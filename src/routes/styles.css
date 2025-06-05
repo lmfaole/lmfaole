@@ -17,7 +17,7 @@
                 lch(from var(--color-bg) 99 calc(c + 2) h),
                 lch(from var(--color-bg) 7 calc(c + 2) h)
         );
-        --color-border: light-dark(lch(from var(--color-bg) 95 0 h), lch(from var(--color-bg) 20 0 h));
+        --color-border: light-dark(lch(from var(--color-bg) 90 0 h), lch(from var(--color-bg) 25 0 h));
         --color-text: light-dark(var(--color-text-light), var(--color-text-dark));
         --color-text-muted: light-dark(lch(from currentColor 10 c h), lch(from currentColor 90 c h));
         --color-link: currentColor;
@@ -28,6 +28,7 @@
         --max-width: calc(var(--max-text-length) + 40ch);
 
         --sans: system-ui;
+        --mono: monospace;
 
         --fw-thin: 200;
         --fw-light: 300;
