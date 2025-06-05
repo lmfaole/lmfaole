@@ -2,6 +2,9 @@ name: Linting for accessibility issues
 
 on: [pull_request]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
