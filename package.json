@@ -15,7 +15,7 @@
     "@biomejs/biome": "^1.9.4",
     "@neoconfetti/svelte": "^1.0.0",
     "@sveltejs/adapter-auto": "^2.0.0",
-    "@sveltejs/kit": "^2.1.0",
+    "@sveltejs/kit": "^2.0.0",
     "svelte": "^3.54.0",
     "svelte-check": "^4.2.1",
     "sveltekit-adapter-deno": "^0.16.1",
