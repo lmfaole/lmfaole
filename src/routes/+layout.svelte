@@ -1,5 +1,8 @@
-<script>
+<script type="module" lang="ts">
 	import './styles.css';
+
+	import type { LayoutProps } from './$types';
+	let { data }: LayoutProps = $props();
 </script>
 
 <div class="app">
@@ -12,7 +15,7 @@
 	<footer>
 		<p>Du kan følge, stalke eller kontakte meg på
 			<a href="https://bsky.app/profile/lmfaole.no" rel="me">Bluesky</a>,
-			<a href="https://github.com/lmfaole" rel="me">Github</a> eller
+			<a href="https://github.com/{data.user.login}" rel="me">Github</a> eller
 			<a href="https://www.linkedin.com/in/olejorgenbakken/" rel="me opener">LinkedIn</a>.
 		</p>
 	</footer>
