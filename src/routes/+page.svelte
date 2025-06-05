@@ -1,11 +1,2 @@
-<svelte:head>
-	<title>Velkommen</title>
-	<meta content="Ole Jørgen Bakkens hjemmeside" name="description" />
-</svelte:head>
-
-<h1>
-	Velkommen til <span lang="en">svelte</span>-versjonen
-</h1>
-<p>
-	Innhold kommer lol
-</p>
+<h1>Welcome to SvelteKit</h1>
+<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
