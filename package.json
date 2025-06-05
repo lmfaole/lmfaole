@@ -19,7 +19,7 @@
     "@sveltejs/kit": "^2.21.2",
     "@types/cookie": "^0.5.1",
     "svelte": "^3.54.0",
-    "svelte-check": "^3.0.1",
+    "svelte-check": "^4.2.1",
     "sveltekit-adapter-deno": "^0.16.1",
     "tslib": "^2.8.1",
     "typescript": "^5.0.0",
