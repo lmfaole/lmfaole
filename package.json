@@ -8,16 +8,14 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "vitest",
-    "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write ."
+    "lint": "deno run -A npm:@biomejs/biome format ./src",
+    "format": "deno run -A npm:@biomejs/biome format --write ./src"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@fontsource/fira-mono": "^4.5.10",
     "@neoconfetti/svelte": "^1.0.0",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^2.21.2",
-    "@types/cookie": "^0.6.0",
     "svelte": "^3.54.0",
     "svelte-check": "^4.2.1",
     "sveltekit-adapter-deno": "^0.16.1",
