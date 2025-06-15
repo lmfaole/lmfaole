@@ -17,14 +17,19 @@
         line-height: 1.5;
     }
 
+    :root {
+        --bg: light-dark(white, black);
+        --text: light-dark(black, white);
+    }
+
     body {
         color-scheme: light dark;
         margin: 0;
         display: flex;
         flex-direction: column;
         min-height: 100svh;
-        background-color: light-dark(white, black);
-        color: light-dark(black, white);
+        background-color: var(--bg);
+        color: var(--text);
         font-family: system-ui;
     }
 
@@ -40,7 +45,7 @@
         text-wrap: pretty;
     }
 
-    a {
+    a:not(:has(img)) {
         text-underline-offset: 0.2ex;
         text-decoration-thickness: 0.2ex;
         padding: 0.1ex 0.1em;
@@ -61,5 +66,14 @@
 
     dt {
         font-weight: bold;
+    }
+
+    img {
+        &.avatar {
+            height: 64px;
+            aspect-ratio: 1;
+            border-radius: 100%;
+            border: 3px solid color-mix(in lch, var(--text) 3%, var(--bg));
+        }
     }
 </style>
