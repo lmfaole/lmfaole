@@ -2,30 +2,45 @@
 	import type { LayoutProps } from './$types';
 
 	let { data, children }: LayoutProps = $props();
+	let repo = data.repo;
+	let user = data.user;
 </script>
 
-<header>
+<!--<header>
 	<a href="/">Home</a>
-</header>
+</header>-->
 
 <main>
 	{@render children()}
 </main>
 
 <footer>
-	<h2>My links</h2>
-	<ul>
-		<li><a href="https://github.com/lmfaole" rel="me">Github</a></li>
-		<li><a href="https://www.linkedin.com/in/olejorgenbakken/" rel="me">LinkedIn</a></li>
-	</ul>
+
+	<h2>Me</h2>
+	<dl>
+		<dt>My links</dt>
+		<dd><a href="{user.html_url}" rel="me">Github</a></dd>
+		<dd><a href="https://www.linkedin.com/in/olejorgenbakken/" rel="me">LinkedIn</a></dd>
+		<dt>Location</dt>
+		<dd>{user.location}</dd>
+		<dt>Company</dt>
+		<dd>{user.company}</dd>
+		<dt>My face</dt>
+		<dd>
+			<a href="{user.avatar_url}">
+				<img alt="My face" class="avatar blob" src="{user.avatar_url}">
+			</a>
+		</dd>
+	</dl>
+
 	<h2>About this site</h2>
 	<dl>
 		<dt>Link</dt>
-		<dd><a href="{data.html_url}">Github repo</a></dd>
+		<dd><a href="{repo.html_url}">Github repo</a></dd>
 		<dt>Updated</dt>
-		<dd>{new Date(data.updated_at).toLocaleDateString("en", { day: "numeric", month: "long", year: "numeric" })}</dd>
+		<dd>{new Date(repo.updated_at).toLocaleDateString("en", { day: "numeric", month: "long", year: "numeric" })}</dd>
 		<dt>Size</dt>
-		<dd>{data.size} KB</dd>
+		<dd>{repo.size} KB</dd>
 	</dl>
 </footer>
 
@@ -34,7 +49,7 @@
         max-width: 90ch;
         margin-inline: auto;
         width: 100%;
-        padding-inline: 1rem;
+        padding-inline: 2vw;
     }
 
     header {
@@ -42,26 +57,15 @@
     }
 
     main {
-        flex: 1;
+        /*flex: 1;*/
     }
 
     footer {
-        container: footer / inline-size;
-        border-block-start: 1px solid oklch(from currentColor l c h / 0.1);
-        padding-block: 2lh;
-
-        @media (min-width: 375px) {
-            display: grid;
-            grid-auto-flow: column;
-            grid-template-areas: "links meta"
-		"links meta";
-            grid-template-columns: repeat(2, max-content);
-            gap: 1ch 12ch;
-        }
+        padding-block-end: 1lh;
 
         h2 {
             font-size: large;
-            margin: 0;
+            margin-block: 4ch 0;
         }
 
         ul, dl {
@@ -84,6 +88,7 @@
 
             dd {
                 margin-inline-start: 0;
+                grid-column: 2;
             }
         }
     }

@@ -1,7 +1,7 @@
 import { Octokit } from 'octokit';
 import { GITHUB_TOKEN } from '$env/static/private';
 
-export const load = async ({ params }) => {
+export const load = async () => {
 	const octokit = new Octokit({
 		auth: GITHUB_TOKEN
 	});
@@ -14,5 +14,12 @@ export const load = async ({ params }) => {
 		}
 	});
 
-	return repo.data;
+	const user = await octokit.request('GET /users/{username}', {
+		username: 'lmfaole',
+		headers: {
+			'X-GitHub-Api-Version': '2022-11-28'
+		}
+	});
+
+	return { repo: repo.data, user: user.data };
 };
