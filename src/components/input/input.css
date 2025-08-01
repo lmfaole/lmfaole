@@ -1,0 +1,30 @@
+label:has(input[type="radio"], input[type="checkbox"]) {
+	display: inline-flex;
+	min-height: 44px;
+	background-color: ButtonFace;
+	border: 1px solid transparent;
+	align-items: center;
+	gap: 0.2ch;
+	margin-inline-end: 1ch;
+	margin-block-end: 0.5lh;
+	border-radius: 1lh;
+	cursor: pointer;
+
+	&:hover,
+	&:has(input:checked) {
+		background-color: ButtonFace;
+		border-color: FieldText;
+	}
+
+	input {
+		cursor: pointer;
+	}
+}
+
+fieldset {
+	border: 0;
+}
+
+input {
+	accent-color: AccentColor;
+}

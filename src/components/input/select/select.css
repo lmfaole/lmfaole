@@ -1,0 +1,37 @@
+@import url("../input.css");
+
+label:has(select) {
+	select {
+		min-height: 44px;
+		margin-block-start: 0.25lh;
+		padding-inline: 1ch;
+		font-size: medium;
+		display: block;
+
+		&[multiple] {
+			min-width: 25ch;
+
+			option {
+				margin-inline: -1ch;
+				padding: 0.5lh;
+
+				&:checked::after {
+					content: " (valgt)";
+				}
+			}
+
+			optgroup {
+				padding-block-end: 0;
+
+				&:not(:last-of-type) {
+					border-block-end: 1px solid ButtonBorder;
+					margin-block: 0.5lh;
+				}
+
+				option {
+					margin-inline: -1ch;
+				}
+			}
+		}
+	}
+}
