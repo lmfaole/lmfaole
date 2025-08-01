@@ -12,8 +12,8 @@ label:has(input[type="radio"], input[type="checkbox"]) {
 
 	&:hover,
 	&:has(input:checked) {
-		background-color: ButtonFace;
-		border-color: FieldText;
+		background-color: Highlight;
+		border-color: Highlight;
 	}
 
 	input {
@@ -26,5 +26,5 @@ fieldset {
 }
 
 input {
-	accent-color: AccentColor;
+	accent-color: HighlightText;
 }
