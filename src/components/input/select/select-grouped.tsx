@@ -1,9 +1,9 @@
 import { useId } from "react";
-import type { GroupedSelectTypes } from "./grouped-select.types.ts";
+import type { SelectGroupedTypes } from "./select-grouped.types.ts";
 
 import "./select.css";
 
-export const GroupedSelect = (props: GroupedSelectTypes) => {
+export const SelectGrouped = (props: SelectGroupedTypes) => {
 	const id = useId();
 
 	const { groups, label, required = true, ...rest } = props;
@@ -11,7 +11,7 @@ export const GroupedSelect = (props: GroupedSelectTypes) => {
 	return (
 		<>
 			<label htmlFor={id}>{label}</label>
-			<select required={required} name={label} id={id} {...rest}>
+			<select required={required} name={label} id={id} size={12} {...rest}>
 				{groups.map((group) => (
 					<optgroup key={group.label} label={group.label}>
 						{group.items.map((item) => (

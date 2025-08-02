@@ -5,24 +5,22 @@ export type {
 export {
 	Checkbox,
 	CheckboxGroup,
+	checkboxInfo,
 } from "./checkbox";
 export type { NumberInputTypes } from "./number";
-export { NumberInput } from "./number";
+export { NumberInput, numberInputInfo } from "./number";
 export type { RadioGroupTypes, RadioTypes } from "./radio";
-export { Radio, RadioGroup } from "./radio";
+export { Radio, RadioGroup, radioInfo } from "./radio";
 export type {
-	GroupedMultiselectTypes,
-	GroupedSelectTypes,
-	MultiselectTypes,
+	SelectGroupedTypes,
 	SelectTypes,
 } from "./select";
 export {
-	GroupedMultiselect,
-	GroupedSelect,
-	Multiselect,
 	Select,
+	SelectGrouped,
+	selectInfo,
 } from "./select";
 export type { TelInputTypes } from "./tel";
-export { TelInput } from "./tel";
+export { TelInput, telInputInfo } from "./tel";
 export type { TextTypes } from "./text";
-export { CardInput, TextInput } from "./text";
+export { TextInput, textInputInfo } from "./text";

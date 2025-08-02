@@ -1,5 +1,2 @@
-import { buttonInfo } from "../../components/button";
-import detailsInfo from "../../components/details";
-
-const componentList = [buttonInfo, detailsInfo];
+import componentList from "../../components/componentsInfo.ts";
 export default componentList;

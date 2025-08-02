@@ -4,5 +4,5 @@ export type ResizerTypes = AllHTMLAttributes<HTMLDivElement> & {
 	figcaption: string;
 	children: ReactNode;
 	padding?: boolean;
-	resize?: "both" | "vertical" | "horizontal";
+	resize?: "both" | "vertical" | "horizontal" | "none";
 };

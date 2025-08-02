@@ -1,4 +1,4 @@
-export { Radio } from "./radio.tsx";
+export { Radio, radioInfo } from "./radio.tsx";
 export type { RadioTypes } from "./radio.types.ts";
 
 export { RadioGroup } from "./radio-group.tsx";

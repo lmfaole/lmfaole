@@ -29,6 +29,10 @@
 		&[data-resize="horizontal"] {
 			resize: horizontal;
 		}
+
+		&[data-resize="none"] {
+			resize: none;
+		}
 	}
 
 	> div {

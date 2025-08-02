@@ -1,4 +1,5 @@
 import { useId } from "react";
+import type { ComponentInfoTypes } from "../../component-info.type.ts";
 import type { TextTypes } from "./text.types.ts";
 
 export const TextInput = (props: TextTypes) => {
@@ -43,4 +44,11 @@ export const TextInput = (props: TextTypes) => {
 			)}
 		</>
 	);
+};
+
+export const textInputInfo: ComponentInfoTypes = {
+	name: "Text input",
+	category: "skjemaelementer",
+	examples: [{ code: <TextInput label={"Hva er nummeret ditt?"} /> }],
+	spec: "https://html.spec.whatwg.org/#the-input-element",
 };

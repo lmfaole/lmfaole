@@ -1,4 +1,5 @@
 import { useId } from "react";
+import type { ComponentInfoTypes } from "../../component-info.type.ts";
 import type { NumberInputTypes } from "./number.types.ts";
 
 export const NumberInput = (props: NumberInputTypes) => {
@@ -44,4 +45,11 @@ export const NumberInput = (props: NumberInputTypes) => {
 			)}
 		</>
 	);
+};
+
+export const numberInputInfo: ComponentInfoTypes = {
+	name: "Number input",
+	category: "skjemaelementer",
+	examples: [{ code: <NumberInput label={"Skriv et tall"} /> }],
+	spec: "https://html.spec.whatwg.org/#the-input-element",
 };

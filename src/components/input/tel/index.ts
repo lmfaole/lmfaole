@@ -1,2 +1,2 @@
-export { TelInput } from "./tel.tsx";
+export { TelInput, telInputInfo } from "./tel.tsx";
 export type { TelInputTypes } from "./tel.types.ts";
