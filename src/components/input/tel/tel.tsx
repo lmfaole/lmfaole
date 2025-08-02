@@ -26,6 +26,7 @@ export const PhoneNumberInput = (props: TelInputTypes) => {
 					inputMode="text"
 					required={required}
 					autoComplete={"tel-country-code"}
+					defaultValue={"+47"}
 					{...rest}
 				/>
 

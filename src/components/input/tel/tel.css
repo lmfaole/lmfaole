@@ -7,9 +7,11 @@ input[type="tel"] {
 }
 
 fieldset:has(input[autocomplete*="tel"]) {
-	columns: 2;
+	display: grid;
+	grid-template-columns: 9ch 18ch;
+	gap: 0 2ch;
 
 	label {
-		max-width: fit-content;
+		grid-row: 1;
 	}
 }
