@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { renderToStaticMarkup } from "react-dom/server";
-import { Button } from "../../components/button";
-import { buttonInfo } from "../../components/button/button.tsx";
+import { Button, buttonInfo } from "../../components/button";
 import { Details } from "../../components/details";
 import { Resizer } from "../../components/layout/resizer/resizer.tsx";
 
@@ -10,21 +9,18 @@ export const Route = createFileRoute("/component/button")({
 });
 
 function RouteComponent() {
-	const example = <Button>Knapp</Button>;
-	const html = renderToStaticMarkup(example);
-
 	return (
 		<>
 			<header>
 				<h1>{buttonInfo.name}</h1>
 				{buttonInfo.description && <p>{buttonInfo.description}</p>}
 				<Resizer figcaption={"Button"} resize={"vertical"}>
-					{example}
+					{buttonInfo.example}
 				</Resizer>
 				<Details summary={"React"}>
 					<output>
 						<pre>
-							<code>{html}</code>
+							<code>{renderToStaticMarkup(buttonInfo.example)}</code>
 						</pre>
 					</output>
 				</Details>
