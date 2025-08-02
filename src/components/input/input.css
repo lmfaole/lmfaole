@@ -1,13 +1,3 @@
-input {
-	font-size: medium;
-	min-height: 44px;
-	padding-inline: 1ch;
-
-	+ span.suffix {
-		margin-inline-start: 1ch;
-	}
-}
-
 label {
 	display: block;
 	width: fit-content;
@@ -40,6 +30,16 @@ label {
 	}
 }
 
+input {
+	font-size: medium;
+	min-height: 44px;
+	padding-inline: 1ch;
+
+	+ span.suffix {
+		margin-inline-start: 1ch;
+	}
+}
+
 fieldset {
 	&:has(input[required]) {
 		label::after {
@@ -50,4 +50,8 @@ fieldset {
 			content: " (påkrevd)";
 		}
 	}
+}
+
+legend {
+	margin-block-end: 0.21lh;
 }
