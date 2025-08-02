@@ -12,6 +12,7 @@ export const NumberInput = (props: NumberTypes) => {
 		suffix,
 		required = true,
 		inputMode = "numeric",
+		autoComplete = "on",
 		...rest
 	} = props;
 
@@ -27,6 +28,7 @@ export const NumberInput = (props: NumberTypes) => {
 				list={`${label}-${id}`}
 				aria-describedby={`${id}-desciption`}
 				inputMode={inputMode}
+				autoComplete={autoComplete}
 				{...rest}
 			/>
 

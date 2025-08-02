@@ -4,7 +4,15 @@ import type { TextTypes } from "./text.types.ts";
 export const TextInput = (props: TextTypes) => {
 	const id = useId();
 
-	const { label, datalist, suffix, list, required = true, ...rest } = props;
+	const {
+		label,
+		datalist,
+		suffix,
+		list,
+		autoComplete = "on",
+		required = true,
+		...rest
+	} = props;
 
 	return (
 		<>
@@ -16,6 +24,7 @@ export const TextInput = (props: TextTypes) => {
 				required={required}
 				list={`${label}-${id}`}
 				aria-describedby={`${id}-desciption`}
+				autoComplete={autoComplete}
 				{...rest}
 			/>
 
