@@ -5,10 +5,14 @@ export const CardInput = () => {
 		<fieldset>
 			<legend>Kortinformasjon</legend>
 
-			<TextInput label={"Navn"} autoComplete={"cc-name"} />
-			<TextInput label={"Utgår"} autoComplete={"cc-exp"} />
-			<TextInput label={"CSV"} autoComplete={"cc-csc"} />
-			<TextInput label={"Kredittkortnummer"} autoComplete={"cc-number"} />
+			<TextInput label={"Navn"} autoComplete={"cc-name"} size={30} />
+			<TextInput
+				label={"Kredittkortnummer"}
+				autoComplete={"cc-number"}
+				size={15}
+			/>
+			<TextInput label={"Utgår"} autoComplete={"cc-exp"} type="month" />
+			<TextInput label={"CSV"} autoComplete={"cc-csc"} size={3} />
 		</fieldset>
 	);
 };
