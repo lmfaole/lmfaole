@@ -1,20 +1,19 @@
 import { Checkbox } from "./checkbox.tsx";
 import type { CheckboxGroupTypes } from "./checkbox-group.types.ts";
 
-import "./checkbox.css";
-
 export const CheckboxGroup = (props: CheckboxGroupTypes) => {
+	const { legend, defaultValues, required = true, items, ...rest } = props;
+
 	return (
-		<fieldset>
-			<legend>{props.legend}</legend>
-			{props.items.map((item) => (
+		<fieldset {...rest}>
+			<legend>{legend}</legend>
+			{items.map((item) => (
 				<Checkbox
+					required={required}
 					key={item}
 					label={item}
-					name={props.legend}
-					defaultChecked={
-						props.defaultValues ? props.defaultValues.includes(item) : false
-					}
+					name={legend}
+					defaultChecked={defaultValues ? defaultValues.includes(item) : false}
 				/>
 			))}
 		</fieldset>

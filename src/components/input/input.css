@@ -1,31 +1,46 @@
-label:has(input[type="radio"], input[type="checkbox"]) {
-	display: inline-flex;
-	min-height: 44px;
-	background-color: ButtonFace;
-	border: 1px solid transparent;
-	align-items: center;
-	gap: 0.2ch;
-	margin-inline-end: 1ch;
-	margin-block-end: 0.5lh;
-	border-radius: 1lh;
-	cursor: pointer;
-
-	&:hover,
-	&:has(input:checked) {
-		background-color: Highlight;
-		border-color: Highlight;
-		color: HighlightText;
-	}
-
-	input {
-		cursor: pointer;
-	}
-}
-
-fieldset {
-	border: 0;
-}
-
 input {
-	accent-color: HighlightText;
+	font-size: medium;
+	min-height: 44px;
+	padding-inline-start: 1ch;
+
+	+ span.suffix {
+		margin-inline-start: 1ch;
+	}
+}
+
+label {
+	display: block;
+
+	&:has(input) {
+		cursor: pointer;
+		display: flex;
+		min-height: 44px;
+		align-items: center;
+		gap: 0.5ch;
+		width: fit-content;
+		max-width: 100%;
+
+		input {
+			cursor: pointer;
+		}
+	}
+
+	&:has(+ input[required]),
+	&:has(+ select[required]) {
+		&::after {
+			content: " (påkrevd)";
+		}
+	}
+
+	+ input {
+		margin-block-start: 0.25lh;
+	}
+}
+
+legend {
+	&:has(+ label > input[required]) {
+		&::after {
+			content: " (påkrevd)";
+		}
+	}
 }

@@ -1,3 +1,5 @@
+@import url("./components/input/input.css");
+
 :root {
 	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 	color-scheme: light dark;
@@ -25,4 +27,14 @@ h4 {
 
 h5 {
 	font-size: medium;
+}
+
+h6 {
+	font-size: small;
+}
+
+header,
+main {
+	margin-inline: auto;
+	max-width: 90ch;
 }

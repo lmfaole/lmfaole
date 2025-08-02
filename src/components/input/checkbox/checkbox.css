@@ -1,5 +1,0 @@
-@import url("../input.css");
-
-label:has(input[type="checkbox"]) {
-	padding-inline: 1ch 1.5ch;
-}

@@ -1,16 +1,21 @@
+import { useId } from "react";
 import type { MultiselectTypes } from "./multiselect.types.ts";
 
 import "./select.css";
 
 export const Multiselect = (props: MultiselectTypes) => {
-	const { legend, items, ...rest } = props;
+	const id = useId();
+
+	const { label, items, required = true, ...rest } = props;
 
 	return (
-		<label>
-			{legend}
+		<>
+			<label htmlFor={id}>{label}</label>
 			<select
-				name={legend}
+				id={id}
+				name={label}
 				size={items.length <= 10 ? props.items.length : 10}
+				required={required}
 				{...rest}
 				multiple={true}
 			>
@@ -18,6 +23,6 @@ export const Multiselect = (props: MultiselectTypes) => {
 					<option key={item}>{item}</option>
 				))}
 			</select>
-		</label>
+		</>
 	);
 };

@@ -1,5 +1,0 @@
-@import url("../input.css");
-
-label:has(input[type="radio"]) {
-	padding-inline: 0.5ch 1.5ch;
-}

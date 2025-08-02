@@ -1,13 +1,23 @@
 import type { GroupedMultiselectTypes } from "./grouped-multiselect.types.ts";
 
 import "./select.css";
+import { useId } from "react";
 
 export const GroupedMultiselect = (props: GroupedMultiselectTypes) => {
-	const { groups, legend, ...rest } = props;
+	const id = useId();
+
+	const { groups, label, required = true, ...rest } = props;
+
 	return (
-		<label>
-			{legend}
-			<select name={legend} size={10} {...rest} multiple={true}>
+		<>
+			<label htmlFor={id}>{label}</label>
+			<select
+				required={required}
+				name={label}
+				size={10}
+				{...rest}
+				multiple={true}
+			>
 				{groups.map((group) => (
 					<optgroup key={group.label} label={group.label}>
 						{group.items.map((item) => (
@@ -16,6 +26,6 @@ export const GroupedMultiselect = (props: GroupedMultiselectTypes) => {
 					</optgroup>
 				))}
 			</select>
-		</label>
+		</>
 	);
 };

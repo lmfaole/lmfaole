@@ -1,13 +1,17 @@
+import { useId } from "react";
 import type { GroupedSelectTypes } from "./grouped-select.types.ts";
 
 import "./select.css";
 
 export const GroupedSelect = (props: GroupedSelectTypes) => {
-	const { groups, legend, ...rest } = props;
+	const id = useId();
+
+	const { groups, label, required = true, ...rest } = props;
+
 	return (
-		<label>
-			{legend}
-			<select name={props.legend} {...rest}>
+		<>
+			<label htmlFor={id}>{label}</label>
+			<select required={required} name={label} id={id} {...rest}>
 				{groups.map((group) => (
 					<optgroup key={group.label} label={group.label}>
 						{group.items.map((item) => (
@@ -16,6 +20,6 @@ export const GroupedSelect = (props: GroupedSelectTypes) => {
 					</optgroup>
 				))}
 			</select>
-		</label>
+		</>
 	);
 };

@@ -1,7 +1,5 @@
 import type { CheckboxTypes } from "./checkbox.types.ts";
 
-import "./checkbox.css";
-
 export const Checkbox = (props: CheckboxTypes) => {
 	return (
 		<label>

@@ -1,36 +1,32 @@
-@import url("../input.css");
+select {
+	min-height: 44px;
+	margin-block-start: 0.25lh;
+	padding-inline: 1ch;
+	font-size: medium;
+	display: block;
 
-label:has(select) {
-	select {
-		min-height: 44px;
-		margin-block-start: 0.25lh;
-		padding-inline: 1ch;
-		font-size: medium;
-		display: block;
+	&[multiple] {
+		min-width: 25ch;
 
-		&[multiple] {
-			min-width: 25ch;
+		option {
+			margin-inline: -1ch;
+			padding: 0.5lh;
+
+			&:checked::after {
+				content: " (valgt)";
+			}
+		}
+
+		optgroup {
+			padding-block-end: 0;
+
+			&:not(:last-of-type) {
+				border-block-end: 1px solid hsl(from ButtonText h s l / 0.2);
+				margin-block: 0.5lh;
+			}
 
 			option {
 				margin-inline: -1ch;
-				padding: 0.5lh;
-
-				&:checked::after {
-					content: " (valgt)";
-				}
-			}
-
-			optgroup {
-				padding-block-end: 0;
-
-				&:not(:last-of-type) {
-					border-block-end: 1px solid ButtonBorder;
-					margin-block: 0.5lh;
-				}
-
-				option {
-					margin-inline: -1ch;
-				}
 			}
 		}
 	}

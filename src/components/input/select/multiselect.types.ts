@@ -4,7 +4,7 @@ export type MultiselectTypes = Omit<
 	SelectHTMLAttributes<Omit<HTMLSelectElement, "multiple">>,
 	"defaultValue"
 > & {
-	legend: string;
+	label: string;
 	items: string[];
 	defaultValue?: string[];
 };

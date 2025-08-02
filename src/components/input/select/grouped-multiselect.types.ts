@@ -4,7 +4,7 @@ export type GroupedMultiselectTypes = Omit<
 	SelectHTMLAttributes<Omit<HTMLSelectElement, "multiple">>,
 	"defaultValue"
 > & {
-	legend: string;
+	label: string;
 	groups: {
 		label: string;
 		items: string[];
