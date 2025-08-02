@@ -1,9 +1,9 @@
 import { useId } from "react";
-import type { NumberTypes } from "./number.types.ts";
+import type { NumberInputTypes } from "./number.types.ts";
 
 import "./number.css";
 
-export const NumberInput = (props: NumberTypes) => {
+export const NumberInput = (props: NumberInputTypes) => {
 	const id = useId();
 
 	const {

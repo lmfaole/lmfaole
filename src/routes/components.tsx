@@ -1,18 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Button } from "../components/button/button.tsx";
+import { Button } from "../components/button";
 import {
+	CardInput,
 	CheckboxGroup,
 	GroupedMultiselect,
 	GroupedSelect,
 	Multiselect,
+	NumberInput,
 	RadioGroup,
 	Select,
+	TelInput,
+	TextInput,
 } from "../components/input";
-import { CardInput } from "../components/input/card/card.tsx";
-import { CardNumberInput } from "../components/input/card/card-number.tsx";
-import { NumberInput } from "../components/input/number/number.tsx";
-import { PhoneNumberInput } from "../components/input/tel/tel.tsx";
-import { TextInput } from "../components/input/text/text.tsx";
 
 export const Route = createFileRoute("/components")({
 	component: About,
@@ -113,12 +112,12 @@ function About() {
 								<ul>
 									<li>
 										<h6>Default</h6>
-										<PhoneNumberInput />
+										<TelInput />
 									</li>
 
 									<li>
 										<h6>Med landskode</h6>
-										<PhoneNumberInput autoComplete={"tel"} />
+										<TelInput autoComplete={"tel"} />
 									</li>
 								</ul>
 							</li>
@@ -127,7 +126,6 @@ function About() {
 								<h5>Kortinformasjon</h5>
 
 								<CardInput />
-								<CardNumberInput />
 							</li>
 
 							<li>

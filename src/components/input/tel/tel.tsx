@@ -3,7 +3,7 @@ import type { TelInputTypes } from "./tel.types.ts";
 
 import "./tel.css";
 
-export const PhoneNumberInput = (props: TelInputTypes) => {
+export const TelInput = (props: TelInputTypes) => {
 	const id = useId();
 
 	const {
