@@ -1,0 +1,7 @@
+input[type="tel"] {
+	max-width: 15ch;
+
+	&[autocomplete="tel-country-code"] {
+		max-width: 5ch;
+	}
+}

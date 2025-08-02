@@ -1,7 +1,7 @@
 input {
 	font-size: medium;
 	min-height: 44px;
-	padding-inline-start: 1ch;
+	padding-inline: 1ch;
 
 	+ span.suffix {
 		margin-inline-start: 1ch;

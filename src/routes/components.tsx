@@ -107,7 +107,17 @@ function About() {
 
 								<li>
 									<h5>Telefon</h5>
-									<PhoneNumberInput />
+									<ul>
+										<li>
+											<h6>Default</h6>
+											<PhoneNumberInput />
+										</li>
+
+										<li>
+											<h6>Med landskode</h6>
+											<PhoneNumberInput autoComplete={"tel"} />
+										</li>
+									</ul>
 								</li>
 							</li>
 
