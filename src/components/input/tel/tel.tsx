@@ -21,12 +21,14 @@ export const PhoneNumberInput = (props: TelInputTypes) => {
 				<label htmlFor={`${id}-cc`}>Landekode</label>
 				<input
 					id={`${id}-cc`}
+					size={3}
 					name={`${id}-cc`}
 					type="text"
 					inputMode="text"
 					required={required}
 					autoComplete={"tel-country-code"}
 					defaultValue={"+47"}
+					placeholder={"+47"}
 					{...rest}
 				/>
 
@@ -35,6 +37,7 @@ export const PhoneNumberInput = (props: TelInputTypes) => {
 					id={`${id}-tel`}
 					name={`${id}-tel`}
 					type="text"
+					size={9}
 					inputMode="tel"
 					required={required}
 					autoComplete={"tel-local"}

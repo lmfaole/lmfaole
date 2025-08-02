@@ -7,11 +7,20 @@ input[type="tel"] {
 }
 
 fieldset:has(input[autocomplete*="tel"]) {
-	display: grid;
-	grid-template-columns: 9ch 18ch;
-	gap: 0 2ch;
-
+	/* https://piccalil.li/blog/visually-hidden/ */
 	label {
-		grid-row: 1;
+		border: 0;
+		clip: rect(0 0 0 0);
+		height: auto;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+		white-space: nowrap;
+	}
+
+	input {
+		margin-inline-end: 1ch;
 	}
 }
