@@ -1,0 +1,57 @@
+.resizer {
+	margin: 0;
+	resize: attr(data-resize);
+	min-width: fit-content;
+	max-width: 100%;
+	min-height: fit-content;
+	height: 33dvh;
+	max-height: 100dvh;
+	overflow: scroll;
+	background-color: Canvas;
+	border: 1px solid Highlight;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&[data-padding="true"] {
+		padding: 1lh;
+	}
+
+	@supports not (attr(data-resize)) {
+		&[data-resize="both"] {
+			resize: both;
+		}
+
+		&[data-resize="vertical"] {
+			resize: vertical;
+		}
+
+		&[data-resize="horizontal"] {
+			resize: horizontal;
+		}
+	}
+
+	> div {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+	}
+
+	figcaption {
+		/* https://piccalil.li/blog/visually-hidden/ */
+		border: 0;
+		clip: rect(0 0 0 0);
+		height: auto;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+		white-space: nowrap;
+
+		/* Hvis jeg finner ut hvordan jeg vil den skal se ut: */
+		text-align: center;
+	}
+}

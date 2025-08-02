@@ -1,0 +1,29 @@
+details {
+	border: 1px solid Highlight;
+	padding: 1lh 1ch;
+
+	summary {
+		margin: -1lh -1ch;
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		padding-inline: 1ch;
+
+		&::before {
+			content: "↓";
+			margin-inline-end: 1ch;
+		}
+
+		+ * {
+			display: block;
+			margin-block-start: 1.5lh;
+		}
+	}
+
+	&[open] {
+		summary::before {
+			content: "↑";
+		}
+	}
+}

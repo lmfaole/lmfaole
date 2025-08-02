@@ -5,7 +5,6 @@ export const Route = createRootRoute({
 	component: () => (
 		<>
 			<header>
-				<h1>Hei</h1>
 				<div>
 					<Link to="/" className="[&.active]:font-bold">
 						Hjem
