@@ -11,7 +11,7 @@ export const Select = (props: SelectTypes) => {
 	return (
 		<>
 			<label htmlFor={id}>{label}</label>
-			<select name={label} id={id} required={required} {...rest}>
+			<select id={id} name={label} title={label} required={required} {...rest}>
 				{props.items.map((item) => (
 					<option key={item}>{item}</option>
 				))}

@@ -1,19 +1,17 @@
 import type { MultiselectTypes } from "./multiselect.types.ts";
-
-import "./select.css";
 import { Select } from "./select.tsx";
 
+import "./select.css";
+
 export const Multiselect = (props: MultiselectTypes) => {
-	const { label, items, required = true, ...rest } = props;
+	const { items, required = true, ...rest } = props;
 
 	return (
 		<Select
-			label={label}
+			multiple
 			items={items}
-			name={label}
-			size={items.length <= 10 ? props.items.length : 10}
+			size={items.length <= 10 ? items.length : 10}
 			required={required}
-			multiple={true}
 			{...rest}
 		/>
 	);

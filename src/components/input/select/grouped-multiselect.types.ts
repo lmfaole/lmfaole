@@ -1,13 +1,3 @@
-import type { SelectHTMLAttributes } from "react";
+import type { GroupedSelectTypes } from "./grouped-select.types.ts";
 
-export type GroupedMultiselectTypes = Omit<
-	SelectHTMLAttributes<Omit<HTMLSelectElement, "multiple">>,
-	"defaultValue"
-> & {
-	label: string;
-	groups: {
-		label: string;
-		items: string[];
-	}[];
-	defaultValue?: string[];
-};
+export type GroupedMultiselectTypes = Omit<GroupedSelectTypes, "multiple">;
