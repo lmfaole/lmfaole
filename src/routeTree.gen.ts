@@ -9,65 +9,58 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ComponentsRouteImport } from './routes/components'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ComponentButtonRouteImport } from './routes/component/button'
+import { Route as ComponentsIndexRouteImport } from './routes/components/index'
+import { Route as ComponentsComponentNameRouteImport } from './routes/components/$componentName'
 
-const ComponentsRoute = ComponentsRouteImport.update({
-  id: '/components',
-  path: '/components',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ComponentButtonRoute = ComponentButtonRouteImport.update({
-  id: '/component/button',
-  path: '/component/button',
+const ComponentsIndexRoute = ComponentsIndexRouteImport.update({
+  id: '/components/',
+  path: '/components/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComponentsComponentNameRoute = ComponentsComponentNameRouteImport.update({
+  id: '/components/$componentName',
+  path: '/components/$componentName',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/components': typeof ComponentsRoute
-  '/component/button': typeof ComponentButtonRoute
+  '/components/$componentName': typeof ComponentsComponentNameRoute
+  '/components': typeof ComponentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/components': typeof ComponentsRoute
-  '/component/button': typeof ComponentButtonRoute
+  '/components/$componentName': typeof ComponentsComponentNameRoute
+  '/components': typeof ComponentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/components': typeof ComponentsRoute
-  '/component/button': typeof ComponentButtonRoute
+  '/components/$componentName': typeof ComponentsComponentNameRoute
+  '/components/': typeof ComponentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/components' | '/component/button'
+  fullPaths: '/' | '/components/$componentName' | '/components'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/components' | '/component/button'
-  id: '__root__' | '/' | '/components' | '/component/button'
+  to: '/' | '/components/$componentName' | '/components'
+  id: '__root__' | '/' | '/components/$componentName' | '/components/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ComponentsRoute: typeof ComponentsRoute
-  ComponentButtonRoute: typeof ComponentButtonRoute
+  ComponentsComponentNameRoute: typeof ComponentsComponentNameRoute
+  ComponentsIndexRoute: typeof ComponentsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/components': {
-      id: '/components'
-      path: '/components'
-      fullPath: '/components'
-      preLoaderRoute: typeof ComponentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -75,11 +68,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/component/button': {
-      id: '/component/button'
-      path: '/component/button'
-      fullPath: '/component/button'
-      preLoaderRoute: typeof ComponentButtonRouteImport
+    '/components/': {
+      id: '/components/'
+      path: '/components'
+      fullPath: '/components'
+      preLoaderRoute: typeof ComponentsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/components/$componentName': {
+      id: '/components/$componentName'
+      path: '/components/$componentName'
+      fullPath: '/components/$componentName'
+      preLoaderRoute: typeof ComponentsComponentNameRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -87,8 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ComponentsRoute: ComponentsRoute,
-  ComponentButtonRoute: ComponentButtonRoute,
+  ComponentsComponentNameRoute: ComponentsComponentNameRoute,
+  ComponentsIndexRoute: ComponentsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

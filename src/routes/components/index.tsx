@@ -1,24 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button } from "../components/button";
-import {
-	CardInput,
-	CheckboxGroup,
-	GroupedMultiselect,
-	GroupedSelect,
-	Multiselect,
-	NumberInput,
-	RadioGroup,
-	Select,
-	TelInput,
-	TextInput,
-} from "../components/input";
+import componentList from "../../components/components.list.ts";
 
-export const Route = createFileRoute("/components")({
+export const Route = createFileRoute("/components/")({
 	component: About,
 });
 
 function About() {
-	const flavors = [
+	/*const flavors = [
 		"Sjokolade",
 		"Dubai-sjokolade",
 		"Mint-sjokolade",
@@ -44,15 +32,25 @@ function About() {
 			label: "Annet",
 			items: ["Jordbær", "Pistasj", "Karamell", "Banan"],
 		},
-	];
+	];*/
 
 	return (
 		<>
 			<h1>Komponenter</h1>
 			<ul>
+				{componentList.map((component) => (
+					<li key={component.name}>
+						<h2>
+							<Link to={`/components/${component.name}`}>{component.name}</Link>
+						</h2>
+						<p>{component.description}</p>
+					</li>
+				))}
+			</ul>
+			{/*<ul>
 				<li>
 					<h2>
-						<Link to={"/component/button"}>Knapp</Link>
+						<Link to={"/components/button"}>Knapp</Link>
 					</h2>
 					<Button>Hei</Button>
 				</li>
@@ -209,7 +207,7 @@ function About() {
 						</ul>
 					</form>
 				</li>
-			</ul>
+			</ul>*/}
 		</>
 	);
 }

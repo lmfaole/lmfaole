@@ -1,9 +1,9 @@
 details {
-	border: 1px solid Highlight;
-	padding: 1lh 1ch;
+	/*border: 1px solid Highlight;
+	padding: 1lh 1ch 0.5lh 1ch;
 
 	summary {
-		margin: -1lh -1ch;
+		margin: -1lh -1ch 0 -1ch;
 		min-height: 44px;
 		display: flex;
 		align-items: center;
@@ -25,5 +25,5 @@ details {
 		summary::before {
 			content: "↑";
 		}
-	}
+	}*/
 }
