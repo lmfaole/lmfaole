@@ -1,6 +1,6 @@
 import type { SelectTypes } from "./select.types.ts";
 
-export type GroupedSelectTypes = SelectTypes & {
+export type GroupedSelectTypes = Omit<SelectTypes, "items"> & {
 	groups: {
 		label: string;
 		items: string[];
