@@ -8,6 +8,8 @@ import {
 	RadioGroup,
 	Select,
 } from "../components/input";
+import { CardInput } from "../components/input/card/card.tsx";
+import { CardNumberInput } from "../components/input/card/card-number.tsx";
 import { NumberInput } from "../components/input/number/number.tsx";
 import { PhoneNumberInput } from "../components/input/tel/tel.tsx";
 import { TextInput } from "../components/input/text/text.tsx";
@@ -119,6 +121,13 @@ function About() {
 										<PhoneNumberInput autoComplete={"tel"} />
 									</li>
 								</ul>
+							</li>
+
+							<li>
+								<h5>Kortinformasjon</h5>
+
+								<CardInput />
+								<CardNumberInput />
 							</li>
 
 							<li>
