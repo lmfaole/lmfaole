@@ -1,18 +1,11 @@
 label {
 	display: block;
-	width: fit-content;
-	max-width: 100%;
 
 	&:has(input) {
-		cursor: pointer;
 		display: flex;
 		min-height: 44px;
 		align-items: center;
 		gap: 0.5ch;
-
-		input {
-			cursor: pointer;
-		}
 	}
 
 	&:has(+ input[required]),
