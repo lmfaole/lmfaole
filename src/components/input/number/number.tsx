@@ -6,7 +6,14 @@ import "./number.css";
 export const NumberInput = (props: NumberTypes) => {
 	const id = useId();
 
-	const { label, datalist, suffix, required = true, ...rest } = props;
+	const {
+		label,
+		datalist,
+		suffix,
+		required = true,
+		inputMode = "numeric",
+		...rest
+	} = props;
 
 	return (
 		<>
@@ -19,6 +26,7 @@ export const NumberInput = (props: NumberTypes) => {
 				defaultValue={props.min}
 				list={`${label}-${id}`}
 				aria-describedby={`${id}-desciption`}
+				inputMode={inputMode}
 				{...rest}
 			/>
 
