@@ -10,16 +10,16 @@ export const Route = createFileRoute("/components/$componentName")({
 
 function PostComponent() {
 	const { componentName } = Route.useParams();
-	// @ts-ignore
-	const [component, setComponent]: ComponentInfo = useState();
+	const [component, setComponent] = useState({} as ComponentInfo);
 
 	useEffect(() => {
 		(async () => {
-			const ding = await import(`../../components/${componentName}`).then(
-				(e) => e.default,
-			);
+			const ding = await import(`../../components/${componentName}`)
+				.then((e) => e.default)
+				.catch((error) => {
+					console.error("Error loading module:", error);
+				});
 			setComponent(ding);
-			console.log(ding);
 		})();
 	}, []);
 
