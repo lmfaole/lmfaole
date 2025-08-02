@@ -15,27 +15,31 @@ export const PhoneNumberInput = (props: TelInputTypes) => {
 
 	if (autoComplete === "tel") {
 		return (
-			<>
-				<label htmlFor={`${id}-cc ${id}-tel`}>{label}</label>
+			<fieldset>
+				<legend>{label}</legend>
+
+				<label htmlFor={`${id}-cc`}>Landekode</label>
 				<input
 					id={`${id}-cc`}
-					name={label}
-					type="tel"
-					inputMode="tel"
+					name={`${id}-cc`}
+					type="text"
+					inputMode="text"
 					required={required}
-					autoComplete={"tel-country-code"}
+					autoComplete={"telefon tel-country-code"}
 					{...rest}
 				/>
+
+				<label htmlFor={`${id}-tel`}>Telefonnummer</label>
 				<input
 					id={`${id}-tel`}
-					name={label}
-					type="tel"
+					name={`${id}-tel`}
+					type="text"
 					inputMode="tel"
 					required={required}
-					autoComplete={"tel-local"}
+					autoComplete={"telefon tel-local"}
 					{...rest}
 				/>
-			</>
+			</fieldset>
 		);
 	}
 
