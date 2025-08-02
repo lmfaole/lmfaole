@@ -41,6 +41,7 @@ function About() {
 				{componentList.map((component) => (
 					<li key={component.name}>
 						<h2>
+							{/* @ts-ignore*/}
 							<Link to={`/components/${component.name}`}>{component.name}</Link>
 						</h2>
 						<p>{component.description}</p>

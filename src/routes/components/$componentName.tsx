@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { Button, buttonInfo } from "../../components/button";
 import type { ComponentInfo } from "../../components/component-info.type.ts";
 import { Details } from "../../components/details";
 import { Resizer } from "../../components/layout/resizer/resizer.tsx";
@@ -11,6 +10,7 @@ export const Route = createFileRoute("/components/$componentName")({
 
 function PostComponent() {
 	const { componentName } = Route.useParams();
+	// @ts-ignore
 	const [component, setComponent]: ComponentInfo = useState();
 
 	useEffect(() => {
@@ -29,7 +29,7 @@ function PostComponent() {
 		<>
 			<header>
 				<h1>{component.name}</h1>
-				{component.description && <p>{buttonInfo.description}</p>}
+				{component.description && <p>{component.description}</p>}
 				<Resizer figcaption={"Button"} resize={"vertical"}>
 					{component.example}
 				</Resizer>
