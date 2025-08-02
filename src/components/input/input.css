@@ -9,8 +9,6 @@ label {
 		min-height: 44px;
 		align-items: center;
 		gap: 0.5ch;
-		width: fit-content;
-		max-width: 100%;
 
 		input {
 			cursor: pointer;

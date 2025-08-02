@@ -1,8 +1,6 @@
 import { useId } from "react";
 import type { NumberInputTypes } from "./number.types.ts";
 
-import "./number.css";
-
 export const NumberInput = (props: NumberInputTypes) => {
 	const id = useId();
 
@@ -10,9 +8,9 @@ export const NumberInput = (props: NumberInputTypes) => {
 		label,
 		datalist,
 		suffix,
+		size = 10,
 		required = true,
 		inputMode = "numeric",
-		autoComplete = "on",
 		...rest
 	} = props;
 
@@ -24,11 +22,10 @@ export const NumberInput = (props: NumberInputTypes) => {
 				type="number"
 				name={label}
 				required={required}
-				defaultValue={props.min}
-				list={`${label}-${id}`}
+				size={size}
+				list={datalist && `${label}-${id}`}
 				aria-describedby={`${id}-desciption`}
 				inputMode={inputMode}
-				autoComplete={autoComplete}
 				{...rest}
 			/>
 

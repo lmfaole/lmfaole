@@ -87,21 +87,20 @@ function About() {
 									<li>
 										<h5>Med en minimum-verdi</h5>
 										<NumberInput
-											label={"Hvor stor er leiligheten din?"}
-											step={5}
+											label={"Hva har du på konto?"}
+											step={1}
 											min={20}
-											max={250}
 										/>
 									</li>
 
 									<li>
 										<h5>Med en nevner</h5>
 										<NumberInput
-											label={"Hvor stor er leiligheten din?"}
-											step={5}
-											min={20}
-											max={250}
-											suffix={"Kvadratmeter"}
+											label={"Hvor høy er du?"}
+											step={1}
+											min={100}
+											max={240}
+											suffix={"cm"}
 										/>
 									</li>
 								</ul>
