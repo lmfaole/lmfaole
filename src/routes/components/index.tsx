@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import componentList from "../../components/components.list.ts";
+import componentList from "./components.list.ts";
 
 export const Route = createFileRoute("/components/")({
 	component: About,

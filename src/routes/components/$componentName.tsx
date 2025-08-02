@@ -1,29 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import type { ComponentInfo } from "../../components/component-info.type.ts";
 import { Details } from "../../components/details";
 import { Resizer } from "../../components/layout/resizer/resizer.tsx";
+import componentsList from "./components.list.ts";
+
 export const Route = createFileRoute("/components/$componentName")({
 	component: PostComponent,
 });
 
 function PostComponent() {
 	const { componentName } = Route.useParams();
-	const [component, setComponent] = useState({} as ComponentInfo);
 
-	useEffect(() => {
-		(async () => {
-			const ding = await import(`../../components/${componentName}`)
-				.then((e) => e.default)
-				.catch((error) => {
-					console.error("Error loading module:", error);
-				});
-			setComponent(ding);
-		})();
-	}, []);
+	const component = componentsList.find((c) => c.name === componentName);
 
-	if (!component) return;
+	if (!component) return <p>Du må ha kommet feil</p>;
 
 	return (
 		<>
