@@ -5,3 +5,11 @@ input[type="tel"] {
 		max-width: 5ch;
 	}
 }
+
+fieldset:has(input[autocomplete*="tel"]) {
+	columns: 2;
+
+	label {
+		max-width: fit-content;
+	}
+}

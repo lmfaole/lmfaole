@@ -1,10 +1,5 @@
-import type { SelectHTMLAttributes } from "react";
+import type { SelectTypes } from "./select.types.ts";
 
-export type MultiselectTypes = Omit<
-	SelectHTMLAttributes<Omit<HTMLSelectElement, "multiple">>,
-	"defaultValue"
-> & {
-	label: string;
-	items: string[];
+export type MultiselectTypes = Omit<SelectTypes, "defaultValue"> & {
 	defaultValue?: string[];
 };

@@ -5,5 +5,4 @@ export type SelectTypes = SelectHTMLAttributes<
 > & {
 	label: string;
 	items: string[];
-	defaultValue?: string;
 };

@@ -25,7 +25,7 @@ export const PhoneNumberInput = (props: TelInputTypes) => {
 					type="text"
 					inputMode="text"
 					required={required}
-					autoComplete={"telefon tel-country-code"}
+					autoComplete={"tel-country-code"}
 					{...rest}
 				/>
 
@@ -36,7 +36,7 @@ export const PhoneNumberInput = (props: TelInputTypes) => {
 					type="text"
 					inputMode="tel"
 					required={required}
-					autoComplete={"telefon tel-local"}
+					autoComplete={"tel-local"}
 					{...rest}
 				/>
 			</fieldset>
