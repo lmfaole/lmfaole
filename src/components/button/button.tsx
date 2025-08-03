@@ -1,7 +1,6 @@
-import * as previousIcon from "../../aksel-icons/Arrows/ArrowLeft.svg";
-import * as nextIcon from "../../aksel-icons/Arrows/ArrowRight.svg";
-import * as downloadIcon from "../../aksel-icons/Files and application/CloudDown.svg";
-
+import * as previousIcon from "../../../public/aksel-icons/Arrows/ArrowLeft.svg";
+import * as nextIcon from "../../../public/aksel-icons/Arrows/ArrowRight.svg";
+import * as downloadIcon from "../../../public/aksel-icons/Files and application/CloudDown.svg";
 import type { ComponentInfoTypes } from "../component-info.type.ts";
 import type { ButtonTypes } from "./button.types.ts";
 import { ButtonGroup } from "./button-group.tsx";
