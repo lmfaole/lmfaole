@@ -1,6 +1,3 @@
-import * as previousIcon from "../../../public/aksel-icons/Arrows/ArrowLeft.svg";
-import * as nextIcon from "../../../public/aksel-icons/Arrows/ArrowRight.svg";
-import * as downloadIcon from "../../../public/aksel-icons/Files and application/CloudDown.svg";
 import type { ComponentInfoTypes } from "../component-info.type.ts";
 import type { ButtonTypes } from "./button.types.ts";
 import { ButtonGroup } from "./button-group.tsx";
@@ -50,13 +47,27 @@ export const buttonInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Med ikon",
-			code: <Button value={"Lagre"} icon={downloadIcon.default} />,
+			code: (
+				<Button
+					value={"Lagre"}
+					icon={
+						"../../../public/aksel-icons/Files and application/CloudDown.svg"
+					}
+				/>
+			),
 		},
 		{
 			title: "Ikke aktiv med ikon",
 			description:
 				"For å gjøre det enda klarere at en knapp ikke kan interagerer med fjernes ikonet",
-			code: <Button value={"Lagre"} icon={downloadIcon.default} />,
+			code: (
+				<Button
+					value={"Lagre"}
+					icon={
+						"../../../public/aksel-icons/Files and application/CloudDown.svg"
+					}
+				/>
+			),
 		},
 		{
 			title: "Med snarvei",
@@ -89,10 +100,13 @@ export const buttonInfo: ComponentInfoTypes = {
 				<ButtonGroup reverse>
 					<Button
 						value={"Forrige"}
-						icon={previousIcon.default}
+						icon={"../../../public/aksel-icons/Arrows/ArrowLeft.svg"}
 						iconPosition={"start"}
 					/>
-					<Button value={"Neste"} icon={nextIcon.default} />
+					<Button
+						value={"Neste"}
+						icon={"../../../public/aksel-icons/Arrows/ArrowRight.svg"}
+					/>
 				</ButtonGroup>
 			),
 		},
@@ -100,10 +114,13 @@ export const buttonInfo: ComponentInfoTypes = {
 			title: "Gruppe med knapper i motsatt rekkefølge i pille",
 			code: (
 				<ButtonGroup reverse pill>
-					<Button value={"Neste"} icon={nextIcon.default} />
+					<Button
+						value={"Neste"}
+						icon={"../../../public/aksel-icons/Arrows/ArrowRight.svg"}
+					/>
 					<Button
 						value={"Forrige"}
-						icon={previousIcon.default}
+						icon={"../../../public/aksel-icons/Arrows/ArrowLeft.svg"}
 						iconPosition={"start"}
 					/>
 				</ButtonGroup>
