@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { renderToStaticMarkup } from "react-dom/server";
 import { ComponentExample } from "../../components/documentation/component-example/component-example.tsx";
 import componentsList from "./components.list.ts";
 
@@ -13,6 +14,8 @@ function ComponentPage() {
 
 	if (!component) return <h1>Du må ha kommet feil</h1>;
 
+	const firstExample = component.examples && component.examples[0];
+
 	return (
 		<article>
 			<header>
@@ -22,12 +25,13 @@ function ComponentPage() {
 					<dd>{component.category}</dd>
 				</dl>
 				{component.description && <p>{component.description}</p>}
-				{component.examples && (
+				{firstExample && firstExample.code && (
 					<ComponentExample
-						title={component.examples[0].title}
-						code={component.examples[0].code}
+						title={firstExample.title}
+						code={firstExample.code}
 						showTitle={false}
 						columns={false}
+						open={renderToStaticMarkup(firstExample?.code).length <= 250}
 					/>
 				)}
 			</header>

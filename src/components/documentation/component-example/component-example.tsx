@@ -15,6 +15,7 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 		columns = "true",
 		resize = "both",
 		code,
+		open,
 		...rest
 	} = props;
 	return (
@@ -31,7 +32,7 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 				<Resizer figcaption={title} resize={resize}>
 					{code}
 				</Resizer>
-				<Details summary={"Markup"}>
+				<Details summary={"Markup"} open={open}>
 					<pre>
 						<code>{renderToStaticMarkup(code)}</code>
 					</pre>

@@ -17,12 +17,14 @@ export const checkboxInfo: ComponentInfoTypes = {
 	category: "skjemaelementer",
 	examples: [
 		{
-			title: "Avkrysningsbokser i gruppe",
-			code: <CheckboxGroup legend={"Checkbox"} items={mockFlavors} />,
-		},
-		{
 			title: "Enkeltstående",
 			code: <Checkbox label={mockFlavors[0]} />,
+		},
+		{
+			title: "Avkrysningsbokser i gruppe",
+			code: (
+				<CheckboxGroup legend={"Checkbox"} items={mockFlavors.slice(0, 4)} />
+			),
 		},
 	],
 	spec: "https://html.spec.whatwg.org/#the-input-element",

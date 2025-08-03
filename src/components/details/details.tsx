@@ -50,6 +50,22 @@ export const detailsInfo: ComponentInfoTypes = {
 				</>
 			),
 		},
+		{
+			title: "Åpen ved sideinnlasting",
+			code: (
+				<>
+					<Details summary={"Detaljer 1"} name={"detaljer"} open>
+						Detaljer
+					</Details>
+					<Details summary={"Detaljer 2"} name={"detaljer"}>
+						Detaljer
+					</Details>
+					<Details summary={"Detaljer 3"} name={"detaljer"}>
+						Detaljer
+					</Details>
+				</>
+			),
+		},
 	],
 	spec: "https://html.spec.whatwg.org/#the-details-element",
 };
