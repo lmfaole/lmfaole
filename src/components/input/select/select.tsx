@@ -31,6 +31,10 @@ export const selectInfo: ComponentInfoTypes = {
 			code: <Select label={"Velg smak"} items={mockFlavors} />,
 		},
 		{
+			title: "Ikke aktiv",
+			code: <Select label={"Velg smak"} items={mockFlavors} disabled />,
+		},
+		{
 			title: "Multiple select",
 			code: <Select label={"Velg smaker"} items={mockFlavors} multiple />,
 			description: "Nyttig ved flervalg. Duh.",

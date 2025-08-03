@@ -25,6 +25,9 @@ export const TelInput = (props: TelInputTypes) => {
 export const telInputInfo: ComponentInfoTypes = {
 	name: "Telefonnummer",
 	category: "skjema",
-	examples: [{ code: <TelInput required={false} /> }],
+	examples: [
+		{ code: <TelInput required={false} /> },
+		{ title: "Ikke aktiv", code: <TelInput required={false} disabled /> },
+	],
 	spec: "https://html.spec.whatwg.org/#the-input-element",
 };

@@ -28,6 +28,12 @@ export const SearchInput = (props: SearchTypes) => {
 export const searchInputInfo: ComponentInfoTypes = {
 	name: "Søkefelt",
 	category: "skjema",
-	examples: [{ code: <SearchInput label={"Søk"} /> }],
+	examples: [
+		{ code: <SearchInput label={"Søk"} /> },
+		{
+			title: "Ikke aktiv",
+			code: <SearchInput label={"Søk"} disabled />,
+		},
+	],
 	spec: "https://html.spec.whatwg.org/#the-input-element",
 };

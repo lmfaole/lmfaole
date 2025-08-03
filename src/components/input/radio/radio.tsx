@@ -21,8 +21,22 @@ export const radioInfo: ComponentInfoTypes = {
 			code: <Radio label={mockFlavors[0]} />,
 		},
 		{
+			title: "Ikke aktiv",
+			code: <Radio label={mockFlavors[0]} disabled />,
+		},
+		{
 			title: "Radiogruppe",
 			code: <RadioGroup legend={"Velg smak"} items={mockFlavors.slice(0, 3)} />,
+		},
+		{
+			title: "Ikke aktiv radiogruppe",
+			code: (
+				<RadioGroup
+					legend={"Velg smak"}
+					items={mockFlavors.slice(0, 3)}
+					disabled
+				/>
+			),
 		},
 	],
 	spec: "https://html.spec.whatwg.org/#the-input-element",

@@ -16,6 +16,17 @@ export const numberInputInfo: ComponentInfoTypes = {
 	examples: [
 		{ code: <NumberInput label={"Skriv et tall"} /> },
 		{
+			title: "Ikke aktiv",
+			code: (
+				<NumberInput
+					disabled
+					label={"Skriv et tall"}
+					datalist={[0, 10, 20, 25]}
+					suffix={"is"}
+				/>
+			),
+		},
+		{
 			title: "Med nevner",
 			code: (
 				<NumberInput

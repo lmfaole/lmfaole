@@ -19,6 +19,12 @@ label {
 		margin-block-start: 0.25lh;
 		margin-block-end: 1lh;
 	}
+
+	&:has(input[disabled]),
+	&:has(+ input[disabled]) {
+		cursor: not-allowed;
+		opacity: 0.6;
+	}
 }
 
 input {
@@ -28,6 +34,15 @@ input {
 
 	+ span.suffix {
 		margin-inline-start: 1ch;
+	}
+
+	&[disabled] {
+		cursor: not-allowed;
+
+		+ span.suffix {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
 	}
 }
 
@@ -40,6 +55,10 @@ fieldset {
 		legend::after {
 			content: " (påkrevd)";
 		}
+	}
+
+	&[disabled] {
+		opacity: 0.6;
 	}
 }
 

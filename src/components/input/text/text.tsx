@@ -17,6 +17,16 @@ export const textInputInfo: ComponentInfoTypes = {
 			code: <TextInput label={"Hvilken smak ønsker du?"} required={false} />,
 		},
 		{
+			title: "Ikke aktiv",
+			code: (
+				<TextInput
+					label={"Hvilken smak ønsker du?"}
+					datalist={mockFlavors}
+					disabled
+				/>
+			),
+		},
+		{
 			title: "Med dataliste for forslag",
 			code: (
 				<TextInput label={"Hvilken smak ønsker du?"} datalist={mockFlavors} />
