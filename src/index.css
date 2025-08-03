@@ -5,25 +5,49 @@
 	--interactive-text-color: light-dark(black, white);
 	--danger-interactive-text-color: light-dark(darkred, red);
 
-	--hover-color: hsl(from currentColor h s l / 0.025);
-	--selected-color: hsl(from currentColor h s l / 0.075);
-	--active-color: hsl(from currentColor h s l / 0.1);
-	--danger-interactive-color: hsl(from red h s l / 0.05);
-	--danger-hover-color: hsl(from red h s l / 0.1);
-	--danger-active-color: hsl(from red h s l / 0.2);
+	--contrast-modifier-bg: 0.025;
+	--contrast-modifier-bg-hover: 0.05;
+	--contrast-modifier-border: 0.15;
+	--contrast-modifier-border-hover: 0.4;
 
-	--border-color: hsl(from currentColor h s l / 0.1);
-	--border-hover-color: hsl(from currentColor h s l / 0.5);
-	--danger-border-color: hsl(from red h s l / 0.3);
-	--danger-border-hover-color: hsl(from red h s l / 0.5);
+	--interactive-bg-color: hsl(
+		from currentColor h s l /
+		var(--contrast-modifier-bg)
+	);
+	--interactive-bg-color-hover: hsl(
+		from currentColor h s l /
+		var(--contrast-modifier-bg-hover)
+	);
+
+	--danger-interactive-bg-color: hsl(
+		from red h s l /
+		var(--contrast-modifier-bg)
+	);
+	--danger-interactive-bg-color-hover: hsl(
+		from red h s l /
+		var(--contrast-modifier-bg-hover)
+	);
+
+	--border-color: hsl(from currentColor h s l / var(--contrast-modifier-border));
+	--border-hover-color: hsl(
+		from currentColor h s l /
+		var(--contrast-modifier-border-hover)
+	);
+	--danger-border-color: hsl(from red h s l / var(--contrast-modifier-border));
+	--danger-border-hover-color: hsl(
+		from red h s l /
+		var(--contrast-modifier-border-hover)
+	);
 
 	--animation-ease-out: 0.2s ease-out;
 
+	@media (prefers-color-scheme: dark) {
+		--contrast-modifier-border: 0.2;
+	}
+
 	@media (prefers-contrast: more) {
-		--border-color: hsl(from currentColor h s l / 0.4);
-		--border-hover-color: hsl(from currentColor h s l / 1);
-		--danger-border-color: hsl(from red h s l / 0.5);
-		--danger-border-hover-color: hsl(from red h s l / 1);
+		--contrast-modifier-border: 0.5;
+		--contrast-modifier-border-hover: 1;
 	}
 
 	@media (prefers-reduced-motion: reduce) {

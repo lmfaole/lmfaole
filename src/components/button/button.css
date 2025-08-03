@@ -30,30 +30,24 @@ button {
 	&[data-action="delete"] {
 		color: var(--danger-interactive-text-color);
 		border-color: var(--danger-border-color);
-		background-color: var(--danger-interactive-color);
+		background-color: var(--danger-interactive-bg-color-hover);
 	}
 
 	&:not([disabled], [aria-disabled]) {
 		cursor: pointer;
 
 		&:hover {
-			background-color: var(--hover-color);
+			background-color: var(--interactive-bg-color-hover);
 			border-color: var(--border-hover-color);
 
 			&[data-action="delete"] {
 				border-color: var(--danger-border-hover-color);
-				background-color: var(--danger-hover-color);
+				background-color: var(--danger-interactive-bg-color-hover);
 			}
 		}
 
 		&:active {
 			transition-property: none;
-			background-color: var(--active-color);
-
-			&[data-action="delete"] {
-				border-color: var(--danger-border-hover-color);
-				background-color: var(--danger-active-color);
-			}
 		}
 	}
 
