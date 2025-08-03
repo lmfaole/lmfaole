@@ -36,6 +36,10 @@
 	> div {
 		max-height: 100%;
 		max-width: 100%;
+
+		&[data-restrict="false"] {
+			display: contents;
+		}
 	}
 
 	figcaption {

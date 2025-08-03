@@ -5,4 +5,5 @@ export type ResizerTypes = AllHTMLAttributes<HTMLDivElement> & {
 	children: ReactNode;
 	padding?: boolean;
 	resize?: "both" | "vertical" | "horizontal" | "none";
+	restrict?: boolean;
 };

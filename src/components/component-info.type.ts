@@ -4,6 +4,7 @@ export type ComponentExample = {
 	code: ReactNode;
 	title?: string;
 	description?: string | ReactNode;
+	restrict?: boolean;
 };
 
 export type ComponentInfoTypes = {

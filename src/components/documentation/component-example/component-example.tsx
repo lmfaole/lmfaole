@@ -14,6 +14,7 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 		showTitle = "true",
 		columns = "true",
 		resize = "both",
+		restrict,
 		code,
 		open,
 		...rest
@@ -29,7 +30,7 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 				)}
 			</div>
 			<div className={"showcase"}>
-				<Resizer figcaption={title} resize={resize}>
+				<Resizer figcaption={title} resize={resize} restrict={restrict}>
 					{code}
 				</Resizer>
 				<Details summary={"Markup"} open={open} lang={"en"}>

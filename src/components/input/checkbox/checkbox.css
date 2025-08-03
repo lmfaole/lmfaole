@@ -1,4 +1,22 @@
 label[data-toggle="true"] {
+	display: grid;
+	grid-template-columns: 2.5em 1fr;
+	gap: 1ch;
+	align-items: center;
+
+	&[data-reverse="true"] {
+		grid-template-columns: 1fr 2.5em;
+
+		.toggle {
+			grid-row: 1;
+			grid-column: 2;
+		}
+	}
+
+	&[data-full-width="true"] {
+		width: 100%;
+	}
+
 	input {
 		border: 0;
 		clip: rect(0 0 0 0);
@@ -9,6 +27,7 @@ label[data-toggle="true"] {
 		position: absolute;
 		width: 1px;
 		white-space: nowrap;
+		grid-column: 3;
 	}
 
 	.toggle {
@@ -17,9 +36,8 @@ label[data-toggle="true"] {
 		justify-content: start;
 		background-color: var(--interactive-bg-color);
 		color: HighlightText;
-		width: 2.5em;
 		padding: 4px;
-		border: 1px solid var(--border-color);
+		border: 1px solid ButtonBorder;
 		transition: var(--animation-ease-out) all;
 
 		&,
@@ -64,10 +82,7 @@ label[data-toggle="true"] {
 
 	&:has(input[disabled]) {
 		.toggle {
-			&,
-			svg {
-				border-style: dashed;
-			}
+			border-style: dashed;
 		}
 	}
 

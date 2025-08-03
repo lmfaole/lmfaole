@@ -7,10 +7,22 @@ import "./checkbox.css";
 import { CheckmarkIcon, XMarkIcon } from "@navikt/aksel-icons";
 
 export const Checkbox = (props: CheckboxTypes) => {
-	const { label, checked, name, toggle = false, ...rest } = props;
+	const {
+		label,
+		checked,
+		name,
+		reverse = false,
+		toggle = false,
+		fullWidth = false,
+		...rest
+	} = props;
 
 	return (
-		<label data-toggle={toggle}>
+		<label
+			data-toggle={toggle}
+			data-reverse={reverse}
+			data-full-width={fullWidth}
+		>
 			{toggle && (
 				<span className={"toggle"}>
 					<CheckmarkIcon className={"check"} />
@@ -49,6 +61,15 @@ export const checkboxInfo: ComponentInfoTypes = {
 		{
 			title: "Ikke aktiv switch",
 			code: <Checkbox toggle disabled label={mockFlavors[0]} />,
+		},
+		{
+			title: "Switch reverse",
+			code: <Checkbox toggle reverse label={mockFlavors[0]} />,
+		},
+		{
+			title: "Switch reverse fullwidth",
+			code: <Checkbox toggle reverse fullWidth label={mockFlavors[0]} />,
+			restrict: false,
 		},
 	],
 	spec: "https://html.spec.whatwg.org/#the-input-element",

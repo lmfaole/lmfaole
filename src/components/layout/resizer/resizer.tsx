@@ -9,6 +9,7 @@ export const Resizer = (props: ResizerTypes) => {
 		figcaption,
 		padding = true,
 		resize = "both",
+		restrict = true,
 		...rest
 	} = props;
 	return (
@@ -18,7 +19,7 @@ export const Resizer = (props: ResizerTypes) => {
 			data-padding={padding}
 			data-resize={resize}
 		>
-			<div>{children}</div>
+			<div data-restrict={restrict}>{children}</div>
 			<figcaption>{figcaption}</figcaption>
 		</figure>
 	);
