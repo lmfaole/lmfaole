@@ -11,14 +11,14 @@ export const ComponentItem = (
 
 	return (
 		<li {...rest}>
-			<h2>
+			<h3>
 				<Link
 					to={`/components/$componentName`}
 					params={{ componentName: name }}
 				>
 					{name}
 				</Link>
-			</h2>
+			</h3>
 			{description && <p>{description}</p>}
 		</li>
 	);
