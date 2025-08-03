@@ -1,10 +1,6 @@
-import type { InputHTMLAttributes } from "react";
+import type { GenericTypes } from "../generic";
 
-export type NumberInputTypes = InputHTMLAttributes<
-	Omit<HTMLInputElement, "type" | "pattern" | "inputMode">
-> & {
-	label: string;
-	datalist?: number[];
-	suffix?: string;
+export type NumberInputTypes = Omit<GenericTypes, "inputMode" | "datalist"> & {
 	inputMode?: "decimal" | "numeric" | "tel";
+	datalist?: number[];
 };

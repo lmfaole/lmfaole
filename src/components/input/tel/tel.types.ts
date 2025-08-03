@@ -1,7 +1,8 @@
-import type { InputHTMLAttributes } from "react";
+import type { NumberInputTypes } from "../number";
 
-export type TelInputTypes = InputHTMLAttributes<
-	Omit<HTMLInputElement, "type" | "inputMode">
+export type TelInputTypes = Omit<
+	NumberInputTypes,
+	"type" | "inputMode" | "label"
 > & {
 	label?: string;
 };

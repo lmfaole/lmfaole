@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ComponentItem } from "../../components/documentation/component-item/component-item.tsx";
-import { TextInput } from "../../components/input";
+import { SearchInput } from "../../components/input";
 import componentList from "./components.list.ts";
 
 export const Route = createFileRoute("/components/")({
@@ -33,11 +33,11 @@ function ComponentListPage() {
 		<>
 			<h1>Komponenter</h1>
 			<search>
-				<TextInput
-					label={"Søk"}
-					required={false}
+				<SearchInput
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
+					datalist={filteredComponents.map((com) => com.name)}
+					autoComplete={"on"}
 				/>
 			</search>
 			{filteredComponents.length ? (

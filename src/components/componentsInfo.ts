@@ -4,6 +4,7 @@ import {
 	checkboxInfo,
 	numberInputInfo,
 	radioInfo,
+	searchInputInfo,
 	selectInfo,
 	telInputInfo,
 	textInputInfo,
@@ -20,5 +21,6 @@ const componentList = [
 	telInputInfo,
 	textInputInfo,
 	resizerInfo,
+	searchInputInfo,
 ];
 export default componentList.sort((a, b) => a.name.localeCompare(b.name));

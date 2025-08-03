@@ -1,7 +1,5 @@
-import type { InputHTMLAttributes } from "react";
+import type { GenericTypes } from "../generic";
 
-export type TextTypes = InputHTMLAttributes<Omit<HTMLInputElement, "type">> & {
-	label: string;
+export type TextTypes = Omit<GenericTypes, "datalist"> & {
 	datalist?: string[];
-	suffix?: string;
 };

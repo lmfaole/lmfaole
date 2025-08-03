@@ -11,6 +11,8 @@ export type { NumberInputTypes } from "./number";
 export { NumberInput, numberInputInfo } from "./number";
 export type { RadioGroupTypes, RadioTypes } from "./radio";
 export { Radio, RadioGroup, radioInfo } from "./radio";
+export type { SearchTypes } from "./search";
+export { SearchInput, searchInputInfo } from "./search";
 export type {
 	SelectGroupedTypes,
 	SelectTypes,

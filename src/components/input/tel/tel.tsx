@@ -1,37 +1,30 @@
-import { useId } from "react";
 import type { ComponentInfoTypes } from "../../component-info.type.ts";
+import { GenericInput } from "../generic";
 import type { TelInputTypes } from "./tel.types.ts";
 
 export const TelInput = (props: TelInputTypes) => {
-	const id = useId();
-
 	const {
 		label = "Telefonnummer",
 		autoComplete = "tel-national",
-		required = true,
+		size = 12,
 		...rest
 	} = props;
 
 	return (
-		<>
-			<label htmlFor={id}>{label}</label>
-			<input
-				id={id}
-				name={label}
-				type="tel"
-				inputMode="tel"
-				size={12}
-				required={required}
-				autoComplete={autoComplete}
-				{...rest}
-			/>
-		</>
+		<GenericInput
+			type="tel"
+			inputMode="tel"
+			label={label}
+			size={size}
+			autoComplete={autoComplete}
+			{...rest}
+		/>
 	);
 };
 
 export const telInputInfo: ComponentInfoTypes = {
 	name: "Telefonnummer",
 	category: "skjema",
-	examples: [{ code: <TelInput label={"Hva er nummeret ditt?"} /> }],
+	examples: [{ code: <TelInput required={false} /> }],
 	spec: "https://html.spec.whatwg.org/#the-input-element",
 };
