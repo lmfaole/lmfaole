@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { renderToStaticMarkup } from "react-dom/server";
 import { ComponentExample } from "../../components/documentation/component-example/component-example.tsx";
+import { ComponentItem } from "../../components/documentation/component-item/component-item.tsx";
 import componentsList from "./components.list.ts";
 
 export const Route = createFileRoute("/components/$componentName")({
@@ -15,6 +16,10 @@ function ComponentPage() {
 	if (!component) return <h1>Du må ha kommet feil</h1>;
 
 	const firstExample = component.examples && component.examples[0];
+	const relatedComponents = componentsList.filter(
+		(item) =>
+			item.category === component.category && item.name !== component.name,
+	);
 
 	return (
 		<article>
@@ -50,7 +55,7 @@ function ComponentPage() {
 				</>
 			)}
 			<footer>
-				<h2>Lenker</h2>
+				{/*<h2>Lenker</h2>
 				<dl>
 					<dt>HTML spesifikasjon</dt>
 					{component.spec && (
@@ -63,7 +68,18 @@ function ComponentPage() {
 							<a href={component.docs}>MDN docs</a>
 						</dd>
 					)}
-				</dl>
+				</dl>*/}
+
+				{!!relatedComponents.length && (
+					<>
+						<h2>Relaterte komponenter</h2>
+						<ul className={"list-style-none"}>
+							{relatedComponents.map((item) => (
+								<ComponentItem {...item} />
+							))}
+						</ul>
+					</>
+				)}
 			</footer>
 		</article>
 	);
