@@ -53,6 +53,14 @@ export const buttonInfo: ComponentInfoTypes = {
 			code: <Button disabled value={"Ikke aktiv knapp"} />,
 		},
 		{
+			title: "Sletteknapp",
+			code: <Button action={"delete"} value={"Slett..."} />,
+		},
+		{
+			title: "Ikke aktiv sletteknapp",
+			code: <Button action={"delete"} value={"Slett..."} disabled />,
+		},
+		{
 			title: "Med ikon",
 			code: <Button value={"Lagre"} icon={<DownloadIcon aria-hidden />} />,
 		},
@@ -127,7 +135,7 @@ export const buttonInfo: ComponentInfoTypes = {
 						<Button value={"Send"} icon={<EnvelopeOpenIcon aria-hidden />} />
 					</ButtonGroup>
 					<ButtonGroup>
-						<Button action={"delete"} value={"Slett..."} disabled />
+						<Button action={"delete"} value={"Slett..."} />
 					</ButtonGroup>
 				</ButtonGroup>
 			),

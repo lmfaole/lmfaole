@@ -40,9 +40,7 @@ button {
 			border-color: var(--border-hover-color);
 
 			&[data-action="delete"] {
-				border-color: darkred;
-				color: darkred;
-				background-color: hsl(from darkred h s l / 0.05);
+				background-color: hsl(from darkred h s l / 0.1);
 			}
 		}
 
@@ -65,7 +63,7 @@ button {
 .button-group {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 1ch 2ch;
+	gap: 2ch;
 
 	&:not(:has(.button-group)) {
 		gap: 0;
