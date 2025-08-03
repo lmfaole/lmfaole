@@ -87,6 +87,16 @@ function ComponentListPage() {
 									</ul>
 								</li>
 							)}
+							{groupedComponents.tekst && (
+								<li>
+									<h2>Tekst</h2>
+									<ul>
+										{groupedComponents.tekst.map((component) => (
+											<ComponentItem key={component.name} {...component} />
+										))}
+									</ul>
+								</li>
+							)}
 						</>
 					) : (
 						<>

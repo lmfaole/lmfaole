@@ -8,7 +8,7 @@ export type ComponentExample = {
 
 export type ComponentInfoTypes = {
 	name: string;
-	category: "layout" | "skjema" | "handling" | "dokumentasjon";
+	category: "layout" | "skjema" | "handling" | "dokumentasjon" | "tekst";
 	description?: string;
 	examples?: ComponentExample[];
 	docs?: string;

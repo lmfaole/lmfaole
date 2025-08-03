@@ -5,7 +5,7 @@ details {
 
 	&[open] {
 		summary {
-			background-color: var(--hover-color);
+			background-color: var(--interactive-bg-color-hover);
 		}
 	}
 
@@ -29,7 +29,7 @@ details {
 		}
 
 		&:hover {
-			background-color: var(--hover-color);
+			background-color: var(--interactive-bg-color-hover);
 		}
 	}
 
