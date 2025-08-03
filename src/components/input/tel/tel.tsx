@@ -30,7 +30,7 @@ export const TelInput = (props: TelInputTypes) => {
 };
 
 export const telInputInfo: ComponentInfoTypes = {
-	name: "Telefon input",
+	name: "Telefonnummer",
 	category: "skjemaelementer",
 	examples: [{ code: <TelInput label={"Hva er nummeret ditt?"} /> }],
 	spec: "https://html.spec.whatwg.org/#the-input-element",

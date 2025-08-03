@@ -47,7 +47,7 @@ export const TextInput = (props: TextTypes) => {
 };
 
 export const textInputInfo: ComponentInfoTypes = {
-	name: "Text input",
+	name: "Tekst",
 	category: "skjemaelementer",
 	examples: [{ code: <TextInput label={"Hva er nummeret ditt?"} /> }],
 	spec: "https://html.spec.whatwg.org/#the-input-element",
