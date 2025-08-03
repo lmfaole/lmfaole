@@ -3,6 +3,16 @@
 :root {
 	--border-color: hsl(from currentColor h s l / 0.1);
 
+	--hover-color: hsl(from currentColor h s l / 0.05);
+	--selected-color: hsl(from currentColor h s l / 0.075);
+	--active-color: hsl(from currentColor h s l / 0.1);
+
+	--animation-reveal: opacity 0.25s, display 0.25s allow-discrete;
+
+	@media (prefers-contrast: more) {
+		--border-color: hsl(from currentColor h s l / 0.4);
+	}
+
 	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 	color-scheme: light dark;
 }

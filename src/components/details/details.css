@@ -3,6 +3,12 @@ details {
 	width: 100%;
 	box-sizing: border-box;
 
+	&[open] {
+		summary {
+			background-color: var(--hover-color);
+		}
+	}
+
 	summary {
 		min-height: 44px;
 		display: flex;
@@ -16,7 +22,11 @@ details {
 		}
 
 		&:hover {
-			background-color: hsl(from currentColor h s l / 0.05);
+			background-color: var(--hover-color);
+		}
+
+		&:active {
+			background-color: var(--active-color);
 		}
 	}
 

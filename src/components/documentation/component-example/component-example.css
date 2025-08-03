@@ -3,6 +3,10 @@
 
 	.info {
 		padding-block: 1lh;
+
+		p {
+			font-size: large;
+		}
 	}
 
 	.showcase {
@@ -19,10 +23,11 @@
 		}
 	}
 
-	@container (min-width: 90ch) {
+	@container (min-width: 70ch) {
 		&[data-columns="true"] {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
+			gap: 4ch;
 
 			.showcase > .resizer {
 				max-height: 80dvh;
