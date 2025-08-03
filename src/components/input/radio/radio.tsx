@@ -14,7 +14,7 @@ export const Radio = (props: RadioTypes) => {
 
 export const radioInfo: ComponentInfoTypes = {
 	name: "Radio",
-	category: "skjemaelementer",
+	category: "skjema",
 	examples: [
 		{
 			title: "Enkeltstående",

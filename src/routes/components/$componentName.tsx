@@ -72,10 +72,10 @@ function ComponentPage() {
 
 				{!!relatedComponents.length && (
 					<>
-						<h2>Relaterte komponenter</h2>
+						<h2>Andre {component.category} komponenter</h2>
 						<ul className={"list-style-none"}>
 							{relatedComponents.map((item) => (
-								<ComponentItem {...item} />
+								<ComponentItem key={item.name} {...item} />
 							))}
 						</ul>
 					</>

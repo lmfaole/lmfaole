@@ -14,7 +14,7 @@ export const Checkbox = (props: CheckboxTypes) => {
 
 export const checkboxInfo: ComponentInfoTypes = {
 	name: "Checkbox",
-	category: "skjemaelementer",
+	category: "skjema",
 	examples: [
 		{
 			title: "Enkeltstående",

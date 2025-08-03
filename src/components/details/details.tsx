@@ -15,7 +15,7 @@ export const Details = (props: DetailsTypes) => {
 
 export const detailsInfo: ComponentInfoTypes = {
 	name: "Details",
-	category: "handlinger",
+	category: "handling",
 	examples: [
 		{ code: <Details>Detaljer</Details> },
 		{

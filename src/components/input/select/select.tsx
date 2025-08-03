@@ -25,7 +25,7 @@ export const Select = (props: SelectTypes) => {
 
 export const selectInfo: ComponentInfoTypes = {
 	name: "Select",
-	category: "skjemaelementer",
+	category: "skjema",
 	examples: [
 		{
 			code: <Select label={"Velg smak"} items={mockFlavors} />,

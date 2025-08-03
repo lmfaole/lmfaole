@@ -17,7 +17,7 @@ export const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
 
 export const buttonInfo: ComponentInfoTypes = {
 	name: "Button",
-	category: "handlinger",
+	category: "handling",
 	examples: [
 		{
 			code: <Button>Knapp</Button>,

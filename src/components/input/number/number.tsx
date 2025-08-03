@@ -49,7 +49,7 @@ export const NumberInput = (props: NumberInputTypes) => {
 
 export const numberInputInfo: ComponentInfoTypes = {
 	name: "Tall",
-	category: "skjemaelementer",
+	category: "skjema",
 	examples: [{ code: <NumberInput label={"Skriv et tall"} /> }],
 	spec: "https://html.spec.whatwg.org/#the-input-element",
 };
