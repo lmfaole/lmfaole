@@ -1,7 +1,10 @@
 @import url("./components/input/input.css");
 
 :root {
-	--interactive-color: transparent;
+	--interactive-bg-color: transparent;
+	--interactive-text-color: light-dark(black, white);
+	--danger-interactive-text-color: light-dark(darkred, red);
+
 	--hover-color: hsl(from currentColor h s l / 0.025);
 	--selected-color: hsl(from currentColor h s l / 0.075);
 	--active-color: hsl(from currentColor h s l / 0.1);

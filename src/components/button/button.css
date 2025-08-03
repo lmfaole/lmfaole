@@ -5,7 +5,8 @@ button {
 	font-size: medium;
 	padding-inline: 1.5ch;
 	border: 1px solid var(--border-color);
-	background-color: transparent;
+	background-color: var(--interactive-bg-color);
+	color: var(--interactive-text-color);
 	transition:
 		var(--animation-ease-out) border-color,
 		var(--animation-ease-out) background-color;
@@ -27,6 +28,7 @@ button {
 	}
 
 	&[data-action="delete"] {
+		color: var(--danger-interactive-text-color);
 		border-color: var(--danger-border-color);
 		background-color: var(--danger-interactive-color);
 	}
