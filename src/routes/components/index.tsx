@@ -42,57 +42,58 @@ function ComponentListPage() {
 			</search>
 			{filteredComponents.length ? (
 				<ul className={"list-style-none"}>
-					{groupedComponents && groupedComponents.layout && (
-						<li>
-							<h2>Layout</h2>
-							<ul>
-								{groupedComponents.layout.map((component) => (
-									<ComponentItem key={component.name} {...component} />
-								))}
-							</ul>
-						</li>
-					)}
-
-					{groupedComponents && groupedComponents.handling && (
-						<li>
-							<h2>Handlinger</h2>
-							<ul>
-								{groupedComponents.handling.map((component) => (
-									<ComponentItem key={component.name} {...component} />
-								))}
-							</ul>
-						</li>
-					)}
-
-					{groupedComponents && groupedComponents.skjema && (
-						<li>
-							<h2>Skjemaelementer</h2>
-							<ul>
-								{groupedComponents.skjema.map((component) => (
-									<ComponentItem key={component.name} {...component} />
-								))}
-							</ul>
-						</li>
-					)}
-
-					{groupedComponents && groupedComponents.dokumentasjon && (
-						<li>
-							<h2>Dokumentasjon</h2>
-							<p>En samling med komponenter brukt for å lage denne siden.</p>
-							<ul>
-								{groupedComponents.dokumentasjon.map((component) => (
-									<ComponentItem key={component.name} {...component} />
-								))}
-							</ul>
-						</li>
-					)}
-
-					{!groupedComponents && (
-						<ul className={"list-style-none"}>
+					{groupedComponents ? (
+						<>
+							{groupedComponents.layout && (
+								<li>
+									<h2>Layout</h2>
+									<ul>
+										{groupedComponents.layout.map((component) => (
+											<ComponentItem key={component.name} {...component} />
+										))}
+									</ul>
+								</li>
+							)}
+							{groupedComponents.handling && (
+								<li>
+									<h2>Handlinger</h2>
+									<ul>
+										{groupedComponents.handling.map((component) => (
+											<ComponentItem key={component.name} {...component} />
+										))}
+									</ul>
+								</li>
+							)}
+							{groupedComponents.skjema && (
+								<li>
+									<h2>Skjemaelementer</h2>
+									<ul>
+										{groupedComponents.skjema.map((component) => (
+											<ComponentItem key={component.name} {...component} />
+										))}
+									</ul>
+								</li>
+							)}
+							{groupedComponents.dokumentasjon && (
+								<li>
+									<h2>Dokumentasjon</h2>
+									<p>
+										En samling med komponenter brukt for å lage denne siden.
+									</p>
+									<ul>
+										{groupedComponents.dokumentasjon.map((component) => (
+											<ComponentItem key={component.name} {...component} />
+										))}
+									</ul>
+								</li>
+							)}
+						</>
+					) : (
+						<>
 							{componentList.map((component) => (
 								<ComponentItem key={component.name} {...component} />
 							))}
-						</ul>
+						</>
 					)}
 				</ul>
 			) : (
