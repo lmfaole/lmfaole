@@ -32,7 +32,7 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 				<Resizer figcaption={title} resize={resize}>
 					{code}
 				</Resizer>
-				<Details summary={"Markup"} open={open}>
+				<Details summary={"Markup"} open={open} lang={"en"}>
 					<pre>
 						<code>{renderToStaticMarkup(code)}</code>
 					</pre>
@@ -47,7 +47,7 @@ export const componentExampleInfo: ComponentInfoTypes = {
 	category: "dokumentasjon",
 	examples: [
 		{
-			code: <ComponentExample code={<Button />} />,
+			code: <ComponentExample code={<Button value={"Knapp"} />} />,
 		},
 	],
 };

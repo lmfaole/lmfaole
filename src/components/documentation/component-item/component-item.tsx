@@ -5,13 +5,14 @@ import "./component-item.css";
 import type { AllHTMLAttributes } from "react";
 
 export const ComponentItem = (
-	props: ComponentInfoTypes & AllHTMLAttributes<HTMLLIElement>,
+	props: Pick<ComponentInfoTypes, "name" | "description"> &
+		AllHTMLAttributes<HTMLLIElement>,
 ) => {
 	const { name, description, ...rest } = props;
 
 	return (
 		<li {...rest}>
-			<h3>
+			<h3 lang="en">
 				<Link
 					to={`/components/$componentName`}
 					params={{ componentName: name }}

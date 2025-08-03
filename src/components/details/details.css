@@ -11,7 +11,7 @@ details {
 		padding-inline: 1ch 2ch;
 
 		&::before {
-			content: "↓";
+			content: "↓" / "";
 			margin-inline-end: 1ch;
 		}
 
@@ -22,7 +22,7 @@ details {
 
 	&[open] {
 		summary::before {
-			content: "↑";
+			content: "↑" / "";
 		}
 	}
 
