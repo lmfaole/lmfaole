@@ -12,6 +12,7 @@
 
 	@media (prefers-contrast: more) {
 		--border-color: hsl(from currentColor h s l / 0.4);
+		--border-hover-color: hsl(from currentColor h s l / 1);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
