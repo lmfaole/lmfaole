@@ -27,9 +27,8 @@ button {
 	}
 
 	&[data-action="delete"] {
-		border-color: red;
-		color: red;
-		background-color: hsl(from red h s l / 0.05);
+		border-color: var(--danger-border-color);
+		background-color: var(--danger-interactive-color);
 	}
 
 	&:not([disabled], [aria-disabled]) {
@@ -40,13 +39,19 @@ button {
 			border-color: var(--border-hover-color);
 
 			&[data-action="delete"] {
-				background-color: hsl(from darkred h s l / 0.1);
+				border-color: var(--danger-border-hover-color);
+				background-color: var(--danger-hover-color);
 			}
 		}
 
 		&:active {
 			transition-property: none;
 			background-color: var(--active-color);
+
+			&[data-action="delete"] {
+				border-color: var(--danger-border-hover-color);
+				background-color: var(--danger-active-color);
+			}
 		}
 	}
 
