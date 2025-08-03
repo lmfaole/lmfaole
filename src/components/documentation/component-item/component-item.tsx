@@ -12,7 +12,7 @@ export const ComponentItem = (
 
 	return (
 		<li {...rest}>
-			<h3 lang="en">
+			<h3>
 				<Link
 					to={`/components/$componentName`}
 					params={{ componentName: name }}

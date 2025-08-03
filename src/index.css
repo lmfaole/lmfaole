@@ -1,12 +1,12 @@
 @import url("./components/input/input.css");
 
 :root {
-	--interactive-bg-color: transparent;
 	--interactive-text-color: light-dark(black, white);
 	--danger-interactive-text-color: light-dark(darkred, red);
 
 	--contrast-modifier-bg: 0.025;
 	--contrast-modifier-bg-hover: 0.05;
+	--contrast-modifier-bg-selected: 0.5;
 	--contrast-modifier-border: 0.15;
 	--contrast-modifier-border-hover: 0.4;
 
@@ -15,6 +15,10 @@
 		var(--contrast-modifier-bg)
 	);
 	--interactive-bg-color-hover: hsl(
+		from currentColor h s l /
+		var(--contrast-modifier-bg-hover)
+	);
+	--interactive-bg-color-selected: hsl(
 		from currentColor h s l /
 		var(--contrast-modifier-bg-hover)
 	);

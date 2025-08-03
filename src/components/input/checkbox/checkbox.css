@@ -1,0 +1,77 @@
+label[data-toggle="true"] {
+	input {
+		border: 0;
+		clip: rect(0 0 0 0);
+		height: auto;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+		white-space: nowrap;
+	}
+
+	.toggle {
+		display: flex;
+		align-items: center;
+		justify-content: start;
+		background-color: var(--interactive-bg-color);
+		color: HighlightText;
+		width: 2.5em;
+		padding: 4px;
+		border: 1px solid var(--border-color);
+		transition: var(--animation-ease-out) all;
+
+		&,
+		svg {
+			border-radius: 1lh;
+			box-sizing: border-box;
+			max-height: 1lh;
+		}
+
+		svg {
+			background-color: ButtonFace;
+			color: ButtonText;
+			border: 1px solid var(--border-color);
+		}
+	}
+
+	.check {
+		display: none;
+	}
+
+	&:has(input:checked) {
+		.cross {
+			display: none;
+		}
+
+		.check {
+			display: inline-block;
+		}
+
+		.toggle {
+			justify-content: end;
+			background-color: hsl(from Highlight h s l / 0.1);
+			border-color: Highlight;
+
+			svg {
+				background-color: Highlight;
+				border-color: Highlight;
+				color: HighlightText;
+			}
+		}
+	}
+
+	&:has(input[disabled]) {
+		.toggle {
+			&,
+			svg {
+				border-style: dashed;
+			}
+		}
+	}
+
+	&:not(:has(input[disabled])) {
+		cursor: pointer;
+	}
+}

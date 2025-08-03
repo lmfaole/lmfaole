@@ -44,7 +44,7 @@ export const Button = (props: ButtonTypes) => {
 };
 
 export const buttonInfo: ComponentInfoTypes = {
-	name: "Button",
+	name: "Knapp",
 	category: "handling",
 	examples: [
 		{
