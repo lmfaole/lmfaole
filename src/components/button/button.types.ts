@@ -5,7 +5,7 @@ export type ButtonTypes = Omit<
 	"value"
 > & {
 	value: string | number;
-	icon?: string;
+	icon?: ReactNode;
 	iconPosition?: "start" | "end";
 };
 

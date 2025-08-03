@@ -1,3 +1,10 @@
+import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	ClipboardIcon,
+	DownloadIcon,
+	FaceSmileIcon,
+} from "@navikt/aksel-icons";
 import type { ComponentInfoTypes } from "../component-info.type.ts";
 import type { ButtonTypes } from "./button.types.ts";
 import { ButtonGroup } from "./button-group.tsx";
@@ -23,13 +30,9 @@ export const Button = (props: ButtonTypes) => {
 			data-icon-position={iconPosition}
 			{...rest}
 		>
-			{icon && iconPosition === "start" && (
-				<img src={icon} alt={""} width={24} height={24} />
-			)}
+			{icon && iconPosition === "start" && icon}
 			{value} {accessKey && <b>[{accessKey}]</b>}
-			{icon && iconPosition === "end" && (
-				<img src={icon} alt={""} width={24} height={24} />
-			)}
+			{icon && iconPosition === "end" && icon}
 		</button>
 	);
 };
@@ -39,7 +42,7 @@ export const buttonInfo: ComponentInfoTypes = {
 	category: "handling",
 	examples: [
 		{
-			code: <Button value={"Knapp"} />,
+			code: <Button value={"Knapp"} icon={<FaceSmileIcon />} />,
 		},
 		{
 			title: "Ikke aktiv",
@@ -47,26 +50,14 @@ export const buttonInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Med ikon",
-			code: (
-				<Button
-					value={"Lagre"}
-					icon={
-						"../../../public/aksel-icons/Files and application/CloudDown.svg"
-					}
-				/>
-			),
+			code: <Button value={"Lagre"} icon={<DownloadIcon aria-hidden />} />,
 		},
 		{
 			title: "Ikke aktiv med ikon",
 			description:
 				"For å gjøre det enda klarere at en knapp ikke kan interagerer med fjernes ikonet",
 			code: (
-				<Button
-					value={"Lagre"}
-					icon={
-						"../../../public/aksel-icons/Files and application/CloudDown.svg"
-					}
-				/>
+				<Button disabled value={"Lagre"} icon={<DownloadIcon aria-hidden />} />
 			),
 		},
 		{
@@ -77,7 +68,7 @@ export const buttonInfo: ComponentInfoTypes = {
 			title: "Gruppe med knapper",
 			code: (
 				<ButtonGroup>
-					<Button value={"Kopier"} />
+					<Button value={"Kopier"} icon={<ClipboardIcon />} />
 					<Button value={"Lim inn"} />
 				</ButtonGroup>
 			),
@@ -100,13 +91,10 @@ export const buttonInfo: ComponentInfoTypes = {
 				<ButtonGroup reverse>
 					<Button
 						value={"Forrige"}
-						icon={"../../../public/aksel-icons/Arrows/ArrowLeft.svg"}
+						icon={<ArrowLeftIcon aria-hidden />}
 						iconPosition={"start"}
 					/>
-					<Button
-						value={"Neste"}
-						icon={"../../../public/aksel-icons/Arrows/ArrowRight.svg"}
-					/>
+					<Button value={"Neste"} icon={<ArrowRightIcon aria-hidden />} />
 				</ButtonGroup>
 			),
 		},
@@ -114,13 +102,10 @@ export const buttonInfo: ComponentInfoTypes = {
 			title: "Gruppe med knapper i motsatt rekkefølge i pille",
 			code: (
 				<ButtonGroup reverse pill>
-					<Button
-						value={"Neste"}
-						icon={"../../../public/aksel-icons/Arrows/ArrowRight.svg"}
-					/>
+					<Button value={"Neste"} icon={<ArrowRightIcon aria-hidden />} />
 					<Button
 						value={"Forrige"}
-						icon={"../../../public/aksel-icons/Arrows/ArrowLeft.svg"}
+						icon={<ArrowLeftIcon aria-hidden />}
 						iconPosition={"start"}
 					/>
 				</ButtonGroup>

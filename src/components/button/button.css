@@ -9,11 +9,16 @@ button {
 		var(--animation-ease-out) border-color,
 		var(--animation-ease-out) background-color;
 
-	&:has(img) {
+	&:has(svg) {
 		display: grid;
 		grid-template-columns: 1fr 24px;
 		align-items: center;
 		gap: 6px;
+
+		svg {
+			height: 24px;
+			width: 24px;
+		}
 
 		&[data-icon-position="start"] {
 			grid-template-columns: 24px 1fr;
@@ -21,7 +26,8 @@ button {
 
 		&[disabled] {
 			grid-template-columns: 1fr;
-			img {
+
+			svg {
 				display: none;
 			}
 		}
