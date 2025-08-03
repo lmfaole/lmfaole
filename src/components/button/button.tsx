@@ -3,7 +3,9 @@ import {
 	ArrowRightIcon,
 	ClipboardIcon,
 	DownloadIcon,
+	EnvelopeOpenIcon,
 	FaceSmileIcon,
+	FloppydiskIcon,
 } from "@navikt/aksel-icons";
 import type { ComponentInfoTypes } from "../component-info.type.ts";
 import type { ButtonTypes } from "./button.types.ts";
@@ -14,6 +16,7 @@ import "./button.css";
 export const Button = (props: ButtonTypes) => {
 	const {
 		type = "button",
+		action = "button",
 		accessKey,
 		value,
 		icon,
@@ -28,6 +31,7 @@ export const Button = (props: ButtonTypes) => {
 			value={value}
 			accessKey={accessKey}
 			data-icon-position={iconPosition}
+			data-action={action}
 			{...rest}
 		>
 			{icon && iconPosition === "start" && icon}
@@ -108,6 +112,23 @@ export const buttonInfo: ComponentInfoTypes = {
 						icon={<ArrowLeftIcon aria-hidden />}
 						iconPosition={"start"}
 					/>
+				</ButtonGroup>
+			),
+		},
+		{
+			title: "Gruppe med grupper",
+			code: (
+				<ButtonGroup pill>
+					<ButtonGroup>
+						<Button value={"Lagre"} icon={<FloppydiskIcon aria-hidden />} />
+						<Button value={"Lagre som..."} />
+					</ButtonGroup>
+					<ButtonGroup>
+						<Button value={"Send"} icon={<EnvelopeOpenIcon aria-hidden />} />
+					</ButtonGroup>
+					<ButtonGroup>
+						<Button action={"delete"} value={"Slett..."} disabled />
+					</ButtonGroup>
 				</ButtonGroup>
 			),
 		},

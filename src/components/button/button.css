@@ -1,6 +1,7 @@
 button {
 	min-height: 44px;
 	min-width: 44px;
+	width: max-content;
 	font-size: medium;
 	padding-inline: 1.5ch;
 	border: 1px solid var(--border-color);
@@ -23,14 +24,12 @@ button {
 		&[data-icon-position="start"] {
 			grid-template-columns: 24px 1fr;
 		}
+	}
 
-		&[disabled] {
-			grid-template-columns: 1fr;
-
-			svg {
-				display: none;
-			}
-		}
+	&[data-action="delete"] {
+		border-color: red;
+		color: red;
+		background-color: hsl(from red h s l / 0.05);
 	}
 
 	&:not([disabled], [aria-disabled]) {
@@ -39,6 +38,12 @@ button {
 		&:hover {
 			background-color: var(--hover-color);
 			border-color: var(--border-hover-color);
+
+			&[data-action="delete"] {
+				border-color: darkred;
+				color: darkred;
+				background-color: hsl(from darkred h s l / 0.05);
+			}
 		}
 
 		&:active {
@@ -46,18 +51,36 @@ button {
 			background-color: var(--active-color);
 		}
 	}
+
+	&[disabled] {
+		grid-template-columns: 1fr;
+		opacity: 0.6;
+
+		svg {
+			display: none;
+		}
+	}
 }
 
 .button-group {
 	display: flex;
-	gap: 1ch;
+	flex-wrap: wrap;
+	gap: 1ch 2ch;
 
-	&[data-pill="true"] {
+	&:not(:has(.button-group)) {
 		gap: 0;
 
 		button {
 			margin-inline-end: -1px;
+		}
+	}
 
+	&[data-pill="true"] {
+		&:not(:has(.button-group)) {
+			gap: 0;
+		}
+
+		button {
 			&:first-of-type {
 				border-end-start-radius: 1lh;
 				border-start-start-radius: 1lh;

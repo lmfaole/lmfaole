@@ -7,6 +7,7 @@ export type ButtonTypes = Omit<
 	value: string | number;
 	icon?: ReactNode;
 	iconPosition?: "start" | "end";
+	action?: HTMLButtonElement["type"] | "delete";
 };
 
 export type ButtonGroupTypes = HTMLAttributes<HTMLDivElement> & {
