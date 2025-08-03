@@ -49,18 +49,18 @@ export const checkboxInfo: ComponentInfoTypes = {
 			code: <Checkbox label={mockFlavors[0]} />,
 		},
 		{
+			title: "Switch",
+			code: <Checkbox toggle label={mockFlavors[0]} defaultChecked />,
+		},
+		{
 			title: "Avkrysningsbokser i gruppe",
 			code: (
 				<CheckboxGroup legend={"Checkbox"} items={mockFlavors.slice(0, 4)} />
 			),
 		},
 		{
-			title: "Switch",
-			code: <Checkbox toggle label={mockFlavors[0]} />,
-		},
-		{
 			title: "Ikke aktiv switch",
-			code: <Checkbox toggle disabled label={mockFlavors[0]} />,
+			code: <Checkbox checked={true} toggle disabled label={mockFlavors[0]} />,
 		},
 		{
 			title: "Switch reverse",
