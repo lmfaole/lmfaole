@@ -5,12 +5,12 @@
 	--hover-color: hsl(from currentColor h s l / 0.025);
 	--selected-color: hsl(from currentColor h s l / 0.075);
 	--active-color: hsl(from currentColor h s l / 0.1);
-	--border-color: hsl(from currentColor h s l / 0.1);
-	--border-hover-color: hsl(from currentColor h s l / 0.5);
-
 	--danger-interactive-color: hsl(from red h s l / 0.05);
 	--danger-hover-color: hsl(from red h s l / 0.1);
 	--danger-active-color: hsl(from red h s l / 0.2);
+
+	--border-color: hsl(from currentColor h s l / 0.1);
+	--border-hover-color: hsl(from currentColor h s l / 0.5);
 	--danger-border-color: hsl(from red h s l / 0.3);
 	--danger-border-hover-color: hsl(from red h s l / 0.5);
 
@@ -19,6 +19,8 @@
 	@media (prefers-contrast: more) {
 		--border-color: hsl(from currentColor h s l / 0.4);
 		--border-hover-color: hsl(from currentColor h s l / 1);
+		--danger-border-color: hsl(from red h s l / 0.5);
+		--danger-border-hover-color: hsl(from red h s l / 1);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
