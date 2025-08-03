@@ -2,8 +2,6 @@ import { useId } from "react";
 import type { ComponentInfoTypes } from "../../component-info.type.ts";
 import type { TelInputTypes } from "./tel.types.ts";
 
-import "./tel.css";
-
 export const TelInput = (props: TelInputTypes) => {
 	const id = useId();
 
@@ -22,6 +20,7 @@ export const TelInput = (props: TelInputTypes) => {
 				name={label}
 				type="tel"
 				inputMode="tel"
+				size={12}
 				required={required}
 				autoComplete={autoComplete}
 				{...rest}

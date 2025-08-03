@@ -8,7 +8,7 @@ export const Details = (props: DetailsTypes) => {
 	return (
 		<details {...rest}>
 			{summary && <summary>{summary}</summary>}
-			{children}
+			<div>{children}</div>
 		</details>
 	);
 };

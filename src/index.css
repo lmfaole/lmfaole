@@ -1,6 +1,8 @@
 @import url("./components/input/input.css");
 
 :root {
+	--border-color: hsl(from currentColor h s l / 0.1);
+
 	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 	color-scheme: light dark;
 }
@@ -57,4 +59,13 @@ header,
 main {
 	margin-inline: auto;
 	max-width: 90ch;
+}
+
+article {
+	container-type: inline-size;
+}
+
+img,
+figure {
+	max-width: 100%;
 }

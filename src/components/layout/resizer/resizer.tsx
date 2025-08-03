@@ -18,7 +18,7 @@ export const Resizer = (props: ResizerTypes) => {
 			data-padding={padding}
 			data-resize={resize}
 		>
-			{children}
+			<div>{children}</div>
 			<figcaption>{figcaption}</figcaption>
 		</figure>
 	);
@@ -31,7 +31,12 @@ export const resizerInfo: ComponentInfoTypes = {
 		{
 			code: (
 				<Resizer figcaption={"En caption"}>
-					<p>Velkommen</p>
+					<img
+						src={
+							"https://images.unsplash.com/photo-1747767296029-c5116a707614?q=80&w=4138&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+						}
+						alt={"Eksempelbilde"}
+					/>
 				</Resizer>
 			),
 		},
@@ -40,7 +45,12 @@ export const resizerInfo: ComponentInfoTypes = {
 			title: "Uten padding",
 			code: (
 				<Resizer figcaption={"En caption"} padding={false}>
-					<p>Velkommen</p>
+					<img
+						src={
+							"https://images.unsplash.com/photo-1747767296029-c5116a707614?q=80&w=4138&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+						}
+						alt={"Eksempelbilde"}
+					/>
 				</Resizer>
 			),
 		},

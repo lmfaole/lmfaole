@@ -25,11 +25,6 @@ export const buttonInfo: ComponentInfoTypes = {
 		{
 			title: "Ikke aktiv",
 			code: <Button disabled>Knapp</Button>,
-			description: (
-				<p>
-					ee<strong>eeee</strong>
-				</p>
-			),
 		},
 	],
 	description:

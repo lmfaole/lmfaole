@@ -1,3 +1,32 @@
 .component-example {
 	margin-block-end: 2lh;
+
+	.info {
+		padding-block: 1lh;
+	}
+
+	.showcase {
+		> * {
+			width: 100%;
+		}
+
+		> details {
+			border-block-start: 0;
+		}
+
+		> .resizer {
+			min-height: 33dvh;
+		}
+	}
+
+	@container (min-width: 90ch) {
+		&[data-columns="true"] {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+
+			.showcase > .resizer {
+				max-height: 80dvh;
+			}
+		}
+	}
 }

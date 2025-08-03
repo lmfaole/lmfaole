@@ -10,7 +10,7 @@ export const TextInput = (props: TextTypes) => {
 		datalist,
 		suffix,
 		list,
-		autoComplete = "on",
+		autoComplete,
 		required = true,
 		...rest
 	} = props;

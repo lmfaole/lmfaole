@@ -1,23 +1,22 @@
 details {
-	/*border: 1px solid Highlight;
-	padding: 1lh 1ch 0.5lh 1ch;
+	border: 1px solid var(--border-color);
+	width: 100%;
+	box-sizing: border-box;
 
 	summary {
-		margin: -1lh -1ch 0 -1ch;
 		min-height: 44px;
 		display: flex;
 		align-items: center;
 		cursor: pointer;
-		padding-inline: 1ch;
+		padding-inline: 1ch 2ch;
 
 		&::before {
 			content: "↓";
 			margin-inline-end: 1ch;
 		}
 
-		+ * {
-			display: block;
-			margin-block-start: 1.5lh;
+		&:hover {
+			background-color: hsl(from currentColor h s l / 0.05);
 		}
 	}
 
@@ -25,5 +24,9 @@ details {
 		summary::before {
 			content: "↑";
 		}
-	}*/
+	}
+
+	> div {
+		padding: 1ex;
+	}
 }
