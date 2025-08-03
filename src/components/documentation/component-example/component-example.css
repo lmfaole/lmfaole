@@ -10,12 +10,19 @@
 	}
 
 	.showcase {
+		max-width: 100%;
+
 		> * {
 			width: 100%;
 		}
 
 		> details {
 			margin-block-start: -1px;
+
+			div {
+				max-height: 10lh;
+				overflow: scroll;
+			}
 		}
 
 		> .resizer {
