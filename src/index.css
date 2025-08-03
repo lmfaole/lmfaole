@@ -2,15 +2,20 @@
 
 :root {
 	--border-color: hsl(from currentColor h s l / 0.1);
+	--border-hover-color: hsl(from currentColor h s l / 0.5);
 
-	--hover-color: hsl(from currentColor h s l / 0.05);
+	--hover-color: hsl(from currentColor h s l / 0.025);
 	--selected-color: hsl(from currentColor h s l / 0.075);
 	--active-color: hsl(from currentColor h s l / 0.1);
 
-	--animation-reveal: opacity 0.25s, display 0.25s allow-discrete;
+	--animation-ease-out: 0.2s ease-out;
 
 	@media (prefers-contrast: more) {
 		--border-color: hsl(from currentColor h s l / 0.4);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		--animation-ease-out: 0;
 	}
 
 	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

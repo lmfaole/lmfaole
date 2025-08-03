@@ -5,12 +5,26 @@ button {
 	padding-inline: 1.5ch;
 	border: 1px solid var(--border-color);
 	background-color: transparent;
+	transition:
+		var(--animation-ease-out) border-color,
+		var(--animation-ease-out) background-color;
 
 	&:has(img) {
 		display: grid;
 		grid-template-columns: 1fr 24px;
 		align-items: center;
 		gap: 6px;
+
+		&[data-icon-position="start"] {
+			grid-template-columns: 24px 1fr;
+		}
+
+		&[disabled] {
+			grid-template-columns: 1fr;
+			img {
+				display: none;
+			}
+		}
 	}
 
 	&:not([disabled], [aria-disabled]) {
@@ -18,9 +32,11 @@ button {
 
 		&:hover {
 			background-color: var(--hover-color);
+			border-color: var(--border-hover-color);
 		}
 
 		&:active {
+			transition-property: none;
 			background-color: var(--active-color);
 		}
 	}

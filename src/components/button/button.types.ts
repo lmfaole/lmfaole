@@ -6,6 +6,7 @@ export type ButtonTypes = Omit<
 > & {
 	value: string | number;
 	icon?: string;
+	iconPosition?: "start" | "end";
 };
 
 export type ButtonGroupTypes = HTMLAttributes<HTMLDivElement> & {

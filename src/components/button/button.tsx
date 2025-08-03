@@ -1,3 +1,5 @@
+import * as previousIcon from "../../aksel-icons/Arrows/ArrowLeft.svg";
+import * as nextIcon from "../../aksel-icons/Arrows/ArrowRight.svg";
 import * as downloadIcon from "../../aksel-icons/Files and application/CloudDown.svg";
 
 import type { ComponentInfoTypes } from "../component-info.type.ts";
@@ -7,7 +9,14 @@ import { ButtonGroup } from "./button-group.tsx";
 import "./button.css";
 
 export const Button = (props: ButtonTypes) => {
-	const { type = "button", accessKey, value, icon, ...rest } = props;
+	const {
+		type = "button",
+		accessKey,
+		value,
+		icon,
+		iconPosition = "end",
+		...rest
+	} = props;
 
 	return (
 		<button
@@ -15,10 +24,16 @@ export const Button = (props: ButtonTypes) => {
 			title={props.title ? props.title : value.toString()}
 			value={value}
 			accessKey={accessKey}
+			data-icon-position={iconPosition}
 			{...rest}
 		>
+			{icon && iconPosition === "start" && (
+				<img src={icon} alt={""} width={24} height={24} />
+			)}
 			{value} {accessKey && <b>[{accessKey}]</b>}
-			{icon && <img src={icon} alt={""} width={24} height={24} />}
+			{icon && iconPosition === "end" && (
+				<img src={icon} alt={""} width={24} height={24} />
+			)}
 		</button>
 	);
 };
@@ -36,6 +51,12 @@ export const buttonInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Med ikon",
+			code: <Button value={"Lagre"} icon={downloadIcon.default} />,
+		},
+		{
+			title: "Ikke aktiv med ikon",
+			description:
+				"For å gjøre det enda klarere at en knapp ikke kan interagerer med fjernes ikonet",
 			code: <Button value={"Lagre"} icon={downloadIcon.default} />,
 		},
 		{
@@ -67,8 +88,12 @@ export const buttonInfo: ComponentInfoTypes = {
 				" hverandre. Bør ikke brukes ofte.",
 			code: (
 				<ButtonGroup reverse>
-					<Button value={"Neste"} />
-					<Button value={"Forrige"} />
+					<Button
+						value={"Forrige"}
+						icon={previousIcon.default}
+						iconPosition={"start"}
+					/>
+					<Button value={"Neste"} icon={nextIcon.default} />
 				</ButtonGroup>
 			),
 		},
@@ -76,8 +101,12 @@ export const buttonInfo: ComponentInfoTypes = {
 			title: "Gruppe med knapper i motsatt rekkefølge i pille",
 			code: (
 				<ButtonGroup reverse pill>
-					<Button value={"Neste"} />
-					<Button value={"Forrige"} disabled />
+					<Button value={"Neste"} icon={nextIcon.default} />
+					<Button
+						value={"Forrige"}
+						icon={previousIcon.default}
+						iconPosition={"start"}
+					/>
 				</ButtonGroup>
 			),
 		},

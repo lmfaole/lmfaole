@@ -9,12 +9,19 @@ details {
 		}
 	}
 
+	&:has(summary:hover) {
+		border-color: var(--border-hover-color);
+	}
+
 	summary {
 		min-height: 44px;
 		display: flex;
 		align-items: center;
 		cursor: pointer;
 		padding-inline: 1ch 2ch;
+		transition:
+			var(--animation-ease-out) border-color,
+			var(--animation-ease-out) background-color;
 
 		&::before {
 			content: "↓" / "";
@@ -23,10 +30,6 @@ details {
 
 		&:hover {
 			background-color: var(--hover-color);
-		}
-
-		&:active {
-			background-color: var(--active-color);
 		}
 	}
 
