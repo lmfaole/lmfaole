@@ -3,4 +3,59 @@ button {
 	min-width: 44px;
 	font-size: medium;
 	padding-inline: 1.5ch;
+	border: 1px solid var(--border-color);
+	background-color: transparent;
+
+	&:not([disabled], [aria-disabled]) {
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--hover-color);
+		}
+
+		&:active {
+			background-color: var(--active-color);
+		}
+	}
+}
+
+.button-group {
+	display: flex;
+	gap: 1ch;
+
+	&[data-pill="true"] {
+		gap: 0;
+
+		button {
+			margin-inline-end: -1px;
+
+			&:first-of-type {
+				border-end-start-radius: 1lh;
+				border-start-start-radius: 1lh;
+			}
+
+			&:last-of-type {
+				border-end-end-radius: 1lh;
+				border-start-end-radius: 1lh;
+			}
+		}
+
+		&[data-reverse] {
+			flex-direction: row-reverse;
+
+			button {
+				border-radius: 0;
+
+				&:first-of-type {
+					border-end-end-radius: 1lh;
+					border-start-end-radius: 1lh;
+				}
+
+				&:last-of-type {
+					border-end-start-radius: 1lh;
+					border-start-start-radius: 1lh;
+				}
+			}
+		}
+	}
 }

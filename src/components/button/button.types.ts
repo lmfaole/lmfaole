@@ -1,8 +1,14 @@
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 
 export type ButtonTypes = Omit<
 	ButtonHTMLAttributes<HTMLButtonElement>,
 	"value"
 > & {
 	value: string | number;
+};
+
+export type ButtonGroupTypes = HTMLAttributes<HTMLDivElement> & {
+	children: ReactNode;
+	reverse?: boolean;
+	pill?: boolean;
 };
