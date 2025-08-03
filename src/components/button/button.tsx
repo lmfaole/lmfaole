@@ -1,17 +1,21 @@
-import type { ButtonHTMLAttributes } from "react";
 import type { ComponentInfoTypes } from "../component-info.type.ts";
 
 import "./button.css";
+import type { ButtonTypes } from "./button.types.ts";
 
-export const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
-	const { type = "button", name, ...rest } = props;
+export const Button = (props: ButtonTypes) => {
+	const { type = "button", accessKey, value, ...rest } = props;
+
 	return (
 		<button
 			type={type}
-			name={name}
-			title={props.title ? props.title : name}
+			title={props.title ? props.title : value.toString()}
+			value={value}
+			accessKey={accessKey}
 			{...rest}
-		/>
+		>
+			{value} {accessKey && <b>[{accessKey}]</b>}
+		</button>
 	);
 };
 
@@ -20,11 +24,15 @@ export const buttonInfo: ComponentInfoTypes = {
 	category: "handling",
 	examples: [
 		{
-			code: <Button>Knapp</Button>,
+			code: <Button value={"Knapp"} />,
 		},
 		{
 			title: "Ikke aktiv",
-			code: <Button disabled>Knapp</Button>,
+			code: <Button disabled value={"Ikke aktiv knapp"} />,
+		},
+		{
+			title: "Med snarvei",
+			code: <Button accessKey={"S"} value={"Knapp med snarvei"} />,
 		},
 	],
 	description:
