@@ -35,7 +35,9 @@ export const Button = (props: ButtonTypes) => {
 			{...rest}
 		>
 			{icon && iconPosition === "start" && icon}
-			{value} {accessKey && <b>[{accessKey}]</b>}
+			<span>
+				{value} {accessKey && <b>[{accessKey}]</b>}
+			</span>
 			{icon && iconPosition === "end" && icon}
 		</button>
 	);
@@ -62,7 +64,13 @@ export const buttonInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Med ikon",
-			code: <Button value={"Lagre"} icon={<DownloadIcon aria-hidden />} />,
+			code: (
+				<Button
+					value={"Lagre"}
+					icon={<DownloadIcon aria-hidden />}
+					accessKey={"W"}
+				/>
+			),
 		},
 		{
 			title: "Ikke aktiv med ikon",
