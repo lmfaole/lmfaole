@@ -5,6 +5,7 @@ export type ButtonTypes = Omit<
 	"value"
 > & {
 	value: string | number;
+	icon?: string;
 };
 
 export type ButtonGroupTypes = HTMLAttributes<HTMLDivElement> & {

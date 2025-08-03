@@ -1,11 +1,13 @@
+import * as downloadIcon from "../../aksel-icons/Files and application/CloudDown.svg";
+
 import type { ComponentInfoTypes } from "../component-info.type.ts";
 import type { ButtonTypes } from "./button.types.ts";
-
-import "./button.css";
 import { ButtonGroup } from "./button-group.tsx";
 
+import "./button.css";
+
 export const Button = (props: ButtonTypes) => {
-	const { type = "button", accessKey, value, ...rest } = props;
+	const { type = "button", accessKey, value, icon, ...rest } = props;
 
 	return (
 		<button
@@ -16,6 +18,7 @@ export const Button = (props: ButtonTypes) => {
 			{...rest}
 		>
 			{value} {accessKey && <b>[{accessKey}]</b>}
+			{icon && <img src={icon} alt={""} width={24} height={24} />}
 		</button>
 	);
 };
@@ -30,6 +33,10 @@ export const buttonInfo: ComponentInfoTypes = {
 		{
 			title: "Ikke aktiv",
 			code: <Button disabled value={"Ikke aktiv knapp"} />,
+		},
+		{
+			title: "Med ikon",
+			code: <Button value={"Lagre"} icon={downloadIcon.default} />,
 		},
 		{
 			title: "Med snarvei",

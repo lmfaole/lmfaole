@@ -6,6 +6,13 @@ button {
 	border: 1px solid var(--border-color);
 	background-color: transparent;
 
+	&:has(img) {
+		display: grid;
+		grid-template-columns: 1fr 24px;
+		align-items: center;
+		gap: 6px;
+	}
+
 	&:not([disabled], [aria-disabled]) {
 		cursor: pointer;
 
