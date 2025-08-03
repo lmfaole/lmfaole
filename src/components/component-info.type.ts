@@ -10,7 +10,7 @@ export type ComponentInfoTypes = {
 	name: string;
 	category: "layout" | "skjemaelementer" | "handlinger" | "dokumentasjon";
 	description?: string;
-	examples: ComponentExample[];
+	examples?: ComponentExample[];
 	docs?: string;
 	spec?: string;
 	furtherReading?: {

@@ -42,7 +42,7 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 };
 
 export const componentExampleInfo: ComponentInfoTypes = {
-	name: "Component example",
+	name: "Component Example",
 	category: "dokumentasjon",
 	examples: [
 		{

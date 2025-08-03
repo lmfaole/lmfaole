@@ -69,3 +69,12 @@ img,
 figure {
 	max-width: 100%;
 }
+
+ul.list-style-none {
+	&,
+	ul {
+		list-style: none;
+		padding-inline-start: 0;
+		margin-block-end: 3lh;
+	}
+}

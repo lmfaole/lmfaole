@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Fragment } from "react";
 import { ComponentExample } from "../../components/documentation/component-example/component-example.tsx";
 import componentsList from "./components.list.ts";
 
 export const Route = createFileRoute("/components/$componentName")({
-	component: PostComponent,
+	component: ComponentPage,
 });
 
-function PostComponent() {
+function ComponentPage() {
 	const { componentName } = Route.useParams();
 
 	const component = componentsList.find((c) => c.name === componentName);
@@ -22,19 +23,26 @@ function PostComponent() {
 					<dd>{component.category}</dd>
 				</dl>
 				{component.description && <p>{component.description}</p>}
-				<ComponentExample
-					title={component.examples[0].title}
-					code={component.examples[0].code}
-					showTitle={false}
-					columns={false}
-				/>
+				{component.examples && (
+					<ComponentExample
+						title={component.examples[0].title}
+						code={component.examples[0].code}
+						showTitle={false}
+						columns={false}
+					/>
+				)}
 			</header>
 
-			{component.examples.length >= 2 && (
+			{component.examples && component.examples.length >= 2 && (
 				<>
 					<h2>Eksempler</h2>
 					{component.examples.slice(1).map((example) => (
-						<ComponentExample resize={"none"} columns={true} {...example} />
+						<ComponentExample
+							key={example.title}
+							resize={"none"}
+							columns={true}
+							{...example}
+						/>
 					))}
 				</>
 			)}
