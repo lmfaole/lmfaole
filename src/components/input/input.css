@@ -1,66 +1,68 @@
-label {
-	display: block;
+@layer base {
+	label {
+		display: block;
 
-	&:has(input) {
-		display: flex;
-		min-height: 44px;
-		align-items: center;
-		gap: 0.5ch;
-	}
+		&:has(input) {
+			display: flex;
+			min-height: 44px;
+			align-items: center;
+			gap: 0.5ch;
+		}
 
-	&:has(+ input[required]),
-	&:has(+ select[required]) {
-		&::after {
-			content: " (påkrevd)";
+		&:has(+ input[required]),
+		&:has(+ select[required]) {
+			&::after {
+				content: " (påkrevd)";
+			}
+		}
+
+		+ input {
+			margin-block-start: 0.25lh;
+			margin-block-end: 1lh;
+		}
+
+		&:has(input[disabled]),
+		&:has(+ input[disabled]) {
+			cursor: not-allowed;
+			opacity: 0.6;
 		}
 	}
 
-	+ input {
-		margin-block-start: 0.25lh;
-		margin-block-end: 1lh;
-	}
-
-	&:has(input[disabled]),
-	&:has(+ input[disabled]) {
-		cursor: not-allowed;
-		opacity: 0.6;
-	}
-}
-
-input {
-	font-size: medium;
-	min-height: 44px;
-	max-width: 100%;
-	padding-inline: 1ch;
-	border: 1px solid var(--border-color);
-	box-sizing: border-box;
-
-	+ span.suffix {
-		margin-inline-start: 1ch;
-	}
-
-	&[disabled] {
-		cursor: not-allowed;
+	input {
+		font-size: medium;
+		min-height: 44px;
+		max-width: 100%;
+		padding-inline: 1ch;
+		border: 1px solid var(--border-color);
+		box-sizing: border-box;
 
 		+ span.suffix {
-			opacity: 0.6;
+			margin-inline-start: 1ch;
+		}
+
+		&[disabled] {
 			cursor: not-allowed;
+
+			+ span.suffix {
+				opacity: 0.6;
+				cursor: not-allowed;
+			}
 		}
 	}
-}
 
-fieldset {
-	&:has(input[required]) {
-		label::after {
-			display: none;
-		}
+	fieldset {
+		&:has(input[required]) {
+			label::after {
+				display: none;
+			}
 
-		legend::after {
-			content: " (påkrevd)";
+			legend::after {
+				content: " (påkrevd)";
+			}
 		}
 	}
-}
 
-legend {
-	margin-block-end: 0.21lh;
+	legend {
+		margin-block-end: 0.21lh;
+	}
 }

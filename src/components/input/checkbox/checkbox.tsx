@@ -63,7 +63,7 @@ export const checkboxInfo: ComponentInfoTypes = {
 		{
 			title: "Avkrysningsbokser i gruppe",
 			children: (
-				<CheckboxGroup legend={"Filtrer smaker"} pill>
+				<CheckboxGroup legend={"Filtrer smaker"}>
 					{mockFlavors.map((flavor) => (
 						<Checkbox label={flavor} />
 					))}

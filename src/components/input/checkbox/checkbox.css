@@ -1,5 +1,7 @@
-label:not(input[data-switch]) {
-	.switch {
-		display: none;
+@layer base {
+	label:not(input[data-switch]) {
+		.switch {
+			display: none;
+		}
 	}
 }
