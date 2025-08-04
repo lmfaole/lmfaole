@@ -5,7 +5,15 @@ import type { GenericTypes } from "./generic.types.ts";
 export const GenericInput = (props: GenericTypes) => {
 	const id = useId();
 
-	const { label, datalist, suffix, name, required = true, ...rest } = props;
+	const {
+		label,
+		datalist,
+		suffix,
+		name,
+		size = 50,
+		required = true,
+		...rest
+	} = props;
 
 	const nameAttribute = name ? name : label;
 
@@ -15,6 +23,7 @@ export const GenericInput = (props: GenericTypes) => {
 			<input
 				{...rest}
 				id={id}
+				size={size}
 				name={nameAttribute}
 				required={required}
 				list={datalist && `${label}-${id}`}

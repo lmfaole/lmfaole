@@ -30,8 +30,10 @@ label {
 input {
 	font-size: medium;
 	min-height: 44px;
+	max-width: 100%;
 	padding-inline: 1ch;
 	border: 1px solid var(--border-color);
+	box-sizing: border-box;
 
 	+ span.suffix {
 		margin-inline-start: 1ch;

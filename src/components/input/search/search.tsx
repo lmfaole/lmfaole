@@ -8,7 +8,7 @@ export const SearchInput = (props: SearchTypes) => {
 		placeholder = "Søk",
 		required = false,
 		name = "q",
-		size = 30,
+		size = 999,
 		...rest
 	} = props;
 

@@ -4,10 +4,11 @@ import type { RadioTypes } from "./radio.types.ts";
 import { RadioGroup } from "./radio-group.tsx";
 
 export const Radio = (props: RadioTypes) => {
+	const { label, name, ...rest } = props;
 	return (
 		<label>
-			<input type="radio" {...props} />
-			{props.label}
+			<input type="radio" name={name ? name : label} {...rest} />
+			{label}
 		</label>
 	);
 };
