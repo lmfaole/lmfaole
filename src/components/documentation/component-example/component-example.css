@@ -11,6 +11,8 @@
 
 	.showcase {
 		max-width: 100%;
+		display: grid;
+		grid-template-rows: 1fr auto;
 
 		> * {
 			width: 100%;
@@ -26,7 +28,7 @@
 		}
 
 		> .resizer {
-			min-height: 33svh;
+			height: 100%;
 		}
 	}
 
