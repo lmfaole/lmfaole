@@ -1,9 +1,7 @@
 .component-example {
-	margin-block-end: 2lh;
+	margin-block-end: 4lh;
 
 	.info {
-		padding-block: 1lh;
-
 		p {
 			font-size: large;
 		}
@@ -34,9 +32,15 @@
 
 	@container (min-width: 70ch) {
 		&[data-columns="true"] {
+			border-block-end: 1px solid var(--border-color);
+			padding-block-end: 4lh;
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
 			gap: 4ch;
+
+			.info {
+				padding-block: 1lh;
+			}
 
 			.showcase > .resizer {
 				max-height: 80svh;

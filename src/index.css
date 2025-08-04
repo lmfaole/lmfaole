@@ -8,6 +8,7 @@
 	--contrast-modifier-bg-hover: 0.05;
 	--contrast-modifier-bg-selected: 0.5;
 	--contrast-modifier-border: 0.15;
+	--contrast-modifier-border-subtle: 0.05;
 	--contrast-modifier-border-hover: 0.4;
 
 	--interactive-bg-color: hsl(
@@ -33,6 +34,10 @@
 	);
 
 	--border-color: hsl(from currentColor h s l / var(--contrast-modifier-border));
+	--border-color-subtle: hsl(
+		from currentColor h s l /
+		var(--contrast-modifier-border-subtle)
+	);
 	--border-hover-color: hsl(
 		from currentColor h s l /
 		var(--contrast-modifier-border-hover)
@@ -47,10 +52,12 @@
 
 	@media (prefers-color-scheme: dark) {
 		--contrast-modifier-border: 0.2;
+		--contrast-modifier-border-subtle: 0.1;
 	}
 
 	@media (prefers-contrast: more) {
 		--contrast-modifier-border: 0.5;
+		--contrast-modifier-border-subtle: 0.5;
 		--contrast-modifier-border-hover: 1;
 	}
 
