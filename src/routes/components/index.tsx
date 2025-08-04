@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ComponentItem } from "../../components/documentation/component-item/component-item.tsx";
-import { SearchInput } from "../../components/input";
-import componentList from "./components.list.ts";
+import { ComponentItem, componentList, SearchInput } from "../../components";
 
 export const Route = createFileRoute("/components/")({
 	component: ComponentListPage,

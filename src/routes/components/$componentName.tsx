@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { renderToStaticMarkup } from "react-dom/server";
-import { ComponentExample } from "../../components/documentation/component-example/component-example.tsx";
-import { ComponentItem } from "../../components/documentation/component-item/component-item.tsx";
-import componentsList from "./components.list.ts";
+import {
+	ComponentExample,
+	ComponentItem,
+	componentList,
+} from "../../components";
 
 export const Route = createFileRoute("/components/$componentName")({
 	component: ComponentPage,
@@ -11,12 +13,11 @@ export const Route = createFileRoute("/components/$componentName")({
 function ComponentPage() {
 	const { componentName } = Route.useParams();
 
-	const component = componentsList.find((c) => c.name === componentName);
+	const component = componentList.find((c) => c.name === componentName);
 
 	if (!component) return <h1>Du må ha kommet feil</h1>;
 
-	const firstExample = component.examples && component.examples[0];
-	const relatedComponents = componentsList.filter(
+	const relatedComponents = componentList.filter(
 		(item) =>
 			item.category === component.category && item.name !== component.name,
 	);
@@ -30,15 +31,14 @@ function ComponentPage() {
 					<dd>{component.category}</dd>
 				</dl>
 				{component.description && <p>{component.description}</p>}
-				{firstExample && firstExample.code && (
-					<ComponentExample
-						title={firstExample.title}
-						code={firstExample.code}
-						showTitle={false}
-						columns={false}
-						open={renderToStaticMarkup(firstExample?.code).length <= 250}
-					/>
-				)}
+				<ComponentExample
+					title={component.name}
+					showTitle={false}
+					columns={false}
+					open={renderToStaticMarkup(component.base).length <= 250}
+				>
+					{component.base}
+				</ComponentExample>
 			</header>
 
 			{component.examples && component.examples.length >= 2 && (

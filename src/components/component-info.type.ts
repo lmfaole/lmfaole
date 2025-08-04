@@ -1,17 +1,12 @@
 import type { ReactNode } from "react";
-
-export type ComponentExample = {
-	code: ReactNode;
-	title?: string;
-	description?: string | ReactNode;
-	restrict?: boolean;
-};
+import type { ComponentExampleTypes } from "./documentation/component-example/component-example.types.ts";
 
 export type ComponentInfoTypes = {
 	name: string;
 	category: "layout" | "skjema" | "handling" | "dokumentasjon" | "tekst";
 	description?: string;
-	examples?: ComponentExample[];
+	base: ReactNode;
+	examples?: ComponentExampleTypes[];
 	docs?: string;
 	spec?: string;
 	furtherReading?: {

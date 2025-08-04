@@ -16,11 +16,11 @@ export const Details = (props: DetailsTypes) => {
 export const detailsInfo: ComponentInfoTypes = {
 	name: "Detaljer",
 	category: "handling",
+	base: <Details>Detaljer</Details>,
 	examples: [
-		{ code: <Details>Detaljer</Details> },
 		{
 			title: "Liste",
-			code: (
+			children: (
 				<>
 					<Details summary={"Detaljer 1"}>Detaljer</Details>
 					<Details summary={"Detaljer 2"}>Detaljer</Details>
@@ -36,7 +36,7 @@ export const detailsInfo: ComponentInfoTypes = {
 					at kun én er åpen om gangen.
 				</p>
 			),
-			code: (
+			children: (
 				<>
 					<Details summary={"Detaljer 1"} name={"detaljer"}>
 						Detaljer
@@ -52,7 +52,7 @@ export const detailsInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Åpen ved sideinnlasting",
-			code: (
+			children: (
 				<>
 					<Details summary={"Detaljer 1"} name={"detaljer"} open>
 						Detaljer

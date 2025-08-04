@@ -49,25 +49,23 @@ export const Button = (props: ButtonTypes) => {
 export const buttonInfo: ComponentInfoTypes = {
 	name: "Knapp",
 	category: "handling",
+	base: <Button value={"Knapp"} icon={<FaceSmileIcon />} />,
 	examples: [
 		{
-			code: <Button value={"Knapp"} icon={<FaceSmileIcon />} />,
-		},
-		{
 			title: "Ikke aktiv",
-			code: <Button disabled value={"Ikke aktiv knapp"} />,
+			children: <Button disabled value={"Ikke aktiv knapp"} />,
 		},
 		{
 			title: "Sletteknapp",
-			code: <Button action={"delete"} value={"Slett..."} />,
+			children: <Button action={"delete"} value={"Slett..."} />,
 		},
 		{
 			title: "Ikke aktiv sletteknapp",
-			code: <Button action={"delete"} value={"Slett..."} disabled />,
+			children: <Button action={"delete"} value={"Slett..."} disabled />,
 		},
 		{
 			title: "Med ikon",
-			code: (
+			children: (
 				<Button
 					value={"Lagre"}
 					icon={<DownloadIcon aria-hidden />}
@@ -79,17 +77,17 @@ export const buttonInfo: ComponentInfoTypes = {
 			title: "Ikke aktiv med ikon",
 			description:
 				"For å gjøre det enda klarere at en knapp ikke kan interagerer med fjernes ikonet",
-			code: (
+			children: (
 				<Button disabled value={"Lagre"} icon={<DownloadIcon aria-hidden />} />
 			),
 		},
 		{
 			title: "Med snarvei",
-			code: <Button accessKey={"S"} value={"Knapp med snarvei"} />,
+			children: <Button accessKey={"S"} value={"Knapp med snarvei"} />,
 		},
 		{
 			title: "Gruppe med knapper",
-			code: (
+			children: (
 				<ButtonGroup>
 					<Button value={"Kopier"} icon={<ClipboardIcon />} />
 					<Button value={"Lim inn"} />
@@ -98,7 +96,7 @@ export const buttonInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Gruppe med knapper i pille",
-			code: (
+			children: (
 				<ButtonGroup pill>
 					<Button value={"Kopier"} />
 					<Button value={"Lim inn"} />
@@ -110,7 +108,7 @@ export const buttonInfo: ComponentInfoTypes = {
 			description:
 				"Brukes i tilfeller der rekkefølgen i DOM-en og den visuelle rekkefølgen virker mot" +
 				" hverandre. Bør ikke brukes ofte.",
-			code: (
+			children: (
 				<ButtonGroup reverse>
 					<Button
 						value={"Forrige"}
@@ -123,7 +121,7 @@ export const buttonInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Gruppe med knapper i motsatt rekkefølge i pille",
-			code: (
+			children: (
 				<ButtonGroup reverse pill>
 					<Button value={"Neste"} icon={<ArrowRightIcon aria-hidden />} />
 					<Button
@@ -136,7 +134,7 @@ export const buttonInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Gruppe med grupper",
-			code: (
+			children: (
 				<ButtonGroup pill>
 					<ButtonGroup>
 						<Button value={"Lagre"} icon={<FloppydiskIcon aria-hidden />} />

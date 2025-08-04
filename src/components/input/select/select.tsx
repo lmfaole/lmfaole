@@ -26,22 +26,22 @@ export const Select = (props: SelectTypes) => {
 export const selectInfo: ComponentInfoTypes = {
 	name: "Select",
 	category: "skjema",
+	base: <Select label={"Velg smak"} items={mockFlavors} />,
 	examples: [
 		{
-			code: <Select label={"Velg smak"} items={mockFlavors} />,
-		},
-		{
 			title: "Ikke aktiv",
-			code: <Select label={"Velg smak"} items={mockFlavors} disabled />,
+			children: <Select label={"Velg smak"} items={mockFlavors} disabled />,
 		},
 		{
 			title: "Multiple select",
-			code: <Select label={"Velg smaker"} items={mockFlavors} multiple />,
+			children: <Select label={"Velg smaker"} items={mockFlavors} multiple />,
 			description: "Nyttig ved flervalg. Duh.",
 		},
 		{
 			title: "Gruppert select",
-			code: <SelectGrouped label={"Velg smak"} groups={mockGroupedFlavors} />,
+			children: (
+				<SelectGrouped label={"Velg smak"} groups={mockGroupedFlavors} />
+			),
 			description: (
 				<p>
 					Kan enkelt gruppere <strong>viktig innhold</strong>.
@@ -50,7 +50,7 @@ export const selectInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Multiple gruppert select",
-			code: (
+			children: (
 				<SelectGrouped
 					label={"Velg smaker"}
 					groups={mockGroupedFlavors}

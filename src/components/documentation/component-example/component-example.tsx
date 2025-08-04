@@ -15,7 +15,7 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 		columns = "true",
 		resize = "both",
 		restrict,
-		code,
+		children = <Button value={"Knapp"} />,
 		open,
 		...rest
 	} = props;
@@ -31,11 +31,11 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 			</div>
 			<div className={"showcase"}>
 				<Resizer figcaption={title} resize={resize} restrict={restrict}>
-					{code}
+					{children}
 				</Resizer>
 				<Details summary={"Markup"} open={open} lang={"en"}>
 					<pre>
-						<code>{renderToStaticMarkup(code)}</code>
+						<code>{renderToStaticMarkup(children)}</code>
 					</pre>
 				</Details>
 			</div>
@@ -46,9 +46,9 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 export const componentExampleInfo: ComponentInfoTypes = {
 	name: "Component Example",
 	category: "dokumentasjon",
-	examples: [
-		{
-			code: <ComponentExample code={<Button value={"Knapp"} />} />,
-		},
-	],
+	base: (
+		<ComponentExample>
+			<Button value={"Knapp"} />
+		</ComponentExample>
+	),
 };

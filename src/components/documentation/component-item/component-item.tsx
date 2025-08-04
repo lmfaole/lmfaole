@@ -28,4 +28,5 @@ export const ComponentItem = (
 export const componentItemInfo: ComponentInfoTypes = {
 	name: "Component Item",
 	category: "dokumentasjon",
+	base: <ComponentItem name={"Komponent Card"} />,
 };

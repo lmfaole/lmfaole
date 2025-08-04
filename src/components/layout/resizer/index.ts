@@ -1,2 +1,2 @@
-export { Resizer } from "./resizer";
+export { Resizer, resizerInfo } from "./resizer";
 export type { ResizerTypes } from "./resizer.types";
