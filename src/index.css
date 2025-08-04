@@ -71,6 +71,11 @@
 
 * {
 	line-height: 1.5;
+
+	&[disabled] {
+		border-style: dashed;
+		opacity: 0.5;
+	}
 }
 
 h1,
