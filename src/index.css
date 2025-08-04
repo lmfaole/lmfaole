@@ -64,6 +64,7 @@
 	@media (prefers-color-scheme: dark) {
 		--contrast-modifier-border: 0.2;
 		--contrast-modifier-border-subtle: 0.1;
+		--contrast-modifier-border-strong: 0.3;
 	}
 
 	@media (prefers-contrast: more) {

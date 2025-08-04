@@ -21,7 +21,7 @@ export const Checkbox = (props: CheckboxTypes) => {
 				name={name ? name : label}
 				{...rest}
 			/>
-			{label}
+			<span className={"text"}>{label}</span>
 		</label>
 	);
 };
