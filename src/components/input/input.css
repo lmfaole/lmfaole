@@ -31,6 +31,7 @@ input {
 	font-size: medium;
 	min-height: 44px;
 	padding-inline: 1ch;
+	border: 1px solid var(--border-color);
 
 	+ span.suffix {
 		margin-inline-start: 1ch;
