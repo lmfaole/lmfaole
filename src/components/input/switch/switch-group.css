@@ -1,0 +1,22 @@
+fieldset[data-full-width="true"]:has(input[data-switch="true"]) {
+	legend {
+		font-weight: 500;
+		padding-inline-start: 0;
+		font-size: large;
+	}
+
+	> * {
+		&:not(:has(input[disabled])) {
+			border-block: 1px solid transparent;
+
+			&:hover {
+				border-block: 1px solid var(--border-color-subtle);
+			}
+		}
+	}
+
+	> *:not(:last-of-type) {
+		margin-block-end: 0.25lh;
+		padding-block-end: 0.25lh;
+	}
+}

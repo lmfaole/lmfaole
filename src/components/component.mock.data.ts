@@ -10,7 +10,7 @@ export const mockFlavors = [
 	"Kinder",
 	"Smash",
 	"Sorbet",
-];
+].sort();
 
 export const mockGroupedFlavors = [
 	{

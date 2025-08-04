@@ -1,0 +1,31 @@
+fieldset:has(input[type="checkbox"]) {
+	border: 0;
+
+	&:not(:last-of-type) {
+		margin-block-end: 4lh;
+	}
+
+	&[data-pill="true"] {
+		display: flex;
+		gap: 2ch;
+		flex-wrap: wrap;
+
+		label {
+			min-width: min-content;
+			white-space: nowrap;
+			padding-inline: 1ch 1.5ch;
+			border-radius: 0.5lh;
+			background-color: var(--interactive-bg-color);
+			border: 1px solid var(--border-color);
+
+			&,
+			input {
+				cursor: pointer;
+			}
+
+			&:hover {
+				border-color: var(--border-hover-color);
+			}
+		}
+	}
+}

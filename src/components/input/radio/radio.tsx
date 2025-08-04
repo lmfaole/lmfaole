@@ -16,22 +16,21 @@ export const Radio = (props: RadioTypes) => {
 export const radioInfo: ComponentInfoTypes = {
 	name: "Radio",
 	category: "skjema",
+	base: <Radio label={mockFlavors[0]} />,
 	examples: [
 		{
-			title: "Enkeltstående",
-			code: <Radio label={mockFlavors[0]} />,
-		},
-		{
 			title: "Ikke aktiv",
-			code: <Radio label={mockFlavors[0]} disabled />,
+			children: <Radio label={mockFlavors[0]} disabled />,
 		},
 		{
 			title: "Radiogruppe",
-			code: <RadioGroup legend={"Velg smak"} items={mockFlavors.slice(0, 3)} />,
+			children: (
+				<RadioGroup legend={"Velg smak"} items={mockFlavors.slice(0, 3)} />
+			),
 		},
 		{
 			title: "Ikke aktiv radiogruppe",
-			code: (
+			children: (
 				<RadioGroup
 					legend={"Velg smak"}
 					items={mockFlavors.slice(0, 3)}

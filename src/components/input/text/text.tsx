@@ -12,13 +12,11 @@ export const TextInput = (props: TextTypes) => {
 export const textInputInfo: ComponentInfoTypes = {
 	name: "Tekst",
 	category: "skjema",
+	base: <TextInput label={"Hvilken smak ønsker du?"} />,
 	examples: [
 		{
-			code: <TextInput label={"Hvilken smak ønsker du?"} required={false} />,
-		},
-		{
 			title: "Ikke aktiv",
-			code: (
+			children: (
 				<TextInput
 					label={"Hvilken smak ønsker du?"}
 					datalist={mockFlavors}
@@ -28,7 +26,7 @@ export const textInputInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Med dataliste for forslag",
-			code: (
+			children: (
 				<TextInput label={"Hvilken smak ønsker du?"} datalist={mockFlavors} />
 			),
 		},

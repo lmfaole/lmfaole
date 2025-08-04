@@ -52,10 +52,6 @@ export const genericInputInfo: ComponentInfoTypes = {
 	description:
 		"Brukes for å håndtere vanlige input egenskaper som datalister og annet snacks.",
 	category: "skjema",
-	examples: [
-		{
-			code: <GenericInput label={"Hvilken smak ønsker du?"} required={false} />,
-		},
-	],
+	base: <GenericInput label={"Hvilken smak ønsker du?"} />,
 	spec: "https://html.spec.whatwg.org/#the-input-element",
 };

@@ -13,11 +13,11 @@ export const NumberInput = (props: NumberInputTypes) => {
 export const numberInputInfo: ComponentInfoTypes = {
 	name: "Tall",
 	category: "skjema",
+	base: <NumberInput label={"Skriv et tall"} />,
 	examples: [
-		{ code: <NumberInput label={"Skriv et tall"} /> },
 		{
 			title: "Ikke aktiv",
-			code: (
+			children: (
 				<NumberInput
 					disabled
 					label={"Skriv et tall"}
@@ -28,7 +28,7 @@ export const numberInputInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Med nevner",
-			code: (
+			children: (
 				<NumberInput
 					label={"Skriv et tall"}
 					datalist={[0, 10, 20, 25]}

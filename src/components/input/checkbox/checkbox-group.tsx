@@ -1,21 +1,14 @@
-import { Checkbox } from "./checkbox.tsx";
-import type { CheckboxGroupTypes } from "./checkbox-group.types.ts";
+import { GenericGroup } from "../generic/generic-group.tsx";
+import type { GenericGroupTypes } from "../generic/generic-group.types.ts";
 
-export const CheckboxGroup = (props: CheckboxGroupTypes) => {
-	const { legend, defaultValues, required = true, items, ...rest } = props;
+import "./checkbox-group.css";
+
+export const CheckboxGroup = (props: GenericGroupTypes) => {
+	const { legend = "Ta noen valg", children, pill = false, ...rest } = props;
 
 	return (
-		<fieldset {...rest}>
-			<legend>{legend}</legend>
-			{items.map((item) => (
-				<Checkbox
-					required={required}
-					key={item}
-					label={item}
-					name={legend}
-					defaultChecked={defaultValues ? defaultValues.includes(item) : false}
-				/>
-			))}
-		</fieldset>
+		<GenericGroup legend={legend} data-pill={pill} {...rest}>
+			{children}
+		</GenericGroup>
 	);
 };
