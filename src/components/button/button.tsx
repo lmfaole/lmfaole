@@ -21,7 +21,6 @@ export const Button = (props: ButtonTypes) => {
 		value,
 		icon,
 		iconPosition = "end",
-
 		...rest
 	} = props;
 
@@ -33,7 +32,9 @@ export const Button = (props: ButtonTypes) => {
 			accessKey={accessKey}
 			data-icon-position={iconPosition}
 			data-action={action}
-			onClickCapture={(_) => navigator.vibrate(200)}
+			onTouchEnd={(_) => {
+				navigator.vibrate(200);
+			}}
 			{...rest}
 		>
 			{icon && iconPosition === "start" && icon}
