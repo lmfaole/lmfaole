@@ -1,133 +1,108 @@
-@layer base {
-    label:has(input[data-switch="true"]) {
-        --icon-bg-color: var(--interactive-bg-color);
-        --icon-text-color: color-mix(in srgb, var(--highlight-color) 40%, var(--text-color));
-        --icon-border-color: var(--border-color);
-        --switch-bg-color: var(--interactive-bg-color);
-        --switch-border-color: color-mix(in srgb, var(--highlight-color) 20%, var(--border-color-strong));
+label:has(input[data-switch="true"]) {
+	display: grid;
+	grid-template-columns: 2.7em 1fr;
+	gap: 2ch;
+	align-items: center;
+	padding-block: 0.25lh;
+	padding-inline: 2ch;
+	margin-inline: -2ch;
+	border-radius: 2lh;
 
-        display: grid;
-        grid-template-columns: 3em 1fr;
-        gap: 2ch;
-        align-items: center;
-        padding-block: 0.25lh;
-        border-radius: 2lh;
+	> * {
+		grid-row: 1;
+	}
 
-        > * {
-            grid-row: 1;
-        }
+	/* Gjem selve input elementet */
+	input {
+		border: 0;
+		clip: rect(0 0 0 0);
+		height: auto;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+		white-space: nowrap;
+		grid-column: 3;
+	}
 
-        /* Gjem selve input elementet */
-        input {
-            border: 0;
-            clip: rect(0 0 0 0);
-            height: auto;
-            margin: 0;
-            overflow: hidden;
-            padding: 0;
-            position: absolute;
-            width: 1px;
-            white-space: nowrap;
-            grid-column: 3;
-        }
+	&:has(input[data-reverse="true"]) {
+		grid-template-columns: 1fr 2.7em;
 
-        &:has(input[data-reverse="true"]) {
-            grid-template-columns: 1fr 3em;
+		.switch {
+			grid-column: 2;
+		}
+	}
 
-            .switch {
-                grid-column: 2;
-            }
-        }
+	&:has(input[data-full-width="true"]) {
+		width: 100%;
+	}
 
-        &:has(input[data-full-width="true"]) {
-            width: 100%;
-        }
+	.switch {
+		display: flex;
 
-        .switch {
-            display: flex;
-            align-items: center;
-            justify-content: start;
-            padding: 4px;
-            transition: var(--animation-ease-out) all;
-            background-color: var(--switch-bg-color);
+		&,
+		.toggle {
+			border-radius: 1lh;
+			border: 1px solid var(--border);
+		}
 
-            &,
-            svg {
-                border-radius: 1lh;
-                box-sizing: border-box;
-                border: 1px solid var(--switch-border-color);
-            }
+		.toggle {
+			display: flex;
+			font-size: large;
+			padding: 2px;
+			margin: -1px;
+		}
+	}
 
-            svg {
-                background-color: var(--icon-bg-color);
-                color: var(--icon-text-color);
-                border-color: var(--icon-border-color);
-            }
+	.check {
+		display: none;
+	}
 
-            svg {
-                font-size: large;
-            }
-        }
+	&:has(input:checked) {
+		.toggle {
+			margin-inline-start: auto;
+			background-color: var(--action);
+		}
 
-        .check {
-            display: none;
-        }
+		.cross {
+			display: none;
+		}
 
-        &:has(input:checked) {
-            --icon-bg-color: var(--highlight-color);
-            --icon-text-color: var(--invert-text-color);
-            --switch-bg-color: color-mix(in srgb, var(--highlight-color) 30%, var(--interactive-bg-color));
-            --switch-border-color: var(--switch-bg-color);
+		.check {
+			display: inline-block;
+		}
+	}
 
-            .cross {
-                display: none;
-            }
+	&:hover {
+		background-color: var(--action);
+	}
 
-            .check {
-                display: inline-block;
-            }
+	&:has(input[disabled]) {
+		.switch {
+			border-style: dashed;
+		}
+	}
 
-            .switch {
-                justify-content: end;
-            }
-        }
+	&:not(:has(input[disabled])) {
+		cursor: pointer;
+	}
 
-        &:hover {
-            background-color: var(--interactive-bg-color-hover);
-            padding-inline: 2ch;
-            margin-inline: -2ch;
-        }
+	@media (prefers-contrast: more) {
+		&:has(input[data-full-width="true"]) {
+			.text {
+				display: grid;
+				grid-template-columns: auto 1fr;
+				align-items: center;
+				gap: 2ch;
+			}
 
-        &:has(input[disabled]) {
-            .switch {
-                border-style: dashed;
-            }
-        }
-
-        &:not(:has(input[disabled])) {
-            cursor: pointer;
-        }
-
-        @media (prefers-contrast: more) {
-            --bg-color: light-dark(white, black);
-            --border-color: light-dark(black, white);
-            --text-color: light-dark(black, white);
-
-            &:has(input[data-full-width="true"]) {
-                .text {
-                    display: grid;
-                    grid-template-columns: auto 1fr;
-                    align-items: center;
-                    gap: 2ch;
-                }
-
-                > .text::after {
-                    content: "";
-                    width: 100%;
-                    height: 1px;
-                    border-block-end: 1px dotted var(--border-color-strong);
-                }
-            }
-        }
-    }
+			> .text::after {
+				content: "";
+				width: 100%;
+				height: 1px;
+				border-block-end: 1px dotted var(--border);
+			}
+		}
+	}
 }

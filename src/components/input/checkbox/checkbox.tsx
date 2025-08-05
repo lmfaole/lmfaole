@@ -11,16 +11,13 @@ export const Checkbox = (props: CheckboxTypes) => {
 
 	return (
 		<label>
-			<span className={"switch"}>
-				<CheckmarkIcon className={"check"} />
-				<XMarkIcon className={"cross"} />
+			<span className={"switch"} aria-hidden={"true"}>
+				<span className={"toggle"}>
+					<CheckmarkIcon className={"check"} />
+					<XMarkIcon className={"cross"} />
+				</span>
 			</span>
-			<input
-				type="checkbox"
-				checked={checked}
-				name={name ? name : label}
-				{...rest}
-			/>
+			<input type="checkbox" checked={checked} {...rest} />
 			<span className={"text"}>{label}</span>
 		</label>
 	);
@@ -32,36 +29,11 @@ export const checkboxInfo: ComponentInfoTypes = {
 	base: <Checkbox label={mockFlavors[0]} />,
 	examples: [
 		{
-			title: "Switch",
-			children: <Checkbox toggle label={mockFlavors[0]} defaultChecked />,
-		},
-		{
-			title: "Ikke aktiv switch",
-			children: (
-				<Checkbox checked={true} toggle disabled label={mockFlavors[0]} />
-			),
-		},
-		{
-			title: "Switch reverse",
-			children: <Checkbox toggle reverse label={mockFlavors[0]} />,
-		},
-		{
-			title: "Switch reverse fullwidth",
-			children: <Checkbox toggle reverse fullWidth label={mockFlavors[0]} />,
-			restrict: false,
+			title: "Disabled",
+			children: <Checkbox disabled label={mockFlavors[0]} />,
 		},
 		{
 			title: "Avkrysningsbokser i fieldset",
-			children: (
-				<CheckboxGroup legend={"Hvilke smaker liker du?"}>
-					{mockFlavors.map((flavor) => (
-						<Checkbox label={flavor} />
-					))}
-				</CheckboxGroup>
-			),
-		},
-		{
-			title: "Avkrysningsbokser i gruppe",
 			children: (
 				<CheckboxGroup legend={"Filtrer smaker"}>
 					{mockFlavors.map((flavor) => (

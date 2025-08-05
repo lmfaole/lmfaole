@@ -4,12 +4,8 @@ button {
 	width: max-content;
 	font-size: medium;
 	padding-inline: 1.5ch;
-	border: 1px solid var(--border-color);
-	background-color: var(--interactive-bg-color);
-	color: var(--text-color);
-	transition:
-		var(--animation-ease-out) border-color,
-		var(--animation-ease-out) background-color;
+	border: 1px solid var(--border);
+	background-color: var(--action);
 
 	&:has(svg) {
 		display: grid;
@@ -27,24 +23,13 @@ button {
 		}
 	}
 
-	&[data-action="delete"] {
-		color: var(--danger-text-color);
-		border-color: var(--danger-border-color);
-		background-color: var(--danger-interactive-bg-color-hover);
+	&[data-danger="true"] {
+		border-color: var(--danger);
+		background-color: var(--danger);
 	}
 
 	&:not([disabled], [aria-disabled]) {
 		cursor: pointer;
-
-		&:hover {
-			background-color: var(--interactive-bg-color-hover);
-			border-color: var(--border-hover-color);
-
-			&[data-action="delete"] {
-				border-color: var(--danger-border-hover-color);
-				background-color: var(--danger-interactive-bg-color-hover);
-			}
-		}
 
 		&:active {
 			transition-property: none;

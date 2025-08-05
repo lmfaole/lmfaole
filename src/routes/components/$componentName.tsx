@@ -17,19 +17,14 @@ function ComponentPage() {
 
 	if (!component) return <h1>Du må ha kommet feil</h1>;
 
-	const relatedComponents = componentList.filter(
-		(item) =>
-			item.category === component.category && item.name !== component.name,
+	const categoryComponents = componentList.filter(
+		(item) => item.category === component.category,
 	);
 
 	return (
-		<article>
+		<article className={"page"}>
 			<header>
 				<h1>{component.name}</h1>
-				<dl>
-					<dt>Kategori</dt>
-					<dd>{component.category}</dd>
-				</dl>
 				{component.description && <p>{component.description}</p>}
 				<ComponentExample
 					title={component.name}
@@ -42,9 +37,9 @@ function ComponentPage() {
 			</header>
 
 			{component.examples && component.examples.length >= 2 && (
-				<>
+				<div>
 					<h2>Eksempler</h2>
-					{component.examples.slice(1).map((example) => (
+					{component.examples.map((example) => (
 						<ComponentExample
 							key={example.title}
 							resize={"none"}
@@ -52,35 +47,27 @@ function ComponentPage() {
 							{...example}
 						/>
 					))}
-				</>
+				</div>
 			)}
-			<footer>
-				{/*<h2>Lenker</h2>
-				<dl>
-					<dt>HTML spesifikasjon</dt>
-					{component.spec && (
-						<dd>
-							<a href={component.spec}>HTML Spec</a>
-						</dd>
-					)}
-					{component.docs && (
-						<dd>
-							<a href={component.docs}>MDN docs</a>
-						</dd>
-					)}
-				</dl>*/}
 
-				{!!relatedComponents.length && (
+			<aside>
+				<h2>Om komponenten</h2>
+				<dl className={"metadata"}>
+					<dt>Kategori</dt>
+					<dd>{component.category}</dd>
+				</dl>
+
+				{!!categoryComponents.length && (
 					<>
-						<h2>Andre {component.category} komponenter</h2>
+						<h2>Andre komponenter i samme kategori</h2>
 						<ul className={"list-style-none"}>
-							{relatedComponents.map((item) => (
+							{categoryComponents.map((item) => (
 								<ComponentItem key={item.name} {...item} />
 							))}
 						</ul>
 					</>
 				)}
-			</footer>
+			</aside>
 		</article>
 	);
 }

@@ -1,5 +1,7 @@
 .component-example {
-	margin-block-end: 4lh;
+	--spacing: 4lh;
+
+	margin-block-end: var(--spacing);
 
 	.info {
 		p {
@@ -30,13 +32,16 @@
 		}
 	}
 
-	@container (min-width: 70ch) {
+	@container (min-width: 95ch) {
 		&[data-columns="true"] {
-			border-block-end: 1px solid var(--border-color);
-			padding-block-end: 4lh;
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
 			gap: 4ch;
+
+			&:not(:last-of-type) {
+				padding-block-end: var(--spacing);
+				border-block-end: 1px solid var(--border);
+			}
 
 			.info {
 				padding-block: 1lh;

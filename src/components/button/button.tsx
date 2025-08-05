@@ -16,7 +16,7 @@ import "./button.css";
 export const Button = (props: ButtonTypes) => {
 	const {
 		type = "button",
-		action = "button",
+		danger = false,
 		accessKey,
 		value,
 		icon,
@@ -31,7 +31,7 @@ export const Button = (props: ButtonTypes) => {
 			value={value}
 			accessKey={accessKey}
 			data-icon-position={iconPosition}
-			data-action={action}
+			data-danger={danger}
 			onTouchEnd={(_) => {
 				navigator.vibrate(200);
 			}}
@@ -57,11 +57,11 @@ export const buttonInfo: ComponentInfoTypes = {
 		},
 		{
 			title: "Sletteknapp",
-			children: <Button action={"delete"} value={"Slett..."} />,
+			children: <Button danger value={"Slett..."} />,
 		},
 		{
 			title: "Ikke aktiv sletteknapp",
-			children: <Button action={"delete"} value={"Slett..."} disabled />,
+			children: <Button danger value={"Slett..."} disabled />,
 		},
 		{
 			title: "Med ikon",
@@ -144,7 +144,7 @@ export const buttonInfo: ComponentInfoTypes = {
 						<Button value={"Send"} icon={<EnvelopeOpenIcon aria-hidden />} />
 					</ButtonGroup>
 					<ButtonGroup>
-						<Button action={"delete"} value={"Slett..."} />
+						<Button danger value={"Slett..."} />
 					</ButtonGroup>
 				</ButtonGroup>
 			),

@@ -1,78 +1,35 @@
 @import url("./components/input/input.css");
-
-@layer base, group;
+@import url("./routes/page.css");
 
 :root {
-	--text-color: light-dark(black, white);
-	--invert-text-color: light-dark(white, black);
-	--danger-text-color: light-dark(darkred, red);
-
-	--highlight-color: light-dark(green, lightgreen);
-	--danger-color: light-dark(darkred, red);
-
-	--contrast-modifier-bg: 0.025;
-	--contrast-modifier-bg-hover: 0.05;
-	--contrast-modifier-bg-selected: 0.5;
-	--contrast-modifier-border: 0.15;
-	--contrast-modifier-border-subtle: 0.05;
-	--contrast-modifier-border-strong: 0.3;
-	--contrast-modifier-border-hover: 0.4;
-
-	--interactive-bg-color: hsl(
-		from var(--highlight-color) h s l /
-		var(--contrast-modifier-bg)
-	);
-	--interactive-bg-color-hover: hsl(
-		from var(--highlight-color) h s l /
-		var(--contrast-modifier-bg-hover)
-	);
-	--interactive-bg-color-selected: hsl(
-		from var(--highlight-color) h s l /
-		var(--contrast-modifier-bg-hover)
-	);
-
-	--danger-interactive-bg-color: hsl(
-		from var(--danger-color) h s l /
-		var(--contrast-modifier-bg)
-	);
-	--danger-interactive-bg-color-hover: hsl(
-		from var(--danger-color) h s l /
-		var(--contrast-modifier-bg-hover)
-	);
-
-	--border-color: hsl(from currentColor h s l / var(--contrast-modifier-border));
-	--border-color-subtle: hsl(
-		from currentColor h s l /
-		var(--contrast-modifier-border-subtle)
-	);
-	--border-color-strong: hsl(
-			from currentColor h s l /
-		var(--contrast-modifier-border-strong)
-	);
-	--border-hover-color: hsl(
-		from currentColor h s l /
-		var(--contrast-modifier-border-hover)
-	);
-	--danger-border-color: hsl(from var(--danger-color) h s l / var(--contrast-modifier-border));
-	--danger-border-hover-color: hsl(
-		from var(--danger-color) h s l /
-		var(--contrast-modifier-border-hover)
-	);
-
-	--animation-ease-out: 0.2s ease-out;
+	--contrast: 0.07;
+	--contrast-less: 0.02;
+	--contrast-more: 0.15;
+	--contrast-most: 0.2;
 
 	@media (prefers-color-scheme: dark) {
-		--contrast-modifier-border: 0.2;
-		--contrast-modifier-border-subtle: 0.1;
-		--contrast-modifier-border-strong: 0.3;
+		--contrast: 0.1;
+		--contrast-less: 0.02;
+		--contrast-more: 0.2;
+		--contrast-most: 0.23;
 	}
 
 	@media (prefers-contrast: more) {
-		--contrast-modifier-border: 0.5;
-		--contrast-modifier-border-subtle: 0.5;
-		--contrast-modifier-border-strong: 0.5;
-		--contrast-modifier-border-hover: 1;
+		--contrast: 0.4;
+		--contrast-less: 0.1;
+		--contrast-more: 0.6;
+		--contrast-most: 0.8;
 	}
+
+	/* Bakgrunner */
+	--bg-color: hsl(from currentColor h s l / var(--contrast-less));
+	--border-color: hsl(from currentColor h s l / var(--contrast));
+	--accent-color: light-dark(green, limegreen);
+	--danger-color: light-dark(darkred, red);
+	--note-color: light-dark(navy, lightblue);
+	--border: hsl(from var(--border-color) h s l / var(--contrast));
+
+	--animation-ease-out: 0.2s ease-out;
 
 	@media (prefers-reduced-motion: reduce) {
 		--animation-ease-out: 0;
@@ -82,82 +39,110 @@
 	color-scheme: light dark;
 }
 
-@layer base {
-	* {
-		line-height: 1.5;
+#root {
+	display: contents;
+}
 
-		&[disabled] {
-			border-style: dashed;
-			opacity: 0.5;
-		}
+* {
+	line-height: 1.5;
+
+	&[disabled] {
+		border-style: dashed;
+		opacity: 0.5;
+	}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	text-wrap: balance;
+	font-weight: 500;
+}
+
+h1 {
+	font-size: xxx-large;
+}
+
+h2 {
+	font-size: xx-large;
+}
+
+h3 {
+	font-size: x-large;
+}
+
+h4 {
+	font-size: large;
+}
+
+h5 {
+	font-size: medium;
+}
+
+h6 {
+	font-size: small;
+}
+
+p {
+	max-width: 66ch;
+	text-wrap: pretty;
+	margin-block-end: 2lh;
+}
+
+pre {
+	margin-block: 0;
+	white-space: wrap;
+	line-break: anywhere;
+}
+
+main {
+	margin-inline: auto;
+	container-type: inline-size;
+}
+
+img,
+figure {
+	max-width: 100%;
+}
+
+ul,
+ol,
+dl {
+	margin-block-end: 3lh;
+}
+
+ul.list-style-none {
+	&,
+	ul {
+		list-style: none;
+		padding-inline-start: 0;
+	}
+}
+
+button,
+label:has(input),
+input,
+select,
+details {
+	--action: hsl(from var(--accent-color) h s l / var(--contrast));
+	--danger: hsl(from var(--danger-color) h s l / var(--contrast));
+	transition:
+		var(--animation-ease-out) border-color,
+		var(--animation-ease-out) background-color;
+
+	&:not([disabled]):hover {
+		--action: hsl(from var(--accent-color) h s l / var(--contrast));
+		--danger: hsl(from var(--danger-color) h s l / var(--contrast-most));
+		--border: hsl(from currentColor h s l / var(--contrast-most));
 	}
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		text-wrap: balance;
-	}
-
-	h1 {
-		font-size: xxx-large;
-	}
-
-	h2 {
-		font-size: xx-large;
-	}
-
-	h3 {
-		font-size: x-large;
-	}
-
-	h4 {
-		font-size: large;
-	}
-
-	h5 {
-		font-size: medium;
-	}
-
-	h6 {
-		font-size: small;
-	}
-
-	p {
-		max-width: 66ch;
-		text-wrap: pretty;
-		margin-block-end: 2lh;
-	}
-
-	pre {
-		margin-block: 0;
-		white-space: wrap;
-		line-break: anywhere;
-	}
-
-	header,
-	main {
-		margin-inline: auto;
-		max-width: 90ch;
-	}
-
-	article {
-		container-type: inline-size;
-	}
-
-	img,
-	figure {
-		max-width: 100%;
-	}
-
-	ul.list-style-none {
-		&,
-		ul {
-			list-style: none;
-			padding-inline-start: 0;
-			margin-block-end: 3lh;
-		}
+	&:checked,
+	&:has(:checked) {
+		--action: hsl(from var(--accent-color) h s l / var(--contrast));
+		--danger: hsl(from var(--danger-color) h s l / var(--contrast-most));
+		--border: hsl(from currentColor h s l / var(--contrast-more));
 	}
 }

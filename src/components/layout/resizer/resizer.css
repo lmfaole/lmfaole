@@ -6,7 +6,7 @@
 	height: fit-content;
 	max-height: 100dvh;
 	overflow: scroll;
-	border: 1px solid var(--border-color);
+	border: 1px solid var(--border);
 	display: flex;
 	justify-content: center;
 	align-items: center;

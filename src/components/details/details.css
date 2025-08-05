@@ -1,17 +1,7 @@
 details {
-	border: 1px solid var(--border-color);
+	border: 1px solid var(--border);
 	width: 100%;
 	box-sizing: border-box;
-
-	&[open] {
-		summary {
-			background-color: var(--interactive-bg-color-hover);
-		}
-	}
-
-	&:has(summary:hover) {
-		border-color: var(--border-hover-color);
-	}
 
 	summary {
 		min-height: 44px;
@@ -27,15 +17,14 @@ details {
 			content: "↓" / "";
 			margin-inline-end: 1ch;
 		}
-
-		&:hover {
-			background-color: var(--interactive-bg-color-hover);
-		}
 	}
 
 	&[open] {
-		summary::before {
-			content: "↑" / "";
+		summary {
+			background-color: var(--action);
+			&::before {
+				content: "↑" / "";
+			}
 		}
 	}
 
