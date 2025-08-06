@@ -5,6 +5,5 @@ export type CheckboxTypes = InputHTMLAttributes<
 > & {
 	label: string;
 	reverse?: boolean;
-	toggle?: boolean;
 	fullWidth?: boolean;
 };

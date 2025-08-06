@@ -1,5 +1,6 @@
 import { buttonInfo } from "./button";
 import { detailsInfo } from "./details";
+import { codeExampleInfo, componentExampleInfo } from "./documentation";
 import {
 	checkboxInfo,
 	numberInputInfo,
@@ -24,6 +25,8 @@ export const componentList = [
 	resizerInfo,
 	searchInputInfo,
 	switchInfo,
+	codeExampleInfo,
+	componentExampleInfo,
 ];
 
 export * from "./button";

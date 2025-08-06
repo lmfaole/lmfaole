@@ -18,29 +18,27 @@ export const Button = (props: ButtonTypes) => {
 		type = "button",
 		danger = false,
 		accessKey,
-		value,
 		icon,
 		iconPosition = "end",
+		children,
 		...rest
 	} = props;
+
+	if (!children) {
+		return <button>Mangler innhold</button>;
+	}
 
 	return (
 		<button
 			type={type}
-			title={props.title ? props.title : value.toString()}
-			value={value}
+			title={props.title ? props.title : children.toString()}
 			accessKey={accessKey}
 			data-icon-position={iconPosition}
 			data-danger={danger}
-			onTouchEnd={(_) => {
-				navigator.vibrate(200);
-			}}
 			{...rest}
 		>
 			{icon && iconPosition === "start" && icon}
-			<span>
-				{value} {accessKey && <b>[{accessKey}]</b>}
-			</span>
+			{children}
 			{icon && iconPosition === "end" && icon}
 		</button>
 	);
@@ -116,19 +114,6 @@ export const buttonInfo: ComponentInfoTypes = {
 						iconPosition={"start"}
 					/>
 					<Button value={"Neste"} icon={<ArrowRightIcon aria-hidden />} />
-				</ButtonGroup>
-			),
-		},
-		{
-			title: "Gruppe med knapper i motsatt rekkefølge i pille",
-			children: (
-				<ButtonGroup reverse pill>
-					<Button value={"Neste"} icon={<ArrowRightIcon aria-hidden />} />
-					<Button
-						value={"Forrige"}
-						icon={<ArrowLeftIcon aria-hidden />}
-						iconPosition={"start"}
-					/>
 				</ButtonGroup>
 			),
 		},

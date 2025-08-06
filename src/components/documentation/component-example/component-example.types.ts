@@ -6,7 +6,6 @@ export type ComponentExampleTypes = AllHTMLAttributes<HTMLDivElement> & {
 	title?: string;
 	description?: string | ReactNode;
 	restrict?: boolean;
-	fullWidth?: boolean;
 	showTitle?: boolean;
 	columns?: boolean;
 	resize?: ResizerTypes["resize"];

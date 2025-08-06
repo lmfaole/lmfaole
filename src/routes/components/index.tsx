@@ -28,7 +28,7 @@ function ComponentListPage() {
 	}, [search]);
 
 	return (
-		<>
+		<main className={"page"}>
 			<h1>Komponenter</h1>
 			<search>
 				<SearchInput
@@ -107,6 +107,6 @@ function ComponentListPage() {
 			) : (
 				<p>Ingen resultater</p>
 			)}
-		</>
+		</main>
 	);
 }

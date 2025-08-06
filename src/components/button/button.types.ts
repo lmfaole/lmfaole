@@ -4,7 +4,6 @@ export type ButtonTypes = Omit<
 	ButtonHTMLAttributes<HTMLButtonElement>,
 	"value"
 > & {
-	value: string | number;
 	icon?: ReactNode;
 	iconPosition?: "start" | "end";
 	danger?: boolean;

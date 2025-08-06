@@ -22,52 +22,54 @@ function ComponentPage() {
 	);
 
 	return (
-		<article className={"page"}>
-			<header>
-				<h1>{component.name}</h1>
-				{component.description && <p>{component.description}</p>}
-				<ComponentExample
-					title={component.name}
-					showTitle={false}
-					columns={false}
-					open={renderToStaticMarkup(component.base).length <= 250}
-				>
-					{component.base}
-				</ComponentExample>
-			</header>
+		<main>
+			<article className={"page"}>
+				<header>
+					<h1>{component.name}</h1>
+					{component.description && <p>{component.description}</p>}
+					<ComponentExample
+						title={component.name}
+						showTitle={false}
+						columns={false}
+						open={renderToStaticMarkup(component.base).length <= 250}
+					>
+						{component.base}
+					</ComponentExample>
+				</header>
 
-			{component.examples && component.examples.length >= 2 && (
-				<div>
-					<h2>Eksempler</h2>
-					{component.examples.map((example) => (
-						<ComponentExample
-							key={example.title}
-							resize={"none"}
-							columns={true}
-							{...example}
-						/>
-					))}
-				</div>
-			)}
-
-			<aside>
-				<h2>Om komponenten</h2>
-				<dl className={"metadata"}>
-					<dt>Kategori</dt>
-					<dd>{component.category}</dd>
-				</dl>
-
-				{!!categoryComponents.length && (
-					<>
-						<h2>Andre komponenter i samme kategori</h2>
-						<ul className={"list-style-none"}>
-							{categoryComponents.map((item) => (
-								<ComponentItem key={item.name} {...item} />
-							))}
-						</ul>
-					</>
+				{component.examples && component.examples.length >= 2 && (
+					<div>
+						<h2>Eksempler</h2>
+						{component.examples.map((example) => (
+							<ComponentExample
+								key={example.title}
+								resize={"none"}
+								columns={true}
+								{...example}
+							/>
+						))}
+					</div>
 				)}
-			</aside>
-		</article>
+
+				<aside>
+					<h2>Om komponenten</h2>
+					<dl className={"metadata"}>
+						<dt>Kategori</dt>
+						<dd>{component.category}</dd>
+					</dl>
+
+					{!!categoryComponents.length && (
+						<>
+							<h2>Andre komponenter i samme kategori</h2>
+							<ul className={"list-style-none"}>
+								{categoryComponents.map((item) => (
+									<ComponentItem key={item.name} {...item} />
+								))}
+							</ul>
+						</>
+					)}
+				</aside>
+			</article>
+		</main>
 	);
 }

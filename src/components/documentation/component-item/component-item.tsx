@@ -1,8 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import type { ComponentInfoTypes } from "../../component-info.type.ts";
-
-import "./component-item.css";
 import type { AllHTMLAttributes } from "react";
+import type { ComponentInfoTypes } from "../../component-info.type.ts";
 
 export const ComponentItem = (
 	props: Pick<ComponentInfoTypes, "name" | "description"> &
@@ -12,14 +10,14 @@ export const ComponentItem = (
 
 	return (
 		<li {...rest}>
-			<h3>
+			<p>
 				<Link
 					to={`/components/$componentName`}
 					params={{ componentName: name }}
 				>
 					{name}
 				</Link>
-			</h3>
+			</p>
 			{description && <p>{description}</p>}
 		</li>
 	);

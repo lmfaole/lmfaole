@@ -1,7 +1,7 @@
 .component-example {
 	--spacing: 4lh;
-
 	margin-block-end: var(--spacing);
+	width: 100%;
 
 	.info {
 		p {

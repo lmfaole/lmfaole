@@ -89,13 +89,14 @@ h6 {
 p {
 	max-width: 66ch;
 	text-wrap: pretty;
-	margin-block-end: 2lh;
+	&:not(:last-of-type) {
+		margin-block-end: 2lh;
+	}
 }
 
 pre {
 	margin-block: 0;
-	white-space: wrap;
-	line-break: anywhere;
+	white-space: pre-wrap;
 }
 
 main {

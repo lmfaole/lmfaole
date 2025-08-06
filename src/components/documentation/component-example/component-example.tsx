@@ -1,8 +1,8 @@
-import { renderToStaticMarkup } from "react-dom/server";
 import { Button } from "../../button";
 import type { ComponentInfoTypes } from "../../component-info.type.ts";
 import { Details } from "../../details";
 import { Resizer } from "../../layout";
+import { Code } from "../code";
 import type { ComponentExampleTypes } from "./component-example.types.ts";
 
 import "./component-example.css";
@@ -15,10 +15,11 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 		columns = "true",
 		resize = "both",
 		restrict,
-		children = <Button value={"Knapp"} />,
+		children = <Button>Knapp</Button>,
 		open,
 		...rest
 	} = props;
+
 	return (
 		<div className={"component-example"} data-columns={columns} {...rest}>
 			<div className={"info"}>
@@ -34,9 +35,7 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 					{children}
 				</Resizer>
 				<Details summary={"Markup"} open={open} lang={"en"}>
-					<pre>
-						<code>{renderToStaticMarkup(children)}</code>
-					</pre>
+					<Code>{children}</Code>
 				</Details>
 			</div>
 		</div>
@@ -47,8 +46,8 @@ export const componentExampleInfo: ComponentInfoTypes = {
 	name: "Component Example",
 	category: "dokumentasjon",
 	base: (
-		<ComponentExample>
-			<Button value={"Knapp"} />
+		<ComponentExample restrict={false}>
+			<Button>Knapp</Button>
 		</ComponentExample>
 	),
 };
