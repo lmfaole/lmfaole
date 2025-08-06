@@ -12,7 +12,6 @@ export const Switch = (props: SwitchTypes) => {
 	return (
 		<Checkbox
 			label={label}
-			switch
 			data-switch="true"
 			data-reverse={reverse}
 			data-full-width={fullWidth}
