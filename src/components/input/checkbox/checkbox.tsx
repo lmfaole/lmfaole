@@ -7,7 +7,9 @@ import { CheckboxGroup } from "./checkbox-group.tsx";
 import "./checkbox.css";
 
 export const Checkbox = (props: CheckboxTypes) => {
-	const { label, checked, name, ...rest } = props;
+	const { label, checked, ...rest } = props;
+
+	const name = props.name ? props.name : label;
 
 	return (
 		<label>
@@ -17,7 +19,7 @@ export const Checkbox = (props: CheckboxTypes) => {
 					<XMarkIcon className={"cross"} />
 				</span>
 			</span>
-			<input type="checkbox" checked={checked} {...rest} />
+			<input type="checkbox" checked={checked} name={name} {...rest} />
 			<span className={"text"}>{label}</span>
 		</label>
 	);
