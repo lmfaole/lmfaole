@@ -36,7 +36,6 @@ export const switchInfo: ComponentInfoTypes = {
 		{
 			title: "Switch reverse fullwidth",
 			children: <Switch reverse fullWidth label={mockFlavors[0]} />,
-			restrict: false,
 		},
 		{
 			title: "Switch reverse fullwidth i gruppe",
@@ -47,7 +46,6 @@ export const switchInfo: ComponentInfoTypes = {
 					))}
 				</SwitchGroup>
 			),
-			restrict: false,
 		},
 	],
 	spec: "https://html.spec.whatwg.org/#the-input-element",
