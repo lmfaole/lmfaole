@@ -1,6 +1,5 @@
 .component-example {
-	--spacing: 4lh;
-	margin-block-end: var(--spacing);
+	min-width: 20ch;
 	width: 100%;
 
 	.info {
@@ -10,9 +9,9 @@
 	}
 
 	.showcase {
-		max-width: 100%;
 		display: grid;
 		grid-template-rows: 1fr auto;
+		max-width: 100%;
 
 		> * {
 			width: 100%;
@@ -29,27 +28,6 @@
 
 		> .resizer {
 			height: 100%;
-		}
-	}
-
-	@container (min-width: 95ch) {
-		&[data-columns="true"] {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			gap: 4ch;
-
-			&:not(:last-of-type) {
-				padding-block-end: var(--spacing);
-				border-block-end: 1px solid var(--border);
-			}
-
-			.info {
-				padding-block: 1lh;
-			}
-
-			.showcase > .resizer {
-				max-height: 80svh;
-			}
 		}
 	}
 }

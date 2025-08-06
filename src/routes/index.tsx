@@ -6,9 +6,11 @@ export const Route = createFileRoute("/")({
 
 function Index() {
 	return (
-		<p>
-			Hei, jeg er på{" "}
-			<a href={"https://www.linkedin.com/in/olejorgenbakken"}>linkedin</a>
-		</p>
+		<main className={"page-width"}>
+			<p>
+				Hei, jeg er på{" "}
+				<a href={"https://www.linkedin.com/in/olejorgenbakken"}>linkedin</a>.
+			</p>
+		</main>
 	);
 }

@@ -1,4 +1,0 @@
-label:has(input[type="radio"]) span {
-	/* Veldig rar spacing på radio, så den får en fix */
-	margin-block-start: 3px;
-}

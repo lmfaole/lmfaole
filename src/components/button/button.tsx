@@ -1,12 +1,4 @@
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	ClipboardIcon,
-	DownloadIcon,
-	EnvelopeOpenIcon,
-	FaceSmileIcon,
-	FloppydiskIcon,
-} from "@navikt/aksel-icons";
+import { FaceSmileIcon } from "@navikt/aksel-icons";
 import type { ComponentInfoTypes } from "../component-info.type.ts";
 import type { ButtonTypes } from "./button.types.ts";
 import { ButtonGroup } from "./button-group.tsx";
@@ -47,48 +39,47 @@ export const Button = (props: ButtonTypes) => {
 export const buttonInfo: ComponentInfoTypes = {
 	name: "Knapp",
 	category: "handling",
-	base: <Button value={"Knapp"} icon={<FaceSmileIcon />} />,
+	description: "Relativt selvforklarende eller?",
+	base: <Button>Hei</Button>,
 	examples: [
 		{
 			title: "Ikke aktiv",
-			children: <Button disabled value={"Ikke aktiv knapp"} />,
+			children: <Button disabled>Knapp</Button>,
 		},
 		{
 			title: "Sletteknapp",
-			children: <Button danger value={"Slett..."} />,
+			children: <Button danger>Slett</Button>,
 		},
 		{
 			title: "Ikke aktiv sletteknapp",
-			children: <Button danger value={"Slett..."} disabled />,
-		},
-		{
-			title: "Med ikon",
 			children: (
-				<Button
-					value={"Lagre"}
-					icon={<DownloadIcon aria-hidden />}
-					accessKey={"W"}
-				/>
+				<Button danger disabled>
+					Slett
+				</Button>
 			),
 		},
 		{
+			title: "Med ikon",
+			children: <Button icon={<FaceSmileIcon />}>Hei</Button>,
+		},
+		{
 			title: "Ikke aktiv med ikon",
-			description:
-				"For å gjøre det enda klarere at en knapp ikke kan interagerer med fjernes ikonet",
 			children: (
-				<Button disabled value={"Lagre"} icon={<DownloadIcon aria-hidden />} />
+				<Button disabled icon={<FaceSmileIcon />}>
+					Hei
+				</Button>
 			),
 		},
 		{
 			title: "Med snarvei",
-			children: <Button accessKey={"S"} value={"Knapp med snarvei"} />,
+			children: <Button accessKey={"S"}>Hei</Button>,
 		},
 		{
 			title: "Gruppe med knapper",
 			children: (
 				<ButtonGroup>
-					<Button value={"Kopier"} icon={<ClipboardIcon />} />
-					<Button value={"Lim inn"} />
+					<Button>Kopier</Button>
+					<Button>Lim inn</Button>
 				</ButtonGroup>
 			),
 		},
@@ -96,8 +87,8 @@ export const buttonInfo: ComponentInfoTypes = {
 			title: "Gruppe med knapper i pille",
 			children: (
 				<ButtonGroup pill>
-					<Button value={"Kopier"} />
-					<Button value={"Lim inn"} />
+					<Button>Kopier</Button>
+					<Button>Lim inn</Button>
 				</ButtonGroup>
 			),
 		},
@@ -108,12 +99,8 @@ export const buttonInfo: ComponentInfoTypes = {
 				" hverandre. Bør ikke brukes ofte.",
 			children: (
 				<ButtonGroup reverse>
-					<Button
-						value={"Forrige"}
-						icon={<ArrowLeftIcon aria-hidden />}
-						iconPosition={"start"}
-					/>
-					<Button value={"Neste"} icon={<ArrowRightIcon aria-hidden />} />
+					<Button>Kopier</Button>
+					<Button>Lim inn</Button>
 				</ButtonGroup>
 			),
 		},
@@ -122,14 +109,14 @@ export const buttonInfo: ComponentInfoTypes = {
 			children: (
 				<ButtonGroup pill>
 					<ButtonGroup>
-						<Button value={"Lagre"} icon={<FloppydiskIcon aria-hidden />} />
-						<Button value={"Lagre som..."} />
+						<Button>Kopier</Button>
+						<Button>Lim inn</Button>
 					</ButtonGroup>
 					<ButtonGroup>
-						<Button value={"Send"} icon={<EnvelopeOpenIcon aria-hidden />} />
+						<Button>Send</Button>
 					</ButtonGroup>
 					<ButtonGroup>
-						<Button danger value={"Slett..."} />
+						<Button danger>Slett</Button>
 					</ButtonGroup>
 				</ButtonGroup>
 			),

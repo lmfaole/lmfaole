@@ -3,8 +3,6 @@ import type { ComponentInfoTypes } from "../../component-info.type.ts";
 import type { RadioTypes } from "./radio.types.ts";
 import { RadioGroup } from "./radio-group.tsx";
 
-import "./radio.css";
-
 export const Radio = (props: RadioTypes) => {
 	const { label, name, ...rest } = props;
 	return (

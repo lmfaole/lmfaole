@@ -1,0 +1,8 @@
+.components.page ul.list-style-box {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+
+	@media (min-width: 90ch) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}

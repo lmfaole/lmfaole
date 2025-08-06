@@ -35,14 +35,6 @@ button {
 			transition-property: none;
 		}
 	}
-
-	&[disabled] {
-		grid-template-columns: 1fr;
-
-		svg {
-			display: none;
-		}
-	}
 }
 
 .button-group {

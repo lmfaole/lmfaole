@@ -1,18 +1,27 @@
 .resizer {
-	margin: 0;
-	box-sizing: border-box;
-	resize: attr(data-resize);
-	min-height: fit-content;
-	height: fit-content;
-	max-height: 100dvh;
-	overflow: scroll;
-	border: 1px solid var(--border);
-	display: flex;
-	justify-content: center;
 	align-items: center;
+	aspect-ratio: 16 / 9;
+	border: 1px solid var(--border);
+	box-sizing: border-box;
+	display: grid;
+	height: fit-content;
+	justify-content: center;
+	margin: 0;
+	max-height: 100dvh;
+	min-height: fit-content;
+	overflow: scroll;
+	resize: attr(data-resize);
 
-	&[data-padding="true"] {
-		padding: 1lh;
+	> div {
+		max-height: 100%;
+		max-width: 100%;
+		padding: 1cqmax;
+	}
+
+	&[data-boxed="false"] {
+		> div {
+			display: contents;
+		}
 	}
 
 	@supports not (attr(data-resize)) {
@@ -33,15 +42,6 @@
 		}
 	}
 
-	> div {
-		max-height: 100%;
-		max-width: 100%;
-
-		&[data-restrict="false"] {
-			display: contents;
-		}
-	}
-
 	figcaption {
 		/* https://piccalil.li/blog/visually-hidden/ */
 		border: 0;
@@ -51,10 +51,10 @@
 		overflow: hidden;
 		padding: 0;
 		position: absolute;
-		width: 1px;
+		text-align: center;
 		white-space: nowrap;
 
 		/* Hvis jeg finner ut hvordan jeg vil den skal se ut: */
-		text-align: center;
+		width: 1px;
 	}
 }

@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ComponentItem, componentList, SearchInput } from "../../components";
 
+import "./index.css";
+
 export const Route = createFileRoute("/components/")({
 	component: ComponentListPage,
 });
@@ -28,7 +30,7 @@ function ComponentListPage() {
 	}, [search]);
 
 	return (
-		<main className={"page"}>
+		<main className={"page components"}>
 			<h1>Komponenter</h1>
 			<search>
 				<SearchInput
@@ -39,71 +41,67 @@ function ComponentListPage() {
 				/>
 			</search>
 			{filteredComponents.length ? (
-				<ul className={"list-style-none"}>
-					{groupedComponents ? (
-						<>
-							{groupedComponents.layout && (
-								<li>
-									<h2>Layout</h2>
-									<ul>
-										{groupedComponents.layout.map((component) => (
-											<ComponentItem key={component.name} {...component} />
-										))}
-									</ul>
-								</li>
-							)}
-							{groupedComponents.handling && (
-								<li>
-									<h2>Handlinger</h2>
-									<ul>
-										{groupedComponents.handling.map((component) => (
-											<ComponentItem key={component.name} {...component} />
-										))}
-									</ul>
-								</li>
-							)}
-							{groupedComponents.skjema && (
-								<li>
-									<h2>Skjemaelementer</h2>
-									<ul>
-										{groupedComponents.skjema.map((component) => (
-											<ComponentItem key={component.name} {...component} />
-										))}
-									</ul>
-								</li>
-							)}
-							{groupedComponents.dokumentasjon && (
-								<li>
-									<h2>Dokumentasjon</h2>
-									<p>
-										En samling med komponenter brukt for å lage denne siden.
-									</p>
-									<ul>
-										{groupedComponents.dokumentasjon.map((component) => (
-											<ComponentItem key={component.name} {...component} />
-										))}
-									</ul>
-								</li>
-							)}
-							{groupedComponents.tekst && (
-								<li>
-									<h2>Tekst</h2>
-									<ul>
-										{groupedComponents.tekst.map((component) => (
-											<ComponentItem key={component.name} {...component} />
-										))}
-									</ul>
-								</li>
-							)}
-						</>
-					) : (
-						<>
-							{componentList.map((component) => (
-								<ComponentItem key={component.name} {...component} />
-							))}
-						</>
-					)}
-				</ul>
+				groupedComponents ? (
+					<ul className={"list-style-none"}>
+						{groupedComponents.layout && (
+							<li>
+								<h2>Layout</h2>
+								<ul className={"list-style-box"}>
+									{groupedComponents.layout.map((component) => (
+										<ComponentItem key={component.name} {...component} />
+									))}
+								</ul>
+							</li>
+						)}
+						{groupedComponents.handling && (
+							<li>
+								<h2>Handlinger</h2>
+								<ul className={"list-style-box"}>
+									{groupedComponents.handling.map((component) => (
+										<ComponentItem key={component.name} {...component} />
+									))}
+								</ul>
+							</li>
+						)}
+						{groupedComponents.skjema && (
+							<li>
+								<h2>Skjemaelementer</h2>
+								<ul className={"list-style-box"}>
+									{groupedComponents.skjema.map((component) => (
+										<ComponentItem key={component.name} {...component} />
+									))}
+								</ul>
+							</li>
+						)}
+						{groupedComponents.dokumentasjon && (
+							<li>
+								<h2>Dokumentasjon</h2>
+								<p>En samling med komponenter brukt for å lage denne siden.</p>
+								<ul className={"list-style-box"}>
+									{groupedComponents.dokumentasjon.map((component) => (
+										<ComponentItem key={component.name} {...component} />
+									))}
+								</ul>
+							</li>
+						)}
+						{groupedComponents.tekst && (
+							<li>
+								<h2>Tekst</h2>
+								<ul className={"list-style-box"}>
+									{groupedComponents.tekst.map((component) => (
+										<ComponentItem key={component.name} {...component} />
+									))}
+								</ul>
+							</li>
+						)}
+					</ul>
+				) : (
+					<ul className={"list-style-box"}>
+						{componentList.map((component) => (
+							<ComponentItem key={component.name} {...component} />
+						))}
+					</ul>
+				)
 			) : (
 				<p>Ingen resultater</p>
 			)}

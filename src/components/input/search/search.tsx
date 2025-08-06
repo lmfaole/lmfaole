@@ -2,13 +2,14 @@ import type { ComponentInfoTypes } from "../../component-info.type.ts";
 import { GenericInput } from "../generic";
 import type { SearchTypes } from "./search.types.ts";
 
+import "./search.css";
+
 export const SearchInput = (props: SearchTypes) => {
 	const {
 		label = "Søk",
 		placeholder = "Søk",
 		required = false,
 		name = "q",
-		size = 999,
 		...rest
 	} = props;
 
@@ -19,7 +20,6 @@ export const SearchInput = (props: SearchTypes) => {
 			name={name}
 			type="search"
 			required={required}
-			size={size}
 			placeholder={placeholder}
 		/>
 	);

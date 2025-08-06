@@ -55,6 +55,8 @@ input {
 }
 
 fieldset {
+	padding: 0;
+
 	&:has(input[required]) {
 		label::after {
 			display: none;
@@ -67,5 +69,5 @@ fieldset {
 }
 
 legend {
-	margin-block-end: 0.21lh;
+	margin-block-end: 0.3lh;
 }

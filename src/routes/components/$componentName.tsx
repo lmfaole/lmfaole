@@ -28,8 +28,7 @@ function ComponentPage() {
 					<h1>{component.name}</h1>
 					{component.description && <p>{component.description}</p>}
 					<ComponentExample
-						title={component.name}
-						showTitle={false}
+						title={"Grunnstil"}
 						columns={false}
 						open={renderToStaticMarkup(component.base).length <= 250}
 					>
@@ -37,7 +36,7 @@ function ComponentPage() {
 					</ComponentExample>
 				</header>
 
-				{component.examples && component.examples.length >= 2 && (
+				{component.examples && (
 					<div>
 						<h2>Eksempler</h2>
 						{component.examples.map((example) => (

@@ -11,19 +11,17 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 	const {
 		title = "Eksempel",
 		description,
-		showTitle = "true",
-		columns = "true",
 		resize = "both",
-		restrict,
+		boxed = true,
 		children = <Button>Knapp</Button>,
 		open,
 		...rest
 	} = props;
 
 	return (
-		<div className={"component-example"} data-columns={columns} {...rest}>
+		<div className={"component-example"} {...rest}>
 			<div className={"info"}>
-				{showTitle && <h3 className={"title"}>{title}</h3>}
+				<h3 className={"title"}>{title}</h3>
 				{typeof description === "string" ? (
 					<p className={"description"}>{description}</p>
 				) : (
@@ -31,7 +29,7 @@ export const ComponentExample = (props: ComponentExampleTypes) => {
 				)}
 			</div>
 			<div className={"showcase"}>
-				<Resizer figcaption={title} resize={resize} restrict={restrict}>
+				<Resizer caption={title} resize={resize} boxed={boxed}>
 					{children}
 				</Resizer>
 				<Details summary={"Markup"} open={open} lang={"en"}>
@@ -46,7 +44,7 @@ export const componentExampleInfo: ComponentInfoTypes = {
 	name: "Component Example",
 	category: "dokumentasjon",
 	base: (
-		<ComponentExample restrict={false}>
+		<ComponentExample>
 			<Button>Knapp</Button>
 		</ComponentExample>
 	),

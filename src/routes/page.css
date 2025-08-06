@@ -1,8 +1,8 @@
 .page {
 	--spacing: 4ch;
 
-	max-width: 90ch;
 	margin-inline: auto;
+	max-width: var(--page-width);
 
 	> header {
 		grid-area: header;
@@ -18,13 +18,12 @@
 
 	&:has(> aside) {
 		@media (min-width: 120ch) {
-			max-width: 140ch;
 			display: grid;
-			grid-template-columns: 1fr 33ch;
+			gap: 1lh 12ch;
 			grid-template-areas:
 				"header header"
 				"main complementary";
-			gap: 1lh 12ch;
+			grid-template-columns: 1fr 33ch;
 		}
 	}
 }

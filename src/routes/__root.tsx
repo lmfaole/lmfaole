@@ -4,7 +4,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 export const Route = createRootRoute({
 	component: () => (
 		<>
-			<header>
+			<header className={"page-width"}>
 				<div>
 					<Link to="/" className="[&.active]:font-bold">
 						Hjem
