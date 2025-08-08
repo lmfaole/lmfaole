@@ -17,9 +17,9 @@
 		grid-area: value;
 		font-family: monospace;
 	}
-}
 
-meter {
-	width: 100%;
-	height: 1lh;
+	meter {
+		width: 100%;
+		height: 1lh;
+	}
 }
