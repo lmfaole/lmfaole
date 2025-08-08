@@ -9,10 +9,10 @@ export const Meter = (props: MeterType) => {
 	return (
 		<div className={"meter-wrapper"}>
 			<div className={"meter"}>
-				<label id={`${label}-meter`} aria-describedby={`${label}-desc`}>
+				<label id={`${label}-meter`} >
 					{label}
 				</label>
-				<meter aria-labelledby={`${label}-meter`} {...rest} />
+				<meter aria-labelledby={`${label}-meter`} aria-describedby={`${label}-desc`} {...rest}/>
 				<small id={`${label}-desc`}>
 					{props.value} av {props.max}
 				</small>
