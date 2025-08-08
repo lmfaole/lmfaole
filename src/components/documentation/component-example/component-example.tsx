@@ -20,7 +20,7 @@ export const ComponentExample = ({
 			</p>
 			<div className={"showcase"}>
 				<div inert={!interactive}>{children}</div>
-				{showMarkup && <Code language={"tsx"}>{children}</Code>}
+				{showMarkup && <Code language={"html"}>{children}</Code>}
 			</div>
 		</div>
 	);

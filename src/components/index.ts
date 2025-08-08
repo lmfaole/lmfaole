@@ -10,6 +10,7 @@ import {
 	telInputInfo,
 	textInputInfo,
 } from "./input";
+import { meterInfo } from "./meter";
 
 export const componentList = [
 	buttonInfo,
@@ -22,6 +23,7 @@ export const componentList = [
 	textInputInfo,
 	searchInputInfo,
 	switchInfo,
+	meterInfo,
 ];
 
 export * from "./button";

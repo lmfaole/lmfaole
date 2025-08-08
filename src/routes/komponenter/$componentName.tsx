@@ -27,11 +27,11 @@ function ComponentPage() {
 					</ComponentExample>
 				</header>
 
-				<h2>Om komponenten</h2>
+				{/*	<h2>Om komponenten</h2>
 				<dl className={"metadata"}>
 					<dt>Kategori</dt>
 					<dd>{component.category}</dd>
-				</dl>
+				</dl>*/}
 
 				{component.examples && (
 					<div>

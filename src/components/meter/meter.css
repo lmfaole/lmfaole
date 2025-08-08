@@ -1,0 +1,11 @@
+.meter {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-template-areas:
+		"label label"
+		"meter value";
+
+	label {
+		grid-area: label;
+	}
+}
