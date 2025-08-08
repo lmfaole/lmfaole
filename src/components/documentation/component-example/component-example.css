@@ -1,6 +1,7 @@
 .component-example {
 	display: grid;
 	grid-template-columns: 1fr;
+	margin-block-end: 3lh;
 
 	@container (width > 800px) {
 		grid-template-columns: repeat(2, 1fr);
@@ -10,10 +11,5 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 1lh;
-	}
-
-	.title {
-		margin: 0;
-		max-width: 100%;
 	}
 }
