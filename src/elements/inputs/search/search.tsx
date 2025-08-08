@@ -1,4 +1,4 @@
-import type { ElementInfoType } from "../element-info.type.ts";
+import type { ElementInfoType } from "../../element-info.type.ts";
 import type { SearchType } from "./search.type.ts";
 
 export const Search = (props: SearchType) => {

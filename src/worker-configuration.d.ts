@@ -810,7 +810,7 @@ declare class Event {
 	get srcElement(): EventTarget | undefined;
 
 	/**
-	 * Returns the event's timestamp as the input-number of milliseconds measured relative to the time origin.
+	 * Returns the event's timestamp as the number of milliseconds measured relative to the time origin.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/timeStamp)
 	 */
@@ -1144,7 +1144,7 @@ declare abstract class Crypto {
 	randomUUID(): string;
 }
 /**
- * This Web Crypto API interface provides a input-number of low-level cryptographic functions. It is accessed via the Crypto.subtle properties available in a window context (via Window.crypto).
+ * This Web Crypto API interface provides a number of low-level cryptographic functions. It is accessed via the Crypto.subtle properties available in a window context (via Window.crypto).
  * Available only in secure contexts.
  *
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SubtleCrypto)
@@ -1362,7 +1362,7 @@ declare class DigestStream extends WritableStream<
 	get bytesWritten(): number | bigint;
 }
 /**
- * A decoder for a specific method, that is a specific character encoding, like utf-8, iso-8859-2, koi8, cp1261, gbk, etc. A decoder takes a stream of bytes as input and emits a stream of code points. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
+ * A decoder for a specific method, that is a specific character encoding, like utf-8, iso-8859-2, koi8, cp1261, gbk, etc. A decoder takes a stream of bytes as inputs and emits a stream of code points. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
  *
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextDecoder)
  */
@@ -1376,7 +1376,7 @@ declare class TextDecoder {
 	get ignoreBOM(): boolean;
 
 	/**
-	 * Returns the result of running encoding's decoder. The method can be invoked zero or more times with options's stream set to true, and then once without options's stream (or set to false), to process a fragmented input. If the invocation without options's stream (or set to false) has no input, it's clearest to omit both arguments.
+	 * Returns the result of running encoding's decoder. The method can be invoked zero or more times with options's stream set to true, and then once without options's stream (or set to false), to process a fragmented inputs. If the invocation without options's stream (or set to false) has no inputs, it's clearest to omit both arguments.
 	 *
 	 * ```
 	 * var string = "", decoder = new TextDecoder(encoding), buffer;
@@ -1396,7 +1396,7 @@ declare class TextDecoder {
 	): string;
 }
 /**
- * TextEncoder takes a stream of code points as input and emits a stream of bytes. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
+ * TextEncoder takes a stream of code points as inputs and emits a stream of bytes. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
  *
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextEncoder)
  */
@@ -1413,7 +1413,7 @@ declare class TextEncoder {
 	encode(input?: string): Uint8Array;
 
 	/**
-	 * Runs the UTF-8 encoder on source, stores the result of that operation into destination, and returns the progress made as an object wherein read is the input-number of converted code units of source and written is the input-number of bytes modified in destination.
+	 * Runs the UTF-8 encoder on source, stores the result of that operation into destination, and returns the progress made as an object wherein read is the number of converted code units of source and written is the number of bytes modified in destination.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextEncoder/encodeInto)
 	 */
@@ -2259,7 +2259,7 @@ interface Transformer<I = any, O = any> {
 }
 interface StreamPipeOptions {
 	/**
-	 * Pipes this readable stream to a given writable stream destination. The way in which the piping process behaves under various error conditions can be customized with a input-number of passed options. It returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
+	 * Pipes this readable stream to a given writable stream destination. The way in which the piping process behaves under various error conditions can be customized with a number of passed options. It returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
 	 *
 	 * Piping a stream will lock it for the duration of the pipe, preventing any other consumer from acquiring a reader.
 	 *
@@ -2575,7 +2575,7 @@ interface QueuingStrategyInit {
 	/**
 	 * Creates a new ByteLengthQueuingStrategy with the provided high water mark.
 	 *
-	 * Note that the provided high water mark will not be validated ahead of time. Instead, if it is negative, NaN, or not a input-number, the resulting ByteLengthQueuingStrategy will cause the corresponding stream constructor to throw.
+	 * Note that the provided high water mark will not be validated ahead of time. Instead, if it is negative, NaN, or not a number, the resulting ByteLengthQueuingStrategy will cause the corresponding stream constructor to throw.
 	 */
 	highWaterMark: number;
 }
@@ -2775,48 +2775,48 @@ declare class URLSearchParams {
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/size) */
 	get size(): number;
 	/**
-	 * Appends a specified key/value pair as a new input-search parameter.
+	 * Appends a specified key/value pair as a new search parameter.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/append)
 	 */
 	append(name: string, value: string): void;
 	/**
-	 * Deletes the given input-search parameter, and its associated value, from the list of all input-search parameters.
+	 * Deletes the given search parameter, and its associated value, from the list of all search parameters.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/delete)
 	 */
 	delete(name: string, value?: string): void;
 	/**
-	 * Returns the first value associated to the given input-search parameter.
+	 * Returns the first value associated to the given search parameter.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/get)
 	 */
 	get(name: string): string | null;
 	/**
-	 * Returns all the values association with a given input-search parameter.
+	 * Returns all the values association with a given search parameter.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/getAll)
 	 */
 	getAll(name: string): string[];
 	/**
-	 * Returns a Boolean indicating if such a input-search parameter exists.
+	 * Returns a Boolean indicating if such a search parameter exists.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/has)
 	 */
 	has(name: string, value?: string): boolean;
 	/**
-	 * Sets the value associated to a given input-search parameter to the given value. If there were several values, delete the others.
+	 * Sets the value associated to a given search parameter to the given value. If there were several values, delete the others.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/set)
 	 */
 	set(name: string, value: string): void;
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/sort) */
 	sort(): void;
-	/* Returns an array of key, value pairs for every entry in the input-search params. */
+	/* Returns an array of key, value pairs for every entry in the search params. */
 	entries(): IterableIterator<[key: string, value: string]>;
-	/* Returns a list of keys in the input-search params. */
+	/* Returns a list of keys in the search params. */
 	keys(): IterableIterator<string>;
-	/* Returns a list of values in the input-search params. */
+	/* Returns a list of values in the search params. */
 	values(): IterableIterator<string>;
 	forEach<This = unknown>(
 		callback: (
@@ -3433,7 +3433,7 @@ type Ai_Cf_Unum_Uform_Gen2_Qwen_500M_Input =
 	| string
 	| {
 			/**
-			 * The input input-text prompt for the model to generate a response.
+			 * The inputs text prompt for the model to generate a response.
 			 */
 			prompt?: string;
 			/**
@@ -3466,7 +3466,7 @@ type Ai_Cf_Unum_Uform_Gen2_Qwen_500M_Input =
 			presence_penalty?: number;
 			image: number[] | (string & NonNullable<unknown>);
 			/**
-			 * The maximum input-number of tokens to generate in the response.
+			 * The maximum number of tokens to generate in the response.
 			 */
 			max_tokens?: number;
 	  };
@@ -3526,7 +3526,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Input {
 	 */
 	vad_filter?: string;
 	/**
-	 * A input-text prompt to help provide context to the model on the contents of the audio.
+	 * A text prompt to help provide context to the model on the contents of the audio.
 	 */
 	initial_prompt?: string;
 	/**
@@ -3558,7 +3558,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Output {
 	 */
 	text: string;
 	/**
-	 * The total input-number of words in the transcription.
+	 * The total number of words in the transcription.
 	 */
 	word_count?: number;
 	segments?: {
@@ -3583,7 +3583,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Output {
 		 */
 		avg_logprob?: number;
 		/**
-		 * The compression ratio of the input to the output, measuring how much the input-text was compressed during the transcription process.
+		 * The compression ratio of the inputs to the output, measuring how much the text was compressed during the transcription process.
 		 */
 		compression_ratio?: number;
 		/**
@@ -3606,7 +3606,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Output {
 		}[];
 	}[];
 	/**
-	 * The transcription in WebVTT format, which includes timing and input-text information for use in subtitles.
+	 * The transcription in WebVTT format, which includes timing and text information for use in subtitles.
 	 */
 	vtt?: string;
 }
@@ -3668,7 +3668,7 @@ interface BGEM3OutputEmbeddingForContexts {
 interface BGEM3OuputEmbedding {
 	shape?: number[];
 	/**
-	 * Embeddings of the requested input-text values
+	 * Embeddings of the requested text values
 	 */
 	data?: number[][];
 	/**
@@ -3682,11 +3682,11 @@ declare abstract class Base_Ai_Cf_Baai_Bge_M3 {
 }
 interface Ai_Cf_Black_Forest_Labs_Flux_1_Schnell_Input {
 	/**
-	 * A input-text description of the image you want to generate.
+	 * A text description of the image you want to generate.
 	 */
 	prompt: string;
 	/**
-	 * The input-number of diffusion steps; higher values can improve quality but take longer.
+	 * The number of diffusion steps; higher values can improve quality but take longer.
 	 */
 	steps?: number;
 }
@@ -3703,7 +3703,7 @@ declare abstract class Base_Ai_Cf_Black_Forest_Labs_Flux_1_Schnell {
 type Ai_Cf_Meta_Llama_3_2_11B_Vision_Instruct_Input = Prompt | Messages;
 interface Prompt {
 	/**
-	 * The input input-text prompt for the model to generate a response.
+	 * The inputs text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	image?: number[] | (string & NonNullable<unknown>);
@@ -3716,7 +3716,7 @@ interface Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum input-number of tokens to generate in the response.
+	 * The maximum number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -3866,7 +3866,7 @@ interface Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum input-number of tokens to generate in the response.
+	 * The maximum number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -3901,7 +3901,7 @@ interface Messages {
 type Ai_Cf_Meta_Llama_3_2_11B_Vision_Instruct_Output =
 	| {
 			/**
-			 * The generated input-text response from the model
+			 * The generated text response from the model
 			 */
 			response?: string;
 			/**
@@ -3938,7 +3938,7 @@ interface Ai_Cf_Meta_Llama_Guard_3_8B_Input {
 		content: string;
 	}[];
 	/**
-	 * The maximum input-number of tokens to generate in the response.
+	 * The maximum number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -3950,7 +3950,7 @@ interface Ai_Cf_Meta_Llama_Guard_3_8B_Input {
 	 */
 	response_format?: {
 		/**
-		 * Set to json_object to process and output generated input-text as JSON.
+		 * Set to json_object to process and output generated text as JSON.
 		 */
 		type?: string;
 	};
@@ -3973,15 +3973,15 @@ interface Ai_Cf_Meta_Llama_Guard_3_8B_Output {
 	 */
 	usage?: {
 		/**
-		 * Total input-number of tokens in input
+		 * Total number of tokens in inputs
 		 */
 		prompt_tokens?: number;
 		/**
-		 * Total input-number of tokens in output
+		 * Total number of tokens in output
 		 */
 		completion_tokens?: number;
 		/**
-		 * Total input-number of input and output tokens
+		 * Total number of inputs and output tokens
 		 */
 		total_tokens?: number;
 	};
@@ -4029,7 +4029,7 @@ type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Input =
 	| Ai_Cf_Meta_Llama_4_Messages;
 interface Ai_Cf_Meta_Llama_4_Prompt {
 	/**
-	 * The input input-text prompt for the model to generate a response.
+	 * The inputs text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	/**
@@ -4045,7 +4045,7 @@ interface Ai_Cf_Meta_Llama_4_Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum input-number of tokens to generate in the response.
+	 * The maximum number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4226,7 +4226,7 @@ interface Ai_Cf_Meta_Llama_4_Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum input-number of tokens to generate in the response.
+	 * The maximum number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4261,7 +4261,7 @@ interface Ai_Cf_Meta_Llama_4_Messages {
 type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Output =
 	| {
 			/**
-			 * The generated input-text response from the model
+			 * The generated text response from the model
 			 */
 			response: string;
 			/**
@@ -4269,15 +4269,15 @@ type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Output =
 			 */
 			usage?: {
 				/**
-				 * Total input-number of tokens in input
+				 * Total number of tokens in inputs
 				 */
 				prompt_tokens?: number;
 				/**
-				 * Total input-number of tokens in output
+				 * Total number of tokens in output
 				 */
 				completion_tokens?: number;
 				/**
-				 * Total input-number of input and output tokens
+				 * Total number of inputs and output tokens
 				 */
 				total_tokens?: number;
 			};
@@ -4723,11 +4723,11 @@ interface RequestInitCfProperties extends Record<string, unknown> {
 	 */
 	cacheTags?: string[];
 	/**
-	 * Force response to be cached for a given input-number of seconds. (e.g. 300)
+	 * Force response to be cached for a given number of seconds. (e.g. 300)
 	 */
 	cacheTtl?: number;
 	/**
-	 * Force response to be cached for a given input-number of seconds based on the Origin status code.
+	 * Force response to be cached for a given number of seconds based on the Origin status code.
 	 * (e.g. { '200-299': 86400, '404': 1, '500-599': 0 })
 	 */
 	cacheTtlByStatus?: Record<string, number>;
@@ -4761,7 +4761,7 @@ interface RequestInitCfPropertiesImageDraw extends BasicImageTransformations {
 	 */
 	url: string;
 	/**
-	 * Floating-point input-number between 0 (transparent) and 1 (opaque).
+	 * Floating-point number between 0 (transparent) and 1 (opaque).
 	 * For example, opacity: 0.5 makes overlay semitransparent.
 	 */
 	opacity?: number;
@@ -4801,7 +4801,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	 * resizing or rotation.
 	 *
 	 * It can be used as:
-	 * - left, top, right, bottom - it will specify the input-number of pixels to cut
+	 * - left, top, right, bottom - it will specify the number of pixels to cut
 	 *   off each side
 	 * - width, height - the width/height you'd like to end up with - can be used
 	 *   in combination with the properties above
@@ -4809,7 +4809,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	 *   it's color. It consists of three properties:
 	 *    - color: rgb or hex representation of the color you wish to trim (todo: verify the rgba bit)
 	 *    - tolerance: difference from color to treat as color
-	 *    - keep: the input-number of pixels of border to keep
+	 *    - keep: the number of pixels of border to keep
 	 */
 	trim?:
 		| "border"
@@ -4855,12 +4855,12 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 		| "png-force"
 		| "svg";
 	/**
-	 * Whether to preserve animation frames from input files. Default is true.
+	 * Whether to preserve animation frames from inputs files. Default is true.
 	 * Setting it to false reduces animations to still images. This setting is
 	 * recommended when enlarging images or processing arbitrary user content,
 	 * because large GIF animations can weigh tens or even hundreds of megabytes.
 	 * It is also useful to set anim:false when using format:"json" to get the
-	 * response quicker without the input-number of frames.
+	 * response quicker without the number of frames.
 	 */
 	anim?: boolean;
 	/**
@@ -4879,7 +4879,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	metadata?: "keep" | "copyright" | "none";
 	/**
 	 * Strength of sharpening filter to apply to the image. Floating-point
-	 * input-number between 0 (no sharpening, default) and 10 (maximum). 1.0 is a
+	 * number between 0 (no sharpening, default) and 10 (maximum). 1.0 is a
 	 * recommended value for downscaled images.
 	 */
 	sharpen?: number;
@@ -4995,7 +4995,7 @@ interface IncomingRequestCfPropertiesBase extends Record<string, unknown> {
 	 */
 	clientAcceptEncoding?: string;
 	/**
-	 * The input-number of milliseconds it took for the request to reach your worker.
+	 * The number of milliseconds it took for the request to reach your worker.
 	 *
 	 * @example 22
 	 */
@@ -5286,13 +5286,13 @@ interface IncomingRequestCfPropertiesTLSClientAuth {
 	/** The certificate subject's distinguished name (legacy policies) */
 	certSubjectDNLegacy: string;
 	/**
-	 * The certificate's serial input-number
+	 * The certificate's serial number
 	 *
 	 * @example "00936EACBE07F201DF"
 	 */
 	certSerial: string;
 	/**
-	 * The certificate issuer's serial input-number
+	 * The certificate issuer's serial number
 	 *
 	 * @example "2489002934BDFEA34"
 	 */
@@ -5936,7 +5936,7 @@ type ImageOutputOptions = {
 interface ImagesBinding {
 	/**
 	 * Get image metadata (type, width and height)
-	 * @throws {@link ImagesError} with code 9412 if input is not an image
+	 * @throws {@link ImagesError} with code 9412 if inputs is not an image
 	 * @param stream The image bytes
 	 */
 	info(stream: ReadableStream<Uint8Array>): Promise<ImageInfoResponse>;
@@ -5966,7 +5966,7 @@ interface ImageTransformer {
 	): ImageTransformer;
 	/**
 	 * Retrieve the image that results from applying the transforms to the
-	 * provided input
+	 * provided inputs
 	 * @param options Options that apply to the output e.g. output format
 	 */
 	output(options: ImageOutputOptions): Promise<ImageTransformationResult>;
@@ -6712,14 +6712,14 @@ interface VectorizeIndexDetails {
 	description?: string;
 	/** The index configuration, including the dimension size and distance metric. */
 	config: VectorizeIndexConfig;
-	/** The input-number of records containing vectors within the index. */
+	/** The number of records containing vectors within the index. */
 	vectorsCount: number;
 }
 /**
  * Metadata about an existing index.
  */
 interface VectorizeIndexInfo {
-	/** The input-number of records containing vectors within the index. */
+	/** The number of records containing vectors within the index. */
 	vectorCount: number;
 	/** Number of dimensions the index has been configured for. */
 	dimensions: number;
@@ -6766,7 +6766,7 @@ interface VectorizeMatches {
 interface VectorizeVectorMutation {
 	/* List of ids of vectors that were successfully processed. */
 	ids: string[];
-	/* Total count of the input-number of processed vectors. */
+	/* Total count of the number of processed vectors. */
 	count: number;
 }
 /**
@@ -6790,8 +6790,8 @@ declare abstract class VectorizeIndex {
 	 */
 	public describe(): Promise<VectorizeIndexDetails>;
 	/**
-	 * Use the provided vector to perform a similarity input-search across the index.
-	 * @param vector Input vector that will be used to drive the similarity input-search.
+	 * Use the provided vector to perform a similarity search across the index.
+	 * @param vector Input vector that will be used to drive the similarity search.
 	 * @param options Configuration options to massage the returned data.
 	 * @returns A promise that resolves with matched and scored vectors.
 	 */
@@ -6836,8 +6836,8 @@ declare abstract class Vectorize {
 	 */
 	public describe(): Promise<VectorizeIndexInfo>;
 	/**
-	 * Use the provided vector to perform a similarity input-search across the index.
-	 * @param vector Input vector that will be used to drive the similarity input-search.
+	 * Use the provided vector to perform a similarity search across the index.
+	 * @param vector Input vector that will be used to drive the similarity search.
 	 * @param options Configuration options to massage the returned data.
 	 * @returns A promise that resolves with matched and scored vectors.
 	 */
@@ -6846,7 +6846,7 @@ declare abstract class Vectorize {
 		options?: VectorizeQueryOptions,
 	): Promise<VectorizeMatches>;
 	/**
-	 * Use the provided vector-id to perform a similarity input-search across the index.
+	 * Use the provided vector-id to perform a similarity search across the index.
 	 * @param vectorId Id for a vector in the index against which the index should be queried.
 	 * @param options Configuration options to massage the returned data.
 	 * @returns A promise that resolves with matched and scored vectors.
@@ -6898,7 +6898,7 @@ interface DynamicDispatchLimits {
 	 */
 	cpuMs?: number;
 	/**
-	 * Limit input-number of subrequests.
+	 * Limit number of subrequests.
 	 */
 	subRequests?: number;
 }

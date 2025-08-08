@@ -7,14 +7,14 @@ export const Progress = (props: ProgressType) => {
 	const { label, ...rest } = props;
 
 	return (
-		<div className={"progress"}>
-			<label id={`${label}-progress`}>{label}</label>
-			<progress aria-labelledby={`${label}-progress`} {...rest} />
-		</div>
+		<label>
+			{label}
+			<progress {...rest} />
+		</label>
 	);
 };
 
 export const progressInfo: ElementInfoType = {
 	name: "Progress",
-	example: <Progress label={"Laster..."} />,
+	example: <Progress label={"Laster"} />,
 };

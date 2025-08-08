@@ -1,42 +1,8 @@
 :root {
-	--mute: 20%;
 	--page-width: 120ch;
-
-	--color-bg: light-dark(white, black);
-	--color-bg-muted: light-dark(whitesmoke, transparent);
-	--color-bg-accent: light-dark(green, midnightblue);
-	--color-bg-danger: brown;
-	--color-bg-note: aliceblue;
-
-	--color-text: light-dark(black, white);
-	--color-text-accent: white;
-	--color-text-danger: white;
-
-	--hover-color-bg: color-mix(
-		in srgb,
-		var(--color-bg-accent),
-		var(--color-text-accent)
-	);
-
-	--border: 1px solid
-		color-mix(in srgb, var(--color-text) var(--mute), var(--color-bg));
-	--border-danger: 1px solid
-		color-mix(
-			in srgb,
-			var(--color-text-danger) var(--mute),
-			var(--color-bg-danger)
-		);
-	--border-note: 1px solid
-		color-mix(in srgb, var(--color-text) var(--mute), var(--color-bg-note));
 
 	color-scheme: light dark;
 	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-	background-color: var(--color-bg);
-	color: var(--color-text);
-
-	@media (prefers-contrast: more) {
-		--mute: 50%;
-	}
 }
 
 #root {
@@ -45,18 +11,6 @@
 
 * {
 	line-height: 1.5;
-
-	&[data-danger="true"] {
-		background-color: var(--color-bg-danger);
-		color: var(--color-text-danger);
-		border: var(--border-danger);
-	}
-
-	&[disabled] {
-		background-color: revert;
-		color: revert;
-		border-style: dashed;
-	}
 }
 
 h1,
@@ -118,8 +72,7 @@ p {
 }
 
 a {
-	color: currentColor;
-	text-underline-offset: 0.06lh;
+	text-underline-offset: 0.1lh;
 }
 
 main {

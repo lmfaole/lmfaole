@@ -1,10 +1,10 @@
-import type { ElementInfoType } from "../element-info.type.ts";
+import type { ElementInfoType } from "../../element-info.type.ts";
 import type { PhoneType } from "./phone.type.ts";
 
 export const Phone = (props: PhoneType) => {
 	const {
 		label = "Telefonnummer",
-		autoComplete = "input-phone-national",
+		autoComplete = "phone-national",
 		size = 12,
 		...rest
 	} = props;

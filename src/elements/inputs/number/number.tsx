@@ -1,4 +1,4 @@
-import type { ElementInfoType } from "../element-info.type.ts";
+import type { ElementInfoType } from "../../element-info.type.ts";
 import type { NumberType } from "./number.type.ts";
 
 export const Number = (props: NumberType) => {

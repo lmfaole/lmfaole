@@ -1,7 +1,3 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes } from "react";
 
-export type ButtonType = ButtonHTMLAttributes<HTMLButtonElement> & {
-	icon?: ReactNode;
-	iconPosition?: "start" | "end";
-	danger?: boolean;
-};
+export type ButtonType = ButtonHTMLAttributes<HTMLButtonElement>;

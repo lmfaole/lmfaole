@@ -1,4 +1,4 @@
-import type { ElementInfoType } from "../element-info.type.ts";
+import type { ElementInfoType } from "../../element-info.type.ts";
 import type { TextType } from "./text.type.ts";
 
 export const Text = (props: TextType) => {

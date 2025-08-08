@@ -1,5 +1,5 @@
-import { mockFlavors } from "../../components/component.mock.data.ts";
-import type { ElementInfoType } from "../element-info.type.ts";
+import { mockFlavors } from "../../../components/component.mock.data.ts";
+import type { ElementInfoType } from "../../element-info.type.ts";
 import type { CheckboxType } from "./checkbox.type.ts";
 
 export const Checkbox = (props: CheckboxType) => {
