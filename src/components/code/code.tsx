@@ -1,16 +1,16 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { Button } from "../../button";
-import type { ComponentInfoTypes } from "../../component-info.type.ts";
+import { Button } from "../button";
+import type { ComponentInfoTypes } from "../component-info.type.ts";
 import type { CodeTypes } from "./code.types.ts";
 
-export const Code = ({ children }: CodeTypes) => {
+export const Code = ({ children, language }: CodeTypes) => {
 	const toFormatedText = renderToStaticMarkup(children).replaceAll(
 		"><",
 		">\n<",
 	);
 
 	return (
-		<pre>
+		<pre data-language={language} className={"code"}>
 			<code>{toFormatedText}</code>
 		</pre>
 	);
@@ -18,7 +18,7 @@ export const Code = ({ children }: CodeTypes) => {
 
 export const codeExampleInfo: ComponentInfoTypes = {
 	name: "Kode",
-	category: "dokumentasjon",
+	category: "tekst",
 	base: (
 		<Code>
 			<Button>Knapp</Button>

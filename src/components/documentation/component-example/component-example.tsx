@@ -1,40 +1,26 @@
 import { Button } from "../../button";
+import { Code } from "../../code";
 import type { ComponentInfoTypes } from "../../component-info.type.ts";
-import { Details } from "../../details";
-import { Resizer } from "../../layout";
-import { Code } from "../code";
 import type { ComponentExampleTypes } from "./component-example.types.ts";
 
 import "./component-example.css";
 
-export const ComponentExample = (props: ComponentExampleTypes) => {
-	const {
-		title = "Eksempel",
-		description,
-		resize = "both",
-		boxed = true,
-		children = <Button>Knapp</Button>,
-		open,
-		...rest
-	} = props;
-
+export const ComponentExample = ({
+	title = "Eksempel",
+	description,
+	children = <Button>Knapp</Button>,
+	showMarkup = true,
+	interactive = false,
+	...rest
+}: ComponentExampleTypes) => {
 	return (
 		<div className={"component-example"} {...rest}>
-			<div className={"info"}>
-				<h3 className={"title"}>{title}</h3>
-				{typeof description === "string" ? (
-					<p className={"description"}>{description}</p>
-				) : (
-					description
-				)}
-			</div>
+			<p className={"title h3"} data-theme={"dark"}>
+				{title}
+			</p>
 			<div className={"showcase"}>
-				<Resizer caption={title} resize={resize} boxed={boxed}>
-					{children}
-				</Resizer>
-				<Details summary={"Markup"} open={open} lang={"en"}>
-					<Code>{children}</Code>
-				</Details>
+				<div inert={!interactive}>{children}</div>
+				{showMarkup && <Code language={"tsx"}>{children}</Code>}
 			</div>
 		</div>
 	);

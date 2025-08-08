@@ -1,27 +1,28 @@
 details {
-	border: 1px solid var(--border);
 	width: 100%;
 	box-sizing: border-box;
+	border: var(--border);
+
+	&:has(+ details) {
+		border-block-end: 0;
+	}
 
 	summary {
 		min-height: 44px;
-		display: flex;
+		display: grid;
 		align-items: center;
-		cursor: pointer;
-		padding-inline: 1ch 2ch;
-		transition:
-			var(--animation-ease-out) border-color,
-			var(--animation-ease-out) background-color;
+		padding-inline: 12px 2ch;
+		grid-template-columns: 24px 1fr;
 
 		&::before {
 			content: "↓" / "";
-			margin-inline-end: 1ch;
 		}
 	}
 
 	&[open] {
+		border: 1px solid var(--color-text);
+
 		summary {
-			background-color: var(--action);
 			&::before {
 				content: "↑" / "";
 			}
@@ -29,6 +30,7 @@ details {
 	}
 
 	> div {
-		padding: 1ex;
+		padding: 1.5ex calc(24px + 12px) 2ex calc(24px + 12px);
+		border-block-start: var(--border);
 	}
 }

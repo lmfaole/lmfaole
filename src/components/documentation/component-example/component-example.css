@@ -1,33 +1,19 @@
 .component-example {
-	min-width: 20ch;
-	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr;
 
-	.info {
-		p {
-			font-size: large;
-		}
+	@container (width > 800px) {
+		grid-template-columns: repeat(2, 1fr);
 	}
 
 	.showcase {
 		display: grid;
-		grid-template-rows: 1fr auto;
+		grid-template-columns: 1fr;
+		gap: 1lh;
+	}
+
+	.title {
+		margin: 0;
 		max-width: 100%;
-
-		> * {
-			width: 100%;
-		}
-
-		> details {
-			margin-block-start: -1px;
-
-			div {
-				max-height: 10lh;
-				overflow: scroll;
-			}
-		}
-
-		> .resizer {
-			height: 100%;
-		}
 	}
 }

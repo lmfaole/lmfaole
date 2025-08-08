@@ -36,16 +36,18 @@ label:has(input[data-switch="true"]) {
 
 	&:has(input[data-full-width="true"]) {
 		width: 100%;
+		container-type: inline-size;
 	}
 
 	.switch {
 		display: flex;
 		padding: 4px;
+		background-color: var(--color-bg);
 
 		&,
 		.toggle {
 			border-radius: 1lh;
-			border: 1px var(--border-style) var(--border);
+			border: var(--border);
 		}
 
 		.toggle {
@@ -61,9 +63,13 @@ label:has(input[data-switch="true"]) {
 	}
 
 	&:has(input:checked) {
+		background-color: var(--color-bg-muted);
+
 		.toggle {
 			margin-inline-start: auto;
-			background-color: var(--action);
+			background-color: var(--color-bg-accent);
+			color: var(--color-text-accent);
+			border-color: var(--color-text-accent);
 		}
 
 		.cross {
@@ -76,7 +82,7 @@ label:has(input[data-switch="true"]) {
 	}
 
 	&:hover {
-		background-color: var(--action);
+		background-color: var(--hover-color-bg);
 	}
 
 	&:has(input[disabled]) {
@@ -89,7 +95,7 @@ label:has(input[data-switch="true"]) {
 		cursor: pointer;
 	}
 
-	@media (prefers-contrast: more) {
+	@container (min-width: 600px) {
 		&:has(input[data-full-width="true"]) {
 			.text {
 				display: grid;
@@ -102,7 +108,8 @@ label:has(input[data-switch="true"]) {
 				content: "";
 				width: 100%;
 				height: 1px;
-				border-block-end: 1px dotted var(--border);
+				border-block-end: var(--border);
+				opacity: var(--mute);
 			}
 		}
 	}

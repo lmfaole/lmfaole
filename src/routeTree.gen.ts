@@ -10,53 +10,91 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ComponentsIndexRouteImport } from './routes/components/index'
-import { Route as ComponentsComponentNameRouteImport } from './routes/components/$componentName'
+import { Route as MChar248nsterIndexRouteImport } from './routes/mønster/index'
+import { Route as KomponenterIndexRouteImport } from './routes/komponenter/index'
+import { Route as MChar248nsterPatternNameRouteImport } from './routes/mønster/$patternName'
+import { Route as KomponenterComponentNameRouteImport } from './routes/komponenter/$componentName'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ComponentsIndexRoute = ComponentsIndexRouteImport.update({
-  id: '/components/',
-  path: '/components/',
+const MChar248nsterIndexRoute = MChar248nsterIndexRouteImport.update({
+  id: '/mønster/',
+  path: '/mønster/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ComponentsComponentNameRoute = ComponentsComponentNameRouteImport.update({
-  id: '/components/$componentName',
-  path: '/components/$componentName',
+const KomponenterIndexRoute = KomponenterIndexRouteImport.update({
+  id: '/komponenter/',
+  path: '/komponenter/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MChar248nsterPatternNameRoute =
+  MChar248nsterPatternNameRouteImport.update({
+    id: '/mønster/$patternName',
+    path: '/mønster/$patternName',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const KomponenterComponentNameRoute =
+  KomponenterComponentNameRouteImport.update({
+    id: '/komponenter/$componentName',
+    path: '/komponenter/$componentName',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/components/$componentName': typeof ComponentsComponentNameRoute
-  '/components': typeof ComponentsIndexRoute
+  '/komponenter/$componentName': typeof KomponenterComponentNameRoute
+  '/mønster/$patternName': typeof MChar248nsterPatternNameRoute
+  '/komponenter': typeof KomponenterIndexRoute
+  '/mønster': typeof MChar248nsterIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/components/$componentName': typeof ComponentsComponentNameRoute
-  '/components': typeof ComponentsIndexRoute
+  '/komponenter/$componentName': typeof KomponenterComponentNameRoute
+  '/mønster/$patternName': typeof MChar248nsterPatternNameRoute
+  '/komponenter': typeof KomponenterIndexRoute
+  '/mønster': typeof MChar248nsterIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/components/$componentName': typeof ComponentsComponentNameRoute
-  '/components/': typeof ComponentsIndexRoute
+  '/komponenter/$componentName': typeof KomponenterComponentNameRoute
+  '/mønster/$patternName': typeof MChar248nsterPatternNameRoute
+  '/komponenter/': typeof KomponenterIndexRoute
+  '/mønster/': typeof MChar248nsterIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/components/$componentName' | '/components'
+  fullPaths:
+    | '/'
+    | '/komponenter/$componentName'
+    | '/mønster/$patternName'
+    | '/komponenter'
+    | '/mønster'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/components/$componentName' | '/components'
-  id: '__root__' | '/' | '/components/$componentName' | '/components/'
+  to:
+    | '/'
+    | '/komponenter/$componentName'
+    | '/mønster/$patternName'
+    | '/komponenter'
+    | '/mønster'
+  id:
+    | '__root__'
+    | '/'
+    | '/komponenter/$componentName'
+    | '/mønster/$patternName'
+    | '/komponenter/'
+    | '/mønster/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ComponentsComponentNameRoute: typeof ComponentsComponentNameRoute
-  ComponentsIndexRoute: typeof ComponentsIndexRoute
+  KomponenterComponentNameRoute: typeof KomponenterComponentNameRoute
+  MChar248nsterPatternNameRoute: typeof MChar248nsterPatternNameRoute
+  KomponenterIndexRoute: typeof KomponenterIndexRoute
+  MChar248nsterIndexRoute: typeof MChar248nsterIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,18 +106,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/components/': {
-      id: '/components/'
-      path: '/components'
-      fullPath: '/components'
-      preLoaderRoute: typeof ComponentsIndexRouteImport
+    '/mønster/': {
+      id: '/mønster/'
+      path: '/mønster'
+      fullPath: '/mønster'
+      preLoaderRoute: typeof MChar248nsterIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/components/$componentName': {
-      id: '/components/$componentName'
-      path: '/components/$componentName'
-      fullPath: '/components/$componentName'
-      preLoaderRoute: typeof ComponentsComponentNameRouteImport
+    '/komponenter/': {
+      id: '/komponenter/'
+      path: '/komponenter'
+      fullPath: '/komponenter'
+      preLoaderRoute: typeof KomponenterIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mønster/$patternName': {
+      id: '/mønster/$patternName'
+      path: '/mønster/$patternName'
+      fullPath: '/mønster/$patternName'
+      preLoaderRoute: typeof MChar248nsterPatternNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/komponenter/$componentName': {
+      id: '/komponenter/$componentName'
+      path: '/komponenter/$componentName'
+      fullPath: '/komponenter/$componentName'
+      preLoaderRoute: typeof KomponenterComponentNameRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -87,8 +139,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ComponentsComponentNameRoute: ComponentsComponentNameRoute,
-  ComponentsIndexRoute: ComponentsIndexRoute,
+  KomponenterComponentNameRoute: KomponenterComponentNameRoute,
+  MChar248nsterPatternNameRoute: MChar248nsterPatternNameRoute,
+  KomponenterIndexRoute: KomponenterIndexRoute,
+  MChar248nsterIndexRoute: MChar248nsterIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

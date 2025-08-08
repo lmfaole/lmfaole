@@ -4,8 +4,9 @@ button {
 	width: max-content;
 	font-size: medium;
 	padding-inline: 1.5ch;
-	border: 1px solid var(--border);
-	background-color: var(--action);
+	background-color: var(--color-bg-accent);
+	color: var(--color-text-accent);
+	border: var(--border);
 
 	&:has(svg) {
 		display: grid;
@@ -23,17 +24,12 @@ button {
 		}
 	}
 
-	&[data-danger="true"] {
-		border-color: var(--danger);
-		background-color: var(--danger);
-	}
-
 	&:not([disabled], [aria-disabled]) {
 		cursor: pointer;
+	}
 
-		&:active {
-			transition-property: none;
-		}
+	&:hover {
+		--color-bg-accent: light-dark(seagreen, navy);
 	}
 }
 

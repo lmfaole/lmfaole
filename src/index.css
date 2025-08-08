@@ -1,43 +1,41 @@
-@import url("./components/input/input.css");
-@import url("./routes/page.css");
-
 :root {
-	--border: hsl(from var(--border-color) h s l / var(--contrast));
-
-	--contrast: 0.07;
-	--accent-color: light-dark(green, limegreen);
-	--bg-color: hsl(from currentColor h s l / var(--contrast-less));
-	--border-color: hsl(from currentColor h s l / var(--contrast));
-
-	--danger-color: light-dark(darkred, red);
-
-	--note-color: light-dark(navy, lightblue);
-
-	/* Bakgrunner */
-	color-scheme: light dark;
-	--animation-ease-out: 0.2s ease-out;
-	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-	--contrast-less: 0.02;
-	--contrast-more: 0.15;
-	--contrast-most: 0.2;
-
+	--mute: 20%;
 	--page-width: 120ch;
 
-	@media (prefers-color-scheme: dark) {
-		--contrast: 0.1;
-		--contrast-less: 0.02;
-		--contrast-more: 0.2;
-		--contrast-most: 0.23;
-	}
+	--color-bg: light-dark(white, black);
+	--color-bg-muted: light-dark(whitesmoke, transparent);
+	--color-bg-accent: light-dark(green, midnightblue);
+	--color-bg-danger: brown;
+	--color-bg-note: aliceblue;
+
+	--color-text: light-dark(black, white);
+	--color-text-accent: white;
+	--color-text-danger: white;
+
+	--hover-color-bg: color-mix(
+		in srgb,
+		var(--color-bg-accent),
+		var(--color-text-accent)
+	);
+
+	--border: 1px solid
+		color-mix(in srgb, var(--color-text) var(--mute), var(--color-bg));
+	--border-danger: 1px solid
+		color-mix(
+			in srgb,
+			var(--color-text-danger) var(--mute),
+			var(--color-bg-danger)
+		);
+	--border-note: 1px solid
+		color-mix(in srgb, var(--color-text) var(--mute), var(--color-bg-note));
+
+	color-scheme: light dark;
+	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	background-color: var(--color-bg);
+	color: var(--color-text);
 
 	@media (prefers-contrast: more) {
-		--contrast: 0.4;
-		--contrast-less: 0.1;
-		--contrast-more: 0.6;
-		--contrast-most: 0.8;
-	}
-	@media (prefers-reduced-motion: reduce) {
-		--animation-ease-out: 0;
+		--mute: 50%;
 	}
 }
 
@@ -48,15 +46,34 @@
 * {
 	line-height: 1.5;
 
+	&[data-danger="true"] {
+		background-color: var(--color-bg-danger);
+		color: var(--color-text-danger);
+		border: var(--border-danger);
+	}
+
 	&[disabled] {
+		background-color: revert;
+		color: revert;
 		border-style: dashed;
-		opacity: 0.5;
 	}
 }
 
 .page-width {
 	margin-inline: auto;
 	max-width: var(--page-width);
+}
+
+.global-header ul {
+	list-style: none;
+	padding-inline-start: 0;
+	margin: 0;
+
+	li {
+		margin: 0;
+		margin-inline-end: 2ch;
+		display: inline;
+	}
 }
 
 h1,
@@ -98,6 +115,7 @@ h4,
 h5,
 .h5 {
 	font-size: medium;
+	font-weight: 500;
 }
 
 h6,
@@ -121,6 +139,22 @@ a {
 pre {
 	margin-block: 0;
 	white-space: pre-wrap;
+	background-color: var(--color-bg-muted);
+	border: var(--border);
+	border-radius: 0.25lh;
+	padding: 0.5lh 2ch;
+	overflow: hidden;
+	position: relative;
+
+	&[data-language] {
+		&::before {
+			display: block;
+			content: "." attr(data-language);
+			text-transform: uppercase;
+			margin-block-end: 1lh;
+			text-align: end;
+		}
+	}
 }
 
 main {
@@ -137,41 +171,9 @@ ul,
 ol,
 dl {
 	margin-block-end: 3lh;
-}
 
-ul {
-	&.list-style-none {
-		list-style: none;
-		padding-inline-start: 0;
-	}
-
-	&.list-style-line-between {
-		list-style: none;
-		padding-inline-start: 0;
-
-		> li {
-			&:not(:last-of-type) {
-				border-block-end: 1px solid var(--border);
-			}
-		}
-	}
-
-	&.list-style-line-end {
-		list-style: none;
-		padding-inline-start: 0;
-
-		> li {
-			border-block-end: 1px solid var(--border);
-		}
-	}
-
-	&.list-style-box {
-		list-style: none;
-		padding-inline-start: 0;
-
-		> li {
-			border: 1px solid var(--border);
-		}
+	li {
+		margin-block-end: 1lh;
 	}
 }
 
@@ -182,29 +184,82 @@ fieldset,
 legend,
 select,
 details {
-	--action: hsl(from var(--accent-color) h s l / var(--contrast));
-	--danger: hsl(from var(--danger-color) h s l / var(--contrast));
-	--border-style: solid;
-	transition:
-		var(--animation-ease-out) border-color,
-		var(--animation-ease-out) background-color;
-
-	&:not([disabled]):hover {
-		--action: hsl(from var(--accent-color) h s l / var(--contrast));
-		--border: hsl(from currentColor h s l / var(--contrast-most));
-		--danger: hsl(from var(--danger-color) h s l / var(--contrast-most));
-	}
-
-	&:not(:hover):checked,
-	&:not(:hover):has(:checked) {
-		--action: hsl(from var(--accent-color) h s l / var(--contrast));
-		--border: hsl(from currentColor h s l / var(--contrast-more));
-		--danger: hsl(from var(--danger-color) h s l / var(--contrast-most));
-	}
-
 	&[disabled],
 	&:has([disabled]) {
-		--border-style: dashed;
 		text-decoration: line-through;
 	}
+}
+
+label {
+	display: block;
+
+	&:has(input) {
+		display: flex;
+		min-height: 44px;
+		padding-inline-end: 3ch;
+		align-items: center;
+		gap: 0.5ch;
+
+		&:has(:checked) {
+			background-color: var(--color-bg-accent);
+		}
+	}
+
+	&:has(+ input[required]),
+	&:has(+ select[required]) {
+		&::after {
+			content: " (påkrevd)";
+		}
+	}
+
+	+ input {
+		margin-block-start: 0.25lh;
+		margin-block-end: 1lh;
+	}
+
+	&:has(input[disabled]),
+	&:has(+ input[disabled]) {
+		cursor: not-allowed;
+		opacity: 0.6;
+	}
+}
+
+input {
+	font-size: medium;
+	min-height: 44px;
+	max-width: 100%;
+	padding-inline: 1ch;
+	box-sizing: border-box;
+	border: var(--border);
+
+	+ span.suffix {
+		margin-inline-start: 1ch;
+	}
+
+	&[disabled] {
+		cursor: not-allowed;
+
+		+ span.suffix {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+	}
+}
+
+fieldset {
+	padding: 0;
+
+	&:has(input[required]) {
+		label::after {
+			display: none;
+		}
+
+		legend::after {
+			content: " (påkrevd)";
+		}
+	}
+}
+
+legend {
+	margin-block-end: 0.3lh;
 }

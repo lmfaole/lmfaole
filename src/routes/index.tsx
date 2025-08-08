@@ -6,7 +6,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
 	return (
-		<main className={"page-width"}>
+		<main>
 			<p>
 				Hei, jeg er på{" "}
 				<a href={"https://www.linkedin.com/in/olejorgenbakken"}>linkedin</a>.

@@ -1,5 +1,5 @@
 input[type="search"] {
-	border: 1px var(--border-style) var(--border);
+	border: var(--border);
 	max-width: 100%;
 	width: 100%;
 }
