@@ -1,0 +1,9 @@
+.progress {
+	width: 100%;
+	text-align: center;
+}
+
+progress {
+	max-width: 24ch;
+	width: 100%;
+}

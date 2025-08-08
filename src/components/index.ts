@@ -11,6 +11,7 @@ import {
 	textInputInfo,
 } from "./input";
 import { meterInfo } from "./meter";
+import { progressInfo } from "./progress";
 
 export const componentList = [
 	buttonInfo,
@@ -24,6 +25,7 @@ export const componentList = [
 	searchInputInfo,
 	switchInfo,
 	meterInfo,
+	progressInfo,
 ];
 
 export * from "./button";
