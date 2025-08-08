@@ -90,6 +90,7 @@ h6,
 .h6 {
 	font-weight: 500;
 	text-wrap: balance;
+	margin-block: 1lh;
 }
 
 h1,
@@ -124,8 +125,10 @@ h6,
 }
 
 p {
+	font-size: medium;
 	max-width: 66ch;
 	text-wrap: pretty;
+
 	&:not(:last-of-type) {
 		margin-block-end: 2lh;
 	}

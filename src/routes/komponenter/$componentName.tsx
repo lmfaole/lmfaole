@@ -36,17 +36,13 @@ function ComponentPage() {
 				{component.examples && (
 					<div>
 						<h2>Eksempler</h2>
-						<ul>
-							{component.examples.map((example) => (
-								<li>
-									<ComponentExample
-										key={example.title}
-										interactive={true}
-										{...example}
-									/>
-								</li>
-							))}
-						</ul>
+						{component.examples.map((example) => (
+							<ComponentExample
+								key={example.title}
+								interactive={true}
+								{...example}
+							/>
+						))}
 					</div>
 				)}
 			</article>
