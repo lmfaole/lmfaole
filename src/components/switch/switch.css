@@ -1,0 +1,102 @@
+.switch {
+	display: grid;
+	grid-template-columns: 2.9em 1fr;
+	gap: 2ch;
+	align-items: center;
+	padding-block: 0.25lh;
+	padding-inline: 2ch;
+	margin-inline: -2ch;
+	border-radius: 2lh;
+
+	input {
+		border: 0;
+		clip: rect(0 0 0 0);
+		height: auto;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+		white-space: nowrap;
+		grid-column: 3;
+	}
+
+	> * {
+		grid-row: 1;
+	}
+
+	.toggle {
+		display: flex;
+		padding: 4px;
+		background-color: var(--color-bg);
+
+		&,
+		.icon {
+			border-radius: 1lh;
+			border: var(--border);
+		}
+
+		.icon {
+			display: flex;
+			font-size: large;
+			padding: 2px;
+			margin: -1px;
+		}
+	}
+
+	.check {
+		display: none;
+	}
+
+	&:has(input:checked) {
+		background-color: var(--color-bg-muted);
+
+		.icon {
+			margin-inline-start: auto;
+			background-color: var(--color-bg-accent);
+			color: var(--color-text-accent);
+			border-color: var(--color-text-accent);
+		}
+
+		.cross {
+			display: none;
+		}
+
+		.check {
+			display: inline-block;
+		}
+	}
+
+	&:hover {
+		background-color: var(--hover-color-bg);
+	}
+
+	&:has(input[disabled]) {
+		.toggle {
+			border-style: dashed;
+		}
+	}
+
+	&:not(:has(input[disabled])) {
+		cursor: pointer;
+	}
+
+	@container (min-width: 600px) {
+		&:has(input[data-full-width="true"]) {
+			.text {
+				display: grid;
+				grid-template-columns: auto 1fr;
+				align-items: center;
+				gap: 2ch;
+			}
+
+			> .text::after {
+				content: "";
+				width: 100%;
+				height: 1px;
+				border-block-end: var(--border);
+				opacity: var(--mute);
+			}
+		}
+	}
+}

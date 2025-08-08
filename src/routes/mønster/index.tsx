@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { patternsList } from "../../patterns";
+import { patterns } from "../../patterns";
 
 export const Route = createFileRoute("/mønster/")({
 	component: RouteComponent,
@@ -17,7 +17,7 @@ function RouteComponent() {
 				.
 			</p>
 			<ul>
-				{patternsList.map((pattern) => (
+				{patterns.map((pattern) => (
 					<li>
 						<Link
 							to={"/mønster/$patternName"}

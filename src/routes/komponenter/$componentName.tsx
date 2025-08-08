@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ComponentExample, componentList } from "../../components";
+import { components } from "../../components";
+import { ComponentExample } from "../../components/component-example/component-example.tsx";
 
 export const Route = createFileRoute("/komponenter/$componentName")({
 	component: ComponentPage,
@@ -8,7 +9,9 @@ export const Route = createFileRoute("/komponenter/$componentName")({
 function ComponentPage() {
 	const { componentName } = Route.useParams();
 
-	const component = componentList.find((c) => c.name === componentName);
+	const component = components.find(
+		(component) => component.name === componentName,
+	);
 
 	if (!component) return <h1>Du må ha kommet feil</h1>;
 
@@ -17,13 +20,12 @@ function ComponentPage() {
 			<article className={"page"}>
 				<header>
 					<h1>{component.name}</h1>
-					{component.description && <p>{component.description}</p>}
 					<ComponentExample
 						title={"Grunnstil"}
 						interactive={true}
 						showMarkup={true}
 					>
-						{component.base}
+						{component.example}
 					</ComponentExample>
 				</header>
 
@@ -33,7 +35,7 @@ function ComponentPage() {
 					<dd>{component.category}</dd>
 				</dl>*/}
 
-				{component.examples && (
+				{/*{component.examples && (
 					<div>
 						<h2>Eksempler</h2>
 						{component.examples.map((example) => (
@@ -44,7 +46,7 @@ function ComponentPage() {
 							/>
 						))}
 					</div>
-				)}
+				)}*/}
 			</article>
 		</main>
 	);

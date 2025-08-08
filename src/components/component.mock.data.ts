@@ -25,4 +25,4 @@ export const mockGroupedFlavors = [
 		label: "Annet",
 		items: ["Jordbær", "Pistasj", "Karamell", "Banan"],
 	},
-];
+].sort();

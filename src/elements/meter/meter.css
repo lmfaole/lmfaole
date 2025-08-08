@@ -1,0 +1,25 @@
+.meter {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-template-areas:
+		"label label"
+		"meter value";
+	align-items: center;
+	column-gap: 2ch;
+	width: 100%;
+
+	label {
+		margin: 0;
+		grid-area: label;
+	}
+
+	small {
+		grid-area: value;
+		font-family: monospace;
+	}
+}
+
+meter {
+	width: 100%;
+	height: 1lh;
+}

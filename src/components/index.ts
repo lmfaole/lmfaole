@@ -1,36 +1,9 @@
-import { buttonInfo } from "./button";
-import { detailsInfo } from "./details";
-import {
-	checkboxInfo,
-	numberInputInfo,
-	radioInfo,
-	searchInputInfo,
-	selectInfo,
-	switchInfo,
-	telInputInfo,
-	textInputInfo,
-} from "./input";
-import { meterInfo } from "./meter";
-import { progressInfo } from "./progress";
+import { switchInfo } from "./switch/switch.tsx";
+import { tagInfo } from "./tag/tag.tsx";
 
-export const componentList = [
-	buttonInfo,
-	detailsInfo,
-	checkboxInfo,
-	numberInputInfo,
-	radioInfo,
-	selectInfo,
-	telInputInfo,
-	textInputInfo,
-	searchInputInfo,
-	switchInfo,
-	meterInfo,
-	progressInfo,
-];
+export * from "./switch/switch.tsx";
+export * from "./tag/tag.tsx";
 
-export * from "./button";
-export * from "./details";
-export * from "./documentation";
-export * from "./input";
+export const components = [switchInfo, tagInfo];
 
-export default componentList.sort((a, b) => a.name.localeCompare(b.name));
+export default components.sort((a, b) => a.name.localeCompare(b.name));

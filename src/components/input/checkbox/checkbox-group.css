@@ -1,9 +1,0 @@
-@layer group {
-	fieldset:has(input[type="checkbox"]) {
-		border: 0;
-
-		&:not(:last-child) {
-			margin-block-end: 4lh;
-		}
-	}
-}

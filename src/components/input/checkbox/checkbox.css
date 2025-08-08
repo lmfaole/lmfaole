@@ -1,7 +1,0 @@
-label:has(input:not(input[data-switch])) {
-	padding-inline-start: 1ch;
-
-	.switch {
-		display: none;
-	}
-}

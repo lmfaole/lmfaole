@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { patternsList } from "../../patterns";
+import { patterns } from "../../patterns";
 
 export const Route = createFileRoute("/mønster/$patternName")({
 	component: RouteComponent,
@@ -8,7 +8,7 @@ export const Route = createFileRoute("/mønster/$patternName")({
 function RouteComponent() {
 	const { patternName } = Route.useParams();
 
-	const pattern = patternsList.find((c) => c.name === patternName);
+	const pattern = patterns.find((c) => c.name === patternName);
 
 	if (!pattern) return <h1>Du må ha kommet feil</h1>;
 

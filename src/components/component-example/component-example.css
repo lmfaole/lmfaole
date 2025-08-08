@@ -1,0 +1,11 @@
+.component-example {
+	display: grid;
+	grid-template-columns: 1fr;
+	margin-block-end: 3lh;
+
+	.showcase {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1lh;
+	}
+}

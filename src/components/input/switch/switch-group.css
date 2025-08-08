@@ -1,9 +1,0 @@
-@layer group {
-    fieldset[data-full-width="true"]:has(input[data-switch="true"]) {
-        legend {
-            font-weight: 500;
-            padding-inline-start: 0;
-            font-size: large;
-        }
-    }
-}

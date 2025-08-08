@@ -30,17 +30,6 @@ declare var onmessage: never;
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException)
  */
 declare class DOMException extends Error {
-	constructor(message?: string, name?: string);
-	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/message) */
-	readonly message: string;
-	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/name) */
-	readonly name: string;
-	/**
-	 * @deprecated
-	 *
-	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/code)
-	 */
-	readonly code: number;
 	static readonly INDEX_SIZE_ERR: number;
 	static readonly DOMSTRING_SIZE_ERR: number;
 	static readonly HIERARCHY_REQUEST_ERR: number;
@@ -66,6 +55,19 @@ declare class DOMException extends Error {
 	static readonly TIMEOUT_ERR: number;
 	static readonly INVALID_NODE_TYPE_ERR: number;
 	static readonly DATA_CLONE_ERR: number;
+	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/message) */
+	readonly message: string;
+	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/name) */
+	readonly name: string;
+	/**
+	 * @deprecated
+	 *
+	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/code)
+	 */
+	readonly code: number;
+
+	constructor(message?: string, name?: string);
+
 	get stack(): any;
 	set stack(value: any);
 }
@@ -154,8 +156,10 @@ declare namespace WebAssembly {
 		mutable?: boolean;
 	}
 	class Global {
-		constructor(descriptor: GlobalDescriptor, value?: any);
 		value: any;
+
+		constructor(descriptor: GlobalDescriptor, value?: any);
+
 		valueOf(): any;
 	}
 	type ImportValue = ExportValue | number;
@@ -164,8 +168,9 @@ declare namespace WebAssembly {
 	type ExportValue = Function | Global | Memory | Table;
 	type Exports = Record<string, ExportValue>;
 	class Instance {
-		constructor(module: Module, imports?: Imports);
 		readonly exports: Exports;
+
+		constructor(module: Module, imports?: Imports);
 	}
 	interface MemoryDescriptor {
 		initial: number;
@@ -173,8 +178,10 @@ declare namespace WebAssembly {
 		shared?: boolean;
 	}
 	class Memory {
-		constructor(descriptor: MemoryDescriptor);
 		readonly buffer: ArrayBuffer;
+
+		constructor(descriptor: MemoryDescriptor);
+
 		grow(delta: number): number;
 	}
 	type ImportExportKind = "function" | "global" | "memory" | "table";
@@ -199,8 +206,10 @@ declare namespace WebAssembly {
 		maximum?: number;
 	}
 	class Table {
-		constructor(descriptor: TableDescriptor, value?: any);
 		readonly length: number;
+
+		constructor(descriptor: TableDescriptor, value?: any);
+
 		get(index: number): any;
 		grow(delta: number, value?: any): number;
 		set(index: number, value?: any): void;
@@ -217,29 +226,6 @@ declare namespace WebAssembly {
 interface ServiceWorkerGlobalScope extends WorkerGlobalScope {
 	DOMException: typeof DOMException;
 	WorkerGlobalScope: typeof WorkerGlobalScope;
-	btoa(data: string): string;
-	atob(data: string): string;
-	setTimeout(callback: (...args: any[]) => void, msDelay?: number): number;
-	setTimeout<Args extends any[]>(
-		callback: (...args: Args) => void,
-		msDelay?: number,
-		...args: Args
-	): number;
-	clearTimeout(timeoutId: number | null): void;
-	setInterval(callback: (...args: any[]) => void, msDelay?: number): number;
-	setInterval<Args extends any[]>(
-		callback: (...args: Args) => void,
-		msDelay?: number,
-		...args: Args
-	): number;
-	clearInterval(timeoutId: number | null): void;
-	queueMicrotask(task: Function): void;
-	structuredClone<T>(value: T, options?: StructuredSerializeOptions): T;
-	reportError(error: any): void;
-	fetch(
-		input: RequestInfo | URL,
-		init?: RequestInit<RequestInitCfProperties>,
-	): Promise<Response>;
 	self: ServiceWorkerGlobalScope;
 	crypto: Crypto;
 	caches: CacheStorage;
@@ -303,6 +289,41 @@ interface ServiceWorkerGlobalScope extends WorkerGlobalScope {
 	FixedLengthStream: typeof FixedLengthStream;
 	IdentityTransformStream: typeof IdentityTransformStream;
 	HTMLRewriter: typeof HTMLRewriter;
+
+	btoa(data: string): string;
+
+	atob(data: string): string;
+
+	setTimeout(callback: (...args: any[]) => void, msDelay?: number): number;
+
+	setTimeout<Args extends any[]>(
+		callback: (...args: Args) => void,
+		msDelay?: number,
+		...args: Args
+	): number;
+
+	clearTimeout(timeoutId: number | null): void;
+
+	setInterval(callback: (...args: any[]) => void, msDelay?: number): number;
+
+	setInterval<Args extends any[]>(
+		callback: (...args: Args) => void,
+		msDelay?: number,
+		...args: Args
+	): number;
+
+	clearInterval(timeoutId: number | null): void;
+
+	queueMicrotask(task: Function): void;
+
+	structuredClone<T>(value: T, options?: StructuredSerializeOptions): T;
+
+	reportError(error: any): void;
+
+	fetch(
+		input: RequestInfo | URL,
+		init?: RequestInit<RequestInitCfProperties>,
+	): Promise<Response>;
 }
 declare function addEventListener<Type extends keyof WorkerGlobalScopeEventMap>(
 	type: Type,
@@ -397,9 +418,11 @@ declare const origin: string;
 declare const navigator: Navigator;
 interface TestController {}
 interface ExecutionContext {
-	waitUntil(promise: Promise<any>): void;
-	passThroughOnException(): void;
 	props: any;
+
+	waitUntil(promise: Promise<any>): void;
+
+	passThroughOnException(): void;
 }
 type ExportedHandlerFetchHandler<Env = unknown, CfHostMetadata = unknown> = (
 	request: Request<CfHostMetadata, IncomingRequestCfProperties<CfHostMetadata>>,
@@ -461,6 +484,11 @@ declare abstract class PromiseRejectionEvent extends Event {
 	readonly reason: any;
 }
 declare abstract class Navigator {
+	readonly userAgent: string;
+	readonly hardwareConcurrency: number;
+	readonly language: string;
+	readonly languages: string[];
+
 	sendBeacon(
 		url: string,
 		body?:
@@ -472,10 +500,6 @@ declare abstract class Navigator {
 			| URLSearchParams
 			| URLSearchParams,
 	): boolean;
-	readonly userAgent: string;
-	readonly hardwareConcurrency: number;
-	readonly language: string;
-	readonly languages: string[];
 }
 /**
  * The Workers runtime supports a subset of the Performance API, used to measure timing and performance,
@@ -521,9 +545,11 @@ type DurableObjectStub<
 	readonly name?: string;
 };
 interface DurableObjectId {
-	toString(): string;
-	equals(other: DurableObjectId): boolean;
 	readonly name?: string;
+
+	toString(): string;
+
+	equals(other: DurableObjectId): boolean;
 }
 interface DurableObjectNamespace<
 	T extends Rpc.DurableObjectBranded | undefined = undefined,
@@ -559,10 +585,12 @@ interface DurableObjectNamespaceGetDurableObjectOptions {
 	locationHint?: DurableObjectLocationHint;
 }
 interface DurableObjectState {
-	waitUntil(promise: Promise<any>): void;
 	readonly id: DurableObjectId;
 	readonly storage: DurableObjectStorage;
 	container?: Container;
+
+	waitUntil(promise: Promise<any>): void;
+
 	blockConcurrencyWhile<T>(callback: () => Promise<T>): Promise<T>;
 	acceptWebSocket(ws: WebSocket, tags?: string[]): void;
 	getWebSockets(tag?: string): WebSocket[];
@@ -606,40 +634,54 @@ interface DurableObjectTransaction {
 	deleteAlarm(options?: DurableObjectSetAlarmOptions): Promise<void>;
 }
 interface DurableObjectStorage {
+	sql: SqlStorage;
+
 	get<T = unknown>(
 		key: string,
 		options?: DurableObjectGetOptions,
 	): Promise<T | undefined>;
+
 	get<T = unknown>(
 		keys: string[],
 		options?: DurableObjectGetOptions,
 	): Promise<Map<string, T>>;
+
 	list<T = unknown>(
 		options?: DurableObjectListOptions,
 	): Promise<Map<string, T>>;
+
 	put<T>(
 		key: string,
 		value: T,
 		options?: DurableObjectPutOptions,
 	): Promise<void>;
+
 	put<T>(
 		entries: Record<string, T>,
 		options?: DurableObjectPutOptions,
 	): Promise<void>;
+
 	delete(key: string, options?: DurableObjectPutOptions): Promise<boolean>;
+
 	delete(keys: string[], options?: DurableObjectPutOptions): Promise<number>;
+
 	deleteAll(options?: DurableObjectPutOptions): Promise<void>;
+
 	transaction<T>(
 		closure: (txn: DurableObjectTransaction) => Promise<T>,
 	): Promise<T>;
+
 	getAlarm(options?: DurableObjectGetAlarmOptions): Promise<number | null>;
+
 	setAlarm(
 		scheduledTime: number | Date,
 		options?: DurableObjectSetAlarmOptions,
 	): Promise<void>;
+
 	deleteAlarm(options?: DurableObjectSetAlarmOptions): Promise<void>;
+
 	sync(): Promise<void>;
-	sql: SqlStorage;
+
 	transactionSync<T>(closure: () => T): T;
 	getCurrentBookmark(): Promise<string>;
 	getBookmarkForTime(timestamp: number | Date): Promise<string>;
@@ -690,119 +732,138 @@ interface AnalyticsEngineDataPoint {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event)
  */
 declare class Event {
+	static readonly NONE: number;
+	static readonly CAPTURING_PHASE: number;
+	static readonly AT_TARGET: number;
+	static readonly BUBBLING_PHASE: number;
+
 	constructor(type: string, init?: EventInit);
+
 	/**
 	 * Returns the type of event, e.g. "click", "hashchange", or "submit".
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/type)
 	 */
 	get type(): string;
+
 	/**
 	 * Returns the event's phase, which is one of NONE, CAPTURING_PHASE, AT_TARGET, and BUBBLING_PHASE.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/eventPhase)
 	 */
 	get eventPhase(): number;
+
 	/**
 	 * Returns true or false depending on how event was initialized. True if event invokes listeners past a ShadowRoot node that is the root of its target, and false otherwise.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/composed)
 	 */
 	get composed(): boolean;
+
 	/**
 	 * Returns true or false depending on how event was initialized. True if event goes through its target's ancestors in reverse tree order, and false otherwise.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/bubbles)
 	 */
 	get bubbles(): boolean;
+
 	/**
 	 * Returns true or false depending on how event was initialized. Its return value does not always carry meaning, but true can indicate that part of the operation during which event was dispatched, can be canceled by invoking the preventDefault() method.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/cancelable)
 	 */
 	get cancelable(): boolean;
+
 	/**
 	 * Returns true if preventDefault() was invoked successfully to indicate cancelation, and false otherwise.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/defaultPrevented)
 	 */
 	get defaultPrevented(): boolean;
+
 	/**
 	 * @deprecated
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/returnValue)
 	 */
 	get returnValue(): boolean;
+
 	/**
 	 * Returns the object whose event listener's callback is currently being invoked.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/currentTarget)
 	 */
 	get currentTarget(): EventTarget | undefined;
+
 	/**
 	 * Returns the object to which event is dispatched (its target).
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/target)
 	 */
 	get target(): EventTarget | undefined;
+
 	/**
 	 * @deprecated
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/srcElement)
 	 */
 	get srcElement(): EventTarget | undefined;
+
 	/**
-	 * Returns the event's timestamp as the number of milliseconds measured relative to the time origin.
+	 * Returns the event's timestamp as the input-number of milliseconds measured relative to the time origin.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/timeStamp)
 	 */
 	get timeStamp(): number;
+
 	/**
 	 * Returns true if event was dispatched by the user agent, and false otherwise.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/isTrusted)
 	 */
 	get isTrusted(): boolean;
+
 	/**
 	 * @deprecated
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/cancelBubble)
 	 */
 	get cancelBubble(): boolean;
+
 	/**
 	 * @deprecated
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/cancelBubble)
 	 */
 	set cancelBubble(value: boolean);
+
 	/**
 	 * Invoking this method prevents event from reaching any registered event listeners after the current one finishes running and, when dispatched in a tree, also prevents event from reaching any other objects.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/stopImmediatePropagation)
 	 */
 	stopImmediatePropagation(): void;
+
 	/**
 	 * If invoked when the cancelable attribute value is true, and while executing a listener for the event with passive set to false, signals to the operation that caused event to be dispatched that it needs to be canceled.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/preventDefault)
 	 */
 	preventDefault(): void;
+
 	/**
 	 * When dispatched in a tree, invoking this method prevents event from reaching any objects other than the current object.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/stopPropagation)
 	 */
 	stopPropagation(): void;
+
 	/**
 	 * Returns the invocation target objects of event's path (objects on which listeners will be invoked), except for any nodes in shadow trees of which the shadow root's mode is "closed" that are not reachable from event's currentTarget.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/composedPath)
 	 */
 	composedPath(): EventTarget[];
-	static readonly NONE: number;
-	static readonly CAPTURING_PHASE: number;
-	static readonly AT_TARGET: number;
-	static readonly BUBBLING_PHASE: number;
 }
 interface EventInit {
 	bubbles?: boolean;
@@ -904,24 +965,31 @@ declare class AbortController {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal)
  */
 declare abstract class AbortSignal extends EventTarget {
-	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/abort_static) */
-	static abort(reason?: any): AbortSignal;
-	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/timeout_static) */
-	static timeout(delay: number): AbortSignal;
-	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/any_static) */
-	static any(signals: AbortSignal[]): AbortSignal;
 	/**
 	 * Returns true if this AbortSignal's AbortController has signaled to abort, and false otherwise.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/aborted)
 	 */
 	get aborted(): boolean;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/reason) */
 	get reason(): any;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/abort_event) */
 	get onabort(): any | null;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/abort_event) */
 	set onabort(value: any | null);
+
+	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/abort_static) */
+	static abort(reason?: any): AbortSignal;
+
+	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/timeout_static) */
+	static timeout(delay: number): AbortSignal;
+
+	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/any_static) */
+	static any(signals: AbortSignal[]): AbortSignal;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/throwIfAborted) */
 	throwIfAborted(): void;
 }
@@ -1010,9 +1078,10 @@ interface FileOptions {
  * [Cloudflare Docs Reference](https://developers.cloudflare.com/workers/runtime-apis/cache/)
  */
 declare abstract class CacheStorage {
+	readonly default: Cache;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/CacheStorage/open) */
 	open(cacheName: string): Promise<Cache>;
-	readonly default: Cache;
 }
 /**
  * The Cache API allows fine grained control of reading and writing from the Cloudflare global network cache.
@@ -1045,12 +1114,15 @@ interface CacheQueryOptions {
  * [Cloudflare Docs Reference](https://developers.cloudflare.com/workers/runtime-apis/web-crypto/)
  */
 declare abstract class Crypto {
+	DigestStream: typeof DigestStream;
+
 	/**
 	 * Available only in secure contexts.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Crypto/subtle)
 	 */
 	get subtle(): SubtleCrypto;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/Crypto/getRandomValues) */
 	getRandomValues<
 		T extends
@@ -1063,16 +1135,16 @@ declare abstract class Crypto {
 			| BigInt64Array
 			| BigUint64Array,
 	>(buffer: T): T;
+
 	/**
 	 * Available only in secure contexts.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Crypto/randomUUID)
 	 */
 	randomUUID(): string;
-	DigestStream: typeof DigestStream;
 }
 /**
- * This Web Crypto API interface provides a number of low-level cryptographic functions. It is accessed via the Crypto.subtle properties available in a window context (via Window.crypto).
+ * This Web Crypto API interface provides a input-number of low-level cryptographic functions. It is accessed via the Crypto.subtle properties available in a window context (via Window.crypto).
  * Available only in secure contexts.
  *
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SubtleCrypto)
@@ -1283,8 +1355,10 @@ interface CryptoKeyArbitraryKeyAlgorithm {
 declare class DigestStream extends WritableStream<
 	ArrayBuffer | ArrayBufferView
 > {
-	constructor(algorithm: string | SubtleCryptoHashAlgorithm);
 	readonly digest: Promise<ArrayBuffer>;
+
+	constructor(algorithm: string | SubtleCryptoHashAlgorithm);
+
 	get bytesWritten(): number | bigint;
 }
 /**
@@ -1294,6 +1368,13 @@ declare class DigestStream extends WritableStream<
  */
 declare class TextDecoder {
 	constructor(label?: string, options?: TextDecoderConstructorOptions);
+
+	get encoding(): string;
+
+	get fatal(): boolean;
+
+	get ignoreBOM(): boolean;
+
 	/**
 	 * Returns the result of running encoding's decoder. The method can be invoked zero or more times with options's stream set to true, and then once without options's stream (or set to false), to process a fragmented input. If the invocation without options's stream (or set to false) has no input, it's clearest to omit both arguments.
 	 *
@@ -1313,9 +1394,6 @@ declare class TextDecoder {
 		input?: ArrayBuffer | ArrayBufferView,
 		options?: TextDecoderDecodeOptions,
 	): string;
-	get encoding(): string;
-	get fatal(): boolean;
-	get ignoreBOM(): boolean;
 }
 /**
  * TextEncoder takes a stream of code points as input and emits a stream of bytes. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
@@ -1324,14 +1402,18 @@ declare class TextDecoder {
  */
 declare class TextEncoder {
 	constructor();
+
+	get encoding(): string;
+
 	/**
 	 * Returns the result of running UTF-8's encoder.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextEncoder/encode)
 	 */
 	encode(input?: string): Uint8Array;
+
 	/**
-	 * Runs the UTF-8 encoder on source, stores the result of that operation into destination, and returns the progress made as an object wherein read is the number of converted code units of source and written is the number of bytes modified in destination.
+	 * Runs the UTF-8 encoder on source, stores the result of that operation into destination, and returns the progress made as an object wherein read is the input-number of converted code units of source and written is the input-number of bytes modified in destination.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextEncoder/encodeInto)
 	 */
@@ -1339,7 +1421,6 @@ declare class TextEncoder {
 		input: string,
 		buffer: ArrayBuffer | ArrayBufferView,
 	): TextEncoderEncodeIntoResult;
-	get encoding(): string;
 }
 interface TextDecoderConstructorOptions {
 	fatal: boolean;
@@ -1615,8 +1696,6 @@ declare var Response: {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Response)
  */
 interface Response extends Body {
-	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/clone) */
-	clone(): Response;
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/status) */
 	status: number;
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/statusText) */
@@ -1633,6 +1712,9 @@ interface Response extends Body {
 	cf: any | undefined;
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/type) */
 	type: "default" | "error";
+
+	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/clone) */
+	clone(): Response;
 }
 interface ResponseInit {
 	status?: number;
@@ -1664,8 +1746,6 @@ declare var Request: {
  */
 interface Request<CfHostMetadata = unknown, Cf = CfProperties<CfHostMetadata>>
 	extends Body {
-	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/clone) */
-	clone(): Request<CfHostMetadata, Cf>;
 	/**
 	 * Returns request's HTTP method, which is "GET" by default.
 	 *
@@ -1716,6 +1796,9 @@ interface Request<CfHostMetadata = unknown, Cf = CfProperties<CfHostMetadata>>
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/cache)
 	 */
 	cache?: "no-store";
+
+	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/clone) */
+	clone(): Request<CfHostMetadata, Cf>;
 }
 interface RequestInit<Cf = CfProperties> {
 	/* A string to set request's method. */
@@ -2176,7 +2259,7 @@ interface Transformer<I = any, O = any> {
 }
 interface StreamPipeOptions {
 	/**
-	 * Pipes this readable stream to a given writable stream destination. The way in which the piping process behaves under various error conditions can be customized with a number of passed options. It returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
+	 * Pipes this readable stream to a given writable stream destination. The way in which the piping process behaves under various error conditions can be customized with a input-number of passed options. It returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
 	 *
 	 * Piping a stream will lock it for the duration of the pipe, preventing any other consumer from acquiring a reader.
 	 *
@@ -2294,11 +2377,14 @@ interface ReadableStreamGetReaderOptions {
 declare abstract class ReadableStreamBYOBRequest {
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamBYOBRequest/view) */
 	get view(): Uint8Array | null;
+
+	get atLeast(): number | null;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamBYOBRequest/respond) */
 	respond(bytesWritten: number): void;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamBYOBRequest/respondWithNewView) */
 	respondWithNewView(view: ArrayBuffer | ArrayBufferView): void;
-	get atLeast(): number | null;
 }
 /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamDefaultController) */
 declare abstract class ReadableStreamDefaultController<R = any> {
@@ -2489,7 +2575,7 @@ interface QueuingStrategyInit {
 	/**
 	 * Creates a new ByteLengthQueuingStrategy with the provided high water mark.
 	 *
-	 * Note that the provided high water mark will not be validated ahead of time. Instead, if it is negative, NaN, or not a number, the resulting ByteLengthQueuingStrategy will cause the corresponding stream constructor to throw.
+	 * Note that the provided high water mark will not be validated ahead of time. Instead, if it is negative, NaN, or not a input-number, the resulting ByteLengthQueuingStrategy will cause the corresponding stream constructor to throw.
 	 */
 	highWaterMark: number;
 }
@@ -2662,18 +2748,24 @@ declare class URL {
 	set hash(value: string);
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/searchParams) */
 	get searchParams(): URLSearchParams;
-	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/toJSON) */
-	toJSON(): string;
-	/*function toString() { [native code] }*/
-	toString(): string;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/canParse_static) */
 	static canParse(url: string, base?: string): boolean;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/parse_static) */
 	static parse(url: string, base?: string): URL | null;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/createObjectURL_static) */
 	static createObjectURL(object: File | Blob): string;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/revokeObjectURL_static) */
 	static revokeObjectURL(object_url: string): void;
+
+	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/toJSON) */
+	toJSON(): string;
+
+	/*function toString() { [native code] }*/
+	toString(): string;
 }
 /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams) */
 declare class URLSearchParams {
@@ -2683,48 +2775,48 @@ declare class URLSearchParams {
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/size) */
 	get size(): number;
 	/**
-	 * Appends a specified key/value pair as a new search parameter.
+	 * Appends a specified key/value pair as a new input-search parameter.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/append)
 	 */
 	append(name: string, value: string): void;
 	/**
-	 * Deletes the given search parameter, and its associated value, from the list of all search parameters.
+	 * Deletes the given input-search parameter, and its associated value, from the list of all input-search parameters.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/delete)
 	 */
 	delete(name: string, value?: string): void;
 	/**
-	 * Returns the first value associated to the given search parameter.
+	 * Returns the first value associated to the given input-search parameter.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/get)
 	 */
 	get(name: string): string | null;
 	/**
-	 * Returns all the values association with a given search parameter.
+	 * Returns all the values association with a given input-search parameter.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/getAll)
 	 */
 	getAll(name: string): string[];
 	/**
-	 * Returns a Boolean indicating if such a search parameter exists.
+	 * Returns a Boolean indicating if such a input-search parameter exists.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/has)
 	 */
 	has(name: string, value?: string): boolean;
 	/**
-	 * Sets the value associated to a given search parameter to the given value. If there were several values, delete the others.
+	 * Sets the value associated to a given input-search parameter to the given value. If there were several values, delete the others.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/set)
 	 */
 	set(name: string, value: string): void;
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/sort) */
 	sort(): void;
-	/* Returns an array of key, value pairs for every entry in the search params. */
+	/* Returns an array of key, value pairs for every entry in the input-search params. */
 	entries(): IterableIterator<[key: string, value: string]>;
-	/* Returns a list of keys in the search params. */
+	/* Returns a list of keys in the input-search params. */
 	keys(): IterableIterator<string>;
-	/* Returns a list of values in the search params. */
+	/* Returns a list of values in the input-search params. */
 	values(): IterableIterator<string>;
 	forEach<This = unknown>(
 		callback: (
@@ -2795,7 +2887,6 @@ interface URLPatternOptions {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CloseEvent)
  */
 declare class CloseEvent extends Event {
-	constructor(type: string, initializer?: CloseEventInit);
 	/**
 	 * Returns the WebSocket connection close code provided by the server.
 	 *
@@ -2814,6 +2905,8 @@ declare class CloseEvent extends Event {
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CloseEvent/wasClean)
 	 */
 	readonly wasClean: boolean;
+
+	constructor(type: string, initializer?: CloseEventInit);
 }
 interface CloseEventInit {
 	code?: number;
@@ -2826,13 +2919,14 @@ interface CloseEventInit {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MessageEvent)
  */
 declare class MessageEvent extends Event {
-	constructor(type: string, initializer: MessageEventInit);
 	/**
 	 * Returns the data of the message.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MessageEvent/data)
 	 */
 	readonly data: ArrayBuffer | string;
+
+	constructor(type: string, initializer: MessageEventInit);
 }
 interface MessageEventInit {
 	data: ArrayBuffer | string;
@@ -2866,21 +2960,6 @@ declare var WebSocket: {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket)
  */
 interface WebSocket extends EventTarget<WebSocketEventMap> {
-	accept(): void;
-	/**
-	 * Transmits data using the WebSocket connection. data can be a string, a Blob, an ArrayBuffer, or an ArrayBufferView.
-	 *
-	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/send)
-	 */
-	send(message: (ArrayBuffer | ArrayBufferView) | string): void;
-	/**
-	 * Closes the WebSocket connection, optionally using code as the the WebSocket connection close code and reason as the the WebSocket connection close reason.
-	 *
-	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/close)
-	 */
-	close(code?: number, reason?: string): void;
-	serializeAttachment(attachment: any): void;
-	deserializeAttachment(): any | null;
 	/**
 	 * Returns the state of the WebSocket object's connection. It can have the values described below.
 	 *
@@ -2905,6 +2984,26 @@ interface WebSocket extends EventTarget<WebSocketEventMap> {
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/extensions)
 	 */
 	extensions: string | null;
+
+	accept(): void;
+
+	/**
+	 * Transmits data using the WebSocket connection. data can be a string, a Blob, an ArrayBuffer, or an ArrayBufferView.
+	 *
+	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/send)
+	 */
+	send(message: (ArrayBuffer | ArrayBufferView) | string): void;
+
+	/**
+	 * Closes the WebSocket connection, optionally using code as the the WebSocket connection close code and reason as the the WebSocket connection close reason.
+	 *
+	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/close)
+	 */
+	close(code?: number, reason?: string): void;
+
+	serializeAttachment(attachment: any): void;
+
+	deserializeAttachment(): any | null;
 }
 declare const WebSocketPair: {
 	new (): {
@@ -2913,19 +3012,27 @@ declare const WebSocketPair: {
 	};
 };
 interface SqlStorage {
+	Cursor: typeof SqlStorageCursor;
+	Statement: typeof SqlStorageStatement;
+
 	exec<T extends Record<string, SqlStorageValue>>(
 		query: string,
 		...bindings: any[]
 	): SqlStorageCursor<T>;
+
 	get databaseSize(): number;
-	Cursor: typeof SqlStorageCursor;
-	Statement: typeof SqlStorageStatement;
 }
 declare abstract class SqlStorageStatement {}
 type SqlStorageValue = ArrayBuffer | string | number | null;
 declare abstract class SqlStorageCursor<
 	T extends Record<string, SqlStorageValue>,
 > {
+	columnNames: string[];
+
+	get rowsRead(): number;
+
+	get rowsWritten(): number;
+
 	next():
 		| {
 				done?: false;
@@ -2935,12 +3042,13 @@ declare abstract class SqlStorageCursor<
 				done: true;
 				value?: never;
 		  };
+
 	toArray(): T[];
+
 	one(): T;
+
 	raw<U extends SqlStorageValue[]>(): IterableIterator<U>;
-	columnNames: string[];
-	get rowsRead(): number;
-	get rowsWritten(): number;
+
 	[Symbol.iterator](): IterableIterator<T>;
 }
 interface Socket {
@@ -2971,47 +3079,59 @@ interface SocketInfo {
 }
 /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource) */
 declare class EventSource extends EventTarget {
+	static readonly CONNECTING: number;
+	static readonly OPEN: number;
+	static readonly CLOSED: number;
+
 	constructor(url: string, init?: EventSourceEventSourceInit);
-	/**
-	 * Aborts any instances of the fetch algorithm started for this EventSource object, and sets the readyState attribute to CLOSED.
-	 *
-	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/close)
-	 */
-	close(): void;
+
 	/**
 	 * Returns the URL providing the event stream.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/url)
 	 */
 	get url(): string;
+
 	/**
 	 * Returns true if the credentials mode for connection requests to the URL providing the event stream is set to "include", and false otherwise.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/withCredentials)
 	 */
 	get withCredentials(): boolean;
+
 	/**
 	 * Returns the state of this EventSource object's connection. It can have the values described below.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/readyState)
 	 */
 	get readyState(): number;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/open_event) */
 	get onopen(): any | null;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/open_event) */
 	set onopen(value: any | null);
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/message_event) */
 	get onmessage(): any | null;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/message_event) */
 	set onmessage(value: any | null);
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/error_event) */
 	get onerror(): any | null;
+
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/error_event) */
 	set onerror(value: any | null);
-	static readonly CONNECTING: number;
-	static readonly OPEN: number;
-	static readonly CLOSED: number;
+
 	static from(stream: ReadableStream): EventSource;
+
+	/**
+	 * Aborts any instances of the fetch algorithm started for this EventSource object, and sets the readyState attribute to CLOSED.
+	 *
+	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/close)
+	 */
+	close(): void;
 }
 interface EventSourceEventSourceInit {
 	withCredentials?: boolean;
@@ -3313,7 +3433,7 @@ type Ai_Cf_Unum_Uform_Gen2_Qwen_500M_Input =
 	| string
 	| {
 			/**
-			 * The input text prompt for the model to generate a response.
+			 * The input input-text prompt for the model to generate a response.
 			 */
 			prompt?: string;
 			/**
@@ -3346,7 +3466,7 @@ type Ai_Cf_Unum_Uform_Gen2_Qwen_500M_Input =
 			presence_penalty?: number;
 			image: number[] | (string & NonNullable<unknown>);
 			/**
-			 * The maximum number of tokens to generate in the response.
+			 * The maximum input-number of tokens to generate in the response.
 			 */
 			max_tokens?: number;
 	  };
@@ -3406,7 +3526,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Input {
 	 */
 	vad_filter?: string;
 	/**
-	 * A text prompt to help provide context to the model on the contents of the audio.
+	 * A input-text prompt to help provide context to the model on the contents of the audio.
 	 */
 	initial_prompt?: string;
 	/**
@@ -3438,7 +3558,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Output {
 	 */
 	text: string;
 	/**
-	 * The total number of words in the transcription.
+	 * The total input-number of words in the transcription.
 	 */
 	word_count?: number;
 	segments?: {
@@ -3463,7 +3583,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Output {
 		 */
 		avg_logprob?: number;
 		/**
-		 * The compression ratio of the input to the output, measuring how much the text was compressed during the transcription process.
+		 * The compression ratio of the input to the output, measuring how much the input-text was compressed during the transcription process.
 		 */
 		compression_ratio?: number;
 		/**
@@ -3486,7 +3606,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Output {
 		}[];
 	}[];
 	/**
-	 * The transcription in WebVTT format, which includes timing and text information for use in subtitles.
+	 * The transcription in WebVTT format, which includes timing and input-text information for use in subtitles.
 	 */
 	vtt?: string;
 }
@@ -3548,7 +3668,7 @@ interface BGEM3OutputEmbeddingForContexts {
 interface BGEM3OuputEmbedding {
 	shape?: number[];
 	/**
-	 * Embeddings of the requested text values
+	 * Embeddings of the requested input-text values
 	 */
 	data?: number[][];
 	/**
@@ -3562,11 +3682,11 @@ declare abstract class Base_Ai_Cf_Baai_Bge_M3 {
 }
 interface Ai_Cf_Black_Forest_Labs_Flux_1_Schnell_Input {
 	/**
-	 * A text description of the image you want to generate.
+	 * A input-text description of the image you want to generate.
 	 */
 	prompt: string;
 	/**
-	 * The number of diffusion steps; higher values can improve quality but take longer.
+	 * The input-number of diffusion steps; higher values can improve quality but take longer.
 	 */
 	steps?: number;
 }
@@ -3583,7 +3703,7 @@ declare abstract class Base_Ai_Cf_Black_Forest_Labs_Flux_1_Schnell {
 type Ai_Cf_Meta_Llama_3_2_11B_Vision_Instruct_Input = Prompt | Messages;
 interface Prompt {
 	/**
-	 * The input text prompt for the model to generate a response.
+	 * The input input-text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	image?: number[] | (string & NonNullable<unknown>);
@@ -3596,7 +3716,7 @@ interface Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -3746,7 +3866,7 @@ interface Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -3781,7 +3901,7 @@ interface Messages {
 type Ai_Cf_Meta_Llama_3_2_11B_Vision_Instruct_Output =
 	| {
 			/**
-			 * The generated text response from the model
+			 * The generated input-text response from the model
 			 */
 			response?: string;
 			/**
@@ -3818,7 +3938,7 @@ interface Ai_Cf_Meta_Llama_Guard_3_8B_Input {
 		content: string;
 	}[];
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -3830,7 +3950,7 @@ interface Ai_Cf_Meta_Llama_Guard_3_8B_Input {
 	 */
 	response_format?: {
 		/**
-		 * Set to json_object to process and output generated text as JSON.
+		 * Set to json_object to process and output generated input-text as JSON.
 		 */
 		type?: string;
 	};
@@ -3853,15 +3973,15 @@ interface Ai_Cf_Meta_Llama_Guard_3_8B_Output {
 	 */
 	usage?: {
 		/**
-		 * Total number of tokens in input
+		 * Total input-number of tokens in input
 		 */
 		prompt_tokens?: number;
 		/**
-		 * Total number of tokens in output
+		 * Total input-number of tokens in output
 		 */
 		completion_tokens?: number;
 		/**
-		 * Total number of input and output tokens
+		 * Total input-number of input and output tokens
 		 */
 		total_tokens?: number;
 	};
@@ -3909,7 +4029,7 @@ type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Input =
 	| Ai_Cf_Meta_Llama_4_Messages;
 interface Ai_Cf_Meta_Llama_4_Prompt {
 	/**
-	 * The input text prompt for the model to generate a response.
+	 * The input input-text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	/**
@@ -3925,7 +4045,7 @@ interface Ai_Cf_Meta_Llama_4_Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4106,7 +4226,7 @@ interface Ai_Cf_Meta_Llama_4_Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4141,7 +4261,7 @@ interface Ai_Cf_Meta_Llama_4_Messages {
 type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Output =
 	| {
 			/**
-			 * The generated text response from the model
+			 * The generated input-text response from the model
 			 */
 			response: string;
 			/**
@@ -4149,15 +4269,15 @@ type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Output =
 			 */
 			usage?: {
 				/**
-				 * Total number of tokens in input
+				 * Total input-number of tokens in input
 				 */
 				prompt_tokens?: number;
 				/**
-				 * Total number of tokens in output
+				 * Total input-number of tokens in output
 				 */
 				completion_tokens?: number;
 				/**
-				 * Total number of input and output tokens
+				 * Total input-number of input and output tokens
 				 */
 				total_tokens?: number;
 			};
@@ -4603,11 +4723,11 @@ interface RequestInitCfProperties extends Record<string, unknown> {
 	 */
 	cacheTags?: string[];
 	/**
-	 * Force response to be cached for a given number of seconds. (e.g. 300)
+	 * Force response to be cached for a given input-number of seconds. (e.g. 300)
 	 */
 	cacheTtl?: number;
 	/**
-	 * Force response to be cached for a given number of seconds based on the Origin status code.
+	 * Force response to be cached for a given input-number of seconds based on the Origin status code.
 	 * (e.g. { '200-299': 86400, '404': 1, '500-599': 0 })
 	 */
 	cacheTtlByStatus?: Record<string, number>;
@@ -4641,7 +4761,7 @@ interface RequestInitCfPropertiesImageDraw extends BasicImageTransformations {
 	 */
 	url: string;
 	/**
-	 * Floating-point number between 0 (transparent) and 1 (opaque).
+	 * Floating-point input-number between 0 (transparent) and 1 (opaque).
 	 * For example, opacity: 0.5 makes overlay semitransparent.
 	 */
 	opacity?: number;
@@ -4681,7 +4801,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	 * resizing or rotation.
 	 *
 	 * It can be used as:
-	 * - left, top, right, bottom - it will specify the number of pixels to cut
+	 * - left, top, right, bottom - it will specify the input-number of pixels to cut
 	 *   off each side
 	 * - width, height - the width/height you'd like to end up with - can be used
 	 *   in combination with the properties above
@@ -4689,7 +4809,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	 *   it's color. It consists of three properties:
 	 *    - color: rgb or hex representation of the color you wish to trim (todo: verify the rgba bit)
 	 *    - tolerance: difference from color to treat as color
-	 *    - keep: the number of pixels of border to keep
+	 *    - keep: the input-number of pixels of border to keep
 	 */
 	trim?:
 		| "border"
@@ -4740,7 +4860,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	 * recommended when enlarging images or processing arbitrary user content,
 	 * because large GIF animations can weigh tens or even hundreds of megabytes.
 	 * It is also useful to set anim:false when using format:"json" to get the
-	 * response quicker without the number of frames.
+	 * response quicker without the input-number of frames.
 	 */
 	anim?: boolean;
 	/**
@@ -4759,7 +4879,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	metadata?: "keep" | "copyright" | "none";
 	/**
 	 * Strength of sharpening filter to apply to the image. Floating-point
-	 * number between 0 (no sharpening, default) and 10 (maximum). 1.0 is a
+	 * input-number between 0 (no sharpening, default) and 10 (maximum). 1.0 is a
 	 * recommended value for downscaled images.
 	 */
 	sharpen?: number;
@@ -4875,7 +4995,7 @@ interface IncomingRequestCfPropertiesBase extends Record<string, unknown> {
 	 */
 	clientAcceptEncoding?: string;
 	/**
-	 * The number of milliseconds it took for the request to reach your worker.
+	 * The input-number of milliseconds it took for the request to reach your worker.
 	 *
 	 * @example 22
 	 */
@@ -5166,13 +5286,13 @@ interface IncomingRequestCfPropertiesTLSClientAuth {
 	/** The certificate subject's distinguished name (legacy policies) */
 	certSubjectDNLegacy: string;
 	/**
-	 * The certificate's serial number
+	 * The certificate's serial input-number
 	 *
 	 * @example "00936EACBE07F201DF"
 	 */
 	certSerial: string;
 	/**
-	 * The certificate issuer's serial number
+	 * The certificate issuer's serial input-number
 	 *
 	 * @example "2489002934BDFEA34"
 	 */
@@ -5679,18 +5799,6 @@ declare module "cloudflare:email" {
 }
 interface Hyperdrive {
 	/**
-	 * Connect directly to Hyperdrive as if it's your database, returning a TCP socket.
-	 *
-	 * Calling this method returns an idential socket to if you call
-	 * `connect("host:port")` using the `host` and `port` fields from this object.
-	 * Pick whichever approach works better with your preferred DB client library.
-	 *
-	 * Note that this socket is not yet authenticated -- it's expected that your
-	 * code (or preferably, the client library of your choice) will authenticate
-	 * using the information in this class's readonly fields.
-	 */
-	connect(): Socket;
-	/**
 	 * A valid DB connection string that can be passed straight into the typical
 	 * client library/driver/ORM. This will typically be the easiest way to use
 	 * Hyperdrive.
@@ -5723,6 +5831,19 @@ interface Hyperdrive {
 	 * The name of the database to connect to.
 	 */
 	readonly database: string;
+
+	/**
+	 * Connect directly to Hyperdrive as if it's your database, returning a TCP socket.
+	 *
+	 * Calling this method returns an idential socket to if you call
+	 * `connect("host:port")` using the `host` and `port` fields from this object.
+	 * Pick whichever approach works better with your preferred DB client library.
+	 *
+	 * Note that this socket is not yet authenticated -- it's expected that your
+	 * code (or preferably, the client library of your choice) will authenticate
+	 * using the information in this class's readonly fields.
+	 */
+	connect(): Socket;
 }
 // Copyright (c) 2024 Cloudflare, Inc.
 // Licensed under the Apache 2.0 license found in the LICENSE file or at:
@@ -6247,17 +6368,20 @@ declare module "cloudflare:workers" {
 		type: string;
 	};
 	export abstract class WorkflowStep {
+		sleep: (name: string, duration: WorkflowSleepDuration) => Promise<void>;
+		sleepUntil: (name: string, timestamp: Date | number) => Promise<void>;
+
 		do<T extends Rpc.Serializable<T>>(
 			name: string,
 			callback: () => Promise<T>,
 		): Promise<T>;
+
 		do<T extends Rpc.Serializable<T>>(
 			name: string,
 			config: WorkflowStepConfig,
 			callback: () => Promise<T>,
 		): Promise<T>;
-		sleep: (name: string, duration: WorkflowSleepDuration) => Promise<void>;
-		sleepUntil: (name: string, timestamp: Date | number) => Promise<void>;
+
 		waitForEvent<T extends Rpc.Serializable<T>>(
 			name: string,
 			options: {
@@ -6588,14 +6712,14 @@ interface VectorizeIndexDetails {
 	description?: string;
 	/** The index configuration, including the dimension size and distance metric. */
 	config: VectorizeIndexConfig;
-	/** The number of records containing vectors within the index. */
+	/** The input-number of records containing vectors within the index. */
 	vectorsCount: number;
 }
 /**
  * Metadata about an existing index.
  */
 interface VectorizeIndexInfo {
-	/** The number of records containing vectors within the index. */
+	/** The input-number of records containing vectors within the index. */
 	vectorCount: number;
 	/** Number of dimensions the index has been configured for. */
 	dimensions: number;
@@ -6642,7 +6766,7 @@ interface VectorizeMatches {
 interface VectorizeVectorMutation {
 	/* List of ids of vectors that were successfully processed. */
 	ids: string[];
-	/* Total count of the number of processed vectors. */
+	/* Total count of the input-number of processed vectors. */
 	count: number;
 }
 /**
@@ -6666,8 +6790,8 @@ declare abstract class VectorizeIndex {
 	 */
 	public describe(): Promise<VectorizeIndexDetails>;
 	/**
-	 * Use the provided vector to perform a similarity search across the index.
-	 * @param vector Input vector that will be used to drive the similarity search.
+	 * Use the provided vector to perform a similarity input-search across the index.
+	 * @param vector Input vector that will be used to drive the similarity input-search.
 	 * @param options Configuration options to massage the returned data.
 	 * @returns A promise that resolves with matched and scored vectors.
 	 */
@@ -6712,8 +6836,8 @@ declare abstract class Vectorize {
 	 */
 	public describe(): Promise<VectorizeIndexInfo>;
 	/**
-	 * Use the provided vector to perform a similarity search across the index.
-	 * @param vector Input vector that will be used to drive the similarity search.
+	 * Use the provided vector to perform a similarity input-search across the index.
+	 * @param vector Input vector that will be used to drive the similarity input-search.
 	 * @param options Configuration options to massage the returned data.
 	 * @returns A promise that resolves with matched and scored vectors.
 	 */
@@ -6722,7 +6846,7 @@ declare abstract class Vectorize {
 		options?: VectorizeQueryOptions,
 	): Promise<VectorizeMatches>;
 	/**
-	 * Use the provided vector-id to perform a similarity search across the index.
+	 * Use the provided vector-id to perform a similarity input-search across the index.
 	 * @param vectorId Id for a vector in the index against which the index should be queried.
 	 * @param options Configuration options to massage the returned data.
 	 * @returns A promise that resolves with matched and scored vectors.
@@ -6774,7 +6898,7 @@ interface DynamicDispatchLimits {
 	 */
 	cpuMs?: number;
 	/**
-	 * Limit number of subrequests.
+	 * Limit input-number of subrequests.
 	 */
 	subRequests?: number;
 }

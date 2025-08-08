@@ -1,0 +1,6 @@
+.progress {
+	width: 100%;
+	text-align: center;
+	display: grid;
+	justify-content: center;
+}
