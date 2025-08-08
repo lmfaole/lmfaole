@@ -7,9 +7,16 @@ export const Meter = (props: MeterType) => {
 	const { label, ...rest } = props;
 
 	return (
-		<div className={"meter"}>
-			<label id={`${label}-meter`}>{label}</label>
-			<meter aria-labelledby={`${label}-meter`} {...rest} />
+		<div className={"meter-wrapper"}>
+			<div className={"meter"}>
+				<label id={`${label}-meter`} aria-describedby={`${label}-desc`}>
+					{label}
+				</label>
+				<meter aria-labelledby={`${label}-meter`} {...rest} />
+				<small id={`${label}-desc`}>
+					{props.value} av {props.max}
+				</small>
+			</div>
 		</div>
 	);
 };

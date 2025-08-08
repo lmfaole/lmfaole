@@ -266,17 +266,3 @@ fieldset {
 legend {
 	margin-block-end: 0.3lh;
 }
-
-meter {
-	display: grid;
-	grid-template-columns: 1fr auto;
-	gap: 2ch;
-	align-items: center;
-	height: 1lh;
-	width: 100%;
-	font-family: monospace;
-
-	&::after {
-		content: attr(value);
-	}
-}

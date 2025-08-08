@@ -1,12 +1,40 @@
+.meter-wrapper {
+	container-type: inline-size;
+}
+
 .meter {
 	display: grid;
 	grid-template-columns: 1fr auto;
 	grid-template-areas:
 		"label label"
 		"meter value";
+	align-items: center;
+	column-gap: 2ch;
+	width: 100%;
+
+	@container (width < 45ch) {
+		grid-template-areas:
+			"label label"
+			"meter meter"
+			"value value";
+
+		meter {
+			margin-block: 0.25lh 0.1lh;
+		}
+	}
 
 	label {
+		margin: 0;
 		grid-area: label;
-		margin-block-end: 0.25lh;
 	}
+
+	small {
+		grid-area: value;
+		font-family: monospace;
+	}
+}
+
+meter {
+	width: 100%;
+	height: 1lh;
 }
