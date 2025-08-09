@@ -1,0 +1,18 @@
+.number-input {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-areas:
+		"label"
+		"input";
+	min-width: max-content;
+	gap: 0.2ex;
+
+	label {
+		grid-area: label;
+	}
+
+	input {
+		grid-area: input;
+		min-width: 10ch;
+	}
+}

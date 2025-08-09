@@ -1,0 +1,41 @@
+details {
+	--border: 1px solid Field;
+
+	border: 1px solid transparent;
+	border-inline-start: var(--border);
+
+	summary {
+		padding: 1ex;
+		cursor: pointer;
+	}
+
+	> div {
+		padding: 0.5lh 1lh;
+	}
+
+	&:not(:only-of-type) {
+		border-inline: var(--border);
+		border-block-start: var(--border);
+		border-block-end: 0;
+
+		&:has(+ details) {
+			border-inline: var(--border);
+		}
+
+		&:not(:has(+ details)) {
+			border-block-end: var(--border);
+		}
+
+		&[open] {
+			border-inline-start-color: currentColor;
+
+			summary {
+				border-block-end: var(--border);
+			}
+		}
+	}
+
+	&[open] {
+		border-inline-start-color: currentColor;
+	}
+}

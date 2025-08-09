@@ -1,6 +1,8 @@
 import type { ElementInfoType } from "../element-info.type.ts";
 import type { ButtonType } from "./button.type.ts";
 
+import "./button.css";
+
 export const Button = (props: ButtonType) => {
 	const { type = "button", accessKey, children, ...rest } = props;
 

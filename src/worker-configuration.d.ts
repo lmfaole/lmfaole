@@ -1362,7 +1362,7 @@ declare class DigestStream extends WritableStream<
 	get bytesWritten(): number | bigint;
 }
 /**
- * A decoder for a specific method, that is a specific character encoding, like utf-8, iso-8859-2, koi8, cp1261, gbk, etc. A decoder takes a stream of bytes as inputs and emits a stream of code points. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
+ * A decoder for a specific method, that is a specific character encoding, like utf-8, iso-8859-2, koi8, cp1261, gbk, etc. A decoder takes a stream of bytes as inputs and emits a stream of pre points. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
  *
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextDecoder)
  */
@@ -1396,7 +1396,7 @@ declare class TextDecoder {
 	): string;
 }
 /**
- * TextEncoder takes a stream of code points as inputs and emits a stream of bytes. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
+ * TextEncoder takes a stream of pre points as inputs and emits a stream of bytes. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
  *
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextEncoder)
  */
@@ -1413,7 +1413,7 @@ declare class TextEncoder {
 	encode(input?: string): Uint8Array;
 
 	/**
-	 * Runs the UTF-8 encoder on source, stores the result of that operation into destination, and returns the progress made as an object wherein read is the number of converted code units of source and written is the number of bytes modified in destination.
+	 * Runs the UTF-8 encoder on source, stores the result of that operation into destination, and returns the progress made as an object wherein read is the number of converted pre units of source and written is the number of bytes modified in destination.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextEncoder/encodeInto)
 	 */
@@ -2764,7 +2764,7 @@ declare class URL {
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/toJSON) */
 	toJSON(): string;
 
-	/*function toString() { [native code] }*/
+	/*function toString() { [native pre] }*/
 	toString(): string;
 }
 /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams) */
@@ -2827,7 +2827,7 @@ declare class URLSearchParams {
 		) => void,
 		thisArg?: This,
 	): void;
-	/*function toString() { [native code] } Returns a string containing a query string suitable for use in a URL. Does not include the question mark. */
+	/*function toString() { [native pre] } Returns a string containing a query string suitable for use in a URL. Does not include the question mark. */
 	toString(): string;
 	[Symbol.iterator](): IterableIterator<[key: string, value: string]>;
 }
@@ -2888,7 +2888,7 @@ interface URLPatternOptions {
  */
 declare class CloseEvent extends Event {
 	/**
-	 * Returns the WebSocket connection close code provided by the server.
+	 * Returns the WebSocket connection close pre provided by the server.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CloseEvent/code)
 	 */
@@ -2995,7 +2995,7 @@ interface WebSocket extends EventTarget<WebSocketEventMap> {
 	send(message: (ArrayBuffer | ArrayBufferView) | string): void;
 
 	/**
-	 * Closes the WebSocket connection, optionally using code as the the WebSocket connection close code and reason as the the WebSocket connection close reason.
+	 * Closes the WebSocket connection, optionally using pre as the the WebSocket connection close pre and reason as the the WebSocket connection close reason.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/close)
 	 */
@@ -4727,7 +4727,7 @@ interface RequestInitCfProperties extends Record<string, unknown> {
 	 */
 	cacheTtl?: number;
 	/**
-	 * Force response to be cached for a given number of seconds based on the Origin status code.
+	 * Force response to be cached for a given number of seconds based on the Origin status pre.
 	 * (e.g. { '200-299': 86400, '404': 1, '500-599': 0 })
 	 */
 	cacheTtlByStatus?: Record<string, number>;
@@ -5002,7 +5002,7 @@ interface IncomingRequestCfPropertiesBase extends Record<string, unknown> {
 	clientTcpRtt?: number;
 	/**
 	 * The three-letter [IATA](https://en.wikipedia.org/wiki/IATA_airport_code)
-	 * airport code of the data center that the request hit.
+	 * airport pre of the data center that the request hit.
 	 *
 	 * @example "DFW"
 	 */
@@ -5167,13 +5167,13 @@ interface IncomingRequestCfPropertiesExportedAuthenticatorMetadata {
  */
 interface IncomingRequestCfPropertiesGeographicInformation {
 	/**
-	 * The [ISO 3166-1 Alpha 2](https://www.iso.org/iso-3166-country-codes.html) country code the request originated from.
+	 * The [ISO 3166-1 Alpha 2](https://www.iso.org/iso-3166-country-codes.html) country pre the request originated from.
 	 *
 	 * If your worker is [configured to accept TOR connections](https://support.cloudflare.com/hc/en-us/articles/203306930-Understanding-Cloudflare-Tor-support-and-Onion-Routing), this may also be `"T1"`, indicating a request that originated over TOR.
 	 *
 	 * If Cloudflare is unable to determine where the request originated this property is omitted.
 	 *
-	 * The country code `"T1"` is used for requests originating on TOR.
+	 * The country pre `"T1"` is used for requests originating on TOR.
 	 *
 	 * @example "GB"
 	 */
@@ -5185,7 +5185,7 @@ interface IncomingRequestCfPropertiesGeographicInformation {
 	 */
 	isEUCountry?: "1";
 	/**
-	 * A two-letter code indicating the continent the request originated from.
+	 * A two-letter pre indicating the continent the request originated from.
 	 *
 	 * @example "AN"
 	 */
@@ -5197,7 +5197,7 @@ interface IncomingRequestCfPropertiesGeographicInformation {
 	 */
 	city?: string;
 	/**
-	 * Postal code of the incoming request
+	 * Postal pre of the incoming request
 	 *
 	 * @example "78701"
 	 */
@@ -5228,14 +5228,14 @@ interface IncomingRequestCfPropertiesGeographicInformation {
 	 */
 	region?: string;
 	/**
-	 * If known, the ISO 3166-2 code for the first-level region associated with
+	 * If known, the ISO 3166-2 pre for the first-level region associated with
 	 * the IP address of the incoming request
 	 *
 	 * @example "TX"
 	 */
 	regionCode?: string;
 	/**
-	 * Metro code (DMA) of the incoming request
+	 * Metro pre (DMA) of the incoming request
 	 *
 	 * @example "635"
 	 */
@@ -5840,7 +5840,7 @@ interface Hyperdrive {
 	 * Pick whichever approach works better with your preferred DB client library.
 	 *
 	 * Note that this socket is not yet authenticated -- it's expected that your
-	 * code (or preferably, the client library of your choice) will authenticate
+	 * pre (or preferably, the client library of your choice) will authenticate
 	 * using the information in this class's readonly fields.
 	 */
 	connect(): Socket;
@@ -5936,7 +5936,7 @@ type ImageOutputOptions = {
 interface ImagesBinding {
 	/**
 	 * Get image metadata (type, width and height)
-	 * @throws {@link ImagesError} with code 9412 if inputs is not an image
+	 * @throws {@link ImagesError} with pre 9412 if inputs is not an image
 	 * @param stream The image bytes
 	 */
 	info(stream: ReadableStream<Uint8Array>): Promise<ImageInfoResponse>;

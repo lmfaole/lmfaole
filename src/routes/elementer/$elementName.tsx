@@ -15,7 +15,25 @@ function RouteComponent() {
 	return (
 		<main>
 			<h1>{element.name}</h1>
+			<h2>Grunnstil</h2>
 			{element.example}
+			{element.playground && (
+				<>
+					<h2 lang="en">Playground</h2>
+					{element.playground()}
+				</>
+			)}
+			{element.usage && (
+				<>
+					<h2>Bruksområder</h2>
+					{element.usage.map((use) => (
+						<>
+							<h3>{use.title}</h3>
+							{use.example}
+						</>
+					))}
+				</>
+			)}
 		</main>
 	);
 }

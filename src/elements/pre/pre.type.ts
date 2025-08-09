@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export type CodeType = {
+export type PreType = {
 	children: ReactNode;
 	language?: "tsx" | "html";
 };

@@ -1,12 +1,14 @@
 import type { ElementInfoType } from "../../element-info.type.ts";
 import type { NumberType } from "./number.type.ts";
 
+import "./number.css";
+
 export const Number = (props: NumberType) => {
-	const { size = 10, inputMode = "numeric", suffix, ...rest } = props;
+	const { size = 10, inputMode = "numeric", suffix, label, ...rest } = props;
 
 	return (
-		<label>
-			{props.label}
+		<div className={"number-input"}>
+			<label>{label}</label>
 			<input
 				{...rest}
 				type="number"
@@ -14,7 +16,7 @@ export const Number = (props: NumberType) => {
 				inputMode={inputMode}
 				data-suffix={suffix}
 			/>
-		</label>
+		</div>
 	);
 };
 

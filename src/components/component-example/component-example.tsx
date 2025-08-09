@@ -1,4 +1,4 @@
-import { Button, Code } from "../../elements";
+import { Button, Pre } from "../../elements";
 import type { ComponentExampleType } from "./component-example.type.ts";
 
 import "./component-example.css";
@@ -18,7 +18,7 @@ export const ComponentExample = ({
 			</p>
 			<div className={"showcase"}>
 				<div inert={!interactive}>{children}</div>
-				{showMarkup && <Code language={"html"}>{children}</Code>}
+				{showMarkup && <Pre language={"html"}>{children}</Pre>}
 			</div>
 		</div>
 	);
