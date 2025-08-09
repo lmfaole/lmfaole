@@ -17,12 +17,16 @@ function RouteComponent() {
 	return (
 		<main>
 			<header>
-				<h1>{element.name}</h1>
+				<h1>
+					{element.name}
+					{element.meta && (
+						<>
+							, <small>{element.meta.aka?.join(", ")}</small>
+						</>
+					)}
+				</h1>
 				{element.meta && (
 					<>
-						{element.meta.aka && (
-							<small>Også kjent som {element.meta.aka.join(", ")}.</small>
-						)}
 						<Blockquote
 							cite={{ href: element.meta.spec, label: "HTML Standarden" }}
 						>

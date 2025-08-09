@@ -17,6 +17,7 @@ export const buttonInfo: ElementInfoType = {
 			"The button element represents a button labeled by its contents.\n" +
 			"\n",
 		spec: "https://html.spec.whatwg.org/multipage/form-elements.html#the-button-element",
+		aka: ["knapp", "action"],
 	},
 	img: <Button>Hei</Button>,
 	playground: ButtonPlayground,
