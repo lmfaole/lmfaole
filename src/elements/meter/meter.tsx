@@ -11,16 +11,11 @@ export const Meter = (props: MeterType) => {
 
 	return (
 		<div className={"meter"}>
-			<label
-				htmlFor={`${label}-${id}-meter`}
-				aria-describedby={`${label}-desc`}
-			>
-				{label}
-			</label>
+			<label htmlFor={`${label}-${id}-meter`}>{label}</label>
 			<meter
 				aria-describedby={`${label}-${id}-desc`}
 				id={`${label}-${id}-meter`}
-				title={suffix?.trimStart()}
+				title={suffix?.trim()}
 				{...rest}
 			>
 				{props.value} av {props.max}
