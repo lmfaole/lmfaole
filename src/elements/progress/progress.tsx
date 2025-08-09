@@ -16,5 +16,5 @@ export const Progress = (props: ProgressType) => {
 
 export const progressInfo: ElementInfoType = {
 	name: "Progress",
-	example: <Progress label={"Laster"} />,
+	img: <Progress label={"Laster"} />,
 };

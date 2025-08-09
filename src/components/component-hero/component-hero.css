@@ -1,0 +1,11 @@
+.component-hero {
+	height: 50svh;
+	border: 1px solid Highlight;
+	padding: 2lh;
+	box-sizing: border-box;
+	margin-block: 4lh;
+	border-radius: 2lh;
+	place-content: center;
+	place-items: center;
+	text-align: center;
+}

@@ -1,12 +1,25 @@
 .meter {
 	display: grid;
-	grid-template-columns: 1fr auto;
+	grid-template-columns: 1fr;
 	grid-template-areas:
-		"label label"
-		"meter value";
+		"label"
+		"meter"
+		"value";
 	align-items: center;
 	column-gap: 2ch;
 	width: 100%;
+
+	@container (width > 400px) {
+		grid-template-columns: 1fr auto;
+		grid-template-areas:
+			"label label"
+			"meter value";
+	}
+
+	@container (width > 600px) {
+		grid-template-columns: auto 1fr auto;
+		grid-template-areas: "label meter value";
+	}
 
 	label {
 		margin: 0;
@@ -14,11 +27,12 @@
 	}
 
 	small {
-		grid-area: value;
 		font-family: monospace;
+		grid-area: value;
 	}
 
 	meter {
 		width: 100%;
+		grid-area: meter;
 	}
 }

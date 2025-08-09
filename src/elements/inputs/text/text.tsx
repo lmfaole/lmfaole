@@ -1,18 +1,22 @@
+import { useId } from "react";
 import type { ElementInfoType } from "../../element-info.type.ts";
 import type { TextType } from "./text.type.ts";
 
+import "./text.css";
+
 export const Text = (props: TextType) => {
 	const { label, ...rest } = props;
+	const id = useId();
 
 	return (
-		<label>
-			{label}
-			<input {...rest} type="text" />
-		</label>
+		<div className={"text-input"}>
+			<label htmlFor={label + id}>{label}</label>
+			<input {...rest} id={label + id} type="text" />
+		</div>
 	);
 };
 
 export const textInputInfo: ElementInfoType = {
 	name: "Text",
-	example: <Text label={"Hvilken smak ønsker du?"} />,
+	img: <Text label={"Hvilken smak ønsker du?"} />,
 };

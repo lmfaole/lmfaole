@@ -6,39 +6,32 @@
 		"output"
 		"code";
 	gap: 2lh 4lh;
-	border-radius: 20px;
-	border: 3px dotted
+	border: 2px dotted
 		light-dark(oklch(0.8494 0.0457 163.76), oklch(0.3494 0.0457 163.76));
 	background-color: transparent;
 	padding: 1lh;
+	resize: horizontal;
+	overflow: hidden;
 
 	@container (width > 800px) {
-		grid-template-columns: 1fr max-content;
+		grid-template-columns: 1fr 320px;
 		grid-template-areas:
 			"output controls"
 			"code controls";
 		padding: 2lh;
-
-		.controls {
-			border-inline-start: 1px dashed
-				light-dark(oklch(0.8494 0.0457 163.76), oklch(0.3494 0.0457 163.76));
-			padding-inline-start: 2lh;
-			min-height: 20vh;
-		}
 	}
 
 	.controls {
-		box-sizing: border-box;
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
 		grid-area: controls;
-		place-content: start;
-		gap: 1lh;
-		height: 100%;
 
-		.range,
-		.select:has(select[multiple]) {
-			grid-column: 1 / -1;
+		> details > div {
+			display: grid;
+			gap: 1lh 2ch;
+			grid-template-columns: repeat(2, 1fr);
+
+			.range {
+				grid-column: 1 / -1;
+			}
 		}
 	}
 
@@ -47,6 +40,7 @@
 		grid-area: output;
 		min-height: 20vh;
 		padding-block: 1lh;
+		container-type: inline-size;
 	}
 
 	> pre {

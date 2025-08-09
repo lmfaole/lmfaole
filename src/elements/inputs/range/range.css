@@ -1,8 +1,8 @@
 .range {
 	display: grid;
-	grid-template-columns: 1fr 4ch;
+	grid-template-columns: 1fr max-content;
 	align-items: center;
-	gap: 0.2ex;
+	gap: 0.2ex 1ch;
 	grid-template-areas:
 		"label label"
 		"input value";

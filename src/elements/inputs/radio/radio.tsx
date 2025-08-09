@@ -14,5 +14,5 @@ export const Radio = (props: RadioType) => {
 
 export const radioInfo: ElementInfoType = {
 	name: "Radio",
-	example: <Radio label={mockFlavors[0]} />,
+	img: <Radio label={mockFlavors[0]} />,
 };

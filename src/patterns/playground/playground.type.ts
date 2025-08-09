@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 export type PlaygroundType = {
-	controls: ReactNode;
 	children: ReactNode;
+	requiredProps: ReactNode[];
+	optionalProps?: ReactNode[];
 };

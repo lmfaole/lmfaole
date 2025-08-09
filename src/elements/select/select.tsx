@@ -22,7 +22,7 @@ export const Select = (props: SelectType) => {
 
 export const selectInfo: ElementInfoType = {
 	name: "Select",
-	example: (
+	img: (
 		<Select label={"Velg smak"}>
 			{mockFlavors.map((flavor) => (
 				<option>{flavor}</option>

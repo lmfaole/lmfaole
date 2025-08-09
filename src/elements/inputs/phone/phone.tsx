@@ -19,5 +19,5 @@ export const Phone = (props: PhoneType) => {
 
 export const phoneInputInfo: ElementInfoType = {
 	name: "Phone",
-	example: <Phone required={false} />,
+	img: <Phone required={false} />,
 };

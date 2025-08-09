@@ -3,6 +3,8 @@ menu {
 	padding: 0;
 	gap: 1lh;
 	margin: 0;
+	list-style: none;
+	align-items: center;
 
 	&[data-show-label]::before {
 		content: attr(aria-label);

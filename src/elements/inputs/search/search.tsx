@@ -26,5 +26,5 @@ export const Search = (props: SearchType) => {
 
 export const searchInputInfo: ElementInfoType = {
 	name: "Search",
-	example: <Search label={"Søk"} />,
+	img: <Search label={"Søk"} />,
 };

@@ -20,7 +20,7 @@ export const Pre = ({ children, language = "html" }: PreType) => {
 
 export const preInfo: ElementInfoType = {
 	name: "Pre",
-	example: (
+	img: (
 		<Pre>
 			<Button>Knapp</Button>
 		</Pre>

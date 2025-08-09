@@ -17,5 +17,5 @@ export const Checkbox = (props: CheckboxType) => {
 
 export const checkboxInfo: ElementInfoType = {
 	name: "Checkbox",
-	example: <Checkbox label={mockFlavors[0]} />,
+	img: <Checkbox label={mockFlavors[0]} />,
 };

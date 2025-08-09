@@ -1,3 +1,4 @@
+import { useId } from "react";
 import type { ElementInfoType } from "../element-info.type.ts";
 import { MeterPlayground } from "./meter.playground.tsx";
 import type { MeterType } from "./meter.type.ts";
@@ -5,16 +6,29 @@ import type { MeterType } from "./meter.type.ts";
 import "./meter.css";
 
 export const Meter = (props: MeterType) => {
-	const { label, ...rest } = props;
+	const { label, suffix, ...rest } = props;
+	const id = useId();
 
 	return (
 		<div className={"meter"}>
-			<label id={`${label}-meter`} aria-describedby={`${label}-desc`}>
+			<label
+				htmlFor={`${label}-${id}-meter`}
+				aria-describedby={`${label}-desc`}
+			>
 				{label}
 			</label>
-			<meter aria-labelledby={`${label}-meter`} {...rest} />
-			<small id={`${label}-desc`}>
+			<meter
+				aria-describedby={`${label}-${id}-desc`}
+				id={`${label}-${id}-meter`}
+				title={suffix?.trimStart()}
+				{...rest}
+			>
 				{props.value} av {props.max}
+				{suffix}
+			</meter>
+			<small id={`${label}-${id}-desc`}>
+				{props.value} av {props.max}
+				{suffix}
 			</small>
 		</div>
 	);
@@ -22,30 +36,13 @@ export const Meter = (props: MeterType) => {
 
 export const meterInfo: ElementInfoType = {
 	name: "Meter",
-	example: <Meter value={10} max={100} label={"Meter"} />,
-	usage: [
-		{
-			title: "Lav verdi",
-			example: <Meter value={15} max={100} min={0} low={20} label={"Lav"} />,
-		},
-		{
-			title: "Høy verdi",
-			example: <Meter value={85} max={100} min={0} high={80} label={"Høy"} />,
-		},
-		{
-			title: "Optimal verdi",
-			example: (
-				<Meter
-					value={90}
-					max={100}
-					min={0}
-					high={95}
-					low={30}
-					optimum={80}
-					label={"Optimal"}
-				/>
-			),
-		},
-	],
+	img: <Meter value={10} max={100} label={"Meter"} />,
+	meta: {
+		description:
+			"The meter element represents a scalar measurement within a known range, or a fractional value; for example disk usage, the relevance of a query result, or the fraction of a voting population to have selected a particular candidate.\n" +
+			"\n",
+		spec: "https://html.spec.whatwg.org/multipage/form-elements.html#the-meter-element",
+		aka: ["gauge", "måler"],
+	},
 	playground: MeterPlayground,
 };

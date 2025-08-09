@@ -1,5 +1,5 @@
 details {
-	--border: 1px solid Field;
+	--border: 1px solid color-mix(in srgb, currentColor 20%, Field);
 
 	border: 1px solid transparent;
 	border-inline-start: var(--border);
@@ -10,32 +10,27 @@ details {
 	}
 
 	> div {
-		padding: 0.5lh 1lh;
+		padding: 0.5lh 1lh 1lh 1lh;
 	}
 
 	&:not(:only-of-type) {
 		border-inline: var(--border);
 		border-block-start: var(--border);
-		border-block-end: 0;
 
 		&:has(+ details) {
-			border-inline: var(--border);
+			margin-block-end: -1px;
 		}
 
 		&:not(:has(+ details)) {
 			border-block-end: var(--border);
 		}
 
-		&[open] {
-			border-inline-start-color: currentColor;
-
-			summary {
-				border-block-end: var(--border);
-			}
+		&:first-of-type {
+			border-radius: 4px 4px 0 0;
 		}
-	}
 
-	&[open] {
-		border-inline-start-color: currentColor;
+		&:last-of-type {
+			border-radius: 0 0 4px 4px;
+		}
 	}
 }

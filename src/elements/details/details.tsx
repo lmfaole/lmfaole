@@ -15,7 +15,7 @@ export const Details = (props: DetailsType) => {
 
 export const detailsInfo: ElementInfoType = {
 	name: "Details",
-	example: <Details>Detaljer</Details>,
+	img: <Details>Detaljer</Details>,
 	usage: [
 		{
 			title: "I løpende tekst",

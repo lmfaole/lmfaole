@@ -23,5 +23,5 @@ export const Button = (props: ButtonType) => {
 
 export const buttonInfo: ElementInfoType = {
 	name: "Button",
-	example: <Button>Hei</Button>,
+	img: <Button>Hei</Button>,
 };
