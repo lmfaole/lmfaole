@@ -16,16 +16,6 @@
 	input {
 		grid-area: input;
 		width: 100%;
-		accent-color: FieldText;
-
-		&::-webkit-slider-runnable-track {
-			background-color: Field;
-			border-radius: 1lh;
-		}
-
-		&::-webkit-slider-thumb {
-			background-color: FieldText;
-		}
 	}
 
 	small {
