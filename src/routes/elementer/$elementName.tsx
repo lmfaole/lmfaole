@@ -20,7 +20,9 @@ function RouteComponent() {
 				<h1>{element.name}</h1>
 				{element.meta && (
 					<>
-						<small>Også kjent som {element.meta.aka.join(", ")}.</small>
+						{element.meta.aka && (
+							<small>Også kjent som {element.meta.aka.join(", ")}.</small>
+						)}
 						<Blockquote
 							cite={{ href: element.meta.spec, label: "HTML Standarden" }}
 						>

@@ -10,7 +10,7 @@ export type ElementInfoType = {
 	playground?: () => ReactNode;
 	meta?: {
 		description: string;
-		aka: string[];
 		spec: string;
+		aka?: string[];
 	};
 };

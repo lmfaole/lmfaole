@@ -2,26 +2,22 @@ import type { ElementInfoType } from "../element-info.type.ts";
 import type { ButtonType } from "./button.type.ts";
 
 import "./button.css";
+import { ButtonPlayground } from "./button.playground.tsx";
 
 export const Button = (props: ButtonType) => {
-	const { type = "button", accessKey, children, ...rest } = props;
+	const { children, ...rest } = props;
 
-	if (!children) {
-		return <button>Mangler innhold</button>;
-	}
-
-	return (
-		<button
-			type={type}
-			title={props.title ? props.title : children.toString()}
-			{...rest}
-		>
-			{children}
-		</button>
-	);
+	return <button {...rest}>{children}</button>;
 };
 
 export const buttonInfo: ElementInfoType = {
 	name: "Button",
+	meta: {
+		description:
+			"The button element represents a button labeled by its contents.\n" +
+			"\n",
+		spec: "https://html.spec.whatwg.org/multipage/form-elements.html#the-button-element",
+	},
 	img: <Button>Hei</Button>,
+	playground: ButtonPlayground,
 };

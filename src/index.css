@@ -102,6 +102,10 @@ input {
 	font-size: medium;
 }
 
+.muted {
+	opacity: 0.75;
+}
+
 main {
 	container-type: inline-size;
 	margin-inline: auto;

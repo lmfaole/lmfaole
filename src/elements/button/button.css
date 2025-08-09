@@ -1,29 +1,11 @@
 button {
 	min-block-size: 44px;
 	min-inline-size: 7ch;
+	padding-inline: 1ch;
 	display: flex;
 	font-size: medium;
 	justify-content: center;
 	align-items: center;
 	font-family: system-ui;
-	border-radius: 0.25lh;
 	font-weight: 500;
-	cursor: pointer;
-	background-color: light-dark(oklch(0.99 0 157.76), oklch(0 0 116.16));
-	border: 2px solid light-dark(oklch(0.95 0 157.76), oklch(0.3499 0 116.16));
-	color: light-dark(oklch(0.2099 0.0061 116.16), oklch(1 0 157.76));
-	transition:
-		0.14s ease-out border-radius,
-		0.14s ease-out background-color,
-		0.14s ease-out color;
-
-	&:hover {
-		background-color: light-dark(oklch(0.97 0 157.76), oklch(0.2 0 116.16));
-		border-color: light-dark(oklch(0.8 0 157.76), oklch(0.4499 0 116.16));
-		color: light-dark(oklch(0 0.0061 116.16), oklch(1 0 157.76));
-	}
-
-	&:active {
-		border-radius: 0.5lh;
-	}
 }
