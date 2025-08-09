@@ -1,4 +1,4 @@
-label:has(input[type="checkbox"]) {
+label:has(input[type="radio"]) {
 	display: flex;
 	align-items: center;
 	min-block-size: 44px;

@@ -1,11 +1,26 @@
 .component-hero {
-	height: 50svh;
-	border: 1px solid Highlight;
-	padding: 2lh;
+	min-height: 33svh;
 	box-sizing: border-box;
 	margin-block: 4lh;
 	border-radius: 2lh;
 	place-content: center;
 	place-items: center;
-	text-align: center;
+	position: relative;
+
+	&::after {
+		content: "";
+		width: 100vw;
+		height: 100%;
+		margin-left: calc(50% - 50vw);
+		background-color: light-dark(
+			oklch(0.9783 0 157.76),
+			oklch(0.1499 0.0061 116.16)
+		);
+		border-block: 1px solid
+			light-dark(oklch(0.9283 0 157.76), oklch(0.2099 0.0061 116.16));
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: -1;
+	}
 }

@@ -1,12 +1,12 @@
 pre {
 	font-family: monospace;
 	padding: 0.5lh 2ch;
+	font-size: medium;
 	white-space: pre-wrap;
-	border-radius: 4px;
-	border: 2px dashed
-		light-dark(oklch(0.9 0.0244 51.87), oklch(0.2888 0.0321 148.33));
 	background-color: light-dark(
-		oklch(0.9991 0.0104 51.87),
-		oklch(0.1888 0.0321 148.33)
+		oklch(0.9783 0 157.76),
+		oklch(0.1499 0.0061 116.16)
 	);
+	border: 1px solid
+		light-dark(oklch(0.9283 0 157.76), oklch(0.2099 0.0061 116.16));
 }

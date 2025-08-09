@@ -8,6 +8,7 @@
 	align-items: center;
 	column-gap: 2ch;
 	width: 100%;
+	font-family: system-ui;
 
 	@container (width > 400px) {
 		grid-template-columns: 1fr auto;

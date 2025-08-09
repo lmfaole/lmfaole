@@ -6,19 +6,16 @@
 		"output"
 		"code";
 	gap: 2lh 4lh;
-	border: 2px dotted
-		light-dark(oklch(0.8494 0.0457 163.76), oklch(0.3494 0.0457 163.76));
 	background-color: transparent;
-	padding: 1lh;
 	resize: horizontal;
 	overflow: hidden;
+	margin-block-end: 4lh;
 
 	@container (width > 800px) {
-		grid-template-columns: 1fr 320px;
+		grid-template-columns: 320px 1fr;
 		grid-template-areas:
-			"output controls"
-			"code controls";
-		padding: 2lh;
+			"controls output"
+			"controls code";
 	}
 
 	.controls {

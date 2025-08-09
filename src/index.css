@@ -2,7 +2,13 @@
 	--page-width: 120ch;
 
 	color-scheme: light dark;
-	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-family: "Crimson Text", serif;
+	background-color: light-dark(
+		oklch(0.9683 0 157.76),
+		oklch(0.1699 0.0061 116.16)
+	);
+	color: light-dark(black, oklch(0.9724 0.0181 116.16));
+	font-size: large;
 }
 
 #root {
@@ -11,6 +17,10 @@
 
 * {
 	line-height: 1.5;
+
+	&:focus-visible {
+		outline: 4px solid currentColor;
+	}
 }
 
 h1,
@@ -25,31 +35,23 @@ h5,
 .h5,
 h6,
 .h6 {
-	font-weight: 500;
-	text-wrap: balance;
-	margin-block: 1lh;
+	margin-block-start: 1lh;
 }
 
 h1,
 .h1 {
 	font-size: xxx-large;
+	text-wrap: balance;
 }
 
 h2,
 .h2 {
 	font-size: xx-large;
-	margin-block: 2lh 0.5lh;
-
-	+ h3,
-	+ .h3 {
-		margin-block-start: 0;
-	}
 }
 
 h3,
 .h3 {
 	font-size: x-large;
-	margin-block: 3lh 0.5lh;
 }
 
 h4,
@@ -59,17 +61,15 @@ h4,
 
 h5,
 .h5 {
-	font-size: medium;
-	font-weight: 500;
+	font-size: large;
 }
 
 h6,
 .h6 {
-	font-size: small;
+	font-size: large;
 }
 
 p {
-	font-size: medium;
 	max-width: 66ch;
 	text-wrap: pretty;
 	margin-block: 0.5lh 1lh;
@@ -79,8 +79,27 @@ p {
 	}
 }
 
+small {
+	font-size: large;
+}
+
 a {
-	text-underline-offset: 0.1lh;
+	text-underline-offset: 0.15lh;
+	text-decoration-thickness: 0.07lh;
+	text-decoration-color: oklch(0.6724 0.0181 116.16);
+	color: inherit;
+
+	&:hover {
+		text-decoration-color: light-dark(black, white);
+	}
+}
+
+li {
+	margin-block-end: 0.5lh;
+}
+
+input {
+	font-size: medium;
 }
 
 main {

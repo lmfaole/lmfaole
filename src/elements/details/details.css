@@ -7,6 +7,7 @@ details {
 	summary {
 		padding: 1ex;
 		cursor: pointer;
+		font-family: system-ui;
 	}
 
 	> div {
@@ -16,6 +17,9 @@ details {
 	&:not(:only-of-type) {
 		border-inline: var(--border);
 		border-block-start: var(--border);
+		background-color: light-dark(oklch(0.99 0 157.76), oklch(0 0 116.16));
+		border: 1px solid light-dark(oklch(0.95 0 157.76), oklch(0.3499 0 116.16));
+		color: light-dark(oklch(0.2099 0.0061 116.16), oklch(1 0 157.76));
 
 		&:has(+ details) {
 			margin-block-end: -1px;

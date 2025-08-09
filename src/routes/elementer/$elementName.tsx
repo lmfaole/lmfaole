@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ComponentHero } from "../../components/component-hero/component-hero.tsx";
 import { elements } from "../../elements";
+import { Blockquote } from "../../elements/blockquote/blockquote.tsx";
 
 export const Route = createFileRoute("/elementer/$elementName")({
 	component: RouteComponent,
@@ -15,23 +16,24 @@ function RouteComponent() {
 
 	return (
 		<main>
-			<h1>{element.name}</h1>
+			<header>
+				<h1>{element.name}</h1>
+				{element.meta && (
+					<>
+						<small>Også kjent som {element.meta.aka.join(", ")}.</small>
+						<Blockquote
+							cite={{ href: element.meta.spec, label: "HTML Standarden" }}
+						>
+							<p className={"h3"} lang={"en"}>
+								{element.meta.description}
+							</p>
+						</Blockquote>
+					</>
+				)}
+			</header>
+
 			<ComponentHero>{element.img}</ComponentHero>
-			<h2>Om elementet</h2>
-			{element.meta && (
-				<dl>
-					<dt>Beskrivelse</dt>
-					<dd lang={"en"}>{element.meta.description}</dd>
-					<dt>Også kjent som</dt>
-					{element.meta.aka.map((aka) => (
-						<dd>{aka}</dd>
-					))}
-					<dt>Spesifikasjon</dt>
-					<dd>
-						<a href={element.meta.spec}>HTML Standard</a>
-					</dd>
-				</dl>
-			)}
+
 			{element.playground && (
 				<>
 					<h2>Egenskaper</h2>

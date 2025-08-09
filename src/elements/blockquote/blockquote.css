@@ -1,0 +1,7 @@
+blockquote {
+	margin-inline-start: 0;
+
+	> *:nth-last-child(2) {
+		margin-block-end: 1lh;
+	}
+}

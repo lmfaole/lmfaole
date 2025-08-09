@@ -4,7 +4,8 @@
 	grid-template-areas:
 		"label"
 		"input";
-	gap: 0.2ex;
+	gap: 0.7ex;
+	font-family: system-ui;
 
 	label {
 		grid-area: label;

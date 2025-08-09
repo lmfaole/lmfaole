@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { components } from "../../components";
-import { ComponentExample } from "../../components/component-example/component-example.tsx";
+import { ComponentHero } from "../../components/component-hero/component-hero.tsx";
 
 export const Route = createFileRoute("/komponenter/$componentName")({
 	component: ComponentPage,
@@ -17,37 +17,8 @@ function ComponentPage() {
 
 	return (
 		<main>
-			<article className={"page"}>
-				<header>
-					<h1>{component.name}</h1>
-					<ComponentExample
-						title={"Grunnstil"}
-						interactive={true}
-						showMarkup={true}
-					>
-						{component.example}
-					</ComponentExample>
-				</header>
-
-				{/*	<h2>Om komponenten</h2>
-				<dl className={"metadata"}>
-					<dt>Kategori</dt>
-					<dd>{component.category}</dd>
-				</dl>*/}
-
-				{/*{component.examples && (
-					<div>
-						<h2>Eksempler</h2>
-						{component.examples.map((example) => (
-							<ComponentExample
-								key={example.title}
-								interactive={true}
-								{...example}
-							/>
-						))}
-					</div>
-				)}*/}
-			</article>
+			<h1>{component.name}</h1>
+			<ComponentHero>{component.example}</ComponentHero>
 		</main>
 	);
 }
