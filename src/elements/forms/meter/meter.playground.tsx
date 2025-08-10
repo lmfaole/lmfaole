@@ -68,23 +68,23 @@ export const MeterPlayground = () => {
 					step={5}
 					defaultValue={optimum}
 					value={optimum}
-					max={max}
-					min={min}
+					max={max - 1}
+					min={min + 1}
 					onChange={(e) => setOptimum(Number(e.target.value))}
 				/>,
 				<Range
 					label={"Lav"}
 					defaultValue={low}
 					value={low}
-					max={high}
-					min={min}
+					max={high - 1}
+					min={minValue}
 					onChange={(e) => setLow(Number(e.target.value))}
 				/>,
 				<Range
 					label={"Høy"}
 					defaultValue={high}
-					max={max}
-					min={low}
+					max={maxValue}
+					min={low + 1}
 					value={high}
 					onChange={(e) => setHigh(Number(e.target.value))}
 				/>,
