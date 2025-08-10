@@ -10,6 +10,7 @@ export const Blockquote = ({ cite, children }: BlockquoteType) => {
 			<p>
 				<cite>
 					<a href={cite.href}>{cite.label}</a>
+					{cite.author && <span> – {cite.author}</span>}
 				</cite>
 			</p>
 		</blockquote>
@@ -23,6 +24,7 @@ export const blockquoteInfo: ElementInfoType = {
 			cite={{
 				href: "https://www.miriamsuzanne.com/2024/08/08/vision/",
 				label: "We don’t need a boss, we need a process",
+				author: "Miriam Eric Suzanne",
 			}}
 		>
 			<p>

@@ -7,5 +7,6 @@ export type BlockquoteType = Omit<
 	cite: {
 		href: string;
 		label: string;
+		author?: string;
 	};
 };
