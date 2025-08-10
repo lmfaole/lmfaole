@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { mockFlavors } from "../../../components/component.mock.data.ts";
+import { mockFlavors } from "../../../data/usage.mock.data.ts";
 import type { ElementInfoType } from "../../element-info.type.ts";
 import type { SelectType } from "./select.type.ts";
 

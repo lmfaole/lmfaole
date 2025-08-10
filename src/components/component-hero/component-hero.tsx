@@ -5,7 +5,7 @@ import type { ComponentHeroType } from "./component-hero.type.ts";
 import "./component-hero.css";
 
 export const ComponentHero = ({ children }: ComponentHeroType) => {
-	return <div className={"component-hero"}>{children}</div>;
+	return <section className={"component-hero"}>{children}</section>;
 };
 
 export const componentHeroInfo: ComponentInfoType = {

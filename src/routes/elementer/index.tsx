@@ -12,20 +12,27 @@ function RouteComponent() {
 			<ul>
 				{elements.map((element) => (
 					<li>
-						<Link
-							to={"/elementer/$elementName"}
-							params={{ elementName: element.name }}
-						>
-							{element.name}
-						</Link>
-						{element.playground && (
-							<p className={"muted"}>Har egenskapsoversikt.</p>
-						)}
-						{element.usage?.length && (
-							<p className={"muted"}>
-								Har {element.usage.length} eksempler på bruk.
+						<p>
+							<Link
+								to={"/elementer/$elementName"}
+								params={{ elementName: element.name }}
+							>
+								{element.name}
+							</Link>
+						</p>
+						{/*{element.meta.aka && (
+							<p>
+								Også kjent som <i>{element.meta.aka?.join(", ")}</i>.
 							</p>
 						)}
+						{element.playground && (
+							<p className={"muted p"}>Har egenskapsoversikt.</p>
+						)}
+						{element.usage?.length && (
+							<p className={"muted p"}>
+								{element.usage.length} eksempler på bruk.
+							</p>
+						)}*/}
 					</li>
 				))}
 			</ul>

@@ -14,8 +14,5 @@
 	input {
 		grid-area: input;
 		min-width: 10ch;
-		padding: 4px 8px;
-		background-color: transparent;
-		border-radius: 4px;
 	}
 }

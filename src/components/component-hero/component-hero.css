@@ -3,6 +3,7 @@
 	box-sizing: border-box;
 	margin-block: 4lh;
 	border-radius: 2lh;
+	padding-block: 3lh;
 	place-content: center;
 	place-items: center;
 	position: relative;

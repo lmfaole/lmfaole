@@ -1,6 +1,6 @@
 import { CheckmarkIcon, XMarkIcon } from "@navikt/aksel-icons";
+import { mockFlavors } from "../../data/usage.mock.data.ts";
 import { checkboxInfo } from "../../elements";
-import { mockFlavors } from "../component.mock.data.ts";
 import type { ComponentInfoType } from "../component-info.type.ts";
 import type { SwitchType } from "./switch.type.ts";
 
