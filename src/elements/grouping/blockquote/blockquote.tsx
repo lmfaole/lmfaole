@@ -49,6 +49,6 @@ export const blockquoteInfo: ElementInfoType = {
 			"The blockquote element represents a section that is quoted from another source.",
 		spec: "https://html.spec.whatwg.org/multipage/grouping-content.html#the-blockquote-element",
 		category: "gruppering",
-		aka: ["hero"],
+		aka: ["sitat"],
 	},
 };
