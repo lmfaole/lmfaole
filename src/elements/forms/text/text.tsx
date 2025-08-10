@@ -24,5 +24,6 @@ export const textInputInfo: ElementInfoType = {
 			"The input element represents a one line plain text edit control for the element's value.",
 		spec: "https://html.spec.whatwg.org/multipage/input.html#text-(type=text)-state-and-search-state-(type=search)",
 		category: "skjema",
+		aka: ["tekst-input"],
 	},
 };

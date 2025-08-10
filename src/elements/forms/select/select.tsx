@@ -34,5 +34,6 @@ export const selectInfo: ElementInfoType = {
 			"The select element represents a control for selecting amongst a set of options.",
 		spec: "https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element",
 		category: "skjema",
+		aka: ["nedtrekksliste", "meny"],
 	},
 };
