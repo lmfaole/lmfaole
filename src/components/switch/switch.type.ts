@@ -1,3 +1,3 @@
-import type { CheckboxType } from "../../elements/inputs/checkbox/checkbox.type.ts";
+import type { CheckboxType } from "../../elements/forms/checkbox/checkbox.type.ts";
 
 export type SwitchType = CheckboxType;

@@ -3,14 +3,24 @@ import type { ReactNode } from "react";
 export type ElementInfoType = {
 	name: string;
 	img: ReactNode;
+	playground?: () => ReactNode;
 	usage?: {
 		title: string;
 		example: ReactNode;
 	}[];
-	playground?: () => ReactNode;
-	meta?: {
+	meta: {
 		description: string;
 		spec: string;
+		category:
+			| "seksjon"
+			| "gruppering"
+			| "tekst"
+			| "lenke"
+			| "redigering"
+			| "innbygging"
+			| "tabulær data"
+			| "skjema"
+			| "interaksjon";
 		aka?: string[];
 	};
 };

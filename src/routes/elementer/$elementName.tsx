@@ -1,10 +1,19 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { ComponentHero } from "../../components/component-hero/component-hero.tsx";
 import { elements } from "../../elements";
-import { Blockquote } from "../../elements/blockquote/blockquote.tsx";
+import { Blockquote } from "../../elements/grouping/blockquote/blockquote.tsx";
 
 export const Route = createFileRoute("/elementer/$elementName")({
+	loader: ({ params: { elementName } }) => {
+		const element = elements.find((e) => e.name === elementName);
+
+		if (!element) throw notFound();
+		return { element };
+	},
 	component: RouteComponent,
+	notFoundComponent: () => {
+		return <h1>Fant ikke elementet</h1>;
+	},
 });
 
 function RouteComponent() {
@@ -12,30 +21,30 @@ function RouteComponent() {
 
 	const element = elements.find((e) => e.name === elementName);
 
-	if (!element) return <h1>Du må ha kommet feil</h1>;
+	if (!element) return <h1>Ingen komponent med dette navnet</h1>;
 
 	return (
 		<main>
 			<header>
 				<h1>
 					{element.name}
-					{element.meta && (
-						<>
-							, <small>{element.meta.aka?.join(", ")}</small>
-						</>
+					{element.meta.aka && (
+						<span>
+							,{" "}
+							<small className={"muted h3"}>
+								{element.meta.aka.join(", ")}
+							</small>
+						</span>
 					)}
 				</h1>
-				{element.meta && (
-					<>
-						<Blockquote
-							cite={{ href: element.meta.spec, label: "HTML Standarden" }}
-						>
-							<p className={"h3"} lang={"en"}>
-								{element.meta.description}
-							</p>
-						</Blockquote>
-					</>
-				)}
+
+				<Blockquote
+					cite={{ href: element.meta.spec, label: "HTML Standarden" }}
+				>
+					<p className={"h3"} lang={"en"}>
+						{element.meta.description}
+					</p>
+				</Blockquote>
 			</header>
 
 			<ComponentHero>{element.img}</ComponentHero>
@@ -57,6 +66,10 @@ function RouteComponent() {
 					))}
 				</>
 			)}
+			<dl>
+				<dt>Kategori</dt>
+				<dd>{element.meta.category}</dd>
+			</dl>
 		</main>
 	);
 }

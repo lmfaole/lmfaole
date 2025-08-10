@@ -1,0 +1,28 @@
+details {
+	--border-color: color-mix(in srgb, currentColor 20%, Field);
+	--border: 1px solid var(--border-color);
+
+	border-block: var(--border);
+
+	&[open] {
+		--border-color: color-mix(in srgb, currentColor 40%, Field);
+	}
+
+	summary {
+		padding: 1ex;
+		cursor: pointer;
+		font-family: system-ui;
+	}
+
+	> div {
+		padding: 0.5lh 1lh 0.75lh 1lh;
+	}
+
+	&:not(:only-of-type) {
+		border-block: var(--border);
+
+		&:has(+ details) {
+			margin-block-end: -1px;
+		}
+	}
+}
