@@ -23,5 +23,6 @@ export const radioInfo: ElementInfoType = {
 			" radio button group in which only one control can have its checkedness state set to true. If the element's checkedness state is true, the control represents the selected control in the group, and if it is false, it indicates a control in the group that is not selected.",
 		spec: "https://html.spec.whatwg.org/multipage/input.html#radio-button-state-(type=radio)",
 		category: "skjema",
+		aka: ["valg"],
 	},
 };

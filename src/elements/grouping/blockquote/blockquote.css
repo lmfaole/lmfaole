@@ -1,12 +1,5 @@
 blockquote {
 	margin-inline-start: 0;
 	font-size: x-large;
-
-	> * {
-		max-width: 60ch;
-	}
-
-	> *:nth-last-child(2) {
-		margin-block-end: 1lh;
-	}
+	max-width: 60ch;
 }
