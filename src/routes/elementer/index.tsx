@@ -23,7 +23,7 @@ function RouteComponent() {
 			</p>
 			<p>
 				<aside>
-					Lista er under utarbeiding forløpende, og vil (forhåpentligvis) vokse.
+					Lista er åpenbart ufullstendig, men vil (forhåpentligvis) vokse.
 				</aside>
 			</p>
 			<h2>Lista</h2>
