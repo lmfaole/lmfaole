@@ -8,10 +8,12 @@ export const Blockquote = ({ cite, children }: BlockquoteType) => {
 		<blockquote>
 			{children}
 			<p>
-				<cite>
-					<a href={cite.href}>{cite.label}</a>
-					{cite.author && <span> – {cite.author}</span>}
-				</cite>
+    <footer>
+				  <cite>
+       <a href={cite.href}>{cite.label}</a>
+      </cite>
+					 {cite.author && <span> – {cite.author}</span>}
+    </footer>
 			</p>
 		</blockquote>
 	);
