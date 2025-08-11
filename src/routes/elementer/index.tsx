@@ -17,8 +17,8 @@ function RouteComponent() {
 				.
 			</p>
 			<p>
-				Målet med utarbeidinga av denne lista er å forstå hva vi web-plattformen
-				gir oss, og hvor vi må legge til ting for å dekke brukerbehovene i
+				Vi produserer mye i lukka miljøer, med få tilgjengleige test-enheter. Mye av poenget med dette prosjektet er derfor å få ut noe fort, se hva web-plattformen
+				gir oss gratis, og legge til funksjonalitet der det kreves for å dekke brukerbehovene ute i
 				teamene.
 			</p>
 			<p>
