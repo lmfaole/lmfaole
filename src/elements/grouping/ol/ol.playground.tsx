@@ -56,6 +56,12 @@ export const OrderedListPlayground = () => {
 					andre siden før du snur. Hold lefsene varme i et klede.
 				</ListItem>
 			</OrderedList>
+			<footer>
+				Hentet fra{" "}
+				<a href={"https://www.matprat.no/oppskrifter/kos/myke-pannebrod/"}>
+					Matprat oppskriften for myke pannebrød
+				</a>
+			</footer>
 		</Playground>
 	);
 };
