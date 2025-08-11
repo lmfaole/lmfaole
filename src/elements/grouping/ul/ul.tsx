@@ -3,15 +3,13 @@ import type { ElementInfoType } from "../../element-info.type.ts";
 import { ListItem } from "../li/li.tsx";
 import { UnorderedListPlayground } from "./ul.playground.tsx";
 
+import "./ul.css";
+
 export const UnorderedList = ({
 	children,
 	...rest
 }: AllHTMLAttributes<HTMLUListElement>) => {
-	return (
-		<ul className={"ul"} {...rest}>
-			{children}
-		</ul>
-	);
+	return <ul {...rest}>{children}</ul>;
 };
 
 export const unorderedListInfo: ElementInfoType = {

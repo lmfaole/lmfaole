@@ -12,6 +12,7 @@ import { searchInputInfo } from "./forms/search/search.tsx";
 import { selectInfo } from "./forms/select/select.tsx";
 import { textInputInfo } from "./forms/text/text.tsx";
 import { blockquoteInfo } from "./grouping/blockquote/blockquote.tsx";
+import { descriptionListInfo } from "./grouping/dl/dl.tsx";
 import { listItemInfo } from "./grouping/li/li.tsx";
 import { menuInfo } from "./grouping/menu/menu.tsx";
 import { orderedListInfo } from "./grouping/ol/ol.tsx";
@@ -31,6 +32,7 @@ export * from "./forms/search/search.tsx";
 export * from "./forms/select/select.tsx";
 export * from "./forms/text/text.tsx";
 export * from "./grouping/blockquote/blockquote.tsx";
+export * from "./grouping/dl/dl.tsx";
 export * from "./grouping/li/li.tsx";
 export * from "./grouping/menu/menu.tsx";
 export * from "./grouping/ol/ol.tsx";
@@ -57,6 +59,9 @@ export const elements: ElementInfoType[] = [
 	orderedListInfo,
 	listItemInfo,
 	rangeInfo,
+	descriptionListInfo,
 ];
 
 export default elements.sort((a, b) => a.name.localeCompare(b.name));
+
+/*.sort((a, b) => a.meta.category.localeCompare(b.meta.category));*/

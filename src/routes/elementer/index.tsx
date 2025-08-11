@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { elements } from "../../elements";
+import { elements, ListItem, UnorderedList } from "../../elements";
 
 export const Route = createFileRoute("/elementer/")({
 	component: RouteComponent,
@@ -9,9 +9,27 @@ function RouteComponent() {
 	return (
 		<main>
 			<h1>Elementer</h1>
-			<ul>
+			<p>
+				Dette er en liste med elementer jeg har jobbet med i arbeidet med{" "}
+				<a href={"https://jokul.fremtind.no"}>
+					Jøkul, designsystemet til Fremtind
+				</a>
+				.
+			</p>
+			<p>
+				Målet med utarbeidinga av denne lista er å forstå hva vi web-plattformen
+				gir oss, og hvor vi må legge til ting for å dekke brukerbehovene i
+				teamene.
+			</p>
+			<p>
+				<aside>
+					Lista er under utarbeiding forløpende, og vil (forhåpentligvis) vokse.
+				</aside>
+			</p>
+			<h2>Lista</h2>
+			<UnorderedList>
 				{elements.map((element) => (
-					<li>
+					<ListItem>
 						<p>
 							<Link
 								to={"/elementer/$elementName"}
@@ -33,9 +51,23 @@ function RouteComponent() {
 								{element.usage.length} eksempler på bruk.
 							</p>
 						)}*/}
-					</li>
+					</ListItem>
 				))}
-			</ul>
+			</UnorderedList>
+			<footer>
+				<h2>Referanser</h2>
+				<p>
+					Informasjonen om elementene er hovedsaklig hentet fra{" "}
+					<a
+						href={
+							"https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements"
+						}
+					>
+						MDN
+					</a>{" "}
+					og <a href={"https://html.spec.whatwg.org/"}>HTML spesifikasjonen</a>.
+				</p>
+			</footer>
 		</main>
 	);
 }

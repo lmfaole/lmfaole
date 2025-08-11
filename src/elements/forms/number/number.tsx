@@ -24,7 +24,7 @@ export const Number = (props: NumberType) => {
 };
 
 export const numberInputInfo: ElementInfoType = {
-	name: "Input: Number",
+	name: "Number",
 	img: <Number label={"Skriv et tall"} />,
 	meta: {
 		description:

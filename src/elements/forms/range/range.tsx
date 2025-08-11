@@ -24,7 +24,7 @@ export const Range = (props: RangeType) => {
 };
 
 export const rangeInfo: ElementInfoType = {
-	name: "Input: Range",
+	name: "Range",
 	img: <Range label={mockFlavors[0]} />,
 	meta: {
 		description:
