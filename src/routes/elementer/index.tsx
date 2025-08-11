@@ -17,7 +17,7 @@ function RouteComponent() {
 				.
 			</p>
 			<p>
-				Vi produserer mye i lukka miljøer, med få tilgjengleige test-enheter. Mye av poenget med dette prosjektet er derfor å få ut noe fort, se hva web-plattformen
+				Vi produserer mye i lukka miljøer, med få tilgjengelige test-enheter. Mye av poenget med dette prosjektet er derfor å få ut noe fort, se hva web-plattformen
 				gir oss gratis, og legge til funksjonalitet der det kreves for å dekke brukerbehovene ute i
 				teamene.
 			</p>
