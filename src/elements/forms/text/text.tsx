@@ -17,7 +17,7 @@ export const Text = (props: TextType) => {
 };
 
 export const textInputInfo: ElementInfoType = {
-	name: "Text",
+	name: "Input: Text",
 	img: <Text label={"Hvilken smak ønsker du?"} />,
 	meta: {
 		description:

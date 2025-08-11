@@ -23,8 +23,8 @@ export const Range = (props: RangeType) => {
 	);
 };
 
-export const radioInfo: ElementInfoType = {
-	name: "Radio",
+export const rangeInfo: ElementInfoType = {
+	name: "Input: Range",
 	img: <Range label={mockFlavors[0]} />,
 	meta: {
 		description:

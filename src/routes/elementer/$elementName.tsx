@@ -1,7 +1,6 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ComponentHero } from "../../components/component-hero/component-hero.tsx";
-import { elements } from "../../elements";
-import { Blockquote } from "../../elements/grouping/blockquote/blockquote.tsx";
+import { Blockquote, elements, ListItem, UnorderedList } from "../../elements";
 
 export const Route = createFileRoute("/elementer/$elementName")({
 	loader: ({ params: { elementName } }) => {
@@ -66,10 +65,30 @@ function RouteComponent() {
 					))}
 				</>
 			)}
-			<dl>
-				<dt>Kategori</dt>
-				<dd>{element.meta.category}</dd>
-			</dl>
+
+			<aside>
+				<h2>Andre elementer i kategorien {element.meta.category}</h2>
+				<UnorderedList>
+					{elements
+						.filter(
+							(e) =>
+								element.meta.category === e.meta.category &&
+								element.name !== e.name,
+						)
+						.map((e) => (
+							<ListItem>
+								<p>
+									<Link
+										to={"/elementer/$elementName"}
+										params={{ elementName: e.name }}
+									>
+										{e.name}
+									</Link>
+								</p>
+							</ListItem>
+						))}
+				</UnorderedList>
+			</aside>
 		</main>
 	);
 }

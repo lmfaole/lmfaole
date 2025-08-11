@@ -5,21 +5,21 @@ import type { PreType } from "./pre.type.ts";
 
 import "./pre.css";
 
-export const Pre = ({ children, language = "html" }: PreType) => {
+export const Pre = ({ children, language = "html", ...rest }: PreType) => {
 	const toFormatedText = renderToStaticMarkup(children).replaceAll(
 		"><",
 		">\n<",
 	);
 
 	return (
-		<pre data-language={language} className={"pre"}>
+		<pre data-language={language} {...rest}>
 			<code>{toFormatedText}</code>
 		</pre>
 	);
 };
 
 export const preInfo: ElementInfoType = {
-	name: "Pre",
+	name: "Preformatted Text",
 	img: (
 		<Pre>
 			<Button>Knapp</Button>

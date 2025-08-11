@@ -16,7 +16,7 @@ export const Checkbox = (props: CheckboxType) => {
 };
 
 export const checkboxInfo: ElementInfoType = {
-	name: "Checkbox",
+	name: "Input: Checkbox",
 	img: <Checkbox label={mockFlavors[0]} />,
 	meta: {
 		category: "skjema",

@@ -15,7 +15,7 @@ export const Radio = (props: RadioType) => {
 };
 
 export const radioInfo: ElementInfoType = {
-	name: "Radio",
+	name: "Input: Radio",
 	img: <Radio label={mockFlavors[0]} />,
 	meta: {
 		description:

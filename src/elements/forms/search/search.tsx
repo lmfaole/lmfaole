@@ -25,7 +25,7 @@ export const Search = (props: SearchType) => {
 };
 
 export const searchInputInfo: ElementInfoType = {
-	name: "Search",
+	name: "Input: Search",
 	img: <Search label={"Søk"} />,
 	meta: {
 		description:

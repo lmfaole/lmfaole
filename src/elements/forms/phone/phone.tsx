@@ -18,7 +18,7 @@ export const Phone = (props: PhoneType) => {
 };
 
 export const phoneInputInfo: ElementInfoType = {
-	name: "Phone",
+	name: "Input: Phone",
 	img: <Phone required={false} />,
 	meta: {
 		description:
