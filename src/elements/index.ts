@@ -19,6 +19,7 @@ import { orderedListInfo } from "./grouping/ol/ol.tsx";
 import { preInfo } from "./grouping/pre/pre.tsx";
 import { unorderedListInfo } from "./grouping/ul/ul.tsx";
 import { detailsInfo } from "./interactive/details/details.tsx";
+import { tableInfo } from "./tabular-data/table/table.tsx";
 
 export * from "./forms/button/button.tsx";
 export * from "./forms/checkbox/checkbox.tsx";
@@ -39,6 +40,7 @@ export * from "./grouping/ol/ol.tsx";
 export * from "./grouping/pre/pre.tsx";
 export * from "./grouping/ul/ul.tsx";
 export * from "./interactive/details/details.tsx";
+export * from "./tabular-data/table/table.tsx";
 
 export const elements: ElementInfoType[] = [
 	buttonInfo,
@@ -60,6 +62,7 @@ export const elements: ElementInfoType[] = [
 	listItemInfo,
 	rangeInfo,
 	descriptionListInfo,
+	tableInfo,
 ];
 
 export default elements.sort((a, b) => a.name.localeCompare(b.name));
