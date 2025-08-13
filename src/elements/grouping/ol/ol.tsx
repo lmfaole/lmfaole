@@ -1,18 +1,15 @@
-import type { DetailedHTMLProps, OlHTMLAttributes } from "react";
 import type { ElementInfoType } from "../../element-info.type.ts";
 import { OrderedListPlayground } from "./ol.playground.tsx";
+import type { OlType } from "./ol.type.ts";
 
-export const OrderedList = ({
-	children,
-	...rest
-}: DetailedHTMLProps<OlHTMLAttributes<HTMLOListElement>, HTMLOListElement>) => {
+export const OrderedList = ({ children, ...rest }: OlType) => {
 	return <ol {...rest}>{children}</ol>;
 };
 
 export const orderedListInfo: ElementInfoType = {
 	name: "Ordered List",
 	img: (
-		<OrderedList>
+		<OrderedList aria-label={"Fremgangsmåte for kake"}>
 			<li>
 				Ha mel i en stor bolle. Ha i gjær, sukker og salt. Bland sammen. Spe
 				vann i deigen, og rør deigen sammen med en sleiv. Kna den godt sammen

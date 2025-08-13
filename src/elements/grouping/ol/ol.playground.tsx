@@ -39,6 +39,7 @@ export const OrderedListPlayground = () => {
 			<OrderedList
 				reversed={reversed}
 				type={type as OlHTMLAttributes<HTMLOListElement>["type"]}
+				aria-label={"Liste for eksperimentering med sorterte lister"}
 			>
 				<ListItem value={startValue}>
 					Ha mel i en stor bolle. Ha i gjær, sukker og salt. Bland sammen. Spe

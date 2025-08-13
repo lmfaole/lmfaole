@@ -4,7 +4,7 @@ import { DescriptionList } from "./dl.tsx";
 export const DescriptionListPlayground = () => {
 	return (
 		<Playground requiredProps={[]} optionalProps={[]}>
-			<DescriptionList>
+			<DescriptionList aria-label={"Eksempelliste: Sanginformasjon"}>
 				<dt>Artister</dt>
 				<dd>Zara Larsson</dd>
 				<dd>Amok</dd>

@@ -1,21 +1,20 @@
-import type { AllHTMLAttributes } from "react";
 import type { ElementInfoType } from "../../element-info.type.ts";
 import { ListItem } from "../li/li.tsx";
 import { UnorderedListPlayground } from "./ul.playground.tsx";
+import type { UlType } from "./ul.type.ts";
 
 import "./ul.css";
 
-export const UnorderedList = ({
-	children,
-	...rest
-}: AllHTMLAttributes<HTMLUListElement>) => {
+export const UnorderedList = ({ children, ...rest }: UlType) => {
 	return <ul {...rest}>{children}</ul>;
 };
 
 export const unorderedListInfo: ElementInfoType = {
 	name: "Unordered List",
 	img: (
-		<UnorderedList>
+		<UnorderedList
+			aria-label={"Ingredienser for en kake om jeg ikke husker helt feil"}
+		>
 			<ListItem>560 g hvetemel</ListItem>
 			<ListItem>2 ts tørrgjær</ListItem>
 			<ListItem>1 ts sukker</ListItem>

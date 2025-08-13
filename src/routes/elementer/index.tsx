@@ -9,25 +9,32 @@ function RouteComponent() {
 	return (
 		<main>
 			<h1>Elementer</h1>
-			<p>
-				Dette er en liste med elementer jeg har jobbet med i arbeidet med{" "}
-				<a href={"https://jokul.fremtind.no"}>
-					Jøkul, designsystemet til Fremtind
-				</a>
-				.
-			</p>
-			<p>
-				Vi produserer mye i lukka miljøer, med få tilgjengelige test-enheter. Mye av poenget med dette prosjektet er derfor å få ut noe fort, se hva web-plattformen
-				gir oss gratis, og legge til funksjonalitet der det kreves for å dekke brukerbehovene ute i
-				teamene.
-			</p>
-			<p>
-				<aside>
-					Lista er åpenbart ufullstendig, men vil (forhåpentligvis) vokse.
-				</aside>
-			</p>
+			<aside>
+				<p>
+					Dette er en liste med elementer jeg har jobbet med i arbeidet med{" "}
+					<a href={"https://jokul.fremtind.no"}>
+						Jøkul, designsystemet til Fremtind
+					</a>
+					.
+				</p>
+				<p>
+					Vi produserer mye i lukka miljøer, med få tilgjengelige test-enheter.
+					Mye av poenget med dette prosjektet er derfor å få ut noe fort, se hva
+					web-plattformen gir oss gratis, og legge til funksjonalitet der det
+					kreves.
+				</p>
+				<p>
+					I tillegg er dette et veldig godt sted for meg å se hva som må gjøres
+					for å sikre universell utforming i bruk av ulike elementer.
+				</p>
+				<p>
+					<aside>
+						Lista er åpenbart ufullstendig, men vil (forhåpentligvis) vokse.
+					</aside>
+				</p>
+			</aside>
 			<h2>Lista</h2>
-			<UnorderedList>
+			<UnorderedList aria-label={"Komponentliste"}>
 				{elements.map((element) => (
 					<ListItem>
 						<p>
@@ -38,19 +45,6 @@ function RouteComponent() {
 								{element.name}
 							</Link>
 						</p>
-						{/*{element.meta.aka && (
-							<p>
-								Også kjent som <i>{element.meta.aka?.join(", ")}</i>.
-							</p>
-						)}
-						{element.playground && (
-							<p className={"muted p"}>Har egenskapsoversikt.</p>
-						)}
-						{element.usage?.length && (
-							<p className={"muted p"}>
-								{element.usage.length} eksempler på bruk.
-							</p>
-						)}*/}
 					</ListItem>
 				))}
 			</UnorderedList>

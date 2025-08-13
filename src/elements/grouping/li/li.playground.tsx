@@ -20,7 +20,7 @@ export const ListItemPlayground = () => {
 				/>,
 			]}
 		>
-			<OrderedList>
+			<OrderedList aria-label={"Liste for eksperimentering med listeelementer"}>
 				<ListItem value={startValue}>
 					Ha mel i en stor bolle. Ha i gjær, sukker og salt. Bland sammen. Spe
 					vann i deigen, og rør deigen sammen med en sleiv. Kna den godt sammen

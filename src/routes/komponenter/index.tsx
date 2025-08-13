@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { components } from "../../components";
+import { createFileRoute } from "@tanstack/react-router";
+/*import { components } from "../../components";*/
 
 export const Route = createFileRoute("/komponenter/")({
 	component: ComponentListPage,
@@ -9,18 +9,28 @@ function ComponentListPage() {
 	return (
 		<main>
 			<h1>Komponenter</h1>
-			<ul>
+			<p>
+				Foreløpig har jeg ikke hatt gleden (?) av å måtte lage et egenkomponert
+				element. Kommer vel snart.
+			</p>
+			<aside>
+				<p>
+					Personlig er jeg ikke så glad i navnet komponenter, men dette kommer
+					jeg sikkert til å skrive noe mer om på et tidspunkt 🤞
+				</p>
+			</aside>
+			{/*<ul>
 				{components.map((component) => (
 					<li>
 						<Link
 							to={"/komponenter/$componentName"}
 							params={{ componentName: component.name }}
 						>
-							&lt;{component.name} /&gt;
+							{component.name}
 						</Link>
 					</li>
 				))}
-			</ul>
+			</ul>*/}
 		</main>
 	);
 }

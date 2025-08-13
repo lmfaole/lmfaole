@@ -1,18 +1,14 @@
-import type { DetailedHTMLProps, HTMLAttributes } from "react";
 import type { ElementInfoType } from "../../element-info.type.ts";
-import { DescriptionListPlayground } from "./dl.playground.tsx";
+import type { DlType } from "./dl.type.ts";
 
-export const DescriptionList = ({
-	children,
-	...rest
-}: DetailedHTMLProps<HTMLAttributes<HTMLDListElement>, HTMLDListElement>) => {
+export const DescriptionList = ({ children, ...rest }: DlType) => {
 	return <dl {...rest}>{children}</dl>;
 };
 
 export const descriptionListInfo: ElementInfoType = {
 	name: "Description List",
 	img: (
-		<DescriptionList>
+		<DescriptionList aria-label={"Eksempelliste: Sanginformasjon"}>
 			<dt>Artister</dt>
 			<dd>Zara Larsson</dd>
 			<dd>Amok</dd>
@@ -30,5 +26,4 @@ export const descriptionListInfo: ElementInfoType = {
 		category: "gruppering",
 		aka: ["definisjonsliste"],
 	},
-	playground: DescriptionListPlayground,
 };

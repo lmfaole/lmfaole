@@ -1,6 +1,6 @@
+/*
 import { createFileRoute } from "@tanstack/react-router";
 import { components } from "../../components";
-import { ComponentHero } from "../../components/component-hero/component-hero.tsx";
 
 export const Route = createFileRoute("/komponenter/$componentName")({
 	component: ComponentPage,
@@ -18,7 +18,7 @@ function ComponentPage() {
 	return (
 		<main>
 			<h1>{component.name}</h1>
-			<ComponentHero>{component.example}</ComponentHero>
 		</main>
 	);
 }
+*/

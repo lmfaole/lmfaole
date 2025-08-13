@@ -1,5 +1,6 @@
 :root {
 	--page-width: 120ch;
+	--page-padding: 1ch;
 
 	color-scheme: light dark;
 	font-family: "Crimson Text", serif;
@@ -21,6 +22,10 @@
 	&:focus-visible {
 		outline: 4px solid currentColor;
 	}
+}
+
+body {
+	margin: 0;
 }
 
 h1,
@@ -73,7 +78,7 @@ h6,
 
 p,
 .p {
-	max-width: 66ch;
+	max-width: 59ch;
 	text-wrap: pretty;
 }
 
@@ -104,4 +109,5 @@ main {
 	container-type: inline-size;
 	margin-inline: auto;
 	max-width: var(--page-width);
+	padding-inline: var(--page-padding);
 }
