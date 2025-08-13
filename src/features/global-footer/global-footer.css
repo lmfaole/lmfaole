@@ -1,9 +1,4 @@
 .global-footer {
-	padding-block: 4lh 1lh;
-	padding-inline: var(--page-padding);
-	max-width: var(--page-width);
-	margin-inline: auto;
-
 	p {
 		margin: 0;
 		background-size: 10ch auto;

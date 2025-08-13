@@ -26,6 +26,82 @@
 
 body {
 	margin: 0;
+	padding: 1ch;
+
+	nav ul {
+		list-style-type: none;
+		padding: 0;
+
+		li {
+			display: inline-block;
+			margin-inline-end: 2ch;
+
+			ul {
+				display: none;
+			}
+		}
+	}
+
+	@media (width > 90ch) {
+		height: 100svh;
+		overflow: hidden;
+		display: grid;
+		grid-template-columns: 2fr 10fr;
+		grid-template-areas: "header container";
+		box-sizing: border-box;
+		padding: 0;
+
+		.global-header,
+		.container {
+			height: 100%;
+			padding-block-start: 4ex;
+			overflow-y: scroll;
+		}
+
+		.global-header {
+			grid-area: header;
+			background: light-dark(
+				oklch(0.9783 0 157.76),
+				oklch(0.1499 0.0061 116.16)
+			);
+
+			nav {
+				margin-block-end: 4lh;
+			}
+
+			nav ul {
+				padding: revert;
+
+				li {
+					display: list-item;
+					margin-inline-end: 2ch;
+
+					ul {
+						display: block;
+					}
+				}
+			}
+		}
+
+		.container {
+			grid-area: container;
+			display: flex;
+			flex-direction: column;
+			gap: 4lh;
+			padding-inline-start: 12ch;
+
+			main {
+				max-width: var(--page-width);
+				display: flex;
+				flex-direction: column;
+				gap: 2lh;
+			}
+
+			.global-footer {
+				margin-block-end: 4lh;
+			}
+		}
+	}
 }
 
 h1,
@@ -103,11 +179,4 @@ input {
 
 .muted {
 	opacity: 0.75;
-}
-
-main {
-	container-type: inline-size;
-	margin-inline: auto;
-	max-width: var(--page-width);
-	padding-inline: var(--page-padding);
 }

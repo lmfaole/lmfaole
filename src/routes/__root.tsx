@@ -7,8 +7,10 @@ export const Route = createRootRoute({
 	component: () => (
 		<>
 			<GlobalHeader />
-			<Outlet />
-			<GlobalFooter />
+			<div className={"container"}>
+				<Outlet />
+				<GlobalFooter />
+			</div>
 			<TanStackRouterDevtools />
 		</>
 	),

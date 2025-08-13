@@ -8,8 +8,8 @@ export const Route = createFileRoute("/elementer/")({
 function RouteComponent() {
 	return (
 		<main>
-			<h1>Elementer</h1>
-			<aside>
+			<header>
+				<h1>Elementer</h1>
 				<p>
 					Dette er en liste med elementer jeg har jobbet med i arbeidet med{" "}
 					<a href={"https://jokul.fremtind.no"}>
@@ -32,22 +32,24 @@ function RouteComponent() {
 						Lista er åpenbart ufullstendig, men vil (forhåpentligvis) vokse.
 					</aside>
 				</p>
-			</aside>
-			<h2>Lista</h2>
-			<UnorderedList aria-label={"Komponentliste"}>
-				{elements.map((element) => (
-					<ListItem>
-						<p>
-							<Link
-								to={"/elementer/$elementName"}
-								params={{ elementName: element.name }}
-							>
-								{element.name}
-							</Link>
-						</p>
-					</ListItem>
-				))}
-			</UnorderedList>
+			</header>
+			<section>
+				<h2>Lista</h2>
+				<UnorderedList aria-label={"Komponentliste"}>
+					{elements.map((element) => (
+						<ListItem>
+							<p>
+								<Link
+									to={"/elementer/$elementName"}
+									params={{ elementName: element.name }}
+								>
+									{element.name}
+								</Link>
+							</p>
+						</ListItem>
+					))}
+				</UnorderedList>
+			</section>
 			<footer>
 				<h2>Referanser</h2>
 				<p>

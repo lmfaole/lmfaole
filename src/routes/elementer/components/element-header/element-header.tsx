@@ -1,12 +1,10 @@
 import { Blockquote } from "../../../../elements";
 import type { ElementInfoType } from "../../../../elements/element-info.type.ts";
 
-import "./element-header.css";
-
 export const ElementHeader = ({ name, meta, img }: ElementInfoType) => {
 	return (
-		<header className="element-header">
-			<div className={"info"}>
+		<>
+			<header>
 				<h1>
 					{name}
 					{meta.aka && (
@@ -20,10 +18,10 @@ export const ElementHeader = ({ name, meta, img }: ElementInfoType) => {
 						{meta.description}
 					</p>
 				</Blockquote>
-			</div>
+			</header>
 			<div className={"example"}>
 				<div>{img}</div>
 			</div>
-		</header>
+		</>
 	);
 };

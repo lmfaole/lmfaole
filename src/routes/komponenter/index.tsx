@@ -8,17 +8,19 @@ export const Route = createFileRoute("/komponenter/")({
 function ComponentListPage() {
 	return (
 		<main>
-			<h1>Komponenter</h1>
-			<p>
-				Foreløpig har jeg ikke hatt gleden (?) av å måtte lage et egenkomponert
-				element. Kommer vel snart.
-			</p>
-			<aside>
+			<header>
+				<h1>Komponenter</h1>
 				<p>
-					Personlig er jeg ikke så glad i navnet komponenter, men dette kommer
-					jeg sikkert til å skrive noe mer om på et tidspunkt 🤞
+					Foreløpig har jeg ikke hatt gleden (?) av å måtte lage et
+					egenkomponert element. Kommer vel snart.
 				</p>
-			</aside>
+				<aside>
+					<p>
+						Personlig er jeg ikke så glad i navnet komponenter, men dette kommer
+						jeg sikkert til å skrive noe mer om på et tidspunkt 🤞
+					</p>
+				</aside>
+			</header>
 			{/*<ul>
 				{components.map((component) => (
 					<li>

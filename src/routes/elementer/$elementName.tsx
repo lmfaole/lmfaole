@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { elements, ListItem, UnorderedList } from "../../elements";
-import { ElementHeader } from "./components/element-hero/element-header.tsx";
+import { ElementHeader } from "./components/element-header/element-header.tsx";
 
 export const Route = createFileRoute("/elementer/$elementName")({
 	loader: ({ params: { elementName } }) => {
@@ -34,13 +34,13 @@ function RouteComponent() {
 				meta={element.meta}
 			/>
 			{element.playground && (
-				<>
+				<section>
 					<h2>Egenskaper</h2>
 					{element.playground()}
-				</>
+				</section>
 			)}
 			{element.usage && (
-				<>
+				<section>
 					<h2>Bruksområder</h2>
 					{element.usage.map((use) => (
 						<>
@@ -48,7 +48,7 @@ function RouteComponent() {
 							{use.example}
 						</>
 					))}
-				</>
+				</section>
 			)}
 
 			{!!relatedComponents.length && (

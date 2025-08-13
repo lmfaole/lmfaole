@@ -2,8 +2,6 @@ import { Fragment } from "react";
 import { Details, Pre } from "../../elements";
 import type { PlaygroundType } from "./playground.type.ts";
 
-import "./playground.css";
-
 export const Playground = ({
 	requiredProps,
 	optionalProps,

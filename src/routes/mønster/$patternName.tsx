@@ -14,11 +14,16 @@ function RouteComponent() {
 
 	return (
 		<main>
-			<h1>{pattern.name}</h1>
-			{pattern.example}
-			<p>
-				Hentet fra <a href={pattern.source.href}>{pattern.source.label}</a>
-			</p>
+			<header>
+				<h1>{pattern.name}</h1>
+				<p>
+					Hentet fra <a href={pattern.source.href}>{pattern.source.label}</a>
+				</p>
+			</header>
+			<section>
+				<h2>Eksempel på implementasjon</h2>
+				{pattern.example}
+			</section>
 		</main>
 	);
 }
