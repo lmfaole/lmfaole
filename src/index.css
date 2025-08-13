@@ -95,6 +95,7 @@ body {
 				display: flex;
 				flex-direction: column;
 				gap: 2lh;
+				container-type: inline-size;
 			}
 
 			.global-footer {

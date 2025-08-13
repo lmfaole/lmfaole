@@ -19,9 +19,13 @@ export const ElementHeader = ({ name, meta, img }: ElementInfoType) => {
 					</p>
 				</Blockquote>
 			</header>
-			<div className={"example"}>
-				<div>{img}</div>
-			</div>
+			<section>
+				<h2>Eksempel</h2>
+
+				<div className={"example"}>
+					<div>{img}</div>
+				</div>
+			</section>
 		</>
 	);
 };
