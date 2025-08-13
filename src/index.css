@@ -42,11 +42,11 @@ body {
 		}
 	}
 
-	@media (width > 90ch) {
+	@media (width > 120ch) {
 		height: 100svh;
 		overflow: hidden;
 		display: grid;
-		grid-template-columns: 2fr 10fr;
+		grid-template-columns: 310px 1fr;
 		grid-template-areas: "header container";
 		box-sizing: border-box;
 		padding: 0;
@@ -91,6 +91,7 @@ body {
 			padding-inline-start: 12ch;
 
 			main {
+				padding-inline-end: 4ch;
 				max-width: var(--page-width);
 				display: flex;
 				flex-direction: column;
