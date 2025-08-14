@@ -1,6 +1,5 @@
 import { useId } from "react";
 import type { ElementInfoType } from "../../element-info.type.ts";
-import { MeterPlayground } from "./meter.playground.tsx";
 import type { MeterType } from "./meter.type.ts";
 
 import "./meter.css";
@@ -12,16 +11,11 @@ export const Meter = (props: MeterType) => {
 	return (
 		<div className={"meter"}>
 			<label htmlFor={`${label}-${id}-meter`}>{label}</label>
-			<meter
-				aria-describedby={`${label}-${id}-desc`}
-				id={`${label}-${id}-meter`}
-				title={suffix?.trim()}
-				{...rest}
-			>
+			<meter id={`${label}-${id}-meter`} title={suffix?.trim()} {...rest}>
 				{props.value} av {props.max}
 				{suffix}
 			</meter>
-			<small id={`${label}-${id}-desc`}>
+			<small>
 				{props.value} av {props.max}
 				{suffix}
 			</small>
@@ -40,5 +34,4 @@ export const meterInfo: ElementInfoType = {
 		aka: ["gauge", "måler"],
 		category: "skjema",
 	},
-	playground: MeterPlayground,
 };

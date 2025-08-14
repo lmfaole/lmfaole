@@ -1,11 +1,5 @@
 button {
 	min-block-size: 44px;
-	min-inline-size: 7ch;
-	padding-inline: 1ch;
-	display: flex;
-	font-size: medium;
-	justify-content: center;
-	align-items: center;
-	font-family: system-ui;
-	font-weight: 500;
+	min-inline-size: 44px;
+	padding-inline: 2ch;
 }

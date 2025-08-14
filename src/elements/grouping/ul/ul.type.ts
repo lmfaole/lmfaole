@@ -5,4 +5,5 @@ export type UlType = DetailedHTMLProps<
 	HTMLUListElement
 > & {
 	"aria-label": string;
+	layout?: "cluster";
 };

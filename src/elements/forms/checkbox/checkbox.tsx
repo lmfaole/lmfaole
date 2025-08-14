@@ -1,17 +1,17 @@
+import { useId } from "react";
 import { mockFlavors } from "../../../data/usage.mock.data.ts";
 import type { ElementInfoType } from "../../element-info.type.ts";
 import type { CheckboxType } from "./checkbox.type.ts";
 
-import "./checkbox.css";
-
 export const Checkbox = (props: CheckboxType) => {
 	const { label, ...rest } = props;
+	const id = useId();
 
 	return (
-		<label>
-			<input type="checkbox" {...rest} />
-			{label}
-		</label>
+		<>
+			<input id={`${label}-${id}-checkbox`} type="checkbox" {...rest} />
+			<label htmlFor={`${label}-${id}-checkbox`}>{label}</label>
+		</>
 	);
 };
 

@@ -1,25 +1,16 @@
+import { useId } from "react";
 import type { ElementInfoType } from "../../element-info.type.ts";
 import type { NumberType } from "./number.type.ts";
 
-import "./number.css";
-import { useId } from "react";
-
 export const Number = (props: NumberType) => {
-	const { size = 10, inputMode = "numeric", suffix, label, ...rest } = props;
+	const { inputMode = "numeric", label, ...rest } = props;
 	const id = useId();
 
 	return (
-		<div className={"number-input"}>
+		<>
 			<label htmlFor={label + id}>{label}</label>
-			<input
-				{...rest}
-				id={label + id}
-				type="number"
-				size={size}
-				inputMode={inputMode}
-				data-suffix={suffix}
-			/>
-		</div>
+			<input id={label + id} type="number" inputMode={inputMode} {...rest} />
+		</>
 	);
 };
 

@@ -1,12 +1,15 @@
 import type { ElementInfoType } from "../../element-info.type.ts";
 import { ListItem } from "../li/li.tsx";
-import { UnorderedListPlayground } from "./ul.playground.tsx";
 import type { UlType } from "./ul.type.ts";
 
 import "./ul.css";
 
-export const UnorderedList = ({ children, ...rest }: UlType) => {
-	return <ul {...rest}>{children}</ul>;
+export const UnorderedList = ({ children, layout, ...rest }: UlType) => {
+	return (
+		<ul data-layout={layout} {...rest}>
+			{children}
+		</ul>
+	);
 };
 
 export const unorderedListInfo: ElementInfoType = {
@@ -30,5 +33,4 @@ export const unorderedListInfo: ElementInfoType = {
 		category: "gruppering",
 		aka: ["usortert list"],
 	},
-	playground: UnorderedListPlayground,
 };

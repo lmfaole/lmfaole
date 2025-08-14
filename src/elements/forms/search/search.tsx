@@ -1,3 +1,4 @@
+import { useId } from "react";
 import type { ElementInfoType } from "../../element-info.type.ts";
 import type { SearchType } from "./search.type.ts";
 
@@ -9,18 +10,13 @@ export const Search = (props: SearchType) => {
 		name = "q",
 		...rest
 	} = props;
+	const id = useId();
 
 	return (
-		<label>
-			{label}
-			<input
-				{...rest}
-				name={name}
-				type="search"
-				required={required}
-				placeholder={placeholder}
-			/>
-		</label>
+		<>
+			<label htmlFor={label + id}>{label}</label>
+			<input {...rest} id={label + id} type="search" {...rest} />
+		</>
 	);
 };
 

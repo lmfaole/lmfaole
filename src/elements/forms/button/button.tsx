@@ -2,7 +2,6 @@ import type { ElementInfoType } from "../../element-info.type.ts";
 import type { ButtonType } from "./button.type.ts";
 
 import "./button.css";
-import { ButtonPlayground } from "./button.playground.tsx";
 
 export const Button = (props: ButtonType) => {
 	const { children, ...rest } = props;
@@ -21,5 +20,4 @@ export const buttonInfo: ElementInfoType = {
 		aka: ["knapp", "action"],
 	},
 	img: <Button>Hei</Button>,
-	playground: ButtonPlayground,
 };

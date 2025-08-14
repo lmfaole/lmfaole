@@ -7,5 +7,4 @@ export type NumberType = Omit<
 	label: string;
 	inputMode?: "decimal" | "numeric" | "tel";
 	datalist?: number[];
-	suffix?: string;
 };

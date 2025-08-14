@@ -7,13 +7,15 @@ export const Blockquote = ({ cite, children }: BlockquoteType) => {
 	return (
 		<blockquote>
 			{children}
-			<p>
-    <footer>
-				  <cite>
-       <a href={cite.href}>{cite.label}</a>
-      </cite>{cite.author && <span> – {cite.author}</span>}
-    </footer>
-			</p>
+
+			<footer>
+				<p>
+					<cite>
+						<a href={cite.href}>{cite.label}</a>
+					</cite>
+					{cite.author && <span> – {cite.author}</span>}
+				</p>
+			</footer>
 		</blockquote>
 	);
 };

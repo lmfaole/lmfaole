@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 export type ElementInfoType = {
 	name: string;
 	img: ReactNode;
-	playground?: () => ReactNode;
 	usage?: {
 		title: string;
 		example: ReactNode;

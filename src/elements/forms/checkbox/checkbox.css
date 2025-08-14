@@ -1,7 +1,0 @@
-label:has(input[type="checkbox"]) {
-	display: flex;
-	align-items: center;
-	min-block-size: 44px;
-	gap: 0.7ex;
-	font-family: system-ui;
-}

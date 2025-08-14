@@ -1,16 +1,17 @@
+import { useId } from "react";
 import { mockFlavors } from "../../../data/usage.mock.data.ts";
 import type { ElementInfoType } from "../../element-info.type.ts";
 import type { RadioType } from "./radio.type.ts";
 
-import "./radio.css";
-
 export const Radio = (props: RadioType) => {
 	const { label, name, ...rest } = props;
+	const id = useId();
+
 	return (
-		<label>
-			<input type="radio" name={name ? name : label} {...rest} />
-			{label}
-		</label>
+		<>
+			<input id={`${label}-${id}-radio`} type="radio" {...rest} />
+			<label htmlFor={`${label}-${id}-radio`}>{label}</label>
+		</>
 	);
 };
 

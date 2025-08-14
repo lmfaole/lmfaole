@@ -3,23 +3,15 @@ import { mockFlavors } from "../../../data/usage.mock.data.ts";
 import type { ElementInfoType } from "../../element-info.type.ts";
 import type { RangeType } from "./range.type.ts";
 
-import "./range.css";
-
 export const Range = (props: RangeType) => {
 	const { label, ...rest } = props;
 	const id = useId();
 
 	return (
-		<div className={"range"}>
+		<>
 			<label htmlFor={`${label}-${id}-range`}>{label}</label>
-			<input
-				id={`${label}-${id}-range`}
-				aria-describedby={`${label}-value`}
-				type="range"
-				{...rest}
-			/>
-			<small id={`${label}-value`}>{props.value}</small>
-		</div>
+			<input id={`${label}-${id}-range`} type="range" {...rest} />
+		</>
 	);
 };
 

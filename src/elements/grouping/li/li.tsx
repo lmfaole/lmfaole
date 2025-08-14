@@ -1,8 +1,5 @@
 import type { DetailedHTMLProps, LiHTMLAttributes } from "react";
 import type { ElementInfoType } from "../../element-info.type.ts";
-import { ListItemPlayground } from "./li.playground.tsx";
-
-import "./li.css";
 
 export const ListItem = ({
 	children,
@@ -22,5 +19,4 @@ export const listItemInfo: ElementInfoType = {
 		category: "gruppering",
 		aka: ["listeelement", "punkt"],
 	},
-	playground: ListItemPlayground,
 };

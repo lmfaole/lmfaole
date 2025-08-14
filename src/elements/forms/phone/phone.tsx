@@ -1,19 +1,16 @@
+import { useId } from "react";
 import type { ElementInfoType } from "../../element-info.type.ts";
 import type { PhoneType } from "./phone.type.ts";
 
 export const Phone = (props: PhoneType) => {
-	const {
-		label = "Telefonnummer",
-		autoComplete = "phone-national",
-		size = 12,
-		...rest
-	} = props;
+	const { label = "Telefon", autoComplete = "phone-national", ...rest } = props;
+	const id = useId();
 
 	return (
-		<label>
-			{label}
-			<input {...rest} autoComplete={autoComplete} size={size} type="tel" />
-		</label>
+		<>
+			<label htmlFor={label + id}>{label}</label>
+			<input id={label + id} autoComplete={autoComplete} type="tel" {...rest} />
+		</>
 	);
 };
 

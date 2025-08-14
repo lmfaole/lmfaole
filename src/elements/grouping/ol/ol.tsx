@@ -1,5 +1,4 @@
 import type { ElementInfoType } from "../../element-info.type.ts";
-import { OrderedListPlayground } from "./ol.playground.tsx";
 import type { OlType } from "./ol.type.ts";
 
 export const OrderedList = ({ children, ...rest }: OlType) => {
@@ -34,5 +33,4 @@ export const orderedListInfo: ElementInfoType = {
 		category: "gruppering",
 		aka: ["sortert liste"],
 	},
-	playground: OrderedListPlayground,
 };
