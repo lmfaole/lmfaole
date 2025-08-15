@@ -40,12 +40,15 @@ function RouteComponent() {
 				<UnorderedList aria-label={"Grupperingselementer"}>
 					{groupedElements.gruppering?.map((element) => (
 						<ListItem key={element.name}>
-							<Link
-								to={"/elementer/$elementName"}
-								params={{ elementName: element.name }}
-							>
-								{element.name}
-							</Link>
+							<p>
+								<Link
+									to={"/elementer/$elementName"}
+									params={{ elementName: element.name }}
+								>
+									{element.name}
+								</Link>{" "}
+								({element.examples?.length} eksempler)
+							</p>
 						</ListItem>
 					))}
 				</UnorderedList>
@@ -54,12 +57,15 @@ function RouteComponent() {
 				<UnorderedList aria-label={"Skjemaelementer"}>
 					{groupedElements.skjema?.map((element) => (
 						<ListItem key={element.name}>
-							<Link
-								to={"/elementer/$elementName"}
-								params={{ elementName: element.name }}
-							>
-								{element.name}
-							</Link>
+							<p>
+								<Link
+									to={"/elementer/$elementName"}
+									params={{ elementName: element.name }}
+								>
+									{element.name}
+								</Link>{" "}
+								({element.examples?.length} eksempler)
+							</p>
 						</ListItem>
 					))}
 				</UnorderedList>
@@ -68,12 +74,15 @@ function RouteComponent() {
 				<UnorderedList aria-label={"Tabulær data"}>
 					{groupedElements["tabulær data"]?.map((element) => (
 						<ListItem key={element.name}>
-							<Link
-								to={"/elementer/$elementName"}
-								params={{ elementName: element.name }}
-							>
-								{element.name}
-							</Link>
+							<p>
+								<Link
+									to={"/elementer/$elementName"}
+									params={{ elementName: element.name }}
+								>
+									{element.name}
+								</Link>{" "}
+								({element.examples?.length} eksempler)
+							</p>
 						</ListItem>
 					))}
 				</UnorderedList>
@@ -82,12 +91,15 @@ function RouteComponent() {
 				<UnorderedList aria-label={"Interaksjonselementer"}>
 					{groupedElements.interaksjon?.map((element) => (
 						<ListItem key={element.name}>
-							<Link
-								to={"/elementer/$elementName"}
-								params={{ elementName: element.name }}
-							>
-								{element.name}
-							</Link>
+							<p>
+								<Link
+									to={"/elementer/$elementName"}
+									params={{ elementName: element.name }}
+								>
+									{element.name}
+								</Link>{" "}
+								({element.examples?.length} eksempler)
+							</p>
 						</ListItem>
 					))}
 				</UnorderedList>

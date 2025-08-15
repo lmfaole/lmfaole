@@ -2,7 +2,7 @@ import type { ElementInfoType } from "../../element.info.type.ts";
 import { PreformattedTextExample } from "./preformatted-text.example.tsx";
 
 export const preformattedTextInfo: ElementInfoType = {
-	name: "Preformatted InputText",
+	name: "Preformatted Text",
 	description:
 		"The preformatted-input-text element represents a block of preformatted input-text, in which structure is represented by" +
 		" typographic conventions rather than by elements.",
