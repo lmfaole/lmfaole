@@ -1,4 +1,4 @@
-import type { ElementInfoType } from "../../element-info.type.ts";
+import type { ElementInfoType } from "../../element.info.type.ts";
 
 export const inputSearchInfo: ElementInfoType = {
 	name: "InputSearch",

@@ -1,8 +1,8 @@
 import { ListItem, OrderedList } from "../../elements";
-import type { BreadcrumbType } from "./breadcrumb.type.ts";
-import "./breadcrumb.css";
+import "./breadcrumb.pattern.css";
+import { links } from "./breadcrumb.pattern.data.ts";
 
-export const Breadcrumb = ({ links }: BreadcrumbType) => {
+export const BreadcrumbPattern = () => {
 	const currentPage = links[links.length - 1];
 
 	return (

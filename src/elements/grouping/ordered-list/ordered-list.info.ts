@@ -1,4 +1,4 @@
-import type { ElementInfoType } from "../../element-info.type.ts";
+import type { ElementInfoType } from "../../element.info.type.ts";
 
 export const orderedListInfo: ElementInfoType = {
 	name: "Ordered List",

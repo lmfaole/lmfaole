@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ClusteredList } from "../../components/UI/clustered-list/clustered-list.tsx";
+import { ClusteredList } from "../../components/clustered-list/clustered-list.tsx";
 import {
 	Blockquote,
 	elements,
@@ -34,15 +34,24 @@ function RouteComponent() {
 	const { element } = Route.useLoaderData();
 	const { name, description, spec, example } = element;
 
-	const patternsIncludingElement = patterns.filter((pattern) =>
-		pattern.implementedUsingElements.includes(name),
+	const patternsIncludingElement = patterns.filter(
+		(pattern) =>
+			pattern.implementedUsingElements &&
+			pattern.implementedUsingElements.includes(name),
 	);
 
 	return (
 		<main>
 			<header>
 				<h1>{name}</h1>
-				<Blockquote cite={{ href: spec, label: "HTML Standarden" }}>
+				<Blockquote
+					cite={{
+						href: spec,
+						label:
+							"Web Hypertext Application Technology Working Group (WHATWG)",
+					}}
+					lang={"en"}
+				>
 					<p className={"h3"} lang={"en"}>
 						{description}
 					</p>

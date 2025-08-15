@@ -1,4 +1,4 @@
-import type { ElementInfoType } from "./element-info.type.ts";
+import type { ElementInfoType } from "./element.info.type.ts";
 import { buttonInfo } from "./forms/button/button.info.ts";
 import { inputCheckboxInfo } from "./forms/input-checkbox/input-checkbox.info.ts";
 import { inputNumberInfo } from "./forms/input-number/input-number.info.ts";

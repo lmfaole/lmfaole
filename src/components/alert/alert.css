@@ -1,0 +1,17 @@
+.alert {
+	--color: light-dark(#ddd, #555);
+
+	padding: 2ex 2ch;
+	background: hsl(from var(--color) h s l / 0.1);
+	color: color-mix(in hsl, var(--color), currentColor 95%);
+	border: 1px solid var(--color);
+	border-radius: 2px;
+	margin-block: 1lh;
+
+	&[data-type="success"] {
+		--color: light-dark(green, lime);
+	}
+	&[data-type="error"] {
+		--color: light-dark(red, red);
+	}
+}

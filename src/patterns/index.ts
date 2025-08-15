@@ -1,6 +1,7 @@
-import { breadcrumbInfo } from "./breadcrumb/breadcrumbs.info.tsx";
-import type { PatternType } from "./pattern.type.ts";
+import { alertPatternInfo } from "./alert/alert.pattern.info.tsx";
+import { breadcrumbInfo } from "./breadcrumb/breadcrumb.pattern.info.tsx";
+import type { PatternInfoType } from "./pattern.info.type.ts";
 
-export const patterns: PatternType[] = [breadcrumbInfo];
+export const patterns: PatternInfoType[] = [breadcrumbInfo, alertPatternInfo];
 
 export default patterns.sort((a, b) => a.name.localeCompare(b.name));

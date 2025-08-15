@@ -37,13 +37,17 @@ function RouteComponent() {
 		source,
 		implementation,
 		implementedUsingElements,
+		implementedUsingComponents,
 	} = pattern;
 
 	return (
 		<main>
 			<header>
 				<h1>{name}</h1>
-				<Blockquote cite={{ href: source.href, label: source.label }}>
+				<Blockquote
+					cite={{ href: source.href, label: source.label }}
+					lang={"en"}
+				>
 					<p className={"h3"} lang={"en"}>
 						{description}
 					</p>
@@ -59,19 +63,38 @@ function RouteComponent() {
 
 			<section>
 				<h2>Implementert med</h2>
+				<h3>Elementer</h3>
 				<UnorderedList
-					aria-label={"Elementer bruk for å implementere mønsteret"}
+					aria-label={"Elementer i bruk for å implementere mønsteret"}
 				>
-					{implementedUsingElements.map((element) => (
-						<ListItem key={element}>
-							<Link
-								to={"/elementer/$elementName"}
-								params={{ elementName: element }}
-							>
-								{element}
-							</Link>
-						</ListItem>
-					))}
+					{implementedUsingElements &&
+						implementedUsingElements.map((element) => (
+							<ListItem key={element}>
+								<Link
+									to={"/elementer/$elementName"}
+									params={{ elementName: element }}
+								>
+									{element}
+								</Link>
+							</ListItem>
+						))}
+				</UnorderedList>
+
+				<h3>Komponenter</h3>
+				<UnorderedList
+					aria-label={"Komponenter i bruk for å implementere mønsteret"}
+				>
+					{implementedUsingComponents &&
+						implementedUsingComponents.map((component) => (
+							<ListItem key={component}>
+								<Link
+									to={"/komponenter/$componentName"}
+									params={{ componentName: component }}
+								>
+									{component}
+								</Link>
+							</ListItem>
+						))}
 				</UnorderedList>
 			</section>
 		</main>

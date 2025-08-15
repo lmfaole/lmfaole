@@ -1,4 +1,4 @@
-import type { ElementInfoType } from "../../element-info.type.ts";
+import type { ElementInfoType } from "../../element.info.type.ts";
 import { PreformattedTextExample } from "./preformatted-text.example.tsx";
 
 export const preformattedTextInfo: ElementInfoType = {

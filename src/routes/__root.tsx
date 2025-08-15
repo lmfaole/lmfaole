@@ -1,11 +1,30 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { GlobalFooter, GlobalHeader } from "../components";
+import { ClusteredList } from "../components/clustered-list/clustered-list.tsx";
+import { GlobalFooter } from "../components/global-footer/global-footer.tsx";
+import { ListItem } from "../elements";
 
 export const Route = createRootRoute({
 	component: () => (
 		<>
-			<GlobalHeader />
+			<header className={"page-width global-header"}>
+				<nav aria-label={"hovednavigasjon"}>
+					<ClusteredList aria-label={"hovednavigasjon"}>
+						<ListItem>
+							<Link to="/">Hjem</Link>
+						</ListItem>
+						<ListItem>
+							<Link to="/elementer">Elementer</Link>
+						</ListItem>
+						<ListItem>
+							<Link to="/komponenter">Komponenter</Link>
+						</ListItem>
+						<ListItem>
+							<Link to="/mønster">Mønster</Link>
+						</ListItem>
+					</ClusteredList>
+				</nav>
+			</header>
 			<div className={"container"}>
 				<Outlet />
 				<GlobalFooter />

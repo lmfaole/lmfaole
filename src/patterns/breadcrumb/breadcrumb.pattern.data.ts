@@ -1,6 +1,6 @@
-import type { BreadcrumbType } from "./breadcrumb.type.ts";
+import type { BreadcrumbPatternType } from "./breadcrumb.pattern.type.ts";
 
-export const links: BreadcrumbType["links"] = [
+export const links: BreadcrumbPatternType["links"] = [
 	{
 		href: "/",
 		label: "Hjem",

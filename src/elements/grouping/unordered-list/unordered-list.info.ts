@@ -1,4 +1,4 @@
-import type { ElementInfoType } from "../../element-info.type.ts";
+import type { ElementInfoType } from "../../element.info.type.ts";
 import { DetailsExample } from "../../interactive/details/details.example.tsx";
 
 export const unorderedListInfo: ElementInfoType = {

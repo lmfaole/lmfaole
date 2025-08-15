@@ -1,4 +1,4 @@
-import type { ElementInfoType } from "../../element-info.type.ts";
+import type { ElementInfoType } from "../../element.info.type.ts";
 
 export const inputCheckboxInfo: ElementInfoType = {
 	name: "InputCheckbox",
