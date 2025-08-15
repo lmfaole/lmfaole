@@ -1,4 +1,4 @@
-import { breadcrumbInfo } from "./breadcrumb/breadcrumb.tsx";
+import { breadcrumbInfo } from "./breadcrumb/breadcrumbs.info.tsx";
 import type { PatternType } from "./pattern.type.ts";
 
 export const patterns: PatternType[] = [breadcrumbInfo];

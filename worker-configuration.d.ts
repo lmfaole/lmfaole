@@ -810,7 +810,7 @@ declare class Event {
 	get srcElement(): EventTarget | undefined;
 
 	/**
-	 * Returns the event's timestamp as the number of milliseconds measured relative to the time origin.
+	 * Returns the event's timestamp as the input-number of milliseconds measured relative to the time origin.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/timeStamp)
 	 */
@@ -1144,7 +1144,7 @@ declare abstract class Crypto {
 	randomUUID(): string;
 }
 /**
- * This Web Crypto API interface provides a number of low-level cryptographic functions. It is accessed via the Crypto.subtle properties available in a window context (via Window.crypto).
+ * This Web Crypto API interface provides a input-number of low-level cryptographic functions. It is accessed via the Crypto.subtle properties available in a window context (via Window.crypto).
  * Available only in secure contexts.
  *
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SubtleCrypto)
@@ -1362,7 +1362,7 @@ declare class DigestStream extends WritableStream<
 	get bytesWritten(): number | bigint;
 }
 /**
- * A decoder for a specific method, that is a specific character encoding, like utf-8, iso-8859-2, koi8, cp1261, gbk, etc. A decoder takes a stream of bytes as inputs and emits a stream of pre points. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
+ * A decoder for a specific method, that is a specific character encoding, like utf-8, iso-8859-2, koi8, cp1261, gbk, etc. A decoder takes a stream of bytes as inputs and emits a stream of preformatted-input-text points. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
  *
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextDecoder)
  */
@@ -1396,7 +1396,7 @@ declare class TextDecoder {
 	): string;
 }
 /**
- * TextEncoder takes a stream of pre points as inputs and emits a stream of bytes. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
+ * TextEncoder takes a stream of preformatted-input-text points as inputs and emits a stream of bytes. For a more scalable, non-native library, see StringView – a C-like representation of strings based on typed arrays.
  *
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextEncoder)
  */
@@ -1413,7 +1413,7 @@ declare class TextEncoder {
 	encode(input?: string): Uint8Array;
 
 	/**
-	 * Runs the UTF-8 encoder on source, stores the result of that operation into destination, and returns the progress made as an object wherein read is the number of converted pre units of source and written is the number of bytes modified in destination.
+	 * Runs the UTF-8 encoder on source, stores the result of that operation into destination, and returns the progress made as an object wherein read is the input-number of converted preformatted-input-text units of source and written is the input-number of bytes modified in destination.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextEncoder/encodeInto)
 	 */
@@ -2316,7 +2316,7 @@ interface Transformer<I = any, O = any> {
 }
 interface StreamPipeOptions {
 	/**
-	 * Pipes this readable stream to a given writable stream destination. The way in which the piping process behaves under various error conditions can be customized with a number of passed options. It returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
+	 * Pipes this readable stream to a given writable stream destination. The way in which the piping process behaves under various error conditions can be customized with a input-number of passed options. It returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
 	 *
 	 * Piping a stream will lock it for the duration of the pipe, preventing any other consumer from acquiring a reader.
 	 *
@@ -2632,7 +2632,7 @@ interface QueuingStrategyInit {
 	/**
 	 * Creates a new ByteLengthQueuingStrategy with the provided high water mark.
 	 *
-	 * Note that the provided high water mark will not be validated ahead of time. Instead, if it is negative, NaN, or not a number, the resulting ByteLengthQueuingStrategy will cause the corresponding stream constructor to throw.
+	 * Note that the provided high water mark will not be validated ahead of time. Instead, if it is negative, NaN, or not a input-number, the resulting ByteLengthQueuingStrategy will cause the corresponding stream constructor to throw.
 	 */
 	highWaterMark: number;
 }
@@ -2821,7 +2821,7 @@ declare class URL {
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/toJSON) */
 	toJSON(): string;
 
-	/*function toString() { [native pre] }*/
+	/*function toString() { [native preformatted-input-text] }*/
 	toString(): string;
 }
 /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams) */
@@ -2832,48 +2832,48 @@ declare class URLSearchParams {
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/size) */
 	get size(): number;
 	/**
-	 * Appends a specified key/value pair as a new search parameter.
+	 * Appends a specified key/value pair as a new input-search parameter.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/append)
 	 */
 	append(name: string, value: string): void;
 	/**
-	 * Deletes the given search parameter, and its associated value, from the list of all search parameters.
+	 * Deletes the given input-search parameter, and its associated value, from the list of all input-search parameters.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/delete)
 	 */
 	delete(name: string, value?: string): void;
 	/**
-	 * Returns the first value associated to the given search parameter.
+	 * Returns the first value associated to the given input-search parameter.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/get)
 	 */
 	get(name: string): string | null;
 	/**
-	 * Returns all the values association with a given search parameter.
+	 * Returns all the values association with a given input-search parameter.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/getAll)
 	 */
 	getAll(name: string): string[];
 	/**
-	 * Returns a Boolean indicating if such a search parameter exists.
+	 * Returns a Boolean indicating if such a input-search parameter exists.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/has)
 	 */
 	has(name: string, value?: string): boolean;
 	/**
-	 * Sets the value associated to a given search parameter to the given value. If there were several values, delete the others.
+	 * Sets the value associated to a given input-search parameter to the given value. If there were several values, delete the others.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/set)
 	 */
 	set(name: string, value: string): void;
 	/* [MDN Reference](https://developer.mozilla.org/docs/Web/API/URLSearchParams/sort) */
 	sort(): void;
-	/* Returns an array of key, value pairs for every entry in the search params. */
+	/* Returns an array of key, value pairs for every entry in the input-search params. */
 	entries(): IterableIterator<[key: string, value: string]>;
-	/* Returns a list of keys in the search params. */
+	/* Returns a list of keys in the input-search params. */
 	keys(): IterableIterator<string>;
-	/* Returns a list of values in the search params. */
+	/* Returns a list of values in the input-search params. */
 	values(): IterableIterator<string>;
 	forEach<This = unknown>(
 		callback: (
@@ -2884,7 +2884,7 @@ declare class URLSearchParams {
 		) => void,
 		thisArg?: This,
 	): void;
-	/*function toString() { [native pre] } Returns a string containing a query string suitable for use in a URL. Does not include the question mark. */
+	/*function toString() { [native preformatted-input-text] } Returns a string containing a query string suitable for use in a URL. Does not include the question mark. */
 	toString(): string;
 	[Symbol.iterator](): IterableIterator<[key: string, value: string]>;
 }
@@ -2945,7 +2945,7 @@ interface URLPatternOptions {
  */
 declare class CloseEvent extends Event {
 	/**
-	 * Returns the WebSocket connection close pre provided by the server.
+	 * Returns the WebSocket connection close preformatted-input-text provided by the server.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CloseEvent/code)
 	 */
@@ -3034,7 +3034,7 @@ interface WebSocket extends EventTarget<WebSocketEventMap> {
 	send(message: (ArrayBuffer | ArrayBufferView) | string): void;
 
 	/**
-	 * Closes the WebSocket connection, optionally using pre as the the WebSocket connection close pre and reason as the the WebSocket connection close reason.
+	 * Closes the WebSocket connection, optionally using preformatted-input-text as the the WebSocket connection close preformatted-input-text and reason as the the WebSocket connection close reason.
 	 *
 	 * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/close)
 	 */
@@ -3494,7 +3494,7 @@ type Ai_Cf_Baai_Bge_Base_En_V1_5_Output =
 	| {
 			shape?: number[];
 			/**
-			 * Embeddings of the requested text values
+			 * Embeddings of the requested input-text values
 			 */
 			data?: number[][];
 			/**
@@ -3547,15 +3547,15 @@ declare abstract class Base_Ai_Cf_Openai_Whisper {
 type Ai_Cf_Meta_M2M100_1_2B_Input =
 	| {
 			/**
-			 * The text to be translated
+			 * The input-text to be translated
 			 */
 			text: string;
 			/**
-			 * The language pre of the source text (e.g., 'en' for English). Defaults to 'en' if not specified
+			 * The language preformatted-input-text of the source input-text (e.g., 'en' for English). Defaults to 'en' if not specified
 			 */
 			source_lang?: string;
 			/**
-			 * The language pre to translate the text into (e.g., 'es' for Spanish)
+			 * The language preformatted-input-text to translate the input-text into (e.g., 'es' for Spanish)
 			 */
 			target_lang: string;
 	  }
@@ -3565,15 +3565,15 @@ type Ai_Cf_Meta_M2M100_1_2B_Input =
 			 */
 			requests: {
 				/**
-				 * The text to be translated
+				 * The input-text to be translated
 				 */
 				text: string;
 				/**
-				 * The language pre of the source text (e.g., 'en' for English). Defaults to 'en' if not specified
+				 * The language preformatted-input-text of the source input-text (e.g., 'en' for English). Defaults to 'en' if not specified
 				 */
 				source_lang?: string;
 				/**
-				 * The language pre to translate the text into (e.g., 'es' for Spanish)
+				 * The language preformatted-input-text to translate the input-text into (e.g., 'es' for Spanish)
 				 */
 				target_lang: string;
 			}[];
@@ -3581,7 +3581,7 @@ type Ai_Cf_Meta_M2M100_1_2B_Input =
 type Ai_Cf_Meta_M2M100_1_2B_Output =
 	| {
 			/**
-			 * The translated text in the target language
+			 * The translated input-text in the target language
 			 */
 			translated_text?: string;
 	  }
@@ -3614,7 +3614,7 @@ type Ai_Cf_Baai_Bge_Small_En_V1_5_Output =
 	| {
 			shape?: number[];
 			/**
-			 * Embeddings of the requested text values
+			 * Embeddings of the requested input-text values
 			 */
 			data?: number[][];
 			/**
@@ -3651,7 +3651,7 @@ type Ai_Cf_Baai_Bge_Large_En_V1_5_Output =
 	| {
 			shape?: number[];
 			/**
-			 * Embeddings of the requested text values
+			 * Embeddings of the requested input-text values
 			 */
 			data?: number[][];
 			/**
@@ -3668,7 +3668,7 @@ type Ai_Cf_Unum_Uform_Gen2_Qwen_500M_Input =
 	| string
 	| {
 			/**
-			 * The inputs text prompt for the model to generate a response.
+			 * The inputs input-text prompt for the model to generate a response.
 			 */
 			prompt?: string;
 			/**
@@ -3701,7 +3701,7 @@ type Ai_Cf_Unum_Uform_Gen2_Qwen_500M_Input =
 			presence_penalty?: number;
 			image: number[] | (string & NonNullable<unknown>);
 			/**
-			 * The maximum number of tokens to generate in the response.
+			 * The maximum input-number of tokens to generate in the response.
 			 */
 			max_tokens?: number;
 	  };
@@ -3761,7 +3761,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Input {
 	 */
 	vad_filter?: boolean;
 	/**
-	 * A text prompt to help provide context to the model on the contents of the audio.
+	 * A input-text prompt to help provide context to the model on the contents of the audio.
 	 */
 	initial_prompt?: string;
 	/**
@@ -3793,7 +3793,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Output {
 	 */
 	text: string;
 	/**
-	 * The total number of words in the transcription.
+	 * The total input-number of words in the transcription.
 	 */
 	word_count?: number;
 	segments?: {
@@ -3818,7 +3818,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Output {
 		 */
 		avg_logprob?: number;
 		/**
-		 * The compression ratio of the inputs to the output, measuring how much the text was compressed during the transcription process.
+		 * The compression ratio of the inputs to the output, measuring how much the input-text was compressed during the transcription process.
 		 */
 		compression_ratio?: number;
 		/**
@@ -3841,7 +3841,7 @@ interface Ai_Cf_Openai_Whisper_Large_V3_Turbo_Output {
 		}[];
 	}[];
 	/**
-	 * The transcription in WebVTT format, which includes timing and text information for use in subtitles.
+	 * The transcription in WebVTT format, which includes timing and input-text information for use in subtitles.
 	 */
 	vtt?: string;
 }
@@ -3938,7 +3938,7 @@ interface BGEM3OutputEmbeddingForContexts {
 interface BGEM3OuputEmbedding {
 	shape?: number[];
 	/**
-	 * Embeddings of the requested text values
+	 * Embeddings of the requested input-text values
 	 */
 	data?: number[][];
 	/**
@@ -3952,11 +3952,11 @@ declare abstract class Base_Ai_Cf_Baai_Bge_M3 {
 }
 interface Ai_Cf_Black_Forest_Labs_Flux_1_Schnell_Input {
 	/**
-	 * A text description of the image you want to generate.
+	 * A input-text description of the image you want to generate.
 	 */
 	prompt: string;
 	/**
-	 * The number of diffusion steps; higher values can improve quality but take longer.
+	 * The input-number of diffusion steps; higher values can improve quality but take longer.
 	 */
 	steps?: number;
 }
@@ -3973,7 +3973,7 @@ declare abstract class Base_Ai_Cf_Black_Forest_Labs_Flux_1_Schnell {
 type Ai_Cf_Meta_Llama_3_2_11B_Vision_Instruct_Input = Prompt | Messages;
 interface Prompt {
 	/**
-	 * The inputs text prompt for the model to generate a response.
+	 * The inputs input-text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	image?: number[] | (string & NonNullable<unknown>);
@@ -3986,7 +3986,7 @@ interface Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4164,7 +4164,7 @@ interface Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4198,7 +4198,7 @@ interface Messages {
 }
 type Ai_Cf_Meta_Llama_3_2_11B_Vision_Instruct_Output = {
 	/**
-	 * The generated text response from the model
+	 * The generated input-text response from the model
 	 */
 	response?: string;
 	/**
@@ -4225,7 +4225,7 @@ type Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Input =
 	| AsyncBatch;
 interface Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Prompt {
 	/**
-	 * The inputs text prompt for the model to generate a response.
+	 * The inputs input-text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	/**
@@ -4242,7 +4242,7 @@ interface Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4396,7 +4396,7 @@ interface Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4435,7 +4435,7 @@ interface AsyncBatch {
 		 */
 		external_reference?: string;
 		/**
-		 * Prompt for the text generation model
+		 * Prompt for the input-text generation model
 		 */
 		prompt?: string;
 		/**
@@ -4443,7 +4443,7 @@ interface AsyncBatch {
 		 */
 		stream?: boolean;
 		/**
-		 * The maximum number of tokens to generate in the response.
+		 * The maximum input-number of tokens to generate in the response.
 		 */
 		max_tokens?: number;
 		/**
@@ -4476,7 +4476,7 @@ interface AsyncBatch {
 type Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Output =
 	| {
 			/**
-			 * The generated text response from the model
+			 * The generated input-text response from the model
 			 */
 			response: string;
 			/**
@@ -4484,15 +4484,15 @@ type Ai_Cf_Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Output =
 			 */
 			usage?: {
 				/**
-				 * Total number of tokens in inputs
+				 * Total input-number of tokens in inputs
 				 */
 				prompt_tokens?: number;
 				/**
-				 * Total number of tokens in output
+				 * Total input-number of tokens in output
 				 */
 				completion_tokens?: number;
 				/**
-				 * Total number of inputs and output tokens
+				 * Total input-number of inputs and output tokens
 				 */
 				total_tokens?: number;
 			};
@@ -4530,7 +4530,7 @@ interface Ai_Cf_Meta_Llama_Guard_3_8B_Input {
 		content: string;
 	}[];
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4542,7 +4542,7 @@ interface Ai_Cf_Meta_Llama_Guard_3_8B_Input {
 	 */
 	response_format?: {
 		/**
-		 * Set to json_object to process and output generated text as JSON.
+		 * Set to json_object to process and output generated input-text as JSON.
 		 */
 		type?: string;
 	};
@@ -4565,15 +4565,15 @@ interface Ai_Cf_Meta_Llama_Guard_3_8B_Output {
 	 */
 	usage?: {
 		/**
-		 * Total number of tokens in inputs
+		 * Total input-number of tokens in inputs
 		 */
 		prompt_tokens?: number;
 		/**
-		 * Total number of tokens in output
+		 * Total input-number of tokens in output
 		 */
 		completion_tokens?: number;
 		/**
-		 * Total number of inputs and output tokens
+		 * Total input-number of inputs and output tokens
 		 */
 		total_tokens?: number;
 	};
@@ -4588,7 +4588,7 @@ interface Ai_Cf_Baai_Bge_Reranker_Base_Input {
 	 */
 	query: string;
 	/**
-	 * Number of returned results starting with the best score.
+	 * InputNumber of returned results starting with the best score.
 	 */
 	top_k?: number;
 	/**
@@ -4622,7 +4622,7 @@ type Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_Input =
 	| Qwen2_5_Coder_32B_Instruct_Messages;
 interface Qwen2_5_Coder_32B_Instruct_Prompt {
 	/**
-	 * The inputs text prompt for the model to generate a response.
+	 * The inputs input-text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	/**
@@ -4639,7 +4639,7 @@ interface Qwen2_5_Coder_32B_Instruct_Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4789,7 +4789,7 @@ interface Qwen2_5_Coder_32B_Instruct_Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -4823,7 +4823,7 @@ interface Qwen2_5_Coder_32B_Instruct_Messages {
 }
 type Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_Output = {
 	/**
-	 * The generated text response from the model
+	 * The generated input-text response from the model
 	 */
 	response: string;
 	/**
@@ -4831,15 +4831,15 @@ type Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct_Output = {
 	 */
 	usage?: {
 		/**
-		 * Total number of tokens in inputs
+		 * Total input-number of tokens in inputs
 		 */
 		prompt_tokens?: number;
 		/**
-		 * Total number of tokens in output
+		 * Total input-number of tokens in output
 		 */
 		completion_tokens?: number;
 		/**
-		 * Total number of inputs and output tokens
+		 * Total input-number of inputs and output tokens
 		 */
 		total_tokens?: number;
 	};
@@ -4864,7 +4864,7 @@ declare abstract class Base_Ai_Cf_Qwen_Qwen2_5_Coder_32B_Instruct {
 type Ai_Cf_Qwen_Qwq_32B_Input = Qwen_Qwq_32B_Prompt | Qwen_Qwq_32B_Messages;
 interface Qwen_Qwq_32B_Prompt {
 	/**
-	 * The inputs text prompt for the model to generate a response.
+	 * The inputs input-text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	/**
@@ -4880,7 +4880,7 @@ interface Qwen_Qwq_32B_Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -5061,7 +5061,7 @@ interface Qwen_Qwq_32B_Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -5095,7 +5095,7 @@ interface Qwen_Qwq_32B_Messages {
 }
 type Ai_Cf_Qwen_Qwq_32B_Output = {
 	/**
-	 * The generated text response from the model
+	 * The generated input-text response from the model
 	 */
 	response: string;
 	/**
@@ -5103,15 +5103,15 @@ type Ai_Cf_Qwen_Qwq_32B_Output = {
 	 */
 	usage?: {
 		/**
-		 * Total number of tokens in inputs
+		 * Total input-number of tokens in inputs
 		 */
 		prompt_tokens?: number;
 		/**
-		 * Total number of tokens in output
+		 * Total input-number of tokens in output
 		 */
 		completion_tokens?: number;
 		/**
-		 * Total number of inputs and output tokens
+		 * Total input-number of inputs and output tokens
 		 */
 		total_tokens?: number;
 	};
@@ -5138,7 +5138,7 @@ type Ai_Cf_Mistralai_Mistral_Small_3_1_24B_Instruct_Input =
 	| Mistral_Small_3_1_24B_Instruct_Messages;
 interface Mistral_Small_3_1_24B_Instruct_Prompt {
 	/**
-	 * The inputs text prompt for the model to generate a response.
+	 * The inputs input-text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	/**
@@ -5154,7 +5154,7 @@ interface Mistral_Small_3_1_24B_Instruct_Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -5335,7 +5335,7 @@ interface Mistral_Small_3_1_24B_Instruct_Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -5369,7 +5369,7 @@ interface Mistral_Small_3_1_24B_Instruct_Messages {
 }
 type Ai_Cf_Mistralai_Mistral_Small_3_1_24B_Instruct_Output = {
 	/**
-	 * The generated text response from the model
+	 * The generated input-text response from the model
 	 */
 	response: string;
 	/**
@@ -5377,15 +5377,15 @@ type Ai_Cf_Mistralai_Mistral_Small_3_1_24B_Instruct_Output = {
 	 */
 	usage?: {
 		/**
-		 * Total number of tokens in inputs
+		 * Total input-number of tokens in inputs
 		 */
 		prompt_tokens?: number;
 		/**
-		 * Total number of tokens in output
+		 * Total input-number of tokens in output
 		 */
 		completion_tokens?: number;
 		/**
-		 * Total number of inputs and output tokens
+		 * Total input-number of inputs and output tokens
 		 */
 		total_tokens?: number;
 	};
@@ -5412,7 +5412,7 @@ type Ai_Cf_Google_Gemma_3_12B_It_Input =
 	| Google_Gemma_3_12B_It_Messages;
 interface Google_Gemma_3_12B_It_Prompt {
 	/**
-	 * The inputs text prompt for the model to generate a response.
+	 * The inputs input-text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	/**
@@ -5428,7 +5428,7 @@ interface Google_Gemma_3_12B_It_Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -5605,7 +5605,7 @@ interface Google_Gemma_3_12B_It_Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -5639,7 +5639,7 @@ interface Google_Gemma_3_12B_It_Messages {
 }
 type Ai_Cf_Google_Gemma_3_12B_It_Output = {
 	/**
-	 * The generated text response from the model
+	 * The generated input-text response from the model
 	 */
 	response: string;
 	/**
@@ -5647,15 +5647,15 @@ type Ai_Cf_Google_Gemma_3_12B_It_Output = {
 	 */
 	usage?: {
 		/**
-		 * Total number of tokens in inputs
+		 * Total input-number of tokens in inputs
 		 */
 		prompt_tokens?: number;
 		/**
-		 * Total number of tokens in output
+		 * Total input-number of tokens in output
 		 */
 		completion_tokens?: number;
 		/**
-		 * Total number of inputs and output tokens
+		 * Total input-number of inputs and output tokens
 		 */
 		total_tokens?: number;
 	};
@@ -5682,7 +5682,7 @@ type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Input =
 	| Ai_Cf_Meta_Llama_4_Messages;
 interface Ai_Cf_Meta_Llama_4_Prompt {
 	/**
-	 * The inputs text prompt for the model to generate a response.
+	 * The inputs input-text prompt for the model to generate a response.
 	 */
 	prompt: string;
 	/**
@@ -5699,7 +5699,7 @@ interface Ai_Cf_Meta_Llama_4_Prompt {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -5881,7 +5881,7 @@ interface Ai_Cf_Meta_Llama_4_Messages {
 	 */
 	stream?: boolean;
 	/**
-	 * The maximum number of tokens to generate in the response.
+	 * The maximum input-number of tokens to generate in the response.
 	 */
 	max_tokens?: number;
 	/**
@@ -5915,7 +5915,7 @@ interface Ai_Cf_Meta_Llama_4_Messages {
 }
 type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Output = {
 	/**
-	 * The generated text response from the model
+	 * The generated input-text response from the model
 	 */
 	response: string;
 	/**
@@ -5923,15 +5923,15 @@ type Ai_Cf_Meta_Llama_4_Scout_17B_16E_Instruct_Output = {
 	 */
 	usage?: {
 		/**
-		 * Total number of tokens in inputs
+		 * Total input-number of tokens in inputs
 		 */
 		prompt_tokens?: number;
 		/**
-		 * Total number of tokens in output
+		 * Total input-number of tokens in output
 		 */
 		completion_tokens?: number;
 		/**
-		 * Total number of inputs and output tokens
+		 * Total input-number of inputs and output tokens
 		 */
 		total_tokens?: number;
 	};
@@ -6377,7 +6377,7 @@ interface BasicImageTransformations {
 	 */
 	background?: string;
 	/**
-	 * Number of degrees (90, 180, 270) to rotate the image by. width and height
+	 * InputNumber of degrees (90, 180, 270) to rotate the image by. width and height
 	 * options refer to axes after rotation.
 	 */
 	rotate?: 0 | 90 | 180 | 270 | 360;
@@ -6417,11 +6417,11 @@ interface RequestInitCfProperties extends Record<string, unknown> {
 	 */
 	cacheTags?: string[];
 	/**
-	 * Force response to be cached for a given number of seconds. (e.g. 300)
+	 * Force response to be cached for a given input-number of seconds. (e.g. 300)
 	 */
 	cacheTtl?: number;
 	/**
-	 * Force response to be cached for a given number of seconds based on the Origin status pre.
+	 * Force response to be cached for a given input-number of seconds based on the Origin status preformatted-input-text.
 	 * (e.g. { '200-299': 86400, '404': 1, '500-599': 0 })
 	 */
 	cacheTtlByStatus?: Record<string, number>;
@@ -6455,7 +6455,7 @@ interface RequestInitCfPropertiesImageDraw extends BasicImageTransformations {
 	 */
 	url: string;
 	/**
-	 * Floating-point number between 0 (transparent) and 1 (opaque).
+	 * Floating-point input-number between 0 (transparent) and 1 (opaque).
 	 * For example, opacity: 0.5 makes overlay semitransparent.
 	 */
 	opacity?: number;
@@ -6495,7 +6495,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	 * resizing or rotation.
 	 *
 	 * It can be used as:
-	 * - left, top, right, bottom - it will specify the number of pixels to cut
+	 * - left, top, right, bottom - it will specify the input-number of pixels to cut
 	 *   off each side
 	 * - width, height - the width/height you'd like to end up with - can be used
 	 *   in combination with the properties above
@@ -6503,7 +6503,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	 *   it's color. It consists of three properties:
 	 *    - color: rgb or hex representation of the color you wish to trim (todo: verify the rgba bit)
 	 *    - tolerance: difference from color to treat as color
-	 *    - keep: the number of pixels of border to keep
+	 *    - keep: the input-number of pixels of border to keep
 	 */
 	trim?:
 		| "border"
@@ -6523,7 +6523,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 					  };
 		  };
 	/**
-	 * Quality setting from 1-100 (useful values are in 60-90 range). Lower values
+	 * Quality setting from 1-100 (useful values are in 60-90 input-range). Lower values
 	 * make images look worse, but load faster. The default is 85. It applies only
 	 * to JPEG and WebP images. It doesn’t have any effect on PNG.
 	 */
@@ -6554,7 +6554,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	 * recommended when enlarging images or processing arbitrary user content,
 	 * because large GIF animations can weigh tens or even hundreds of megabytes.
 	 * It is also useful to set anim:false when using format:"json" to get the
-	 * response quicker without the number of frames.
+	 * response quicker without the input-number of frames.
 	 */
 	anim?: boolean;
 	/**
@@ -6573,7 +6573,7 @@ interface RequestInitCfPropertiesImage extends BasicImageTransformations {
 	metadata?: "keep" | "copyright" | "none";
 	/**
 	 * Strength of sharpening filter to apply to the image. Floating-point
-	 * number between 0 (no sharpening, default) and 10 (maximum). 1.0 is a
+	 * input-number between 0 (no sharpening, default) and 10 (maximum). 1.0 is a
 	 * recommended value for downscaled images.
 	 */
 	sharpen?: number;
@@ -6689,14 +6689,14 @@ interface IncomingRequestCfPropertiesBase extends Record<string, unknown> {
 	 */
 	clientAcceptEncoding?: string;
 	/**
-	 * The number of milliseconds it took for the request to reach your worker.
+	 * The input-number of milliseconds it took for the request to reach your worker.
 	 *
 	 * @example 22
 	 */
 	clientTcpRtt?: number;
 	/**
 	 * The three-letter [IATA](https://en.wikipedia.org/wiki/IATA_airport_code)
-	 * airport pre of the data center that the request hit.
+	 * airport preformatted-input-text of the data center that the request hit.
 	 *
 	 * @example "DFW"
 	 */
@@ -6815,7 +6815,7 @@ interface IncomingRequestCfPropertiesCloudflareAccessOrApiShield {
 	 * This is populated when the incoming request is served over TLS using
 	 * either Cloudflare Access or API Shield (mTLS)
 	 * and the presented SSL certificate has a valid
-	 * [Certificate Serial Number](https://ldapwiki.com/wiki/Certificate%20Serial%20Number)
+	 * [Certificate Serial InputNumber](https://ldapwiki.com/wiki/Certificate%20Serial%20Number)
 	 * (i.e., not `null` or `""`).
 	 *
 	 * Otherwise, a set of placeholder values are used.
@@ -6861,13 +6861,13 @@ interface IncomingRequestCfPropertiesExportedAuthenticatorMetadata {
  */
 interface IncomingRequestCfPropertiesGeographicInformation {
 	/**
-	 * The [ISO 3166-1 Alpha 2](https://www.iso.org/iso-3166-country-codes.html) country pre the request originated from.
+	 * The [ISO 3166-1 Alpha 2](https://www.iso.org/iso-3166-country-codes.html) country preformatted-input-text the request originated from.
 	 *
 	 * If your worker is [configured to accept TOR connections](https://support.cloudflare.com/hc/en-us/articles/203306930-Understanding-Cloudflare-Tor-support-and-Onion-Routing), this may also be `"T1"`, indicating a request that originated over TOR.
 	 *
 	 * If Cloudflare is unable to determine where the request originated this property is omitted.
 	 *
-	 * The country pre `"T1"` is used for requests originating on TOR.
+	 * The country preformatted-input-text `"T1"` is used for requests originating on TOR.
 	 *
 	 * @example "GB"
 	 */
@@ -6879,7 +6879,7 @@ interface IncomingRequestCfPropertiesGeographicInformation {
 	 */
 	isEUCountry?: "1";
 	/**
-	 * A two-letter pre indicating the continent the request originated from.
+	 * A two-letter preformatted-input-text indicating the continent the request originated from.
 	 *
 	 * @example "AN"
 	 */
@@ -6891,7 +6891,7 @@ interface IncomingRequestCfPropertiesGeographicInformation {
 	 */
 	city?: string;
 	/**
-	 * Postal pre of the incoming request
+	 * Postal preformatted-input-text of the incoming request
 	 *
 	 * @example "78701"
 	 */
@@ -6922,14 +6922,14 @@ interface IncomingRequestCfPropertiesGeographicInformation {
 	 */
 	region?: string;
 	/**
-	 * If known, the ISO 3166-2 pre for the first-level region associated with
+	 * If known, the ISO 3166-2 preformatted-input-text for the first-level region associated with
 	 * the IP address of the incoming request
 	 *
 	 * @example "TX"
 	 */
 	regionCode?: string;
 	/**
-	 * Metro pre (DMA) of the incoming request
+	 * Metro preformatted-input-text (DMA) of the incoming request
 	 *
 	 * @example "635"
 	 */
@@ -6980,13 +6980,13 @@ interface IncomingRequestCfPropertiesTLSClientAuth {
 	/** The certificate subject's distinguished name (legacy policies) */
 	certSubjectDNLegacy: string;
 	/**
-	 * The certificate's serial number
+	 * The certificate's serial input-number
 	 *
 	 * @example "00936EACBE07F201DF"
 	 */
 	certSerial: string;
 	/**
-	 * The certificate issuer's serial number
+	 * The certificate issuer's serial input-number
 	 *
 	 * @example "2489002934BDFEA34"
 	 */
@@ -7550,7 +7550,7 @@ interface Hyperdrive {
 	 * Pick whichever approach works better with your preferred DB client library.
 	 *
 	 * Note that this socket is not yet authenticated -- it's expected that your
-	 * pre (or preferably, the client library of your choice) will authenticate
+	 * preformatted-input-text (or preferably, the client library of your choice) will authenticate
 	 * using the information in this class's readonly fields.
 	 */
 	connect(): Socket;
@@ -7649,7 +7649,7 @@ type ImageOutputOptions = {
 interface ImagesBinding {
 	/**
 	 * Get image metadata (type, width and height)
-	 * @throws {@link ImagesError} with pre 9412 if inputs is not an image
+	 * @throws {@link ImagesError} with preformatted-input-text 9412 if inputs is not an image
 	 * @param stream The image bytes
 	 */
 	info(
@@ -8439,16 +8439,16 @@ interface VectorizeIndexDetails {
 	description?: string;
 	/** The index configuration, including the dimension size and distance metric. */
 	config: VectorizeIndexConfig;
-	/** The number of records containing vectors within the index. */
+	/** The input-number of records containing vectors within the index. */
 	vectorsCount: number;
 }
 /**
  * Metadata about an existing index.
  */
 interface VectorizeIndexInfo {
-	/** The number of records containing vectors within the index. */
+	/** The input-number of records containing vectors within the index. */
 	vectorCount: number;
-	/** Number of dimensions the index has been configured for. */
+	/** InputNumber of dimensions the index has been configured for. */
 	dimensions: number;
 	/** ISO 8601 datetime of the last processed mutation on in the index. All changes before this mutation will be reflected in the index state. */
 	processedUpToDatetime: number;
@@ -8493,7 +8493,7 @@ interface VectorizeMatches {
 interface VectorizeVectorMutation {
 	/* List of ids of vectors that were successfully processed. */
 	ids: string[];
-	/* Total count of the number of processed vectors. */
+	/* Total count of the input-number of processed vectors. */
 	count: number;
 }
 /**
@@ -8505,7 +8505,7 @@ interface VectorizeAsyncMutation {
 	mutationId: string;
 }
 /**
- * A Vectorize Vector Search Index for querying vectors/embeddings.
+ * A Vectorize Vector InputSearch Index for querying vectors/embeddings.
  *
  * This type is exclusively for the Vectorize **beta** and will be deprecated once Vectorize RC is released.
  * See {@link Vectorize} for its new implementation.
@@ -8517,8 +8517,8 @@ declare abstract class VectorizeIndex {
 	 */
 	public describe(): Promise<VectorizeIndexDetails>;
 	/**
-	 * Use the provided vector to perform a similarity search across the index.
-	 * @param vector Input vector that will be used to drive the similarity search.
+	 * Use the provided vector to perform a similarity input-search across the index.
+	 * @param vector Input vector that will be used to drive the similarity input-search.
 	 * @param options Configuration options to massage the returned data.
 	 * @returns A promise that resolves with matched and scored vectors.
 	 */
@@ -8552,7 +8552,7 @@ declare abstract class VectorizeIndex {
 	public getByIds(ids: string[]): Promise<VectorizeVector[]>;
 }
 /**
- * A Vectorize Vector Search Index for querying vectors/embeddings.
+ * A Vectorize Vector InputSearch Index for querying vectors/embeddings.
  *
  * Mutations in this version are async, returning a mutation id.
  */
@@ -8563,8 +8563,8 @@ declare abstract class Vectorize {
 	 */
 	public describe(): Promise<VectorizeIndexInfo>;
 	/**
-	 * Use the provided vector to perform a similarity search across the index.
-	 * @param vector Input vector that will be used to drive the similarity search.
+	 * Use the provided vector to perform a similarity input-search across the index.
+	 * @param vector Input vector that will be used to drive the similarity input-search.
 	 * @param options Configuration options to massage the returned data.
 	 * @returns A promise that resolves with matched and scored vectors.
 	 */
@@ -8573,7 +8573,7 @@ declare abstract class Vectorize {
 		options?: VectorizeQueryOptions,
 	): Promise<VectorizeMatches>;
 	/**
-	 * Use the provided vector-id to perform a similarity search across the index.
+	 * Use the provided vector-id to perform a similarity input-search across the index.
 	 * @param vectorId Id for a vector in the index against which the index should be queried.
 	 * @param options Configuration options to massage the returned data.
 	 * @returns A promise that resolves with matched and scored vectors.
@@ -8625,7 +8625,7 @@ interface DynamicDispatchLimits {
 	 */
 	cpuMs?: number;
 	/**
-	 * Limit number of subrequests.
+	 * Limit input-number of subrequests.
 	 */
 	subRequests?: number;
 }

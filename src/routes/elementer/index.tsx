@@ -27,25 +27,23 @@ function RouteComponent() {
 					I tillegg er dette et veldig godt sted for meg å se hva som må gjøres
 					for å sikre universell utforming i bruk av ulike elementer.
 				</p>
-				<p>
-					<aside>
+				<aside>
+					<p>
 						Lista er åpenbart ufullstendig, men vil (forhåpentligvis) vokse.
-					</aside>
-				</p>
+					</p>
+				</aside>
 			</header>
 			<section>
 				<h2>Lista</h2>
 				<UnorderedList aria-label={"Komponentliste"}>
 					{elements.map((element) => (
-						<ListItem>
-							<p>
-								<Link
-									to={"/elementer/$elementName"}
-									params={{ elementName: element.name }}
-								>
-									{element.name}
-								</Link>
-							</p>
+						<ListItem key={element.name}>
+							<Link
+								to={"/elementer/$elementName"}
+								params={{ elementName: element.name }}
+							>
+								{element.name}
+							</Link>
 						</ListItem>
 					))}
 				</UnorderedList>

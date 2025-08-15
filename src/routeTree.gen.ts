@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MChar248nsterIndexRouteImport } from './routes/mønster/index'
-import { Route as KomponenterIndexRouteImport } from './routes/komponenter/index'
 import { Route as ElementerIndexRouteImport } from './routes/elementer/index'
 import { Route as MChar248nsterPatternNameRouteImport } from './routes/mønster/$patternName'
 import { Route as ElementerElementNameRouteImport } from './routes/elementer/$elementName'
@@ -24,11 +23,6 @@ const IndexRoute = IndexRouteImport.update({
 const MChar248nsterIndexRoute = MChar248nsterIndexRouteImport.update({
   id: '/mønster/',
   path: '/mønster/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const KomponenterIndexRoute = KomponenterIndexRouteImport.update({
-  id: '/komponenter/',
-  path: '/komponenter/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ElementerIndexRoute = ElementerIndexRouteImport.update({
@@ -53,7 +47,6 @@ export interface FileRoutesByFullPath {
   '/elementer/$elementName': typeof ElementerElementNameRoute
   '/mønster/$patternName': typeof MChar248nsterPatternNameRoute
   '/elementer': typeof ElementerIndexRoute
-  '/komponenter': typeof KomponenterIndexRoute
   '/mønster': typeof MChar248nsterIndexRoute
 }
 export interface FileRoutesByTo {
@@ -61,7 +54,6 @@ export interface FileRoutesByTo {
   '/elementer/$elementName': typeof ElementerElementNameRoute
   '/mønster/$patternName': typeof MChar248nsterPatternNameRoute
   '/elementer': typeof ElementerIndexRoute
-  '/komponenter': typeof KomponenterIndexRoute
   '/mønster': typeof MChar248nsterIndexRoute
 }
 export interface FileRoutesById {
@@ -70,7 +62,6 @@ export interface FileRoutesById {
   '/elementer/$elementName': typeof ElementerElementNameRoute
   '/mønster/$patternName': typeof MChar248nsterPatternNameRoute
   '/elementer/': typeof ElementerIndexRoute
-  '/komponenter/': typeof KomponenterIndexRoute
   '/mønster/': typeof MChar248nsterIndexRoute
 }
 export interface FileRouteTypes {
@@ -80,7 +71,6 @@ export interface FileRouteTypes {
     | '/elementer/$elementName'
     | '/mønster/$patternName'
     | '/elementer'
-    | '/komponenter'
     | '/mønster'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,7 +78,6 @@ export interface FileRouteTypes {
     | '/elementer/$elementName'
     | '/mønster/$patternName'
     | '/elementer'
-    | '/komponenter'
     | '/mønster'
   id:
     | '__root__'
@@ -96,7 +85,6 @@ export interface FileRouteTypes {
     | '/elementer/$elementName'
     | '/mønster/$patternName'
     | '/elementer/'
-    | '/komponenter/'
     | '/mønster/'
   fileRoutesById: FileRoutesById
 }
@@ -105,7 +93,6 @@ export interface RootRouteChildren {
   ElementerElementNameRoute: typeof ElementerElementNameRoute
   MChar248nsterPatternNameRoute: typeof MChar248nsterPatternNameRoute
   ElementerIndexRoute: typeof ElementerIndexRoute
-  KomponenterIndexRoute: typeof KomponenterIndexRoute
   MChar248nsterIndexRoute: typeof MChar248nsterIndexRoute
 }
 
@@ -123,13 +110,6 @@ declare module '@tanstack/react-router' {
       path: '/mønster'
       fullPath: '/mønster'
       preLoaderRoute: typeof MChar248nsterIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/komponenter/': {
-      id: '/komponenter/'
-      path: '/komponenter'
-      fullPath: '/komponenter'
-      preLoaderRoute: typeof KomponenterIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/elementer/': {
@@ -161,7 +141,6 @@ const rootRouteChildren: RootRouteChildren = {
   ElementerElementNameRoute: ElementerElementNameRoute,
   MChar248nsterPatternNameRoute: MChar248nsterPatternNameRoute,
   ElementerIndexRoute: ElementerIndexRoute,
-  KomponenterIndexRoute: KomponenterIndexRoute,
   MChar248nsterIndexRoute: MChar248nsterIndexRoute,
 }
 export const routeTree = rootRouteImport

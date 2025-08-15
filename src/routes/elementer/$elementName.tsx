@@ -1,11 +1,13 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { elements } from "../../elements";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { ClusteredList } from "../../components/UI/clustered-list/clustered-list.tsx";
 import {
-	ElementExample,
-	ElementFooter,
-	ElementHeader,
-	ElementUsage,
-} from "./components";
+	Blockquote,
+	elements,
+	ListItem,
+	PreformattedText,
+	UnorderedList,
+} from "../../elements";
+import { patterns } from "../../patterns";
 
 export const Route = createFileRoute("/elementer/$elementName")({
 	loader: ({ params: { elementName } }) => {
@@ -30,13 +32,69 @@ export const Route = createFileRoute("/elementer/$elementName")({
 
 function RouteComponent() {
 	const { element } = Route.useLoaderData();
+	const { name, description, spec, example } = element;
+
+	const patternsIncludingElement = patterns.filter((pattern) =>
+		pattern.implementedUsingElements.includes(name),
+	);
 
 	return (
 		<main>
-			<ElementHeader {...element} />
-			<ElementExample {...element} />
-			<ElementUsage {...element} />
-			<ElementFooter />
+			<header>
+				<h1>{name}</h1>
+				<Blockquote cite={{ href: spec, label: "HTML Standarden" }}>
+					<p className={"h3"} lang={"en"}>
+						{description}
+					</p>
+				</Blockquote>
+			</header>
+
+			{example && (
+				<section>
+					<h2>Eksempel</h2>
+					{example}
+					<h3>Koden</h3>
+					<PreformattedText>{example}</PreformattedText>
+				</section>
+			)}
+
+			{!!patternsIncludingElement.length && (
+				<section>
+					<h2>
+						Mønstre <span lang={"en"}>{element.name}</span> brukes i
+					</h2>
+					<UnorderedList aria-label={"Mønstre elementet brukes i"}>
+						{patternsIncludingElement.map((pattern) => (
+							<ListItem key={pattern.name}>
+								<Link
+									to={"/mønster/$patternName"}
+									params={{ patternName: pattern.name }}
+								>
+									{pattern.name}
+								</Link>
+							</ListItem>
+						))}
+					</UnorderedList>
+				</section>
+			)}
+
+			<footer>
+				<h2>Elementliste</h2>
+				<ClusteredList aria-label={"Elementliste"}>
+					{elements
+						.filter((e) => e.name !== name)
+						.map((element) => (
+							<ListItem key={element.name}>
+								<Link
+									to={"/elementer/$elementName"}
+									params={{ elementName: element.name }}
+								>
+									{element.name}
+								</Link>
+							</ListItem>
+						))}
+				</ClusteredList>
+			</footer>
 		</main>
 	);
 }

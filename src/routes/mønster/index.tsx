@@ -23,7 +23,7 @@ function RouteComponent() {
 				<h2>Lista</h2>
 				<UnorderedList aria-label={"Lista med mønster"}>
 					{patterns.map((pattern) => (
-						<ListItem>
+						<ListItem key={pattern.name}>
 							<Link
 								to={"/mønster/$patternName"}
 								params={{ patternName: pattern.name }}
