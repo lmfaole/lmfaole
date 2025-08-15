@@ -10,5 +10,5 @@ export const tableInfo: ElementInfoType = {
 	spec: "https://html.spec.whatwg.org/#the-table-element",
 	category: "tabulær data",
 	aliases: ["tabell"],
-	example: SimpleTable(),
+	examples: [SimpleTable()],
 };

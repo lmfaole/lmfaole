@@ -15,5 +15,5 @@ export type ElementInfoType = {
 		| "interaksjon";
 	spec: string;
 	aliases?: string[];
-	example?: ReactNode;
+	examples?: ReactNode[];
 };

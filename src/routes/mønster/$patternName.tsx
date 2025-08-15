@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import {
 	Blockquote,
+	Details,
 	ListItem,
 	PreformattedText,
 	UnorderedList,
@@ -55,8 +56,10 @@ function RouteComponent() {
 			<section>
 				<h2>Eksempel på implementasjon</h2>
 				{implementation}
-				<h3>Koden</h3>
-				<PreformattedText>{implementation}</PreformattedText>
+
+				<Details summary="Koden">
+					<PreformattedText>{implementation}</PreformattedText>
+				</Details>
 			</section>
 
 			<section>

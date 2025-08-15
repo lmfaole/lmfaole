@@ -9,5 +9,5 @@ export const detailsInfo: ElementInfoType = {
 	spec: "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element",
 	category: "interaksjon",
 	aliases: ["accordion", "trekkspill-liste"],
-	example: DetailsExample(),
+	examples: [DetailsExample()],
 };

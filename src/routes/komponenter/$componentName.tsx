@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { Fragment } from "react";
 import { components } from "../../components";
 import { ListItem, UnorderedList } from "../../elements";
 import { patterns } from "../../patterns";
@@ -42,10 +43,14 @@ function RouteComponent() {
 				<p lang={"en"}>{description}</p>
 			</header>
 
-			<section>
-				<h2>Eksempler</h2>
-				{examples}
-			</section>
+			{examples && (
+				<section>
+					<h2>Eksempler</h2>
+					{examples.map((item, index) => (
+						<Fragment key={index}>{item}</Fragment>
+					))}
+				</section>
+			)}
 
 			{!!patternsIncludingComponent.length && (
 				<section>

@@ -8,5 +8,5 @@ export const unorderedListInfo: ElementInfoType = {
 	spec: "https://html.spec.whatwg.org/multipage/grouping-content.html#the-ul-element",
 	category: "gruppering",
 	aliases: ["usortert lists"],
-	example: UnorderedListExample(),
+	examples: [UnorderedListExample()],
 };

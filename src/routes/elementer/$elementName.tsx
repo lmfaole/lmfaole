@@ -1,7 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { Fragment } from "react";
 import { ClusteredList } from "../../components/clustered-list/clustered-list.tsx";
 import {
 	Blockquote,
+	Details,
 	elements,
 	ListItem,
 	PreformattedText,
@@ -32,7 +34,7 @@ export const Route = createFileRoute("/elementer/$elementName")({
 
 function RouteComponent() {
 	const { element } = Route.useLoaderData();
-	const { name, description, example, spec, aliases } = element;
+	const { name, description, examples, spec, aliases } = element;
 
 	const patternsIncludingElement = patterns.filter(
 		(pattern) =>
@@ -61,12 +63,18 @@ function RouteComponent() {
 				</Blockquote>
 			</header>
 
-			{example && (
+			{examples && (
 				<section>
-					<h2>Eksempel</h2>
-					{example}
-					<h3>Koden</h3>
-					<PreformattedText>{example}</PreformattedText>
+					<h2>Eksempler</h2>
+					{examples.map((item, index) => (
+						<Fragment key={index}>
+							{item}
+
+							<Details summary="Koden">
+								<PreformattedText>{item}</PreformattedText>
+							</Details>
+						</Fragment>
+					))}
 				</section>
 			)}
 
