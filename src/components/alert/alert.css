@@ -1,4 +1,4 @@
-.alert {
+div[role="alert"] {
 	--color: light-dark(#ddd, #555);
 
 	padding: 2ex 2ch;

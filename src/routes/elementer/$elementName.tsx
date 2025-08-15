@@ -70,7 +70,7 @@ function RouteComponent() {
 			{!!patternsIncludingElement.length && (
 				<section>
 					<h2>
-						Mønstre <span lang={"en"}>{element.name}</span> brukes i
+						Mønstre <span lang={"en"}>{name}</span> brukes i
 					</h2>
 					<UnorderedList aria-label={"Mønstre elementet brukes i"}>
 						{patternsIncludingElement.map((pattern) => (

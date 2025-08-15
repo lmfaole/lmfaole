@@ -7,7 +7,10 @@ export const AlertPatternExample = () => {
 
 	return (
 		<>
-			<Button onClick={() => setShowAlert(!showAlert)}>
+			<Button
+				aria-pressed={showAlert}
+				onClick={(_) => setShowAlert(!showAlert)}
+			>
 				Veksle visning av melding
 			</Button>
 			{showAlert && (

@@ -1,7 +1,11 @@
 import type { ButtonType } from "./button.type.ts";
 
 export const Button = (props: ButtonType) => {
-	const { children, ...rest } = props;
+	const { children, type = "button", ...rest } = props;
 
-	return <button {...rest}>{children}</button>;
+	return (
+		<button type={type} {...rest}>
+			{children}
+		</button>
+	);
 };
