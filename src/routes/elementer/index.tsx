@@ -47,7 +47,10 @@ function RouteComponent() {
 								>
 									{element.name}
 								</Link>{" "}
-								({element.examples?.length} eksempler)
+								<small>
+									({element.examples ? element.examples?.length : "Ingen"}{" "}
+									eksempler)
+								</small>
 							</p>
 						</ListItem>
 					))}
@@ -64,7 +67,10 @@ function RouteComponent() {
 								>
 									{element.name}
 								</Link>{" "}
-								({element.examples?.length} eksempler)
+								<small>
+									({element.examples ? element.examples?.length : "Ingen"}{" "}
+									eksempler)
+								</small>
 							</p>
 						</ListItem>
 					))}
@@ -81,7 +87,10 @@ function RouteComponent() {
 								>
 									{element.name}
 								</Link>{" "}
-								({element.examples?.length} eksempler)
+								<small>
+									({element.examples ? element.examples?.length : "Ingen"}{" "}
+									eksempler)
+								</small>
 							</p>
 						</ListItem>
 					))}
@@ -98,7 +107,10 @@ function RouteComponent() {
 								>
 									{element.name}
 								</Link>{" "}
-								({element.examples?.length} eksempler)
+								<small>
+									({element.examples ? element.examples?.length : "Ingen"}{" "}
+									eksempler)
+								</small>
 							</p>
 						</ListItem>
 					))}
