@@ -1,7 +1,6 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { GlobalFooter } from "../components/global/global-footer/global-footer.tsx";
-import { GlobalHeader } from "../components/global/global-header/global-header.tsx";
+import { GlobalFooter, GlobalHeader } from "../components";
 
 export const Route = createRootRoute({
 	component: () => (
