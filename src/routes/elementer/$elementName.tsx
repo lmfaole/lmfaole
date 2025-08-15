@@ -52,9 +52,7 @@ function RouteComponent() {
 					}}
 					lang={"en"}
 				>
-					<p className={"h3"} lang={"en"}>
-						{description}
-					</p>
+					<p lang={"en"}>{description}</p>
 				</Blockquote>
 			</header>
 

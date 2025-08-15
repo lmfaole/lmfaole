@@ -48,9 +48,7 @@ function RouteComponent() {
 					cite={{ href: source.href, label: source.label }}
 					lang={"en"}
 				>
-					<p className={"h3"} lang={"en"}>
-						{description}
-					</p>
+					<p lang={"en"}>{description}</p>
 				</Blockquote>
 			</header>
 

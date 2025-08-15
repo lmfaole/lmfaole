@@ -39,9 +39,7 @@ function RouteComponent() {
 			<header>
 				<h1>{name}</h1>
 
-				<p className={"h3"} lang={"en"}>
-					{description}
-				</p>
+				<p lang={"en"}>{description}</p>
 			</header>
 
 			<section>
