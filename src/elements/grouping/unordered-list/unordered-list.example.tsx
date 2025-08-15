@@ -1,7 +1,7 @@
 import { ListItem } from "../list-item/list-item.tsx";
 import { UnorderedList } from "./unordered-list.tsx";
 
-export const Example = () => {
+export const UnorderedListExample = () => {
 	return (
 		<UnorderedList
 			aria-label={"Ingredienser for en kake om jeg ikke husker helt feil"}

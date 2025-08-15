@@ -32,7 +32,7 @@ export const Route = createFileRoute("/elementer/$elementName")({
 
 function RouteComponent() {
 	const { element } = Route.useLoaderData();
-	const { name, description, spec, example } = element;
+	const { name, description, example, spec, aliases } = element;
 
 	const patternsIncludingElement = patterns.filter(
 		(pattern) =>
@@ -44,6 +44,11 @@ function RouteComponent() {
 		<main>
 			<header>
 				<h1>{name}</h1>
+				{aliases && (
+					<aside>
+						Også kjent som <i>{aliases.join(", ")}</i>
+					</aside>
+				)}
 				<Blockquote
 					cite={{
 						href: spec,

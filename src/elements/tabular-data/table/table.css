@@ -4,19 +4,18 @@ table {
 
 	border: var(--border);
 	border-collapse: collapse;
-    width: 100%;
+	width: 100%;
 
 	th,
 	td {
 		border: var(--border);
 		padding: 0.7ex 1ch;
-        font-family: system-ui;
-        text-align: start;
+		text-align: start;
 	}
 
-    caption {
-        text-align: start;
-        caption-side: bottom;
-        margin-block-start: 0.7ex;
-    }
+	caption {
+		text-align: start;
+		caption-side: bottom;
+		margin-block-start: 0.7ex;
+	}
 }
