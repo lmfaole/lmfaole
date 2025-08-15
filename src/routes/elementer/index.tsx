@@ -6,6 +6,8 @@ export const Route = createFileRoute("/elementer/")({
 });
 
 function RouteComponent() {
+	const groupedElements = Object.groupBy(elements, ({ category }) => category);
+
 	return (
 		<main>
 			<header>
@@ -34,9 +36,51 @@ function RouteComponent() {
 				</aside>
 			</header>
 			<section>
-				<h2>Lista</h2>
-				<UnorderedList aria-label={"Komponentliste"}>
-					{elements.map((element) => (
+				<h2>Grupperingselementer</h2>
+				<UnorderedList aria-label={"Grupperingselementer"}>
+					{groupedElements.gruppering?.map((element) => (
+						<ListItem key={element.name}>
+							<Link
+								to={"/elementer/$elementName"}
+								params={{ elementName: element.name }}
+							>
+								{element.name}
+							</Link>
+						</ListItem>
+					))}
+				</UnorderedList>
+
+				<h2>Skjemaelementer</h2>
+				<UnorderedList aria-label={"Skjemaelementer"}>
+					{groupedElements.skjema?.map((element) => (
+						<ListItem key={element.name}>
+							<Link
+								to={"/elementer/$elementName"}
+								params={{ elementName: element.name }}
+							>
+								{element.name}
+							</Link>
+						</ListItem>
+					))}
+				</UnorderedList>
+
+				<h2>Tabulær data</h2>
+				<UnorderedList aria-label={"Tabulær data"}>
+					{groupedElements["tabulær data"]?.map((element) => (
+						<ListItem key={element.name}>
+							<Link
+								to={"/elementer/$elementName"}
+								params={{ elementName: element.name }}
+							>
+								{element.name}
+							</Link>
+						</ListItem>
+					))}
+				</UnorderedList>
+
+				<h2>Interaksjon</h2>
+				<UnorderedList aria-label={"Interaksjonselementer"}>
+					{groupedElements.interaksjon?.map((element) => (
 						<ListItem key={element.name}>
 							<Link
 								to={"/elementer/$elementName"}

@@ -12,8 +12,6 @@
 		"cf-typegen": "wrangler types"
 	},
 	"dependencies": {
-		"@atproto/api": "^0.16.2",
-		"@navikt/aksel-icons": "^7.25.1",
 		"@tanstack/react-router": "^1.130.11",
 		"@tanstack/react-router-devtools": "^1.130.11",
 		"react": "^19.1.0",
