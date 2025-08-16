@@ -8,6 +8,23 @@ export const Route = createFileRoute("/elementer/")({
 function RouteComponent() {
 	const groupedElements = Object.groupBy(elements, ({ category }) => category);
 
+	const formatPluralExamples = (n?: number) => {
+		if (!n) return "Ingen eksempler";
+
+		const enOrdinalRules = new Intl.PluralRules("no", { type: "cardinal" });
+
+		const suffixes = new Map([
+			["one", "eksempel"],
+			["two", "eksempler"],
+			["few", "eksempler"],
+			["other", "eksempler"],
+		]);
+
+		const rule = enOrdinalRules.select(n);
+		const suffix = suffixes.get(rule);
+		return `${n} ${suffix}`;
+	};
+
 	return (
 		<main>
 			<header>
@@ -47,9 +64,8 @@ function RouteComponent() {
 								>
 									{element.name}
 								</Link>{" "}
-								<small>
-									({element.examples ? element.examples?.length : "Ingen"}{" "}
-									eksempler)
+								<small className="muted">
+									({formatPluralExamples(element.examples?.length)})
 								</small>
 							</p>
 						</ListItem>
@@ -67,9 +83,8 @@ function RouteComponent() {
 								>
 									{element.name}
 								</Link>{" "}
-								<small>
-									({element.examples ? element.examples?.length : "Ingen"}{" "}
-									eksempler)
+								<small className="muted">
+									({formatPluralExamples(element.examples?.length)})
 								</small>
 							</p>
 						</ListItem>
@@ -87,9 +102,8 @@ function RouteComponent() {
 								>
 									{element.name}
 								</Link>{" "}
-								<small>
-									({element.examples ? element.examples?.length : "Ingen"}{" "}
-									eksempler)
+								<small className="muted">
+									({formatPluralExamples(element.examples?.length)})
 								</small>
 							</p>
 						</ListItem>
@@ -107,9 +121,8 @@ function RouteComponent() {
 								>
 									{element.name}
 								</Link>{" "}
-								<small>
-									({element.examples ? element.examples?.length : "Ingen"}{" "}
-									eksempler)
+								<small className="muted">
+									({formatPluralExamples(element.examples?.length)})
 								</small>
 							</p>
 						</ListItem>
