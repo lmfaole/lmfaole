@@ -9,7 +9,7 @@ function RouteComponent() {
 	const groupedElements = Object.groupBy(elements, ({ category }) => category);
 
 	const formatPluralExamples = (n?: number) => {
-		if (!n) return "Ingen eksempler";
+		if (!n) return;
 
 		const enOrdinalRules = new Intl.PluralRules("no", { type: "cardinal" });
 
@@ -22,7 +22,7 @@ function RouteComponent() {
 
 		const rule = enOrdinalRules.select(n);
 		const suffix = suffixes.get(rule);
-		return `${n} ${suffix}`;
+		return `(${n} ${suffix})`;
 	};
 
 	return (
@@ -65,7 +65,7 @@ function RouteComponent() {
 									{element.name}
 								</Link>{" "}
 								<small className="muted">
-									({formatPluralExamples(element.examples?.length)})
+									{formatPluralExamples(element.examples?.length)}
 								</small>
 							</p>
 						</ListItem>
@@ -84,7 +84,7 @@ function RouteComponent() {
 									{element.name}
 								</Link>{" "}
 								<small className="muted">
-									({formatPluralExamples(element.examples?.length)})
+									{formatPluralExamples(element.examples?.length)}
 								</small>
 							</p>
 						</ListItem>
@@ -103,7 +103,7 @@ function RouteComponent() {
 									{element.name}
 								</Link>{" "}
 								<small className="muted">
-									({formatPluralExamples(element.examples?.length)})
+									{formatPluralExamples(element.examples?.length)}
 								</small>
 							</p>
 						</ListItem>
@@ -122,7 +122,7 @@ function RouteComponent() {
 									{element.name}
 								</Link>{" "}
 								<small className="muted">
-									({formatPluralExamples(element.examples?.length)})
+									{formatPluralExamples(element.examples?.length)}
 								</small>
 							</p>
 						</ListItem>

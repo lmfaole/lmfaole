@@ -60,12 +60,14 @@ function RouteComponent() {
 					<UnorderedList aria-label={"Mønstre elementet brukes i"}>
 						{patternsIncludingComponent.map((pattern) => (
 							<ListItem key={pattern.name}>
-								<Link
-									to={"/mønster/$patternName"}
-									params={{ patternName: pattern.name }}
-								>
-									{pattern.name}
-								</Link>
+								<p>
+									<Link
+										to={"/mønster/$patternName"}
+										params={{ patternName: pattern.name }}
+									>
+										{pattern.name}
+									</Link>
+								</p>
 							</ListItem>
 						))}
 					</UnorderedList>
