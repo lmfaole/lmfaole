@@ -1,0 +1,4 @@
+p code {
+	background-color: color-mix(in hsl, Canvas 75%, lime);
+	padding-inline: 0.25ch;
+}

@@ -3,7 +3,9 @@
 	--page-padding: 1ch;
 
 	color-scheme: light dark;
-	font-family: "Crimson Text", serif;
+	font-family:
+		"Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia,
+		serif;
 	background-color: light-dark(
 		oklch(0.9683 0 157.76),
 		oklch(0.1699 0.0061 116.16)

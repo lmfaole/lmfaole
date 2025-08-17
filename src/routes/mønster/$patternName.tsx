@@ -62,42 +62,50 @@ function RouteComponent() {
 				</Details>
 			</section>
 
-			<section>
-				<h2>Implementert med</h2>
-				<h3>Elementer</h3>
-				<UnorderedList
-					aria-label={"Elementer i bruk for å implementere mønsteret"}
-				>
-					{implementedUsingElements &&
-						implementedUsingElements.map((element) => (
-							<ListItem key={element}>
-								<Link
-									to={"/elementer/$elementName"}
-									params={{ elementName: element }}
-								>
-									{element}
-								</Link>
-							</ListItem>
-						))}
-				</UnorderedList>
+			{(implementedUsingElements || implementedUsingComponents) && (
+				<section>
+					<h2>Implementert med</h2>
+					{implementedUsingElements && (
+						<>
+							<h3>Elementer</h3>
+							<UnorderedList
+								aria-label={"Elementer i bruk for å implementere mønsteret"}
+							>
+								{implementedUsingElements.map((element) => (
+									<ListItem key={element}>
+										<Link
+											to={"/elementer/$elementName"}
+											params={{ elementName: element }}
+										>
+											{element}
+										</Link>
+									</ListItem>
+								))}
+							</UnorderedList>
+						</>
+					)}
 
-				<h3>Komponenter</h3>
-				<UnorderedList
-					aria-label={"Komponenter i bruk for å implementere mønsteret"}
-				>
-					{implementedUsingComponents &&
-						implementedUsingComponents.map((component) => (
-							<ListItem key={component}>
-								<Link
-									to={"/komponenter/$componentName"}
-									params={{ componentName: component }}
-								>
-									{component}
-								</Link>
-							</ListItem>
-						))}
-				</UnorderedList>
-			</section>
+					{implementedUsingComponents && (
+						<>
+							<h3>Komponenter</h3>
+							<UnorderedList
+								aria-label={"Komponenter i bruk for å implementere mønsteret"}
+							>
+								{implementedUsingComponents.map((component) => (
+									<ListItem key={component}>
+										<Link
+											to={"/komponenter/$componentName"}
+											params={{ componentName: component }}
+										>
+											{component}
+										</Link>
+									</ListItem>
+								))}
+							</UnorderedList>
+						</>
+					)}
+				</section>
+			)}
 		</main>
 	);
 }

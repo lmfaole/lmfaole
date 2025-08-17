@@ -1,5 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import type { PreformattedTextType } from "./preformatted-text.type.ts";
+import "./preformatted-text.css";
 
 export const PreformattedText = ({
 	children,
