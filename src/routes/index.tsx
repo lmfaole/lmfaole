@@ -1,5 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ListItem, UnorderedList } from "../elements";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
 	component: Index,
@@ -8,42 +7,16 @@ export const Route = createFileRoute("/")({
 function Index() {
 	return (
 		<main>
-			<header>
+			<hgroup>
 				<h1>Ole Jørgen Bakken</h1>
 				<p>
-					Det er alltid litt kleint å introdusere en personlig nettside syns jeg
-					as.
+					Velkommen til en deltids testside for{" "}
+					<Link to="/elementer">elementer</Link>,{" "}
+					<Link to="/komponenter">komponenter</Link> og{" "}
+					<Link to="/mønster">mønster</Link> jeg bruker i hverdagen min som
+					utvikler. Du kan lese <Link to="/om">mer om meg her</Link>.
 				</p>
-			</header>
-			<section>
-				<h2>Andre steder på internett</h2>
-				<UnorderedList aria-label={"Mine lenker"}>
-					<ListItem>
-						<p>
-							<a href={"https://bsky.app/profile/lmfaole.party"} rel={"me"}>
-								Bluesky
-							</a>
-						</p>
-					</ListItem>
-					<ListItem>
-						<p>
-							<a href={"https://github.com/lmfaole"} rel={"me"}>
-								Github
-							</a>
-						</p>
-					</ListItem>
-					<ListItem>
-						<p>
-							<a
-								href={"https://www.linkedin.com/in/olejorgenbakken/"}
-								rel={"me"}
-							>
-								LinkedIn
-							</a>
-						</p>
-					</ListItem>
-				</UnorderedList>
-			</section>
+			</hgroup>
 		</main>
 	);
 }

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OmIndexRouteImport } from './routes/om/index'
 import { Route as MChar248nsterIndexRouteImport } from './routes/mønster/index'
 import { Route as KomponenterIndexRouteImport } from './routes/komponenter/index'
 import { Route as ElementerIndexRouteImport } from './routes/elementer/index'
@@ -20,6 +21,11 @@ import { Route as ElementerElementNameRouteImport } from './routes/elementer/$el
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OmIndexRoute = OmIndexRouteImport.update({
+  id: '/om/',
+  path: '/om/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MChar248nsterIndexRoute = MChar248nsterIndexRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/elementer': typeof ElementerIndexRoute
   '/komponenter': typeof KomponenterIndexRoute
   '/mønster': typeof MChar248nsterIndexRoute
+  '/om': typeof OmIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByTo {
   '/elementer': typeof ElementerIndexRoute
   '/komponenter': typeof KomponenterIndexRoute
   '/mønster': typeof MChar248nsterIndexRoute
+  '/om': typeof OmIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -82,6 +90,7 @@ export interface FileRoutesById {
   '/elementer/': typeof ElementerIndexRoute
   '/komponenter/': typeof KomponenterIndexRoute
   '/mønster/': typeof MChar248nsterIndexRoute
+  '/om/': typeof OmIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -93,6 +102,7 @@ export interface FileRouteTypes {
     | '/elementer'
     | '/komponenter'
     | '/mønster'
+    | '/om'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -102,6 +112,7 @@ export interface FileRouteTypes {
     | '/elementer'
     | '/komponenter'
     | '/mønster'
+    | '/om'
   id:
     | '__root__'
     | '/'
@@ -111,6 +122,7 @@ export interface FileRouteTypes {
     | '/elementer/'
     | '/komponenter/'
     | '/mønster/'
+    | '/om/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -121,6 +133,7 @@ export interface RootRouteChildren {
   ElementerIndexRoute: typeof ElementerIndexRoute
   KomponenterIndexRoute: typeof KomponenterIndexRoute
   MChar248nsterIndexRoute: typeof MChar248nsterIndexRoute
+  OmIndexRoute: typeof OmIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -130,6 +143,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/om/': {
+      id: '/om/'
+      path: '/om'
+      fullPath: '/om'
+      preLoaderRoute: typeof OmIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mønster/': {
@@ -185,6 +205,7 @@ const rootRouteChildren: RootRouteChildren = {
   ElementerIndexRoute: ElementerIndexRoute,
   KomponenterIndexRoute: KomponenterIndexRoute,
   MChar248nsterIndexRoute: MChar248nsterIndexRoute,
+  OmIndexRoute: OmIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

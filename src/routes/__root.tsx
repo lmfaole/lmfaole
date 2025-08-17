@@ -1,13 +1,12 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ClusteredList } from "../components/clustered-list/clustered-list.tsx";
-import { GlobalFooter } from "../components/global-footer/global-footer.tsx";
 import { ListItem } from "../elements";
 
 export const Route = createRootRoute({
 	component: () => (
 		<>
-			<header className={"page-width global-header"}>
+			<header className={"global-header"}>
 				<nav aria-label={"hovednavigasjon"}>
 					<ClusteredList aria-label={"hovednavigasjon"}>
 						<ListItem>
@@ -25,10 +24,11 @@ export const Route = createRootRoute({
 					</ClusteredList>
 				</nav>
 			</header>
-			<div className={"container"}>
-				<Outlet />
-				<GlobalFooter />
-			</div>
+			<Outlet />
+			<footer className={"global-footer"}>
+				<p>Trans-rettigheter er menneskerettigheter</p>
+				<p>Fritt Palestina</p>
+			</footer>
 			<TanStackRouterDevtools />
 		</>
 	),

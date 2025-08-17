@@ -29,7 +29,11 @@
 body {
 	margin: auto;
 	max-width: 960px;
-	padding: 4ch;
+	padding: 4ch 2ch;
+
+	.global-footer {
+		margin-block-start: 4lh;
+	}
 }
 
 h1,
@@ -102,6 +106,7 @@ p,
 .p {
 	max-width: 59ch;
 	text-wrap: pretty;
+	line-height: 1.7;
 }
 
 a {
@@ -116,5 +121,5 @@ a {
 }
 
 .muted {
-	opacity: 0.75;
+	opacity: 0.7;
 }

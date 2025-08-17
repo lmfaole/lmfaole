@@ -1,4 +1,5 @@
 import type { DetailedHTMLProps, LiHTMLAttributes } from "react";
+import "./list-item.css";
 
 export const ListItem = ({
 	children,

@@ -9,10 +9,10 @@ export const Route = createFileRoute("/komponenter/")({
 function RouteComponent() {
 	return (
 		<main>
-			<header>
+			<hgroup>
 				<h1>Komponenter</h1>
 				<p>Dette er forløpig bare byggeklosser for mønster.</p>
-			</header>
+			</hgroup>
 			<section>
 				<h2>Lista</h2>
 				<UnorderedList aria-label={"Lista med mønster"}>

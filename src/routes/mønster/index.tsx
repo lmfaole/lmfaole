@@ -9,7 +9,7 @@ export const Route = createFileRoute("/mønster/")({
 function RouteComponent() {
 	return (
 		<main>
-			<header>
+			<hgroup>
 				<h1>Mønster</h1>
 				<p>
 					Her tester jeg å lage mønster definert i{" "}
@@ -18,20 +18,18 @@ function RouteComponent() {
 					</a>
 					.
 				</p>
-			</header>
+			</hgroup>
 			<section>
 				<h2>Lista</h2>
 				<UnorderedList aria-label={"Lista med mønster"}>
 					{patterns.map((pattern) => (
 						<ListItem key={pattern.name}>
-							<p>
-								<Link
-									to={"/mønster/$patternName"}
-									params={{ patternName: pattern.name }}
-								>
-									{pattern.name}
-								</Link>
-							</p>
+							<Link
+								to={"/mønster/$patternName"}
+								params={{ patternName: pattern.name }}
+							>
+								{pattern.name}
+							</Link>
 						</ListItem>
 					))}
 				</UnorderedList>
