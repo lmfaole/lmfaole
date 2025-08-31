@@ -1,9 +1,0 @@
-li {
-	margin-block-end: 1ex;
-	max-width: 59ch;
-	line-height: 2;
-
-	ul {
-		margin-block-start: 1ex;
-	}
-}
