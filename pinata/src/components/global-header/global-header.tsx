@@ -3,7 +3,7 @@ import {Component, h, Host} from '@stencil/core';
 @Component({
   tag: 'global-header',
   styleUrl: 'global-header.css',
-  shadow: false,
+  shadow: true,
 })
 export class GlobalHeader {
   render() {

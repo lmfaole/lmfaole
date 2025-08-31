@@ -24,6 +24,8 @@ export namespace Components {
          */
         "middle": string;
     }
+    interface PNote {
+    }
 }
 declare global {
     interface HTMLGlobalFooterElement extends Components.GlobalFooter, HTMLStencilElement {
@@ -44,10 +46,17 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLPNoteElement extends Components.PNote, HTMLStencilElement {
+    }
+    var HTMLPNoteElement: {
+        prototype: HTMLPNoteElement;
+        new (): HTMLPNoteElement;
+    };
     interface HTMLElementTagNameMap {
         "global-footer": HTMLGlobalFooterElement;
         "global-header": HTMLGlobalHeaderElement;
         "my-component": HTMLMyComponentElement;
+        "p-note": HTMLPNoteElement;
     }
 }
 declare namespace LocalJSX {
@@ -69,10 +78,13 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
+    interface PNote {
+    }
     interface IntrinsicElements {
         "global-footer": GlobalFooter;
         "global-header": GlobalHeader;
         "my-component": MyComponent;
+        "p-note": PNote;
     }
 }
 export { LocalJSX as JSX };
@@ -82,6 +94,7 @@ declare module "@stencil/core" {
             "global-footer": LocalJSX.GlobalFooter & JSXBase.HTMLAttributes<HTMLGlobalFooterElement>;
             "global-header": LocalJSX.GlobalHeader & JSXBase.HTMLAttributes<HTMLGlobalHeaderElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "p-note": LocalJSX.PNote & JSXBase.HTMLAttributes<HTMLPNoteElement>;
         }
     }
 }

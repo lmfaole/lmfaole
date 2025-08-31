@@ -1,7 +1,6 @@
 :host {
   display: block;
-}
-
-global-header {
-  margin-block-end: 1lh;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  text-align: center;
 }

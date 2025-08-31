@@ -1,0 +1,8 @@
+:host {
+  --separator-color: var(--accent-color);
+
+  display: block;
+  padding: 1ch 2ch;
+  border: var(--separator);
+  background: oklch(from var(--accent-color) l c h / 0.1);
+}

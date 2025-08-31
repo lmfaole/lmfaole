@@ -3,7 +3,7 @@ import {Component, h, Host} from '@stencil/core';
 @Component({
   tag: 'global-footer',
   styleUrl: 'global-footer.css',
-  shadow: false,
+  shadow: true,
 })
 export class GlobalFooter {
   render() {
