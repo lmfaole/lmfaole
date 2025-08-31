@@ -1,4 +1,4 @@
-import { Config } from '@stencil/core';
+import {Config} from '@stencil/core';
 
 export const config: Config = {
   namespace: 'pinata',
@@ -18,7 +18,11 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null, // disable service workers
+      copy: [
+        {src: 'favicon.png', dest: 'favicon.ico'},
+      ]
     },
+
   ],
   testing: {
     browserHeadless: "shell",
