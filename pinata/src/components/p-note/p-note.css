@@ -3,6 +3,5 @@
 
   display: block;
   padding: 1ch 2ch;
-  border: var(--separator);
-  background: oklch(from var(--accent-color) l c h / 0.1);
+  border-inline-start: var(--separator);
 }

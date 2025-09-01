@@ -1,21 +1,22 @@
 :root {
   color-scheme: light dark;
 
-  --max-width: 55ch;
+  --max-width: 52ch;
 
   --separator-color: oklch(from currentColor l c h / 0.2);
   --separator-style: solid;
   --separator-thickness: 1px;
   --separator: var(--separator-thickness) var(--separator-style) var(--separator-color);
 
-  --accent-color: light-dark(green, darkgreen);
+  --accent-color: light-dark(#362059, #a566f3);
 }
 
 body {
   margin: 0;
   margin-inline: auto;
   padding: 1ch;
-  line-height: 1.5;
+  line-height: 1.75;
+  font-family: system-ui;
 }
 
 p, li {
@@ -37,4 +38,22 @@ h1, h2, h3, h4, h5, h6 {
 main {
   max-width: var(--max-width);
   margin-inline: auto;
+}
+
+a {
+  position: relative;
+  color: currentColor;
+  text-decoration-color: oklch(from var(--accent-color) l c h / 0.75);
+  text-underline-offset: 0.1lh;
+  text-decoration-thickness: 0.2ex;
+  padding: 0.2ex 0.2ch;
+  margin: -0.2ex -0.2ch;
+  border-radius: 0.2ex;
+  background-color: transparent;
+  transition: background-color 120ms ease-out;
+
+  &:hover {
+    text-decoration-color: oklch(from var(--accent-color) l c h / 1);
+    background-color: oklch(from var(--accent-color) l c h / 0.1);
+  }
 }
