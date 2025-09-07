@@ -1,17 +1,17 @@
 {
-	"name": "lmfaole",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"scripts": {
-		"preview": "pnpm run build && wrangler pages dev",
-		"deploy": "pnpm run build && wrangler pages deploy",
-		"cf-typegen": "wrangler types"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.1.3",
-		"globals": "^16.3.0",
-		"typescript": "~5.8.3",
-		"wrangler": "^4.27.0"
-	}
+  "name": "lmfaole",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "preview": "pnpm run build && wrangler pages dev",
+    "deploy": "pnpm run build && wrangler pages deploy",
+    "cf-typegen": "wrangler types"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.3",
+    "globals": "^16.3.0",
+    "typescript": "~5.8.3",
+    "wrangler": "^4.27.0"
+  }
 }

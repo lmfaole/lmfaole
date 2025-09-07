@@ -1,7 +1,59 @@
 :host {
-  --separator-color: var(--accent-color);
+  --color: gray;
 
   display: block;
-  padding: 1ch 2ch;
-  border-inline-start: var(--separator);
+  box-sizing: border-box;
+  padding: 2ch 3ch;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 4px;
+  color: color-mix(in oklch, currentColor 50%, var(--color));
+  border: 1px solid oklch(from var(--color) l c h / 0.25);
+  background: oklch(from var(--color) l c h / 0.025);
+
+  p {
+    margin: 1ex 0 0 0;
+    max-width: 50ch;
+    text-wrap: pretty;
+  }
+
+  &::before {
+    display: block;
+    text-transform: uppercase;
+    font-size: smaller;
+    letter-spacing: 0.05em;
+    font-family: monospace;
+  }
+
+  &.info {
+    --color: light-dark(oklch(0.605 0.217 257.214), oklch(0.773 0.121 249.295));
+
+    &::before {
+      content: 'Info';
+    }
+  }
+
+  &.hint {
+    --color: light-dark(oklch(0.56 0.296 301.912), oklch(0.69 0.199 302.382));
+
+    &::before {
+      content: 'Hint';
+    }
+  }
+
+  &.warning {
+    --color: light-dark(oklch(0.736 0.184 54.259), oklch(0.814 0.136 63.805));
+
+    &::before {
+      content: 'Advarsel';
+    }
+  }
+
+  &.danger {
+    --color: light-dark(oklch(0.628 0.258 29.234), oklch(0.744 0.155 21.504));
+
+    &::before {
+      content: 'Advarsel';
+    }
+  }
 }

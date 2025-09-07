@@ -25,6 +25,15 @@ export namespace Components {
         "middle": string;
     }
     interface PNote {
+        /**
+          * @default "Notat"
+         */
+        "text": string;
+        /**
+          * Lar deg differansiere mellom ulike beskjeder. Merk at semantikken på elementet ikke endres.
+          * @default 'info'
+         */
+        "variant"?: "warning" | "danger" | "hint" | "info";
     }
 }
 declare global {
@@ -79,6 +88,15 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface PNote {
+        /**
+          * @default "Notat"
+         */
+        "text"?: string;
+        /**
+          * Lar deg differansiere mellom ulike beskjeder. Merk at semantikken på elementet ikke endres.
+          * @default 'info'
+         */
+        "variant"?: "warning" | "danger" | "hint" | "info";
     }
     interface IntrinsicElements {
         "global-footer": GlobalFooter;
