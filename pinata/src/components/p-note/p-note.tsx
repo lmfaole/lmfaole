@@ -3,7 +3,7 @@ import {Component, h, Host, Prop} from '@stencil/core';
 @Component({
   tag: 'p-note',
   styleUrl: 'p-note.css',
-  shadow: false,
+  scoped: true,
 })
 export class PNote {
   @Prop() text: string = "Notat";

@@ -10,16 +10,6 @@ export namespace Components {
     }
     interface GlobalHeader {
     }
-    interface HamburgerMenu {
-        /**
-          * @default "Åpne popover"
-         */
-        "buttonText": string;
-        /**
-          * @default 'hamburger-menu'
-         */
-        "id": string;
-    }
     interface MyComponent {
         /**
           * The first name
@@ -45,6 +35,24 @@ export namespace Components {
          */
         "variant"?: "warning" | "danger" | "hint" | "info";
     }
+    interface PopoverButton {
+        /**
+          * @default "Åpne popover"
+         */
+        "buttonText": string;
+        /**
+          * @default 'popover 1'
+         */
+        "popoverId": string;
+        /**
+          * @default 'auto'
+         */
+        "popoverType"?: "auto" | "hint";
+        /**
+          * @default false
+         */
+        "showOnHover"?: boolean;
+    }
 }
 declare global {
     interface HTMLGlobalFooterElement extends Components.GlobalFooter, HTMLStencilElement {
@@ -59,12 +67,6 @@ declare global {
         prototype: HTMLGlobalHeaderElement;
         new (): HTMLGlobalHeaderElement;
     };
-    interface HTMLHamburgerMenuElement extends Components.HamburgerMenu, HTMLStencilElement {
-    }
-    var HTMLHamburgerMenuElement: {
-        prototype: HTMLHamburgerMenuElement;
-        new (): HTMLHamburgerMenuElement;
-    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -77,28 +79,24 @@ declare global {
         prototype: HTMLPNoteElement;
         new (): HTMLPNoteElement;
     };
+    interface HTMLPopoverButtonElement extends Components.PopoverButton, HTMLStencilElement {
+    }
+    var HTMLPopoverButtonElement: {
+        prototype: HTMLPopoverButtonElement;
+        new (): HTMLPopoverButtonElement;
+    };
     interface HTMLElementTagNameMap {
         "global-footer": HTMLGlobalFooterElement;
         "global-header": HTMLGlobalHeaderElement;
-        "hamburger-menu": HTMLHamburgerMenuElement;
         "my-component": HTMLMyComponentElement;
         "p-note": HTMLPNoteElement;
+        "popover-button": HTMLPopoverButtonElement;
     }
 }
 declare namespace LocalJSX {
     interface GlobalFooter {
     }
     interface GlobalHeader {
-    }
-    interface HamburgerMenu {
-        /**
-          * @default "Åpne popover"
-         */
-        "buttonText"?: string;
-        /**
-          * @default 'hamburger-menu'
-         */
-        "id"?: string;
     }
     interface MyComponent {
         /**
@@ -125,12 +123,30 @@ declare namespace LocalJSX {
          */
         "variant"?: "warning" | "danger" | "hint" | "info";
     }
+    interface PopoverButton {
+        /**
+          * @default "Åpne popover"
+         */
+        "buttonText"?: string;
+        /**
+          * @default 'popover 1'
+         */
+        "popoverId"?: string;
+        /**
+          * @default 'auto'
+         */
+        "popoverType"?: "auto" | "hint";
+        /**
+          * @default false
+         */
+        "showOnHover"?: boolean;
+    }
     interface IntrinsicElements {
         "global-footer": GlobalFooter;
         "global-header": GlobalHeader;
-        "hamburger-menu": HamburgerMenu;
         "my-component": MyComponent;
         "p-note": PNote;
+        "popover-button": PopoverButton;
     }
 }
 export { LocalJSX as JSX };
@@ -139,9 +155,9 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "global-footer": LocalJSX.GlobalFooter & JSXBase.HTMLAttributes<HTMLGlobalFooterElement>;
             "global-header": LocalJSX.GlobalHeader & JSXBase.HTMLAttributes<HTMLGlobalHeaderElement>;
-            "hamburger-menu": LocalJSX.HamburgerMenu & JSXBase.HTMLAttributes<HTMLHamburgerMenuElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "p-note": LocalJSX.PNote & JSXBase.HTMLAttributes<HTMLPNoteElement>;
+            "popover-button": LocalJSX.PopoverButton & JSXBase.HTMLAttributes<HTMLPopoverButtonElement>;
         }
     }
 }
