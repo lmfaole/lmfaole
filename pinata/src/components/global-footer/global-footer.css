@@ -1,6 +1,0 @@
-:host {
-  display: block;
-  max-width: var(--max-width);
-  margin-block-start: 2lh;
-  margin-inline: auto;
-}
