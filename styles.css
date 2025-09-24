@@ -6,18 +6,44 @@ body {
     margin-block: 0;
     margin-inline: auto;
     padding-inline: 1ch;
-    max-width: 90ch;
+    max-width: 60ch;
     font-size: large;
     font-family: system-ui, "Arial", sans-serif;
     line-height: 1.5;
 }
 
-a[rel="external"]::after {
-    content: " (ekstern)";
+header {
+    margin-block: 2lh 0.5lh;
+
+    &.horizontal {
+        display: flex;
+        gap: 1lh 4ch;
+        align-items: center;
+        flex-wrap: wrap;
+
+        > * {
+            margin: 0;
+        }
+    }
+}
+a {
+    padding-inline: 0.25ch;
+    margin-inline: -0.25ch;
+    text-underline-offset: 0.1lh;
+}
+
+a {
+    &:hover {
+        background: oklch(from currentColor l c h / 0.2);
+    }
+
+    &[rel="external"]::after {
+        content: " (ekstern)";
+    }
 }
 
 h1, h2, h3, h4, h5, h6 {
-    margin-block: 2lh 0;
+    margin-block: 2lh 0.5lh;
     line-height: 1.2;
 }
 
@@ -28,4 +54,65 @@ ul, ol {
 p, li {
     max-width: 60ch;
     margin-block-end: 0.5lh;
+}
+
+button {
+    min-inline-size: 44px;
+    min-block-size: 44px;
+    max-block-size: max-content;
+    padding: 1ch;
+    font-size: inherit;
+    vertical-align: middle;
+}
+
+button[popovertarget="my-links"] {
+    anchor-name: --my-links;
+}
+
+[popover] {
+    padding: 1ch;
+    margin: 4px;
+    border: 1px solid currentColor;
+    box-shadow: 0px 0px 4px oklch(from currentColor l c h / 0.2);
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 100ms,
+    margin 300ms,
+    overlay 300ms allow-discrete,
+    display 300ms allow-discrete;
+
+    &:popover-open {
+        opacity: 1;
+        margin: 4px;
+
+        @starting-style {
+            opacity: 0;
+            margin: 0;
+        }
+    }
+}
+
+[id="my-links"] {
+    position-anchor: --my-links;
+    position-area: block-start center;
+    position-try: block-start, block-end, inline-start, inline-end;
+    padding: 0;
+
+    ul {
+        margin: 0;
+        list-style-type: none;
+        padding: 0;
+
+        li {
+            margin: 0;
+        }
+
+        a {
+            display: block;
+            padding: 1rem 3ch 1rem 2ch;
+            vertical-align: middle;
+        }
+    }
+}
+
 }

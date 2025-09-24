@@ -2,14 +2,24 @@
 <html lang="no">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" name="viewport">
-    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="styles.css" rel="stylesheet">
     <title>Ole Jørgen Bakken</title>
 </head>
 <body>
 <main>
-    <h1>Heisann, Ole Jørgen her 🪿</h1>
+    <header class="horizontal">
+        <h1>Heisann, Ole Jørgen her 🪿</h1>
+        <button popovertarget="my-links">Meg andre steder</button>
+        <nav id="my-links" popover="auto">
+            <ul>
+                <li><a href="https://www.linkedin.com/in/olejorgenbakken/" rel="me">LinkedIn</a></li>
+                <li><a href="https://bsky.app/profile/lmfaole.party" rel="me">Bluesky</a></li>
+                <li><a href="https://github.com/lmfaole" rel="me">Github</a></li>
+            </ul>
+        </nav>
+    </header>
+    
     <h2>Jobber og sånn</h2>
     <ol>
         <li>Frontend i <a href="http://jokul.fremtind.no" rel="external">Jøkul</a>, designsystemet til
