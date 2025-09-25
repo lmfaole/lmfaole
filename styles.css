@@ -78,7 +78,6 @@ button, input, label, select {
         min-inline-size: 44px;
     }
 
-
     &:is(label) {
         display: block;
         max-width: fit-content;
