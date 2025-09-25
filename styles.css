@@ -69,10 +69,15 @@ legend {
 button, input, label, select {
     font: inherit;
 
+    &:is(input:not([type="checkbox"], [type="radio"], [type="button"], [type="reset"], [type="submit"])) {
+        display: block;
+    }
+
     &:is(input:not([type="checkbox"], [type="radio"]), select), &:is(label:has(input[type="checkbox"], [type="radio"])) {
         min-block-size: 44px;
         min-inline-size: 44px;
     }
+
 
     &:is(label) {
         display: block;
