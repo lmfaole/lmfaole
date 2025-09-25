@@ -6,9 +6,9 @@ body {
     margin-block: 0;
     margin-inline: auto;
     padding-inline: 1ch;
+    padding-block-end: 4lh;
     max-width: 120ch;
-    font: 500 large system-ui;
-    line-height: 1.5;
+    font: 500 large/1.7 system-ui;
 }
 
 a {
@@ -34,16 +34,28 @@ h1, h2, h3, h4, h5, h6 {
         margin-inline-start: 0.5ch;
     }
 
-    &:is(h1)::after {
-        content: "🪿" / "";
+    &:is(h1) {
+        font-size: xx-large;
+
+        &::after {
+            content: "🪿" / "";
+        }
     }
 
-    &:is(h2)::after {
-        content: "🦆" / "";
+    &:is(h2) {
+        font-size: xx-large;
+
+        &::after {
+            content: "🦆" / "";
+        }
     }
 
-    &:is(h3)::after {
-        content: "🐝" / "";
+    &:is(h3) {
+        font-size: medium;
+
+        &::after {
+            content: "🐝" / "";
+        }
     }
 }
 
