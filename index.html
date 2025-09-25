@@ -3,41 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Hentet fra https://htmlhead.dev/ -->
+    <!-- Icon in the highest resolution we need it for -->
+    <link href="/assets/digimon.png" rel="icon" sizes="192x192">
+    <!-- Apple Touch Icon (reuse 192px icon.png) -->
+    <link href="/assets/digimon.png" rel="apple-touch-icon">
+    <!-- Safari Pinned Tab Icon -->
+    <link color="black" href="/assets/digimon.svg" rel="mask-icon">
+
     <link href="styles.css" rel="stylesheet">
     <title>Ole Jørgen Bakken</title>
 </head>
 <body>
+
+<h1>Heisann, Ole Jørgen her</h1>
+
 <main>
-    <header class="horizontal">
-        <h1>Heisann, Ole Jørgen her 🪿</h1>
-        <button popovertarget="my-links">Meg andre steder</button>
-        <nav id="my-links" popover="auto">
-            <ul>
-                <li><a href="https://www.linkedin.com/in/olejorgenbakken/" rel="me">LinkedIn</a></li>
-                <li><a href="https://bsky.app/profile/lmfaole.party" rel="me">Bluesky</a></li>
-                <li><a href="https://github.com/lmfaole" rel="me">Github</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <h2>Jobber og sånn</h2>
-    <ol>
-        <li>Frontend i <a href="http://jokul.fremtind.no" rel="external">Jøkul</a>, designsystemet til
-            <a href="http://fremtind.no" rel="external">Fremtind
-                Forsikring</a>. <a href="https://github.com/fremtind/jokul" rel="external">Jøkul-repoet på Github</a>
-            viser
-            litt av hva jeg
-            liker å holde på med. HTML, CSS og sånn.
-        </li>
-        <li>Interaksjonsdesign på bedriftforsikringsportalen i Fremtind.</li>
-        <li>Produktdesign (mest interkasjon) i <a href="http://aksel.nav.no" rel="external">Aksel</a>, designsystemet
-            til
-            <a href="http://nav.no" rel="external">NAV</a>.
-        </li>
-        <li>Interaksjonsdesign i dagpengesøknaden til NAV.</li>
-    </ol>
-    <p>Du kan se hele på <a href="https://www.linkedin.com/in/olejorgenbakken/" rel="me">LinkedIn</a> seff.</p>
-    <p>Jeg er også på <a href="https://bsky.app/profile/lmfaole.party" rel="me">Bluesky</a>.</p>
+    <article>
+        <h2>Jobber og sånn</h2>
+        <ol>
+            <li>Frontend i <a href="http://jokul.fremtind.no" rel="external">Jøkul</a>, designsystemet til
+                <a href="http://fremtind.no" rel="external">Fremtind
+                    Forsikring</a>. <a href="https://github.com/fremtind/jokul" rel="external">Jøkul-repoet på
+                    Github</a> viser litt av hva jeg liker å holde på med. HTML, CSS og sånn. Nå jobber jeg med
+                <a href="skjema.html">skjemaelementer</a>.
+            </li>
+            <li>Interaksjonsdesign på bedriftforsikringsportalen i Fremtind.</li>
+            <li>Produktdesign (mest interkasjon) i <a href="http://aksel.nav.no" rel="external">Aksel</a>,
+                designsystemet til <a href="http://nav.no" rel="external">NAV</a>.
+            </li>
+            <li>Interaksjonsdesign i dagpengesøknaden til NAV.</li>
+        </ol>
+        <p>Du kan se hele på <a href="https://www.linkedin.com/in/olejorgenbakken/" rel="me">LinkedIn</a> seff.</p>
+        <p>Jeg er også på <a href="https://bsky.app/profile/lmfaole.party" rel="me">Bluesky</a>.</p>
+    </article>
 </main>
+
+<footer>
+    <nav aria-labelledby="meg-andre-steder">
+        <h2 id="meg-andre-steder">Meg andre steder</h2>
+        <ul>
+            <li><a href="https://www.linkedin.com/in/olejorgenbakken/" rel="me">LinkedIn</a></li>
+            <li><a href="https://bsky.app/profile/lmfaole.party" rel="me">Bluesky</a></li>
+            <li><a href="https://github.com/lmfaole" rel="me">Github</a></li>
+        </ul>
+    </nav>
+</footer>
 </body>
 </html>
