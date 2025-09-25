@@ -6,9 +6,9 @@ body {
     margin-block: 0;
     margin-inline: auto;
     padding-inline: 1ch;
+    padding-block-end: 4lh;
     max-width: 120ch;
-    font: 500 large system-ui;
-    line-height: 1.5;
+    font: 400 medium/1.7 system-ui;
 }
 
 a {
@@ -26,24 +26,43 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    margin-block: 3lh 1lh;
+    margin-block: 2lh 0.5lh;
     line-height: 1.2;
-    font-weight: inherit;
+    font-weight: 500;
 
     &::after {
         margin-inline-start: 0.5ch;
     }
 
-    &:is(h1)::after {
-        content: "🪿" / "";
+    &:is(h1) {
+        font-size: xxx-large;
+        font-weight: 800;
+        margin-block-start: 1lh;
+
+        &::after {
+            content: "🪿" / "";
+        }
     }
 
-    &:is(h2)::after {
-        content: "🦆" / "";
+    &:is(h2) {
+        font-size: xx-large;
+        font-weight: 600;
+
+        &::after {
+            content: "🦆" / "";
+        }
+
+        + * {
+            margin-block-start: 0;
+        }
     }
 
-    &:is(h3)::after {
-        content: "🐝" / "";
+    &:is(h3) {
+        font-size: medium;
+
+        &::after {
+            content: "🐝" / "";
+        }
     }
 }
 
@@ -56,34 +75,17 @@ p, li {
     max-width: 60ch;
 }
 
-fieldset {
-    margin-block: 2lh 1ex;
-    padding: 0;
-    border: none;
+button, input, label, legend, select {
+    font: inherit;
 }
 
 legend {
     margin-block: 2lh 1ex;
+    font-weight: 600;
 }
 
-button, input, label, select {
-    font: inherit;
-
-    &:is(input:not([type="checkbox"], [type="radio"], [type="button"], [type="reset"], [type="submit"])) {
-        display: block;
-    }
-
-    &:is(input:not([type="checkbox"], [type="radio"]), select), &:is(label:has(input[type="checkbox"], [type="radio"])) {
-        min-block-size: 44px;
-        min-inline-size: 44px;
-    }
-
-    &:is(label) {
-        display: block;
-        max-width: fit-content;
-
-        &:not(:has(input)) {
-            margin-block: 2lh 1ex;
-        }
-    }
+fieldset {
+    margin-block: 2lh 1ex;
+    padding: 0;
+    border: none;
 }

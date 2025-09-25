@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="no">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	
+	<!-- Hentet fra https://htmlhead.dev/ -->
+	<!-- Icon in the highest resolution we need it for -->
+	<link href="/assets/digimon.png" rel="icon" sizes="192x192">
+	<!-- Apple Touch Icon (reuse 192px icon.png) -->
+	<link href="/assets/digimon.png" rel="apple-touch-icon">
+	<!-- Safari Pinned Tab Icon -->
+	<link color="black" href="/assets/digimon.svg" rel="mask-icon">
+	
+	<!-- Ressurser -->
+	<link
+		href="https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date)"
+		rel="help">
+	
+	<!-- Stiler -->
+	<link href="/styles.css" rel="stylesheet">
+	
+	<!-- Tittel -->
+	<title>Datofelt | Ole Jørgen Bakken</title>
+</head>
+<body>
+
+<h1>Datofelt</h1>
+
+<nav>
+	<ul>
+		<li><a href="/index.html">Tilbake til forsiden</a></li>
+		<li><a href="/skjema.html">Tilbake til skjemaelementer</a></li>
+	</ul>
+</nav>
+
+<main>
+	<h2>Eksempel</h2>
+	<label for="date-1-input">date</label>
+	<input id="date-1-input"
+		   onchange="handleDateChange('date-1-input', 'date-1-output')"
+		   onload="handleCurrentDate('date-1-input')"
+		   type="date" />
+	<output id="date-1-output"></output>
+	
+	<h2>Attributter</h2>
+	<p>Hentet fra <a
+		href="https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date)"
+		rel="help">HTML-spesifikasjonen</a>.
+	</p>
+	
+	<ul lang="en">
+		<li><a
+			href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete"
+			rel="help">autocomplete</a>: The autocomplete content attribute can
+			be used to hint to the user agent how
+			to, or indeed whether to, provide such a feature. There are two ways
+			this attribute is used. When wearing
+			the autofill expectation mantle, the autocomplete attribute
+			describes what input is expected from users. When
+			wearing the autofill anchor mantle, the autocomplete attribute
+			describes the meaning of the given value.
+		</li>
+		<li><a
+			href="https://html.spec.whatwg.org/multipage/input.html#attr-input-list"
+			rel="help">list</a>: The list attribute is used to identify an
+			element that lists predefined options suggested to the user.
+		</li>
+		<li><a
+			href="https://html.spec.whatwg.org/multipage/input.html#the-min-and-max-attributes"
+			rel="help">min and max</a>: The min and max attributes indicate the
+			allowed range of values for the element.
+		</li>
+		<li><a
+			href="https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly"
+			rel="help">readonly</a>: The readonly attribute is a boolean
+			attribute that controls whether or not the user can edit the form
+			control. When specified, the element is not mutable.
+		</li>
+		<li><a
+			href="https://html.spec.whatwg.org/multipage/input.html#attr-input-required"
+			rel="help">required</a>: The required attribute is a boolean
+			attribute. When specified, the element is required.
+		</li>
+		<li><a
+			href="https://html.spec.whatwg.org/multipage/input.html#attr-input-step"
+			rel="help">step</a>: The step attribute indicates the granularity
+			that is expected (and required) of the value or values, by limiting
+			the allowed values.
+		</li>
+	</ul>
+	
+	<h2>Autocomplete</h2>
+	
+	<label for="date-autocomplete-bday">Bursdag</label>
+	<input autocomplete="bday" id="date-autocomplete-bday"
+		   onchange="handleDateChange('date-autocomplete-bday', 'date-autocomplete-bday-output')"
+		   type="date" />
+	<output id="date-autocomplete-bday-output"></output>
+	
+	<h2>List</h2>
+
+</main>
+<script src="/utilities/date.js"></script>
+<script>
+	function handleCurrentDate(element) {
+		const input = document.querySelector(`#${element}`);
+		
+		input.value = toInputFormat(new Date());
+	}
+	
+	function handleDateChange(inputNode, outputNode) {
+		const input = document.querySelector(`#${inputNode}`);
+		const output = document.querySelector(`#${outputNode}`);
+		const inputValue = input.value;
+		output.innerHTML =
+			`<span>${new Date(inputValue).toLocaleDateString("no",
+				{...norwgegianFormat, weekday: "long"})}</span>`;
+	}
+</script>
+</body>
+</html>
