@@ -58,7 +58,8 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     &:is(h3) {
-        font-size: medium;
+        font-size: large;
+        font-weight: 600;
 
         &::after {
             content: "🐝" / "";
