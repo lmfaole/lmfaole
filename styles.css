@@ -79,6 +79,13 @@ button, input, label, legend, select {
     font: inherit;
 }
 
+label {
+    &:has(+input) {
+        display: block;
+        margin-block-start: 1lh;
+    }
+}
+
 legend {
     margin-block: 2lh 1ex;
     font-weight: 600;

@@ -38,8 +38,8 @@
 	<h2>Eksempel</h2>
 	<label for="date-1-input">date</label>
 	<input id="date-1-input"
-		   onchange="handleDateChange('date-1-input', 'date-1-output')"
-		   onload="handleCurrentDate('date-1-input')"
+		   onchange="handleInputChange('date-1-input', 'date-1-output')"
+		   onload="handleInputLoad('date-1-input')"
 		   type="date" />
 	<output id="date-1-output"></output>
 	
@@ -94,7 +94,8 @@
 	
 	<label for="date-autocomplete-bday">Bursdag</label>
 	<input autocomplete="bday" id="date-autocomplete-bday"
-		   onchange="handleDateChange('date-autocomplete-bday', 'date-autocomplete-bday-output')"
+		   onchange="handleInputChange('date-autocomplete-bday',
+		   'date-autocomplete-bday-output')"
 		   type="date" />
 	<output id="date-autocomplete-bday-output"></output>
 	
@@ -103,13 +104,13 @@
 </main>
 <script src="/utilities/date.js"></script>
 <script>
-	function handleCurrentDate(element) {
+	function handleInputLoad(element) {
 		const input = document.querySelector(`#${element}`);
 		
 		input.value = toInputFormat(new Date());
 	}
 	
-	function handleDateChange(inputNode, outputNode) {
+	function handleInputChange(inputNode, outputNode) {
 		const input = document.querySelector(`#${inputNode}`);
 		const output = document.querySelector(`#${outputNode}`);
 		const inputValue = input.value;
