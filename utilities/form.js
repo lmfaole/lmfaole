@@ -13,7 +13,7 @@ function createDescriptionListFromInputs(outputNode, inputElements) {
 
             const descriptionDetail = document.createElement("dd");
             if(input.type === "date") {
-                descriptionDetail.innerText = new Date(input.value).toLocaleDateString(navigator.language, {...defaultDateFormat });
+                descriptionDetail.innerText = new Date(input.value).toLocaleDateString(navigator.language, {...defaultDateFormat,  weekday: "long" });
             } else {
             descriptionDetail.innerText = input.value;
             }
