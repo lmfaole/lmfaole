@@ -5,8 +5,8 @@ html {
 body {
     margin-block: 0;
     margin-inline: auto;
-    padding-inline: 1ch;
-    padding-block-end: 4lh;
+    padding-inline: 2ch;
+    padding-block-end: 2lh;
     max-width: 120ch;
     font: 400 medium/1.7 system-ui;
 }
@@ -79,8 +79,10 @@ p, li, dd {
 p {
     &[role="note"] {
         background: Highlight;
+        color: HighlightText;
         padding: 1ex 3ch 1ex 1ch;
         border-inline-start: 1px dashed HighlightText;
+        margin-inline-start: -1ch;
     }
 }
 
