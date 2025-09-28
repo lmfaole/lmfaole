@@ -15,7 +15,7 @@ function toInputFormat(dateToBeFormatted) {
     return `${year}-${month}-${day}`;
 }
 
-const norwgegianFormat = {
+const defaultDateFormat = {
     day: "2-digit",
     month: "2-digit",
     year: "numeric"

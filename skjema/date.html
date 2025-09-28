@@ -36,20 +36,21 @@
 
 <main>
 	<h2>Eksempel</h2>
-	<label for="date-1-input">date</label>
-	<input id="date-1-input"
-		   onchange="handleInputChange('date-1-input', 'date-1-output')"
-		   onload="handleInputLoad('date-1-input')"
-		   type="date" />
-	<output id="date-1-output"></output>
+	<label for="date-example">date</label>
+	<input id="date-example" type="date" value="2025-04-20"/>
+	<output for="date-example"></output>
 	
-	<h2>Attributter</h2>
-	<p>Hentet fra <a
+	<h2 id="attributter-heading">Attributter</h2>
+	<p>Lista er hentet fra <a
 		href="https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date)"
 		rel="help">HTML-spesifikasjonen</a>.
 	</p>
+	<p role="note">Vær oppmerksom på at det er store forskjeller i
+		implementasjon mellom nettlesere, og at ikke alle
+		nettlesere støtter alle
+		attributter.</p>
 	
-	<ul lang="en">
+	<ul lang="en" aria-labelledby="attributter-heading">
 		<li><a
 			href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete"
 			rel="help">autocomplete</a>: The autocomplete content attribute can
@@ -90,34 +91,98 @@
 		</li>
 	</ul>
 	
-	<h2>Autocomplete</h2>
+	<form action="" method="get">
+		<h3>Autocomplete</h3>
+		<label for="date-autocomplete">Bursdag</label>
+		<input autocomplete="bday" id="date-autocomplete" type="date" />
+		<output for="date-autocomplete"></output>
+		
+		<h3>List</h3>
+		<label for="date-list">Liste med valg</label>
+		<input id="date-list" type="date" list="date-list-options" />
+		<output for="date-list"></output>
+		<!-- https://css-tricks.com/datalists-different-input-types/ -->
+		<datalist id="date-list-options">
+			<option label="Dagen dette dokumentet ble lagd">2025-08-28</option>
+			<option label="Bursdagen min">1997-03-11</option>
+			<option label="Månelandingen Apollo 11">1969-07-20</option>
+			<option label="D-Dagen">1944-06-06</option>
+		</datalist>
+		
+		<h3>Min og max</h3>
+		<label for="date-min-max">Minimum og maksimumvalg</label>
+		<input id="date-min-max" type="date" />
+		<output for="date-min-max"></output>
+		
+		<h3>Required</h3>
+		<label for="date-required">Påkrevd</label>
+		<input id="date-required" type="date" required />
+		<output for="date-required"></output>
+		
+		<h3>Readonly</h3>
+		<label for="date-readonly">Kun avlesning</label>
+		<input id="date-readonly" type="date" value="2025-04-20" readonly />
+		<output for="date-readonly"></output>
+		
+		<h3>Steps</h3>
+		<label for="date-steps">Satte steg</label>
+		<input id="date-steps" type="date" step="7" />
+		<output for="date-steps"></output>
+		
+		<input type="submit">
+	</form>
 	
-	<label for="date-autocomplete-bday">Bursdag</label>
-	<input autocomplete="bday" id="date-autocomplete-bday"
-		   onchange="handleInputChange('date-autocomplete-bday',
-		   'date-autocomplete-bday-output')"
-		   type="date" />
-	<output id="date-autocomplete-bday-output"></output>
-	
-	<h2>List</h2>
+	<output id="form-output"></output>
 
 </main>
 <script src="/utilities/date.js"></script>
+<script src="/utilities/form.js"></script>
 <script>
-	function handleInputLoad(element) {
-		const input = document.querySelector(`#${element}`);
-		
-		input.value = toInputFormat(new Date());
+	let today = new Date();
+	let aWeekAgo = new Date();
+	let aWeekForward = new Date();
+	
+	aWeekAgo.setDate(today.getDate() - 7);
+	aWeekForward.setDate(today.getDate() + 7);
+	
+	const inputs = Array.from(document.querySelectorAll("input"));
+	const form = document.getElementsByTagName("form")[0];
+	
+	function setInputInteractions() {
+		inputs.map((input) => {
+			input.addEventListener("change",
+				function () {
+					const output = input.nextElementSibling;
+					const inputValue = input.value;
+					if (output) {
+						output.innerText =
+							`${new Date(inputValue).toLocaleDateString(navigator.language,
+								{...defaultDateFormat, weekday: "long"})}`;
+					}
+				})
+			
+			input.addEventListener("load",
+				function () {
+					input.value = toInputFormat(new Date());
+				})
+		});
 	}
 	
-	function handleInputChange(inputNode, outputNode) {
-		const input = document.querySelector(`#${inputNode}`);
-		const output = document.querySelector(`#${outputNode}`);
-		const inputValue = input.value;
-		output.innerHTML =
-			`<span>${new Date(inputValue).toLocaleDateString("no",
-				{...norwgegianFormat, weekday: "long"})}</span>`;
+	setInputInteractions();
+	
+	function setMinMax() {
+		const input = document.getElementById("date-min-max");
+		input.min = toInputFormat(aWeekAgo);
+		input.max = toInputFormat(aWeekForward);
 	}
+	
+	setMinMax();
+	
+
+		form.addEventListener("submit", function(ev) {
+			ev.preventDefault();
+			createDescriptionListFromInputs("form-output", inputs);
+		})
 </script>
 </body>
 </html>
