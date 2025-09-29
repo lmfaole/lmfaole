@@ -25,7 +25,12 @@ a {
     }
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin-block: 2lh 0.5lh;
     line-height: 1.2;
     font-weight: 500;
@@ -52,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
             content: "🦆" / "";
         }
 
-        + * {
+        +* {
             margin-block-start: 0;
         }
     }
@@ -67,26 +72,33 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-ul, ol {
+ul,
+ol {
     margin-block-end: 1lh;
 }
 
-p, li, dd {
+p,
+li,
+dd {
     margin-block-end: 0.5lh;
     max-width: 60ch;
 }
 
 p {
     &[role="note"] {
-        background: Highlight;
-        color: HighlightText;
-        padding: 1ex 3ch 1ex 1ch;
-        border-inline-start: 1px dashed HighlightText;
+        background: oklch(from currentColor l c h / 0.05);
+        padding-inline: 1ch 3ch;
+        padding-block: 2ex;
+        border-inline-start: 1px dashed currentColor;
         margin-inline-start: -1ch;
     }
 }
 
-button, input, label, legend, select {
+button,
+input,
+label,
+legend,
+select {
     font: inherit;
 }
 
@@ -94,24 +106,59 @@ label {
     &:has(+input) {
         display: block;
         margin-block-start: 1lh;
+        max-inline-size: fit-content;
     }
 }
 
-legend {
-    margin-block: 2lh 1ex;
-    font-weight: 600;
+button,
+input:not([type="checkbox"], [type="radio"]) {
+    min-block-size: 44px;
+    min-inline-size: 44px;
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    &:not(:has(+ button, input[type="button"], input[type="submit"], input[type="reset"])) {
+        margin-block-start: 2lh;
+        display: block;
+    }
 }
 
 fieldset {
-    margin-block: 2lh 1ex;
+    margin-block: 2lh 0;
     padding: 0;
+    padding-inline-start: 2ch;
     border: none;
-}
+    border-inline-start: 1px solid oklch(from currentColor l c h / 0.3);
+    container-type: inline-size;
 
-button, input[type="button"],input[type="submit"],input[type="reset"] {
-    &:not(:has(+ button, input[type="button"],input[type="submit"],input[type="reset"])) {
-        margin-block-start: 2lh;
-        display: block;
+    >fieldset {
+        margin-inline-start: 2ch;
+    }
+
+    legend {
+        font-weight: 600;
+    }
+
+    .bday {
+        display: grid;
+        grid: auto-flow / 1fr;
+        column-gap: 3ch;
+
+        @container (width > 30ch) {
+            display: grid;
+            grid: auto-flow / repeat(2, 6ch) 8ch;
+
+            label {
+                grid-row: 1;
+            }
+
+            input {
+                min-inline-size: unset;
+            }
+        }
     }
 }
 
