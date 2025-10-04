@@ -1,5 +1,31 @@
 const forms = Array.from(document.getElementsByTagName("form"));
 
+function showFormNotification(formInfo) {
+    const toast = document.getElementById(`${formInfo.formName}-output`);
+    const heading = document.createElement("h2");
+    heading.innerText = `${formInfo.formName} skjema ${formInfo.valid ? " sendt!" : " ikke sendt"}`;
+
+    const answerDetails = document.createElement("details");
+    const answerDetailsHeading = document.createElement("summary");
+    answerDetailsHeading.innerText = "Vis detaljer";
+
+    const answerDetailsDescriptionList = document.createElement("dl");
+    formInfo.answers.map((answer) => {
+        const answerDetailsDescriptionTerm = document.createElement("dt");
+        const answerDetailsDescriptionDetail = document.createElement("dd");
+
+        answerDetailsDescriptionTerm.innerText = answer.key;
+        answerDetailsDescriptionDetail.innerText = typeof answer.value === "object" ? answer.value.join(", ") : answer.value;
+
+        answerDetailsDescriptionList.append(answerDetailsDescriptionTerm, answerDetailsDescriptionDetail);
+    });
+
+    answerDetails.appendChild(answerDetailsDescriptionList);
+    toast.replaceChildren(heading, answerDetails);
+
+    toast.showPopover();
+}
+
 function submitForm(form) {
     const formData = new FormData(form);
     let formInfo = {
@@ -26,12 +52,12 @@ function submitForm(form) {
     console.table(formInfo.answers);
     console.groupEnd();
 
-    return formInfo;
+    showFormNotification(formInfo);
 }
 
 function handleFormNavigation(form) {
     const currentSection = form.querySelector("section[aria-current=step]");
-    const nextSection = currentSection.nextElementSibling;
+    const nextSection = currentSection.nextElementSibling.tagName === "SECTION" && currentSection.nextElementSibling;
 
     let currentInputs = Array.from(currentSection.querySelectorAll("input"));
 
@@ -47,6 +73,8 @@ function handleFormNavigation(form) {
     if (nextSection && !hasInvalidInputs) {
         currentSection.setAttribute("aria-current", "");
         nextSection.setAttribute("aria-current", "step");
+        currentSection.style.display = "none";
+        nextSection.style.display = "block";
     } else if (hasInvalidInputs) {
         form.reportValidity();
     } else {
@@ -55,9 +83,14 @@ function handleFormNavigation(form) {
 }
 
 forms.map((form) => {
+    const toast = document.createElement("output");
+    toast.id = `${form.name}-output`;
+    toast.popover = "auto";
+    toast.classList.add("toast");
+    form.append(toast);
+
     form.addEventListener("submit", function (ev) {
         ev.preventDefault();
-        submitForm(form);
     });
 
     form.addEventListener("keypress", (ev) => {
@@ -73,12 +106,14 @@ forms.map((form) => {
         if (sections) {
             Array.from(sections).map((section) => {
                 section.id = section.querySelector("h2").innerText;
+                section.style.display = "none";
 
-                const nextSection = section.nextElementSibling;
+                const nextSection = section.nextElementSibling.tagName === "SECTION" && section.nextElementSibling;
                 const previousSection = section.previousElementSibling;
                 const currentSection = section.hasAttribute("aria-current");
                 if (!currentSection) {
                     sections[0].setAttribute("aria-current", "step");
+                    sections[0].style.display = "block";
                 }
 
                 const nextSectionButton = document.createElement("button");
@@ -95,6 +130,8 @@ forms.map((form) => {
                     if (previousSection) {
                         section.removeAttribute("aria-current");
                         previousSection.setAttribute("aria-current", "step");
+                        section.style.display = "none";
+                        previousSection.style.display = "block";
                     }
                 });
 

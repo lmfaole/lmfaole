@@ -19,10 +19,6 @@ a {
 	&:hover {
 		background: oklch(from currentColor l c h / 0.2);
 	}
-
-	&[rel="external"]::after {
-		content: " (ekstern)";
-	}
 }
 
 h1,
@@ -31,56 +27,26 @@ h3,
 h4,
 h5,
 h6 {
-	font-weight: 500;
-	line-height: 1.2;
-	margin-block: 2lh 0.5lh;
-
 	&::after {
 		margin-inline-start: 0.5ch;
 	}
 
-	&:is(h1) {
-		font-size: xxx-large;
-		font-weight: 800;
-		margin-block-start: 1lh;
-
-		&::after {
-			content: "🪿" / "";
-		}
+	&:is(h1)::after {
+		content: "🪿" / "";
 	}
 
-	&:is(h2) {
-		font-size: xx-large;
-		font-weight: 600;
-
-		&::after {
-			content: "🦆" / "";
-		}
-
-		+ * {
-			margin-block-start: 0;
-		}
+	&:is(h2)::after {
+		content: "🦆" / "";
 	}
 
-	&:is(h3) {
-		font-size: x-large;
-		font-weight: 600;
-
-		&::after {
-			content: "🐝" / "";
-		}
+	&:is(h3)::after {
+		content: "🐝" / "";
 	}
-}
-
-ul,
-ol {
-	margin-block-end: 1lh;
 }
 
 p,
 li,
 dd {
-	margin-block-end: 0.5lh;
 	max-width: 60ch;
 }
 
@@ -102,12 +68,10 @@ select {
 	font: inherit;
 }
 
-label {
-	&:has(+input, +select) {
-		display: block;
-		margin-block-start: 1lh;
-		max-inline-size: fit-content;
-	}
+label:has(+input, +select), fieldset {
+	display: block;
+	margin-block-start: 1lh;
+	max-inline-size: fit-content;
 }
 
 button,
@@ -121,134 +85,33 @@ select {
 	padding-inline-end: 3ch;
 }
 
-fieldset {
-	border: none;
-	border-inline-start: 1px solid oklch(from currentColor l c h / 0.3);
-	container-type: inline-size;
-	margin-block: 2lh 0;
-	padding: 0;
-	padding-inline-start: 2ch;
+label:has(input:is([type="checkbox"], [type="radio"])) {
+	display: block;
+}
 
-	> fieldset {
-		margin-inline-start: 2ch;
-	}
+form footer {
+	margin-block-start: 1lh;
 
-	&:not(:has(input[required])) legend::after {
-		content: " (valgfritt)";
-	}
-
-	& legend {
-		margin-block-end: 0.5lh;
-		padding-block-start: 0.5lh;
-	}
-
-	& label:has(input[type="checkbox"], input[type="radio"]) {
-		align-content: center;
-		background-color: Field;
-		border: 1px solid GrayText;
-		border-radius: 2px;
+	& button {
 		display: block;
-		max-width: max-content;
-		min-block-size: 44px;
-		min-inline-size: 44px;
-		padding-inline: 4px 4ch;
-
-		&:not(:last-of-type) {
-			margin-block-end: 1lh;
-		}
+		margin-block-end: 1ex;
 	}
 }
 
-form {
+output.toast[popover]:popover-open {
+	--margin: 5%;
+	box-sizing: border-box;
+	inset: auto var(--margin) var(--margin) auto;
 	max-width: 60ch;
+	position: fixed;
+	width: 90%;
 
-	& footer {
-		display: grid;
-		gap: 2ch;
-		grid: repeat(1, max(1lh, 44px)) / auto-flow;
-
-		& button {
-			grid-row: 1;
-		}
-
-		& button.next {
-			grid-column: 2;
-		}
-
-		& button.previous {
-			grid-column: 1;
-		}
-	}
-
-	&.steps {
-		background-color: oklch(from Field l c h);
-		border: 1px solid oklch(from currentColor l c h / 0.4);
-		border-radius: 3px;
-		box-sizing: border-box;
-		height: 95svh;
-		max-width: 70ch;
-		overflow: hidden;
-		--gradient-size: 3lh;
-
-		& section {
-			box-sizing: border-box;
-			display: flex;
-			flex-direction: column;
-			height: 100%;
-			overflow: hidden auto;
-
-			& h2 {
-				margin-block: 0;
-				top: 0;
-			}
-
-			& footer {
-				align-content: end;
-				bottom: -1px;
-				box-sizing: border-box;
-				flex-grow: 1;
-				margin-block-start: var(--gradient-size);
-				position: relative;
-
-				&::before {
-					background: linear-gradient(transparent, Field);
-					content: "";
-					height: var(--gradient-size);
-					left: 0;
-					position: absolute;
-					top: calc(var(--gradient-size) * -1);
-					width: 100%;
-				}
-			}
-
-			> * {
-				margin-inline: 2rem;
-			}
-
-			& h2, & footer {
-				background-color: oklch(from Field l c h);
-				padding-block: 1lh;
-				position: sticky;
-			}
-
-			&:not([aria-current="step"]) {
-				display: none;
-			}
-		}
-	}
-}
-
-dl {
-	display: grid;
-	gap: 1ex 2ch;
-	grid: auto-flow / max-content 1fr;
-
-	& dt {
-		font-weight: 600;
-		max-width: 30ch;
-	}
-
-	& dd {
+	& h2 {
+		font-size: medium;
 		margin: 0;
+
+		&::after {
+			content: "";
+		}
 	}
 }
