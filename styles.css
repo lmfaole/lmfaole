@@ -107,7 +107,6 @@ form footer {
 details summary {
 	cursor: pointer;
 	max-width: 100%;
-	width: max-content;
 
 	+ * {
 		margin-block-start: 0;
@@ -116,10 +115,17 @@ details summary {
 
 .toast {
 	border: 1px solid currentColor;
+	max-height: 90svh;
+	overflow-y: auto;
 
 	&[data-type="success"] {
 		background-color: light-dark(oklch(from green calc(l + 1) c h), oklch(from darkgreen calc(l - 0.2) c h));
 		border-color: light-dark(oklch(from green calc(l + 0.8) c h), oklch(from darkgreen calc(l - 0.15) c h));
+	}
+
+	&[data-type="error"] {
+		background-color: light-dark(oklch(from red calc(l + 1) c h), oklch(from darkred calc(l - 0.2) c h));
+		border-color: light-dark(oklch(from red calc(l + 0.8) c h), oklch(from darkred calc(l - 0.15) c h));
 	}
 }
 
