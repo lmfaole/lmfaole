@@ -57,7 +57,7 @@ h6 {
             content: "🦆" / "";
         }
 
-        +* {
+        + * {
             margin-block-start: 0;
         }
     }
@@ -134,31 +134,12 @@ fieldset {
     border-inline-start: 1px solid oklch(from currentColor l c h / 0.3);
     container-type: inline-size;
 
-    >fieldset {
+    > fieldset {
         margin-inline-start: 2ch;
     }
 
-    legend {
+    & legend {
         font-weight: 600;
-    }
-
-    .bday {
-        display: grid;
-        grid: auto-flow / 1fr;
-        column-gap: 3ch;
-
-        @container (width > 30ch) {
-            display: grid;
-            grid: auto-flow / repeat(2, 6ch) 8ch;
-
-            label {
-                grid-row: 1;
-            }
-
-            input {
-                min-inline-size: unset;
-            }
-        }
     }
 }
 
@@ -167,12 +148,12 @@ dl {
     grid: auto-flow / max-content 1fr;
     gap: 1ex 2ch;
 
-    dt {
+    & dt {
         font-weight: 600;
         max-width: 30ch;
     }
 
-    dd {
+    & dd {
         margin: 0;
     }
 }

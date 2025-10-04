@@ -6,7 +6,7 @@ function submitForm(form) {
     const formData = new FormData(form);
     console.groupCollapsed(`Skjema: ${form.name}`);
     for (const [key, value] of formData) {
-        console.debug({key, value})
+        console.debug({key, value});
         answers.push({key, value});
     }
     console.groupEnd();

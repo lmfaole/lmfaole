@@ -15,12 +15,6 @@ nextMonth.setDate(today.getMonth() + 1);
 lastYear.setDate(today.getFullYear() - 1);
 nextYear.setDate(today.getFullYear() + 1);
 
-const defaultDateFormat = {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric"
-}
-
 function toInputFormat(dateToBeFormatted) {
     const date = new Date(dateToBeFormatted);
     let day = date.getDate();
