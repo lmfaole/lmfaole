@@ -4,31 +4,31 @@
 <head>
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1.0"
-		  name="viewport">
-	
+		name="viewport">
+
 	<!-- Hentet fra https://htmlhead.dev/ -->
 	<!-- Icon in the highest resolution we need it for -->
 	<link href="/assets/digimon.png"
-		  rel="icon"
-		  sizes="192x192">
+		rel="icon"
+		sizes="192x192">
 	<!-- Apple Touch Icon (reuse 192px icon.png) -->
 	<link href="/assets/digimon.png"
-		  rel="apple-touch-icon">
+		rel="apple-touch-icon">
 	<!-- Safari Pinned Tab Icon -->
 	<link color="black"
-		  href="/assets/digimon.svg"
-		  rel="mask-icon">
-	
+		href="/assets/digimon.svg"
+		rel="mask-icon">
+
 	<!-- Ressurser -->
 	<link href="https://html.spec.whatwg.org/multipage/input.html#the-input-element"
-		  rel="help">
+		rel="help">
 	<link href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input"
-		  rel="help">
-	
+		rel="help">
+
 	<!-- Stiler -->
 	<link href="/styles.css"
-		  rel="stylesheet">
-	
+		rel="stylesheet">
+
 	<!-- Tittel -->
 	<title>Skjemaelementer | Ole Jørgen Bakken</title>
 </head>
@@ -40,144 +40,145 @@
 <a href="index.html">Tilbake til forsiden</a>
 
 <main>
-	<form>
+	<form name="skjematyper">
 		<h2>Dato og tid</h2>
-		
+
 		<label for="date-1">date</label>
 		<input id="date-1"
-			   type="date" />
-		
+			type="date" />
+
 		<label for="datetime-local-1">datetime-local</label>
 		<input id="datetime-local-1"
-			   type="datetime-local" />
-		
+			type="datetime-local" />
+
 		<label for="month-1">month</label>
 		<input id="month-1"
-			   type="month" />
-		
+			type="month" />
+
 		<label for="time-1">time</label>
 		<input id="time-1"
-			   type="time" />
-		
+			type="time" />
+
 		<label for="week-1">week</label>
 		<input id="week-1"
-			   type="week" />
-		
+			type="week" />
+
 		<h3>Les mer om</h3>
 		<ul>
 			<li>
-				<a href="skjema/date.html">Datofelt</a>
+				<a href="skjema/datofelter.html">Datofelt</a>
 			</li>
 		</ul>
-		
+
 		<h2>Tekst og tall</h2>
-		
+
 		<label for="email-1">email</label>
 		<input id="email-1"
-			   type="email" />
-		
+			type="email" />
+
 		<label for="url-1">url</label>
 		<input id="url-1"
-			   type="url" />
-		
+			type="url" />
+
 		<label for="number-1">number</label>
 		<input id="number-1"
-			   type="number" />
-		
+			type="number" />
+
 		<label for="password-1">password</label>
 		<input id="password-1"
-			   type="password" />
-		
+			type="password" />
+
 		<label for="search-1">search</label>
 		<input id="search-1"
-			   type="search" />
-		
+			type="search" />
+
 		<label for="tel-1">tel</label>
 		<input id="tel-1"
-			   type="tel" />
-		
+			type="tel" />
+
 		<label for="text-1">text</label>
 		<input id="text-1"
-			   type="text" />
-		
+			type="text" />
+
 		<h2>Gruppe-elementer</h2>
-		
+
 		<label for="select-1">select</label>
 		<select id="select-1">
 			<option disabled
-					selected
-					value="">Velg
+				selected
+				value="">Velg
 			</option>
 			<option>Valg 1</option>
 			<option>Valg 2</option>
 			<option>Valg 3</option>
 			<option>Valg 4</option>
 		</select>
-		
+
 		<fieldset>
-			<legend>Fieldset legend</legend>
-			<label><input type="checkbox" />checkbox</label>
-			<label><input type="checkbox" />checkbox</label>
-			<label><input type="checkbox" />checkbox</label>
+			<legend>Checkbox legend</legend>
+			<label><input type="checkbox" />check 1</label>
+			<label><input type="checkbox" />check 2</label>
+			<label><input type="checkbox" />check 3</label>
 		</fieldset>
-		
+
 		<fieldset>
-			<legend>Fieldset legend</legend>
+			<legend>Radio legend</legend>
 			<label><input name="radio-demo"
-						  type="radio"
-						  value="1" />radio</label>
+				type="radio"
+				value="1" />radio 1</label>
 			<label><input name="radio-demo"
-						  type="radio"
-						  value="2" />radio</label>
+				type="radio"
+				value="2" />radio 2</label>
 			<label><input name="radio-demo"
-						  type="radio"
-						  value="3" />radio</label>
+				type="radio"
+				value="3" />radio 3</label>
 		</fieldset>
-		
-		<h2>Knapper</h2>
-		
-		<input type="button"
-			   value="Button" />
-		<input type="reset" />
-		<input type="submit" />
-		
+
 		<h2>Andre</h2>
-		
+
 		<label for="color-1">color</label>
 		<input id="color-1"
-			   type="color" />
-		
+			type="color" />
+
 		<label for="file-1">file</label>
 		<input id="file-1"
-			   type="file" />
-		
+			type="file" />
+
 		<label for="range-1">range</label>
 		<input id="range-1"
-			   type="range" />
-		
+			type="range" />
+
 		<label for="image-1">image</label>
 		<input alt="image"
-			   id="image-1"
-			   type="image" />
-		
-		<label for="hidden-1">hidden</label>
-		<input id="hidden-1"
-			   type="hidden" />
+			id="image-1"
+			type="image" />
+
+
+		<h2>Knapper</h2>
+		<!--		<input type="button"
+					   value="Button" />
+				<input type="reset" />
+				<input type="submit" />-->
+		<button type="button">Button</button>
+		<button type="submit">Submit</button>
+		<button type="reset">Reset</button>
 	</form>
-	
+
 	<h2>Les mer</h2>
-	
+
 	<ul>
 		<li>
 			<a href="https://html.spec.whatwg.org/multipage/input.html#the-input-element"
-			   rel="external">HTML-spesifikasjon for input</a></li>
+				rel="external">HTML-spesifikasjon for input</a></li>
 		<li>
 			<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input"
-			   rel="external">Mozilla sin oversiktside over input, og typer</a>
+				rel="external">Mozilla sin oversiktside over input, og typer</a>
 		</li>
 	</ul>
 
 </main>
+<script src="scripts/utilities/index.js"
+	type="module"></script>
 </body>
 
 </html>
