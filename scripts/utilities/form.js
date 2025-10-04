@@ -2,12 +2,15 @@ const forms = Array.from(document.getElementsByTagName("form"));
 
 function showFormNotification(formInfo) {
     const toast = document.getElementById(`${formInfo.formName}-output`);
+    toast.setAttribute("data-type", formInfo.valid ? "success" : "error");
+
     const heading = document.createElement("h2");
     heading.innerText = `${formInfo.formName} skjema ${formInfo.valid ? " sendt!" : " ikke sendt"}`;
 
     const answerDetails = document.createElement("details");
     const answerDetailsHeading = document.createElement("summary");
-    answerDetailsHeading.innerText = "Vis detaljer";
+    answerDetailsHeading.innerText = "Se dine svar";
+    answerDetails.append(answerDetailsHeading);
 
     const answerDetailsDescriptionList = document.createElement("dl");
     formInfo.answers.map((answer) => {

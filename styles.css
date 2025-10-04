@@ -60,6 +60,10 @@ p {
 	}
 }
 
+dl dt {
+	font-weight: bold;
+}
+
 button,
 input,
 label,
@@ -76,7 +80,9 @@ label:has(+input, +select), fieldset {
 
 button,
 input:not([type="checkbox"], [type="radio"]),
-select {
+select,
+summary {
+	align-content: center;
 	min-block-size: 44px;
 	min-inline-size: 44px;
 }
@@ -98,11 +104,31 @@ form footer {
 	}
 }
 
+details summary {
+	cursor: pointer;
+	max-width: 100%;
+	width: max-content;
+
+	+ * {
+		margin-block-start: 0;
+	}
+}
+
+.toast {
+	border: 1px solid currentColor;
+
+	&[data-type="success"] {
+		background-color: light-dark(oklch(from green calc(l + 1) c h), oklch(from darkgreen calc(l - 0.2) c h));
+		border-color: light-dark(oklch(from green calc(l + 0.8) c h), oklch(from darkgreen calc(l - 0.15) c h));
+	}
+}
+
 output.toast[popover]:popover-open {
 	--margin: 5%;
 	box-sizing: border-box;
 	inset: auto var(--margin) var(--margin) auto;
 	max-width: 60ch;
+	padding: 1rem;
 	position: fixed;
 	width: 90%;
 
