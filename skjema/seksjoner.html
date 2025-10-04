@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="no">
+
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0"
+		name="viewport">
+
+	<!-- Hentet fra https://htmlhead.dev/ -->
+	<!-- Icon in the highest resolution we need it for -->
+	<link href="/assets/digimon.png"
+		rel="icon"
+		sizes="192x192">
+	<!-- Apple Touch Icon (reuse 192px icon.png) -->
+	<link href="/assets/digimon.png"
+		rel="apple-touch-icon">
+	<!-- Safari Pinned Tab Icon -->
+	<link color="black"
+		href="/assets/digimon.svg"
+		rel="mask-icon">
+
+	<!-- Ressurser -->
+	<link
+		href="https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date)"
+		rel="help">
+
+	<!-- Stiler -->
+	<link href="../styles.css"
+		rel="stylesheet">
+
+	<!-- Tittel -->
+	<title>Seksjoner i skjema | Ole Jørgen Bakken</title>
+</head>
+
+<body>
+
+<h1>Seksjoner i skjema</h1>
+
+<nav>
+	<ul>
+		<li><a href="/index.html">Tilbake til forsiden</a></li>
+		<li><a href="/skjemaelementer.html">Tilbake til skjemaelementer</a></li>
+	</ul>
+</nav>
+
+<main>
+
+	<form action=""
+		class="steps"
+		method="get"
+		name="seksjonseksempel">
+		<section>
+			<h2>Personalia</h2>
+
+			<label for="fornavn">Fornavn</label>
+			<input
+				id="fornavn"
+				name="fornavn"
+				type="text"
+			/>
+
+			<label for="etternavn">Etternavn</label>
+			<input
+				id="etternavn"
+				name="etternavn"
+				type="text"
+			/>
+		</section>
+
+		<section>
+			<h2>Interesser</h2>
+
+			<fieldset>
+				<legend>Faglige interesser</legend>
+				<label><input type="checkbox" />HTML</label>
+				<label><input type="checkbox" />CSS</label>
+				<label><input type="checkbox" />JavaScript</label>
+				<label><input type="checkbox" />React</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Hobbyer</legend>
+				<label><input type="checkbox" />Klatring</label>
+				<label><input type="checkbox" />Kokking</label>
+				<label><input type="checkbox" />Strikking</label>
+				<label><input type="checkbox" />Musikk</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Liker du å trene?</legend>
+				<label><input type="radio" />Ja</label>
+				<label><input type="radio" />Nei</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Hva slags musikk liker du?</legend>
+				<label><input type="radio" />Pop</label>
+				<label><input type="radio" />Rock</label>
+				<label><input type="radio" />R&B</label>
+				<label><input type="radio" />Indie</label>
+			</fieldset>
+		</section>
+	</form>
+</main>
+<script src="../scripts/utilities/index.js"
+	type="module"></script>
+</body>
+
+</html>
