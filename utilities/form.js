@@ -1,4 +1,3 @@
-const inputs = Array.from(document.getElementsByTagName("input"));
 const forms = Array.from(document.getElementsByTagName("form"));
 
 function submitForm(form) {
