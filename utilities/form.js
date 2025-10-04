@@ -1,34 +1,21 @@
-const inputs = Array.from(document.querySelectorAll("input"));
-const form = document.getElementsByTagName("form")[0];
+const inputs = Array.from(document.getElementsByTagName("input"));
+const forms = Array.from(document.getElementsByTagName("form"));
 
-function createDescriptionListFromInputs(outputNode, inputElements) {
-    const output = document.getElementById(outputNode);
+function submitForm(form) {
+    let answers = [];
 
-    const list = document.createElement("dl");
-    list.ariaLabel = "Dine valg";
-    const listHeading = document.createElement("h2");
-    listHeading.innerText = "Dine valg";
+    const formData = new FormData(form);
+    console.groupCollapsed(`Skjema: ${form.name}`);
+    for (const [key, value] of formData) {
+        console.debug({key, value})
+        answers.push({key, value});
+    }
+    console.groupEnd();
 
-    inputElements.map((input) => {
-        if (input.value) {
-            const descriptionTerm = document.createElement("dt");
-            descriptionTerm.innerText = input.previousElementSibling.innerText;
-
-            const descriptionDetail = document.createElement("dd");
-            if (input.type === "date") {
-                descriptionDetail.innerText = new Date(input.value).toLocaleDateString(navigator.language, { ...defaultDateFormat, weekday: "long" });
-            } else {
-                descriptionDetail.innerText = input.value;
-            }
-
-            list.append(descriptionTerm, descriptionDetail);
-        }
-    });
-
-    output.replaceChildren(listHeading, list);
+    return answers;
 }
 
-form.addEventListener("submit", function (ev) {
+forms.map((form) => form.addEventListener("submit", function (ev) {
     ev.preventDefault();
-    createDescriptionListFromInputs("form-output", inputs);
-})
+    submitForm(form);
+}));

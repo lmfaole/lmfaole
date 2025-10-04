@@ -3,83 +3,115 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-
+	<meta content="width=device-width, initial-scale=1.0"
+		  name="viewport">
+	
 	<!-- Hentet fra https://htmlhead.dev/ -->
 	<!-- Icon in the highest resolution we need it for -->
-	<link href="/assets/digimon.png" rel="icon" sizes="192x192">
+	<link href="/assets/digimon.png"
+		  rel="icon"
+		  sizes="192x192">
 	<!-- Apple Touch Icon (reuse 192px icon.png) -->
-	<link href="/assets/digimon.png" rel="apple-touch-icon">
+	<link href="/assets/digimon.png"
+		  rel="apple-touch-icon">
 	<!-- Safari Pinned Tab Icon -->
-	<link color="black" href="/assets/digimon.svg" rel="mask-icon">
-
+	<link color="black"
+		  href="/assets/digimon.svg"
+		  rel="mask-icon">
+	
 	<!-- Ressurser -->
-	<link href="https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date)" rel="help">
-
+	<link href="https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date)"
+		  rel="help">
+	
 	<!-- Stiler -->
-	<link href="../styles.css" rel="stylesheet">
-
+	<link href="../styles.css"
+		  rel="stylesheet">
+	
 	<!-- Tittel -->
 	<title>Skjema | Ole Jørgen Bakken</title>
 </head>
 
 <body>
 
-	<h1>Skjema</h1>
+<h1>Skjema</h1>
 
-	<nav>
-		<ul>
-			<li><a href="/index.html">Tilbake til forsiden</a></li>
-			<li><a href="/skjema.html">Tilbake til skjemaelementer</a></li>
-		</ul>
-	</nav>
+<nav>
+	<ul>
+		<li><a href="/index.html">Tilbake til forsiden</a></li>
+		<li><a href="./skjema.html">Tilbake til skjemaelementer</a></li>
+	</ul>
+</nav>
 
-	<main>
-		<h2>Eksempel</h2>
-		<form>
-			<fieldset>
-				<legend>Personalia</legend>
-
-				<label for="name">Navn</label>
-				<input type="text" id="name" required autocomplete="name">
-
-				<fieldset class="bday">
-					<legend>Bursdag</legend>
-
-					<label for="day">Dag</label>
-					<input type="number" id="day" autocomplete="bday-day" min="1" max="31">
-
-					<label for="month">Måned</label>
-					<input type="number" id="month" autocomplete="bday-month" min="1" max="12">
-
-					<label for="year">År</label>
-					<input type="number" id="year" autocomplete="bday-year" min="1900" max="2100">
-				</fieldset>
+<main>
+	<h2>Eksempel</h2>
+	<form>
+		<fieldset>
+			<legend>Personalia</legend>
+			
+			<label for="username">Username</label>
+			<input autocomplete="username"
+				   id="username"
+				   name="username"
+				   required
+				   type="text"
+			/>
+			
+			<fieldset class="bday"
+					  name="birthday">
+				<legend>Bursdag</legend>
+				
+				<label for="day">Dag</label>
+				<input autocomplete="bday-day"
+					   id="day"
+					   max="31"
+					   min="1"
+					   name="birthday day"
+					   type="number">
+				
+				<label for="month">Måned</label>
+				<input autocomplete="bday-month"
+					   id="month"
+					   max="12"
+					   min="1"
+					   name="birthday month"
+					   type="number" />
+				
+				<label for="year">År</label>
+				<input autocomplete="bday-year"
+					   id="year"
+					   max="2100"
+					   min="1900"
+					   name="birthday year"
+					   type="number" />
 			</fieldset>
+		</fieldset>
+		
+		<fieldset>
+			<legend>Brukerinformasjon</legend>
+			
+			<label for="mail">E-post</label>
+			<input autocomplete="email"
+				   id="mail"
+				   name="mail"
+				   required
+				   type="email" />
+			
+			<label for="passord">Passord</label>
+			<input autocomplete="current-password"
+				   id="passord"
+				   name="password"
+				   required
+				   type="password" />
+		
+		</fieldset>
+		
+		
+		<input type="submit">
+	</form>
 
-			<fieldset>
-				<legend>Brukerinformasjon</legend>
-
-				<label for="mail">E-post</label>
-				<input type="email" id="mail" required>
-
-				<label for="passord">Passord</label>
-				<input type="password" id="passord" required>
-
-			</fieldset>
-
-
-			<input type="submit">
-		</form>
-
-		<output id="form-output"></output>
-
-	</main>
-	<script src="../utilities/date.js"></script>
-	<script src="../utilities/form.js"></script>
-	<script>
-
-	</script>
+</main>
+<script src="../utilities/index.js"
+		type="module"></script>
 </body>
 
 </html>
