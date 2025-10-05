@@ -95,12 +95,18 @@ label:has(input:is([type="checkbox"], [type="radio"])) {
 	display: block;
 }
 
-form footer {
-	margin-block-start: 1lh;
+form {
+	&.steps section:not([aria-current="step"]) {
+		display: none;
+	}
 
-	& button {
-		display: block;
-		margin-block-end: 1ex;
+	& footer {
+		margin-block-start: 1lh;
+
+		& button {
+			display: block;
+			margin-block-end: 1ex;
+		}
 	}
 }
 
@@ -115,7 +121,7 @@ details summary {
 
 .toast {
 	border: 1px solid currentColor;
-	max-height: 90svh;
+	max-height: 80svh;
 	overflow-y: auto;
 
 	&[data-type="success"] {
