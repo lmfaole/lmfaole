@@ -19,54 +19,45 @@
 		href="/assets/digimon.svg"
 		rel="mask-icon">
 
-	<!-- Ressurser -->
-	<link
-		href="https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date)"
-		rel="help">
-
 	<!-- Stiler -->
 	<link href="../styles/root.css"
 		rel="stylesheet">
 
 	<!-- Tittel -->
-	<title>Datalist | Ole Jørgen Bakken</title>
+	<title>Temporal API-et | Ole Jørgen Bakken</title>
 </head>
 
 <body>
 
-<h1>Datalist</h1>
-
-<baseline-status featureId="datalist"></baseline-status>
-
-<nav>
-	<ul>
-		<li><a href="/index.html">Tilbake til forsiden</a></li>
-		<li><a href="/skjema.html">Tilbake til skjemaelementer</a></li>
-	</ul>
-</nav>
+<h1>Temporal API-et</h1>
+<baseline-status featureId="temporal"></baseline-status>
 
 <main>
+	<section id="temporal-now">
+		<h2>Temporal.Now</h2>
+	</section>
 
-	<form action=""
-		method="get"
-		name="Tekstfelter">
-		<h2>Tekstfelt</h2>
-
-		<label for="pokemon">Pokemon</label>
-		<input
-			class="autosuggest"
-			id="pokemon"
-			list="pokemon"
-			name="pokemon"
-			type="text"
-		/>
-		<button type="submit">Send</button>
-	</form>
+	<section>
+		<h2>Les mer</h2>
+		<ul>
+			<li>
+				<a href="https://tc39.es/proposal-temporal/"
+					rel="external">TC39-spesifikasjon for Temporal
+				</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal"
+					rel="external">Mozilla sin oversiktside for Temporal</a>
+			</li>
+		</ul>
+	</section>
 </main>
-<script src="../scripts/index.js"
-	type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/baseline-status@1/baseline-status.min.js"
 	type="module"></script>
+
+<script>
+
+</script>
 </body>
 
 </html>

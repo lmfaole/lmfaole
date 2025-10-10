@@ -1,0 +1,59 @@
+@layer components {
+	p[role="note"] {
+		--note-color: var(--purple);
+
+		box-sizing: border-box;
+		border-inline-start: 1ch solid var(--note-color);
+		background-color: oklch(from var(--note-color) l c h / 0.25);
+		margin-block: 1.5lh;
+		padding: 1ex 2ch;
+	}
+
+	form footer {
+		margin-block-start: 1lh;
+
+		& button {
+			display: block;
+			margin-block-end: 1ex;
+		}
+	}
+
+	form.steps section:not([aria-current="step"]) {
+		display: none;
+	}
+
+	output.toast {
+		border: 1px solid currentColor;
+		max-height: 80svh;
+		overflow-y: auto;
+
+		&[data-type="success"] {
+			background-color: light-dark(oklch(from green calc(l + 1) c h), oklch(from darkgreen calc(l - 0.2) c h));
+			border-color: light-dark(oklch(from green calc(l + 0.8) c h), oklch(from darkgreen calc(l - 0.15) c h));
+		}
+
+		&[data-type="error"] {
+			background-color: light-dark(oklch(from red calc(l + 1) c h), oklch(from darkred calc(l - 0.2) c h));
+			border-color: light-dark(oklch(from red calc(l + 0.8) c h), oklch(from darkred calc(l - 0.15) c h));
+		}
+
+		&[popover]:popover-open {
+			--margin: 5%;
+			box-sizing: border-box;
+			inset: auto var(--margin) var(--margin) auto;
+			max-width: 60ch;
+			padding: 1rem;
+			position: fixed;
+			width: 90%;
+
+			& h2 {
+				font-size: medium;
+				margin: 0;
+
+				&::after {
+					content: "";
+				}
+			}
+		}
+	}
+}
