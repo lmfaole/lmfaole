@@ -1,0 +1,13 @@
+@layer reset, base;
+
+@layer base {
+	code,
+	pre {
+		font-family:
+			"SF Mono", Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+	}
+
+	:focus-visible {
+		outline: 3px solid currentColor;
+	}
+}
