@@ -10,10 +10,6 @@ order: 3
 Design systems developer. Currently making components, writing documentation
 and helping teams make web pages at [Jøkul](https://jokul.fremtind.no).
 
-## Earlier works
-
-2021 Designer
-
 ## Socials and other platforms
 
 In preferred order
