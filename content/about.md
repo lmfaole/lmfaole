@@ -2,7 +2,7 @@
 const eleventyNavigation = {
 key: "About",
 order: 3
-};
+}
 ---
 
 # About
@@ -22,3 +22,6 @@ In preferred order
 6. [Instagram](https://www.instagram.com/lmfaole/)
 7. [Goodreads](https://www.goodreads.com/user/show/191477888-lmfaole) (I forget
    I like reading a lot)
+
+This blog is built with <a href="https://www.11ty.dev/">{{ eleventy.
+generator }}</a> 💛
