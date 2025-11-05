@@ -6,9 +6,10 @@ const eleventyNavigation = {
 
 const numberOfLatestPostsToShow = 10;
 ---
+
 {% set postsCount = collections.posts | length %}
 {% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
-<h1>Last posts</h1>
+<h2>Sample posts</h2>
 
 {% set postslist = collections.posts | head(-1 * numberOfLatestPostsToShow) %}
 {% set postslistCounter = postsCount %}

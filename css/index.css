@@ -1,13 +1,93 @@
-@layer reset, base;
+@layer reset, base, global, posts;
 
 @layer base {
+	p, li {
+		max-width: 55ch;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		max-width: 35ch;
+		margin-block-start: 1lh;
+	}
+
+	a {
+		color: yellow;
+	}
+
 	code,
 	pre {
-		font-family:
-			"SF Mono", Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+		font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+	}
+
+	pre {
+		font-size: smaller;
+		background-color: #272822;
+		color: currentColor;
+		border: 1px solid hsl(from currentColor h s l / 0.1);
+		border-radius: 1lh;
+
+		& code {
+			background: inherit;
+		}
 	}
 
 	:focus-visible {
 		outline: 3px solid currentColor;
+	}
+}
+
+@layer global {
+	.global-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-block-end: 1lh;
+	}
+
+	.nav li {
+		display: inline-block;
+
+		&:not(:last-child) {
+			margin-right: 0.5em;
+		}
+	}
+
+	.ha {
+		color: currentColor;
+	}
+
+	.tags {
+		list-style: none;
+		font-size: smaller;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1ch;
+
+		.tag {
+			display: inline-block;
+			border: 1px solid color-mix(in hsl, currentColor, transparent 75%);
+			line-height: 1;
+			padding: 0.25lh 0.5em;
+			border-radius: 1lh;
+			text-decoration: none;
+			text-box-trim: trim-end;
+			box-sizing: border-box;
+		}
+	}
+}
+
+@layer posts {
+	.post {
+		& hgroup {
+			& h1 {
+				margin-block-end: 0;
+			}
+
+			.published {
+				opacity: 0.8;
+				margin-block-start: 0.5lh;
+			}
+		}
 	}
 }
