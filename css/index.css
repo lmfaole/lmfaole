@@ -45,7 +45,8 @@
 	}
 
 	pre {
-		background-color: black;
+		background-color: #0c150f;
+		border: 1px solid color-mix(in hsl, currentColor 10%, #0c150f);
 		font-size: smaller;
 		border-radius: 0.5lh;
 		padding: 1em;
@@ -65,12 +66,12 @@
 				box-sizing: border-box;
 				display: block;
 				text-align: end;
-				font-size: xx-small;
+				font-size: small;
 				line-height: 1;
-				padding: 0.75lh 0.5em;
+				padding: 1lh 0.5em;
 				border-block-end: 1px solid color-mix(in hsl, white 20%, transparent);
 				text-transform: uppercase;
-				margin-block-end: 10px;
+				margin-block-end: 1lh;
 				opacity: var(--muted);
 				color: white;
 			}
