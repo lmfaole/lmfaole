@@ -1,7 +1,7 @@
 ---
 title: The Elements of HTML – <address>
 description: An element used for contact information for people, or for an organization.
-date: 2025-11-08
+date: Last Modified
 tags: html elements, flow content, palpable content
 ---
 

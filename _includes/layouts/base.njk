@@ -34,6 +34,11 @@
 	{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
 	<link rel="stylesheet" href="{% getBundleFileUrl "css" %}">
 
+	{#- Favicons #}
+	<link rel="icon" href="/img/favicon.ico" sizes="32x32">
+	<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" href="/img/favicon.png"><!-- 180×180 -->
+
 	{#- Add the heading-anchors web component to the JavaScript bundle #}
 	<script type="module">{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}</script>
 </head>

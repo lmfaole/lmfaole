@@ -70,12 +70,12 @@ export default async function (eleventyConfig) {
 		stylesheet: "pretty-atom-feed.xsl",
 		collection: {
 			name: "posts",
-			limit: 10,
+			limit: 0,
 		},
 		metadata: {
 			language: "no",
-			title: "Festen",
-			subtitle: "Ditt og datt fra dataen.",
+			title: "Ole Jørgen Bakken",
+			subtitle: "Work in progress.",
 			base: "https://lmfaole.party/",
 			author: {
 				name: "Ole Jørgen Bakken",
