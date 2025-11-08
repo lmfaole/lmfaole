@@ -3,48 +3,30 @@ layout: layouts/base.njk
 ---
 {# Only include the syntax highlighter CSS on blog posts, included with the CSS per-page bundle #}
 <style>
-    @layer reset {
-	    {% include "node_modules/prismjs/themes/prism-okaidia.css" %}
-	}
+    @layer reset {{% include "node_modules/prismjs/themes/prism-okaidia.css" %}}
 </style>
 <style>
 	{% include "css/prism-diff.css" %}
 </style>
 <article class="post">
 	<header class="post-header">
-		<h1>
-			{{
-			title
-			}}</h1>
-		<p>
-			{{
-			description
-			}}</p>
-		<p class="published">
-			Published
-			<time datetime="{{ page.date | htmlDateString }}">
-				{{
-				page.date
-				|
-				readableDate
-				}}
-			</time>
-		</p>
+		<h1>{{ title }}</h1>
+		<p>{{ description }}</p>
+		<p class="published">Published <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time></p>
 	</header>
 
 	{{ content | safe }}
 
 	<footer class="post-footer">
 	    <h2>Tags</h2>
-		<ul class="tag-list"
-			role="list">
-			    {%- for tag in tags | filterTagList %}
-				{%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-				<li>
-					<a href="{{ tagUrl }}" class="post-tag tag">{{ tag }}</a>
-				</li>
-				{%- endfor %}
-			</ul>
+		<ul class="tag-list" role="list">
+			{%- for tag in tags | filterTagList %}
+			{%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+			<li>
+				<a href="{{ tagUrl }}" class="post-tag tag">{{ tag }}</a>
+			</li>
+			{%- endfor %}
+		</ul>
 
 		{# {%- if collections.posts %}
 			{%- set previousPost = collections.posts | getPreviousCollectionItem %}
