@@ -6,7 +6,8 @@ tags: html elements, flow content, palpable content
 ---
 
 > *
-*From [the address spec](https://html.spec.whatwg.org/multipage/sections.html#the-address-element)
+*
+From [the address spec](https://html.spec.whatwg.org/multipage/sections.html#the-address-element)
 **
 >
 > The address element represents the contact information for its nearest
