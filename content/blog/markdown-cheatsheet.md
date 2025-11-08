@@ -1,7 +1,12 @@
 ---js
-const title = "Markdown cheat sheet";
+const title = "Markdown Cheatsheet";
+const date = "Last Modified";
 const draft = true;
 ---
+
+## Links
+
+- [Markdown Cheatsheet](https://www.markdownlang.com/cheatsheet/)
 
 ## Diff
 

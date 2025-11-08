@@ -19,6 +19,9 @@
       </list>
     </option>
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -37,6 +40,9 @@
 }</component>
   <component name="MaliciousPackageCheckinHandlerState">
     <option name="packageCheck" value="true" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -66,6 +72,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "code.cleanup.on.save": "true",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/ole.jorgen.bakken/WebstormProjects/lmfaole/public/img",
     "node.js.detected.package.eslint": "true",
@@ -79,8 +86,9 @@
     "nodejs_package_manager_path": "npm",
     "npm.start.executor": "Run",
     "npm.test.executor": "Run",
+    "rearrange.code.on.save": "true",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "preferences.sourceCode",
     "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   },
@@ -113,17 +121,6 @@
       <set>
         <option value="js.build_tools.npm" />
       </set>
-    </option>
-    <option name="configurationStatuses">
-      <map>
-        <entry key="js.build_tools.npm">
-          <value>
-            <map>
-              <entry key="start" value="STOPPED" />
-            </map>
-          </value>
-        </entry>
-      </map>
     </option>
   </component>
   <component name="RunManager" selected="npm.start">
@@ -251,6 +248,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT_PROFILE" value="Project Default" />
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <MESSAGE value="legg til skjema" />
     <MESSAGE value="mer dato-greier" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;skjema/date.html" />
@@ -275,6 +273,10 @@
     <MESSAGE value="add footer again" />
     <MESSAGE value="styling pre block" />
     <MESSAGE value="sticky header on pre block with language set" />
-    <option name="LAST_COMMIT_MESSAGE" value="sticky header on pre block with language set" />
+    <MESSAGE value="formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="formatting" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
