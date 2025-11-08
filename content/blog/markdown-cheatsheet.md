@@ -1,7 +1,7 @@
 ---js
 const title = "Markdown Cheatsheet";
 const date = "Last Modified";
-const draft = true;
+const draft = true
 ---
 
 ## Links

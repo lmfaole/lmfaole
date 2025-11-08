@@ -1,17 +1,19 @@
 <ol class="postlist" reversed role="list" style="--postlist-index: {{ (postslistCounter or postslist.length) + 1 }}">
-{%- for post in postslist | reverse %}
-	<li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
-		<a class="title" href="{{ post.url }}">
-			{% if post.data.title %}
-				{{ post.data.title }}{% else %}<code>{{ post.url }}</code>
+	{%- for post in postslist | reverse %}
+		<li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
+			<a class="title" href="{{ post.url }}">
+				{% if post.data.title %}
+					{{ post.data.title }}
+				{% else %}
+					<code>{{ post.url }}</code>
+				{% endif %}
+			</a>
+			{% if post.data.description %}
+				<p class="lead">{{ post.data.description }}</p>
 			{% endif %}
-		</a>
-		{% if post.data.description %}
-			<p class="lead">{{ post.data.description }}</p>
-		{% endif %}
-		<small class="date">Posted
+			<small class="date">Posted
 			<time class="postlist-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("LLLL yyyy") }}</time>
-		</small>
-	</li>
-{%- endfor %}
+			</small>
+		</li>
+	{%- endfor %}
 </ol>

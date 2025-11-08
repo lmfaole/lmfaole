@@ -1,4 +1,6 @@
----js const numberOfLatestPostsToShow = 3;---
+---js
+const numberOfLatestPostsToShow = 3;
+---
 
 <h1>Hey there 🪿</h1>
 
@@ -17,11 +19,13 @@
 	</p>
 {% endif %}
 
-{# List every content page in the project #}{#
+{# List every content page in the project #}
+{#
 <ul>
 	{%- for entry in collections.all %}
 		<li>
 			<a href="{{ entry.url }}"><code>{{ entry.url }}</code></a>
 		</li>
 	{%- endfor %}
-</ul>#}
+</ul>
+#}

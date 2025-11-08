@@ -17,7 +17,6 @@ markup:
 
 ``` html
 <address>
-	You can find me on <a href="https://bsky.app/profile/lmfaole.party">Bluesky</a>.
+ You can find me on <a href="https://bsky.app/profile/lmfaole.party">Bluesky</a>.
 </address>
 ```
-

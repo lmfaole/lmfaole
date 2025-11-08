@@ -41,8 +41,8 @@ generated content in real-time will have multiple touchpoints for offshoring.
 ```
 // this is a command
 function myCommand() {
-	let counter = 0;
-	counter++;
+ let counter = 0;
+ counter++;
 }
 
 // Test with a line break above this line.
