@@ -270,6 +270,7 @@
     <MESSAGE value="updated styles, and some content" />
     <MESSAGE value="remove duplicated content" />
     <MESSAGE value="styling and a little tiny post" />
-    <option name="LAST_COMMIT_MESSAGE" value="styling and a little tiny post" />
+    <MESSAGE value="revert post.njk" />
+    <option name="LAST_COMMIT_MESSAGE" value="revert post.njk" />
   </component>
 </project>
