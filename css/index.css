@@ -116,6 +116,7 @@
 			&::before {
 				box-sizing: border-box;
 				position: sticky;
+				inset-inline-start: 0;
 				display: block;
 				text-align: end;
 				font-size: small;
