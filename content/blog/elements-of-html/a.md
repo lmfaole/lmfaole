@@ -1,7 +1,7 @@
 ---
 title: The Elements of HTML — anchor
 description: An element used to create a link.
-date: 2025-11-09
+date: "git Created"
 tags: html elements, flow content, palpable content, interactive content, phrasing content
 ---
 

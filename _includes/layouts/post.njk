@@ -17,8 +17,7 @@ layout: layouts/base.njk
 		{% if description %}
 			<p class="lead">{{ description }}</p>
 		{% endif %}
-		<p class="updated">Updated
-			<time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
+		<p class="date">Posted <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
 		</p>
 	</header>
 

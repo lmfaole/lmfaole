@@ -206,6 +206,10 @@
 		max-width: var(--max-width);
 		margin-inline: auto;
 	}
+
+	.date {
+		opacity: var(--muted);
+	}
 }
 
 @layer state {
@@ -294,7 +298,6 @@
 			}
 
 			.date {
-				opacity: var(--muted);
 				align-self: end;
 			}
 
@@ -323,8 +326,7 @@
 			--margin: 1lh;
 			margin-block-end: var(--margin);
 
-			.updated {
-				opacity: var(--muted);
+			.date {
 				font-size: smaller;
 				margin-block-end: 0;
 			}
