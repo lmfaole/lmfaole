@@ -12,7 +12,7 @@
 				<p class="lead">{{ post.data.description }}</p>
 			{% endif %}
 			<small class="date">Posted
-			<time class="postlist-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("LLLL yyyy") }}</time>
+			<time class="postlist-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
 			</small>
 		</li>
 	{%- endfor %}
