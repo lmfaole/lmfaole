@@ -5,7 +5,7 @@ date: 2025-11-09
 tags: html elements, flow content, palpable content, interactive content, phrasing content
 ---
 
-> **From [the address spec](https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-a-element)**
+> **From [the anchor spec](https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-a-element)**
 >
 > If the a element has an `href` attribute, then it represents a hyperlink (a hypertext anchor) labeled by its contents.
 > 
