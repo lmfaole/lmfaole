@@ -58,8 +58,8 @@
 			<a href="/" class="home-link">{{ metadata.title }}</a>
 
 			{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
-			<nav>
-				<p class="screenreader-only" id="main-menu">Main menu</h2>
+			<nav aria-labelledby="main-menu">
+				<p class="screenreader-only" id="main-menu">Site navigation</h2>
 				<ul class="nav" aria-labelledby="main-menu">
 					{%- for entry in collections.all | eleventyNavigation %}
 						<li class="nav-item">

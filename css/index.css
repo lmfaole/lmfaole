@@ -1,10 +1,29 @@
-@layer reset, base, global, posts, state;
+@layer reset, base, global, state, components, pages;
 
 @layer base {
 	:root {
-		--accent: light-dark(black, lightgreen);
-		--muted: 0.8;
+		--accent: light-dark(hsl(210, 92%, 37%), hsl(68, 78%, 82%));
+		--muted: 75%;
 		--max-width: 90ch;
+
+		--animation-speed-fast: 0ms linear;
+		--decorative-border-opacity: 20%;
+		--decorative-background-opacity: 2%;
+
+		--bold: 600;
+
+		background-color: light-dark(hsl(50, 100%, 99%), hsl(42, 100%, 1%));
+
+		@media (prefers-reduced-motion: no-preference) {
+			--animation-speed-fast: 200ms ease-out;
+		}
+
+		/* biome-ignore lint/correctness/noUnknownMediaFeatureName: This is a valid media query */
+		@media ((prefers-contrast: more) or (prefers-reduced-transparency: reduce)) {
+			--decorative-border-opacity: 100%;
+			--decorative-background-opacity: 0%;
+			--muted: 100%;
+		}
 	}
 
 	h1,
@@ -15,7 +34,7 @@
 	h6 {
 		max-width: 35ch;
 		margin-block: 2lh 0.5lh;
-		font-weight: 600;
+		font-weight: var(--bold);
 	}
 
 	p,
@@ -38,20 +57,24 @@
 
 	a {
 		--color: var(--accent);
-		--decoration-opacity: 20%;
 
 		color: var(--color);
 		text-underline-offset: 0.1lh;
 		text-decoration-thickness: 0.05lh;
 		text-decoration-color: color-mix(
 			in hsl,
-			var(--color) var(--decoration-opacity),
+			var(--color) var(--decorative-border-opacity),
 			transparent
 		);
-		transition: text-decoration-color 100ms ease-out;
+		transition: text-decoration-color var(--animation-speed-fast);
 
 		&:hover {
-			--decoration-opacity: 100%;
+			--decorative-border-opacity: 100%;
+		}
+
+		&[download]::after {
+			content: " 📂" / "";
+			font-size: smaller;
 		}
 	}
 
@@ -62,7 +85,7 @@
 	}
 
 	code {
-		background-color: color-mix(in hsl, currentColor 5%, transparent);
+		background-color: color-mix(in hsl, currentColor 3%, transparent);
 		border: 1px solid color-mix(in hsl, currentColor 10%, transparent);
 		padding-inline: 0.2em;
 		border-radius: 0.1lh;
@@ -70,9 +93,10 @@
 	}
 
 	pre {
-		--border: 1px solid color-mix(in hsl, currentColor 10%, #0c150f);
+		--background-color: light-dark(hsl(219, 81%, 10%), hsl(137, 64%, 2%));
+		--border: 1px solid hsl(from currentColor h s l / 0.1);
 
-		background-color: #0c150f;
+		background-color: var(--background-color);
 		border: var(--border);
 		font-size: smaller;
 		border-radius: 0.5lh;
@@ -92,7 +116,6 @@
 			&::before {
 				box-sizing: border-box;
 				position: sticky;
-				inset-inline-start: 0;
 				display: block;
 				text-align: end;
 				font-size: small;
@@ -102,7 +125,6 @@
 				text-transform: uppercase;
 				margin-block-end: 1lh;
 				opacity: var(--muted);
-				color: white;
 			}
 
 			&[class*="html"]::before {
@@ -116,17 +138,25 @@
 	}
 
 	blockquote {
-		margin-inline-start: 0;
-		padding-inline-start: 2ch;
-		border-inline-start: 1px solid
-			color-mix(in hsl, var(--accent) 33%, transparent);
+		margin-inline: 0;
+		padding: 2ex 2ch 1ex 2ch;
+		background-color: color-mix(
+			in hsl,
+			currentColor var(--decorative-background-opacity),
+			transparent
+		);
+		border-inline-start: 2px solid
+			color-mix(
+				in hsl,
+				var(--accent) var(--decorative-border-opacity),
+				transparent
+			);
 		margin-block: 2lh;
-	}
-}
+		width: fit-content;
 
-@layer state {
-	:focus-visible {
-		outline: 3px solid currentColor;
+		@media (prefers-contrast: more) {
+			padding-block: 0;
+		}
 	}
 }
 
@@ -177,60 +207,122 @@
 	}
 }
 
-@layer posts {
+@layer state {
+	:focus-visible {
+		outline: 3px solid currentColor;
+	}
+}
+
+@layer components {
+	.chip-group {
+		list-style: none;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1ch;
+
+		li {
+			margin-block-end: 0;
+		}
+	}
+
+	.chip {
+		display: inline-block;
+		border: 1px solid
+			color-mix(
+				in hsl,
+				var(--accent) var(--decorative-border-opacity),
+				transparent
+			);
+		background-color: color-mix(
+			in hsl,
+			var(--accent) var(--decorative-background-opacity),
+			transparent
+		);
+		line-height: 1;
+		padding: 0.5ex 0.75em;
+		border-radius: 2lh;
+		text-decoration: none;
+		text-box-trim: trim-end;
+		transition: border var(--animation-speed-fast);
+
+		&:hover {
+			--decorative-border-opacity: 100%;
+		}
+	}
+}
+
+@layer pages {
 	.postlist {
 		list-style-type: none;
+		display: grid;
+		grid: auto-flow dense / repeat(auto-fit, minmax(min(35ch, 100%), 1fr));
+		gap: 3px;
 
 		.postlist-item {
-			--border-opacity: 10%;
-			--border-color: currentColor;
-
-			max-width: unset;
-			background-color: color-mix(in hsl, currentColor 5%, transparent);
-			padding: 0.5lh 1em;
-			border-radius: 0.25lh;
+			display: grid;
+			grid: auto 1fr auto / auto-flow;
+			gap: 0.25lh;
+			margin: 0;
+			background-color: color-mix(
+				in hsl,
+				currentColor var(--decorative-background-opacity),
+				transparent
+			);
+			padding: 0.75lh 1.5em 1lh;
 			border: 1px solid
 				color-mix(
 					in hsl,
-					var(--border-color) var(--border-opacity),
+					var(--accent) var(--decorative-border-opacity),
 					transparent
 				);
 
-			transition: border-color 100ms ease-out;
+			transition: border-color var(--animation-speed-fast);
 
 			.title {
-				display: block;
-				font-weight: bolder;
-				margin-block-end: 0.2lh;
 				max-width: max-content;
 			}
 
 			.lead {
-				margin-block: 0 0.2lh;
+				margin: 0;
 				font-size: smaller;
+			}
+
+			&:not(:has(.lead)) {
+				grid: repeat(2, auto) / auto-flow;
 			}
 
 			.date {
 				opacity: var(--muted);
-			}
-
-			&:not(:last-of-type) {
-				margin-block-end: 1lh;
+				align-self: end;
 			}
 
 			&:has(.title:hover) {
-				--border-opacity: 15%;
-				--border-color: var(--accent);
+				--decorative-border-opacity: 100%;
+			}
+		}
+
+		.postlist-item:first-of-type {
+			grid-row: 1 / 3;
+			grid-template-rows: 1fr auto auto;
+
+			.title {
+				font-weight: var(--bold);
+				align-self: end;
+			}
+
+			.lead {
+				font-size: revert;
 			}
 		}
 	}
 
 	.post {
 		& header {
-			--margin: 1.5lh;
+			--margin: 1lh;
 			margin-block-end: var(--margin);
 
-			.published {
+			.updated {
 				opacity: var(--muted);
 				font-size: smaller;
 				margin-block-end: 0;
@@ -240,39 +332,18 @@
 				display: block;
 				content: "";
 				padding-block-end: var(--margin);
-				border-block-end: 1px dotted
-					color-mix(in hsl, currentColor 20%, transparent);
+				border-block-end: 1px solid
+					color-mix(
+						in hsl,
+						currentColor var(--decorative-border-opacity),
+						transparent
+					);
 			}
 		}
 
 		.post-footer {
 			margin-block: 3lh;
 			font-size: smaller;
-
-			.tag-list {
-				list-style: none;
-				display: flex;
-				align-items: center;
-				flex-wrap: wrap;
-				gap: 1ch;
-
-				.tag {
-					display: inline-block;
-					border: 1px solid
-						color-mix(
-							in hsl,
-							var(--accent) var(--decoration-opacity),
-							transparent
-						);
-					background-color: color-mix(in hsl, var(--accent) 2%, transparent);
-					line-height: 1;
-					padding: 0.5ex 0.75em;
-					border-radius: 2lh;
-					text-decoration: none;
-					text-box-trim: trim-end;
-					transition: border 100ms ease-out;
-				}
-			}
 		}
 	}
 }
