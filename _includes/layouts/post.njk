@@ -25,8 +25,8 @@ layout: layouts/base.njk
 	{{ content | safe }}
 
 	<footer class="post-footer">
-		<h2>Tags</h2>
-		<ul class="tag-list" role="list">
+		<h2 id="tag-heading">Tags</h2>
+		<ul class="tag-list" role="list" aria-labelledby="tag-heading">
 			{%- for tag in tags | filterTagList %}
 				{%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
 				<li>

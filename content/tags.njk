@@ -1,6 +1,6 @@
-<h1>Tags</h1>
+<h1 id="tags-heading">Tags</h1>
 
-<ul>
+<ul aria-labelledby="tags-heading">
 	{% for tag in collections | getKeys | filterTagList | sortAlphabetically %}
 		{% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
 		<li>
