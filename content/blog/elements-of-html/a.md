@@ -20,10 +20,10 @@ The [download attribute][download] makes the browser download the document refer
 You can, however, specify the filename using the `download` attribute. Take this link for example: <a href="https://lmfaole.party/img/favicon.png" download="an_awesome_favicon.png">download my awesome favicon</a>. The `href` is still the same, but I've changed the value of the download attribute: `download="an_awesome_favicon.png"`.
 
 ``` html
-// Programmatically determined filename
+// Programmatically determined file name
 <a href="https://lmfaole.party/img/favicon.png" download>
 
-// Custom filename
+// Custom file name
 <a href="https://lmfaole.party/img/favicon.png" download="filename.png">
 ```
 
