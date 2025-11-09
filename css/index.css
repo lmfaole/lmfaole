@@ -1,4 +1,4 @@
-@layer reset, base, global, posts;
+@layer reset, base, global, posts, state;
 
 @layer base {
 	:root {
@@ -7,11 +7,17 @@
 		--max-width: 90ch;
 	}
 
-	p, li {
+	p,
+	li {
 		max-width: 55ch;
 	}
 
-	h1, h2, h3, h4, h5, h6 {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
 		max-width: 35ch;
 		margin-block-start: 1lh;
 	}
@@ -23,7 +29,11 @@
 		color: var(--color);
 		text-underline-offset: 0.1lh;
 		text-decoration-thickness: 0.05lh;
-		text-decoration-color: color-mix(in hsl, var(--color) var(--decoration-opacity), transparent);
+		text-decoration-color: color-mix(
+			in hsl,
+			var(--color) var(--decoration-opacity),
+			transparent
+		);
 		transition: text-decoration-color 100ms ease-out;
 
 		&:hover {
@@ -33,7 +43,8 @@
 
 	code,
 	pre {
-		font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+		font-family:
+			"SF Mono", Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
 	}
 
 	code {
@@ -61,7 +72,7 @@
 			font-size: unset;
 		}
 
-		&:has([class*=language]) {
+		&:has([class*="language"]) {
 			padding-block-start: 0;
 
 			&::before {
@@ -80,11 +91,11 @@
 				color: white;
 			}
 
-			&[class*=html]::before {
+			&[class*="html"]::before {
 				content: "HTML";
 			}
 
-			&[class*=js]::before {
+			&[class*="js"]::before {
 				content: "Javascript";
 			}
 		}
@@ -93,10 +104,13 @@
 	blockquote {
 		margin-inline-start: 0;
 		padding-inline-start: 2ch;
-		border-inline-start: 1px solid color-mix(in hsl, var(--accent) 33%, transparent);
+		border-inline-start: 1px solid
+			color-mix(in hsl, var(--accent) 33%, transparent);
 		margin-block: 2lh;
 	}
+}
 
+@layer state {
 	:focus-visible {
 		outline: 3px solid currentColor;
 	}
@@ -130,16 +144,17 @@
 		max-width: var(--max-width);
 		margin-inline: auto;
 
-		&::before {
-			display: block;
-			content: "";
-			padding-block-start: var(--margin);
-			border-block-start: 1px dotted color-mix(in hsl, currentColor 20%, transparent);
-		}
-
 		& address {
 			font-style: unset;
 		}
+	}
+
+	.global-footer::before {
+		display: block;
+		content: "";
+		padding-block-start: var(--margin);
+		border-block-start: 1px dotted
+			color-mix(in hsl, currentColor 20%, transparent);
 	}
 
 	main {
@@ -160,7 +175,12 @@
 			background-color: color-mix(in hsl, currentColor 5%, transparent);
 			padding: 0.5lh 1em;
 			border-radius: 0.25lh;
-			border: 1px solid color-mix(in hsl, var(--border-color) var(--border-opacity), transparent);
+			border: 1px solid
+				color-mix(
+					in hsl,
+					var(--border-color) var(--border-opacity),
+					transparent
+				);
 
 			transition: border-color 100ms ease-out;
 
@@ -206,7 +226,8 @@
 				display: block;
 				content: "";
 				padding-block-end: var(--margin);
-				border-block-end: 1px dotted color-mix(in hsl, currentColor 20%, transparent);
+				border-block-end: 1px dotted
+					color-mix(in hsl, currentColor 20%, transparent);
 			}
 		}
 
@@ -223,7 +244,12 @@
 
 				.tag {
 					display: inline-block;
-					border: 1px solid color-mix(in hsl, var(--accent) var(--decoration-opacity), transparent);
+					border: 1px solid
+						color-mix(
+							in hsl,
+							var(--accent) var(--decoration-opacity),
+							transparent
+						);
 					background-color: color-mix(in hsl, var(--accent) 2%, transparent);
 					line-height: 1;
 					padding: 0.5ex 0.75em;

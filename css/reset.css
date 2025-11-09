@@ -168,6 +168,7 @@
 	}
 
 	[hidden] {
+		/* biome-ignore lint/complexity/noImportantStyles: This actually is important */
 		display: none !important;
 	}
 
