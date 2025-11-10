@@ -10,6 +10,7 @@
 		--decorative-border-thickness: 1px;
 		--decorative-border-opacity: 20%;
 		--decorative-background-opacity: 2%;
+		--decorative-background-padding: 0.5lh;
 
 		--bold: 600;
 
@@ -28,6 +29,7 @@
 		@media ((prefers-contrast: more) or (prefers-reduced-transparency: reduce)) {
 			--decorative-border-opacity: 100%;
 			--decorative-background-opacity: 0%;
+			--decorative-background-padding: 1px;
 			--muted: 100%;
 		}
 	}
@@ -115,7 +117,8 @@
 
 	pre {
 		--background-color: light-dark(hsl(219, 81%, 10%), hsl(137, 64%, 2%));
-		--border: 1px solid hsl(from currentColor h s l / 0.1);
+		--border: 1px solid
+			hsl(from currentColor h s l / var(--decorative-border-opacity));
 
 		background-color: var(--background-color);
 		border: var(--border);
@@ -164,7 +167,8 @@
 
 	blockquote {
 		margin-inline: 0;
-		padding: 2ex 2ch 1ex 2ch;
+		padding: calc(var(--decorative-background-padding) * 2) 2ch
+			var(--decorative-background-padding);
 		background-color: color-mix(
 			in hsl,
 			currentColor var(--decorative-background-opacity),
@@ -218,8 +222,6 @@
 		grid: auto-flow / 64px 1fr;
 		gap: var(--margin) 2ch;
 		align-items: center;
-		opacity: var(--muted);
-		transition: opacity var(--animation-speed-fast);
 
 		& address {
 			font-style: unset;
@@ -229,12 +231,8 @@
 			display: block;
 			grid-column: 1 / -1;
 			content: "";
-			border-block-start: 1px dotted
-				color-mix(in hsl, currentColor 20%, transparent);
-		}
-
-		&:hover {
-			opacity: 1;
+			border-block-start: 2px solid
+				hsl(from var(--accent) h s l / var(--decorative-border-opacity));
 		}
 	}
 
@@ -258,6 +256,9 @@
 	.avatar {
 		border-radius: 50%;
 		aspect-ratio: 1;
+		border: 2px solid
+			hsl(from var(--accent) h s l / var(--decorative-border-opacity));
+		transition: border-color var(--animation-speed-fast);
 	}
 
 	.chip-group {
@@ -377,11 +378,7 @@
 				content: "";
 				padding-block-end: var(--margin);
 				border-block-end: 1px solid
-					color-mix(
-						in hsl,
-						currentColor var(--decorative-border-opacity),
-						transparent
-					);
+					hsl(from var(--accent) h s l / var(--decorative-border-opacity));
 			}
 		}
 
