@@ -39,7 +39,7 @@ The [href] is the backbone of the entire thing that is a link. There are a numbe
 
 #### Link to a specific part of a document
 
-- Go to an element with an id: <a href="#attributes">Go to the attributes section</a>
+- Go to an element with an id: <a href="#useful-attributes">Go to the attributes section</a>
 - Go to a specific piece of text in a document: <a href="https://en.wikipedia.org/wiki/Vinstra#:~:text=The%20village%20of%20Vinstra%20was%20granted%20the%20status%20of%20a%20%22town%22%5B1%5D%20on%201%20September%202013%2C%20an%20event%20that%20was%20celebrated%20for%203%20days.">Feast your eyes on a fun fact about my hometown</a>
 - Go to a specific timestamp in a piece of media: I love <a href="https://youtu.be/1NxyVkRC0MA?t=129" target="_blank">Pattie Labelle and Mariah Carey's on-stage banter during this live performance</a>
 
@@ -50,7 +50,7 @@ Send an SMS: <a href="sms:12345678">Send me a message<span class="sr"> (test lin
 Start composing an e-mail with a predefined address: <a href="mailto:olejorgenbakken@gmail.com">Send me an e-mail</a>
 
 <!-- Parts of a document -->
-Go to an element with an id: <a href="#attributes">Go to the attributes section</a>
+Go to an element with an id: <a href="#useful-attributes">Go to the attributes section</a>
 Go to a specific piece of text in a document: <a href="https://en.wikipedia.org/wiki/Vinstra#:~:text=The%20village%20of%20Vinstra%20was%20granted%20the%20status%20of%20a%20%22town%22%5B1%5D%20on%201%20September%202013%2C%20an%20event%20that%20was%20celebrated%20for%203%20days.">Feast your eyes on a fun fact about my hometown</a>
 Go to a specific timestamp in a piece of media: I love <a href="https://youtu.be/1NxyVkRC0MA?t=129" target="_blank">Pattie Labelle and Mariah Carey's on-stage banter during this live performance</a>
 ```
