@@ -20,10 +20,10 @@ The [download attribute][download] makes the browser download the document refer
 You can, however, specify the filename using the `download` attribute. Take this link for example: <a href="https://lmfaole.party/img/favicon.png" download="an_awesome_favicon.png">download my awesome favicon</a>. The `href` is still the same, but I've changed the value of the download attribute: `download="an_awesome_favicon.png"`.
 
 ``` html
-// Programmatically determined file name
+<!-- Programmatically determined file name -->
 <a href="https://lmfaole.party/img/favicon.png" download>
 
-// Custom file name
+<!-- Custom file name -->
 <a href="https://lmfaole.party/img/favicon.png" download="filename.png">
 ```
 
@@ -43,7 +43,7 @@ The [href] is the backbone of the entire thing that is a link. There are a numbe
 - Go to a specific piece of text in a document: <a href="https://en.wikipedia.org/wiki/Vinstra#:~:text=The%20village%20of%20Vinstra%20was%20granted%20the%20status%20of%20a%20%22town%22%5B1%5D%20on%201%20September%202013%2C%20an%20event%20that%20was%20celebrated%20for%203%20days.">Feast your eyes on a fun fact about my hometown</a>
 - Go to a specific timestamp in a piece of media: I love <a href="https://youtu.be/1NxyVkRC0MA?t=129" target="_blank">Pattie Labelle and Mariah Carey's on-stage banter during this live performance</a>
 
-```html
+``` html
 <!-- Actions -->
 Call numbers: <a href="tel:12345678">Call me<span class="sr"> (test link)</span></a>
 Send an SMS: <a href="sms:12345678">Send me a message<span class="sr"> (test link)</span></a>
@@ -77,7 +77,7 @@ The [hreflang] gives a hint about the language of a linked document (for example
 
 [Manuel Matuzovic] has written [a great article about some basics of HTML](https://htmhell.dev/adventcalendar/2023/4/) over at [HTMHell], where he gives some reasons why might want to use hreflang.
 
-```html
+``` html
 <a href="https://freak.no/forum/showthread.php?t=206290" hreflang="no">forum post about the 2011 Norwegian butter crisis</a>
 ```
 
@@ -90,7 +90,7 @@ The [target] attribute defines where to open the link, you've probably encounter
 
 PS: [Kyrylo Silin] has written [a post about why target values use underscores](https://kyrylo.org/html/2024/10/25/why-does-target-blank-have-an-underscore-in-front.html).
 
-```html
+``` html
 <a href="https://en.wikipedia.org/wiki/Rickrolling" target="_self">Get kinda rick-rolled</a>
 <a href="https://en.wikipedia.org/wiki/Rickrolling" target="_blank">Get kinda rick-rolled</a>
 ```
