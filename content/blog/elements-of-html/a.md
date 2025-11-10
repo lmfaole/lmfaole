@@ -35,7 +35,7 @@ The [href] is the backbone of the entire thing that is a link. There are a numbe
 
 - Call numbers: <a href="tel:12345678">Call me<span class="sr"> (test link)</span></a>
 - Send an SMS: <a href="sms:12345678">Send me a message<span class="sr"> (test link)</span></a>
-- Start a mail app with a predefined address: <a href="mailto:olejorgenbakken@gmail.com">Send me a mail</a>
+- Start composing an e-mail with a predefined address: <a href="mailto:olejorgenbakken@gmail.com">Send me an e-mail</a>
 
 #### Link to a specific part of a document
 
@@ -47,7 +47,7 @@ The [href] is the backbone of the entire thing that is a link. There are a numbe
 <!-- Actions -->
 Call numbers: <a href="tel:12345678">Call me<span class="sr"> (test link)</span></a>
 Send an SMS: <a href="sms:12345678">Send me a message<span class="sr"> (test link)</span></a>
-Start a mail app with a predefined address: <a href="mailto:olejorgenbakken@gmail.com">Send me a mail</a>
+Start composing an e-mail with a predefined address: <a href="mailto:olejorgenbakken@gmail.com">Send me an e-mail</a>
 
 <!-- Parts of a document -->
 Go to an element with an id: <a href="#attributes">Go to the attributes section</a>
