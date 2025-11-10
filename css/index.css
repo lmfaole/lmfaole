@@ -7,6 +7,7 @@
 		--max-width: 90ch;
 
 		--animation-speed-fast: 0ms linear;
+		--decorative-border-thickness: 1px;
 		--decorative-border-opacity: 20%;
 		--decorative-background-opacity: 2%;
 
@@ -16,6 +17,11 @@
 
 		@media (prefers-reduced-motion: no-preference) {
 			--animation-speed-fast: 200ms ease-out;
+		}
+
+		@media (prefers-color-scheme: dark) {
+			--decorative-border-opacity: 50%;
+			--decorative-background-opacity: 4%;
 		}
 
 		/* biome-ignore lint/correctness/noUnknownMediaFeatureName: This is a valid media query */
@@ -68,12 +74,27 @@
 		);
 		transition: text-decoration-color var(--animation-speed-fast);
 
+		& code {
+			border: none;
+			padding-inline: 0;
+		}
+
 		&:hover {
 			--decorative-border-opacity: 100%;
 		}
 
 		&[download]::after {
 			content: " 📂" / "";
+			font-size: smaller;
+		}
+
+		&[hreflang="no"]::after {
+			content: " 🇳🇴" / "";
+			font-size: smaller;
+		}
+
+		&[target="_blank"]::after {
+			content: " 👋" / "";
 			font-size: smaller;
 		}
 	}
@@ -101,6 +122,8 @@
 		font-size: smaller;
 		border-radius: 0.5lh;
 		padding: 1em;
+		color: inherit;
+		margin-block: 2lh 3lh;
 
 		& code {
 			background-color: transparent;
@@ -111,6 +134,7 @@
 		}
 
 		&:has([class*="language"]) {
+			color: revert;
 			padding-block-start: 0;
 
 			&::before {
@@ -165,18 +189,20 @@
 	.global-header {
 		max-width: var(--max-width);
 		margin-inline: auto;
-		display: flex;
+		display: grid;
+		grid-template-columns: 1fr auto;
 		align-items: center;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		gap: 1ex 5ch;
+		gap: 1ex 2ch;
 		margin-block-end: 1lh;
 
-		.nav li {
-			display: inline-block;
+		.nav {
+			display: flex;
+			margin: 0;
+			justify-content: end;
+			gap: 2ch;
 
-			&:not(:last-child) {
-				margin-right: 1em;
+			li {
+				list-style-type: none;
 			}
 		}
 	}
@@ -188,18 +214,28 @@
 		width: 100%;
 		max-width: var(--max-width);
 		margin-inline: auto;
+		display: grid;
+		grid: auto-flow / 64px 1fr;
+		gap: var(--margin) 2ch;
+		align-items: center;
+		opacity: var(--muted);
+		transition: opacity var(--animation-speed-fast);
 
 		& address {
 			font-style: unset;
 		}
-	}
 
-	.global-footer::before {
-		display: block;
-		content: "";
-		padding-block-start: var(--margin);
-		border-block-start: 1px dotted
-			color-mix(in hsl, currentColor 20%, transparent);
+		&::before {
+			display: block;
+			grid-column: 1 / -1;
+			content: "";
+			border-block-start: 1px dotted
+				color-mix(in hsl, currentColor 20%, transparent);
+		}
+
+		&:hover {
+			opacity: 1;
+		}
 	}
 
 	main {
@@ -219,6 +255,11 @@
 }
 
 @layer components {
+	.avatar {
+		border-radius: 50%;
+		aspect-ratio: 1;
+	}
+
 	.chip-group {
 		list-style: none;
 		display: flex;

@@ -225,14 +225,24 @@
 		font-size: 90%;
 	}
 
-	.screenreader-only:not(:focus):not(:active) {
-		clip: rect(0 0 0 0);
-		clip-path: inset(50%);
-		height: 1px;
-		overflow: hidden;
-		position: absolute;
-		white-space: nowrap;
-		width: 1px;
+	.sr {
+		&:not(:focus):not(:active) {
+			clip: rect(0 0 0 0);
+			clip-path: inset(50%);
+			height: 1px;
+			overflow: hidden;
+			position: absolute;
+			white-space: nowrap;
+			width: 1px;
+		}
+
+		&#skip-link {
+			position: absolute;
+			margin: 6px;
+			padding: 1ex 1em;
+			inset-inline-start: 0;
+			inset-block-start: 0;
+		}
 	}
 
 	:focus-visible {

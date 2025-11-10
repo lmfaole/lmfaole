@@ -8,24 +8,28 @@ Previously designed components for [NAV] at [Aksel].
 
 In preferred order
 
-1. [Bluesky](https://bsky.app/profile/lmfaole.party)
-2. [Github](https://github.com/lmfaole)
-3. [Codepen](https://codepen.io/lmfaole)
-4. [Last.fm](https://www.last.fm/user/snowpony69)
-5. [Letterboxd](https://letterboxd.com/lmfaole/)
-6. [Apple Music](https://music.apple.com/profile/lmfaole)
-7. [Instagram](https://www.instagram.com/lmfaole/)
-8. [Goodreads](https://www.goodreads.com/user/show/191477888-lmfaole) (I forget I like reading)
+1. <a href="https://bsky.app/profile/lmfaole.party" rel="me">Bluesky</a>
+2. <a href="https://github.com/lmfaole" rel="me">Github</a>
+3. <a href="https://codepen.io/lmfaole" rel="me">Codepen</a>
+4. <a href="https://www.last.fm/user/snowpony69" rel="me">Last.fm</a>
+5. <a href="https://letterboxd.com/lmfaole/" rel="me">Letterboxd</a>
+6. <a href="https://music.apple.com/profile/lmfaole" rel="me">Apple Music</a>
+7. <a href="https://www.instagram.com/lmfaole/" rel="me">Instagram</a>
+8. <a href="https://www.goodreads.com/user/show/191477888-lmfaole" rel="me">Goodreads</a> (I forget I like reading)
 
 ## Current tools
 
+### Blogging platform
+
+Markdown + [Eleventy].
+
 ### IDE environment
 
-A reserved recommendation of [VSCode][].
+I'll first give a reserved recommendation of [VSCode][]. It's really not my favorite, but the extensive library of extensions make it inevitable at this point.
 
-**I like a lot of what [WebStorm] is doing**. [WebStorm's integrated version control](https://www.jetbrains.com/help/webstorm/manage-branches.html#create-branch) is a delight, but I've found that it's ultimately too opinionated for collaboration purposes. The [GitLens extension](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) is probably the closest you can get on VSCode, but I haven't found it as easy to use (and it's paid).
+**My personal favorite is [WebStorm]**. [WebStorm's integrated version control](https://www.jetbrains.com/help/webstorm/manage-branches.html#create-branch) is a delight, but there aren't nearly enough plugins. Some notable missing ones for me is a good formatter for nunjucks, and a Norwegian language pack.
 
-I try to keep my extensions to a minimum, but these are some of my favorites:
+When I'm using VSCode I try to keep my extensions to a minimum. This is my minimalistic setup:
 
 - [Dark Horizon (dark theme)](https://marketplace.visualstudio.com/items?itemName=mcagampan.dark-horizon)
 - [Horla (light theme)](https://marketplace.visualstudio.com/items?itemName=Horla.horla-light-theme)
@@ -33,15 +37,11 @@ I try to keep my extensions to a minimum, but these are some of my favorites:
 - [Fluent Product Icons](https://marketplace.visualstudio.com/items?itemName=miguelsolorio.fluent-icons)
 - [Biome for VSCode](https://marketplace.visualstudio.com/items?itemName=biomejs.biome)
 
-We use [Biome] for linting and formatting on my team, and so far it's been a great replacement for Prettier and ESLint. In addition to this I use the [markdownlint extension](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) as [Biome doesn't fully support markdown yet](https://biomejs.dev/internals/language-support/).
+We use [Biome] for linting and formatting on my team, and so far it's been a great replacement for Prettier and ESLint. In addition to this I use the [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) as [Biome doesn't fully support Markdown yet](https://biomejs.dev/internals/language-support/).
 
 > **AI**
 >
-> I turn off all AI features. Accidentally learning about something while coding is so much fun, and at the time of writing this Copilot takes that away from me. Intellisense stays on though.
-
-### Blogging platform
-
-Markdown + [Eleventy]
+> I turn off all AI features in any IDE. Accidentally learning about something while coding is so much fun, and at the time of writing this Copilot takes that away from me. Intellisense stays on though.
 
 [Eleventy]: https://www.11ty.dev/
 [Biome]: https://biomejs.dev/

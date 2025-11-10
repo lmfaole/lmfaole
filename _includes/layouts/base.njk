@@ -52,15 +52,15 @@
 		</script>
 	</head>
 	<body>
-		<a href="#main" id="skip-link" class="screenreader-only">To main content</a>
+		<a href="#main" id="skip-link" class="sr">To main content</a>
 
 		<header class="global-header">
 			<a href="/" class="home-link">{{ metadata.title }}</a>
 
 			{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
 			<nav aria-labelledby="main-menu">
-				<p class="screenreader-only" id="main-menu">Site navigation</h2>
-				<ul class="nav" aria-labelledby="main-menu">
+				<p class="sr" id="main-menu">Site</h2>
+				<ul class="nav" aria-label="Sitewide navigation" role="list">
 					{%- for entry in collections.all | eleventyNavigation %}
 						<li class="nav-item">
 							<a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a>
@@ -77,11 +77,8 @@
 		</main>
 
 		<footer class="global-footer">
-			<address>If you want to contact me I'm ususally on
-		<a href="https://bsky.app/profile/lmfaole.party">Bluesky</a> or you can
-		<a href="mailto:hello@lmfaole.party">send me an email</a> (yes, actually).
-	</address>
-			<p>More <a href="/about">about me</a>.</p>
+			<a href="/about" aria-label="about me"><img src="/img/my-face.png" alt="My face, a smiling and bald guy in the middle of the woods in Norway with a cabin in the background" class="avatar"/></a>
+			<address>If you want to contact me your best chances are on <a href="https://bsky.app/profile/lmfaole.party">Bluesky</a>, or to just <a href="mailto:hello@lmfaole.party">send me an email</a> (yes, really).</address>
 		</footer>
 
 		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->

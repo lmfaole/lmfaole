@@ -29,7 +29,7 @@ layout: layouts/base.njk
 			{%- for tag in tags | filterTagList %}
 				{%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
 				<li>
-					<a href="{{ tagUrl }}" class="post-tag chip">{{ tag }}</a>
+					<a href="{{ tagUrl }}" class="post-tag chip" rel="tag">{{ tag }}</a>
 				</li>
 			{%- endfor %}
 		</ul>
