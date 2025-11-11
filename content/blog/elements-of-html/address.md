@@ -1,8 +1,10 @@
 ---
 title: The Elements of HTML — address
 description: An element used for contact information for people, or for an organization.
-date: 2025-11-08
+created: 2025-11-08
+modified: 2025-11-09
 tags: html elements, flow content, palpable content
+draft: false
 ---
 
 > **From [the address spec](https://html.spec.whatwg.org/multipage/sections.html#the-address-element)**

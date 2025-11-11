@@ -241,7 +241,7 @@
 		margin-inline: auto;
 	}
 
-	.date {
+	.muted {
 		opacity: var(--muted);
 	}
 }
@@ -253,6 +253,34 @@
 }
 
 @layer components {
+	.bleed {
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+
+		&.background {
+			--background-color: hsl(
+				from var(--accent) h s l /
+				var(--decorative-background-opacity)
+			);
+			width: unset;
+			margin-left: unset;
+			position: relative;
+			padding-block: var(--decorative-background-padding);
+
+			&::after {
+				content: "";
+				position: absolute;
+				width: 100vw;
+				margin-left: calc(50% - 50vw);
+				inset: 0;
+				background-color: var(--background-color);
+				z-index: -1;
+			}
+		}
+
+		/* Thanks https://piccalil.li/blog/creating-a-full-bleed-css-utility/ */
+	}
+
 	.avatar {
 		border-radius: 50%;
 		aspect-ratio: 1;
@@ -303,44 +331,54 @@
 	.postlist {
 		list-style-type: none;
 		display: grid;
-		grid: auto-flow dense / repeat(auto-fit, minmax(min(35ch, 100%), 1fr));
-		gap: 3px;
+		grid: auto-flow dense / repeat(auto-fit, minmax(min(30ch, 100%), 1fr));
+		gap: 0;
+		container: postlist-item / inline-size;
+
+		@media (prefers-contrast: more) {
+			gap: 1em;
+		}
 
 		.postlist-item {
+			max-width: unset;
 			display: grid;
-			grid: auto 1fr auto / auto-flow;
-			gap: 0.25lh;
+			grid-template-columns: 1fr;
 			margin: 0;
-			background-color: color-mix(
-				in hsl,
-				currentColor var(--decorative-background-opacity),
-				transparent
+			background-color: hsl(
+				from currentColor h s l /
+				var(--decorative-background-opacity)
 			);
-			padding: 0.75lh 1.5em 1lh;
 			border: 1px solid
 				color-mix(
 					in hsl,
 					var(--accent) var(--decorative-border-opacity),
 					transparent
 				);
-
 			transition: border-color var(--animation-speed-fast);
 
-			.title {
-				max-width: max-content;
+			@container (width > 60ch) {
+				&:first-of-type {
+					grid-column: 1 / 3;
+				}
 			}
 
-			.lead {
-				margin: 0;
-				font-size: smaller;
+			picture {
+				display: none;
 			}
 
-			&:not(:has(.lead)) {
-				grid: repeat(2, auto) / auto-flow;
-			}
+			.info {
+				padding: 1ex 2em;
 
-			.date {
-				align-self: end;
+				.title {
+					display: block;
+					max-width: max-content;
+					margin-block: 0.5lh;
+				}
+
+				.lead {
+					margin: 0;
+					font-size: smaller;
+				}
 			}
 
 			&:has(.title:hover) {
@@ -350,40 +388,79 @@
 
 		.postlist-item:first-of-type {
 			grid-row: 1 / 3;
-			grid-template-rows: 1fr auto auto;
 
-			.title {
-				font-weight: var(--bold);
-				align-self: end;
+			&:has(img) {
+				picture {
+					display: block;
+					align-self: center;
+					height: 100%;
+
+					@media (prefers-contrast: more) {
+						height: 90%;
+						margin: 2em;
+					}
+
+					img {
+						height: 100%;
+						object-fit: cover;
+					}
+				}
+
+				@container (width > 60ch) {
+					grid-template-columns: repeat(2, 1fr);
+				}
 			}
 
-			.lead {
-				font-size: revert;
+			.info {
+				align-self: center;
+
+				.title {
+					font-weight: var(--bold);
+				}
 			}
 		}
 	}
 
 	.post {
-		& header {
-			--margin: 1lh;
-			margin-block-end: var(--margin);
+		container: post / inline-size;
 
-			.date {
-				font-size: smaller;
-				margin-block-end: 0;
+		.post-header {
+			margin-block: 2lh 3lh;
+
+			&:has(img) {
+				display: grid;
+				grid: auto-flow dense / 1fr;
+				gap: 1lh 3em;
+
+				@container (width > 70ch) {
+					grid: auto-flow dense / 1fr 40cqi;
+				}
 			}
 
-			&::after {
-				display: block;
-				content: "";
-				padding-block-end: var(--margin);
-				border-block-end: 1px solid
-					hsl(from var(--accent) h s l / var(--decorative-border-opacity));
+			.info {
+				align-self: center;
+
+				.title {
+					margin-block-start: 0;
+				}
+
+				.date {
+					font-size: smaller;
+				}
+			}
+
+			picture {
+				place-self: center;
+				border-radius: 0.25lh;
+				overflow: hidden;
+
+				img {
+					width: 100%;
+				}
 			}
 		}
 
 		.post-footer {
-			margin-block: 3lh;
 			font-size: smaller;
 		}
 	}

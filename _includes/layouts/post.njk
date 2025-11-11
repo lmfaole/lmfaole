@@ -13,17 +13,21 @@ layout: layouts/base.njk
 </style>
 <article class="post">
 	<header class="post-header">
-		<h1>{{ title }}</h1>
-		{% if description %}
-			<p class="lead">{{ description }}</p>
+		<div class="info">
+			<h1 class="title">{{ title }}</h1>
+			{% if description %}
+				<p class="lead">{{ description }}</p>
+			{% endif %}
+		</div>
+		{% if image %}
+			<img src={{image}} alt="{% if imageAlt %}{{imageAlt}}{% else %}{% endif %}"/>
 		{% endif %}
-		<p class="date">Posted <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
-		</p>
 	</header>
 
 	{{ content | safe }}
 
 	<footer class="post-footer">
+
 		<h2 id="tag-heading">Tags</h2>
 		<ul class="chip-group" role="list" aria-labelledby="tag-heading">
 			{%- for tag in tags | filterTagList %}
@@ -34,7 +38,21 @@ layout: layouts/base.njk
 			{%- endfor %}
 		</ul>
 
-		{# {%- if collections.posts %}
+		<p class="muted">
+			{% if modified %}
+				{% if modified !== created %}
+					Updated <time datetime="{{ modified | htmlDateString }}">{{ modified | readableDateHour }}</time>
+					<br/>
+					Posted <time datetime="{{ created | htmlDateString }}">{{ created | readableDateHour }}</time>
+				{% else %}
+					Posted <time datetime="{{ created | htmlDateString }}">{{ created | readableDateHour }}</time>
+					{%endif%}
+				{% else %}
+				Posted <time datetime="{{  date | htmlDateString }}">{{ date | readableDateHour }}</time>
+					{%endif%}
+				</p>
+
+				{# {%- if collections.posts %}
 			{%- set previousPost = collections.posts | getPreviousCollectionItem %}
 			{%- set nextPost = collections.posts | getNextCollectionItem %}
 			{%- if nextPost or previousPost %}
@@ -51,5 +69,5 @@ layout: layouts/base.njk
 				</ul>
 			{%- endif %}
 		{%- endif %} #}
-	</footer>
-</article>
+			</footer>
+		</article>
