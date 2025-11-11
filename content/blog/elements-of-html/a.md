@@ -1,5 +1,5 @@
 ---
-title: The Elements of HTML — anchor
+title: The anchor element
 description: An element used to create a link.
 date: 2025-11-09
 created: 2025-11-09
@@ -8,6 +8,7 @@ image: img/blog/links.avif
 imageAlt:
 tags:
   - element
+  - html
 draft: false
 ---
 
