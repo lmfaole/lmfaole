@@ -9,7 +9,9 @@ layout: layouts/base.njk
 	}
 </style>
 <style>
-	{% include "css/prism-diff.css" %}
+	@layer reset {
+		{% include "css/prism-diff.css" %}
+	}
 </style>
 <article class="post">
 	<header class="post-header">

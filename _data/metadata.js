@@ -1,6 +1,6 @@
 export default {
-	title: "Ole Jørgen Bakken",
-	url: "https://lmfaole.party/",
+	title: "lmfaole.party",
+	url: "https://lmfaole.party",
 	language: "en",
 	description: "I don't know yet",
 	author: {

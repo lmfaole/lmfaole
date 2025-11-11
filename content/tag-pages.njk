@@ -11,7 +11,7 @@ const pagination = {
 const eleventyExcludeFromCollections = true;
 
 const eleventyComputed = {
-	title: "Tagged '{{ tag }}'",
+	title: "{{ tag }} posts",
 	permalink: function(data, content) {
 		// If DuplicatePermalinkOutputError occurs, check that no tag occurs
 		// with differing case, e.g. "RSS" and "rss".
@@ -20,7 +20,7 @@ const eleventyComputed = {
 };
 ---
 
-<h1>Tagged “{{ tag }}”</h1>
+<h1>A collection of {{ tag }} posts</h1>
 
 	{% set postslist = collections[tag] %}
 {% include "postslist.njk" %}
