@@ -120,6 +120,18 @@ export default async function (eleventyConfig) {
 		return new Date().toISOString();
 	});
 
+	// Curtesy of Patrick Lee: https://patricklee.nyc/blog/easy-dynamic-social-sharing-image-with-eleventy/
+	eleventyConfig.addShortcode("openGraphScreenshotURL", function () {
+		// URL Encode the page
+		const encodedURL = encodeURIComponent(
+			`https://lmfaole.party/${this.page.url}`,
+		);
+		// Generate a cache-busting key for quicker testing
+		const cacheKey = `_${new Date().valueOf()}`;
+		// Return the screenshot service's URL to add to the open graph tags.
+		return `https://v1.screenshot.11ty.dev/${encodedURL}/opengraph/${cacheKey}`;
+	});
+
 	// Features to make your build faster (when you need them)
 
 	// If your passthrough copy gets heavy and cumbersome, add this line

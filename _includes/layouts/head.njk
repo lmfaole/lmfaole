@@ -6,7 +6,7 @@
 
 	<meta property="og:title" content="{{ title or metadata.title }}">
 	<meta property="og:description" content="{{ description or metadata.description }}">
-	<meta property="og:image" content="{{metadata.url}}/{{ image or "img/open-graph.png" }}">
+	<meta property="og:image" content="{% openGraphScreenshotURL %}">
 	<meta property="og:image:width" content="1200">
 	<meta property="og:image:height" content="630">
 	<meta property="og:url" content="{{metadata.url}}{{page.url | escape }}"/>
@@ -16,6 +16,13 @@
 	<meta property="og:article:author" content="{{metadata.author.name}}">
 	<meta property="og:article:tag" content="{% set comma = joiner() %}{% for tag in tags -%}{{ comma() }} {{ tag }}{%- endfor %}">
 	<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="{{metadata.url}}{{page.url | escape }}">
+	<meta property="twitter:title" content="{{ title or "Welcome" }} | lmfaole.party">
+	<meta property="twitter:description" content="{{ description or metadata.description }}">
+	<meta property="twitter:image" content="{% openGraphScreenshotURL %}">
 
 	{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
 	{#- <meta name="generator" content="{{ eleventy.generator }}"> #}
