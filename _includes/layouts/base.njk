@@ -3,8 +3,11 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{{ title or metadata.title }}</title>
+		<title>{{ title or metadata.title }} | lmfaole.party</title>
 		<meta name="description" content="{{ description or metadata.description }}">
+		<meta name="og:image" content="{{ image or "/img/open-graph.png" }}">
+		<meta name="og:image:width" content="1200">
+  		<meta name="og:image:height" content="630">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
 
 		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
