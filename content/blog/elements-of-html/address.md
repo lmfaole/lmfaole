@@ -4,7 +4,8 @@ description: An element used for contact information for people, or for an organ
 date: 2025-11-08
 created: 2025-11-08
 modified: 2025-11-09
-tags: html elements, flow content, palpable content
+tags:
+  - element
 draft: false
 ---
 

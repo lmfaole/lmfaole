@@ -20,23 +20,24 @@ layout: layouts/base.njk
 			{% endif %}
 		</div>
 		{% if image %}
-			<img src={{image}} alt="{% if imageAlt %}{{imageAlt}}{% else %}{% endif %}"/>
+			<img src="/{{image}}" alt="{% if imageAlt %}{{imageAlt}}{% else %}{% endif %}"/>
 		{% endif %}
 	</header>
 
 	{{ content | safe }}
 
 	<footer class="post-footer">
-
-		<h2 id="tag-heading">Tags</h2>
-		<ul class="chip-group" role="list" aria-labelledby="tag-heading">
-			{%- for tag in tags | filterTagList %}
-				{%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-				<li>
-					<a href="{{ tagUrl }}" class="post-tag chip" rel="tag">{{ tag }}</a>
-				</li>
-			{%- endfor %}
-		</ul>
+		{% if tags.length > 1 %}
+			<h2 id="tag-heading">Tags</h2>
+			<ul class="chip-group" role="list" aria-labelledby="tag-heading">
+				{%- for tag in tags | filterTagList %}
+					{%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+					<li>
+						<a href="{{ tagUrl }}" class="post-tag chip" rel="tag">{{ tag }}</a>
+					</li>
+				{%- endfor %}
+			</ul>
+		{% endif %}
 
 		<p class="muted">
 			{% if modified %}
