@@ -1,6 +1,7 @@
 ---
 title: The Elements of HTML — anchor
 description: An element used to create a link.
+date: 2025-11-09
 created: 2025-11-09
 modified: 2025-11-11
 image: https://images.unsplash.com/photo-1545987796-200677ee1011?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2940
