@@ -1,0 +1,188 @@
+@layer components {
+	.avatar {
+		border-radius: 50%;
+		aspect-ratio: 1;
+		border: 2px solid
+			hsl(from var(--accent) h s l / var(--decorative-border-opacity));
+		transition: border-color var(--animation-speed-fast);
+	}
+
+	.bleed {
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+
+		&.background {
+			--background-color: hsl(
+				from var(--accent) h s l /
+				var(--decorative-background-opacity)
+			);
+			width: unset;
+			margin-left: unset;
+			position: relative;
+			padding-block: var(--decorative-background-padding);
+
+			&::after {
+				content: "";
+				position: absolute;
+				width: 100vw;
+				margin-left: calc(50% - 50vw);
+				inset: 0;
+				background-color: var(--background-color);
+				z-index: -1;
+			}
+		}
+
+		/* Thanks https://piccalil.li/blog/creating-a-full-bleed-css-utility/ */
+	}
+
+	.chip-group {
+		list-style: none;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1ch;
+
+		li {
+			margin-block-end: 0;
+		}
+	}
+
+	.chip {
+		display: inline-block;
+		border: 1px solid
+			color-mix(
+				in hsl,
+				var(--accent) var(--decorative-border-opacity),
+				transparent
+			);
+		background-color: color-mix(
+			in hsl,
+			var(--accent) var(--decorative-background-opacity),
+			transparent
+		);
+		line-height: 1;
+		padding: 0.5ex 0.75em;
+		border-radius: 2lh;
+		text-decoration: none;
+		text-box-trim: trim-end;
+		transition: border var(--animation-speed-fast);
+
+		&:hover {
+			--decorative-border-opacity: 100%;
+		}
+	}
+
+	.global-header {
+		max-width: var(--max-width);
+		margin-inline: auto;
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		gap: 1ex 2ch;
+		margin-block-end: 1lh;
+
+		.nav {
+			display: flex;
+			margin: 0;
+			justify-content: end;
+			gap: 2ch;
+
+			li {
+				list-style-type: none;
+			}
+		}
+	}
+
+	.global-footer {
+		--margin: 1.5lh;
+
+		margin-block-start: 2lh;
+		width: 100%;
+		max-width: var(--max-width);
+		margin-inline: auto;
+		display: grid;
+		grid: auto-flow / 64px 1fr;
+		gap: var(--margin) 2ch;
+		align-items: center;
+
+		& address {
+			font-style: unset;
+		}
+
+		&::before {
+			display: block;
+			grid-column: 1 / -1;
+			content: "";
+			border-block-start: 2px solid
+				hsl(from var(--accent) h s l / var(--decorative-border-opacity));
+		}
+	}
+
+	.muted {
+		opacity: var(--muted);
+	}
+
+	.post-list {
+		list-style-type: none;
+		display: grid;
+		gap: 1lh;
+		container: postlist-item / inline-size;
+
+		.postlist-item {
+			max-width: unset;
+			display: grid;
+			grid: subgrid / subgrid;
+			grid-column: 1 / -1;
+			background-color: transparent;
+			margin: 0;
+
+			&:has(.title:hover) {
+				border-inline-start-color: var(--accent);
+			}
+		}
+	}
+
+	.post-item {
+		container: post / inline-size;
+
+		.post-header {
+			margin-block: 2lh 3lh;
+
+			&:has(img) {
+				display: grid;
+				grid: auto-flow dense / 1fr;
+				gap: 1lh 3em;
+
+				@container (width > 70ch) {
+					grid: auto-flow dense / 1fr 40cqi;
+				}
+			}
+
+			.info {
+				align-self: center;
+
+				.title {
+					margin-block-start: 0;
+				}
+
+				.date {
+					font-size: smaller;
+				}
+			}
+
+			picture {
+				place-self: center;
+				border-radius: 0.25lh;
+				overflow: hidden;
+
+				img {
+					width: 100%;
+				}
+			}
+		}
+
+		.post-footer {
+			font-size: smaller;
+		}
+	}
+}

@@ -6,7 +6,7 @@
 
 	<meta property="og:title" content="{{ title or metadata.title }}">
 	<meta property="og:description" content="{{ description or metadata.description }}">
-	<meta property="og:image" content="https://images.unsplash.com/photo-1700547949740-717968824fee?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=4330">
+	<meta property="og:image" content="https://lmfaole.party/img/open-graph.png">
 	<meta property="og:image:width" content="1200">
 	<meta property="og:image:height" content="630">
 	<meta property="og:url" content="{{metadata.url}}{{page.url | escape }}"/>
@@ -24,29 +24,15 @@
 	<meta property="twitter:description" content="{{ description or metadata.description }}">
 	<meta property="twitter:image" content="https://images.unsplash.com/photo-1700547949740-717968824fee?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=4330">
 
-	{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
-	{#- <meta name="generator" content="{{ eleventy.generator }}"> #}
-
-	{#-
-	Plain-text bundles are provided via the `eleventy-plugin-bundle` plugin:
-	1. CSS:
-	* Add to a per-page bundle using `{% css %}{% endcss %}`
-	* Retrieve bundle content using `{% getBundle "css" %}` or `{% getBundleFileUrl "css" %}`
-	2. Or for JavaScript:
-	* Add to a per-page bundle using `{% js %}{% endjs %}`
-	* Retrieve via `{% getBundle "js" %}` or `{% getBundleFileUrl "js" %}`
-	3. Learn more: https://github.com/11ty/eleventy-plugin-bundle
-	#}
-
-	{#- Add CSS to the bundle #}
-	<style>
-		/* This is an arbitrary CSS string added to the bundle */
-	</style>
+	<meta name="generator" content="{{ eleventy.generator }}">
 
 	{#- Add the contents of a file to the bundle #}
 	<style>
-		{% include "css/reset.css" %}
 		{% include "css/index.css" %}
+		{% include "css/reset.css" %}
+		{% include "css/base.css" %}
+		{% include "css/components.css" %}
+		{% include "css/state.css" %}
 	</style>
 
 	{#- Or you can add from node_modules #}

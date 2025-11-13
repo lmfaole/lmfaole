@@ -30,7 +30,11 @@ export default async function (eleventyConfig) {
 			"./public/": "/",
 		})
 		.addPassthroughCopy("./content/feed/pretty-atom-feed.xsl")
-		.addPassthroughCopy("./content/blog/*");
+		.addPassthroughCopy("./content/blog/")
+		.addPassthroughCopy("./content/blog/img/");
+
+	eleventyConfig.addPassthroughCopy("./assets/");
+	eleventyConfig.addPassthroughCopy("./css/");
 
 	// Run Eleventy when these files change:
 	// https://www.11ty.dev/docs/watch-serve/#add-your-own-watch-targets
@@ -44,12 +48,7 @@ export default async function (eleventyConfig) {
 
 	// Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
 	// Bundle <style> content and adds a {% css %} paired shortcode
-	eleventyConfig.addBundle("css", {
-		toFileDirectory: "dist",
-		// Add all <style> content to `css` bundle (use <style eleventy:ignore> to opt-out)
-		// Supported selectors: https://www.npmjs.com/package/posthtml-match-helper
-		bundleHtmlContentFromSelector: "style",
-	});
+	eleventyConfig.addBundle("css");
 
 	// Bundle <script> content and adds a {% js %} paired shortcode
 	eleventyConfig.addBundle("js", {
