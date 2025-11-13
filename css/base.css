@@ -1,0 +1,232 @@
+@layer base {
+	:root {
+		--accent: light-dark(hsl(210, 92%, 37%), hsl(68, 78%, 82%));
+		--muted: 75%;
+
+		--animation-speed-fast: 0ms linear;
+		--decorative-border-thickness: 1px;
+		--decorative-border-opacity: 20%;
+		--decorative-background-opacity: 2%;
+		--decorative-background-padding: 0.25lh;
+
+		@media (prefers-reduced-motion: no-preference) {
+			--animation-speed-fast: 200ms ease-out;
+		}
+
+		@media (prefers-color-scheme: dark) {
+			--decorative-border-opacity: 50%;
+			--decorative-background-opacity: 4%;
+		}
+
+		/* biome-ignore lint/correctness/noUnknownMediaFeatureName: This is a valid media query */
+		@media ((prefers-contrast: more) or (prefers-reduced-transparency: reduce)) {
+			--decorative-border-opacity: 100%;
+			--decorative-background-opacity: 0%;
+			--decorative-background-padding: 1px;
+			--muted: 100%;
+		}
+
+		--bold: 600;
+		--max-width: 50ch;
+		--background-color: light-dark(hsl(50, 100%, 99%), hsl(42, 100%, 1%));
+
+		background-color: var(--background-color);
+		line-height: 1.6;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		max-width: 35ch;
+		margin-block: 2lh 0.5lh;
+		font-weight: var(--bold);
+	}
+
+	h1 {
+		font-size: 2.25em;
+		font-weight: 700;
+	}
+
+	h2 {
+		font-size: 1.75em;
+		font-weight: 500;
+	}
+
+	h3 {
+		font-size: 1.4em;
+		font-weight: 500;
+	}
+
+	h4 {
+		font-size: 1.1em;
+		font-weight: 400;
+	}
+
+	p,
+	li {
+		max-width: 55ch;
+	}
+
+	p {
+		margin-block: 0.5lh 1lh;
+	}
+
+	ul,
+	ol {
+		margin-block: 1lh;
+	}
+
+	li:not(:last-of-type) {
+		margin-block-end: 0.25lh;
+	}
+
+	a {
+		--color: var(--accent);
+
+		color: var(--color);
+		text-underline-offset: 0.1lh;
+		text-decoration-thickness: 0.05lh;
+		text-decoration-color: color-mix(
+			in hsl,
+			var(--color) var(--decorative-border-opacity),
+			transparent
+		);
+		transition: text-decoration-color var(--animation-speed-fast);
+
+		& code {
+			border: none;
+			padding-inline: 0;
+		}
+
+		&:hover {
+			--decorative-border-opacity: 100%;
+		}
+
+		&[download]::after {
+			content: " 📂" / "";
+			font-size: smaller;
+		}
+
+		&[hreflang="no"]::after {
+			content: " 🇳🇴" / "";
+			font-size: smaller;
+		}
+
+		&[target="_blank"]::after {
+			content: " 👋" / "";
+			font-size: smaller;
+		}
+	}
+
+	main {
+		max-width: var(--max-width);
+		margin-inline: auto;
+	}
+
+	code,
+	pre {
+		font-family:
+			"SF Mono", Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+	}
+
+	code {
+		background-color: color-mix(in hsl, currentColor 3%, transparent);
+		border: 1px solid color-mix(in hsl, currentColor 10%, transparent);
+		padding-inline: 0.2em;
+		border-radius: 0.1lh;
+		font-size: smaller;
+	}
+
+	pre {
+		--background-color: light-dark(hsl(219, 81%, 10%), hsl(137, 64%, 2%));
+		--border: 1px solid
+			hsl(from currentColor h s l / var(--decorative-border-opacity));
+
+		background-color: var(--background-color);
+		border: var(--border);
+		font-size: smaller;
+		border-radius: 0.5lh;
+		padding: 1em;
+		color: inherit;
+		margin-block: 2lh 3lh;
+
+		& code {
+			background-color: transparent;
+			border: none;
+			padding-inline: unset;
+			border-radius: unset;
+			font-size: unset;
+		}
+
+		&:has([class*="language"]) {
+			color: revert;
+			padding-block-start: 0;
+
+			&::before {
+				box-sizing: border-box;
+				position: sticky;
+				inset-inline-start: 0;
+				display: block;
+				text-align: end;
+				font-size: small;
+				line-height: 1;
+				padding: 1lh 0.5em;
+				border-block-end: var(--border);
+				text-transform: uppercase;
+				margin-block-end: 1lh;
+				opacity: var(--muted);
+			}
+
+			&[class*="html"]::before {
+				content: "HTML";
+			}
+
+			&[class*="js"]::before {
+				content: "Javascript";
+			}
+		}
+	}
+
+	aside {
+		padding-inline-start: 1em;
+		border-inline-start: 2px solid
+			hsl(from currentColor h s l / var(--decorative-border-opacity));
+	}
+
+	blockquote {
+		font-size: 0.9em;
+		margin-inline: 0;
+		padding: var(--decorative-background-padding) 1em;
+		background-color: hsl(
+			from currentColor h s l /
+			var(--decorative-background-opacity)
+		);
+		border-inline-start: 2px solid
+			hsl(from currentColor h s l / var(--decorative-border-opacity));
+		margin-block: 2lh;
+		width: fit-content;
+		text-box-trim: trim-end;
+
+		@media (prefers-contrast: more) {
+			padding-block: 0;
+		}
+	}
+
+	hr {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&::before {
+			content: "∞" / "";
+			background-color: var(--background-color);
+			padding-inline: 1em;
+			z-index: 1;
+			text-box-trim: trim-start;
+			font-size: larger;
+		}
+	}
+}

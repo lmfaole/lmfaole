@@ -4,7 +4,7 @@ description: An element used to create a link.
 date: 2025-11-09
 created: 2025-11-09
 modified: 2025-11-11
-image: img/blog/links.avif
+image: links.avif
 imageAlt:
 tags:
   - element

@@ -1,10 +1,6 @@
-<ol class="postlist" reversed role="list" style="--postlist-index: {{ (postslistCounter or postslist.length) + 1 }}" aria-label="Posts">
+<ol class="post-list" reversed role="list" style="--postlist-index: {{ (postslistCounter or postslist.length) + 1 }}" aria-label="Posts">
 	{%- for post in postslist | reverse %}
 		<li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
-			{% if post.data.image %}
-				<img src={{post.data.image}} alt="{% if post.data.imageAlt %}{{post.data.imageAlt}}{% else %}{% endif %}"/>
-			{% endif %}
-
 			<div class="info">
 				<a class="title" href="{{ post.url }}">
 					{% if post.data.title %}
@@ -14,16 +10,19 @@
 					{% endif %}
 				</a>
 
+				<p class="lead">
 				{% if post.data.description %}
-					<p class="lead">{{ post.data.description }}</p>
+					<span>{{ post.data.description }}</span>
 				{% endif %}
-
-				<p>
-					<small class="muted">
-						Posted <time class="postlist-date" datetime="{% if post.data.created %}{{post.data.created | htmlDateString }}{% else %}{{post.date | htmlDateString }}{% endif %}">{% if post.data.created %}{{post.data.created | readableDate }}{% else %}{{post.date | readableDate }}{% endif %}</time>
-					</small>
+				<span class="muted">
+					Posted <time class="postlist-date" datetime="{% if post.data.created %}{{post.data.created | htmlDateString }}{% else %}{{post.date | htmlDateString }}{% endif %}">{% if post.data.created %}{{post.data.created | readableDate }}{% else %}{{post.date | readableDate }}{% endif %}</time>
+				</span>
 				</p>
 			</div>
+
+			{# {% if post.data.image %}
+				<img src="blog/img/{{post.data.image}}" alt="{% if post.data.imageAlt %}{{post.data.imageAlt}}{% else %}{% endif %}"/>
+			{% endif %} #}
 		</li>
 	{%- endfor %}
 </ol>
