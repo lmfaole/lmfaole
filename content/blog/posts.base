@@ -1,0 +1,59 @@
+views:
+  - type: table
+    name: Posted
+    filters:
+      and:
+        - file.ext == "md"
+    groupBy:
+      property: draft
+      direction: ASC
+    order:
+      - draft
+      - modified
+      - file.ctime
+      - file.fullname
+      - title
+      - description
+      - image
+      - tags
+    sort:
+      - property: created
+        direction: DESC
+      - property: modified
+        direction: DESC
+      - property: file.name
+        direction: DESC
+      - property: file.folder
+        direction: ASC
+    columnSize:
+      note.draft: 81
+      file.fullname: 163
+      note.title: 248
+      note.description: 262
+      note.image: 142
+  - type: table
+    name: Drafts
+    filters:
+      and:
+        - file.folder.contains("drafts")
+        - file.ext == "md"
+    order:
+      - draft
+      - date
+      - created
+      - modified
+      - title
+      - description
+      - image
+      - tags
+    sort:
+      - property: modified
+        direction: ASC
+      - property: created
+        direction: ASC
+      - property: file.folder
+        direction: ASC
+    columnSize:
+      note.title: 309
+      note.description: 343
+      note.image: 137

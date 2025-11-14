@@ -11,14 +11,13 @@
             "id": "09f622da8703704b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "bases",
               "state": {
-                "file": "blog/elements-of-html/a.md",
-                "mode": "source",
-                "source": false
+                "file": "blog/posts.base",
+                "viewName": "Posted"
               },
-              "icon": "lucide-file",
-              "title": "a"
+              "icon": "lucide-table",
+              "title": "posts"
             }
           }
         ]
@@ -194,8 +193,20 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f6e6b7651bd96015",
+  "active": "09f622da8703704b",
   "lastOpenFiles": [
+    "Untitled.base",
+    "Untitled.md",
+    "blog/posts.base",
+    "blog/markdown-cheatsheet.md",
+    "blog/drafts/fourthpost/fourthpost.md",
+    "blog/drafts/fourthpost/possum.png",
+    "blog/drafts/fourthpost",
+    "blog/drafts/fifthpost.md",
+    "blog/drafts/secondpost.md",
+    "blog/drafts/thirdpost.md",
+    "404.md",
+    "blog/elements-of-html/a.md",
     "img/blog/links.avif",
     "blog/elements-of-html/img/blog/links.avif",
     "blog/elements-of-html/img/blog",
@@ -208,13 +219,9 @@
     "img/open-graph",
     "img/OGImage.png",
     "blog/elements-of-html/address.md",
-    "blog/elements-of-html/a.md",
-    "blog/markdown-cheatsheet.md",
     "img/my-face.png",
-    "404.md",
     "Untitled.canvas",
     "2025-11-11.md",
-    "Untitled.base",
     "blog/elements-of-html/address 1.md",
     "blog/elements-of-html/efe.md",
     "img/blog"
