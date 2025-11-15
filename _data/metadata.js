@@ -2,7 +2,7 @@ export default {
 	title: "lmfaole.party",
 	url: "https://lmfaole.party",
 	language: "en",
-	description: "I don't know yet",
+	description: "Design systems developer in Oslo, Norway.",
 	author: {
 		name: "Ole Jørgen Bakken",
 		url: "https://lmfaole.party/about/",

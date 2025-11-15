@@ -1,3 +1,8 @@
+---
+title: About
+description: Design systems developer in Oslo, Norway.
+---
+
 # About
 
 I'm a design systems developer in **Oslo, Norway**. Currently making components, writing documentation, and helping teams make web pages at [Jøkul][] for [Fremtind].
