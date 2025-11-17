@@ -22,9 +22,11 @@
 	<meta property="twitter:url" content="{{metadata.url}}{{page.url | escape }}">
 	<meta property="twitter:title" content="{{ title or "Welcome" }} | lmfaole.party">
 	<meta property="twitter:description" content="{{ description or metadata.description }}">
-	<meta property="twitter:image" content="https://images.unsplash.com/photo-1700547949740-717968824fee?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=4330">
+	<meta property="twitter:image" content="https://lmfaole.party/img/open-graph.png">
 
-	<meta name="generator" content="{{ eleventy.generator }}">
+    <link rel="webmention" href="https://webmention.io/lmfaole.party/webmention" />
+
+    <meta name="generator" content="{{ eleventy.generator }}">
 
 	{#- Add the contents of a file to the bundle #}
 	<style>
