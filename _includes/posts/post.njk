@@ -29,6 +29,8 @@ layout: layouts/base.njk
 	{{ content | safe }}
 
 	<footer class="post-footer">
+        {% include "../webmentions/webmentions-list.njk" %}
+
 		{% if tags.length > 1 %}
 			<h2 id="tag-heading">Tags</h2>
 			<ul class="chip-group" role="list" aria-labelledby="tag-heading">

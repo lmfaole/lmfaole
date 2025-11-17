@@ -4,16 +4,11 @@
 	"description": "A starter repository for a blog web site using the Eleventy site generator.",
 	"type": "module",
 	"scripts": {
-		"build": "npx @11ty/eleventy",
-		"build-nocolor": "cross-env NODE_DISABLE_COLORS=1 npx @11ty/eleventy",
-		"build-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/",
-		"start": "npx @11ty/eleventy --serve",
-		"start-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/ --serve --quiet",
-		"format": "pnpm exec biome format --write",
-		"lint": "pnpm exec biome check --write",
-		"debug": "cross-env DEBUG=Eleventy* npx @11ty/eleventy",
-		"debugstart": "cross-env DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
-		"benchmark": "cross-env DEBUG=Eleventy:Benchmark* npx @11ty/eleventy"
+      "start": "pnpm run 11ty:dev && wrangler:dev",
+      "11ty:dev": "npx @11ty/eleventy --serve",
+      "11ty:build": "npx @11ty/eleventy",
+      "wrangler:dev": "npx wrangler dev --live-reload",
+      "wrangler:deploy": "npx wrangler deploy"
 	},
 	"repository": {
 		"type": "git",
@@ -46,6 +41,7 @@
 		"cross-env": "^7.0.3",
 		"luxon": "^3.6.1",
 		"prismjs": "^1.30.0",
+		"wrangler": "^4.47.0",
 		"zod": "^3.25.67",
 		"zod-validation-error": "^3.5.2"
 	},
