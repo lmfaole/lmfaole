@@ -2,12 +2,13 @@
 title: About
 description: Design systems developer in Oslo, Norway.
 ---
-
 # About
 
 I'm a design systems developer in **Oslo, Norway**. Currently making components, writing documentation, and helping teams make web pages at [Jøkul][] for [Fremtind].
 
 Previously designed components for [NAV] at [Aksel].
+
+[My CV](/cv), and [my LinkedIn](https://www.linkedin.com/in/olejorgenbakken/).
 
 ## Socials and other platforms
 
