@@ -101,7 +101,7 @@
 		max-width: var(--max-width);
 		margin-inline: auto;
 		display: grid;
-		grid: auto-flow / 64px 1fr;
+		grid: auto-flow / 1fr;
 		gap: var(--margin) 2ch;
 		align-items: center;
 
