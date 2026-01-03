@@ -1,0 +1,21 @@
+:root {
+    color-scheme: light dark;
+}
+
+body {
+    margin: 2em;
+    max-width: 60ch;
+}
+
+footer  {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+    margin-block-start: 2lh;
+    
+    img {
+        height: 36px;
+        object-fit: contain;
+        outline: 1px solid color-mix(in srgb, transparent 75%, currentcolor);
+    }
+}
