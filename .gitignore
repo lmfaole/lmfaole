@@ -1,0 +1,7 @@
+_site/
+node_modules/
+.idea/
+.cache
+.DS_Store
+.env
+.wrangler/
