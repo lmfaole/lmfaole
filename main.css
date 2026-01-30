@@ -1,71 +1,21 @@
 @layer base, components;
+@import url("./components.css");
 
 :root {
-    --main-color: oklch(0.48 0.145 252.327);
-
-    --color-background: light-dark(white, black);
-    --color-text: light-dark(black, white);
-
-    --color-action-text: color-mix(in oklch, var(--color-text) 95%, var(--color-action-background));
-    --color-action-background: color-mix(in oklch, var(--main-color) 80%, var(--color-background));
-    --color-action-background-focus: color-mix(in oklch, var(--main-color) 60%, var(--color-background));
-    --color-action-border: color-mix(in oklch, var(--main-color) 85%, var(--color-background));
-    --color-action-border-hover: color-mix(in oklch, var(--main-color) 90%, var(--color-background));
-    --color-action-border-focus: color-mix(in oklch, var(--main-color) 93%, var(--color-background));
-
-    --color-box-background: color-mix(in oklch, var(--main-color) 40%, var(--color-background));
-    --color-box-border: color-mix(in oklch, var(--main-color) 50%, var(--color-background));
-
-    --color-text-action: color-mix(in oklch, var(--main-color) 10%, var(--color-text));
-    --color-text-decoration: color-mix(in oklch, var(--main-color) 10%, var(--color-text));
-    --color-text-decoration-hover: color-mix(in oklch, var(--main-color) 70%, var(--color-text));
+    --accent-color: oklch(0.48 0.145 252.327);
 
     color-scheme: light dark;
 }
 
-@layer components {
-    [popover] {
-        padding: 1lh;
-
-        :is(p, h1, h2, h3):first-child {
-            margin-block-start: 0;
-        }
-    }
-
-    dialog footer {
-        margin-block-start: 0;
-        display: flex;
-        gap: 1em;
-    }
-
-    pre,
-    .example {
-        padding: 1ch 1em;
-        border: 1px solid var(--color-box-border);
-        background: var(--color-box-background);
-
-        > *:first-of-type {
-            margin-block-start: 0;
-        }
-    }
-
-    pre {
-        display: flex;
-        flex-direction: column;
-    }
-}
-
 @layer base {
-
     :focus-visible {
         outline: 3px solid currentColor;
         outline-offset: 5px;
     }
 
     body {
+        accent-color: var(--accent-color);
         font: 400 1em / 1.5 system-ui;
-        background: var(--color-background);
-        accent-color: var(--main-color);
 
         main {
             max-width: 66ch;
@@ -97,15 +47,8 @@
     }
 
     a {
-        transition: text-decoration-color 0.15s ease-in;
-        color: var(--color-text-action);
         text-underline-offset: 0.1lh;
-        text-decoration-color: var(--color-text-decoration);
         text-decoration-thickness: 1px;
-
-        &:hover {
-            text-decoration-color: var(--color-text-decoration-hover);
-        }
     }
 
     button {
@@ -113,22 +56,36 @@
         min-width: 44px;
         padding: 0.4ex 0.75ch;
         cursor: pointer;
-        transition: border-color 0.1s ease-in;
         transform: none;
-        color: var(--color-action-text);
-        border: 2px solid var(--color-action-border);
         border-radius: 3px;
-        background: var(--color-action-background);
 
         &:hover {
-            transition: transform 0.1s ease-in-out, border-color 0.2s ease-out, background-color 0.1s ease-out;
-            border-color: var(--color-action-border-hover);
+            transition: transform 0.1s ease-in-out;
         }
 
         &:active {
             transform: translateY(1q);
-            border-color: var(--color-action-border-focus);
-            background: var(--color-action-background-focus);
+        }
+    }
+
+    pre, code {
+        color-scheme: only dark;
+        font: inherit;
+        font-family: "PT Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        background: light-dark(white, #202020);
+        color: light-dark(#202020, white);
+    }
+
+    code {
+        padding-inline: 0.4ch;
+    }
+
+    pre {
+        display: flex;
+        flex-direction: column;
+
+        code {
+            background: transparent;
         }
     }
 }

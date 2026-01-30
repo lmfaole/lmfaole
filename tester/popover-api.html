@@ -10,105 +10,102 @@
 <main>
     <header>
         <a href="/index.html">Forsiden</a>
-        <!--        <label><input class="switch" id="toggle-switch" oninput="themeToggle()" type="checkbox">Høykontrast-->
-        <!--            modus</label>-->
     </header>
-    <h1>Popover API</h1>
+    <article>
+        <h1>Popover API</h1>
 
-    <pre>
-        <code>popovertarget="grunnleggende-popover"</code>
-    </pre>
+        <toc-party></toc-party>
 
-    <h2>Toggle</h2>
-    <button popovertarget="grunnleggende-popover">Vis popover</button>
-    <div id="grunnleggende-popover" popover>Popover!</div>
+        <pre>
+            <code>popovertarget="grunnleggende-popover"</code>
+        </pre>
 
-    <h2>Ulike knapper for å vise og skjule</h2>
-    <p>Dette kan du gjøre med <code>popovertargetaction="show / hide"</code> og en unik referanse (id) til elementet som
-        kontrolleres med <code>popovertarget="din-popover"</code>.</p>
+        <h2>Toggle</h2>
+        <button popovertarget="grunnleggende-popover">Vis popover</button>
+        <div id="grunnleggende-popover" popover>Popover!</div>
 
-    <p>Eller du kan bruke <code>command="show-popover"</code> og <code>commandfor="unique-popover"</code>.
-        Du får samme resultat, men API-ene er ulike i bruksområder utenom popovers.</p>
-    <menu>
-        <li>
-            <button popovertarget="unique-popover" popovertargetaction="show">
-                Vis popover
+        <h2>Ulike knapper for å vise og skjule</h2>
+        <p>Dette kan du gjøre med <code>popovertargetaction="show / hide"</code> og en unik referanse (id) til elementet
+            som
+            kontrolleres med <code>popovertarget="din-popover"</code>.</p>
+
+        <p>Eller du kan bruke <code>command="show-popover"</code> og <code>commandfor="unique-popover"</code>.
+            Du får samme resultat, men API-ene er ulike i bruksområder utenom popovers.</p>
+        <menu>
+            <li>
+                <button popovertarget="unique-popover" popovertargetaction="show">
+                    Vis popover
+                </button>
+            </li>
+            <li>
+                <button popovertarget="unique-popover" popovertargetaction="hide">
+                    Skjul popover
+                </button>
+            </li>
+            <li>
+                <button command="show-popover" commandfor="unique-popover">Vis popover</button>
+            </li>
+            <li>
+                <button command="hide-popover" commandfor="unique-popover">Skjul popover</button>
+            </li>
+        </menu>
+
+        <div id="unique-popover" popover>Unik popover</div>
+
+        <h2>Manuell popover</h2>
+        <button command="show-popover" commandfor="manuell-popover-1">Vis popover 1</button>
+        <div id="manuell-popover-1" popover="manual">
+            <p>
+                Manuelle popovers skjules ikke automatisk ved trykk utenfor popoveren.
+            </p>
+            <button command="hide-popover" commandfor="manuell-popover-1">Skjul popover</button>
+        </div>
+
+        <button command="show-popover" commandfor="manuell-popover-2">Vis popover 2</button>
+        <div id="manuell-popover-2" popover="manual">
+            <p>
+                Dette gjør at du kan vise flere samtidig
+            </p>
+            <button command="hide-popover" commandfor="manuell-popover-2">Skjul popover</button>
+        </div>
+
+        <h2>Interest invokers</h2>
+        <p>Interest invokers er det samme som popovers, men tiltenkt popovers som vises på for eksempel hover-states</p>
+
+        <p class="example">Som for eksempel ved visning av en <a
+                href="https://no.wikipedia.org/wiki/Pok%C3%A9mon_FireRed_og_LeafGreen"
+                interestfor="mypopover">ekstern side om pokémon</a>.</p>
+        <p id="mypopover" popover>Pokémon FireRed og LeafGreen er Game Boy Advance-gjenskapningene av de første
+            Pokémon-spillene til Game Boy, Pokémon Red og Blue.</p>
+
+        <p>Dette kan være veldig nyttig for eksempel ved bruk av tooltips</p>
+
+        <div class="example">
+            <p>
+                For eksempel i en løsning hvor du kan
+            </p>
+            <button
+                    command="toggle-popover"
+                    commandfor="confirmation-dialog"
+                    interestfor="send-sak-tooltip">
+                sende en sak
             </button>
-        </li>
-        <li>
-            <button popovertarget="unique-popover" popovertargetaction="hide">
-                Skjul popover
-            </button>
-        </li>
-        <li>
-            <button command="show-popover" commandfor="unique-popover">Vis popover</button>
-        </li>
-        <li>
-            <button command="hide-popover" commandfor="unique-popover">Skjul popover</button>
-        </li>
-    </menu>
+            <p id="send-sak-tooltip" popover="hint">Send sak til behandling</p>
+            <dialog id="confirmation-dialog" popover>
+                <form>
+                    <h2>
+                        Vil du sende med eller uten vedlegg?
+                    </h2>
 
-    <div id="unique-popover" popover>Unik popover</div>
-
-    <h2>Manuell popover</h2>
-    <button command="show-popover" commandfor="manuell-popover-1">Vis popover 1</button>
-    <div id="manuell-popover-1" popover="manual">
-        <p>
-            Manuelle popovers skjules ikke automatisk ved trykk utenfor popoveren.
-        </p>
-        <button command="hide-popover" commandfor="manuell-popover-1">Skjul popover</button>
-    </div>
-
-    <button command="show-popover" commandfor="manuell-popover-2">Vis popover 2</button>
-    <div id="manuell-popover-2" popover="manual">
-        <p>
-            Dette gjør at du kan vise flere samtidig
-        </p>
-        <button command="hide-popover" commandfor="manuell-popover-2">Skjul popover</button>
-    </div>
-
-    <h2>Interest invokers</h2>
-    <p>Interest invokers er det samme som popovers, men tiltenkt popovers som vises på for eksempel hover-states</p>
-
-    <p class="example">Som for eksempel ved visning av en <a
-            href="https://no.wikipedia.org/wiki/Pok%C3%A9mon_FireRed_og_LeafGreen"
-            interestfor="mypopover">ekstern side om pokémon</a>.</p>
-    <p id="mypopover" popover>Pokémon FireRed og LeafGreen er Game Boy Advance-gjenskapningene av de første
-        Pokémon-spillene til Game Boy, Pokémon Red og Blue.</p>
-
-    <p>Dette kan være veldig nyttig for eksempel ved bruk av tooltips</p>
-
-    <div class="example">
-        <p>
-            For eksempel i en løsning hvor du kan
-        </p>
-        <button
-                command="toggle-popover"
-                commandfor="confirmation-dialog"
-                interestfor="send-sak-tooltip">
-            sende en sak
-        </button>
-        <p id="send-sak-tooltip" popover="hint">Send sak til behandling</p>
-        <dialog id="confirmation-dialog" popover>
-            <form>
-                <h2>
-                    Vil du sende med eller uten vedlegg?
-                </h2>
-
-                <footer>
-                    <button type="button">Send uten vedlegg</button>
-                    <button type="button">Send med vedlegg</button>
-                </footer>
-            </form>
-        </dialog>
-    </div>
+                    <footer>
+                        <button type="button">Send uten vedlegg</button>
+                        <button type="button">Send med vedlegg</button>
+                    </footer>
+                </form>
+            </dialog>
+        </div>
+    </article>
 </main>
-<!--<script>-->
-<!--    const themeToggleSwitch = document.getElementById('toggle-switch');-->
-
-<!--    function themeToggle() {-->
-<!--        document.body.setAttribute("high-contrast", themeToggleSwitch.checked);-->
-<!--    }-->
-<!--</script>-->
+<script src="/components/toc/toc.js" type="module"></script>
 </body>
 </html>
