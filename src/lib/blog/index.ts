@@ -10,7 +10,6 @@ import post9 from "./9-spacing-og-layout";
 import type { BlogPost } from "./types";
 
 export type { BlogPost, Resource } from "./types";
-export { foundationalPosts } from "./foundational";
 
 export const blogPosts: BlogPost[] = [
     post1,

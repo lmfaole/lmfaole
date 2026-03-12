@@ -1,2 +1,2 @@
-export { blogPosts } from "./posts";
-export type { BlogPost, Resource } from "./posts/types";
+export { blogPosts } from "./blog";
+export type { BlogPost, Resource } from "./blog/types";

@@ -1,5 +1,5 @@
-import { foundationalPosts } from "./posts/foundational";
-import type { BlogPost } from "./posts/types";
+import { foundationalPosts } from "./foundational";
+import type { BlogPost } from "./blog/types";
 
 export type { BlogPost };
 export { foundationalPosts };

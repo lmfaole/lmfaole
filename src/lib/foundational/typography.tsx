@@ -5,7 +5,7 @@ import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
 import { Tag } from "@fremtind/jokul/tag";
 import { Flex } from "@fremtind/jokul/flex";
-import type { BlogPost } from "../types";
+import type { BlogPost } from "../blog/types";
 
 const post: BlogPost = {
   id: 10,

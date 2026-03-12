@@ -54,9 +54,9 @@ body {
   font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", arial, sans-serif;
   font-size: var(--jkl-font-size-3);
   line-height: var(--jkl-line-height-relaxed);
-  margin: 0;
-  max-width: unset;
-  padding-block: 2lh;
+  margin: 0 auto;
+  max-width: 120ch;
+  padding: 2lh 1rem;
 }
 
 article h1,
