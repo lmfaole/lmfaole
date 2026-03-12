@@ -1,5 +1,6 @@
 _site/
 node_modules/
+.next
 .idea/
 .cache
 .DS_Store

@@ -1,0 +1,38 @@
+{
+  "name": "lmfaole",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "mkdir -p public/fonts && cp node_modules/@fremtind/jokul/src/fonts/FremtindGrotesk-*.woff* public/fonts/ && cp node_modules/@fremtind/jokul/src/fonts/Fremtind-Material-Symbols.woff2 public/fonts/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmfaole/lmfaole.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/lmfaole/lmfaole/issues"
+  },
+  "homepage": "https://github.com/lmfaole/lmfaole#readme",
+  "dependencies": {
+    "@fremtind/jokul": "^4.2.0",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "sass": "^1.98.0",
+    "typescript": "^5.9.3"
+  }
+}
