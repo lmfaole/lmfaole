@@ -5,10 +5,15 @@ import { Flex } from "@fremtind/jokul/flex";
 import { Tag } from "@fremtind/jokul/tag";
 import { Message } from "@fremtind/jokul/message";
 import { Link } from "@fremtind/jokul/link";
+import { TableOfContents } from "@fremtind/jokul/table-of-contents";
 import { useParams } from "next/navigation";
 import { getComponentDoc } from "@/lib/componentDocs";
 import { PropTable } from "@/components/PropTable";
 import { CodeBlock } from "@/components/CodeBlock";
+
+function slugify(text: string) {
+    return text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "");
+}
 
 export default function ComponentPage() {
     const params = useParams();
@@ -24,40 +29,51 @@ export default function ComponentPage() {
     }
 
     return (
-        <Flex as="article" direction="column" gap="xl">
-            <Flex as="header" direction="column" gap="s">
-                <Flex gap="s" alignItems="center">
-                    <h1>{doc.name}</h1>
-                    <Tag variant="neutral">{doc.category}</Tag>
-                </Flex>
-                <code className="component-package">{doc.package}</code>
-                <p>{doc.description}</p>
-                {doc.notes && (
-                    <Message variant="info">{doc.notes}</Message>
-                )}
-            </Flex>
-
-            <Flex direction="column" gap="m">
-                <h2>Props</h2>
-                <PropTable props={doc.props} />
-            </Flex>
-
-            <Flex direction="column" gap="xl">
-                <h2>Eksempler</h2>
-                {doc.examples.map((example) => (
-                    <Flex key={example.title} direction="column" gap="m" className="component-example">
-                        <Flex direction="column" gap="xs">
-                            <h3>{example.title}</h3>
-                            {example.description && <p>{example.description}</p>}
-                        </Flex>
-                        {example.preview && (
-                            <div className="component-example__preview">
-                                {example.preview}
-                            </div>
-                        )}
-                        <CodeBlock code={example.code} />
-                    </Flex>
+        <Flex gap="xl" alignItems="start" as="main">
+            <TableOfContents label="Innhold" style={{ flexShrink: 0, position: "sticky", top: "2rem" }}>
+                <TableOfContents.Link href="#props">Props</TableOfContents.Link>
+                {doc.examples.map((ex) => (
+                    <TableOfContents.Link key={ex.title} href={`#${slugify(ex.title)}`}>
+                        {ex.title}
+                    </TableOfContents.Link>
                 ))}
+            </TableOfContents>
+
+            <Flex as="article" direction="column" gap="xl" style={{ flex: 1, minWidth: 0 }}>
+                <Flex as="header" direction="column" gap="s">
+                    <Flex gap="s" alignItems="center">
+                        <h1>{doc.name}</h1>
+                        <Tag variant="neutral">{doc.category}</Tag>
+                    </Flex>
+                    <code className="component-package">{doc.package}</code>
+                    <p>{doc.description}</p>
+                    {doc.notes && (
+                        <Message variant="info">{doc.notes}</Message>
+                    )}
+                </Flex>
+
+                <Flex direction="column" gap="m">
+                    <h2 id="props">Props</h2>
+                    <PropTable props={doc.props} />
+                </Flex>
+
+                <Flex direction="column" gap="xl">
+                    <h2>Eksempler</h2>
+                    {doc.examples.map((example) => (
+                        <Flex key={example.title} direction="column" gap="m" className="component-example">
+                            <Flex direction="column" gap="xs">
+                                <h3 id={slugify(example.title)}>{example.title}</h3>
+                                {example.description && <p>{example.description}</p>}
+                            </Flex>
+                            {example.preview && (
+                                <div className="component-example__preview">
+                                    {example.preview}
+                                </div>
+                            )}
+                            <CodeBlock code={example.code} />
+                        </Flex>
+                    ))}
+                </Flex>
             </Flex>
         </Flex>
     );

@@ -7,10 +7,10 @@ import post6 from "./6-fargesystemet-i-jokul";
 import post7 from "./7-ikoner-i-jokul";
 import post8 from "./8-testing-av-komponenter";
 import post9 from "./9-spacing-og-layout";
-import { foundationalPosts } from "./foundational";
 import type { BlogPost } from "./types";
 
 export type { BlogPost, Resource } from "./types";
+export { foundationalPosts } from "./foundational";
 
 export const blogPosts: BlogPost[] = [
     post1,
@@ -22,5 +22,4 @@ export const blogPosts: BlogPost[] = [
     post7,
     post8,
     post9,
-    ...foundationalPosts,
 ].sort((a, b) => a.id - b.id);

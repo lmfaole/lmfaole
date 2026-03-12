@@ -34,6 +34,20 @@ const doc: ComponentDoc = {
                 </Flex>
             ),
         },
+        {
+            title: "Inline-laster",
+            description: "Bruk inline for å vise lasteren som en del av tekst eller andre inline-elementer.",
+            code: `<Flex gap="s" alignItems="center">
+  <Loader variant="small" inline textDescription="Henter data" />
+  <span>Henter forsikringsinformasjon…</span>
+</Flex>`,
+            preview: (
+                <Flex gap="s" alignItems="center">
+                    <Loader variant="small" inline textDescription="Henter data" />
+                    <span>Henter forsikringsinformasjon…</span>
+                </Flex>
+            ),
+        },
     ],
 };
 

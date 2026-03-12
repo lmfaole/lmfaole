@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import {Link} from "@fremtind/jokul/link";
-import {Flex} from "@fremtind/jokul/flex";
-import {TableOfContents} from "@fremtind/jokul/table-of-contents";
-import {PostMeta} from "@/components/PostMeta";
-import {useParams} from "next/navigation";
-import {getBlogPost} from "@/lib/blogPosts";
+import { Link } from "@fremtind/jokul/link";
+import { Flex } from "@fremtind/jokul/flex";
+import { TableOfContents } from "@fremtind/jokul/table-of-contents";
+import { PostMeta } from "@/components/PostMeta";
+import { useParams } from "next/navigation";
+import { getFoundationalPost } from "@/lib/foundationalPosts";
 
 function slugify(text: string) {
     return text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "");
@@ -41,15 +41,15 @@ function injectH2Ids(node: React.ReactNode): React.ReactNode {
     });
 }
 
-export default function PostPage() {
+export default function FoundationalPostPage() {
     const params = useParams();
-    const post = getBlogPost(params.id as string);
+    const post = getFoundationalPost(params.id as string);
 
     if (!post) {
         return (
             <Flex as="main" direction="column" gap="m">
                 <h1>Fant ikke innlegget</h1>
-                <Link href="/">Tilbake til forsiden</Link>
+                <Link href="/foundational">Tilbake til grunnleggende konsepter</Link>
             </Flex>
         );
     }
@@ -77,4 +77,3 @@ export default function PostPage() {
         </Flex>
     );
 }
-

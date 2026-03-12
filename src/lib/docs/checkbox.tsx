@@ -43,6 +43,38 @@ const doc: ComponentDoc = {
                 </Flex>
             ),
         },
+        {
+            title: "Ugyldig tilstand",
+            description: "Bruk invalid når brukeren prøver å sende skjema uten å ha krysset av et påkrevd felt.",
+            code: `<Checkbox name="required" value="terms" invalid>
+  Jeg godtar vilkårene (påkrevd)
+</Checkbox>`,
+            preview: (
+                <Checkbox name="required" value="terms" invalid>
+                    Jeg godtar vilkårene (påkrevd)
+                </Checkbox>
+            ),
+        },
+        {
+            title: "Indeterminate",
+            description: "Indeterminate brukes typisk for en «velg alle»-avkrysningsboks når kun noen rader er valgt.",
+            code: `<Flex direction="column" gap="xs">
+  <Checkbox name="all" value="all" indeterminate>
+    Velg alle (delvis valgt)
+  </Checkbox>
+  <Checkbox name="item" value="a" defaultChecked>Alternativ A</Checkbox>
+  <Checkbox name="item" value="b">Alternativ B</Checkbox>
+  <Checkbox name="item" value="c" defaultChecked>Alternativ C</Checkbox>
+</Flex>`,
+            preview: (
+                <Flex direction="column" gap="xs">
+                    <Checkbox name="all" value="all" indeterminate>Velg alle (delvis valgt)</Checkbox>
+                    <Checkbox name="item" value="a" defaultChecked>Alternativ A</Checkbox>
+                    <Checkbox name="item" value="b">Alternativ B</Checkbox>
+                    <Checkbox name="item" value="c" defaultChecked>Alternativ C</Checkbox>
+                </Flex>
+            ),
+        },
     ],
 };
 

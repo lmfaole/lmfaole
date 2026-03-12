@@ -50,6 +50,18 @@ const doc: ComponentDoc = {
                 </Message>
             ),
         },
+        {
+            title: "Full bredde",
+            description: "Bruk fullWidth for meldinger som skal dekke hele sidebredden, f.eks. global systemstatus.",
+            code: `<Message variant="error" title="Tjenesten er nede" fullWidth>
+  Vi opplever for øyeblikket tekniske problemer. Prøv igjen om noen minutter.
+</Message>`,
+            preview: (
+                <Message variant="error" title="Tjenesten er nede" fullWidth>
+                    Vi opplever for øyeblikket tekniske problemer. Prøv igjen om noen minutter.
+                </Message>
+            ),
+        },
     ],
 };
 

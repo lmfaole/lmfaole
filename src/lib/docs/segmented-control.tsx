@@ -1,4 +1,5 @@
 import React from "react";
+import { SegmentedControl, SegmentedControlButton } from "@fremtind/jokul/segmented-control";
 import type { ComponentDoc } from "./types";
 
 const doc: ComponentDoc = {
@@ -19,17 +20,36 @@ const doc: ComponentDoc = {
         {
             title: "Visningsvalg",
             description: "SegmentedControl for å velge mellom visningsmoduser.",
-            code: `const [view, setView] = React.useState("list");
-
-<SegmentedControl
-    legend="Velg visning"
-    value={view}
-    onChange={(e) => setView(e.target.value)}
->
-    <SegmentedControlButton value="list">Liste</SegmentedControlButton>
-    <SegmentedControlButton value="grid">Rutenett</SegmentedControlButton>
-    <SegmentedControlButton value="map">Kart</SegmentedControlButton>
+            code: `<SegmentedControl legend="Velg visning">
+  <SegmentedControlButton value="list">Liste</SegmentedControlButton>
+  <SegmentedControlButton value="grid">Rutenett</SegmentedControlButton>
+  <SegmentedControlButton value="map">Kart</SegmentedControlButton>
 </SegmentedControl>`,
+            preview: (
+                <SegmentedControl legend="Velg visning">
+                    <SegmentedControlButton value="list">Liste</SegmentedControlButton>
+                    <SegmentedControlButton value="grid">Rutenett</SegmentedControlButton>
+                    <SegmentedControlButton value="map">Kart</SegmentedControlButton>
+                </SegmentedControl>
+            ),
+        },
+        {
+            title: "Tidsperiode",
+            description: "Typisk bruk for å filtrere innhold etter tidsperiode.",
+            code: `<SegmentedControl legend="Velg periode">
+  <SegmentedControlButton value="day">Dag</SegmentedControlButton>
+  <SegmentedControlButton value="week">Uke</SegmentedControlButton>
+  <SegmentedControlButton value="month">Måned</SegmentedControlButton>
+  <SegmentedControlButton value="year">År</SegmentedControlButton>
+</SegmentedControl>`,
+            preview: (
+                <SegmentedControl legend="Velg periode">
+                    <SegmentedControlButton value="day">Dag</SegmentedControlButton>
+                    <SegmentedControlButton value="week">Uke</SegmentedControlButton>
+                    <SegmentedControlButton value="month">Måned</SegmentedControlButton>
+                    <SegmentedControlButton value="year">År</SegmentedControlButton>
+                </SegmentedControl>
+            ),
         },
     ],
 };

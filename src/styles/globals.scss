@@ -24,7 +24,6 @@
 @use "@fremtind/jokul/styles/components/chip/chip.scss";
 @use "@fremtind/jokul/styles/components/combobox/combobox.scss";
 @use "@fremtind/jokul/styles/components/countdown/countdown.scss";
-@use "@fremtind/jokul/styles/components/datepicker/datepicker.scss";
 @use "@fremtind/jokul/styles/components/file-input/file-input.scss";
 @use "@fremtind/jokul/styles/components/icon-button/icon-button.scss";
 @use "@fremtind/jokul/styles/components/image/image.scss";
@@ -55,45 +54,45 @@ body {
   font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", arial, sans-serif;
   font-size: var(--jkl-font-size-3);
   line-height: var(--jkl-line-height-relaxed);
-  margin: 0 auto;
-  max-width: 90ch;
+  margin: 0;
+  max-width: unset;
   padding-block: 2lh;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-p {
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article p {
   max-width: 60ch;
 }
 
-h1 {
+h1, .h1 {
   @include jkl.text-style("heading-1");
 }
 
-h2 {
+h2, .h2 {
   @include jkl.text-style("heading-2");
 }
 
-h3 {
+h3, .h3 {
   @include jkl.text-style("heading-3");
 }
 
-h4 {
+h4, .h4 {
   @include jkl.text-style("heading-4");
 }
 
-h5 {
+h5, .h5 {
   @include jkl.text-style("heading-5");
 }
 
-p {
+p, .p, .p.medium {
   @include jkl.text-style("paragraph-medium");
 }
 
-small {
+small, .p.small, .small {
   @include jkl.text-style("paragraph-small");
 }
 
@@ -102,41 +101,41 @@ small {
 }
 
 .component-package {
+  background: var(--jkl-color-background-container-subdued);
+  border: 1px solid var(--jkl-color-border-subdued);
+  border-radius: 3px;
+  color: var(--jkl-color-text-subdued);
   font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
   font-size: var(--jkl-font-size-2);
-  color: var(--jkl-color-text-subdued);
-  background: var(--jkl-color-background-container-subdued);
   padding: 2px 6px;
-  border-radius: 3px;
-  border: 1px solid var(--jkl-color-border-subdued);
 }
 
 .component-example {
-  padding-block: var(--jkl-spacing-m);
   border-bottom: 1px solid var(--jkl-color-border-subdued);
+  padding-block: var(--jkl-spacing-m);
 
   &:last-child {
     border-bottom: none;
   }
 
   &__preview {
-    padding: var(--jkl-spacing-l);
     background: var(--jkl-color-background-container-subdued);
     border: 1px solid var(--jkl-color-border-subdued);
     border-radius: 4px;
+    padding: var(--jkl-spacing-l);
   }
 }
 
 .frontpage-sections {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 38ch), 1fr));
-  gap: var(--jkl-spacing-l);
   align-items: start;
+  display: grid;
+  gap: var(--jkl-spacing-l);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 38ch), 1fr));
 }
 
 .component-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 34ch), 1fr));
   gap: var(--jkl-spacing-l);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 34ch), 1fr));
 }
 

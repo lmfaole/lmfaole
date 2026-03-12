@@ -65,6 +65,64 @@ const doc: ComponentDoc = {
                 </Table>
             ),
         },
+        {
+            title: "Full bredde med radoverskrifter",
+            description: "fullWidth strekker tabellen, og TableHeader med scope=\"row\" markerer radoverskrifter tilgjengelig.",
+            code: `<Table caption="Månedlige premier" fullWidth>
+  <TableHead>
+    <TableRow>
+      <TableHeader scope="col">Produkt</TableHeader>
+      <TableHeader scope="col" align="right">Månedspremie</TableHeader>
+      <TableHeader scope="col" align="right">Årspremie</TableHeader>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    <TableRow>
+      <TableHeader scope="row">Bilforsikring Kasko</TableHeader>
+      <TableCell align="right">542 kr</TableCell>
+      <TableCell align="right">6 504 kr</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableHeader scope="row">Innboforsikring</TableHeader>
+      <TableCell align="right">189 kr</TableCell>
+      <TableCell align="right">2 268 kr</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableHeader scope="row">Reiseforsikring</TableHeader>
+      <TableCell align="right">98 kr</TableCell>
+      <TableCell align="right">1 176 kr</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>`,
+            preview: (
+                <Table caption="Månedlige premier" fullWidth>
+                    <TableHead>
+                        <TableRow>
+                            <TableHeader scope="col">Produkt</TableHeader>
+                            <TableHeader scope="col" align="right">Månedspremie</TableHeader>
+                            <TableHeader scope="col" align="right">Årspremie</TableHeader>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableHeader scope="row">Bilforsikring Kasko</TableHeader>
+                            <TableCell align="right">542 kr</TableCell>
+                            <TableCell align="right">6 504 kr</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableHeader scope="row">Innboforsikring</TableHeader>
+                            <TableCell align="right">189 kr</TableCell>
+                            <TableCell align="right">2 268 kr</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableHeader scope="row">Reiseforsikring</TableHeader>
+                            <TableCell align="right">98 kr</TableCell>
+                            <TableCell align="right">1 176 kr</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            ),
+        },
     ],
 };
 

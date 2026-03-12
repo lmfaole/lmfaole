@@ -1,38 +1,28 @@
 import React from "react";
+import { DataTable } from "@fremtind/jokul/table";
 import type { PropDef } from "@/lib/componentDocs";
-import "./prop-table.scss";
 
 interface PropTableProps {
     props: PropDef[];
 }
 
+const COLUMNS = ["Prop", "Type", "Påkrevd", "Standard", "Beskrivelse"];
+
 export function PropTable({ props }: PropTableProps) {
+    const rows: React.ReactNode[][] = props.map((prop) => [
+        <code key="name">{prop.name}</code>,
+        <code key="type">{prop.type}</code>,
+        prop.required ? "Ja" : "Nei",
+        prop.default ? <code key="default">{prop.default}</code> : "—",
+        prop.description,
+    ]);
+
     return (
-        <div className="prop-table-wrapper">
-            <table className="prop-table">
-                <thead>
-                    <tr>
-                        <th scope="col">Prop</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Påkrevd</th>
-                        <th scope="col">Standard</th>
-                        <th scope="col">Beskrivelse</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {props.map((prop) => (
-                        <tr key={prop.name}>
-                            <td><code>{prop.name}</code></td>
-                            <td><code className="prop-table__type">{prop.type}</code></td>
-                            <td className={prop.required ? "prop-table__required" : "prop-table__optional"}>
-                                {prop.required ? "Ja" : "Nei"}
-                            </td>
-                            <td>{prop.default ? <code>{prop.default}</code> : <span className="muted">—</span>}</td>
-                            <td>{prop.description}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+        <DataTable
+            caption="Props"
+            columns={COLUMNS}
+            rows={rows}
+            collapseToList
+        />
     );
 }

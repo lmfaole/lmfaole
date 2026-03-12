@@ -66,6 +66,26 @@ const doc: ComponentDoc = {
                 />
             ),
         },
+        {
+            title: "Med hjelpetekst og feilmelding",
+            description: "helpLabel gir brukeren kontekst, errorLabel vises ved valideringsfeil.",
+            code: `<Select
+    name="role"
+    label="Rolle"
+    helpLabel="Velg rollen som best beskriver deg"
+    errorLabel="Du må velge en rolle"
+    items={["Utvikler", "Designer", "Produkteier", "Leder"]}
+/>`,
+            preview: (
+                <Select
+                    name="role"
+                    label="Rolle"
+                    helpLabel="Velg rollen som best beskriver deg"
+                    errorLabel="Du må velge en rolle"
+                    items={["Utvikler", "Designer", "Produkteier", "Leder"]}
+                />
+            ),
+        },
     ],
 };
 

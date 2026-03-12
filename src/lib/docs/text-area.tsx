@@ -35,6 +35,27 @@ const doc: ComponentDoc = {
 />`,
             preview: <TextArea label="Kommentar" counter={{ maxLength: 200 }} rows={3} />,
         },
+        {
+            title: "Auto-utvidende felt",
+            description: "autoExpand gjør at feltet vokser med innholdet — ingen synlig scrollebar.",
+            code: `<TextArea
+    label="Skadbeskrivelse"
+    autoExpand
+    helpLabel="Feltet vokser automatisk når du skriver"
+    rows={2}
+/>`,
+            preview: <TextArea label="Skadbeskrivelse" autoExpand helpLabel="Feltet vokser automatisk når du skriver" rows={2} />,
+        },
+        {
+            title: "Med feilmelding",
+            description: "errorLabel vises i stedet for helpLabel og markerer feltet som ugyldig.",
+            code: `<TextArea
+    label="Begrunnelse"
+    errorLabel="Beskriv hendelsen med minst 20 tegn"
+    rows={3}
+/>`,
+            preview: <TextArea label="Begrunnelse" errorLabel="Beskriv hendelsen med minst 20 tegn" rows={3} />,
+        },
     ],
 };
 

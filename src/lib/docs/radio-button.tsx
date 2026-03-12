@@ -35,6 +35,46 @@ const doc: ComponentDoc = {
                 </RadioButtonGroup>
             ),
         },
+        {
+            title: "Inline-variant",
+            description: "Bruk inline når du har få, korte alternativer og nok horisontal plass.",
+            code: `<RadioButtonGroup legend="Kjønn" name="gender" inline>
+  <RadioButton value="male">Mann</RadioButton>
+  <RadioButton value="female">Kvinne</RadioButton>
+  <RadioButton value="other">Annet</RadioButton>
+</RadioButtonGroup>`,
+            preview: (
+                <RadioButtonGroup legend="Kjønn" name="gender" inline>
+                    <RadioButton value="male">Mann</RadioButton>
+                    <RadioButton value="female">Kvinne</RadioButton>
+                    <RadioButton value="other">Annet</RadioButton>
+                </RadioButtonGroup>
+            ),
+        },
+        {
+            title: "Med feilmelding",
+            description: "Vis errorLabel på RadioButtonGroup når ingen verdi er valgt ved innsending.",
+            code: `<RadioButtonGroup
+  legend="Velg forsikringstype"
+  name="insurance"
+  errorLabel="Du må velge en forsikringstype for å gå videre"
+>
+  <RadioButton value="basic">Basis</RadioButton>
+  <RadioButton value="plus">Pluss</RadioButton>
+  <RadioButton value="premium">Premium</RadioButton>
+</RadioButtonGroup>`,
+            preview: (
+                <RadioButtonGroup
+                    legend="Velg forsikringstype"
+                    name="insurance"
+                    errorLabel="Du må velge en forsikringstype for å gå videre"
+                >
+                    <RadioButton value="basic">Basis</RadioButton>
+                    <RadioButton value="plus">Pluss</RadioButton>
+                    <RadioButton value="premium">Premium</RadioButton>
+                </RadioButtonGroup>
+            ),
+        },
     ],
 };
 

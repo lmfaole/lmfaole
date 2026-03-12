@@ -34,7 +34,6 @@ import tableOfContentsDoc from "./table-of-contents";
 import tabsDoc from "./tabs";
 import textAreaDoc from "./text-area";
 import tooltipDoc from "./tooltip";
-import datepickerDoc from "./datepicker";
 import radioPanelDoc from "./radio-panel";
 import type { ComponentDoc } from "./types";
 
@@ -49,7 +48,6 @@ export const componentDocs: ComponentDoc[] = [
     checkboxPanelDoc,
     chipDoc,
     countdownDoc,
-    datepickerDoc,
     descriptionListDoc,
     expandablePanelDoc,
     fieldGroupDoc,

@@ -7,6 +7,7 @@ import {Card} from "@fremtind/jokul/card";
 import {Tag} from "@fremtind/jokul/tag";
 import {blogPosts} from "@/lib/blogPosts";
 import {componentDocs} from "@/lib/componentDocs";
+import {foundationalPosts} from "@/lib/foundationalPosts";
 
 export default function Home() {
     const recentPosts = blogPosts.slice(0, 3);
@@ -33,6 +34,27 @@ export default function Home() {
             </Flex>
 
             <Flex direction="column" className="frontpage-sections">
+                <Card padding="l">
+                    <Flex direction="column" gap="m">
+                        <Flex direction="column" gap="xs">
+                            <h2><Link href="/foundational">Grunnleggende konsepter</Link></h2>
+                            <p>
+                                Fundamentene i Jøkul — typografi, farger og spacing.
+                                Essensielle artikler for å forstå designsystemets kjerneprinsipper
+                                og bruke dem riktig i dine prosjekter.
+                            </p>
+                            <p className="muted">{foundationalPosts.length} artikler</p>
+                        </Flex>
+                        <Flex direction="column" gap="xs">
+                            <h3>Konsepter</h3>
+                            {foundationalPosts.map((post) => (
+                                <Link key={post.id} href={`/foundational/${post.id}`}>{post.title}</Link>
+                            ))}
+                        </Flex>
+                        <Link href="/foundational">Se alle →</Link>
+                    </Flex>
+                </Card>
+
                 <Card padding="l">
                     <Flex direction="column" gap="m">
                         <Flex direction="column" gap="xs">
