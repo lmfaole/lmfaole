@@ -1,7 +1,6 @@
 "use client";
 
 import {Link} from "@fremtind/jokul/link";
-import {Flex} from "@fremtind/jokul/flex";
 import {SystemMessage} from "@fremtind/jokul/system-message";
 import {blogPosts} from "@/lib/blogPosts";
 import {componentDocs} from "@/lib/componentDocs";
@@ -69,15 +68,6 @@ export default function Home() {
                     ctaLabel="Se alle komponenter"
                 />
             </div>
-
-            <footer className="home__footer">
-                <nav aria-label="Eksterne lenker">
-                    <Flex as="ul" className="chip-list" gap="m">
-                        <li><Link href="https://jokul.fremtind.no/" external>Jøkul dokumentasjon</Link></li>
-                        <li><Link href="https://github.com/fremtind/jokul" external>GitHub</Link></li>
-                    </Flex>
-                </nav>
-            </footer>
         </main>
     );
 }
