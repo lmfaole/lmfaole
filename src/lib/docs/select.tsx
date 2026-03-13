@@ -7,6 +7,7 @@ const doc: ComponentDoc = {
     name: "Select",
     package: "@fremtind/jokul/select",
     category: "Skjema",
+    tags: ["input", "skjema", "interaktiv", "søk", "skjemabygging"],
     description: "Select er et nedtrekksmeny-skjemaelement for å velge ett alternativ fra en liste.",
     notes: "Bruk Select når listen har 5+ alternativer.",
     relatedIds: ["radio-button", "autosuggest"],
@@ -76,6 +77,7 @@ const doc: ComponentDoc = {
     errorLabel="Du må velge en rolle"
     items={["Utvikler", "Designer", "Produkteier", "Leder"]}
 />`,
+            tags: ["error-state"],
             preview: (
                 <Select
                     name="role"

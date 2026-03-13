@@ -9,6 +9,7 @@ const doc: ComponentDoc = {
     name: "Tooltip",
     package: "@fremtind/jokul/tooltip",
     category: "Visning",
+    tags: ["overlay", "interaktiv", "tilgjengelighet", "feedback"],
     description: "Tooltip og PopupTip viser tilleggsinformasjon ved hover eller klikk.",
     notes: "Ikke legg viktig informasjon kun i en tooltip.",
     props: [
@@ -26,6 +27,7 @@ const doc: ComponentDoc = {
   </TooltipTrigger>
   <TooltipContent>Dette er en forklarende tekst om knappens funksjon.</TooltipContent>
 </Tooltip>`,
+            tags: ["accessibility"],
             preview: (
                 <Tooltip>
                     <TooltipTrigger>

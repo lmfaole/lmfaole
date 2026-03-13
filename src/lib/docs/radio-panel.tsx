@@ -1,5 +1,6 @@
 import React from "react";
 import { RadioPanel } from "@fremtind/jokul/radio-panel";
+import { FieldGroup } from "@fremtind/jokul/input-group";
 import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentDoc } from "./types";
 
@@ -8,6 +9,7 @@ const doc: ComponentDoc = {
     name: "RadioPanel",
     package: "@fremtind/jokul/radio-panel",
     category: "Skjema",
+    tags: ["input", "skjema", "panel", "interaktiv", "pris"],
     description: "RadioPanel er et panelbasert envalgsalternativ.",
     notes: "Grupper RadioPanel-er i FieldGroup med legend for tilgjengelighet.",
     relatedIds: ["radio-button", "checkbox-panel"],
@@ -34,10 +36,62 @@ const doc: ComponentDoc = {
 </Flex>`,
             preview: (
                 <Flex direction="column" gap="xs">
-                    <RadioPanel name="coverage" value="basic" label="Grunnpakke">Grunnpakke</RadioPanel>
-                    <RadioPanel name="coverage" value="standard" label="Standardpakke">Standardpakke</RadioPanel>
-                    <RadioPanel name="coverage" value="premium" label="Premiumpakke">Premiumpakke</RadioPanel>
+                    <RadioPanel name="coverage" value="basic" label="Grunnpakke" />
+                    <RadioPanel name="coverage" value="standard" label="Standardpakke" />
+                    <RadioPanel name="coverage" value="premium" label="Premiumpakke" />
                 </Flex>
+            ),
+        },
+        {
+            title: "Med beskrivelse og pris",
+            description: "RadioPanel med utvidet informasjon og prisvisning.",
+            code: `<FieldGroup legend="Velg forsikringspakke">
+  <RadioPanel
+    name="plan"
+    value="basis"
+    label="Basis"
+    amount="189 kr/mnd"
+    description="Grunnleggende dekning for deg som kjører lite."
+  />
+  <RadioPanel
+    name="plan"
+    value="pluss"
+    label="Pluss"
+    amount="299 kr/mnd"
+    description="Utvidet dekning med veihjelp inkludert."
+  />
+  <RadioPanel
+    name="plan"
+    value="premium"
+    label="Premium"
+    amount="449 kr/mnd"
+    description="Full dekning med leiebil og glassforsikring."
+  />
+</FieldGroup>`,
+            tags: ["price"],
+            preview: (
+                <FieldGroup legend="Velg forsikringspakke">
+                    <RadioPanel name="plan" value="basis" label="Basis" amount="189 kr/mnd" description="Grunnleggende dekning for deg som kjører lite." />
+                    <RadioPanel name="plan" value="pluss" label="Pluss" amount="299 kr/mnd" description="Utvidet dekning med veihjelp inkludert." />
+                    <RadioPanel name="plan" value="premium" label="Premium" amount="449 kr/mnd" description="Full dekning med leiebil og glassforsikring." />
+                </FieldGroup>
+            ),
+        },
+        {
+            title: "Med feilmelding",
+            description: "FieldGroup rundt RadioPanel-er viser feilmelding for hele gruppen.",
+            code: `<FieldGroup legend="Velg betalingsmetode" errorLabel="Du må velge en betalingsmetode">
+  <RadioPanel name="payment" value="card" label="Bankkort" />
+  <RadioPanel name="payment" value="invoice" label="Faktura" />
+  <RadioPanel name="payment" value="avtalegiro" label="AvtaleGiro" />
+</FieldGroup>`,
+            tags: ["error-state"],
+            preview: (
+                <FieldGroup legend="Velg betalingsmetode" errorLabel="Du må velge en betalingsmetode">
+                    <RadioPanel name="payment" value="card" label="Bankkort" />
+                    <RadioPanel name="payment" value="invoice" label="Faktura" />
+                    <RadioPanel name="payment" value="avtalegiro" label="AvtaleGiro" />
+                </FieldGroup>
             ),
         },
     ],

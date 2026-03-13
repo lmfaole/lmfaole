@@ -8,6 +8,7 @@ const doc: ComponentDoc = {
     name: "Message",
     package: "@fremtind/jokul/message",
     category: "Tilbakemelding",
+    tags: ["feedback", "tilgjengelighet", "validering"],
     description: "Message viser kontekstuell informasjon, advarsler, suksessmeldinger og feilmeldinger til brukeren. Komponenten er tilgjengelig ut av boksen med riktig role og aria-attributter for alle varianter. Bruk riktig variant for å kommunisere alvorlighetsgraden av meldingen.",
     notes: "Ikke bruk Message for inline skjemafeil — bruk errorLabel på skjemakomponentene i stedet. Message passer best for meldinger som gjelder hele skjemaet eller siden, ikke enkeltfelt.",
     relatedIds: ["tag"],

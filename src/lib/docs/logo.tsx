@@ -1,5 +1,5 @@
 import React from "react";
-import { Logo } from "@fremtind/jokul/logo";
+import { Logo, LogoStamp, ForsikringLevertAvFremtind } from "@fremtind/jokul/logo";
 import type { ComponentDoc } from "./types";
 
 const doc: ComponentDoc = {
@@ -7,6 +7,7 @@ const doc: ComponentDoc = {
     name: "Logo",
     package: "@fremtind/jokul/logo",
     category: "Visning",
+    tags: ["media", "ikon", "merkevare"],
     description: "Logo rendrer Fremtind-logoen som en SVG-komponent.",
     notes: "Endre ikke logoens farger eller proporsjoner.",
     props: [],
@@ -16,6 +17,24 @@ const doc: ComponentDoc = {
             description: "Fremtind-logoen i standard størrelse.",
             code: `<Logo />`,
             preview: <Logo />,
+        },
+        {
+            title: "Logosymbol",
+            description: "Kun symbolet uten ordmerket, for eksempel i kompakte flater.",
+            code: `<Logo isSymbol title="Fremtind" />`,
+            preview: <Logo isSymbol title="Fremtind" />,
+        },
+        {
+            title: "Logostempel",
+            description: "LogoStamp med tekst rundt logoen, brukes for å forsterke Fremtind-merkevaren.",
+            code: `<LogoStamp>
+  <ForsikringLevertAvFremtind />
+</LogoStamp>`,
+            preview: (
+                <LogoStamp>
+                    <ForsikringLevertAvFremtind />
+                </LogoStamp>
+            ),
         },
     ],
 };

@@ -7,6 +7,7 @@ const doc: ComponentDoc = {
     name: "TextArea",
     package: "@fremtind/jokul/text-area",
     category: "Skjema",
+    tags: ["input", "skjema", "interaktiv", "skjemabygging"],
     description: "TextArea er et flerlinjers tekstinputfelt for lengre tekstinnhold.",
     notes: "Bruk autoExpand for å la feltet vokse automatisk med innholdet.",
     relatedIds: ["text-input"],
@@ -54,6 +55,7 @@ const doc: ComponentDoc = {
     errorLabel="Beskriv hendelsen med minst 20 tegn"
     rows={3}
 />`,
+            tags: ["error-state"],
             preview: <TextArea label="Begrunnelse" errorLabel="Beskriv hendelsen med minst 20 tegn" rows={3} />,
         },
     ],

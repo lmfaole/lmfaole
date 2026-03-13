@@ -1,4 +1,5 @@
 import React from "react";
+import { Tabs, Tab, TabList, TabPanel } from "@fremtind/jokul/tabs";
 import type { ComponentDoc } from "./types";
 
 const doc: ComponentDoc = {
@@ -6,6 +7,7 @@ const doc: ComponentDoc = {
     name: "Tabs",
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
+    tags: ["navigasjon", "layout", "interaktiv"],
     description: "Tabs organiser innhold i faner der kun én fane vises om gangen.",
     notes: "Bruk Tabs for å skjule innhold, ikke for navigasjon mellom sider.",
     relatedIds: ["nav-link"],
@@ -34,6 +36,53 @@ const doc: ComponentDoc = {
     <p>Historikk vises her.</p>
   </TabPanel>
 </Tabs>`,
+        },
+        {
+            title: "Med standardfane",
+            description: "Tabs der en annen fane enn den første er aktiv ved innlasting.",
+            code: `<Tabs defaultTab={1}>
+  <TabList>
+    <Tab>Aktive avtaler</Tab>
+    <Tab>Utgåtte avtaler</Tab>
+    <Tab>Avsluttede avtaler</Tab>
+  </TabList>
+  <TabPanel>
+    <p>Dine aktive forsikringsavtaler vises her.</p>
+  </TabPanel>
+  <TabPanel>
+    <p>Forsikringsavtaler som har gått ut vises her.</p>
+  </TabPanel>
+  <TabPanel>
+    <p>Avsluttede forsikringsavtaler vises her.</p>
+  </TabPanel>
+</Tabs>`,
+        },
+        {
+            title: "Med endringslytter",
+            description: "Tabs med onChange-handler for å reagere på faneskift.",
+            code: `const [activeTab, setActiveTab] = React.useState(0);
+const tabNames = ["Personlig", "Bedrift", "Landbruk"];
+
+<>
+  <p>Aktiv fane: {tabNames[activeTab]}</p>
+  <Tabs defaultTab={0} onChange={setActiveTab}>
+    <TabList>
+      <Tab>Personlig</Tab>
+      <Tab>Bedrift</Tab>
+      <Tab>Landbruk</Tab>
+    </TabList>
+    <TabPanel>
+      <p>Forsikringer for privatpersoner.</p>
+    </TabPanel>
+    <TabPanel>
+      <p>Forsikringer for bedrifter.</p>
+    </TabPanel>
+    <TabPanel>
+      <p>Forsikringer for landbruk.</p>
+    </TabPanel>
+  </Tabs>
+</>`,
+            tags: ["controlled"],
         },
     ],
 };

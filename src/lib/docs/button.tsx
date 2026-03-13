@@ -8,6 +8,7 @@ const doc: ComponentDoc = {
     name: "Button",
     package: "@fremtind/jokul/button",
     category: "Skjema",
+    tags: ["knapp", "interaktiv", "skjema"],
     description: "Button brukes til å utløse handlinger. Knapper er det primære interaksjonselementet og skal alltid kommunisere hva som skjer når brukeren trykker på dem. Velg variant basert på handlingens prioritet — bruk én primary-knapp per kontekst og reserver ghost for lavprioriterte handlinger.",
     notes: "Ikke bruk Button til navigasjon — bruk Link eller NavLink i stedet. En knapp skal alltid ha en tydelig, handlingsrettet label. Unngå «Klikk her» eller «Send» uten kontekst.",
     relatedIds: ["text-input", "toggle-switch"],
@@ -57,6 +58,7 @@ const doc: ComponentDoc = {
   <Button disabled>Kan ikke lagres</Button>
   <Button variant="secondary" disabled>Slett</Button>
 </Flex>`,
+            tags: ["disabled"],
             preview: (
                 <Flex gap="s">
                     <Button disabled>Kan ikke lagres</Button>

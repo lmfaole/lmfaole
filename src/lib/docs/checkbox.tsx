@@ -8,6 +8,7 @@ const doc: ComponentDoc = {
     name: "Checkbox",
     package: "@fremtind/jokul/checkbox",
     category: "Skjema",
+    tags: ["input", "skjema", "interaktiv", "skjemabygging", "tilgjengelighet"],
     description: "Checkbox brukes for binære valg i skjemaer, typisk for samtykke eller flervalgslister.",
     notes: "Bruk Checkbox for skjemainnsending, ikke ToggleSwitch.",
     relatedIds: ["toggle-switch", "checkbox-panel"],
@@ -49,6 +50,7 @@ const doc: ComponentDoc = {
             code: `<Checkbox name="required" value="terms" invalid>
   Jeg godtar vilkårene (påkrevd)
 </Checkbox>`,
+            tags: ["error-state"],
             preview: (
                 <Checkbox name="required" value="terms" invalid>
                     Jeg godtar vilkårene (påkrevd)

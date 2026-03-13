@@ -7,6 +7,7 @@ const doc: ComponentDoc = {
     name: "RadioButton",
     package: "@fremtind/jokul/radio-button",
     category: "Skjema",
+    tags: ["input", "skjema", "interaktiv", "skjemabygging", "tilgjengelighet"],
     description: "RadioButton og RadioButtonGroup brukes for enovalgslister.",
     notes: "Bruk alltid RadioButtonGroup som wrapper for tilgjengelighet.",
     relatedIds: ["checkbox", "radio-panel"],
@@ -63,6 +64,7 @@ const doc: ComponentDoc = {
   <RadioButton value="plus">Pluss</RadioButton>
   <RadioButton value="premium">Premium</RadioButton>
 </RadioButtonGroup>`,
+            tags: ["error-state"],
             preview: (
                 <RadioButtonGroup
                     legend="Velg forsikringstype"

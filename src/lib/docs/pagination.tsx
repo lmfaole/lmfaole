@@ -6,6 +6,7 @@ const doc: ComponentDoc = {
     name: "Pagination",
     package: "@fremtind/jokul/pagination",
     category: "Navigasjon",
+    tags: ["navigasjon", "interaktiv", "datavisning", "liste"],
     description: "Pagination brukes til å dele opp lange lister i sider.",
     notes: "Oppdater currentPage-state i onPageChange-handler.",
     props: [
@@ -24,6 +25,30 @@ const doc: ComponentDoc = {
     currentPage={page}
     numberOfPages={10}
     onPageChange={(toPage) => setPage(toPage)}
+/>`,
+            tags: ["controlled"],
+        },
+        {
+            title: "Mange sider",
+            description: "Paginering med et høyt antall sider viser ellipsis for kompakt visning.",
+            code: `const [page, setPage] = React.useState(1);
+
+<Pagination
+    currentPage={page}
+    numberOfPages={50}
+    onPageChange={(toPage) => setPage(toPage)}
+/>`,
+        },
+        {
+            title: "Egendefinerte knapptekster",
+            description: "Egne tekster på forrige/neste-knappene.",
+            code: `const [page, setPage] = React.useState(1);
+
+<Pagination
+    currentPage={page}
+    numberOfPages={10}
+    onPageChange={(toPage) => setPage(toPage)}
+    labels={{ previous: "Forrige side", next: "Neste side" }}
 />`,
         },
     ],

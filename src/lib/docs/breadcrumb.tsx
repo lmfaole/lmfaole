@@ -7,6 +7,7 @@ const doc: ComponentDoc = {
     name: "Breadcrumb",
     package: "@fremtind/jokul/breadcrumb",
     category: "Navigasjon",
+    tags: ["navigasjon", "hierarki"],
     description: "Breadcrumb viser hvor brukeren er i nettstedets hierarki og gir snarveier tilbake til overordnede sider.",
     notes: "Bruk Breadcrumb på sider som er mer enn ett nivå dypt.",
     relatedIds: ["nav-link", "link"],
@@ -27,6 +28,38 @@ const doc: ComponentDoc = {
                     <BreadcrumbItem><a href="/">Hjem</a></BreadcrumbItem>
                     <BreadcrumbItem><a href="/forsikring">Forsikring</a></BreadcrumbItem>
                     <BreadcrumbItem>Bilforsikring</BreadcrumbItem>
+                </Breadcrumb>
+            ),
+        },
+        {
+            title: "To nivåer",
+            description: "Kort brødsmulesti med kun hjem og gjeldende side.",
+            code: `<Breadcrumb>
+  <BreadcrumbItem><a href="/">Hjem</a></BreadcrumbItem>
+  <BreadcrumbItem>Min profil</BreadcrumbItem>
+</Breadcrumb>`,
+            preview: (
+                <Breadcrumb>
+                    <BreadcrumbItem><a href="/">Hjem</a></BreadcrumbItem>
+                    <BreadcrumbItem>Min profil</BreadcrumbItem>
+                </Breadcrumb>
+            ),
+        },
+        {
+            title: "Fire nivåer",
+            description: "Dypere navigasjonsvei for nestet innholdsstruktur.",
+            code: `<Breadcrumb>
+  <BreadcrumbItem><a href="/">Hjem</a></BreadcrumbItem>
+  <BreadcrumbItem><a href="/produkter">Produkter</a></BreadcrumbItem>
+  <BreadcrumbItem><a href="/produkter/forsikring">Forsikring</a></BreadcrumbItem>
+  <BreadcrumbItem>Reiseforsikring</BreadcrumbItem>
+</Breadcrumb>`,
+            preview: (
+                <Breadcrumb>
+                    <BreadcrumbItem><a href="/">Hjem</a></BreadcrumbItem>
+                    <BreadcrumbItem><a href="/produkter">Produkter</a></BreadcrumbItem>
+                    <BreadcrumbItem><a href="/produkter/forsikring">Forsikring</a></BreadcrumbItem>
+                    <BreadcrumbItem>Reiseforsikring</BreadcrumbItem>
                 </Breadcrumb>
             ),
         },

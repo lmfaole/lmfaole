@@ -8,6 +8,7 @@ const doc: ComponentDoc = {
     name: "Loader",
     package: "@fremtind/jokul/loader",
     category: "Tilbakemelding",
+    tags: ["animasjon", "feedback", "tilstandsstyring"],
     description: "Loader viser at noe laster i bakgrunnen. Alltid gi textDescription for skjermlesere.",
     notes: "Bruk Loader for hele side- og seksjonslasting. For knapper med innebygd laster, bruk Button sin loader-prop.",
     relatedIds: ["button"],
@@ -26,6 +27,7 @@ const doc: ComponentDoc = {
   <Loader variant="medium" textDescription="Laster" />
   <Loader variant="large" textDescription="Laster" />
 </Flex>`,
+            tags: ["loading"],
             preview: (
                 <Flex gap="l" alignItems="center">
                     <Loader variant="small" textDescription="Laster" />

@@ -8,6 +8,7 @@ const doc: ComponentDoc = {
     name: "NavLink",
     package: "@fremtind/jokul/nav-link",
     category: "Navigasjon",
+    tags: ["navigasjon", "interaktiv"],
     description: "NavLink er en navigasjonslenke med tydelig aktiv tilstand. Brukes i navigasjonsmeny og sidefelt.",
     notes: "Sett active på gjeldende side for å markere hvilken side brukeren er på.",
     relatedIds: ["link"],

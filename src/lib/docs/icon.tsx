@@ -8,6 +8,7 @@ const doc: ComponentDoc = {
     name: "Icon",
     package: "@fremtind/jokul/icon",
     category: "Visning",
+    tags: ["ikon", "media"],
     description: "Icon rendrer Material Symbols-ikoner. Gi navnet på ikonet som child-tekst.",
     notes: "Bruk alltid aria-label eller ledsagende tekst hvis ikonet er eneste indikasjon på en handling.",
     props: [

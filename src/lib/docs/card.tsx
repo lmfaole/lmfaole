@@ -10,6 +10,7 @@ const doc: ComponentDoc = {
     name: "Card",
     package: "@fremtind/jokul/card",
     category: "Visning",
+    tags: ["layout", "panel", "datavisning"],
     description: "Card er en overflate-komponent som grupperer relatert innhold i et visuelt avgrenset område. Den gir bakgrunn, ramme og padding via padding-proppen. Card gjør ikke antagelser om innhold — det er opp til deg å strukturere innholdet med Flex, overskrifter og andre komponenter.",
     notes: "Card er ikke interaktivt som standard. Hvis hele kortet skal være klikkbart, legg til en Link-komponent rundt eller bruk onClick på Card med role=\"button\". Ikke misbruk Card for all strukturering — bruk section-elementer og CSS for enklere grupperinger.",
     relatedIds: ["flex"],

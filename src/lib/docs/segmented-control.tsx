@@ -7,6 +7,7 @@ const doc: ComponentDoc = {
     name: "SegmentedControl",
     package: "@fremtind/jokul/segmented-control",
     category: "Skjema",
+    tags: ["input", "skjema", "interaktiv", "filter"],
     description: "SegmentedControl er en gruppe av knapper der kun ett alternativ kan velges om gangen.",
     notes: "Bruk SegmentedControl for 2–5 gjensidig utelukkende valg.",
     relatedIds: ["radio-button"],

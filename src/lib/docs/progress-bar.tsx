@@ -8,6 +8,7 @@ const doc: ComponentDoc = {
     name: "ProgressBar",
     package: "@fremtind/jokul/progress-bar",
     category: "Tilbakemelding",
+    tags: ["animasjon", "feedback", "tilstandsstyring"],
     description: "ProgressBar viser fremgang i en prosess.",
     notes: "Gi alltid en beskrivende title og aria-valuetext for skjermlesere.",
     props: [
@@ -26,6 +27,7 @@ const doc: ComponentDoc = {
     title="Laster opp fil"
     aria-valuetext="60 prosent lastet opp"
 />`,
+            tags: ["loading"],
             preview: (
                 <ProgressBar
                     aria-valuenow={60}

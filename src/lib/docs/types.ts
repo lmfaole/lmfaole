@@ -13,6 +13,7 @@ export interface ComponentExample {
     description?: string;
     code: string;
     preview?: React.ReactNode;
+    tags?: string[];
 }
 
 export interface ComponentDoc {
@@ -20,6 +21,8 @@ export interface ComponentDoc {
     name: string;
     package: string;
     category: "Layout" | "Skjema" | "Tilbakemelding" | "Navigasjon" | "Visning";
+    status?: "stable" | "beta" | "deprecated";
+    tags: string[];
     description: string;
     notes?: string;
     props: PropDef[];

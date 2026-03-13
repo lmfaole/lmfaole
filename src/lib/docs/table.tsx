@@ -7,6 +7,7 @@ const doc: ComponentDoc = {
     name: "Table",
     package: "@fremtind/jokul/table",
     category: "Visning",
+    tags: ["tabell", "datavisning"],
     description: "Table rendrer en tilgjengelig HTML-tabell med Jøkuls stilsett.",
     notes: "Alltid inkluder caption for tilgjengelighet.",
     relatedIds: ["summary-table"],

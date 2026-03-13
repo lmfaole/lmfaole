@@ -7,6 +7,7 @@ const doc: ComponentDoc = {
     name: "TextInput",
     package: "@fremtind/jokul/text-input",
     category: "Skjema",
+    tags: ["input", "skjema", "interaktiv", "skjemabygging", "kontrollert"],
     description: "TextInput er en enkeltlinjers tekstinndatafelt. Komponenten inkluderer label, feilmelding og hjelpetekst i ett og håndterer tilgjengelighet automatisk — label er koblet til input via htmlFor/id. Alle skjema-primitiver i Jøkul følger samme API-mønster.",
     notes: "Bruk alltid label — ikke bruk placeholder som erstatning for label. Placeholder-tekst forsvinner når brukeren skriver og er ikke tilgjengelig. helpLabel brukes for format-hint som «Skriv inn dato som DD.MM.ÅÅÅÅ».",
     relatedIds: ["button"],
@@ -94,6 +95,7 @@ const doc: ComponentDoc = {
   placeholder="Ola Nordmann"
   autoComplete="name"
 />`,
+            tags: ["controlled"],
             preview: (
                 <TextInput
                     label="Fullt navn"
@@ -131,6 +133,7 @@ const doc: ComponentDoc = {
   type="email"
   autoComplete="email"
 />`,
+            tags: ["error-state"],
             preview: (
                 <TextInput
                     label="E-postadresse"

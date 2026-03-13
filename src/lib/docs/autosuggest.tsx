@@ -6,6 +6,7 @@ const doc: ComponentDoc = {
     name: "Autosuggest",
     package: "@fremtind/jokul/autosuggest",
     category: "Skjema",
+    tags: ["input", "skjema", "søk", "interaktiv", "kontrollert"],
     description: "Autosuggest er et tekstinputfelt som viser forslag mens brukeren skriver. Passer for søk og fritekstfelt med et endelig sett av gyldige valg.",
     notes: "Krev ikke valg fra forslagslisten — brukeren skal kunne skrive fritt.",
     relatedIds: ["text-input", "select"],
@@ -36,6 +37,44 @@ const suggestions = allSuggestions.filter(s =>
     onChange={setValue}
     onSelect={setValue}
     helpLabel="Begynn å skrive for å se forslag"
+/>`,
+            tags: ["controlled"],
+        },
+        {
+            title: "Med feilmelding",
+            description: "Autosuggest viser feilmelding når input er ugyldig.",
+            code: `const [value, setValue] = React.useState("xyz");
+const allSuggestions = ["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"];
+const suggestions = allSuggestions.filter(s =>
+    s.toLowerCase().startsWith(value.toLowerCase())
+);
+
+<Autosuggest
+    label="Hjemsted"
+    suggestions={suggestions}
+    value={value}
+    onChange={setValue}
+    onSelect={setValue}
+    errorLabel="Velg en gyldig by fra listen"
+/>`,
+            tags: ["error-state", "controlled"],
+        },
+        {
+            title: "Ingen treff-tekst",
+            description: "Viser tilpasset tekst når ingen forslag matcher det brukeren har skrevet.",
+            code: `const [value, setValue] = React.useState("");
+const allSuggestions = ["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"];
+const suggestions = allSuggestions.filter(s =>
+    s.toLowerCase().startsWith(value.toLowerCase())
+);
+
+<Autosuggest
+    label="Hjemsted"
+    suggestions={suggestions}
+    value={value}
+    onChange={setValue}
+    onSelect={setValue}
+    noSuggestionsText="Ingen byer funnet – prøv et annet søk"
 />`,
         },
     ],
