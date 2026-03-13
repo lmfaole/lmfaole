@@ -28,23 +28,23 @@ export function EditorialCard({
                                   ctaLabel,
                               }: EditorialCardProps) {
     return (
-        <article className="home__section">
+        <article className="editorial-card">
             <div>
-                <h2 className="home__section-title">
+                <h2 className="editorial-card__title">
                     <Link href={titleHref}>{title}</Link>
                 </h2>
-                <p className="home__section-desc">{description}</p>
+                <p className="editorial-card__desc">{description}</p>
             </div>
-            <ul className="home__article-list">
+            <ul className="editorial-card__list">
                 {items.map((item) => (
-                    <li key={item.key} className="home__article-item" inert>
+                    <li key={item.key} className="editorial-card__item" inert>
                         <Link href={item.href}>{item.title}</Link>
-                        {item.excerpt && <span className="home__article-excerpt">{item.excerpt}</span>}
+                        {item.excerpt && <span className="editorial-card__excerpt">{item.excerpt}</span>}
                     </li>
                 ))}
             </ul>
-            <div className="home__section-footer">
-                <span className="home__stat" aria-hidden="true">{stat}</span>
+            <div className="editorial-card__footer">
+                <span className="editorial-card__stat" aria-hidden="true">{stat}</span>
                 <Link href={ctaHref}>{ctaLabel}</Link>
             </div>
         </article>

@@ -24,7 +24,7 @@ export default function Home() {
                 </SystemMessage>
             </header>
 
-            <div className="home__sections">
+            <div className="editorial-grid">
                 <EditorialCard
                     title="Siste artikler"
                     titleHref="/jokul/blog"
