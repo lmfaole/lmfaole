@@ -5,7 +5,9 @@ import {SystemMessage} from "@fremtind/jokul/system-message";
 import {blogPosts} from "@/lib/blogPosts";
 import {componentDocs} from "@/lib/componentDocs";
 import {foundationalPosts} from "@/lib/foundationalPosts";
-import {EditorialCard} from "@/components/EditorialCard/EditorialCard";
+import {BlogPostCard} from "@/components/BlogPostCard";
+import {ComponentCard} from "@/components/ComponentCard";
+import {Grid} from "@/components/Grid";
 import "./home.scss";
 
 export default function Home() {
@@ -24,50 +26,43 @@ export default function Home() {
                 </SystemMessage>
             </header>
 
-            <div className="editorial-grid">
-                <EditorialCard
-                    title="Siste artikler"
-                    titleHref="/jokul/blog"
-                    description="Dybdeartikler om tilgjengelighet, typografi, farger og komponentbruk."
-                    items={blogPosts.slice(0, 2).map((p) => ({
-                        key: p.id,
-                        href: `/jokul/blog/${p.id}`,
-                        title: p.title,
-                        excerpt: p.excerpt,
-                    }))}
-                    stat={blogPosts.length}
-                    ctaHref="/jokul/blog"
-                    ctaLabel="Se alle artikler"
-                />
-                <EditorialCard
-                    title="Konsepter"
-                    titleHref="/jokul/foundational"
-                    description="Fundamentene i Jøkul — typografi, farger og designtokens."
-                    items={foundationalPosts.slice(0, 2).map((p) => ({
-                        key: p.id,
-                        href: `/jokul/foundational/${p.id}`,
-                        title: p.title,
-                        excerpt: p.excerpt
-                    }))}
-                    stat={foundationalPosts.length}
-                    ctaHref="/jokul/foundational"
-                    ctaLabel="Se alle"
-                />
-                <EditorialCard
-                    title="Dokumentasjon"
-                    titleHref="/jokul/component"
-                    description="Prop-tabeller og kodeeksempler for alle Jøkul-komponenter."
-                    items={componentDocs.slice(0, 2).map((d) => ({
-                        key: d.id,
-                        href: `/jokul/component/${d.id}`,
-                        title: d.name,
-                        excerpt: d.description,
-                    }))}
-                    stat={componentDocs.length}
-                    ctaHref="/jokul/component"
-                    ctaLabel="Se alle komponenter"
-                />
-            </div>
+            <section className="home__section">
+                <div className="home__section-header">
+                    <h2><Link href="/jokul/foundational">Grunnleggende</Link></h2>
+                    <p>Fundamentene i Jøkul — typografi, farger og designtokens.</p>
+                </div>
+                <Grid columns={3} gap="l">
+                    {foundationalPosts.map((post) => (
+                        <BlogPostCard key={post.id} post={post} />
+                    ))}
+                </Grid>
+            </section>
+
+            <section className="home__section">
+                <div className="home__section-header">
+                    <h2><Link href="/jokul/blog">Blogg</Link></h2>
+                    <p>Dybdeartikler om tilgjengelighet, typografi, farger og komponentbruk.</p>
+                </div>
+                <Grid columns={3} gap="l">
+                    {blogPosts.slice(0, 3).map((post) => (
+                        <BlogPostCard key={post.id} post={post} />
+                    ))}
+                </Grid>
+                <Link href="/jokul/blog">Se alle {blogPosts.length} artikler</Link>
+            </section>
+
+            <section className="home__section">
+                <div className="home__section-header">
+                    <h2><Link href="/jokul/component">Komponenter</Link></h2>
+                    <p>Prop-tabeller og kodeeksempler for alle Jøkul-komponenter.</p>
+                </div>
+                <Grid columns={4} gap="m">
+                    {componentDocs.slice(0, 8).map((doc) => (
+                        <ComponentCard key={doc.id} doc={doc} />
+                    ))}
+                </Grid>
+                <Link href="/jokul/component">Se alle {componentDocs.length} komponenter</Link>
+            </section>
         </main>
     );
 }
