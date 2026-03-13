@@ -7,10 +7,10 @@ import {Search} from "@fremtind/jokul/search";
 import {Chip} from "@fremtind/jokul/chip";
 import {Select} from "@fremtind/jokul/select";
 import {SegmentedControl, SegmentedControlButton} from "@fremtind/jokul/segmented-control";
-import {DescriptionList, DescriptionTerm, DescriptionDetail} from "@fremtind/jokul/description-list";
+import {DescriptionDetail, DescriptionList, DescriptionTerm} from "@fremtind/jokul/description-list";
 import {Link} from "@fremtind/jokul/link";
-import {componentDocs} from "@/lib/componentDocs";
 import type {PropSource} from "@/lib/componentDocs";
+import {componentDocs} from "@/lib/componentDocs";
 import {Grid} from "@/components/Grid";
 import {ComponentCard} from "@/components/ComponentCard";
 
@@ -23,8 +23,8 @@ const ALL_PROP_ENTRIES: PropEntry[] = (() => {
     const map = new Map<string, { source: PropSource | undefined; usedBy: { id: string; name: string }[] }>();
     for (const doc of componentDocs) {
         for (const prop of doc.props) {
-            const existing = map.get(prop.name) ?? { source: prop.source, usedBy: [] };
-            if (!existing.usedBy.find((e) => e.id === doc.id)) existing.usedBy.push({ id: doc.id, name: doc.name });
+            const existing = map.get(prop.name) ?? {source: prop.source, usedBy: []};
+            if (!existing.usedBy.find((e) => e.id === doc.id)) existing.usedBy.push({id: doc.id, name: doc.name});
             // if any doc marks it as custom, treat it as custom
             if (prop.source === "custom") existing.source = "custom";
             else if (prop.source === "native" && existing.source == null) existing.source = "native";
@@ -32,7 +32,7 @@ const ALL_PROP_ENTRIES: PropEntry[] = (() => {
         }
     }
     return Array.from(map.entries())
-        .map(([propName, { source, usedBy }]) => ({ propName, source, usedBy }))
+        .map(([propName, {source, usedBy}]) => ({propName, source, usedBy}))
         .sort((a, b) => a.propName.localeCompare(b.propName, "nb"));
 })();
 
@@ -199,16 +199,19 @@ export default function ComponentsPage() {
                         />
                     </Flex>
                     <Flex gap="xs" wrap="wrap">
-                        {(["custom", "native"] as PropSource[]).map((src) => (
-                            <Chip
-                                key={src}
-                                variant="filter"
-                                selected={propSourceFilter === src}
-                                onClick={() => setPropSourceFilter(propSourceFilter === src ? null : src)}
-                            >
-                                {src === "custom" ? "Egendefinert" : "Native HTML"}
-                            </Chip>
-                        ))}
+                        {(["custom", "native", "react", "aria"] as PropSource[]).map((src) => {
+                            const label = src === "custom" ? "Egendefinert" : src === "native" ? "Native HTML" : src === "react" ? "React" : "ARIA";
+                            return (
+                                <Chip
+                                    key={src}
+                                    variant="filter"
+                                    selected={propSourceFilter === src}
+                                    onClick={() => setPropSourceFilter(propSourceFilter === src ? null : src)}
+                                >
+                                    {label}
+                                </Chip>
+                            );
+                        })}
                     </Flex>
                     <p className="muted" style={{margin: 0, fontSize: "var(--jkl-font-size-s)"}}>
                         {filteredProps.length} av {ALL_PROP_ENTRIES.length} props
@@ -218,21 +221,14 @@ export default function ComponentsPage() {
                             <React.Fragment key={entry.propName}>
                                 <DescriptionTerm>
                                     <Flex direction="column" gap="xs">
-                                        <code>{entry.propName}</code>
-                                        {entry.source && (
-                                            <span style={{fontSize: "var(--jkl-font-size-s)", color: "var(--jkl-color-text-subdued)"}}>
-                                                {entry.source === "custom" ? "Egendefinert" : "Native HTML"}
-                                            </span>
-                                        )}
+                                        <code>{entry.propName} {entry.source && `(${entry.source})`}</code>
                                     </Flex>
                                 </DescriptionTerm>
-                                <DescriptionDetail>
-                                    <Flex wrap="wrap" gap="xs">
-                                        {entry.usedBy.map((comp) => (
-                                            <Link key={comp.id} href={`/component/${comp.id}`}>{comp.name}</Link>
-                                        ))}
-                                    </Flex>
-                                </DescriptionDetail>
+                                {entry.usedBy.map((comp) => (
+                                    <DescriptionDetail key={comp.id}><Link
+                                        href={`/component/${comp.id}`}>{comp.name}</Link></DescriptionDetail>
+                                ))}
+
                             </React.Fragment>
                         ))}
                     </DescriptionList>

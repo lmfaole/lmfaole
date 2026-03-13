@@ -27,7 +27,11 @@ const STATUS_COLOR: Record<PropStatus, string> = {
 const SOURCE_LABEL: Record<PropSource, string> = {
     custom: "Egendefinert",
     native: "Native HTML",
+    aria: "ARIA",
+    react: "React",
 };
+
+const ALL_SOURCES: PropSource[] = ["custom", "native", "react", "aria"];
 
 function PropNameCell({ name, status, statusDescription, source }: Pick<PropDef, "name" | "status" | "statusDescription" | "source">) {
     const hasStatus = status && status !== "stable";
@@ -68,7 +72,7 @@ export function PropTable({ props }: PropTableProps) {
         <Flex direction="column" gap="s">
             {hasSourceInfo && (
                 <Flex gap="xs" wrap="wrap">
-                    {(["custom", "native"] as PropSource[]).map((src) => (
+                    {ALL_SOURCES.filter((src) => props.some((p) => p.source === src)).map((src) => (
                         <Chip
                             key={src}
                             variant="filter"
