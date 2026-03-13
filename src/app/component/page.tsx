@@ -7,41 +7,48 @@ import { Link } from "@fremtind/jokul/link";
 import { NavLink } from "@fremtind/jokul/nav-link";
 import { Search } from "@fremtind/jokul/search";
 import { Chip } from "@fremtind/jokul/chip";
+import { Tag } from "@fremtind/jokul/tag";
+import { Select } from "@fremtind/jokul/select";
 import { componentDocs } from "@/lib/componentDocs";
 import { Grid } from "@/components/Grid";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
+const ALL_TAGS = Array.from(new Set(componentDocs.flatMap((d) => d.tags))).sort();
 
 export default function ComponentsPage() {
     const [query, setQuery] = useState("");
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
+    const [activeTag, setActiveTag] = useState<string | null>(null);
+    const [sortBy, setSortBy] = useState("az");
 
     const filtered = useMemo(() => {
         const q = query.toLowerCase();
-        return componentDocs.filter((doc) => {
+        const results = componentDocs.filter((doc) => {
             const matchesQuery =
                 !q ||
                 doc.name.toLowerCase().includes(q) ||
                 doc.description.toLowerCase().includes(q) ||
                 doc.package.toLowerCase().includes(q) ||
+                doc.tags.some(t => t.includes(q)) ||
                 doc.examples.some(
                     (ex) =>
                         ex.title.toLowerCase().includes(q) ||
-                        (ex.description ?? "").toLowerCase().includes(q)
+                        (ex.description ?? "").toLowerCase().includes(q) ||
+                        ex.tags?.some(t => t.includes(q))
                 );
             const matchesCategory = !activeCategory || doc.category === activeCategory;
-            return matchesQuery && matchesCategory;
+            const matchesTag = !activeTag || doc.tags.includes(activeTag);
+            return matchesQuery && matchesCategory && matchesTag;
         });
-    }, [query, activeCategory]);
+        return results.sort((a, b) => {
+            if (sortBy === "za") return b.name.localeCompare(a.name, "nb");
+            if (sortBy === "most-props") return b.props.length - a.props.length;
+            if (sortBy === "most-examples") return b.examples.length - a.examples.length;
+            return a.name.localeCompare(b.name, "nb"); // az
+        });
+    }, [query, activeCategory, activeTag, sortBy]);
 
-    const grouped = useMemo(() => {
-        const map = new Map<string, typeof filtered>();
-        for (const doc of filtered) {
-            if (!map.has(doc.category)) map.set(doc.category, []);
-            map.get(doc.category)!.push(doc);
-        }
-        return Array.from(map.entries());
-    }, [filtered]);
+
 
     return (
         <Flex as="main" direction="column" gap="xl">
@@ -55,12 +62,26 @@ export default function ComponentsPage() {
             </Flex>
 
             <Flex direction="column" gap="m">
-                <Search
-                    label="Søk etter komponent"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Navn, beskrivelse eller pakke…"
-                />
+                <Flex gap="m" alignItems="end" wrap="wrap">
+                    <Search
+                        label="Søk etter komponent"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder="Navn, beskrivelse eller pakke…"
+                    />
+                    <Select
+                        label="Sorter"
+                        name="sort-components"
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        items={[
+                            { value: "az", label: "A–Å" },
+                            { value: "za", label: "Å–A" },
+                            { value: "most-props", label: "Flest props" },
+                            { value: "most-examples", label: "Flest eksempler" },
+                        ]}
+                    />
+                </Flex>
                 <Flex gap="xs" wrap="wrap">
                     {ALL_CATEGORIES.map((cat) => (
                         <Chip
@@ -73,32 +94,42 @@ export default function ComponentsPage() {
                         </Chip>
                     ))}
                 </Flex>
+                <Flex gap="xs" wrap="wrap" alignItems="center">
+                    <span className="muted" style={{ fontSize: "0.875rem" }}>Tags:</span>
+                    {ALL_TAGS.map((tag) => (
+                        <Chip
+                            key={tag}
+                            variant="filter"
+                            selected={activeTag === tag}
+                            onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+                        >
+                            {tag}
+                        </Chip>
+                    ))}
+                </Flex>
             </Flex>
 
             {filtered.length === 0 ? (
                 <p className="muted">Ingen komponenter samsvarer med søket.</p>
             ) : (
-                <Flex direction="column" gap="xl">
-                    {grouped.map(([cat, docs]) => (
-                        <Flex key={cat} direction="column" gap="l">
-                            <h2>{cat}</h2>
-                            <Grid>
-                                {docs.map((doc) => (
-                                    <Card key={doc.id} padding="l">
-                                        <Flex direction="column" gap="s">
-                                            <h3>
-                                                <Link href={`/component/${doc.id}`}>{doc.name}</Link>
-                                            </h3>
-                                            <p>{doc.description.split(".")[0]}.</p>
-                                            <small className="muted">{doc.examples.map((ex) => ex.title).join(", ")}</small>
-                                            <p className="muted">{doc.props.length} props · {doc.examples.length} eksempler</p>
-                                        </Flex>
-                                    </Card>
-                                ))}
-                            </Grid>
-                        </Flex>
+                <Grid>
+                    {filtered.map((doc) => (
+                        <Card key={doc.id} padding="l">
+                            <Flex direction="column" gap="s">
+                                <Flex gap="xs" alignItems="center">
+                                    <h3 style={{ margin: 0 }}>
+                                        <Link href={`/component/${doc.id}`}>{doc.name}</Link>
+                                    </h3>
+                                    {doc.status === "deprecated" && <Tag variant="warning">Deprecated</Tag>}
+                                    {doc.status === "beta" && <Tag variant="info">Beta</Tag>}
+                                </Flex>
+                                <p>{doc.description.split(".")[0]}.</p>
+                                <small className="muted">{doc.examples.map((ex) => ex.title).join(", ")}</small>
+                                <p className="muted">{doc.props.length} props · {doc.examples.length} eksempler</p>
+                            </Flex>
+                        </Card>
                     ))}
-                </Flex>
+                </Grid>
             )}
         </Flex>
     );
