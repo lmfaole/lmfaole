@@ -14,7 +14,7 @@ const doc: ComponentDoc = {
     relatedIds: ["message"],
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Etikettteksten. Hold den kort — maks 3–4 ord." },
-        { name: "variant", type: '"neutral" | "info" | "success" | "warning" | "error"', required: false, source: "custom", default: '"neutral"', description: "Fargevarianten." },
+        { name: "variant", type: '"neutral" | "info" | "success" | "warning" | "error"', required: false, source: "react", default: '"neutral"', description: "Fargevarianten." },
     ],
     examples: [
         {

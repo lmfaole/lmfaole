@@ -18,7 +18,7 @@ const doc: ComponentDoc = {
     relatedIds: ["button", "tag"],
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Innholdet som skal layoutes." },
-        { name: "direction", type: '"row" | "column" | "row-reverse" | "column-reverse"', required: false, source: "custom", default: '"row"', description: "Retningen barn-elementene plasseres." },
+        { name: "direction", type: '"row" | "column" | "row-reverse" | "column-reverse"', required: false, source: "react", default: '"row"', description: "Retningen barn-elementene plasseres." },
         { name: "gap", type: '"none" | "xxs" | "xs" | "s" | "m" | "l" | "xl"', required: false, source: "custom", default: '"none"', description: "Avstand mellom barn-elementene. Bruker Jøkuls spacing-skala." },
         { name: "wrap", type: '"nowrap" | "wrap" | "wrap-reverse"', required: false, source: "custom", default: '"nowrap"', description: "wrap lar barn-elementene bryte over på ny linje." },
         { name: "alignItems", type: '"normal" | "start" | "center" | "end" | "baseline" | "stretch"', required: false, source: "custom", default: '"stretch"', description: "Justering langs kryssaksen." },

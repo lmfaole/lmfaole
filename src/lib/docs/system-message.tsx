@@ -59,7 +59,7 @@ const doc: ComponentDoc = {
     notes:
         "Bruk role='alert' for kritiske meldinger slik at skjermlesere annonserer dem umiddelbart. Bruk de pre-konfigurerte variantene (InfoSystemMessage, SuccessSystemMessage osv.) fremfor å angi variant manuelt.",
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "Innholdet i meldingen." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Innholdet i meldingen." },
         {
             name: "variant",
             type: '"info" | "success" | "warning" | "error"',

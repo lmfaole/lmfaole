@@ -13,7 +13,7 @@ const doc: ComponentDoc = {
     notes: "Bruk alltid aria-label eller ledsagende tekst hvis ikonet er eneste indikasjon på en handling.",
     props: [
         { name: "children", type: "string", required: true, source: "react", description: 'Material Symbol-navn, f.eks. "arrow_forward".' },
-        { name: "bold", type: "boolean", required: false, source: "custom", description: "Tykkere strekbredde." },
+        { name: "bold", type: "boolean", required: false, source: "react", description: "Tykkere strekbredde." },
         { name: "filled", type: "boolean", required: false, source: "custom", description: "Fylt variant av ikonet." },
         { name: "as", type: '"div" | "span"', required: false, source: "custom", default: '"span"', description: "HTML-element ikonet rendres som." },
     ],

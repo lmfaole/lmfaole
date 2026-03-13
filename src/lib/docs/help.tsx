@@ -80,7 +80,7 @@ const doc: ComponentDoc = {
             name: "children",
             type: "React.ReactNode",
             required: true,
-            source: "custom",
+            source: "react",
             description: "Innholdet som vises i popoveret.",
         },
         {

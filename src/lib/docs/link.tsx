@@ -15,7 +15,7 @@ const doc: ComponentDoc = {
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Lenketekst." },
         { name: "href", type: "string", required: true, source: "native", description: "URL-en lenken peker til." },
-        { name: "external", type: "boolean", required: false, source: "custom", default: "false", description: "Åpner i ny fane med ikon." },
+        { name: "external", type: "boolean", required: false, source: "react", default: "false", description: "Åpner i ny fane med ikon." },
     ],
     examples: [
         {

@@ -76,7 +76,7 @@ const doc: ComponentDoc = {
             name: "initialPlacement",
             type: "string",
             required: false,
-            source: "custom",
+            source: "react",
             default: '"bottom-start"',
             description: "Startposisjon for menyen relativt til trigger.",
         },

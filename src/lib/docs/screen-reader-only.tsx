@@ -100,7 +100,7 @@ const doc: ComponentDoc = {
             name: "showOnFocus",
             type: "boolean",
             required: false,
-            source: "custom",
+            source: "react",
             default: "false",
             description: "Gjør innholdet synlig når det er fokusert (brukes til skip-links).",
         },

@@ -27,7 +27,7 @@ const doc: ComponentDoc = {
             name: "padding",
             type: '"s" | "m" | "l" | "xl"',
             required: false,
-            source: "custom",
+            source: "react",
             default: '"s"',
             description: "Innvendig padding. Bruk l/xl for romslig innhold som fremhevede kort.",
         },

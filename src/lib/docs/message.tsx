@@ -15,7 +15,7 @@ const doc: ComponentDoc = {
     props: [
         { name: "variant", type: '"info" | "success" | "warning" | "error"', required: false, source: "custom", default: '"info"', description: "info: nøytral informasjon eller tips. success: bekreftelse på at noe gikk bra. warning: viktig informasjon brukeren bør lese. error: noe gikk galt og brukeren må gjøre noe." },
         { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Meldingsteksten." },
-        { name: "title", type: "string", required: false, source: "custom", description: "Valgfri overskrift i meldingen." },
+        { name: "title", type: "string", required: false, source: "react", description: "Valgfri overskrift i meldingen." },
         { name: "full", type: "boolean", required: false, source: "custom", default: "false", description: "Strekker meldingen til full bredde." },
         { name: "dismissed", type: "boolean", required: false, source: "custom", description: "Kontrollert tilstand for om meldingen er lukket." },
         { name: "onDismiss", type: "() => void", required: false, source: "react", description: "Klikk-handler for lukkeknappen." },
