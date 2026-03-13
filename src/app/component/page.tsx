@@ -9,6 +9,7 @@ import {Select} from "@fremtind/jokul/select";
 import {componentDocs} from "@/lib/componentDocs";
 import {Grid} from "@/components/Grid";
 import {ComponentCard} from "@/components/ComponentCard";
+import {PropIndex} from "@/components/PropIndex";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
 const ALL_TAGS = Array.from(new Set(componentDocs.flatMap((d) => d.tags))).sort();
@@ -56,6 +57,9 @@ export default function ComponentsPage() {
                     Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for
                     komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet.
                 </p>
+                <div>
+                    <PropIndex />
+                </div>
             </Flex>
 
             <Flex direction="column" gap="m">
