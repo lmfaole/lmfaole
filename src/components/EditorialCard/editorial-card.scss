@@ -26,7 +26,6 @@
 
 .editorial-card__title {
   font-size: var(--jkl-font-size-6);
-  font-weight: 500;
   margin: 0 0 var(--jkl-spacing-s);
 
   a {
@@ -54,9 +53,8 @@
 }
 
 .editorial-card__stat {
-  font-size: clamp(3rem, 5vw, 4.5rem);
-  font-weight: 500;
-  line-height: 1;
+  font-size: var(--jkl-font-size-9);
+  line-height: var(--jkl-line-height-flush);
   color: var(--jkl-color-text-subdued);
   font-variant-numeric: tabular-nums;
 }

@@ -48,9 +48,8 @@
             background: var(--jkl-color-background-container);
             border: 2px solid var(--jkl-color-border-default);
             font-size: var(--jkl-font-size-s);
-            font-weight: 600;
             flex-shrink: 0;
-            line-height: 1;
+            line-height: var(--jkl-line-height-flush);
             z-index: 1;
         }
 
@@ -66,11 +65,7 @@
 
     &__step-label {
         align-self: center;
-        font-weight: 600;
         grid-column: 2;
-
-        // Instruction steps use .muted on the element — no extra rule needed
-        &.muted { font-weight: 400; }
     }
 
     .code-block {

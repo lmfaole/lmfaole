@@ -57,9 +57,6 @@
 body {
   background-color: var(--jkl-color-background-page);
   color: var(--jkl-color-text-default);
-  font-family: "Fremtind Grotesk", "Adjusted Arial Fallback", arial, sans-serif;
-  font-size: var(--jkl-font-size-3);
-  line-height: var(--jkl-line-height-relaxed);
   margin: 0 auto;
   max-width: 120ch;
   overflow-x: hidden;
@@ -122,8 +119,7 @@ h1, h2, h3, h4, h5, p, small {
 }
 
 code {
-  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
-  line-height: var(--jkl-line-height-normal);
+  font-family: "Fremtind Grotesk Mono", monospace;
 }
 
 .muted {
