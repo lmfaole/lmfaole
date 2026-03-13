@@ -39,6 +39,7 @@ export default function ComponentsPage() {
     const [activeTag, setActiveTag] = useState<string | null>(null);
     const [sortBy, setSortBy] = useState("az");
     const [propQuery, setPropQuery] = useState("");
+    const [propSortBy, setPropSortBy] = useState("az");
 
     const filtered = useMemo(() => {
         const q = query.toLowerCase();
@@ -69,13 +70,18 @@ export default function ComponentsPage() {
 
     const filteredProps = useMemo(() => {
         const q = propQuery.toLowerCase().trim();
-        if (!q) return ALL_PROP_ENTRIES;
-        return ALL_PROP_ENTRIES.filter(
-            (e) =>
-                e.propName.toLowerCase().includes(q) ||
-                e.usedBy.some((c) => c.name.toLowerCase().includes(q)),
-        );
-    }, [propQuery]);
+        const results = !q
+            ? [...ALL_PROP_ENTRIES]
+            : ALL_PROP_ENTRIES.filter(
+                (e) =>
+                    e.propName.toLowerCase().includes(q) ||
+                    e.usedBy.some((c) => c.name.toLowerCase().includes(q)),
+            );
+        if (propSortBy === "za") return results.sort((a, b) => b.propName.localeCompare(a.propName, "nb"));
+        if (propSortBy === "most-used") return results.sort((a, b) => b.usedBy.length - a.usedBy.length);
+        if (propSortBy === "least-used") return results.sort((a, b) => a.usedBy.length - b.usedBy.length);
+        return results.sort((a, b) => a.propName.localeCompare(b.propName, "nb")); // az
+    }, [propQuery, propSortBy]);
 
     return (
         <Flex as="main" direction="column" gap="xl">
@@ -169,12 +175,26 @@ export default function ComponentsPage() {
 
             {view === "props" && (
                 <Flex direction="column" gap="m">
+                <Flex gap="m" alignItems="end" wrap="wrap">
                     <Search
                         label="Filtrer props"
                         value={propQuery}
                         onChange={(e) => setPropQuery(e.target.value)}
                         placeholder="Propnavn eller komponentnavn…"
                     />
+                    <Select
+                        label="Sorter"
+                        name="sort-props"
+                        value={propSortBy}
+                        onChange={(e) => setPropSortBy(e.target.value)}
+                        items={[
+                            {value: "az", label: "A–Å"},
+                            {value: "za", label: "Å–A"},
+                            {value: "most-used", label: "Mest brukt"},
+                            {value: "least-used", label: "Minst brukt"},
+                        ]}
+                    />
+                </Flex>
                     <p className="muted" style={{margin: 0, fontSize: "var(--jkl-font-size-s)"}}>
                         {filteredProps.length} av {ALL_PROP_ENTRIES.length} props
                     </p>
