@@ -17,13 +17,13 @@ const doc: ComponentDoc = {
     notes: "Flex er ikke ment å erstatte alle layout-behov. For todimensjonale layouts, bruk CSS Grid.",
     relatedIds: ["button", "tag"],
     props: [
-        { name: "children", type: "React.ReactNode", required: true, description: "Innholdet som skal layoutes." },
-        { name: "direction", type: '"row" | "column" | "row-reverse" | "column-reverse"', required: false, default: '"row"', description: "Retningen barn-elementene plasseres." },
-        { name: "gap", type: '"none" | "xxs" | "xs" | "s" | "m" | "l" | "xl"', required: false, default: '"none"', description: "Avstand mellom barn-elementene. Bruker Jøkuls spacing-skala." },
-        { name: "wrap", type: '"nowrap" | "wrap" | "wrap-reverse"', required: false, default: '"nowrap"', description: "wrap lar barn-elementene bryte over på ny linje." },
-        { name: "alignItems", type: '"normal" | "start" | "center" | "end" | "baseline" | "stretch"', required: false, default: '"stretch"', description: "Justering langs kryssaksen." },
-        { name: "justifyContent", type: "string", required: false, default: '"flex-start"', description: "Distribusjon langs hovedaksen." },
-        { name: "as", type: "React.ElementType", required: false, default: '"div"', description: "HTML-elementtypen som rendres." },
+        { name: "children", type: "React.ReactNode", required: true, source: "native", description: "Innholdet som skal layoutes." },
+        { name: "direction", type: '"row" | "column" | "row-reverse" | "column-reverse"', required: false, source: "custom", default: '"row"', description: "Retningen barn-elementene plasseres." },
+        { name: "gap", type: '"none" | "xxs" | "xs" | "s" | "m" | "l" | "xl"', required: false, source: "custom", default: '"none"', description: "Avstand mellom barn-elementene. Bruker Jøkuls spacing-skala." },
+        { name: "wrap", type: '"nowrap" | "wrap" | "wrap-reverse"', required: false, source: "custom", default: '"nowrap"', description: "wrap lar barn-elementene bryte over på ny linje." },
+        { name: "alignItems", type: '"normal" | "start" | "center" | "end" | "baseline" | "stretch"', required: false, source: "custom", default: '"stretch"', description: "Justering langs kryssaksen." },
+        { name: "justifyContent", type: "string", required: false, source: "custom", default: '"flex-start"', description: "Distribusjon langs hovedaksen." },
+        { name: "as", type: "React.ElementType", required: false, source: "custom", default: '"div"', description: "HTML-elementtypen som rendres." },
     ],
     examples: [
         {

@@ -12,10 +12,10 @@ const doc: ComponentDoc = {
     notes: "Bruk SegmentedControl for 2–5 gjensidig utelukkende valg.",
     relatedIds: ["radio-button"],
     props: [
-        { name: "legend", type: "string", required: true, description: "Tilgjengelig gruppenavn." },
-        { name: "children", type: "React.ReactNode", required: true, description: "SegmentedControlButton-elementer." },
-        { name: "value", type: "string", required: false, description: "Valgt verdi (kontrollert)." },
-        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, description: "Kalles ved valg." },
+        { name: "legend", type: "string", required: true, source: "custom", description: "Tilgjengelig gruppenavn." },
+        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "SegmentedControlButton-elementer." },
+        { name: "value", type: "string", required: false, source: "native", description: "Valgt verdi (kontrollert)." },
+        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "native", description: "Kalles ved valg." },
     ],
     examples: [
         {

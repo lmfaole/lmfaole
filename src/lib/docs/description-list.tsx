@@ -11,9 +11,9 @@ const doc: ComponentDoc = {
     description: "DescriptionList viser nøkkel-verdi-par strukturert som en HTML description list (dl/dt/dd).",
     notes: "Bruk DescriptionTerm for nøkler og DescriptionDetail for verdier.",
     props: [
-        { name: "children", type: "React.ReactNode", required: true, description: "DescriptionTerm og DescriptionDetail-elementer." },
-        { name: "separators", type: "boolean", required: false, default: "false", description: "Viser skillelinjer mellom par." },
-        { name: "alignment", type: '"horizontal" | "vertical" | "justified"', required: false, default: '"vertical"', description: "Layoutretning for nøkkel-verdi-par." },
+        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "DescriptionTerm og DescriptionDetail-elementer." },
+        { name: "separators", type: "boolean", required: false, source: "custom", default: "false", description: "Viser skillelinjer mellom par." },
+        { name: "alignment", type: '"horizontal" | "vertical" | "justified"', required: false, source: "custom", default: '"vertical"', description: "Layoutretning for nøkkel-verdi-par." },
     ],
     examples: [
         {

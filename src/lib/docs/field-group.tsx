@@ -13,10 +13,10 @@ const doc: ComponentDoc = {
     notes: "Alltid bruk FieldGroup rundt grupper av avkrysningsbokser og radioknapper for tilgjengelighet.",
     relatedIds: ["checkbox", "radio-button"],
     props: [
-        { name: "legend", type: "string", required: true, description: "Overskrift for gruppen." },
-        { name: "children", type: "React.ReactNode", required: true, description: "Skjemaelementer i gruppen." },
-        { name: "errorLabel", type: "string", required: false, description: "Feilmelding for hele gruppen." },
-        { name: "helpLabel", type: "string", required: false, description: "Hjelpetekst for hele gruppen." },
+        { name: "legend", type: "string", required: true, source: "custom", description: "Overskrift for gruppen." },
+        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "Skjemaelementer i gruppen." },
+        { name: "errorLabel", type: "string", required: false, source: "custom", description: "Feilmelding for hele gruppen." },
+        { name: "helpLabel", type: "string", required: false, source: "custom", description: "Hjelpetekst for hele gruppen." },
     ],
     examples: [
         {

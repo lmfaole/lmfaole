@@ -11,11 +11,11 @@ const doc: ComponentDoc = {
     description: "ExpandablePanel er et utviddbart panel med header og innhold.",
     notes: "Bruk ExpandablePanel.Header for tittelområdet og ExpandablePanel.Content for innholdet.",
     props: [
-        { name: "children", type: "React.ReactNode", required: true, description: "Innhold med Header og Content sub-komponenter." },
-        { name: "variant", type: '"fill" | "stroke"', required: false, default: '"fill"', description: "Visuell stil." },
-        { name: "open", type: "boolean", required: false, description: "Kontrollert åpen-tilstand." },
-        { name: "defaultOpen", type: "boolean", required: false, default: "false", description: "Initialt åpen." },
-        { name: "onOpenChange", type: "(open: boolean) => void", required: false, description: "Kalles ved åpning/lukking." },
+        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "Innhold med Header og Content sub-komponenter." },
+        { name: "variant", type: '"fill" | "stroke"', required: false, source: "custom", default: '"fill"', description: "Visuell stil." },
+        { name: "open", type: "boolean", required: false, source: "custom", description: "Kontrollert åpen-tilstand." },
+        { name: "defaultOpen", type: "boolean", required: false, source: "custom", default: "false", description: "Initialt åpen." },
+        { name: "onOpenChange", type: "(open: boolean) => void", required: false, source: "custom", description: "Kalles ved åpning/lukking." },
     ],
     examples: [
         {

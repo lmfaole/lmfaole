@@ -13,10 +13,10 @@ const doc: ComponentDoc = {
     notes: "Bruk Loader for hele side- og seksjonslasting. For knapper med innebygd laster, bruk Button sin loader-prop.",
     relatedIds: ["button"],
     props: [
-        { name: "textDescription", type: "string", required: true, description: "Tilgjengelig beskrivelse for skjermlesere." },
-        { name: "variant", type: '"small" | "medium" | "large"', required: false, default: '"medium"', description: "Størrelse på lasteren." },
-        { name: "delay", type: "number", required: false, description: "Forsinkelse i millisekunder før lasteren vises." },
-        { name: "inline", type: "boolean", required: false, description: "Viser lasteren inline." },
+        { name: "textDescription", type: "string", required: true, source: "custom", description: "Tilgjengelig beskrivelse for skjermlesere." },
+        { name: "variant", type: '"small" | "medium" | "large"', required: false, source: "custom", default: '"medium"', description: "Størrelse på lasteren." },
+        { name: "delay", type: "number", required: false, source: "custom", description: "Forsinkelse i millisekunder før lasteren vises." },
+        { name: "inline", type: "boolean", required: false, source: "custom", description: "Viser lasteren inline." },
     ],
     examples: [
         {

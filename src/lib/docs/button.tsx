@@ -13,12 +13,12 @@ const doc: ComponentDoc = {
     notes: "Ikke bruk Button til navigasjon — bruk Link eller NavLink i stedet. En knapp skal alltid ha en tydelig, handlingsrettet label. Unngå «Klikk her» eller «Send» uten kontekst.",
     relatedIds: ["text-input", "toggle-switch"],
     props: [
-        { name: "children", type: "React.ReactNode", required: true, description: "Tekstinnholdet i knappen." },
-        { name: "variant", type: '"primary" | "secondary" | "ghost" | "tertiary"', required: false, default: '"primary"', description: "Visuell prioritet." },
-        { name: "loader", type: "{ showLoader: boolean, textDescription: string }", required: false, description: "Viser lasteindikator i knappen." },
-        { name: "disabled", type: "boolean", required: false, default: "false", description: "Deaktiverer knappen." },
-        { name: "type", type: '"button" | "submit" | "reset"', required: false, default: '"button"', description: "HTML-type-attributtet." },
-        { name: "onClick", type: "React.MouseEventHandler<HTMLButtonElement>", required: false, description: "Klikk-handler." },
+        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "Tekstinnholdet i knappen." },
+        { name: "variant", type: '"primary" | "secondary" | "ghost" | "tertiary"', required: false, source: "custom", default: '"primary"', description: "Visuell prioritet." },
+        { name: "loader", type: "{ showLoader: boolean, textDescription: string }", required: false, source: "custom", description: "Viser lasteindikator i knappen." },
+        { name: "disabled", type: "boolean", required: false, source: "native", default: "false", description: "Deaktiverer knappen." },
+        { name: "type", type: '"button" | "submit" | "reset"', required: false, source: "native", default: '"button"', description: "HTML-type-attributtet." },
+        { name: "onClick", type: "React.MouseEventHandler<HTMLButtonElement>", required: false, source: "native", description: "Klikk-handler." },
     ],
     examples: [
         {

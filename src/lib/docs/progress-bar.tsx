@@ -12,11 +12,11 @@ const doc: ComponentDoc = {
     description: "ProgressBar viser fremgang i en prosess.",
     notes: "Gi alltid en beskrivende title og aria-valuetext for skjermlesere.",
     props: [
-        { name: "aria-valuenow", type: "number", required: true, description: "Gjeldende fremgangsverdi." },
-        { name: "aria-valuemin", type: "number", required: false, default: "0", description: "Minimumsverdi." },
-        { name: "aria-valuemax", type: "number", required: false, default: "100", description: "Maksimumsverdi." },
-        { name: "title", type: "string", required: false, default: '"Fremdrift"', description: "Synlig tittel over fremdriftslinjen." },
-        { name: "aria-valuetext", type: "string", required: false, description: "Menneskelig lesbar verdi for skjermlesere." },
+        { name: "aria-valuenow", type: "number", required: true, source: "native", description: "Gjeldende fremgangsverdi." },
+        { name: "aria-valuemin", type: "number", required: false, source: "native", default: "0", description: "Minimumsverdi." },
+        { name: "aria-valuemax", type: "number", required: false, source: "native", default: "100", description: "Maksimumsverdi." },
+        { name: "title", type: "string", required: false, source: "custom", default: '"Fremdrift"', description: "Synlig tittel over fremdriftslinjen." },
+        { name: "aria-valuetext", type: "string", required: false, source: "native", description: "Menneskelig lesbar verdi for skjermlesere." },
     ],
     examples: [
         {

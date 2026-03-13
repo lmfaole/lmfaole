@@ -12,10 +12,10 @@ const doc: ComponentDoc = {
     notes: "Alltid sett caption for tilgjengelighet.",
     relatedIds: ["description-list", "table"],
     props: [
-        { name: "header", type: "[string, string]", required: true, description: "Tuppel med to kolonneoverskrifter." },
-        { name: "body", type: "React.ReactNode", required: true, description: "SummaryTableRow-elementer." },
-        { name: "caption", type: "string", required: false, description: "Tilgjengelig tabellbeskrivelse." },
-        { name: "footer", type: "React.ReactNode", required: false, description: "Bunntekst i tabellen." },
+        { name: "header", type: "[string, string]", required: true, source: "custom", description: "Tuppel med to kolonneoverskrifter." },
+        { name: "body", type: "React.ReactNode", required: true, source: "custom", description: "SummaryTableRow-elementer." },
+        { name: "caption", type: "string", required: false, source: "custom", description: "Tilgjengelig tabellbeskrivelse." },
+        { name: "footer", type: "React.ReactNode", required: false, source: "custom", description: "Bunntekst i tabellen." },
     ],
     examples: [
         {

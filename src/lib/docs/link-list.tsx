@@ -12,9 +12,9 @@ const doc: ComponentDoc = {
     notes: "Bruk LinkList.Link for lenker inne i komponenten for korrekt styling.",
     relatedIds: ["link", "nav-link"],
     props: [
-        { name: "label", type: "string", required: true, description: "Overskrift for lenkegruppens seksjon." },
-        { name: "hideLabel", type: "boolean", required: false, default: "false", description: "Skjuler overskriften visuelt." },
-        { name: "children", type: "React.ReactNode", required: false, description: "LinkList.Link-elementer." },
+        { name: "label", type: "string", required: true, source: "custom", description: "Overskrift for lenkegruppens seksjon." },
+        { name: "hideLabel", type: "boolean", required: false, source: "custom", default: "false", description: "Skjuler overskriften visuelt." },
+        { name: "children", type: "React.ReactNode", required: false, source: "native", description: "LinkList.Link-elementer." },
     ],
     examples: [
         {

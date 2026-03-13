@@ -16,11 +16,11 @@ const doc: ComponentDoc = {
     notes: "Ikke bruk IconButton uten aria-label.",
     relatedIds: ["button", "icon"],
     props: [
-        { name: "icon", type: "string", required: true, description: "Ikonnavnet (Material Symbol)." },
-        { name: "aria-label", type: "string", required: true, description: "Tilgjengelig navn for knappen." },
-        { name: "onClick", type: "React.MouseEventHandler<HTMLButtonElement>", required: false, description: "Klikk-handler." },
-        { name: "disabled", type: "boolean", required: false, default: "false", description: "Deaktiverer knappen." },
-        { name: "variant", type: '"ghost" | "primary"', required: false, default: '"ghost"', description: "Visuell variant." },
+        { name: "icon", type: "string", required: true, source: "custom", description: "Ikonnavnet (Material Symbol)." },
+        { name: "aria-label", type: "string", required: true, source: "native", description: "Tilgjengelig navn for knappen." },
+        { name: "onClick", type: "React.MouseEventHandler<HTMLButtonElement>", required: false, source: "native", description: "Klikk-handler." },
+        { name: "disabled", type: "boolean", required: false, source: "native", default: "false", description: "Deaktiverer knappen." },
+        { name: "variant", type: '"ghost" | "primary"', required: false, source: "custom", default: '"ghost"', description: "Visuell variant." },
     ],
     examples: [
         {

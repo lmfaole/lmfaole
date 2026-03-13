@@ -13,9 +13,9 @@ const doc: ComponentDoc = {
     description: "Tooltip og PopupTip viser tilleggsinformasjon ved hover eller klikk.",
     notes: "Ikke legg viktig informasjon kun i en tooltip.",
     props: [
-        { name: "placement", type: '"top" | "top-start" | "top-end" | "left" | "right"', required: false, default: '"top"', description: "Posisjon for tooltip." },
-        { name: "triggerOn", type: '"hover" | "click"', required: false, default: '"hover"', description: "Utløsende hendelse." },
-        { name: "delay", type: "number", required: false, description: "Forsinkelse i ms før visning." },
+        { name: "placement", type: '"top" | "top-start" | "top-end" | "left" | "right"', required: false, source: "custom", default: '"top"', description: "Posisjon for tooltip." },
+        { name: "triggerOn", type: '"hover" | "click"', required: false, source: "custom", default: '"hover"', description: "Utløsende hendelse." },
+        { name: "delay", type: "number", required: false, source: "custom", description: "Forsinkelse i ms før visning." },
     ],
     examples: [
         {

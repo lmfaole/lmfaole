@@ -48,26 +48,29 @@ const doc: ComponentDoc = {
     notes:
         "Sett alt til en tom streng ('') for dekorative bilder som ikke tilfører meningsfylt informasjon. Bruk alltid beskrivende alt-tekst for innholdsmessige bilder.",
     props: [
-        { name: "src", type: "string", required: true, description: "URL til bildet." },
+        { name: "src", type: "string", required: true, source: "native", description: "URL til bildet." },
         {
             name: "alt",
             type: "string",
             required: true,
+            source: "native",
             description: "Alternativ tekst. Bruk tom streng for dekorative bilder.",
         },
         {
             name: "srcSet",
             type: "string",
             required: false,
+            source: "native",
             description: "Responsivt srcset-attributt for ulike skjermoppløsninger.",
         },
         {
             name: "placeholder",
             type: "string",
             required: false,
+            source: "native",
             description: "URL til et lavoppløselig plassholdbilde som vises under innlasting.",
         },
-        { name: "className", type: "string", required: false, description: "Ekstra CSS-klasser." },
+        { name: "className", type: "string", required: false, source: "native", description: "Ekstra CSS-klasser." },
     ],
     examples: [
         {

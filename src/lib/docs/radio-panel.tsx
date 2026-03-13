@@ -14,10 +14,10 @@ const doc: ComponentDoc = {
     notes: "Grupper RadioPanel-er i FieldGroup med legend for tilgjengelighet.",
     relatedIds: ["radio-button", "checkbox-panel"],
     props: [
-        { name: "value", type: "string", required: true, description: "Verdien som sendes ved innsending." },
-        { name: "name", type: "string", required: true, description: "Skjemafeltets navn (felles for gruppen)." },
-        { name: "children", type: "React.ReactNode", required: false, description: "Innhold i panelet." },
-        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, description: "Kalles ved valg." },
+        { name: "value", type: "string", required: true, source: "native", description: "Verdien som sendes ved innsending." },
+        { name: "name", type: "string", required: true, source: "native", description: "Skjemafeltets navn (felles for gruppen)." },
+        { name: "children", type: "React.ReactNode", required: false, source: "custom", description: "Innhold i panelet." },
+        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "native", description: "Kalles ved valg." },
     ],
     examples: [
         {
