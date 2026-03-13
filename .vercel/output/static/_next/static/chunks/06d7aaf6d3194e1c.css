@@ -1,0 +1,1 @@
+.image-preview{aspect-ratio:3/2;width:100%;max-width:37.5rem;display:block}.image-preview .jkl-image{width:100%;height:100%}.image-preview img{width:100%;display:block}.image-preview--small{max-width:18.75rem}.image-preview__caption,.image-preview figcaption{color:var(--jkl-color-text-subdued);font-size:var(--jkl-font-size-s);margin-top:var(--jkl-spacing-xs)}

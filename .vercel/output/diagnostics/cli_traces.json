@@ -1,0 +1,77 @@
+[
+  {
+    "name": "vc.builder.install",
+    "duration": 644033,
+    "timestamp": 718655242211,
+    "id": "dac5192c-e8c9-4038-9bb1-612ebc1bdba9",
+    "parentId": "349c9a72-5739-4c11-96d0-8a41936b56e4",
+    "tags": {
+      "cliType": "npm",
+      "lockfileVersion": "3"
+    },
+    "startTime": 1773411816903
+  },
+  {
+    "name": "vc.builder.build",
+    "duration": 8703425,
+    "timestamp": 718655888875,
+    "id": "3e0a6123-063c-421e-a3d7-85b27b204207",
+    "parentId": "349c9a72-5739-4c11-96d0-8a41936b56e4",
+    "tags": {
+      "buildScriptName": "build"
+    },
+    "startTime": 1773411817550
+  },
+  {
+    "name": "vc.builder",
+    "duration": 14215234,
+    "timestamp": 718655233571,
+    "id": "349c9a72-5739-4c11-96d0-8a41936b56e4",
+    "parentId": "bb057787-497b-4220-931b-651715b31924",
+    "tags": {
+      "builder.name": "@vercel/next",
+      "builder.version": "4.16.1",
+      "builder.dynamicallyInstalled": "false",
+      "install": "true",
+      "build": "true"
+    },
+    "startTime": 1773411816894
+  },
+  {
+    "name": "vc.builder.diagnostics",
+    "duration": 823,
+    "timestamp": 718669448860,
+    "id": "d26233c4-b9ec-4c10-b16b-2d74ac7a4d39",
+    "parentId": "349c9a72-5739-4c11-96d0-8a41936b56e4",
+    "tags": {},
+    "startTime": 1773411831110
+  },
+  {
+    "name": "vc.builder.writeBuildResult",
+    "duration": 155280,
+    "timestamp": 718669449738,
+    "id": "05e632d2-f630-49d4-8a92-61992839cdc0",
+    "parentId": "349c9a72-5739-4c11-96d0-8a41936b56e4",
+    "tags": {
+      "buildOutputLength": "1"
+    },
+    "startTime": 1773411831110
+  },
+  {
+    "name": "vc.doBuild",
+    "duration": 14651116,
+    "timestamp": 718654960090,
+    "id": "bb057787-497b-4220-931b-651715b31924",
+    "parentId": "066f36d3-ed1c-46ad-b3fe-ac1f5e489838",
+    "tags": {},
+    "startTime": 1773411816621
+  },
+  {
+    "name": "vc",
+    "duration": 14726170,
+    "timestamp": 718654885046,
+    "id": "066f36d3-ed1c-46ad-b3fe-ac1f5e489838",
+    "tags": {},
+    "startTime": 1773411816546
+  }
+]
