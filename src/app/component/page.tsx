@@ -7,6 +7,7 @@ import {Search} from "@fremtind/jokul/search";
 import {Chip} from "@fremtind/jokul/chip";
 import {Select} from "@fremtind/jokul/select";
 import {SegmentedControl, SegmentedControlButton} from "@fremtind/jokul/segmented-control";
+import {DescriptionList, DescriptionTerm, DescriptionDetail} from "@fremtind/jokul/description-list";
 import {Link} from "@fremtind/jokul/link";
 import {componentDocs} from "@/lib/componentDocs";
 import {Grid} from "@/components/Grid";
@@ -177,28 +178,20 @@ export default function ComponentsPage() {
                     <p className="muted" style={{margin: 0, fontSize: "var(--jkl-font-size-s)"}}>
                         {filteredProps.length} av {ALL_PROP_ENTRIES.length} props
                     </p>
-                    <dl style={{margin: 0, display: "flex", flexDirection: "column", gap: 0}}>
+                    <DescriptionList alignment="horizontal" separators>
                         {filteredProps.map((entry) => (
-                            <div
-                                key={entry.propName}
-                                style={{
-                                    display: "grid",
-                                    gridTemplateColumns: "14rem 1fr",
-                                    gap: "var(--jkl-spacing-s)",
-                                    alignItems: "baseline",
-                                    borderBottom: "1px solid var(--jkl-color-border-subtle)",
-                                    padding: "var(--jkl-spacing-s) 0",
-                                }}
-                            >
-                                <dt><code>{entry.propName}</code></dt>
-                                <dd style={{margin: 0, display: "flex", flexWrap: "wrap", gap: "var(--jkl-spacing-2xs) var(--jkl-spacing-xs)"}}>
-                                    {entry.usedBy.map((comp) => (
-                                        <Link key={comp.id} href={`/component/${comp.id}`}>{comp.name}</Link>
-                                    ))}
-                                </dd>
-                            </div>
+                            <React.Fragment key={entry.propName}>
+                                <DescriptionTerm><code>{entry.propName}</code></DescriptionTerm>
+                                <DescriptionDetail>
+                                    <Flex wrap="wrap" gap="xs">
+                                        {entry.usedBy.map((comp) => (
+                                            <Link key={comp.id} href={`/component/${comp.id}`}>{comp.name}</Link>
+                                        ))}
+                                    </Flex>
+                                </DescriptionDetail>
+                            </React.Fragment>
                         ))}
-                    </dl>
+                    </DescriptionList>
                 </Flex>
             )}
         </Flex>
