@@ -8,7 +8,7 @@ interface PropTableProps {
     props: PropDef[];
 }
 
-const COLUMNS = ["Prop", "Type", "Påkrevd", "Standard", "Status", "Beskrivelse"];
+const COLUMNS = ["Prop", "Type", "Påkrevd", "Standard", "Beskrivelse"];
 
 const STATUS_LABEL: Record<PropStatus, string> = {
     stable: "Stabil",
@@ -16,37 +16,34 @@ const STATUS_LABEL: Record<PropStatus, string> = {
     experimental: "Eksperimentell",
 };
 
-const STATUS_STYLE: Record<PropStatus, React.CSSProperties> = {
-    stable: { color: "var(--jkl-color-text-subdued)" },
-    deprecated: { color: "var(--jkl-color-text-negative)" },
-    experimental: { color: "var(--jkl-color-text-warning)" },
+const STATUS_COLOR: Record<PropStatus, string> = {
+    stable: "var(--jkl-color-text-subdued)",
+    deprecated: "var(--jkl-color-text-negative)",
+    experimental: "var(--jkl-color-text-warning)",
 };
 
-function PropStatusCell({ status, statusDescription }: Pick<PropDef, "status" | "statusDescription">) {
-    if (!status || status === "stable") return <>—</>;
+function PropNameCell({ name, status, statusDescription }: Pick<PropDef, "name" | "status" | "statusDescription">) {
+    const hasStatus = status && status !== "stable";
 
-    const label = STATUS_LABEL[status];
-    const style = STATUS_STYLE[status];
-
-    if (statusDescription) {
-        return (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--jkl-spacing-2xs)", ...style }}>
-                {label}
-                <PopupTip content={statusDescription} placement="top" />
-            </span>
-        );
-    }
-
-    return <span style={style}>{label}</span>;
+    return (
+        <span style={{ display: "inline-flex", flexDirection: "column", gap: "var(--jkl-spacing-3xs)" }}>
+            <code>{name}</code>
+            {hasStatus && (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--jkl-spacing-2xs)", fontSize: "var(--jkl-font-size-s)", color: STATUS_COLOR[status] }}>
+                    {STATUS_LABEL[status]}
+                    {statusDescription && <PopupTip content={statusDescription} placement="top" />}
+                </span>
+            )}
+        </span>
+    );
 }
 
 export function PropTable({ props }: PropTableProps) {
     const rows: React.ReactNode[][] = props.map((prop) => [
-        <code key="name">{prop.name}</code>,
+        <PropNameCell key="name" name={prop.name} status={prop.status} statusDescription={prop.statusDescription} />,
         <code key="type">{prop.type}</code>,
         prop.required ? "Ja" : "Nei",
         prop.default ? <code key="default">{prop.default}</code> : "—",
-        <PropStatusCell key="status" status={prop.status} statusDescription={prop.statusDescription} />,
         prop.description,
     ]);
 
@@ -59,3 +56,5 @@ export function PropTable({ props }: PropTableProps) {
         />
     );
 }
+
+
