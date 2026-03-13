@@ -1,4 +1,3 @@
-import React from "react";
 import { SummaryTable, SummaryTableRow } from "@fremtind/jokul/summary-table";
 import type { ComponentDoc } from "./types";
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@fremtind/jokul/card";
 import { Flex } from "@fremtind/jokul/flex";
 import { Button } from "@fremtind/jokul/button";

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionListContactPreview } from "./description-list";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";

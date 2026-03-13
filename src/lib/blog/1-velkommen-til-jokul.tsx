@@ -1,5 +1,4 @@
-import React from "react";
-import { UnorderedList, OrderedList, ListItem } from "@fremtind/jokul/list";
+import { OrderedList, ListItem } from "@fremtind/jokul/list";
 import { Message } from "@fremtind/jokul/message";
 import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";

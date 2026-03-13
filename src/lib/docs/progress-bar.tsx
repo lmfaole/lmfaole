@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ProgressBar } from "@fremtind/jokul/progress-bar";
-import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
 

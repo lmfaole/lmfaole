@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FieldGroup } from "@fremtind/jokul/input-group";
 import { Checkbox } from "@fremtind/jokul/checkbox";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";

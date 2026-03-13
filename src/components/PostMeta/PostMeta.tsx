@@ -1,4 +1,3 @@
-import React from "react";
 import {formatDate} from "@fremtind/jokul/utilities";
 import {readingTime} from "@/lib/blogPosts";
 import {DescriptionDetail, DescriptionList, DescriptionTerm} from "@fremtind/jokul/description-list";

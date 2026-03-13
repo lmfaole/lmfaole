@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Pagination } from "@fremtind/jokul/pagination";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";

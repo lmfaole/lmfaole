@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { SegmentedControl, SegmentedControlButton } from "@fremtind/jokul/segmented-control";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";

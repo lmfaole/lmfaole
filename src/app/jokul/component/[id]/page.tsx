@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import "./component-page.scss";
 import {TableOfContents} from "@fremtind/jokul/table-of-contents";

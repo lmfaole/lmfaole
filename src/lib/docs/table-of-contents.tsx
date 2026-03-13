@@ -1,4 +1,3 @@
-import React from "react";
 import { TableOfContents } from "@fremtind/jokul/table-of-contents";
 import type { ComponentDoc } from "./types";
 

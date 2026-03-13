@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell, TableCaption, useSortableTableHeader } from "@fremtind/jokul/table";
 import type { ComponentDoc } from "./types";
 

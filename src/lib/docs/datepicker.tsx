@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { DatePicker } from "@fremtind/jokul/datepicker";
 import type { ComponentDoc } from "./types";
 

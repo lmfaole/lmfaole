@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { Flex } from "@fremtind/jokul/flex";
 import { Chip } from "@fremtind/jokul/chip";
 

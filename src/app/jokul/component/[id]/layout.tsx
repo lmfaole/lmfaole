@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Flex } from "@fremtind/jokul/flex";
 import { Link } from "@fremtind/jokul/link";
 import { useParams } from "next/navigation";

@@ -1,4 +1,3 @@
-import React from "react";
 import { ScreenReaderOnly } from "@fremtind/jokul/screen-reader-only";
 import type { ComponentDoc } from "./types";
 

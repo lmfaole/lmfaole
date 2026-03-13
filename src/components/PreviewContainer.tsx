@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ElementType, ComponentPropsWithoutRef } from "react";
+import { useState, ElementType, ComponentPropsWithoutRef } from "react";
 import { PreviewHoverContext } from "@/components/PreviewHoverContext";
 
 type PreviewContainerProps<T extends ElementType = "div"> = {

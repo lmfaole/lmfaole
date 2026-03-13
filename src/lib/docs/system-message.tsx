@@ -1,15 +1,17 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import {
-    SystemMessage,
-    InfoSystemMessage,
-    WarningSystemMessage,
-    ErrorSystemMessage,
-    SuccessSystemMessage,
-} from "@fremtind/jokul/system-message";
+import { useState, useEffect } from "react";
+import { SystemMessage } from "@fremtind/jokul/system-message";
 import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+const VARIANTS = ["info", "success", "warning", "error"] as const;
+const TEXTS = [
+    "Systemet vil være utilgjengelig fredag 20. juni kl. 22–24. Planlagt vedlikehold.",
+    "Handlingen ble gjennomført.",
+    "Sesjonen din utløper om 5 minutter.",
+    "Noe gikk galt. Prøv igjen.",
+];
 
 function SystemMessagePreview() {
     const isHovered = usePreviewHovered();
@@ -22,10 +24,7 @@ function SystemMessagePreview() {
         return () => clearInterval(id);
     }, [isHovered]);
 
-    if (step === 1) return <SuccessSystemMessage>Handlingen ble gjennomført.</SuccessSystemMessage>;
-    if (step === 2) return <WarningSystemMessage>Sesjonen din utløper om 5 minutter.</WarningSystemMessage>;
-    if (step === 3) return <ErrorSystemMessage>Noe gikk galt. Prøv igjen.</ErrorSystemMessage>;
-    return <InfoSystemMessage>Systemet vil være utilgjengelig fredag 20. juni kl. 22–24. Planlagt vedlikehold.</InfoSystemMessage>;
+    return <SystemMessage variant={VARIANTS[step]}>{TEXTS[step]}</SystemMessage>;
 }
 
 function DismissPreview() {
@@ -33,14 +32,15 @@ function DismissPreview() {
     return dismissed ? (
         <p style={{ color: "var(--jkl-color-text-subdued)" }}>Meldingen ble lukket.</p>
     ) : (
-        <InfoSystemMessage
+        <SystemMessage
+            variant="info"
             dismissAction={{
                 handleDismiss: () => setDismissed(true),
                 buttonTitle: "Lukk melding",
             }}
         >
             Du kan lukke denne meldingen ved å trykke på X.
-        </InfoSystemMessage>
+        </SystemMessage>
     );
 }
 
@@ -53,7 +53,10 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "SystemMessage brukes til å kommunisere viktig informasjon til brukeren på sidenivå. Finnes i variantene info, success, warning og error. Kan gjøres avvisbar med dismissAction.",
-    warnings: "Bruk role='alert' på kritiske meldinger som vises dynamisk — uten det annonserer ikke skjermlesere dem automatisk.",
+    warnings: [
+        "Bruk role='alert' på kritiske meldinger som vises dynamisk — uten det annonserer ikke skjermlesere dem automatisk.",
+        "InfoSystemMessage, SuccessSystemMessage, WarningSystemMessage og ErrorSystemMessage er utfaset. Bruk <SystemMessage variant=\"...\"> i stedet.",
+    ],
     relatedIds: ["message", "toast"],
     preview: <SystemMessagePreview />,
     props: [
@@ -71,28 +74,28 @@ const doc: ComponentDoc = {
         {
             title: "Info-melding",
             description: "En enkel informasjonsmelding på sidenivå.",
-            code: `<InfoSystemMessage>
+            code: `<SystemMessage variant="info">
     Systemet vil være utilgjengelig for vedlikehold lørdag 22. mars fra kl. 22–24.
-</InfoSystemMessage>`,
+</SystemMessage>`,
             preview: (
-                <InfoSystemMessage>
+                <SystemMessage variant="info">
                     Systemet vil være utilgjengelig for vedlikehold lørdag 22. mars fra kl. 22–24.
-                </InfoSystemMessage>
+                </SystemMessage>
             ),
         },
         {
             title: "Alle varianter",
             description: "Velg variant basert på alvorlighetsgraden av meldingen.",
-            code: `<InfoSystemMessage>Dette er en informasjonsmelding til brukeren.</InfoSystemMessage>
-<SuccessSystemMessage>Handlingen ble gjennomført.</SuccessSystemMessage>
-<WarningSystemMessage>Vær oppmerksom på at dette kan påvirke andre.</WarningSystemMessage>
-<ErrorSystemMessage>Noe gikk galt. Prøv igjen.</ErrorSystemMessage>`,
+            code: `<SystemMessage variant="info">Dette er en informasjonsmelding til brukeren.</SystemMessage>
+<SystemMessage variant="success">Handlingen ble gjennomført.</SystemMessage>
+<SystemMessage variant="warning">Vær oppmerksom på at dette kan påvirke andre.</SystemMessage>
+<SystemMessage variant="error">Noe gikk galt. Prøv igjen.</SystemMessage>`,
             preview: (
                 <Flex direction="column" gap="s">
-                    <InfoSystemMessage>Dette er en informasjonsmelding til brukeren.</InfoSystemMessage>
-                    <SuccessSystemMessage>Handlingen ble gjennomført.</SuccessSystemMessage>
-                    <WarningSystemMessage>Vær oppmerksom på at dette kan påvirke andre.</WarningSystemMessage>
-                    <ErrorSystemMessage>Noe gikk galt. Prøv igjen.</ErrorSystemMessage>
+                    <SystemMessage variant="info">Dette er en informasjonsmelding til brukeren.</SystemMessage>
+                    <SystemMessage variant="success">Handlingen ble gjennomført.</SystemMessage>
+                    <SystemMessage variant="warning">Vær oppmerksom på at dette kan påvirke andre.</SystemMessage>
+                    <SystemMessage variant="error">Noe gikk galt. Prøv igjen.</SystemMessage>
                 </Flex>
             ),
         },
@@ -104,39 +107,57 @@ const doc: ComponentDoc = {
 {dismissed ? (
     <p>Meldingen ble lukket.</p>
 ) : (
-    <InfoSystemMessage
+    <SystemMessage variant="info"
         dismissAction={{
             handleDismiss: () => setDismissed(true),
             buttonTitle: "Lukk melding",
         }}
     >
         Du kan lukke denne meldingen ved å trykke på X.
-    </InfoSystemMessage>
+    </SystemMessage>
 )}`,
             preview: <DismissPreview />,
         },
         {
             title: "Med begrenset innholdsbredde",
             description: "Når SystemMessage strekker seg over hele sidebredden, bruk maxContentWidth for å begrense tekstlinjenes lengde.",
-            code: `<ErrorSystemMessage role="alert" maxContentWidth="60ch">
+            code: `<SystemMessage variant="error" role="alert" maxContentWidth="60ch">
     Vi opplever for øyeblikket tekniske problemer. Prøv igjen om noen minutter.
-</ErrorSystemMessage>`,
+</SystemMessage>`,
             preview: (
-                <ErrorSystemMessage role="alert" maxContentWidth="60ch">
+                <SystemMessage variant="error" role="alert" maxContentWidth="60ch">
                     Vi opplever for øyeblikket tekniske problemer. Prøv igjen om noen minutter.
-                </ErrorSystemMessage>
+                </SystemMessage>
             ),
         },
         {
             title: "Dynamisk melding med role='alert'",
             description: "Legg til role='alert' når meldingen vises etter en brukerhandling — da annonserer skjermlesere den automatisk.",
-            code: `<WarningSystemMessage role="alert">
+            code: `<SystemMessage variant="warning" role="alert">
     Sesjonen din utløper om 5 minutter. Lagre arbeidet ditt nå.
-</WarningSystemMessage>`,
+</SystemMessage>`,
             preview: (
-                <WarningSystemMessage role="alert">
+                <SystemMessage variant="warning" role="alert">
                     Sesjonen din utløper om 5 minutter. Lagre arbeidet ditt nå.
-                </WarningSystemMessage>
+                </SystemMessage>
+            ),
+        },
+        {
+            title: "Migrering fra navngitte varianter",
+            description: "InfoSystemMessage, SuccessSystemMessage, WarningSystemMessage og ErrorSystemMessage er utfaset. Erstatt dem med SystemMessage og variant-propen.",
+            migrationBefore: `import { InfoSystemMessage, ErrorSystemMessage } from "@fremtind/jokul/system-message";
+
+<InfoSystemMessage>Systemet vedlikeholdes lørdag kl. 22–24.</InfoSystemMessage>
+<ErrorSystemMessage>Noe gikk galt. Prøv igjen.</ErrorSystemMessage>`,
+            code: `import { SystemMessage } from "@fremtind/jokul/system-message";
+
+<SystemMessage variant="info">Systemet vedlikeholdes lørdag kl. 22–24.</SystemMessage>
+<SystemMessage variant="error">Noe gikk galt. Prøv igjen.</SystemMessage>`,
+            preview: (
+                <Flex direction="column" gap="s">
+                    <SystemMessage variant="info">Systemet vedlikeholdes lørdag kl. 22–24.</SystemMessage>
+                    <SystemMessage variant="error">Noe gikk galt. Prøv igjen.</SystemMessage>
+                </Flex>
             ),
         },
     ],

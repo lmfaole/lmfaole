@@ -1,4 +1,3 @@
-import React from "react";
 import { Countdown } from "@fremtind/jokul/countdown";
 import type { ComponentDoc } from "./types";
 

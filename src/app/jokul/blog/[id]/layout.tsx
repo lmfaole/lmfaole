@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import {PostNavigation} from "@/components/PostNavigation";
 import {PostResources} from "@/components/PostResources";

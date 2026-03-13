@@ -1,4 +1,3 @@
-import React from "react";
 import { Breadcrumb, BreadcrumbItem } from "@fremtind/jokul/breadcrumb";
 import type { ComponentDoc } from "./types";
 

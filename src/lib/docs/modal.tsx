@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@fremtind/jokul/button";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";

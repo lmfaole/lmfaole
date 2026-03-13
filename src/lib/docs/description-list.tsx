@@ -1,4 +1,3 @@
-import React from "react";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
 import type { ComponentDoc } from "./types";
 

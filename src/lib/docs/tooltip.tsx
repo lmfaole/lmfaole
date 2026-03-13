@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger, PopupTip } from "@fremtind/jokul/tooltip";
 import { Button } from "@fremtind/jokul/button";
 import { Flex } from "@fremtind/jokul/flex";

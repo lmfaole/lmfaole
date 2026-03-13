@@ -1,4 +1,3 @@
-import React from "react";
 import {Link} from "@fremtind/jokul/link";
 import {Card} from "@fremtind/jokul/card";
 import {Flex} from "@fremtind/jokul/flex";

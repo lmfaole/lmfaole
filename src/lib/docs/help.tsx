@@ -1,4 +1,3 @@
-import React from "react";
 import { Help } from "@fremtind/jokul/help";
 import type { ComponentDoc } from "./types";
 

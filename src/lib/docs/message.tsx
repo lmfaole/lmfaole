@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Message } from "@fremtind/jokul/message";
 import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";

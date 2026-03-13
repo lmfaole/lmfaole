@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ToastProvider, useToast } from "@fremtind/jokul/toast";
 import { Button } from "@fremtind/jokul/button";
 import { SuccessIcon, InfoIcon, WarningIcon, ErrorIcon } from "@fremtind/jokul/icon";

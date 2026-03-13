@@ -1,4 +1,3 @@
-import React from "react";
 import { Flex } from "@fremtind/jokul/flex";
 import { Button } from "@fremtind/jokul/button";
 import { Message } from "@fremtind/jokul/message";

@@ -1,4 +1,3 @@
-import React from "react";
 import { LinkList } from "@fremtind/jokul/link-list";
 import type { ComponentDoc } from "./types";
 

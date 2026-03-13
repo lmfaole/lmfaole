@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { InputGroup, FieldGroup } from "@fremtind/jokul/input-group";
 import { TextInput } from "@fremtind/jokul/text-input";
 import { Checkbox } from "@fremtind/jokul/checkbox";

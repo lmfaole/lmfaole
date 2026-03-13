@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { IconButton } from "@fremtind/jokul/icon-button";
 import { Icon } from "@fremtind/jokul/icon";
 import { Flex } from "@fremtind/jokul/flex";

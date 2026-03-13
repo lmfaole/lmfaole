@@ -1,6 +1,4 @@
-import React from "react";
 import { Link } from "@fremtind/jokul/link";
-import { NavLink } from "@fremtind/jokul/nav-link";
 
 export default function NotFound() {
     return (

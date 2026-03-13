@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { Loader } from "@fremtind/jokul/loader";
 import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentDoc } from "./types";

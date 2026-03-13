@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { RadioPanel } from "@fremtind/jokul/radio-panel";
 import { FieldGroup } from "@fremtind/jokul/input-group";
 import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
 
-const RADIO_VALUES = ["bil", "reise", "hjem"];
 
 function RadioPanelPreview() {
     const isHovered = usePreviewHovered();

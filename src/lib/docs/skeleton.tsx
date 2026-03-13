@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
     SkeletonAnimation,
     SkeletonElement,
@@ -75,11 +75,6 @@ function SkeletonListPreview() {
     );
 }
 
-const FAKE_PROFILE = {
-    name: "Kari Nordmann",
-    role: "Skadeforsikring",
-    joined: "Kunde siden 2018",
-};
 
 function useReloadTimer(delayMs = 4000) {
     const [loaded, setLoaded] = useState(false);

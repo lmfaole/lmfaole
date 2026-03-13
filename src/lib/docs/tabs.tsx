@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, Tab, TabList, TabPanel } from "@fremtind/jokul/tabs";
 import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Search } from "@fremtind/jokul/search";
 import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";

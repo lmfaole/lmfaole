@@ -1,4 +1,3 @@
-import React from "react";
 import {Tag} from "@fremtind/jokul/tag";
 import {CodeBlock} from "@/components/CodeBlock";
 import type {ComponentExample} from "@/lib/docs/types";

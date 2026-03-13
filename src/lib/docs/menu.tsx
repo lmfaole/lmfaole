@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Menu, MenuItem, MenuItemCheckbox, MenuDivider } from "@fremtind/jokul/menu";
 import { Button } from "@fremtind/jokul/button";
 import { Icon } from "@fremtind/jokul/icon";

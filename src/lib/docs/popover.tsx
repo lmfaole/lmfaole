@@ -1,4 +1,3 @@
-import React from "react";
 import { Popover } from "@fremtind/jokul/popover";
 import type { ComponentDoc } from "./types";
 

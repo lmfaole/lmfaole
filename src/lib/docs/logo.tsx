@@ -1,4 +1,3 @@
-import React from "react";
 import { Logo, LogoStamp, ForsikringLevertAvFremtind } from "@fremtind/jokul/logo";
 import type { ComponentDoc } from "./types";
 

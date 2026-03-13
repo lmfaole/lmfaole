@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "@fremtind/jokul/nav-link";
 import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentDoc } from "./types";

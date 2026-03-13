@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@fremtind/jokul/button";
 import { Icon } from "@fremtind/jokul/icon";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Flex } from "@fremtind/jokul/flex";
 import { NavLink } from "@fremtind/jokul/nav-link";
 import { Search } from "@fremtind/jokul/search";

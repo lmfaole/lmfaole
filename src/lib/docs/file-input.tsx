@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FileInput } from "@fremtind/jokul/file-input";
 import type { UploadedFile } from "@fremtind/jokul/file-input";
 import type { ComponentDoc } from "./types";

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { DataTable } from "@fremtind/jokul/table";
 import { PopupTip } from "@fremtind/jokul/tooltip";
 import { Flex } from "@fremtind/jokul/flex";

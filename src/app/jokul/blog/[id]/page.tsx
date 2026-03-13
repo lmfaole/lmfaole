@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { PostArticle } from "@/components/PostArticle";
 import { NotFound } from "@/components/NotFound";
 import { useParams } from "next/navigation";

@@ -1,4 +1,3 @@
-import React from "react";
 import { UnorderedList, OrderedList, ListItem } from "@fremtind/jokul/list";
 import type { ComponentDoc } from "./types";
 

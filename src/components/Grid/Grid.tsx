@@ -1,4 +1,3 @@
-import React from "react";
 import "./grid.scss";
 
 export type SemanticSpacing = "none" | "xxs" | "xs" | "s" | "m" | "l" | "xl";

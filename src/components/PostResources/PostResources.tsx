@@ -1,4 +1,3 @@
-import React from "react";
 import {Link} from "@fremtind/jokul/link";
 import type {Resource} from "@/lib/blogPosts";
 import {List, ListItem} from "@fremtind/jokul/list";
