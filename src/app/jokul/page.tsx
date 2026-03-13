@@ -12,12 +12,19 @@ export default function Home() {
     return (
         <main className="home">
             <header className="home__hero">
-                <p className="home__eyebrow">Jøkul læringsressurser</p>
+                <p className="home__eyebrow">Uoffisiell læringsressurs</p>
                 <h1 className="home__headline">Bygg bedre<br/>med Jøkul</h1>
                 <p className="home__intro">
                     Artikler, veiledninger og komponentdokumentasjon for deg som bygger
-                    med <Link href="https://jokul.fremtind.no/" external>Fremtinds designsystem</Link>.
+                    med Fremtinds designsystem.
                 </p>
+                <div className="home__disclaimer">
+                    <span>⚠️ Dette er ikke den offisielle dokumentasjonen.</span>
+                    {" "}
+                    <Link href="https://jokul.fremtind.no/" external>
+                        Gå til jokul.fremtind.no
+                    </Link>
+                </div>
             </header>
 
             <div className="home__sections">
