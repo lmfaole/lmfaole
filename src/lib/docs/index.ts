@@ -1,5 +1,11 @@
 import buttonDoc from "./button";
+import comboboxDoc from "./combobox";
+import datepickerDoc from "./datepicker";
+import feedbackDoc from "./feedback";
+import fileInputDoc from "./file-input";
 import messageDoc from "./message";
+import menuDoc from "./menu";
+import modalDoc from "./modal";
 import tagDoc from "./tag";
 import flexDoc from "./flex";
 import textInputDoc from "./text-input";
@@ -35,6 +41,8 @@ import tabsDoc from "./tabs";
 import textAreaDoc from "./text-area";
 import tooltipDoc from "./tooltip";
 import radioPanelDoc from "./radio-panel";
+import popoverDoc from "./popover";
+import toastDoc from "./toast";
 import type { ComponentDoc } from "./types";
 
 export type { ComponentDoc };
@@ -47,10 +55,14 @@ export const componentDocs: ComponentDoc[] = [
     checkboxDoc,
     checkboxPanelDoc,
     chipDoc,
+    comboboxDoc,
     countdownDoc,
+    datepickerDoc,
     descriptionListDoc,
     expandablePanelDoc,
+    feedbackDoc,
     fieldGroupDoc,
+    fileInputDoc,
     flexDoc,
     iconDoc,
     iconButtonDoc,
@@ -59,9 +71,12 @@ export const componentDocs: ComponentDoc[] = [
     listDoc,
     loaderDoc,
     logoDoc,
+    menuDoc,
     messageDoc,
+    modalDoc,
     navLinkDoc,
     paginationDoc,
+    popoverDoc,
     progressBarDoc,
     radioButtonDoc,
     radioPanelDoc,
@@ -75,6 +90,7 @@ export const componentDocs: ComponentDoc[] = [
     tagDoc,
     textAreaDoc,
     textInputDoc,
+    toastDoc,
     toggleSwitchDoc,
     tooltipDoc,
 ];
