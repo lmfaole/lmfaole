@@ -99,7 +99,7 @@ const doc: ComponentDoc = {
             type: "Array<{ value: string; label: string }>",
             required: false,
             source: "custom",
-            description: "Kontrollert liste over valgte elementer.",
+            description: "Kontrollert liste over valgte elementer. Merk: i motsetning til det native HTML value-attributtet (en streng), bruker Combobox et Jøkul-spesifikt objekt-array for å representere valgte alternativer med både verdi og visningsnavn.",
         },
         {
             name: "placeholder",

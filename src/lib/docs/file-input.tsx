@@ -66,7 +66,7 @@ const doc: ComponentDoc = {
             type: "UploadedFile[]",
             required: true,
             source: "custom",
-            description: "Liste over opplastede filer med tilstand og fremdrift.",
+            description: "Liste over opplastede filer med tilstand og fremdrift. Merk: i motsetning til det native HTML value-attributtet (en streng), bruker FileInput en Jøkul-spesifikk UploadedFile[]-type for å håndtere filstatus og fremdrift.",
         },
         {
             name: "onChange",
