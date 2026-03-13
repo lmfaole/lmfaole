@@ -30,17 +30,17 @@ export function Footer() {
                             </Link>
                         </li>
                         <li>
-                            <Link href="https://jokul.fremtind.no/kom-i-gang" external>
+                            <Link href="https://jokul.fremtind.no/kom-i-gang/introduksjon/" external>
                                 Kom i gang
                             </Link>
                         </li>
                         <li>
-                            <Link href="https://jokul.fremtind.no/profil" external>
+                            <Link href="https://jokul.fremtind.no/profil/designprinsipper/" external>
                                 Stilguide og profil
                             </Link>
                         </li>
                         <li>
-                            <Link href="https://jokul.fremtind.no/komponenter" external>
+                            <Link href="https://jokul.fremtind.no/komponenter/buttons/" external>
                                 Komponentbibliotek
                             </Link>
                         </li>
