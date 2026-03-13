@@ -12,12 +12,12 @@ const doc: ComponentDoc = {
     notes: "Bruk autoExpand for å la feltet vokse automatisk med innholdet.",
     relatedIds: ["text-input"],
     props: [
-        { name: "label", type: "React.ReactNode", required: true, source: "custom", description: "Synlig label over tekstfeltet." },
-        { name: "rows", type: "number", required: false, source: "native", default: "4", description: "Antall synlige linjer." },
-        { name: "autoExpand", type: "boolean", required: false, source: "custom", default: "false", description: "Feltet vokser med innholdet." },
-        { name: "counter", type: "{ maxLength: number; hideProgress?: boolean }", required: false, source: "custom", description: "Tegngrense med visuell teller." },
-        { name: "helpLabel", type: "string", required: false, source: "custom", description: "Hjelpetekst." },
-        { name: "errorLabel", type: "string", required: false, source: "custom", description: "Feilmelding." },
+        { name: "label", type: "React.ReactNode", required: true, source: "custom", status: "stable", description: "Synlig label over tekstfeltet." },
+        { name: "rows", type: "number", required: false, source: "native", status: "stable", default: "4", description: "Antall synlige linjer." },
+        { name: "autoExpand", type: "boolean", required: false, source: "custom", status: "stable", default: "false", description: "Feltet vokser med innholdet." },
+        { name: "counter", type: "{ maxLength: number; hideProgress?: boolean }", required: false, source: "custom", status: "stable", description: "Tegngrense med visuell teller." },
+        { name: "helpLabel", type: "string", required: false, source: "custom", status: "stable", description: "Hjelpetekst." },
+        { name: "errorLabel", type: "string", required: false, source: "custom", status: "stable", description: "Feilmelding." },
     ],
     examples: [
         {

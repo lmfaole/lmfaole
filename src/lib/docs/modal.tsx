@@ -94,6 +94,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: true,
             source: "custom",
+            status: "stable",
             description: "Tittel på modalen, sendes til useModal.",
         },
         {
@@ -101,6 +102,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             default: '"Lukk"',
             description: "Tilgjengelig label for lukkeknappen.",
         },
@@ -109,6 +111,7 @@ const doc: ComponentDoc = {
             type: '"dialog" | "alertdialog"',
             required: false,
             source: "aria",
+            status: "stable",
             default: '"dialog"',
             description:
                 "ARIA-rolle. alertdialog forhindrer lukking med Escape eller klikk utenfor.",
@@ -118,6 +121,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Padding på Modal-komponenten, f.eks. 'var(--jkl-spacing-l)'.",
         },
     ],
@@ -125,6 +129,7 @@ const doc: ComponentDoc = {
         {
             title: "Grunnleggende dialog",
             description: "En enkel modal med tittel, innhold og handlingsknapper.",
+            uses: ["button"],
             code: `import ReactDOM from "react-dom";
 import {
     Modal,
@@ -178,6 +183,7 @@ function ModalExample() {
             title: "Alertdialog (ingen Escape/klikk utenfor)",
             description:
                 "Med role='alertdialog' kan ikke brukeren lukke modalen ved å trykke Escape eller klikke utenfor.",
+            uses: ["button"],
             code: `import ReactDOM from "react-dom";
 import {
     Modal,
@@ -228,6 +234,7 @@ function AlertDialogExample() {
         {
             title: "Bekreftelsesdialog",
             description: "Modal brukt til å bekrefte en brukerhandling før den utføres.",
+            uses: ["button"],
             code: `import ReactDOM from "react-dom";
 import {
     Modal,

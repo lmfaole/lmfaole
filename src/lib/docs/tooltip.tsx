@@ -13,21 +13,22 @@ const doc: ComponentDoc = {
     description: "Tooltip og PopupTip viser tilleggsinformasjon ved hover eller klikk.",
     notes: "Ikke legg viktig informasjon kun i en tooltip.",
     props: [
-        { name: "placement", type: '"top" | "top-start" | "top-end" | "left" | "right"', required: false, source: "custom", default: '"top"', description: "Posisjon for tooltip." },
-        { name: "triggerOn", type: '"hover" | "click"', required: false, source: "custom", default: '"hover"', description: "Utløsende hendelse." },
-        { name: "delay", type: "number", required: false, source: "custom", description: "Forsinkelse i ms før visning." },
+        { name: "placement", type: '"top" | "top-start" | "top-end" | "left" | "right"', required: false, source: "custom", status: "stable", default: '"top"', description: "Posisjon for tooltip." },
+        { name: "triggerOn", type: '"hover" | "click"', required: false, source: "custom", status: "stable", default: '"hover"', description: "Utløsende hendelse." },
+        { name: "delay", type: "number", required: false, source: "custom", status: "stable", description: "Forsinkelse i ms før visning." },
     ],
     examples: [
         {
             title: "Tooltip på knapp",
             description: "Tooltip med TooltipTrigger og TooltipContent.",
+            uses: ["button"],
+            tags: ["accessibility"],
             code: `<Tooltip>
   <TooltipTrigger>
     <Button variant="secondary">Mer info</Button>
   </TooltipTrigger>
   <TooltipContent>Dette er en forklarende tekst om knappens funksjon.</TooltipContent>
 </Tooltip>`,
-            tags: ["accessibility"],
             preview: (
                 <Tooltip>
                     <TooltipTrigger>

@@ -11,8 +11,8 @@ const doc: ComponentDoc = {
     description: "TableOfContents viser en navigerbar innholdsfortegnelse for siden.",
     notes: "Bruk TableOfContents.Link for hvert element i innholdsfortegnelsen.",
     props: [
-        { name: "label", type: "string", required: true, source: "custom", description: "Overskrift for innholdsfortegnelsen." },
-        { name: "children", type: "React.ReactNode", required: false, source: "react", description: "TableOfContents.Link-elementer." },
+        { name: "label", type: "string", required: true, source: "custom", status: "stable", description: "Overskrift for innholdsfortegnelsen." },
+        { name: "children", type: "React.ReactNode", required: false, source: "react", status: "stable", description: "TableOfContents.Link-elementer." },
     ],
     examples: [
         {

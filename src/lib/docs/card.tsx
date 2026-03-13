@@ -6,6 +6,46 @@ import { Tag } from "@fremtind/jokul/tag";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
 import type { ComponentDoc } from "./types";
 
+export function CardDetailPreview() {
+    return (
+        <Card padding="l" style={{ maxWidth: "28rem", width: "100%" }}>
+            <Flex direction="column" gap="m">
+                <Flex justifyContent="space-between" alignItems="center">
+                    <h2 style={{ margin: 0 }}>Bilforsikring kasko</h2>
+                    <Tag variant="success">Aktiv</Tag>
+                </Flex>
+                <DescriptionList>
+                    <DescriptionTerm>Registreringsnummer</DescriptionTerm>
+                    <DescriptionDetail>AB 12345</DescriptionDetail>
+                    <DescriptionTerm>Månedspremie</DescriptionTerm>
+                    <DescriptionDetail>542 kr</DescriptionDetail>
+                    <DescriptionTerm>Neste forfall</DescriptionTerm>
+                    <DescriptionDetail>15. april 2026</DescriptionDetail>
+                </DescriptionList>
+                <Flex gap="s">
+                    <Button>Endre dekning</Button>
+                    <Button variant="ghost">Meld skade</Button>
+                </Flex>
+            </Flex>
+        </Card>
+    );
+}
+
+export function CardBasicPreview() {
+    return (
+        <Card padding="l">
+            <Flex direction="column" gap="s">
+                <h2>Tittel på kortet</h2>
+                <p>Beskrivelse av innholdet i dette kortet.</p>
+                <Flex gap="s">
+                    <Button>Åpne</Button>
+                    <Button variant="ghost">Mer info</Button>
+                </Flex>
+            </Flex>
+        </Card>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "card",
     name: "Card",
@@ -21,6 +61,7 @@ const doc: ComponentDoc = {
             type: "React.ReactNode",
             required: true,
             source: "react",
+            status: "stable",
             description: "Kortets innhold. Strukturer med Flex, overskrifter og andre komponenter.",
         },
         {
@@ -28,6 +69,7 @@ const doc: ComponentDoc = {
             type: '"s" | "m" | "l" | "xl"',
             required: false,
             source: "react",
+            status: "stable",
             default: '"s"',
             description: "Innvendig padding. Bruk l/xl for romslig innhold som fremhevede kort.",
         },
@@ -36,6 +78,7 @@ const doc: ComponentDoc = {
             type: '"outlined" | "high" | "low"',
             required: false,
             source: "custom",
+            status: "stable",
             default: '"high"',
             description: "Visuell variant. high gir sterk skygge, low svak skygge, outlined kantlinje uten skygge. Velg etter bakgrunnskontrast.",
         },
@@ -44,6 +87,7 @@ const doc: ComponentDoc = {
             type: "boolean",
             required: false,
             source: "custom",
+            status: "stable",
             default: "false",
             description: "Markerer kortet visuelt som klikkbart (hover/fokus-effekter). Du må selv rendre kortet som et klikkbart element. Husk aria-label.",
         },
@@ -52,6 +96,7 @@ const doc: ComponentDoc = {
             type: "React.ElementType",
             required: false,
             source: "custom",
+            status: "stable",
             default: '"div"',
             description: "Polymorf komponent — bytt ut rotelementet. Bruk as=\"a\" for klikkbare kort.",
         },
@@ -60,6 +105,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "react",
+            status: "stable",
             description: "Egendefinerte CSS-klasser.",
         },
     ],
@@ -68,6 +114,7 @@ const doc: ComponentDoc = {
             title: "Grunnleggende innholdskort",
             description: "Typisk mønster: Card med Flex-kolonne internt. Header øverst, innhold i midten, handlinger nederst.",
             tags: ["variant:high"],
+            uses: ["flex", "button"],
             code: `<Card padding="l">
   <Flex direction="column" gap="s">
     <h2>Tittel på kortet</h2>
@@ -78,18 +125,7 @@ const doc: ComponentDoc = {
     </Flex>
   </Flex>
 </Card>`,
-            preview: (
-                <Card padding="l">
-                    <Flex direction="column" gap="s">
-                        <h2>Tittel på kortet</h2>
-                        <p>Beskrivelse av innholdet i dette kortet.</p>
-                        <Flex gap="s">
-                            <Button>Åpne</Button>
-                            <Button variant="ghost">Mer info</Button>
-                        </Flex>
-                    </Flex>
-                </Card>
-            ),
+            preview: <CardBasicPreview />,
         },
         {
             title: "Varianter: high, low og outlined",
@@ -130,6 +166,7 @@ const doc: ComponentDoc = {
             title: "Klikkbart kort",
             description: "Bruk as=\"a\" og clickable for å gjøre hele kortet klikkbart. Sett aria-label så skjermleseren ikke leser alt innholdet.",
             tags: ["clickable", "interaktiv"],
+            uses: ["flex", "tag"],
             code: `<Flex gap="m" wrap="wrap">
   <Card as="a" href="/forsikringer/bilforsikring" clickable aria-label="Bilforsikring kasko">
     <Flex direction="column" gap="xs">
@@ -177,6 +214,7 @@ const doc: ComponentDoc = {
             title: "Detaljkort med oppsummering",
             description: "Kombiner Card med DescriptionList for å vise nøkkel-verdi-informasjon i et ryddig panel.",
             tags: ["composition"],
+            uses: ["flex", "tag", "description-list", "button"],
             code: `<Card padding="l" style={{ maxWidth: "28rem" }}>
   <Flex direction="column" gap="m">
     <Flex justifyContent="space-between" alignItems="center">
@@ -197,28 +235,7 @@ const doc: ComponentDoc = {
     </Flex>
   </Flex>
 </Card>`,
-            preview: (
-                <Card padding="l" style={{ maxWidth: "28rem", width: "100%" }}>
-                    <Flex direction="column" gap="m">
-                        <Flex justifyContent="space-between" alignItems="center">
-                            <h2 style={{ margin: 0 }}>Bilforsikring kasko</h2>
-                            <Tag variant="success">Aktiv</Tag>
-                        </Flex>
-                        <DescriptionList>
-                            <DescriptionTerm>Registreringsnummer</DescriptionTerm>
-                            <DescriptionDetail>AB 12345</DescriptionDetail>
-                            <DescriptionTerm>Månedspremie</DescriptionTerm>
-                            <DescriptionDetail>542 kr</DescriptionDetail>
-                            <DescriptionTerm>Neste forfall</DescriptionTerm>
-                            <DescriptionDetail>15. april 2026</DescriptionDetail>
-                        </DescriptionList>
-                        <Flex gap="s">
-                            <Button>Endre dekning</Button>
-                            <Button variant="ghost">Meld skade</Button>
-                        </Flex>
-                    </Flex>
-                </Card>
-            ),
+            preview: <CardDetailPreview />,
         },
     ],
 };

@@ -2,6 +2,19 @@ import React from "react";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
 import type { ComponentDoc } from "./types";
 
+export function DescriptionListContactPreview() {
+    return (
+        <DescriptionList>
+            <DescriptionTerm>Navn</DescriptionTerm>
+            <DescriptionDetail>Ola Nordmann</DescriptionDetail>
+            <DescriptionTerm>E-post</DescriptionTerm>
+            <DescriptionDetail>ola@nordmann.no</DescriptionDetail>
+            <DescriptionTerm>Telefon</DescriptionTerm>
+            <DescriptionDetail>+47 900 00 000</DescriptionDetail>
+        </DescriptionList>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "description-list",
     name: "DescriptionList",
@@ -11,23 +24,23 @@ const doc: ComponentDoc = {
     description: "DescriptionList viser nøkkel-verdi-par strukturert som en HTML description list (dl/dt/dd).",
     notes: "Bruk DescriptionTerm for nøkler og DescriptionDetail for verdier.",
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "DescriptionTerm og DescriptionDetail-elementer." },
-        { name: "separators", type: "boolean", required: false, source: "react", default: "false", description: "Viser skillelinjer mellom par." },
-        { name: "alignment", type: '"horizontal" | "vertical" | "justified"', required: false, source: "custom", default: '"vertical"', description: "Layoutretning for nøkkel-verdi-par." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "DescriptionTerm og DescriptionDetail-elementer." },
+        { name: "separators", type: "boolean", required: false, source: "react", status: "stable", default: "false", description: "Viser skillelinjer mellom par." },
+        { name: "alignment", type: '"horizontal" | "vertical" | "justified"', required: false, source: "custom", status: "stable", default: '"vertical"', description: "Layoutretning for nøkkel-verdi-par." },
     ],
     subComponents: [
         {
             name: "DescriptionTerm",
             description: "Nøkkelen (dt) i et nøkkel-verdi-par.",
             props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Tekst eller innhold for termen." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekst eller innhold for termen." },
             ],
         },
         {
             name: "DescriptionDetail",
             description: "Verdien (dd) i et nøkkel-verdi-par.",
             props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Tekst eller innhold for detaljen." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekst eller innhold for detaljen." },
             ],
         },
     ],
@@ -58,16 +71,7 @@ const doc: ComponentDoc = {
   <DescriptionTerm>Telefon</DescriptionTerm>
   <DescriptionDetail>+47 900 00 000</DescriptionDetail>
 </DescriptionList>`,
-            preview: (
-                <DescriptionList>
-                    <DescriptionTerm>Navn</DescriptionTerm>
-                    <DescriptionDetail>Ola Nordmann</DescriptionDetail>
-                    <DescriptionTerm>E-post</DescriptionTerm>
-                    <DescriptionDetail>ola@nordmann.no</DescriptionDetail>
-                    <DescriptionTerm>Telefon</DescriptionTerm>
-                    <DescriptionDetail>+47 900 00 000</DescriptionDetail>
-                </DescriptionList>
-            ),
+            preview: <DescriptionListContactPreview />,
         },
         {
             title: "Horisontal layout",

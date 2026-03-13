@@ -57,14 +57,14 @@ const doc: ComponentDoc = {
     notes: "Krev ikke valg fra forslagslisten — brukeren skal kunne skrive fritt.",
     relatedIds: ["text-input", "select"],
     props: [
-        { name: "label", type: "string", required: true, source: "custom", description: "Synlig label over inputfeltet." },
-        { name: "suggestions", type: "string[]", required: true, source: "custom", description: "Liste over forslag som vises under feltet." },
-        { name: "value", type: "string", required: false, source: "native", description: "Kontrollert verdi." },
-        { name: "onChange", type: "(value: string) => void", required: false, source: "react", description: "Kalles ved endring i inputverdien." },
-        { name: "onSelect", type: "(value: string) => void", required: false, source: "react", description: "Kalles når brukeren velger et forslag." },
-        { name: "helpLabel", type: "string", required: false, source: "custom", description: "Hjelpetekst vist under label." },
-        { name: "errorLabel", type: "string", required: false, source: "custom", description: "Feilmelding vist under feltet." },
-        { name: "noSuggestionsText", type: "string", required: false, source: "custom", description: "Tekst vist når ingen forslag matcher." },
+        { name: "label", type: "string", required: true, source: "custom", status: "stable", description: "Synlig label over inputfeltet." },
+        { name: "suggestions", type: "string[]", required: true, source: "custom", status: "stable", description: "Liste over forslag som vises under feltet." },
+        { name: "value", type: "string", required: false, source: "native", status: "stable", description: "Kontrollert verdi." },
+        { name: "onChange", type: "(value: string) => void", required: false, source: "react", status: "stable", description: "Kalles ved endring i inputverdien." },
+        { name: "onSelect", type: "(value: string) => void", required: false, source: "react", status: "stable", description: "Kalles når brukeren velger et forslag." },
+        { name: "helpLabel", type: "string", required: false, source: "custom", status: "stable", description: "Hjelpetekst vist under label." },
+        { name: "errorLabel", type: "string", required: false, source: "custom", status: "stable", description: "Feilmelding vist under feltet." },
+        { name: "noSuggestionsText", type: "string", required: false, source: "custom", status: "stable", description: "Tekst vist når ingen forslag matcher." },
     ],
     examples: [
         {

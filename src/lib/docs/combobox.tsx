@@ -70,6 +70,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: true,
             source: "custom",
+            status: "stable",
             description: "Synlig label over feltet.",
         },
         {
@@ -77,6 +78,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: true,
             source: "native",
+            status: "stable",
             description: "Skjemafeltets navn.",
         },
         {
@@ -84,6 +86,7 @@ const doc: ComponentDoc = {
             type: "Array<{ value: string; label: string }>",
             required: true,
             source: "custom",
+            status: "stable",
             description: "Liste over tilgjengelige alternativer.",
         },
         {
@@ -91,6 +94,7 @@ const doc: ComponentDoc = {
             type: '(event: { type: "change" | "blur", target: { name: string, value: string, selectedOptions: Array<{value: string, label: string}> } }) => void',
             required: true,
             source: "react",
+            status: "stable",
             description:
                 "Kalles ved endring. Bruk event.target.selectedOptions for å hente valgte elementer.",
         },
@@ -99,6 +103,7 @@ const doc: ComponentDoc = {
             type: "Array<{ value: string; label: string }>",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Kontrollert liste over valgte elementer. Merk: i motsetning til det native HTML value-attributtet (en streng), bruker Combobox et Jøkul-spesifikt objekt-array for å representere valgte alternativer med både verdi og visningsnavn.",
         },
         {
@@ -106,6 +111,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "native",
+            status: "stable",
             description: "Plassholdertekst i søkefeltet.",
         },
         {
@@ -113,6 +119,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Hjelpetekst under feltet.",
         },
         {
@@ -120,6 +127,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Feilmelding som vises under feltet.",
         },
         {
@@ -127,6 +135,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             default: '"Ingen treff"',
             description: "Tekst som vises når søket ikke gir treff.",
         },

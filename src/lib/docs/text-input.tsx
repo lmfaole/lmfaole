@@ -17,6 +17,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: true,
             source: "custom",
+            status: "stable",
             description: "Synlig label over inputfeltet. Kobles automatisk til input-elementet for tilgjengelighet. Bruk et beskrivende substantiv, f.eks. «Navn» eller «E-postadresse».",
         },
         {
@@ -24,6 +25,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "native",
+            status: "stable",
             description: "Kontrollert verdi. Bruk sammen med onChange for kontrollert komponent-mønster.",
         },
         {
@@ -31,6 +33,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "native",
+            status: "stable",
             description: "Initiell verdi for ukontrollert bruk. Ikke bruk sammen med value.",
         },
         {
@@ -38,6 +41,7 @@ const doc: ComponentDoc = {
             type: "React.ChangeEventHandler<HTMLInputElement>",
             required: false,
             source: "react",
+            status: "stable",
             description: "Kalles ved hvert tastetrykk. Brukes i kontrollert komponent-mønster.",
         },
         {
@@ -45,6 +49,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Feilmelding vist under inputfeltet med rød ramme. Vis kun ved faktisk valideringsfeil — ikke vis tomt errorLabel. Tømmes automatisk når verdien er gyldig.",
         },
         {
@@ -52,6 +57,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Hjelpetekst vist under label. Brukes for format-hint eller kortfattede instruksjoner. Vises ikke når errorLabel er satt.",
         },
         {
@@ -59,6 +65,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "native",
+            status: "stable",
             description: "Plassholdertekst i tomt felt. Bruk kun for eksempelverdi, aldri som erstatning for label. Ikke bruk instruksjoner som placeholder.",
         },
         {
@@ -66,6 +73,7 @@ const doc: ComponentDoc = {
             type: "boolean",
             required: false,
             source: "native",
+            status: "stable",
             default: "false",
             description: "Deaktiverer feltet. Deaktiverte felter sendes ikke med i form-innsending.",
         },
@@ -74,6 +82,7 @@ const doc: ComponentDoc = {
             type: "boolean",
             required: false,
             source: "native",
+            status: "stable",
             default: "false",
             description: "Gjør feltet skrivebeskyttet. Brukeren kan markere og kopiere verdien, men ikke endre den.",
         },
@@ -82,6 +91,7 @@ const doc: ComponentDoc = {
             type: '"text" | "email" | "password" | "tel" | "url" | "search" | "number"',
             required: false,
             source: "native",
+            status: "stable",
             default: '"text"',
             description: "HTML input-type. Velg riktig type for å få riktig tastatur på mobil og semantisk validering.",
         },
@@ -90,6 +100,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "native",
+            status: "stable",
             description: "HTML autocomplete-attributt. Bruk alltid autocomplete=\"email\", autocomplete=\"name\" etc. for skjemafelt som brukere forventer autofullfør for.",
         },
     ],

@@ -57,6 +57,7 @@ const doc: ComponentDoc = {
             type: "React.ReactNode",
             required: true,
             source: "custom",
+            status: "stable",
             description: "Tekstetikett for inputfeltet.",
         },
         {
@@ -64,6 +65,7 @@ const doc: ComponentDoc = {
             type: "(props: { 'aria-describedby'?: string; 'aria-invalid'?: boolean; id?: string }) => JSX.Element",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Funksjon som rendrer inputfeltet med tilgjengelighetsprops injisert.",
         },
         {
@@ -71,6 +73,7 @@ const doc: ComponentDoc = {
             type: "React.ReactNode",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Hjelpetekst vist under feltet.",
         },
         {
@@ -78,6 +81,7 @@ const doc: ComponentDoc = {
             type: "React.ReactNode",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Feilmelding vist under feltet. Legger til aria-invalid automatisk.",
         },
         {
@@ -85,6 +89,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Ekstra beskrivelsestekst.",
         },
         {
@@ -92,6 +97,7 @@ const doc: ComponentDoc = {
             type: "React.ReactNode",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Tooltip-komponent ved siden av labelen.",
         },
         {
@@ -99,20 +105,21 @@ const doc: ComponentDoc = {
             type: "boolean",
             required: false,
             source: "custom",
+            status: "stable",
             default: "false",
             description: "Viser label og felt på én linje.",
         },
-        { name: "id", type: "string", required: false, source: "native", description: "Overstyrer generert HTML id." },
+        { name: "id", type: "string", required: false, source: "native", status: "stable", description: "Overstyrer generert HTML id." },
     ],
     subComponents: [
         {
             name: "FieldGroup",
             description: "Grupperer relaterte skjemaelementer (f.eks. avkrysningsbokser, radioknapper) under en felles legend ved hjelp av fieldset.",
             props: [
-                { name: "legend", type: "string", required: true, source: "custom", description: "Overskrift for gruppen." },
-                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Skjemaelementer i gruppen." },
-                { name: "errorLabel", type: "string", required: false, source: "react", description: "Feilmelding for hele gruppen." },
-                { name: "helpLabel", type: "string", required: false, source: "custom", description: "Hjelpetekst for hele gruppen." },
+                { name: "legend", type: "string", required: true, source: "custom", status: "stable", description: "Overskrift for gruppen." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Skjemaelementer i gruppen." },
+                { name: "errorLabel", type: "string", required: false, source: "react", status: "stable", description: "Feilmelding for hele gruppen." },
+                { name: "helpLabel", type: "string", required: false, source: "custom", status: "stable", description: "Hjelpetekst for hele gruppen." },
             ],
         },
     ],
@@ -120,6 +127,7 @@ const doc: ComponentDoc = {
         {
             title: "Grunnleggende InputGroup",
             description: "Bruk render-prop for å injisere tilgjengelighetsprops i inputfeltet.",
+            uses: ["text-input"],
             code: `import { InputGroup } from "@fremtind/jokul/input-group";
 import { TextInput } from "@fremtind/jokul/text-input";
 
@@ -132,6 +140,7 @@ import { TextInput } from "@fremtind/jokul/text-input";
         {
             title: "Med hjelpetekst og feilmelding",
             description: "helpLabel og errorLabel kobles automatisk til feltet via aria-describedby.",
+            uses: ["text-input"],
             code: `import { InputGroup } from "@fremtind/jokul/input-group";
 import { TextInput } from "@fremtind/jokul/text-input";
 
@@ -151,6 +160,7 @@ import { TextInput } from "@fremtind/jokul/text-input";
         {
             title: "FieldGroup med avkrysningsbokser",
             description: "FieldGroup rendrer et fieldset og er riktig element for grupper av relaterte valg.",
+            uses: ["checkbox"],
             code: `import { FieldGroup } from "@fremtind/jokul/input-group";
 import { Checkbox } from "@fremtind/jokul/checkbox";
 

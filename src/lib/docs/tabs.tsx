@@ -33,31 +33,31 @@ const doc: ComponentDoc = {
     notes: "Bruk Tabs for å skjule innhold, ikke for navigasjon mellom sider.",
     relatedIds: ["nav-link"],
     props: [
-        { name: "defaultTab", type: "number", required: false, source: "custom", default: "0", description: "Initialt aktiv fane (indeks)." },
-        { name: "onChange", type: "(index: number) => void", required: false, source: "react", description: "Kalles ved faneskift." },
-        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "TabList og TabPanel-elementer." },
+        { name: "defaultTab", type: "number", required: false, source: "custom", status: "stable", default: "0", description: "Initialt aktiv fane (indeks)." },
+        { name: "onChange", type: "(index: number) => void", required: false, source: "react", status: "stable", description: "Kalles ved faneskift." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "TabList og TabPanel-elementer." },
     ],
     subComponents: [
         {
             name: "TabList",
             description: "Wrapper som inneholder Tab-elementene.",
             props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Tab-elementer." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tab-elementer." },
             ],
         },
         {
             name: "Tab",
             description: "En enkelt fane-knapp.",
             props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Tekst eller innhold i fanen." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekst eller innhold i fanen." },
             ],
         },
         {
             name: "TabPanel",
             description: "Innholdsområdet tilknyttet en fane.",
             props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Innholdet som vises når fanen er aktiv." },
-                { name: "tabIndex", type: "number", required: false, source: "native", description: "Overstyrer tabIndex på panelet." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet som vises når fanen er aktiv." },
+                { name: "tabIndex", type: "number", required: false, source: "native", status: "stable", description: "Overstyrer tabIndex på panelet." },
             ],
         },
     ],

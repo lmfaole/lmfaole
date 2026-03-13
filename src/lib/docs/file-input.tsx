@@ -59,6 +59,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: true,
             source: "custom",
+            status: "stable",
             description: "Synlig legend/label over filopplastningsfeltet.",
         },
         {
@@ -66,6 +67,7 @@ const doc: ComponentDoc = {
             type: "UploadedFile[]",
             required: true,
             source: "custom",
+            status: "stable",
             description: "Liste over opplastede filer med tilstand og fremdrift. Merk: i motsetning til det native HTML value-attributtet (en streng), bruker FileInput en Jøkul-spesifikk UploadedFile[]-type for å håndtere filstatus og fremdrift.",
         },
         {
@@ -73,6 +75,7 @@ const doc: ComponentDoc = {
             type: "(e: Event, files: UploadedFile[]) => void",
             required: true,
             source: "react",
+            status: "stable",
             description: "Kalles når bruker legger til eller fjerner filer.",
         },
         {
@@ -80,6 +83,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "native",
+            status: "stable",
             description: "Godkjente filtyper, f.eks. 'image/*,.pdf'.",
         },
         {
@@ -87,6 +91,7 @@ const doc: ComponentDoc = {
             type: "number",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Maksimal filstørrelse i bytes.",
         },
         {
@@ -94,6 +99,7 @@ const doc: ComponentDoc = {
             type: "boolean",
             required: false,
             source: "native",
+            status: "stable",
             default: "true",
             description: "Tillat opplasting av flere filer samtidig.",
         },
@@ -102,6 +108,7 @@ const doc: ComponentDoc = {
             type: '"flexible" | "small"',
             required: false,
             source: "custom",
+            status: "stable",
             description: "Visningsvariant. 'small' gir en kompakt versjon.",
         },
         {
@@ -109,6 +116,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Hjelpetekst under feltet.",
         },
         {
@@ -116,6 +124,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Feilmelding som vises under feltet.",
         },
     ],

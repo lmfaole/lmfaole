@@ -18,6 +18,7 @@ const doc: ComponentDoc = {
             type: "React.ReactNode",
             required: true,
             source: "react",
+            status: "stable",
             description: "Label-teksten. Beskriv tilstanden som er på, f.eks. «Mørkt tema» eller «Varsler aktivert».",
         },
         {
@@ -25,6 +26,7 @@ const doc: ComponentDoc = {
             type: "boolean",
             required: false,
             source: "native",
+            status: "stable",
             description: "Kontrollert av/på-tilstand.",
         },
         {
@@ -32,6 +34,7 @@ const doc: ComponentDoc = {
             type: "boolean",
             required: false,
             source: "native",
+            status: "stable",
             default: "false",
             description: "Initiell tilstand for ukontrollert bruk.",
         },
@@ -40,6 +43,7 @@ const doc: ComponentDoc = {
             type: "React.ChangeEventHandler<HTMLInputElement>",
             required: false,
             source: "react",
+            status: "stable",
             description: "Kalles umiddelbart når brukeren veksler bryteren. Utfør handlingen direkte her.",
         },
         {
@@ -47,6 +51,7 @@ const doc: ComponentDoc = {
             type: "boolean",
             required: false,
             source: "native",
+            status: "stable",
             default: "false",
             description: "Deaktiverer bryteren. Forklar alltid for brukeren hvorfor den er deaktivert.",
         },
@@ -55,6 +60,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "react",
+            status: "stable",
             description: "Egendefinerte CSS-klasser.",
         },
     ],

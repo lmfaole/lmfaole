@@ -26,10 +26,10 @@ const doc: ComponentDoc = {
     description: "Pagination brukes til å dele opp lange lister i sider.",
     notes: "Oppdater currentPage-state i onPageChange-handler.",
     props: [
-        { name: "currentPage", type: "number", required: true, source: "custom", description: "Gjeldende sidenummer (1-basert)." },
-        { name: "numberOfPages", type: "number", required: true, source: "custom", description: "Totalt antall sider." },
-        { name: "onPageChange", type: "(toPage: number, fromPage: number) => void", required: true, source: "react", description: "Kalles ved sidebytte." },
-        { name: "labels", type: '{ previous: string; next: string }', required: false, source: "custom", default: '{ previous: "Forrige", next: "Neste" }', description: "Tekster for forrige/neste-knapper." },
+        { name: "currentPage", type: "number", required: true, source: "custom", status: "stable", description: "Gjeldende sidenummer (1-basert)." },
+        { name: "numberOfPages", type: "number", required: true, source: "custom", status: "stable", description: "Totalt antall sider." },
+        { name: "onPageChange", type: "(toPage: number, fromPage: number) => void", required: true, source: "react", status: "stable", description: "Kalles ved sidebytte." },
+        { name: "labels", type: '{ previous: string; next: string }', required: false, source: "custom", status: "stable", default: '{ previous: "Forrige", next: "Neste" }', description: "Tekster for forrige/neste-knapper." },
     ],
     examples: [
         {

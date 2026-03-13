@@ -13,9 +13,9 @@ const doc: ComponentDoc = {
     notes: "Bruk Link for navigasjon, ikke Button.",
     relatedIds: ["nav-link", "link-list"],
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Lenketekst." },
-        { name: "href", type: "string", required: true, source: "native", description: "URL-en lenken peker til." },
-        { name: "external", type: "boolean", required: false, source: "react", default: "false", description: "Åpner i ny fane med ikon." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Lenketekst." },
+        { name: "href", type: "string", required: true, source: "native", status: "stable", description: "URL-en lenken peker til." },
+        { name: "external", type: "boolean", required: false, source: "react", status: "stable", default: "false", description: "Åpner i ny fane med ikon." },
     ],
     examples: [
         {

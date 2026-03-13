@@ -12,12 +12,12 @@ const doc: ComponentDoc = {
     notes: "Bruk alltid RadioButtonGroup som wrapper for tilgjengelighet.",
     relatedIds: ["checkbox", "radio-panel"],
     props: [
-        { name: "legend", type: "string", required: true, source: "custom", description: "Overskrift for gruppen (på RadioButtonGroup)." },
-        { name: "name", type: "string", required: false, source: "native", description: "Skjemafeltets navn." },
-        { name: "value", type: "string", required: false, source: "native", description: "Valgt verdi." },
-        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "react", description: "Kalles ved valg." },
-        { name: "errorLabel", type: "string", required: false, source: "custom", description: "Feilmelding." },
-        { name: "inline", type: "boolean", required: false, source: "custom", default: "false", description: "Viser radioknappene på én linje." },
+        { name: "legend", type: "string", required: true, source: "custom", status: "stable", description: "Overskrift for gruppen (på RadioButtonGroup)." },
+        { name: "name", type: "string", required: false, source: "native", status: "stable", description: "Skjemafeltets navn." },
+        { name: "value", type: "string", required: false, source: "native", status: "stable", description: "Valgt verdi." },
+        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "react", status: "stable", description: "Kalles ved valg." },
+        { name: "errorLabel", type: "string", required: false, source: "custom", status: "stable", description: "Feilmelding." },
+        { name: "inline", type: "boolean", required: false, source: "custom", status: "stable", default: "false", description: "Viser radioknappene på én linje." },
     ],
     examples: [
         {

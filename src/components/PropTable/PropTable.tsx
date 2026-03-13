@@ -33,7 +33,7 @@ const SOURCE_LABEL: Record<PropSource, string> = {
 
 const ALL_SOURCES: PropSource[] = ["custom", "native", "react", "aria"];
 
-function PropNameCell({ name, status, statusDescription, source }: Pick<PropDef, "name" | "status" | "statusDescription" | "source">) {
+function PropNameCell({ name, status, statusDescription, source }: Pick<PropDef, "name" | "status" | "statusDescription"> & { source?: PropSource }) {
     const hasStatus = status && status !== "stable";
 
     return (

@@ -59,6 +59,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             default: '"Velg dato"',
             description: "Label som vises over datofelet.",
         },
@@ -67,6 +68,7 @@ const doc: ComponentDoc = {
             type: '(e: ChangeEvent<HTMLInputElement>, date: Date | null, meta: { error: "WRONG_FORMAT" | "OUTSIDE_LOWER_BOUND" | "OUTSIDE_UPPER_BOUND" | null, value: string }) => void',
             required: false,
             source: "react",
+            status: "stable",
             description: "Kalles ved endring. Motta dato og evt. feilkode.",
         },
         {
@@ -74,6 +76,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "native",
+            status: "stable",
             description: "Kontrollert verdi (ISO-datostreng).",
         },
         {
@@ -81,6 +84,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "native",
+            status: "stable",
             description: "Ukontrollert startverdi.",
         },
         {
@@ -88,6 +92,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Hjelpetekst under feltet.",
         },
         {
@@ -95,6 +100,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Feilmelding som vises under feltet.",
         },
         {
@@ -102,6 +108,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Deaktiverer datoer før denne datoen i kalenderen (format: 'DD.MM.YYYY').",
         },
         {
@@ -109,6 +116,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Deaktiverer datoer etter denne datoen i kalenderen (format: 'DD.MM.YYYY').",
         },
         {
@@ -116,6 +124,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Tilgjengelig label for å åpne kalenderen.",
         },
         {
@@ -123,6 +132,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Tilgjengelig label for å lukke kalenderen.",
         },
     ],

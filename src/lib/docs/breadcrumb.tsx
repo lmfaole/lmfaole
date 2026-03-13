@@ -12,14 +12,14 @@ const doc: ComponentDoc = {
     notes: "Bruk Breadcrumb på sider som er mer enn ett nivå dypt.",
     relatedIds: ["nav-link", "link"],
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "BreadcrumbItem-elementer." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "BreadcrumbItem-elementer." },
     ],
     subComponents: [
         {
             name: "BreadcrumbItem",
             description: "Et enkelt ledd i brødsmulestien.",
             props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Lenke eller tekst for gjeldende side." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Lenke eller tekst for gjeldende side." },
             ],
         },
     ],

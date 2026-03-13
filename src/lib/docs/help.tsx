@@ -74,6 +74,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: true,
             source: "custom",
+            status: "stable",
             description: "Tilgjengelig label for ?-knappen (leses av skjermlesere).",
         },
         {
@@ -81,6 +82,7 @@ const doc: ComponentDoc = {
             type: "React.ReactNode",
             required: true,
             source: "react",
+            status: "stable",
             description: "Innholdet som vises i popoveret.",
         },
         {
@@ -88,6 +90,7 @@ const doc: ComponentDoc = {
             type: '"top" | "bottom" | "left" | "right"',
             required: false,
             source: "custom",
+            status: "stable",
             default: '"top"',
             description: "Hvilken side popoveret åpner på.",
         },

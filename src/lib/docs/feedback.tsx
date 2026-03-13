@@ -65,6 +65,7 @@ const doc: ComponentDoc = {
             type: '"smiley" | "radio"',
             required: true,
             source: "custom",
+            status: "stable",
             description: "Velger mellom smiley-vurdering og radioknapper.",
         },
         {
@@ -72,6 +73,7 @@ const doc: ComponentDoc = {
             type: "string",
             required: true,
             source: "custom",
+            status: "stable",
             description: "Spørsmålet som stilles til brukeren.",
         },
         {
@@ -79,6 +81,7 @@ const doc: ComponentDoc = {
             type: "Array<{ label: string; value: string | number }>",
             required: true,
             source: "custom",
+            status: "stable",
             description: "Alternativer brukeren kan velge. For smiley brukes value: number (1–5).",
         },
         {
@@ -86,6 +89,7 @@ const doc: ComponentDoc = {
             type: "({ feedbackValue, intentionalSubmit, message? }: FeedbackSubmitEvent) => void",
             required: true,
             source: "react",
+            status: "stable",
             description: "Kalles når brukeren sender inn tilbakemeldingen.",
         },
         {
@@ -93,6 +97,7 @@ const doc: ComponentDoc = {
             type: "{ label: string }",
             required: false,
             source: "custom",
+            status: "stable",
             description: "Oppfølgingsspørsmål med tekstfelt som vises etter valg.",
         },
     ],
