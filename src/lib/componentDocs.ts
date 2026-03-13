@@ -1,7 +1,7 @@
 import { componentDocs } from "./docs/index";
-import type { ComponentDoc, PropDef, PropStatus, ComponentExample } from "./docs/types";
+import type { ComponentDoc, PropDef, PropStatus, PropSource, ComponentExample } from "./docs/types";
 
-export type { ComponentDoc, PropDef, PropStatus, ComponentExample };
+export type { ComponentDoc, PropDef, PropStatus, PropSource, ComponentExample };
 export { componentDocs };
 
 export function getComponentDoc(id: string): ComponentDoc | undefined {

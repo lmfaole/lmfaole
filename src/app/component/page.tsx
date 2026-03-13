@@ -10,25 +10,29 @@ import {SegmentedControl, SegmentedControlButton} from "@fremtind/jokul/segmente
 import {DescriptionList, DescriptionTerm, DescriptionDetail} from "@fremtind/jokul/description-list";
 import {Link} from "@fremtind/jokul/link";
 import {componentDocs} from "@/lib/componentDocs";
+import type {PropSource} from "@/lib/componentDocs";
 import {Grid} from "@/components/Grid";
 import {ComponentCard} from "@/components/ComponentCard";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
 const ALL_TAGS = Array.from(new Set(componentDocs.flatMap((d) => d.tags))).sort();
 
-type PropEntry = { propName: string; usedBy: { id: string; name: string }[] };
+type PropEntry = { propName: string; source: PropSource | undefined; usedBy: { id: string; name: string }[] };
 
 const ALL_PROP_ENTRIES: PropEntry[] = (() => {
-    const map = new Map<string, { id: string; name: string }[]>();
+    const map = new Map<string, { source: PropSource | undefined; usedBy: { id: string; name: string }[] }>();
     for (const doc of componentDocs) {
         for (const prop of doc.props) {
-            const existing = map.get(prop.name) ?? [];
-            if (!existing.find((e) => e.id === doc.id)) existing.push({ id: doc.id, name: doc.name });
+            const existing = map.get(prop.name) ?? { source: prop.source, usedBy: [] };
+            if (!existing.usedBy.find((e) => e.id === doc.id)) existing.usedBy.push({ id: doc.id, name: doc.name });
+            // if any doc marks it as custom, treat it as custom
+            if (prop.source === "custom") existing.source = "custom";
+            else if (prop.source === "native" && existing.source == null) existing.source = "native";
             map.set(prop.name, existing);
         }
     }
     return Array.from(map.entries())
-        .map(([propName, usedBy]) => ({ propName, usedBy }))
+        .map(([propName, { source, usedBy }]) => ({ propName, source, usedBy }))
         .sort((a, b) => a.propName.localeCompare(b.propName, "nb"));
 })();
 
@@ -40,6 +44,7 @@ export default function ComponentsPage() {
     const [sortBy, setSortBy] = useState("az");
     const [propQuery, setPropQuery] = useState("");
     const [propSortBy, setPropSortBy] = useState("az");
+    const [propSourceFilter, setPropSourceFilter] = useState<PropSource | null>(null);
 
     const filtered = useMemo(() => {
         const q = query.toLowerCase();
@@ -70,18 +75,16 @@ export default function ComponentsPage() {
 
     const filteredProps = useMemo(() => {
         const q = propQuery.toLowerCase().trim();
-        const results = !q
-            ? [...ALL_PROP_ENTRIES]
-            : ALL_PROP_ENTRIES.filter(
-                (e) =>
-                    e.propName.toLowerCase().includes(q) ||
-                    e.usedBy.some((c) => c.name.toLowerCase().includes(q)),
-            );
+        const results = ALL_PROP_ENTRIES.filter(
+            (e) =>
+                (!q || e.propName.toLowerCase().includes(q) || e.usedBy.some((c) => c.name.toLowerCase().includes(q))) &&
+                (!propSourceFilter || e.source === propSourceFilter),
+        );
         if (propSortBy === "za") return results.sort((a, b) => b.propName.localeCompare(a.propName, "nb"));
         if (propSortBy === "most-used") return results.sort((a, b) => b.usedBy.length - a.usedBy.length);
         if (propSortBy === "least-used") return results.sort((a, b) => a.usedBy.length - b.usedBy.length);
-        return results.sort((a, b) => a.propName.localeCompare(b.propName, "nb")); // az
-    }, [propQuery, propSortBy]);
+        return results.sort((a, b) => a.propName.localeCompare(b.propName, "nb"));
+    }, [propQuery, propSortBy, propSourceFilter]);
 
     return (
         <Flex as="main" direction="column" gap="xl">
@@ -175,33 +178,54 @@ export default function ComponentsPage() {
 
             {view === "props" && (
                 <Flex direction="column" gap="m">
-                <Flex gap="m" alignItems="end" wrap="wrap">
-                    <Search
-                        label="Filtrer props"
-                        value={propQuery}
-                        onChange={(e) => setPropQuery(e.target.value)}
-                        placeholder="Propnavn eller komponentnavn…"
-                    />
-                    <Select
-                        label="Sorter"
-                        name="sort-props"
-                        value={propSortBy}
-                        onChange={(e) => setPropSortBy(e.target.value)}
-                        items={[
-                            {value: "az", label: "A–Å"},
-                            {value: "za", label: "Å–A"},
-                            {value: "most-used", label: "Mest brukt"},
-                            {value: "least-used", label: "Minst brukt"},
-                        ]}
-                    />
-                </Flex>
+                    <Flex gap="m" alignItems="end" wrap="wrap">
+                        <Search
+                            label="Filtrer props"
+                            value={propQuery}
+                            onChange={(e) => setPropQuery(e.target.value)}
+                            placeholder="Propnavn eller komponentnavn…"
+                        />
+                        <Select
+                            label="Sorter"
+                            name="sort-props"
+                            value={propSortBy}
+                            onChange={(e) => setPropSortBy(e.target.value)}
+                            items={[
+                                {value: "az", label: "A–Å"},
+                                {value: "za", label: "Å–A"},
+                                {value: "most-used", label: "Mest brukt"},
+                                {value: "least-used", label: "Minst brukt"},
+                            ]}
+                        />
+                    </Flex>
+                    <Flex gap="xs" wrap="wrap">
+                        {(["custom", "native"] as PropSource[]).map((src) => (
+                            <Chip
+                                key={src}
+                                variant="filter"
+                                selected={propSourceFilter === src}
+                                onClick={() => setPropSourceFilter(propSourceFilter === src ? null : src)}
+                            >
+                                {src === "custom" ? "Egendefinert" : "Native HTML"}
+                            </Chip>
+                        ))}
+                    </Flex>
                     <p className="muted" style={{margin: 0, fontSize: "var(--jkl-font-size-s)"}}>
                         {filteredProps.length} av {ALL_PROP_ENTRIES.length} props
                     </p>
                     <DescriptionList alignment="horizontal" separators>
                         {filteredProps.map((entry) => (
                             <React.Fragment key={entry.propName}>
-                                <DescriptionTerm><code>{entry.propName}</code></DescriptionTerm>
+                                <DescriptionTerm>
+                                    <Flex direction="column" gap="xs">
+                                        <code>{entry.propName}</code>
+                                        {entry.source && (
+                                            <span style={{fontSize: "var(--jkl-font-size-s)", color: "var(--jkl-color-text-subdued)"}}>
+                                                {entry.source === "custom" ? "Egendefinert" : "Native HTML"}
+                                            </span>
+                                        )}
+                                    </Flex>
+                                </DescriptionTerm>
                                 <DescriptionDetail>
                                     <Flex wrap="wrap" gap="xs">
                                         {entry.usedBy.map((comp) => (

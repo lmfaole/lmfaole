@@ -1,6 +1,7 @@
 import type React from "react";
 
 export type PropStatus = "stable" | "deprecated" | "experimental";
+export type PropSource = "custom" | "native";
 
 export interface PropDef {
     name: string;
@@ -8,6 +9,8 @@ export interface PropDef {
     required: boolean;
     default?: string;
     description: string;
+    /** Whether this prop is a custom component prop or a native HTML attribute pass-through */
+    source?: PropSource;
     /** Status for this specific prop, e.g. "deprecated" */
     status?: PropStatus;
     /** Reason shown in a tooltip next to the status badge */
