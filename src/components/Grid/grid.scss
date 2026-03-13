@@ -2,7 +2,7 @@ $gap-tokens: "none", "xxs", "xs", "s", "m", "l", "xl";
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--grid-col-min, 16rem)), 1fr));
 
   @each $token in $gap-tokens {
     &[data-gap="var(--jkl-spacing-#{$token})"] {

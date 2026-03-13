@@ -4,10 +4,10 @@ import React, { useState, useMemo } from "react";
 import { Flex } from "@fremtind/jokul/flex";
 import { NavLink } from "@fremtind/jokul/nav-link";
 import { Search } from "@fremtind/jokul/search";
-import { Chip } from "@fremtind/jokul/chip";
 import { Select } from "@fremtind/jokul/select";
 import { blogPosts } from "@/lib/blogPosts";
 import { BlogPostCard } from "@/components/BlogPostCard";
+import { ChipFilterList } from "@/components/ChipFilterList";
 import { Grid } from "@/components/Grid";
 
 const ALL_TAGS = Array.from(new Set(blogPosts.flatMap((p) => p.tags))).sort();
@@ -69,39 +69,15 @@ export default function BlogPage() {
                     />
                 </Flex>
                 <p className="muted">Kategori</p>
-                <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
-                    {ALL_CATEGORIES.map((cat) => (
-                        <li key={cat}>
-                            <Chip
-                                variant="filter"
-                                selected={activeCategory === cat}
-                                onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
-                            >
-                                {cat}
-                            </Chip>
-                        </li>
-                    ))}
-                </Flex>
+                <ChipFilterList items={ALL_CATEGORIES} selected={activeCategory} onChange={setActiveCategory} />
                 <p className="muted">Tags</p>
-                <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
-                    {ALL_TAGS.map((tag) => (
-                        <li key={tag}>
-                            <Chip
-                                variant="filter"
-                                selected={activeTag === tag}
-                                onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-                            >
-                                {tag}
-                            </Chip>
-                        </li>
-                    ))}
-                </Flex>
+                <ChipFilterList items={ALL_TAGS} selected={activeTag} onChange={setActiveTag} />
             </Flex>
 
             {filtered.length === 0 ? (
                 <p className="muted">Ingen artikler samsvarer med filteret.</p>
             ) : (
-                <Grid gap="l">
+                <Grid columns={3} gap="l">
                     {filtered.map((post) => (
                         <BlogPostCard key={post.id} post={post} />
                     ))}

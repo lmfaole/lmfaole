@@ -5,9 +5,9 @@ import { Flex } from "@fremtind/jokul/flex";
 import { NavLink } from "@fremtind/jokul/nav-link";
 import { Card } from "@fremtind/jokul/card";
 import { Link } from "@fremtind/jokul/link";
-import { Tag } from "@fremtind/jokul/tag";
 import { foundationalPosts } from "@/lib/foundationalPosts";
 import { Grid } from "@/components/Grid";
+import { TagList } from "@/components/TagList";
 
 export default function FoundationalPage() {
     return (
@@ -15,7 +15,7 @@ export default function FoundationalPage() {
             <NavLink href="/" back>Tilbake til forsiden</NavLink>
             <h1>Grunnleggende konsepter</h1>
             <p>Fundamentene i Jøkul — typografi, farger og spacing. Les disse for å forstå designsystemets kjerneprinsipper.</p>
-            <Grid gap="l">
+            <Grid columns={3} gap="l">
                 {foundationalPosts.map((post) => (
                     <Card key={post.id} padding="l">
                         <h2>
@@ -23,11 +23,7 @@ export default function FoundationalPage() {
                         </h2>
                         <p>{post.excerpt}</p>
                         {post.tags.length > 0 && (
-                            <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
-                                {post.tags.map((tag) => (
-                                    <li key={tag}><Tag variant="neutral">{tag}</Tag></li>
-                                ))}
-                            </Flex>
+                            <TagList tags={post.tags} />
                         )}
                     </Card>
                 ))}

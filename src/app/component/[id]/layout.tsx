@@ -22,7 +22,7 @@ export default function ComponentLayout({ children }: { children: React.ReactNod
             {related.length > 0 && (
                 <>
                     <h2>Relaterte komponenter</h2>
-                    <Grid>
+                    <Grid columns={4}>
                         {related.map((rel) => (
                             <ComponentCard key={rel.id} doc={rel} />
                         ))}

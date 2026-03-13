@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { DataTable } from "@fremtind/jokul/table";
 import { PopupTip } from "@fremtind/jokul/tooltip";
-import { Chip } from "@fremtind/jokul/chip";
 import { Flex } from "@fremtind/jokul/flex";
 import type { PropDef, PropStatus, PropSource } from "@/lib/componentDocs";
+import { ChipFilterList } from "@/components/ChipFilterList";
 
 interface PropTableProps {
     props: PropDef[];
@@ -85,18 +85,12 @@ export function PropTable({ props }: PropTableProps) {
     return (
         <Flex direction="column" gap="m">
             {hasSourceInfo && (
-                <Flex gap="xs" wrap="wrap">
-                    {ALL_SOURCES.filter((src) => props.some((p) => p.source === src)).map((src) => (
-                        <Chip
-                            key={src}
-                            variant="filter"
-                            selected={sourceFilter === src}
-                            onClick={() => setSourceFilter(sourceFilter === src ? null : src)}
-                        >
-                            {SOURCE_LABEL[src]}
-                        </Chip>
-                    ))}
-                </Flex>
+                <ChipFilterList
+                    items={ALL_SOURCES.filter((src) => props.some((p) => p.source === src))}
+                    selected={sourceFilter}
+                    onChange={(v) => setSourceFilter(v as PropSource | null)}
+                    getLabel={(src) => SOURCE_LABEL[src as PropSource]}
+                />
             )}
 
             {activeRows.length === 0 ? (

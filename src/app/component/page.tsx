@@ -15,6 +15,7 @@ import {Grid} from "@/components/Grid";
 import {ComponentCard} from "@/components/ComponentCard";
 import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
 import {useLocalStorage} from "@/hooks/useLocalStorage";
+import {ChipFilterList} from "@/components/ChipFilterList";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
 const ALL_TAGS = Array.from(new Set(componentDocs.flatMap((d) => d.tags))).sort();
@@ -161,41 +162,17 @@ export default function ComponentsPage() {
                                 ]}
                             />
                         </Flex>
-                        <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
-                            {ALL_CATEGORIES.map((cat) => (
-                                <li key={cat}>
-                                    <Chip
-                                        variant="filter"
-                                        selected={activeCategory === cat}
-                                        onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
-                                    >
-                                        {cat}
-                                    </Chip>
-                                </li>
-                            ))}
-                        </Flex>
+                        <ChipFilterList items={ALL_CATEGORIES} selected={activeCategory} onChange={setActiveCategory} />
                         <Flex gap="xs" wrap="wrap" alignItems="center">
                             <span className="muted" style={{fontSize: "0.875rem"}}>Tags:</span>
-                            <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
-                                {ALL_TAGS.map((tag) => (
-                                    <li key={tag}>
-                                        <Chip
-                                            variant="filter"
-                                            selected={activeTag === tag}
-                                            onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-                                        >
-                                            {tag}
-                                        </Chip>
-                                    </li>
-                                ))}
-                            </Flex>
+                            <ChipFilterList items={ALL_TAGS} selected={activeTag} onChange={setActiveTag} />
                         </Flex>
                     </Flex>
 
                     {filtered.length === 0 ? (
                         <p className="muted">Ingen komponenter samsvarer med søket.</p>
                     ) : (
-                        <Grid>
+                        <Grid columns={4}>
                             {filtered.map((doc) => (
                                 <ComponentCard key={doc.id} doc={doc}/>
                             ))}

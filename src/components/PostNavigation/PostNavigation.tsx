@@ -43,7 +43,7 @@ export function PostNavigation({ previous, next, related }: PostNavigationProps)
             {hasNavigation && (
                 <>
                     <h2>Les mer</h2>
-                    <Grid gap="m">
+                    <Grid columns={2} gap="m">
                         {previous && <PostCard post={previous} label="← Forrige innlegg" />}
                         {next && <PostCard post={next} label="Neste innlegg →" />}
                     </Grid>
@@ -52,7 +52,7 @@ export function PostNavigation({ previous, next, related }: PostNavigationProps)
             {hasRelated && (
                 <>
                     <h2>Relaterte innlegg</h2>
-                    <Grid gap="m">
+                    <Grid columns={3} gap="m">
                         {related.map((post) => (
                             <PostCard key={post.id} post={post} />
                         ))}

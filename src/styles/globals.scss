@@ -158,13 +158,6 @@ code {
   }
 }
 
-.frontpage-sections {
-  align-items: start;
-  display: grid;
-  gap: var(--jkl-spacing-l);
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 38ch), 1fr));
-}
-
 .image-preview {
   aspect-ratio: 3 / 2;
   display: block;
@@ -191,13 +184,6 @@ code {
     font-size: var(--jkl-font-size-s);
     margin-top: var(--jkl-spacing-xs);
   }
-}
-
-
-.component-grid {
-  display: grid;
-  gap: var(--jkl-spacing-l);
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 34ch), 1fr));
 }
 
 /* Reset list styling for ul/ol used as flex/visual containers */

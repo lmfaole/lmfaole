@@ -5,6 +5,7 @@ import {Link} from "@fremtind/jokul/link";
 import {Flex} from "@fremtind/jokul/flex";
 import {Card} from "@fremtind/jokul/card";
 import {Tag} from "@fremtind/jokul/tag";
+import {Grid} from "@/components/Grid";
 import {blogPosts} from "@/lib/blogPosts";
 import {componentDocs} from "@/lib/componentDocs";
 import {foundationalPosts} from "@/lib/foundationalPosts";
@@ -31,7 +32,7 @@ export default function Home() {
                 </Flex>
             </header>
 
-            <Flex direction="column" className="frontpage-sections">
+            <Grid columns={3} gap="l" style={{ alignItems: "start" }}>
                 <Card padding="l">
                     <h2><Link href="/foundational">Grunnleggende konsepter</Link></h2>
                     <p>
@@ -89,7 +90,7 @@ export default function Home() {
                     </Flex>
                     <Link href="/component">Se all komponentdokumentasjon →</Link>
                 </Card>
-            </Flex>
+            </Grid>
 
             <footer>
                 <nav aria-label="Eksterne lenker">

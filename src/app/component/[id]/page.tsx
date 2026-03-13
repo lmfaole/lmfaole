@@ -13,6 +13,7 @@ import {getComponentDoc} from "@/lib/componentDocs";
 import {PropTable} from "@/components/PropTable";
 import {CodeBlock} from "@/components/CodeBlock";
 import {MigrationExample} from "@/components/MigrationExample";
+import {NotFound} from "@/components/NotFound";
 
 import {slugify, toPascalCase} from "@/lib/format";
 
@@ -22,10 +23,11 @@ export default function ComponentPage() {
 
     if (!doc) {
         return (
-            <main>
-                <h1>Fant ikke komponenten</h1>
-                <Link href="/component">Tilbake til alle komponenter</Link>
-            </main>
+            <NotFound
+                message="Fant ikke komponenten"
+                backHref="/component"
+                backLabel="Tilbake til alle komponenter"
+            />
         );
     }
 
