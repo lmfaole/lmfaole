@@ -1,0 +1,23 @@
+.component-example-preview {
+  align-items: center;
+  background-color: transparent;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--jkl-color-border-subdued) 40%, transparent) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border-block: 1px solid var(--jkl-color-border-subdued);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--jkl-spacing-m);
+  justify-content: center;
+  margin-inline: calc(-1 * var(--jkl-spacing-m));
+  min-height: 12svh;
+  padding: var(--jkl-spacing-xl) var(--jkl-spacing-m);
+}
+
+.component-example-size-toolbar {
+  margin-inline: calc(-1 * var(--jkl-spacing-m));
+  padding: var(--jkl-spacing-m);
+}
+
+.component-example-header {
+  padding-block-end: var(--jkl-spacing-s);
+}

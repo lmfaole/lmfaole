@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Chip } from "@fremtind/jokul/chip";
 import { Flex } from "@fremtind/jokul/flex";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function ChipPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+    useEffect(() => {
+        if (!isHovered) {
+            setStep(0);
+            return;
+        }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % 4), 1200);
+        return () => clearInterval(id);
+    }, [isHovered]);
+    return (
+        <Flex gap="xs" wrap="wrap">
+            <Chip variant="filter" selected={step >= 1}>Reise</Chip>
+            <Chip variant="filter" selected={step >= 2}>Bil</Chip>
+            <Chip variant="filter" selected={step >= 3}>Hjem</Chip>
+        </Flex>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "chip",
@@ -10,8 +32,8 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["interaktiv", "filter", "tag", "skjema"],
     description: "Chip brukes for interaktive filtre og tagger som brukeren kan velge og velge bort.",
-    notes: "Bruk filter-varianten for flervalgsfiltre, input-varianten for tags brukeren kan fjerne.",
     relatedIds: ["tag"],
+    preview: <ChipPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Chip-teksten." },
         { name: "variant", type: '"input" | "filter"', required: true, source: "react", status: "stable", description: "Visuell variant og funksjon." },

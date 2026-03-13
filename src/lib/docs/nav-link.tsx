@@ -10,8 +10,15 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "interaktiv"],
     description: "NavLink er en navigasjonslenke med tydelig aktiv tilstand. Brukes i navigasjonsmeny og sidefelt.",
-    notes: "Sett active på gjeldende side for å markere hvilken side brukeren er på.",
     relatedIds: ["link"],
+    preview: (
+        <Flex direction="column" gap="xs">
+            <NavLink href="#" active>Oversikt</NavLink>
+            <NavLink href="#">Mine forsikringer</NavLink>
+            <NavLink href="#">Skademeldinger</NavLink>
+            <NavLink href="#">Profil</NavLink>
+        </Flex>
+    ),
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Lenketekst." },
         { name: "href", type: "string", required: false, source: "native", status: "stable", description: "Destinasjon." },

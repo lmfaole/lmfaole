@@ -22,7 +22,16 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["liste", "datavisning", "tekst"],
     description: "DescriptionList viser nøkkel-verdi-par strukturert som en HTML description list (dl/dt/dd).",
-    notes: "Bruk DescriptionTerm for nøkler og DescriptionDetail for verdier.",
+    preview: (
+        <DescriptionList>
+            <DescriptionTerm>Navn</DescriptionTerm>
+            <DescriptionDetail>Ola Nordmann</DescriptionDetail>
+            <DescriptionTerm>Adresse</DescriptionTerm>
+            <DescriptionDetail>Storgata 1, 0001 Oslo</DescriptionDetail>
+            <DescriptionTerm>Forsikringsnummer</DescriptionTerm>
+            <DescriptionDetail>NO-1234567</DescriptionDetail>
+        </DescriptionList>
+    ),
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "DescriptionTerm og DescriptionDetail-elementer." },
         { name: "separators", type: "boolean", required: false, source: "react", status: "stable", default: "false", description: "Viser skillelinjer mellom par." },

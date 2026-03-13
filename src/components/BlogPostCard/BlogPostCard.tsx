@@ -14,7 +14,7 @@ export function BlogPostCard({post}: BlogPostCardProps) {
         <Card padding="l">
             <Flex direction="column" gap="s">
                 <h2>
-                    <Link href={`/blog/${post.id}`}>{post.title}</Link>
+                    <Link href={`/jokul/blog/${post.id}`}>{post.title}</Link>
                 </h2>
                 <p>{post.excerpt}</p>
                 <Flex as="footer" gap="s" wrap="wrap">

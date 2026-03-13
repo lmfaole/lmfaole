@@ -9,10 +9,28 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "layout"],
     description: "TableOfContents viser en navigerbar innholdsfortegnelse for siden.",
-    notes: "Bruk TableOfContents.Link for hvert element i innholdsfortegnelsen.",
+    preview: (
+        <TableOfContents label="Innhold">
+            <TableOfContents.Link href="#intro">Introduksjon</TableOfContents.Link>
+            <TableOfContents.Link href="#usage">Bruk</TableOfContents.Link>
+            <TableOfContents.Link href="#props">Props</TableOfContents.Link>
+            <TableOfContents.Link href="#examples">Eksempler</TableOfContents.Link>
+        </TableOfContents>
+    ),
     props: [
         { name: "label", type: "string", required: true, source: "custom", status: "stable", description: "Overskrift for innholdsfortegnelsen." },
         { name: "children", type: "React.ReactNode", required: false, source: "react", status: "stable", description: "TableOfContents.Link-elementer." },
+    ],
+    subComponents: [
+        {
+            name: "TableOfContents.Link",
+            description: "En lenke i innholdsfortegnelsen. Rendres som en <a> som standard, men kan byttes med as-prop.",
+            props: [
+                { name: "href", type: "string", required: true, source: "native", status: "stable", description: "Anker-ID for seksjonen lenken peker til, f.eks. #intro." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Lenketeksten." },
+                { name: "as", type: "React.ElementType", required: false, source: "custom", status: "stable", description: "Bytt ut underliggende element, f.eks. Next.js Link." },
+            ],
+        },
     ],
     examples: [
         {

@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { CheckboxPanel } from "@fremtind/jokul/checkbox-panel";
 import { Flex } from "@fremtind/jokul/flex";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function CheckboxPanelPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        if (!isHovered) { setStep(0); return; }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % 4), 1200);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    // step 0: none, step 1: first, step 2: both, step 3: none
+    const firstChecked = step === 1 || step === 2;
+    const secondChecked = step === 2;
+
+    return (
+        <Flex direction="column" gap="xs">
+            <CheckboxPanel name="panel" value="a" label="Reiseforsikring" checked={firstChecked} onChange={() => {}} />
+            <CheckboxPanel name="panel" value="b" label="Bilforsikring" checked={secondChecked} onChange={() => {}} />
+        </Flex>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "checkbox-panel",
@@ -10,11 +34,8 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "panel", "interaktiv", "pris"],
     description: "CheckboxPanel er en utvidet avkrysningsboks med et synlig paneldesign.",
-    notes: [
-    "Bruk CheckboxPanel når valgene er komplekse nok til å trenge panelvisning.",
-    "Grupper CheckboxPanel-er i FieldGroup med legend.",
-],
     relatedIds: ["checkbox", "radio-panel"],
+    preview: <CheckboxPanelPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innhold i panelet." },
         { name: "name", type: "string", required: true, source: "native", status: "stable", description: "Skjemafeltets navn." },

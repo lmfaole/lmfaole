@@ -5,12 +5,11 @@ import {Flex} from "@fremtind/jokul/flex";
 import {PostNavigation} from "@/components/PostNavigation";
 import {PostResources} from "@/components/PostResources";
 import {getBlogPost, getNextPost, getPreviousPost, getRelatedPosts} from "@/lib/blogPosts";
-import {useParams} from "next/navigation";
 import {NavLink} from "@fremtind/jokul/nav-link";
+import { useParams } from "next/navigation";
 
 export default function PostLayout({children}: { children: React.ReactNode }) {
-    const params = useParams();
-    const id = params.id as string;
+    const { id } = useParams<{ id: string }>();
 
     const post = getBlogPost(id);
     const previous = getPreviousPost(id);
@@ -19,7 +18,7 @@ export default function PostLayout({children}: { children: React.ReactNode }) {
 
     return (
         <Flex direction="column" gap="xl">
-            <NavLink href="/blog" back>Tilbake til alle innlegg</NavLink>
+            <NavLink href="/jokul/blog" back>Tilbake til alle innlegg</NavLink>
             {children}
             {post?.resources && post.resources.length > 0 && (
                 <PostResources resources={post.resources} />

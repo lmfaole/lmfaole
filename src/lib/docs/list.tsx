@@ -9,7 +9,13 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["liste", "tekst"],
     description: "List-komponentene (UnorderedList og OrderedList) brukes for strukturerte lister med konsistent styling.",
-    notes: "Bruk UnorderedList for rekkefølge-uavhengige punktlister, OrderedList for nummererte trinn.",
+    preview: (
+        <UnorderedList>
+            <ListItem>Bilforsikring dekker skader på kjøretøy</ListItem>
+            <ListItem>Reiseforsikring gjelder i hele Norden</ListItem>
+            <ListItem>Innboforsikring inkluderer tyveri</ListItem>
+        </UnorderedList>
+    ),
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "ListItem-elementer." },
     ],

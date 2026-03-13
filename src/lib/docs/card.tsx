@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "@fremtind/jokul/card";
 import { Flex } from "@fremtind/jokul/flex";
 import { Button } from "@fremtind/jokul/button";
 import { Tag } from "@fremtind/jokul/tag";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+const CARD_VARIANTS = ["high", "low", "outlined"] as const;
+
+function CardPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        if (!isHovered) { setStep(0); return; }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % 3), 1200);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    return (
+        <Card variant={CARD_VARIANTS[step]}>
+            <Tag variant="success">Aktiv</Tag>
+            <h3 style={{ margin: "var(--jkl-spacing-xs) 0" }}>Bilforsikring</h3>
+            <p style={{ margin: "0 0 var(--jkl-spacing-m)" }}>Kaskoforsikring — fornyes 1. januar 2025</p>
+            <Button variant="secondary">Se detaljer</Button>
+        </Card>
+    );
+}
 
 export function CardDetailPreview() {
     return (
@@ -53,12 +77,9 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["layout", "panel", "datavisning"],
     description: "Card er en overflate-komponent som grupperer relatert innhold i et visuelt avgrenset område. Den gir bakgrunn, ramme og padding via padding-proppen. Card gjør ikke antagelser om innhold — det er opp til deg å strukturere innholdet med Flex, overskrifter og andre komponenter.",
-    notes: [
-    "Card er ikke interaktivt som standard.",
-    "Bruk clickable-prop for klikkbare kort, og sett alltid aria-label for tilgjengelighet.",
-    "Ikke legg interaktive elementer (knapper, lenker) inne i et clickable Card — det skaper nested interactives.",
-],
+    warnings: "Ikke legg interaktive elementer (knapper, lenker) inne i et clickable Card — det skaper nested interactives som er ugyldige i HTML og problematiske for skjermlesere.",
     relatedIds: ["flex"],
+    preview: <CardPreview />,
     props: [
         {
             name: "children",

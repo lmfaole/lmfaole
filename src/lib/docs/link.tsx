@@ -10,11 +10,14 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "tekst", "interaktiv"],
     description: "Link er Jøkuls grunnleggende lenkestil for inline-lenker og frittstående lenker.",
-    notes: [
-    "Bruk Link for navigasjon, ikke Button.",
-    "Bruk external-prop for lenker som åpner i ny fane — dette legger til visuell og ARIA-indikasjon.",
-],
+    warnings: "Bruk Link for navigasjon, ikke Button — feil element bryter forventningene til tastaturbrukere og skjermlesere.",
     relatedIds: ["nav-link", "link-list"],
+    preview: (
+        <Flex direction="column" gap="xs">
+            <Link href="#">Les mer om bilforsikring</Link>
+            <Link href="#" external>Åpne i ny fane</Link>
+        </Flex>
+    ),
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Lenketekst." },
         { name: "href", type: "string", required: true, source: "native", status: "stable", description: "URL-en lenken peker til." },

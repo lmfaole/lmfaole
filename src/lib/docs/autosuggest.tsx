@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Autosuggest } from "@fremtind/jokul/autosuggest";
 import { TextInput } from "@fremtind/jokul/text-input";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
 
 const ALL_CITIES = ["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"];
+const TYPING_TARGET = "Bergen";
 
 function AutosuggestPreview() {
+    const isHovered = usePreviewHovered();
     const [value, setValue] = useState("");
+
+    useEffect(() => {
+        if (!isHovered) {
+            setValue("");
+            return;
+        }
+        let i = 0;
+        const id = setInterval(() => {
+            i++;
+            setValue(TYPING_TARGET.slice(0, i));
+            if (i >= TYPING_TARGET.length) clearInterval(id);
+        }, 120);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
     return (
         <Autosuggest
             label="Hjemsted"
@@ -54,12 +73,9 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "søk", "interaktiv", "kontrollert"],
     description: "Autosuggest er et tekstinputfelt som viser forslag mens brukeren skriver. Passer for søk og fritekstfelt med et endelig sett av gyldige valg.",
-    notes: [
-    "Krev ikke valg fra forslagslisten — brukeren skal kunne skrive fritt.",
-    "Forslagene filtreres ikke automatisk — du håndterer filtering i suggestions-prop.",
-    "Bruk onSelect for å reagere når brukeren velger et forslag.",
-],
+    warnings: "Forslagene filtreres ikke automatisk — du håndterer filtrering selv og oppdaterer suggestions-prop.",
     relatedIds: ["text-input", "select"],
+    preview: <AutosuggestPreview />,
     props: [
         { name: "label", type: "string", required: true, source: "custom", status: "stable", description: "Synlig label over inputfeltet." },
         { name: "suggestions", type: "string[]", required: true, source: "custom", status: "stable", description: "Liste over forslag som vises under feltet." },
@@ -137,7 +153,7 @@ const doc: ComponentDoc = {
             preview: <AutosuggestNoHitsPreview />,
         },
         {
-            title: "Migrering: leadText / noHitsMessage → helpLabel / noHits",
+            title: "Hjelpetekst og ingen-treff-melding har fått nye props",
             description: "leadText og noHitsMessage er utfaset. Bruk helpLabel for hjelpetekst og noHits-objektet for ingen-treff-melding.",
             migrationBefore: `<Autosuggest
     label="Hjemsted"

@@ -4,7 +4,7 @@ import React, { useState, useMemo } from "react";
 import { Flex } from "@fremtind/jokul/flex";
 import { NavLink } from "@fremtind/jokul/nav-link";
 import { Search } from "@fremtind/jokul/search";
-import { Select } from "@fremtind/jokul/select";
+import { BETA_Select as Select } from "@fremtind/jokul/select";
 import { blogPosts } from "@/lib/blogPosts";
 import { BlogPostCard } from "@/components/BlogPostCard";
 import { ChipFilterList } from "@/components/ChipFilterList";
@@ -43,7 +43,7 @@ export default function BlogPage() {
 
     return (
         <Flex as="main" direction="column" gap="xl">
-            <NavLink href="/" back>Tilbake til forsiden</NavLink>
+            <NavLink href="/jokul" back>Tilbake til forsiden</NavLink>
             <h1>Blogg</h1>
             <p>Artikler om Jøkul — designsystemet til Fremtind. Tips, dybdeanalyser og god praksis for deg som bygger med komponentbiblioteket.</p>
 
@@ -60,13 +60,12 @@ export default function BlogPage() {
                         name="sort-blog"
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
-                        items={[
-                            { value: "newest", label: "Nyeste først" },
-                            { value: "oldest", label: "Eldste først" },
-                            { value: "az", label: "A–Å" },
-                            { value: "za", label: "Å–A" },
-                        ]}
-                    />
+                    >
+                        <option value="newest">Nyeste først</option>
+                        <option value="oldest">Eldste først</option>
+                        <option value="az">A–Å</option>
+                        <option value="za">Å–A</option>
+                    </Select>
                 </Flex>
                 <p className="muted">Kategori</p>
                 <ChipFilterList items={ALL_CATEGORIES} selected={activeCategory} onChange={setActiveCategory} />

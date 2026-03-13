@@ -66,8 +66,13 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Help viser en liten ?-knapp som åpner en flytenede hjelpetekst i et popover. Brukes til å gi kontekstuell hjelp ved skjemafelt uten å ta opp permanent plass i grensesnittet.",
-    notes:
+    warnings:
         "Help rendres som en knapp — ikke legg den inne i et annet interaktivt element. Bruk buttonText for en tilgjengelig skjermlesertekst.",
+    preview: (
+        <Help buttonText="Hjelp om personnummer" position="right">
+            Personnummeret ditt er et 11-sifret nummer som identifiserer deg i offentlige registre.
+        </Help>
+    ),
     props: [
         {
             name: "buttonText",
@@ -150,7 +155,7 @@ const doc: ComponentDoc = {
             preview: <LongContentPreview />,
         },
         {
-            title: "Migrering: iconPosition / showButtonText",
+            title: "Help viser ikke lenger tekst ved siden av ikonet",
             description: "iconPosition er utfaset fordi tekst ikke lenger vises. showButtonText er utfaset — bruk heller en vanlig Button ved siden av Help.",
             uses: ["button"],
             migrationBefore: `<Help buttonText="Hjelp" iconPosition="right" showButtonText>

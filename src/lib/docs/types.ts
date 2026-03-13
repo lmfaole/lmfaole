@@ -23,6 +23,8 @@ export interface ComponentExample {
     code: string;
     /** If set, this example is a migration guide. This field holds the deprecated "before" code, and `code` holds the replacement "after" code. */
     migrationBefore?: string;
+    /** Optional step-by-step instructions for complex migrations. Each string is a numbered action to take. */
+    migrationSteps?: string[];
     preview?: React.ReactNode;
     tags?: string[];
     /** IDs of other Jøkul components used in this example, for showing composition context */
@@ -43,7 +45,9 @@ export interface ComponentDoc {
     status?: "stable" | "beta" | "deprecated";
     tags: string[];
     description: string;
-    notes?: string | string[];
+    warnings?: string | string[];
+    /** Dedicated preview shown in the component card and page header. Falls back to examples[0].preview if omitted. */
+    preview?: React.ReactNode;
     props: PropDef[];
     subComponents?: SubComponentDoc[];
     examples: ComponentExample[];

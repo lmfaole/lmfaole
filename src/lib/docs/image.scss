@@ -1,0 +1,27 @@
+.image-preview {
+  aspect-ratio: 3 / 2;
+  display: block;
+  max-width: 37.5rem;
+  width: 100%;
+
+  .jkl-image {
+    height: 100%;
+    width: 100%;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  &--small {
+    max-width: 18.75rem;
+  }
+
+  &__caption,
+  figcaption {
+    color: var(--jkl-color-text-subdued);
+    font-size: var(--jkl-font-size-s);
+    margin-top: var(--jkl-spacing-xs);
+  }
+}

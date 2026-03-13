@@ -1,18 +1,24 @@
 "use client";
 
 import React, {useState} from "react";
-import {Button} from "@fremtind/jokul/button";
-import {Icon} from "@fremtind/jokul/icon";
+import {Expander} from "@fremtind/jokul/expander";
+import {CopyButton} from "./CopyButton";
 import "./code-block.scss";
 import {Card} from "@fremtind/jokul/card";
 import {Flex} from "@fremtind/jokul/flex";
 
-interface CodeBlockProps {
-    code: string;
-    title?: React.ReactNode | string;
-    language?: string;
-    hideCopyButton?: boolean;
-}
+const LANG_LABELS: Record<string, string> = {
+    tsx: "TSX",
+    ts: "TypeScript",
+    js: "JavaScript",
+    jsx: "JSX",
+    css: "CSS",
+    scss: "SCSS",
+    sh: "Shell",
+    html: "HTML",
+    json: "JSON",
+    code: "Code",
+};
 
 function detectLanguage(code: string): string {
     const trimmed = code.trim();
@@ -26,33 +32,58 @@ function detectLanguage(code: string): string {
     return "code";
 }
 
-export function CodeBlock({code, title = "Kode", language, hideCopyButton}: CodeBlockProps) {
-    const [copied, setCopied] = useState(false);
-    const lang = language ?? detectLanguage(code);
+interface CodeBlockProps {
+    code: string;
+    language?: string;
+    hideCopyButton?: boolean;
+    bare?: boolean;
+    collapsible?: boolean;
+}
 
-    const handleCopy = async () => {
-        await navigator.clipboard.writeText(code);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
+function CodeBlockContent({code, lang, hideCopyButton, collapsible}: {code: string; lang: string; hideCopyButton?: boolean; collapsible?: boolean}) {
+    const [open, setOpen] = useState(false);
+
+    if (collapsible) {
+        return (
+            <>
+                <Flex className="code-block__toolbar" alignItems="stretch">
+                    {!hideCopyButton && <CopyButton code={code.trim()}/>}
+                    <Expander open={open} onClick={() => setOpen(o => !o)} expandDirection="down" className="code-block__expander">
+                        <code>{LANG_LABELS[lang] ?? lang.toUpperCase()}</code>
+                    </Expander>
+                </Flex>
+                {open && <pre><code>{code.trim()}</code></pre>}
+            </>
+        );
+    }
 
     return (
-        <Card className="code-block" padding="l">
-            <Flex as="header" justifyContent="space-between" alignItems="center" gap="s" wrap="wrap">
-                <p>{title} <code>.{lang}</code></p>
-                {!hideCopyButton && <div className="code-block__copy">
-                    <Button
-                        variant="ghost"
-                        onClick={handleCopy}
-                        icon={<Icon>{copied ? "check" : "content_copy"}</Icon>}
-                        iconPosition="right"
-                        aria-label={copied ? "Kode kopiert" : "Kopier kode"}
-                    >
-                        {copied ? "Kopiert" : "Kopier"}
-                    </Button>
-                </div>}
-            </Flex>
-            <pre className="code-block__pre"><code>{code.trim()}</code></pre>
+        <>
+            <div className="code-block__toolbar">
+                <Flex justifyContent="space-between" alignItems="center" gap="s" wrap="wrap" style={{padding: "var(--jkl-spacing-s) var(--jkl-spacing-m)"}}>
+                    <code>{LANG_LABELS[lang] ?? lang.toUpperCase()}</code>
+                    {!hideCopyButton && <CopyButton code={code.trim()}/>}
+                </Flex>
+            </div>
+            <pre><code>{code.trim()}</code></pre>
+        </>
+    );
+}
+
+export function CodeBlock({code, language, hideCopyButton, bare, collapsible}: CodeBlockProps) {
+    const lang = language ?? detectLanguage(code);
+
+    if (bare) {
+        return (
+            <div className="code-block">
+                <CodeBlockContent code={code} lang={lang} hideCopyButton={hideCopyButton} collapsible={collapsible}/>
+            </div>
+        );
+    }
+
+    return (
+        <Card className="code-block">
+            <CodeBlockContent code={code} lang={lang} hideCopyButton={hideCopyButton} collapsible={collapsible}/>
         </Card>
     );
 }

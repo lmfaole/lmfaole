@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Icon } from "@fremtind/jokul/icon";
 import { Flex } from "@fremtind/jokul/flex";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+const ICON_NAMES = ["home", "person", "check_circle", "warning", "download", "arrow_forward", "settings", "favorite", "search", "shield"];
+
+function IconPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        if (!isHovered) { setStep(0); return; }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % ICON_NAMES.length), 1000);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    const visibleIcons = ICON_NAMES.slice(step, step + 5).concat(ICON_NAMES.slice(0, Math.max(0, step + 5 - ICON_NAMES.length)));
+    return (
+        <Flex gap="m" wrap="wrap" alignItems="center">
+            {visibleIcons.map((name) => <Icon key={name}>{name}</Icon>)}
+        </Flex>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "icon",
@@ -10,10 +32,8 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["ikon", "media"],
     description: "Icon rendrer Material Symbols-ikoner. Gi navnet på ikonet som child-tekst.",
-    notes: [
-    "Bruk alltid aria-label eller ledsagende tekst hvis ikonet er eneste indikasjon på en handling.",
-    "Bruk Icon kun for dekorasjon eller visuell støtte — ikke som primær informasjonsformidler.",
-],
+    warnings: "Et ikon uten ledsagende tekst må ha aria-label — ellers er det usynlig for skjermlesere.",
+    preview: <IconPreview />,
     props: [
         { name: "children", type: "string", required: true, source: "react", status: "stable", description: 'Material Symbol-navn, f.eks. "arrow_forward".' },
         { name: "bold", type: "boolean", required: false, source: "react", status: "stable", description: "Tykkere strekbredde." },
@@ -59,7 +79,7 @@ const doc: ComponentDoc = {
             ),
         },
         {
-            title: "Migrering: variant → automatisk størrelse",
+            title: "Ikonstørrelse arves nå fra omgivelsene",
             description: "variant-propen er utfaset. Størrelsen settes nå automatisk fra omgivelsenes fontstørrelse. Fjern variant og kontroller størrelsen med CSS font-size på et omsluttende element om nødvendig.",
             migrationBefore: `<Icon variant="small">home</Icon>
 <Icon variant="medium">home</Icon>`,

@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Checkbox } from "@fremtind/jokul/checkbox";
 import { Flex } from "@fremtind/jokul/flex";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function CheckboxPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+    useEffect(() => {
+        if (!isHovered) {
+            setStep(0);
+            return;
+        }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % 3), 1200);
+        return () => clearInterval(id);
+    }, [isHovered]);
+    return (
+        <Flex direction="column" gap="xs">
+            <Checkbox name="demo-preview" value="a" checked={step === 1} indeterminate={step === 2} onChange={() => {}}>Reiseforsikring</Checkbox>
+            <Checkbox name="demo-preview" value="b" checked={step === 0} onChange={() => {}}>Bilforsikring</Checkbox>
+            <Checkbox name="demo-preview" value="c" checked={step !== 1} indeterminate={step === 2} onChange={() => {}}>Innboforsikring</Checkbox>
+        </Flex>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "checkbox",
@@ -10,12 +32,9 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "skjemabygging", "tilgjengelighet"],
     description: "Checkbox brukes for binære valg i skjemaer, typisk for samtykke eller flervalgslister.",
-    notes: [
-    "Bruk Checkbox for skjemainnsending med binære valg.",
-    "Bruk ToggleSwitch for innstillinger som trer i kraft umiddelbart uten innsending.",
-    "Grupper flere Checkbox-er i FieldGroup med legend for tilgjengelighet.",
-],
+    warnings: "Bruk ToggleSwitch for innstillinger som trer i kraft umiddelbart — Checkbox er for skjemainnsending.",
     relatedIds: ["toggle-switch", "checkbox-panel"],
+    preview: <CheckboxPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Label-tekst." },
         { name: "name", type: "string", required: true, source: "native", status: "stable", description: "Skjemafeltets navn." },

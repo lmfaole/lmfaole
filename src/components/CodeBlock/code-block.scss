@@ -1,14 +1,27 @@
 .code-block {
-  --padding: var(--jkl-spacing-m);
-  position: relative;
+  font-family: "Fremtind Grotesk Mono", "Adjusted Courier New Fallback", monospace;
+  overflow: hidden;
 
-  &__pre {
+  &__toolbar {
+    border-block-end: 1px solid var(--jkl-color-border-subdued);
+  }
+
+  &__expander {
+    flex: 1;
+    justify-content: flex-end;
+    padding-inline: var(--jkl-spacing-m);
+  }
+
+  pre {
     margin: 0;
     overflow-x: auto;
+    padding: var(--jkl-spacing-m);
+  }
 
-    code {
-      max-width: none;
-      white-space: pre;
-    }
+  // When rendered without its own Card, bleed to parent card edges
+  &:not(.jkl-card) {
+    border-block-start: 1px solid var(--jkl-color-border-subdued);
+    margin-inline: calc(-1 * var(--jkl-spacing-m));
+    margin-block-end: calc(-1 * var(--jkl-spacing-m));
   }
 }

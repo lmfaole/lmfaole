@@ -1,8 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@fremtind/jokul/button";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
 
+const MODAL_STATES = [
+    { title: "Laster…", body: "Henter forsikringsdetaljer, vennligst vent.", primaryLabel: "Avbryt", secondaryLabel: null },
+    { title: "Forsikringsdetaljer", body: "Bilforsikring kasko — Månedspremie: 542 kr. Neste forfall 15. april 2026.", primaryLabel: "Endre dekning", secondaryLabel: "Lukk" },
+    { title: "Bekreft sletting", body: "Er du sikker på at du vil slette forsikringen? Handlingen kan ikke angres.", primaryLabel: "Slett forsikring", secondaryLabel: "Avbryt" },
+] as const;
+
 function ModalPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        if (!isHovered) { setStep(0); return; }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % 3), 2000);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    const state = MODAL_STATES[step];
+    return (
+        <div style={{ border: "1px solid var(--jkl-color-border-default)", borderRadius: "8px", padding: "var(--jkl-spacing-l)", maxWidth: "400px", background: "var(--jkl-color-background-default)", boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }}>
+            <strong style={{ display: "block", fontSize: "1.25em", marginBottom: "var(--jkl-spacing-s)" }}>{state.title}</strong>
+            <p style={{ margin: "0 0 var(--jkl-spacing-m)" }}>{state.body}</p>
+            <div style={{ display: "flex", gap: "var(--jkl-spacing-s)" }}>
+                <Button variant="primary">{state.primaryLabel}</Button>
+                {state.secondaryLabel && <Button variant="secondary">{state.secondaryLabel}</Button>}
+            </div>
+        </div>
+    );
+}
+
+function ModalBasicPreview() {
     return (
         <div
             style={{
@@ -86,11 +117,11 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Modal er en dialogboks som vises over resten av innholdet. Den brukes til å be om bekreftelse, vise viktig informasjon eller samle inn data uten å navigere bort fra siden.",
-    notes: [
-        "Bruk useModal() for å sette opp instansen og spre props på riktige elementer.",
-        "Modalen rendres i en portal via ReactDOM.createPortal — unngå å stile den ut fra parent-konteksten.",
-        "Bruk role='alertdialog' når brukeren ikke skal kunne lukke dialogen med Escape eller klikk utenfor.",
+    warnings: [
+        "Krev useModal()-hooken for å sette opp instansen og spre trigger- og dialog-props korrekt.",
+        "Bruk role='alertdialog' hvis brukeren ikke skal kunne lukke dialogen med Escape eller klikk utenfor.",
     ],
+    preview: <ModalPreview />,
     props: [
         {
             name: "title",
@@ -180,7 +211,7 @@ function ModalExample() {
         </>
     );
 }`,
-            preview: <ModalPreview />,
+            preview: <ModalBasicPreview />,
         },
         {
             title: "Alertdialog (ingen Escape/klikk utenfor)",

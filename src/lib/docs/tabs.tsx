@@ -1,7 +1,35 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Tabs, Tab, TabList, TabPanel } from "@fremtind/jokul/tabs";
 import { Flex } from "@fremtind/jokul/flex";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function TabsPreview() {
+    const isHovered = usePreviewHovered();
+    const [activeTab, setActiveTab] = useState(0);
+    useEffect(() => {
+        if (!isHovered) {
+            setActiveTab(0);
+            return;
+        }
+        setActiveTab(1);
+        const id = setInterval(() => setActiveTab(t => (t + 1) % 3), 1500);
+        return () => clearInterval(id);
+    }, [isHovered]);
+    return (
+        <Tabs key={activeTab} defaultTab={activeTab}>
+            <TabList>
+                <Tab>Oversikt</Tab>
+                <Tab>Detaljer</Tab>
+                <Tab>Historikk</Tab>
+            </TabList>
+            <TabPanel><p>Din bilforsikring er aktiv og fornyes automatisk.</p></TabPanel>
+            <TabPanel><p>Kasko — inkluderer tyveri og naturskade.</p></TabPanel>
+            <TabPanel><p>Ingen skademeldinger siste 12 måneder.</p></TabPanel>
+        </Tabs>
+    );
+}
 
 function TabsWithListener() {
     const [activeTab, setActiveTab] = useState(0);
@@ -30,11 +58,9 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "layout", "interaktiv"],
     description: "Tabs organiser innhold i faner der kun én fane vises om gangen.",
-    notes: [
-    "Bruk Tabs for å skjule innhold innenfor samme side — ikke for navigasjon mellom sider.",
-    "Faner bør ikke brukes hvis brukeren sannsynligvis trenger innhold fra flere faner samtidig.",
-],
+    warnings: "Bruk Tabs for å skjule innhold innenfor samme side — ikke for navigasjon mellom sider.",
     relatedIds: ["nav-link"],
+    preview: <TabsPreview />,
     props: [
         { name: "defaultTab", type: "number", required: false, source: "custom", status: "stable", default: "0", description: "Initialt aktiv fane (indeks)." },
         { name: "onChange", type: "(index: number) => void", required: false, source: "react", status: "stable", description: "Kalles ved faneskift." },

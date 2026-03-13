@@ -2,22 +2,20 @@
 
 import React from "react";
 import { Flex } from "@fremtind/jokul/flex";
-import { NavLink } from "@fremtind/jokul/nav-link";
 import { Link } from "@fremtind/jokul/link";
 import { useParams } from "next/navigation";
 import { getComponentDoc, getRelatedDocs } from "@/lib/componentDocs";
 import { ComponentCard } from "@/components/ComponentCard";
 import { Grid } from "@/components/Grid";
+import { CopyableCode } from "@/components/CopyableCode/CopyableCode";
 
 export default function ComponentLayout({ children }: { children: React.ReactNode }) {
-    const params = useParams();
-    const id = params.id as string;
+    const { id } = useParams<{ id: string }>();
     const doc = getComponentDoc(id);
     const related = getRelatedDocs(id);
 
     return (
         <Flex direction="column" gap="xl">
-            <NavLink href="/component" back>Tilbake til alle komponenter</NavLink>
             {children}
             {related.length > 0 && (
                 <>
@@ -33,7 +31,7 @@ export default function ComponentLayout({ children }: { children: React.ReactNod
                 <footer>
                     <p className="muted">
                         Importér fra{" "}
-                        <code>{doc.package}</code>
+                        <CopyableCode>{doc.package}</CopyableCode>
                     </p>
                     <p className="muted">
                         <Link href="https://jokul.fremtind.no/" external>

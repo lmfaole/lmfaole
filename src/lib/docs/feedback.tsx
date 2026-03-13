@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Feedback } from "@fremtind/jokul/feedback";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
 
 const SMILEY_OPTIONS = [
@@ -17,13 +18,41 @@ const RADIO_OPTIONS = [
 ];
 
 function FeedbackSmileyPreview() {
+    const isHovered = usePreviewHovered();
+    const ref = useRef<HTMLDivElement>(null);
+    const [step, setStep] = useState(-1);
+
+    useEffect(() => {
+        if (!isHovered) {
+            // deselect by clicking current selection again, or just remount via key
+            setStep(-1);
+            return;
+        }
+        setStep(0);
+        let i = 0;
+        const id = setInterval(() => {
+            i = (i + 1) % SMILEY_OPTIONS.length;
+            setStep(i);
+        }, 900);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    // Imperatively click the radio input for the current step
+    useEffect(() => {
+        if (step < 0 || !ref.current) return;
+        const radios = ref.current.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+        radios[step]?.click();
+    }, [step]);
+
     return (
-        <Feedback
-            type="smiley"
-            label="Hvordan var opplevelsen din?"
-            options={SMILEY_OPTIONS}
-            onSubmit={() => {}}
-        />
+        <div ref={ref}>
+            <Feedback
+                type="smiley"
+                label="Hvordan var opplevelsen din?"
+                options={SMILEY_OPTIONS}
+                onSubmit={() => {}}
+            />
+        </div>
     );
 }
 
@@ -59,10 +88,7 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Feedback er en komponent for å samle inn tilbakemeldinger fra brukere. Den støtter smileys og radioknapper, og kan utvides med et oppfølgingsspørsmål.",
-    notes: [
-        "Feedback er beregnet på å samle brukeropplevelse i produkter — ikke til skjemafeil.",
-        "Bruk onSubmit for å sende tilbakemeldingen til ditt eget API.",
-    ],
+    preview: <FeedbackSmileyPreview />,
     props: [
         {
             name: "type",

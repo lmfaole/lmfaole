@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FieldGroup } from "@fremtind/jokul/input-group";
 import { Checkbox } from "@fremtind/jokul/checkbox";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function FieldGroupPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        if (!isHovered) { setStep(0); return; }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % 3), 1200);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    // step 0: none, step 1: first, step 2: first+second
+    return (
+        <FieldGroup legend="Velg forsikringer">
+            <Checkbox name="fg" value="reise" checked={step >= 1} onChange={() => {}}>Reiseforsikring</Checkbox>
+            <Checkbox name="fg" value="bil" checked={step >= 2} onChange={() => {}}>Bilforsikring</Checkbox>
+            <Checkbox name="fg" value="hjem" checked={false} onChange={() => {}}>Innboforsikring</Checkbox>
+        </FieldGroup>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "field-group",
@@ -10,12 +32,9 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["skjema", "skjemabygging", "tilgjengelighet", "validering"],
     description: "FieldGroup grupperer relaterte skjemaelementer under en felles legend.",
-    notes: [
-    "Alltid bruk FieldGroup rundt grupper av avkrysningsbokser og radioknapper for tilgjengelighet.",
-    "legend-prop er påkrevd — den beskriver hva gruppen handler om for skjermlesere.",
-    "Bruk helpLabel og errorLabel på FieldGroup, ikke på hvert enkelt felt i gruppen.",
-],
+    warnings: "Grupper alltid Checkbox og RadioButton innenfor FieldGroup — uten det mangler skjermlesere kontekst for hva gruppen handler om.",
     relatedIds: ["checkbox", "radio-button"],
+    preview: <FieldGroupPreview />,
     props: [
         { name: "legend", type: "string", required: true, source: "custom", status: "stable", description: "Overskrift for gruppen." },
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Skjemaelementer i gruppen." },

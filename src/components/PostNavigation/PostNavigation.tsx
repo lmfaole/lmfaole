@@ -22,7 +22,7 @@ function PostCard({ post, label }: PostCardProps) {
         <Card padding="m" variant="outlined">
             {label && <small className="muted">{label}</small>}
             {!label && <Tag variant="info">{post.category}</Tag>}
-            <Link href={`/blog/${post.id}`}>{post.title}</Link>
+            <Link href={`/jokul/blog/${post.id}`}>{post.title}</Link>
             {label ? (
                 <PostMeta category={post.category} date={post.date} author={post.author} content={post.content} tags={post.tags} />
             ) : (

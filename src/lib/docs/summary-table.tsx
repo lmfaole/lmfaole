@@ -9,8 +9,22 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["tabell", "datavisning", "skjema"],
     description: "SummaryTable viser en oppsummering av nøkkel-verdi-par i tabellformat.",
-    notes: "Alltid sett caption for tilgjengelighet.",
+    warnings: "Alltid sett caption — uten det har skjermlesere ingen kontekst for hva tabellen inneholder.",
     relatedIds: ["description-list", "table"],
+    preview: (
+        <SummaryTable
+            caption="Oppsummering"
+            header={["Dekning", "Pris"]}
+            body={
+                <>
+                    <SummaryTableRow header="Bilforsikring" content="3 200 kr" />
+                    <SummaryTableRow header="Reiseforsikring" content="890 kr" />
+                    <SummaryTableRow header="Innboforsikring" content="1 100 kr" />
+                </>
+            }
+            footer={<SummaryTableRow header="Totalt" content="5 190 kr" />}
+        />
+    ),
     props: [
         { name: "header", type: "[string, string]", required: true, source: "custom", status: "stable", description: "Tuppel med to kolonneoverskrifter." },
         { name: "body", type: "React.ReactNode", required: true, source: "custom", status: "stable", description: "SummaryTableRow-elementer." },

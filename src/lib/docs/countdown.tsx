@@ -9,7 +9,9 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["animasjon", "tekst", "tilstandsstyring"],
     description: "Countdown viser en nedtelling fra et gitt antall millisekunder.",
-    notes: "Gi alltid kontekst rundt Countdown-komponenten.",
+    preview: (
+        <Countdown from={60 * 1000} />
+    ),
     props: [
         { name: "from", type: "number", required: true, source: "custom", status: "stable", description: "Antall millisekunder å telle ned fra." },
         { name: "isPaused", type: "boolean", required: false, source: "custom", status: "stable", default: "false", description: "Pause nedtellingen." },

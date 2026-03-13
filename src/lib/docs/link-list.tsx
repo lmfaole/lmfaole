@@ -9,8 +9,16 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "liste"],
     description: "LinkList viser en tematisk gruppert liste av lenker med en felles overskrift.",
-    notes: "Bruk LinkList.Link for lenker inne i komponenten for korrekt styling.",
+    warnings: "Bruk LinkList.Link for lenker inne i komponenten for korrekt styling.",
     relatedIds: ["link", "nav-link"],
+    preview: (
+        <LinkList label="Forsikringer">
+            <LinkList.Link href="#">Bilforsikring</LinkList.Link>
+            <LinkList.Link href="#">Reiseforsikring</LinkList.Link>
+            <LinkList.Link href="#">Innboforsikring</LinkList.Link>
+            <LinkList.Link href="#">Helseforsikring</LinkList.Link>
+        </LinkList>
+    ),
     props: [
         { name: "label", type: "string", required: true, source: "custom", status: "stable", description: "Overskrift for lenkegruppens seksjon." },
         { name: "hideLabel", type: "boolean", required: false, source: "custom", status: "stable", default: "false", description: "Skjuler overskriften visuelt." },

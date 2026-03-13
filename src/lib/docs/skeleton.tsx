@@ -14,15 +14,51 @@ import { Button } from "@fremtind/jokul/button";
 import { CardBasicPreview } from "./card";
 import { TableBasicPreview } from "./table";
 import { DescriptionListContactPreview } from "./description-list";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function SkeletonPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        if (!isHovered) { setStep(0); return; }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % 2), 2000);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    if (step === 1) {
+        return (
+            <div style={{ maxWidth: "320px" }}>
+                <Flex direction="column" gap="m">
+                    <p style={{ margin: 0, fontWeight: "bold" }}>Bilforsikring kasko</p>
+                    <p style={{ margin: 0 }}>Månedspremie: 542 kr</p>
+                    <Button variant="secondary" style={{ width: "8rem" }}>Se detaljer</Button>
+                </Flex>
+            </div>
+        );
+    }
+    return (
+        <SkeletonAnimation textDescription="Laster innhold…" style={{ maxWidth: "320px" }}>
+            <Flex direction="column" gap="m">
+                <SkeletonInput />
+                <SkeletonInput />
+                <SkeletonButton width="8rem" />
+            </Flex>
+        </SkeletonAnimation>
+    );
+}
 
 function SkeletonFormPreview() {
     return (
         <SkeletonAnimation textDescription="Laster skjema…" style={{ maxWidth: "24rem" }}>
-            <SkeletonInput />
-            <SkeletonInput />
-            <SkeletonTextArea />
-            <SkeletonButton width="8rem" />
+            <Flex direction="column" gap="m">
+                <SkeletonInput />
+                <SkeletonInput />
+                <SkeletonTextArea />
+                <SkeletonButton width="8rem" />
+            </Flex>
         </SkeletonAnimation>
     );
 }
@@ -145,9 +181,10 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Skeleton-komponenter bygger opp et innholdsskjelett som matcher layouten til det virkelige innholdet, og gir brukeren en visuell indikasjon på at innhold er på vei.",
-    notes:
+    warnings:
         "Wrap alltid Skeleton-komponenter i SkeletonAnimation for å få shimmering-animasjon og en tilgjengelig textDescription for skjermlesere. Bruk SkeletonElement for freeform rektangel-plassholdere.",
     relatedIds: ["loader", "feedback"],
+    preview: <SkeletonPreview />,
     props: [
         { name: "textDescription", type: "string", required: true, source: "aria", status: "stable", description: "Tilgjengelig beskrivelse for skjermlesere. Plasseres på SkeletonAnimation-wrapperen." },
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Skeleton-komponenter som skal animeres." },
@@ -206,10 +243,12 @@ const doc: ComponentDoc = {
             title: "Skjema",
             description: "SkeletonInput, SkeletonTextArea og SkeletonButton matcher vanlige skjemaelementer og gir et troverdig skjelett.",
             code: `<SkeletonAnimation textDescription="Laster skjema…" style={{ maxWidth: "24rem" }}>
-  <SkeletonInput />
-  <SkeletonInput />
-  <SkeletonTextArea />
-  <SkeletonButton width="8rem" />
+  <Flex direction="column" gap="m">
+    <SkeletonInput />
+    <SkeletonInput />
+    <SkeletonTextArea />
+    <SkeletonButton width="8rem" />
+  </Flex>
 </SkeletonAnimation>`,
             preview: <SkeletonFormPreview />,
         },

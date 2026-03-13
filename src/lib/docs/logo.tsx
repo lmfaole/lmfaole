@@ -9,7 +9,10 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["media", "ikon", "merkevare"],
     description: "Logo rendrer Fremtind-logoen som en SVG-komponent.",
-    notes: "Endre ikke logoens farger eller proporsjoner.",
+    warnings: "Endre ikke logoens farger eller proporsjoner.",
+    preview: (
+        <Logo />
+    ),
     props: [],
     examples: [
         {

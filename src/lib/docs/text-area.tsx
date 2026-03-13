@@ -1,6 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { TextArea } from "@fremtind/jokul/text-area";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function TextAreaPreview() {
+    const isHovered = usePreviewHovered();
+    const [value, setValue] = useState("");
+    const text = "Bilen min ble skadet i et trafikkuhell 15. mars. Jeg ønsker å melde inn en skade.";
+
+    useEffect(() => {
+        if (!isHovered) { setValue(""); return; }
+        let i = 0;
+        const id = setInterval(() => {
+            i++;
+            setValue(text.slice(0, i));
+            if (i >= text.length) clearInterval(id);
+        }, 80);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    return (
+        <TextArea
+            label="Beskriv hendelsen"
+            value={value}
+            onChange={() => {}}
+            rows={4}
+        />
+    );
+}
 
 const doc: ComponentDoc = {
     id: "text-area",
@@ -9,11 +36,8 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "skjemabygging"],
     description: "TextArea er et flerlinjers tekstinputfelt for lengre tekstinnhold.",
-    notes: [
-    "Bruk autoExpand for å la feltet vokse automatisk med innholdet.",
-    "Sett alltid label for tilgjengelighet.",
-],
     relatedIds: ["text-input"],
+    preview: <TextAreaPreview />,
     props: [
         { name: "label", type: "React.ReactNode", required: true, source: "custom", status: "stable", description: "Synlig label over tekstfeltet." },
         { name: "rows", type: "number", required: false, source: "native", status: "stable", default: "4", description: "Antall synlige linjer." },

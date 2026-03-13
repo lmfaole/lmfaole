@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SegmentedControl, SegmentedControlButton } from "@fremtind/jokul/segmented-control";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+const scValues = ["monthly", "yearly", "onetime"];
+
+function SegmentedControlPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+    useEffect(() => {
+        if (!isHovered) {
+            setStep(0);
+            return;
+        }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % scValues.length), 1200);
+        return () => clearInterval(id);
+    }, [isHovered]);
+    return (
+        <SegmentedControl legend="Velg betalingsfrekvens" onChange={() => {}}>
+            <SegmentedControlButton value="monthly" checked={step === 0} onChange={() => {}}>Månedlig</SegmentedControlButton>
+            <SegmentedControlButton value="yearly" checked={step === 1} onChange={() => {}}>Årlig</SegmentedControlButton>
+            <SegmentedControlButton value="onetime" checked={step === 2} onChange={() => {}}>Engangsbetaling</SegmentedControlButton>
+        </SegmentedControl>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "segmented-control",
@@ -9,8 +33,8 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "filter"],
     description: "SegmentedControl er en gruppe av knapper der kun ett alternativ kan velges om gangen.",
-    notes: "Bruk SegmentedControl for 2–5 gjensidig utelukkende valg.",
     relatedIds: ["radio-button"],
+    preview: <SegmentedControlPreview />,
     props: [
         { name: "legend", type: "string", required: true, source: "custom", status: "stable", description: "Tilgjengelig gruppenavn." },
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "SegmentedControlButton-elementer." },

@@ -1,6 +1,27 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { TextInput } from "@fremtind/jokul/text-input";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function TextInputPreview() {
+    const isHovered = usePreviewHovered();
+    const [value, setValue] = useState("");
+    const text = "Ole Jorgen Bakken";
+
+    useEffect(() => {
+        if (!isHovered) { setValue(""); return; }
+        let i = 0;
+        const id = setInterval(() => {
+            i++;
+            setValue(text.slice(0, i));
+            if (i >= text.length) clearInterval(id);
+        }, 120);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    return <TextInput label="Fullt navn" value={value} onChange={() => {}} />;
+}
 
 const doc: ComponentDoc = {
     id: "text-input",
@@ -9,11 +30,8 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "skjemabygging", "kontrollert"],
     description: "TextInput er en enkeltlinjers tekstinndatafelt. Komponenten inkluderer label, feilmelding og hjelpetekst i ett og håndterer tilgjengelighet automatisk — label er koblet til input via htmlFor/id. Alle skjema-primitiver i Jøkul følger samme API-mønster.",
-    notes: [
-    "Bruk alltid label-prop for tilgjengelighet — ikke bare placeholder.",
-    "Koble feilmeldinger via errorLabel og hjelp via helpLabel, eller bruk InputGroup for mer kontroll.",
-],
     relatedIds: ["button"],
+    preview: <TextInputPreview />,
     props: [
         {
             name: "label",
@@ -195,7 +213,7 @@ const doc: ComponentDoc = {
             ),
         },
         {
-            title: "Migrering: action → actionButton",
+            title: "Handlingsknappen i tekstfeltet sendes som element",
             description: "action-propen er utfaset. Bruk actionButton med et React-element — typisk en Button eller IconButton — i stedet.",
             uses: ["button"],
             migrationBefore: `<TextInput

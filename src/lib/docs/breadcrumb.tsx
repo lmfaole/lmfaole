@@ -9,8 +9,14 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "hierarki"],
     description: "Breadcrumb viser hvor brukeren er i nettstedets hierarki og gir snarveier tilbake til overordnede sider.",
-    notes: "Bruk Breadcrumb på sider som er mer enn ett nivå dypt.",
     relatedIds: ["nav-link", "link"],
+    preview: (
+        <Breadcrumb>
+            <BreadcrumbItem><a href="#">Hjem</a></BreadcrumbItem>
+            <BreadcrumbItem><a href="#">Forsikringer</a></BreadcrumbItem>
+            <BreadcrumbItem>Bilforsikring</BreadcrumbItem>
+        </Breadcrumb>
+    ),
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "BreadcrumbItem-elementer." },
     ],

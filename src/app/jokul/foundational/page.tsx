@@ -12,14 +12,14 @@ import { TagList } from "@/components/TagList";
 export default function FoundationalPage() {
     return (
         <Flex as="main" direction="column" gap="xl">
-            <NavLink href="/" back>Tilbake til forsiden</NavLink>
+            <NavLink href="/jokul" back>Tilbake til forsiden</NavLink>
             <h1>Grunnleggende konsepter</h1>
             <p>Fundamentene i Jøkul — typografi, farger og spacing. Les disse for å forstå designsystemets kjerneprinsipper.</p>
             <Grid columns={3} gap="l">
                 {foundationalPosts.map((post) => (
                     <Card key={post.id} padding="l">
                         <h2>
-                            <Link href={`/foundational/${post.id}`}>{post.title}</Link>
+                            <Link href={`/jokul/foundational/${post.id}`}>{post.title}</Link>
                         </h2>
                         <p>{post.excerpt}</p>
                         {post.tags.length > 0 && (

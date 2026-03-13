@@ -5,7 +5,7 @@ import {Flex} from "@fremtind/jokul/flex";
 import {NavLink} from "@fremtind/jokul/nav-link";
 import {Search} from "@fremtind/jokul/search";
 import {Chip} from "@fremtind/jokul/chip";
-import {Select} from "@fremtind/jokul/select";
+import {BETA_Select as Select} from "@fremtind/jokul/select";
 import {SegmentedControl, SegmentedControlButton} from "@fremtind/jokul/segmented-control";
 import {DescriptionDetail, DescriptionList, DescriptionTerm} from "@fremtind/jokul/description-list";
 import {Link} from "@fremtind/jokul/link";
@@ -95,7 +95,7 @@ export default function ComponentsPage() {
     if (!viewReady) {
         return (
             <Flex as="main" direction="column" gap="xl">
-                <NavLink href="/" back>Tilbake til forsiden</NavLink>
+                <NavLink href="/jokul" back>Tilbake til forsiden</NavLink>
                 <Flex direction="column" gap="s">
                     <h1>Komponentdokumentasjon</h1>
                     <p>
@@ -113,7 +113,7 @@ export default function ComponentsPage() {
 
     return (
         <Flex as="main" direction="column" gap="xl">
-            <NavLink href="/" back>Tilbake til forsiden</NavLink>
+            <NavLink href="/jokul" back>Tilbake til forsiden</NavLink>
             <Flex direction="column" gap="s">
                 <h1>Komponentdokumentasjon</h1>
                 <p>
@@ -154,13 +154,12 @@ export default function ComponentsPage() {
                                 name="sort-components"
                                 value={sortBy}
                                 onChange={(e) => setSortBy(e.target.value)}
-                                items={[
-                                    {value: "az", label: "A–Å"},
-                                    {value: "za", label: "Å–A"},
-                                    {value: "most-props", label: "Flest props"},
-                                    {value: "most-examples", label: "Flest eksempler"},
-                                ]}
-                            />
+                            >
+                                <option value="az">A–Å</option>
+                                <option value="za">Å–A</option>
+                                <option value="most-props">Flest props</option>
+                                <option value="most-examples">Flest eksempler</option>
+                            </Select>
                         </Flex>
                         <ChipFilterList items={ALL_CATEGORIES} selected={activeCategory} onChange={setActiveCategory} />
                         <Flex gap="xs" wrap="wrap" alignItems="center">
@@ -195,13 +194,12 @@ export default function ComponentsPage() {
                             name="sort-props"
                             value={propSortBy}
                             onChange={(e) => setPropSortBy(e.target.value)}
-                            items={[
-                                {value: "az", label: "A–Å"},
-                                {value: "za", label: "Å–A"},
-                                {value: "most-used", label: "Mest brukt"},
-                                {value: "least-used", label: "Minst brukt"},
-                            ]}
-                        />
+                        >
+                            <option value="az">A–Å</option>
+                            <option value="za">Å–A</option>
+                            <option value="most-used">Mest brukt</option>
+                            <option value="least-used">Minst brukt</option>
+                        </Select>
                     </Flex>
                     <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
                         {(["custom", "native", "react", "aria"] as PropSource[]).map((src) => {
@@ -248,7 +246,7 @@ export default function ComponentsPage() {
                                 </DescriptionTerm>
                                 {entry.usedBy.map((comp) => (
                                     <DescriptionDetail key={comp.id}><Link
-                                        href={`/component/${comp.id}`}>{comp.name}</Link></DescriptionDetail>
+                                        href={`/jokul/component/${comp.id}`}>{comp.name}</Link></DescriptionDetail>
                                 ))}
                             </React.Fragment>
                         ))}

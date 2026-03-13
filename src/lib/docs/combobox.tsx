@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Combobox } from "@fremtind/jokul/combobox";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
 
 const LANGUAGE_ITEMS = [
@@ -11,12 +13,32 @@ const LANGUAGE_ITEMS = [
 ];
 
 function ComboboxBasicPreview() {
+    const isHovered = usePreviewHovered();
     const [selected, setSelected] = useState<Array<{ value: string; label: string }>>([]);
+
+    useEffect(() => {
+        if (!isHovered) {
+            setSelected([]);
+            return;
+        }
+        // Select items one by one with a delay
+        const picks = [
+            { value: "no", label: "Norsk" },
+            { value: "en", label: "Engelsk" },
+        ];
+        const timers: ReturnType<typeof setTimeout>[] = [];
+        picks.forEach((item, i) => {
+            timers.push(setTimeout(() => {
+                setSelected(prev => [...prev, item]);
+            }, 600 + i * 900));
+        });
+        return () => timers.forEach(clearTimeout);
+    }, [isHovered]);
 
     return (
         <Combobox
             label="Språk"
-            name="languages"
+            name="languages-preview"
             items={LANGUAGE_ITEMS}
             value={selected}
             onChange={(e) => setSelected(e.target.selectedOptions)}
@@ -63,12 +85,8 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Combobox er et flervalg-skjemaelement med søkefunksjon. Valgte elementer vises som chips og kan fjernes enkeltvis.",
-    notes: [
-        "Combobox er for flervalg med søk — bruk Select for enkeltvalg uten søk.",
-        "Valgte elementer vises som chips og kan fjernes enkeltvis av brukeren.",
-        "Bruk onChange for å holde rede på valgte verdier i kontrollert modus.",
-    ],
     relatedIds: ["select", "autosuggest"],
+    preview: <ComboboxBasicPreview />,
     props: [
         {
             name: "label",

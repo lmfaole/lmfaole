@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { RadioButton, RadioButtonGroup } from "@fremtind/jokul/radio-button";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+const radioValues = ["bil", "reise", "hjem"];
+
+function RadioButtonPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+    useEffect(() => {
+        if (!isHovered) {
+            setStep(0);
+            return;
+        }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % radioValues.length), 1200);
+        return () => clearInterval(id);
+    }, [isHovered]);
+    return (
+        <RadioButtonGroup legend="Velg forsikringstype" name="radio-preview" value={radioValues[step]} onChange={() => {}}>
+            <RadioButton value="bil">Bilforsikring</RadioButton>
+            <RadioButton value="reise">Reiseforsikring</RadioButton>
+            <RadioButton value="hjem">Innboforsikring</RadioButton>
+        </RadioButtonGroup>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "radio-button",
@@ -9,11 +33,9 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "skjemabygging", "tilgjengelighet"],
     description: "RadioButton og RadioButtonGroup brukes for enovalgslister.",
-    notes: [
-    "Bruk alltid RadioButtonGroup som wrapper — aldri stående alene.",
-    "RadioButtonGroup krever name-prop for riktig skjemainnsending og tilgjengelighet.",
-],
+    warnings: "Aldri bruk RadioButton uten RadioButtonGroup — den er ikke tilgjengelig uten riktig name og grouping.",
     relatedIds: ["checkbox", "radio-panel"],
+    preview: <RadioButtonPreview />,
     props: [
         { name: "legend", type: "string", required: true, source: "custom", status: "stable", description: "Overskrift for gruppen (på RadioButtonGroup)." },
         { name: "name", type: "string", required: false, source: "native", status: "stable", description: "Skjemafeltets navn." },
@@ -82,7 +104,7 @@ const doc: ComponentDoc = {
             ),
         },
         {
-            title: "Migrering: label → children",
+            title: "Radioknapp-tekst sendes nå som children",
             description: "label-propen på RadioButton er utfaset. Bruk children (tekst som barn av komponenten) i stedet.",
             migrationBefore: `<RadioButton value="basic" label="Basis" />`,
             code: `<RadioButton value="basic">Basis</RadioButton>`,

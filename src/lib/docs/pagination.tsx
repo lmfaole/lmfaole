@@ -1,6 +1,22 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Pagination } from "@fremtind/jokul/pagination";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function PaginationAnimatedPreview() {
+    const isHovered = usePreviewHovered();
+    const [page, setPage] = useState(1);
+
+    useEffect(() => {
+        if (!isHovered) { setPage(1); return; }
+        setPage(2);
+        const id = setInterval(() => setPage(p => p >= 5 ? 1 : p + 1), 800);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    return <Pagination currentPage={page} numberOfPages={8} onPageChange={setPage} />;
+}
 
 function PaginationPreview() {
     const [page, setPage] = useState(3);
@@ -24,10 +40,8 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "interaktiv", "datavisning", "liste"],
     description: "Pagination brukes til å dele opp lange lister i sider.",
-    notes: [
-    "Oppdater currentPage-state i onPageChange-handler.",
-    "Pagination er utelukkende kontrollert — du må holde rede på gjeldende side selv.",
-],
+    warnings: "Pagination er fullt kontrollert — du er ansvarlig for å oppdatere currentPage i onPageChange.",
+    preview: <PaginationAnimatedPreview />,
     props: [
         { name: "currentPage", type: "number", required: true, source: "custom", status: "stable", description: "Gjeldende sidenummer (1-basert)." },
         { name: "numberOfPages", type: "number", required: true, source: "custom", status: "stable", description: "Totalt antall sider." },

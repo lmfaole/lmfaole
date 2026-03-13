@@ -1,7 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Message } from "@fremtind/jokul/message";
 import { Flex } from "@fremtind/jokul/flex";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+const MESSAGE_VARIANTS = ["info", "success", "warning", "error"] as const;
+const MESSAGE_TEXTS = [
+    "Forsikringen din fornyes automatisk 1. januar 2025.",
+    "Endringene dine ble lagret.",
+    "Du har ikke lagret de siste endringene.",
+    "Noe gikk galt. Prøv igjen om litt.",
+];
+
+function MessagePreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        if (!isHovered) { setStep(0); return; }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % 4), 1500);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    return (
+        <Message variant={MESSAGE_VARIANTS[step]}>
+            {MESSAGE_TEXTS[step]}
+        </Message>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "message",
@@ -10,8 +37,9 @@ const doc: ComponentDoc = {
     category: "Tilbakemelding",
     tags: ["feedback", "tilgjengelighet", "validering"],
     description: "Message viser kontekstuell informasjon, advarsler, suksessmeldinger og feilmeldinger til brukeren. Komponenten er tilgjengelig ut av boksen med riktig role og aria-attributter for alle varianter. Bruk riktig variant for å kommunisere alvorlighetsgraden av meldingen.",
-    notes: "Ikke bruk Message for inline skjemafeil — bruk errorLabel på skjemakomponentene i stedet. Message passer best for meldinger som gjelder hele skjemaet eller siden, ikke enkeltfelt.",
+    warnings: "Ikke bruk Message for inline skjemafeil — bruk errorLabel på skjemakomponentene i stedet. Message passer best for meldinger som gjelder hele skjemaet eller siden, ikke enkeltfelt.",
     relatedIds: ["tag"],
+    preview: <MessagePreview />,
     props: [
         { name: "variant", type: '"info" | "success" | "warning" | "error"', required: false, source: "custom", status: "stable", default: '"info"', description: "info: nøytral informasjon eller tips. success: bekreftelse på at noe gikk bra. warning: viktig informasjon brukeren bør lese. error: noe gikk galt og brukeren må gjøre noe." },
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Meldingsteksten." },

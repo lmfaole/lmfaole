@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@fremtind/jokul/button";
 import { Icon } from "@fremtind/jokul/icon";
 import { Flex } from "@fremtind/jokul/flex";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function ButtonPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+    useEffect(() => {
+        if (!isHovered) {
+            setStep(0);
+            return;
+        }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % 4), 1200);
+        return () => clearInterval(id);
+    }, [isHovered]);
+    return (
+        <Flex gap="s" wrap="wrap">
+            <Button variant={step === 0 ? "primary" : "secondary"}>Lagre endringer</Button>
+            <Button variant={step === 1 ? "primary" : "secondary"}>Avbryt</Button>
+            <Button variant={step === 2 ? "primary" : "secondary"}>Slett</Button>
+            <Button variant={step === 3 ? "primary" : "secondary"}>Vis mer</Button>
+        </Flex>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "button",
@@ -11,12 +34,9 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["knapp", "interaktiv", "skjema"],
     description: "Button brukes til å utløse handlinger. Knapper er det primære interaksjonselementet og skal alltid kommunisere hva som skjer når brukeren trykker på dem. Velg variant basert på handlingens prioritet — bruk én primary-knapp per kontekst og reserver ghost for lavprioriterte handlinger.",
-    notes: [
-    "Ikke bruk Button til navigasjon — bruk Link eller NavLink i stedet.",
-    "En knapp skal alltid ha en tydelig, handlingsrettet label. Unngå «Klikk her» eller «Send» uten kontekst.",
-    "Bruk én primary-knapp per kontekst. Reserver ghost for lavprioriterte handlinger.",
-],
+    warnings: "Ikke bruk Button til navigasjon — bruk Link eller NavLink i stedet.",
     relatedIds: ["text-input", "toggle-switch", "icon-button", "icon"],
+    preview: <ButtonPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekstinnholdet i knappen." },
         { name: "variant", type: '"primary" | "secondary" | "ghost" | "tertiary"', required: false, source: "react", status: "stable", default: '"secondary"', description: "Visuell prioritet." },
@@ -31,8 +51,14 @@ const doc: ComponentDoc = {
     ],
     examples: [
         {
+            title: "Primær handling",
+            description: "Standard bruk — én primary-knapp per kontekst for den viktigste handlingen.",
+            code: `<Button variant="primary">Send inn søknad</Button>`,
+            preview: <Button variant="primary">Send inn søknad</Button>,
+        },
+        {
             title: "Varianter",
-            description: "Bruk primary for den viktigste handlingen. secondary og ghost brukes for støttehandlinger.",
+            description: "Bruk primary for den viktigste handlingen. secondary og ghost for støttehandlinger. tertiary for lavprioriterte lenke-lignende handlinger.",
             code: `<Flex gap="s" wrap="wrap">
   <Button variant="primary">Lagre endringer</Button>
   <Button variant="secondary">Avbryt</Button>
@@ -78,11 +104,16 @@ const doc: ComponentDoc = {
             ),
         },
         {
-            title: "Migrering: iconLeft / iconRight → icon",
+            title: "Ikonknapper bruker nå én icon-prop",
             description: "iconLeft og iconRight er utfaset. Bruk icon-propen med en Icon-komponent, og styr plasseringen med iconPosition.",
             uses: ["icon"],
             migrationBefore: `<Button iconLeft={<Icon>add</Icon>}>Ny forsikring</Button>
 <Button iconRight={<Icon>arrow_forward</Icon>}>Se alle</Button>`,
+            migrationSteps: [
+                "Fjern iconLeft / iconRight-propen.",
+                "Legg til icon-propen med samme Icon-komponent som verdi.",
+                "Vil du ha ikonet til høyre? Legg til iconPosition=\"right\".",
+            ],
             code: `<Button icon={<Icon>add</Icon>}>Ny forsikring</Button>
 <Button icon={<Icon>arrow_forward</Icon>} iconPosition="right">Se alle</Button>`,
             preview: (

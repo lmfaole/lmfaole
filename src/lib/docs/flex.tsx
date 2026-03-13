@@ -39,8 +39,16 @@ const doc: ComponentDoc = {
     category: "Layout",
     tags: ["layout", "responsiv"],
     description: "Flex er den primære layout-primitiven i Jøkul. Den lar deg bygge flexbox-layouts med Jøkuls spacing-skala for gap, uten å skrive CSS. Komponenten rendres som div som standard, men kan rendres som et hvilket som helst HTML-element via as-proppen.",
-    notes: "Flex er ikke ment å erstatte alle layout-behov. For todimensjonale layouts, bruk CSS Grid.",
+    warnings: "Flex er ikke ment å erstatte alle layout-behov. For todimensjonale layouts, bruk CSS Grid.",
     relatedIds: ["button", "tag"],
+    preview: (
+        <Flex gap="s" wrap="wrap" alignItems="center">
+            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-focus)", borderRadius: "4px" }} />
+            <div style={{ width: 80, height: 48, background: "var(--jkl-color-background-info)", borderRadius: "4px" }} />
+            <div style={{ width: 64, height: 48, background: "var(--jkl-color-background-success)", borderRadius: "4px" }} />
+            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-warning)", borderRadius: "4px" }} />
+        </Flex>
+    ),
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet som skal layoutes." },
         { name: "direction", type: '"row" | "column" | "row-reverse" | "column-reverse"', required: false, source: "react", status: "stable", default: '"row"', description: "Retningen barn-elementene plasseres." },

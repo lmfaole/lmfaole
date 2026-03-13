@@ -1,7 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ToastProvider, useToast } from "@fremtind/jokul/toast";
 import { Button } from "@fremtind/jokul/button";
+import { SuccessIcon, InfoIcon, WarningIcon, ErrorIcon } from "@fremtind/jokul/icon";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+const VARIANTS = [
+    { key: "success", icon: <SuccessIcon className="jkl-toast__icon" />, title: "Endringer lagret", body: "Forsikringen din er oppdatert." },
+    { key: "info",    icon: <InfoIcon className="jkl-toast__icon" />,    title: "Informasjon",      body: "Skjemaet er under vedlikehold frem til klokken 14." },
+    { key: "warning", icon: <WarningIcon className="jkl-toast__icon" />, title: "Advarsel",         body: "Du har ikke lagret de siste endringene." },
+    { key: "error",   icon: <ErrorIcon className="jkl-toast__icon" />,   title: "Feil",             body: "Noe gikk galt. Prøv igjen om litt." },
+] as const;
+
+function ToastMockPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        if (!isHovered) { setStep(0); return; }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % VARIANTS.length), 1800);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    const v = VARIANTS[step];
+    return (
+        <div data-theme="light" style={{ display: "contents" }}>
+            <div className={`jkl-toast jkl-toast--${v.key}`} style={{ display: "flex", gap: "var(--jkl-spacing-xs)" }}>
+                {v.icon}
+                <div className="jkl-toast__content">
+                    <p className="jkl-toast__title">{v.title}</p>
+                    <p className="jkl-toast__message">{v.body}</p>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 function ToastTrigger() {
     const { add } = useToast();
@@ -25,12 +59,8 @@ function ToastVariantsTrigger() {
     return (
         <div style={{ display: "flex", gap: "var(--jkl-spacing-s)", flexWrap: "wrap" }}>
             <Button onClick={() => add("Info-melding", { variant: "info" })}>Info</Button>
-            <Button onClick={() => add("Handlingen ble fullført!", { variant: "success" })}>
-                Suksess
-            </Button>
-            <Button onClick={() => add("Vær oppmerksom på dette", { variant: "warning" })}>
-                Advarsel
-            </Button>
+            <Button onClick={() => add("Handlingen ble fullført!", { variant: "success" })}>Suksess</Button>
+            <Button onClick={() => add("Vær oppmerksom på dette", { variant: "warning" })}>Advarsel</Button>
             <Button onClick={() => add("Noe gikk galt", { variant: "error" })}>Feil</Button>
         </div>
     );
@@ -51,10 +81,7 @@ function ToastActionTrigger() {
             onClick={() =>
                 add("Endringer lagret", {
                     variant: "success",
-                    action: {
-                        label: "Angre",
-                        onClick: () => console.log("Angret"),
-                    },
+                    action: { label: "Angre", onClick: () => console.log("Angret") },
                 })
             }
         >
@@ -80,12 +107,12 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Toast er en midlertidig varslingskomponent som vises til brukeren etter en handling. Den forsvinner automatisk etter en stund og kan inneholde en handling.",
-    notes: [
-        "Wrap appen i ToastProvider og bruk useToast() for å vise toasts.",
-        "useToast() må kalles inne i en komponent som er nested under ToastProvider.",
+    warnings: [
+        "Wrap appen i ToastProvider — useToast() vil kaste en feil hvis det kalles utenfor.",
         "Toast forsvinner automatisk — ikke bruk den for kritisk informasjon som krever brukerhandling.",
     ],
     relatedIds: ["message"],
+    preview: <ToastMockPreview />,
     props: [
         {
             name: "placement (ToastProvider)",

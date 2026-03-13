@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { Menu, MenuItem, MenuItemCheckbox, MenuDivider } from "@fremtind/jokul/menu";
 import { Button } from "@fremtind/jokul/button";
@@ -57,11 +58,17 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Menu er en dropdown-meny som åpnes av et trigger-element. Den støtter vanlige valg, separatorer og avkrysningselementer.",
-    notes: [
-        "Menu er en dropdown-meny for handlinger, ikke for navigasjon.",
-        "Bruk Menu.Trigger for å koble menyen til et element — standard er en knapp.",
-        "Menyen lukkes automatisk etter valg og ved Escape-tasten.",
-    ],
+    preview: (
+        <div style={{ display: "inline-flex", flexDirection: "column", gap: "4px", minWidth: "160px" }}>
+            <Button variant="secondary" icon={<Icon>more_vert</Icon>}>Handlinger</Button>
+            <ul style={{ background: "var(--jkl-color-background-default)", border: "1px solid var(--jkl-color-border-default)", borderRadius: "4px", padding: "4px 0", margin: 0, listStyle: "none" }}>
+                <li style={{ padding: "10px 16px" }}>Rediger</li>
+                <li style={{ padding: "10px 16px" }}>Dupliser</li>
+                <li style={{ height: "1px", background: "var(--jkl-color-border-default)", margin: "4px 0" }} />
+                <li style={{ padding: "10px 16px", color: "var(--jkl-color-text-negative)" }}>Slett</li>
+            </ul>
+        </div>
+    ),
     props: [
         {
             name: "triggerElement",

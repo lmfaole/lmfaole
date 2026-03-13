@@ -8,14 +8,13 @@ import { getFoundationalPost } from "@/lib/foundationalPosts";
 import { useParams } from "next/navigation";
 
 export default function FoundationalPostLayout({ children }: { children: React.ReactNode }) {
-    const params = useParams();
-    const id = params.id as string;
+    const { id } = useParams<{ id: string }>();
 
     const post = getFoundationalPost(id);
 
     return (
         <Flex direction="column" gap="xl">
-            <NavLink href="/foundational" back>Tilbake til grunnleggende konsepter</NavLink>
+            <NavLink href="/jokul/foundational" back>Tilbake til grunnleggende konsepter</NavLink>
             {children}
             {post?.resources && post.resources.length > 0 && (
                 <PostResources resources={post.resources} />

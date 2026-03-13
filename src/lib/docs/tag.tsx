@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Tag } from "@fremtind/jokul/tag";
 import { Flex } from "@fremtind/jokul/flex";
 import { CardDetailPreview } from "./card";
 import { FlexCardGridPreview } from "./flex";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+const TAG_VARIANTS = ["success", "warning", "error", "info", "neutral"] as const;
+const TAG_LABELS = ["Aktiv", "Utløper snart", "Kansellert", "Ny", "Standard"];
+
+function TagPreview() {
+    const isHovered = usePreviewHovered();
+    const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        if (!isHovered) { setStep(0); return; }
+        setStep(1);
+        const id = setInterval(() => setStep(s => (s + 1) % 5), 1200);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    return (
+        <Flex gap="xs" wrap="wrap">
+            {TAG_VARIANTS.map((variant, i) => (
+                <Tag key={variant} variant={variant} style={i === step ? { fontWeight: "bold" } : undefined}>
+                    {TAG_LABELS[i]}
+                </Tag>
+            ))}
+        </Flex>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "tag",
@@ -12,8 +38,9 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["tekst", "datavisning", "feedback"],
     description: "Tag brukes til å vise kategorier, statuser og etiketter. De er kun visuelle elementer — ikke bruk Tag som knapper eller lenker. For klikkbare filtre, bruk Chip-komponenten i stedet.",
-    notes: "Tags er dekorative og ikke interaktive. Sørg for at taggteksten gir mening uten ekstra kontekst.",
+    warnings: "Tags er dekorative og ikke interaktive. Sørg for at taggteksten gir mening uten ekstra kontekst.",
     relatedIds: ["message"],
+    preview: <TagPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Etikettteksten. Hold den kort — maks 3–4 ord." },
         { name: "variant", type: '"neutral" | "info" | "success" | "warning" | "error"', required: false, source: "react", status: "stable", default: '"neutral"', description: "Fargevarianten." },

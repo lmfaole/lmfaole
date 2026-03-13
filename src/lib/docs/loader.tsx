@@ -13,12 +13,15 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Loader viser en spinner-animasjon mens data hentes eller en operasjon pågår. Gi alltid textDescription for skjermlesere.",
-    notes: [
-        "Bruk delay-prop for å unngå flimmer ved raske operasjoner.",
-        "Bruk inline-variant for å vise lasteren som del av tekst eller knapper.",
-        "Sett alltid textDescription for skjermlesere.",
-    ],
+    warnings: "Bruk delay-prop for å unngå flimmer ved operasjoner under ~300ms — en loader som blinker er verre enn ingen loader.",
     relatedIds: ["skeleton", "button", "feedback"],
+    preview: (
+        <Flex gap="l" alignItems="center">
+            <Loader variant="small" textDescription="Laster" />
+            <Loader variant="medium" textDescription="Laster" />
+            <Loader variant="large" textDescription="Laster" />
+        </Flex>
+    ),
     props: [
         { name: "textDescription", type: "string", required: true, source: "aria", status: "stable", description: "Tilgjengelig beskrivelse for skjermlesere." },
         { name: "variant", type: '"small" | "medium" | "large"', required: false, source: "custom", status: "stable", default: '"medium"', description: "Størrelse på spinner-animasjonen." },

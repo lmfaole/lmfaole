@@ -54,11 +54,15 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Popover er en flytende informasjonsboks som vises ved siden av et trigger-element. Den brukes til kontekstuell informasjon og handlinger som ikke krever en full modal.",
-    notes: [
-        "Popover er en compound component: Popover.Trigger rendrer som en knapp som standard.",
-        "Bruk asChild på Popover.Trigger for å merge trigger-props inn i et eksisterende element.",
-        "Popover lukkes automatisk ved klikk utenfor og Escape-tasten.",
-    ],
+    warnings: "Bruk asChild på Popover.Trigger for å merge trigger-props inn i et eksisterende element uten å introdusere et ekstra DOM-element.",
+    preview: (
+        <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-start", gap: "8px" }}>
+            <div style={{ background: "var(--jkl-color-background-default)", border: "1px solid var(--jkl-color-border-default)", borderRadius: "4px", padding: "var(--jkl-spacing-s) var(--jkl-spacing-m)", minWidth: "200px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}>
+                <p style={{ margin: 0, fontSize: "0.9em" }}>Forsikringen gjelder for alle i husstanden og dekker ulykker 24/7.</p>
+            </div>
+            <button style={{ padding: "8px 16px", border: "1px solid var(--jkl-color-border-default)", borderRadius: "4px", background: "var(--jkl-color-background-default)" }}>Mer info</button>
+        </div>
+    ),
     props: [
         {
             name: "children",

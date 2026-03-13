@@ -1,9 +1,8 @@
 import React from "react";
-import {Flex} from "@fremtind/jokul/flex";
-import {Icon} from "@fremtind/jokul/icon";
 import {Tag} from "@fremtind/jokul/tag";
 import {CodeBlock} from "@/components/CodeBlock";
 import type {ComponentExample} from "@/lib/docs/types";
+import "./migration-example.scss";
 
 interface MigrationExampleProps {
     example: ComponentExample & { migrationBefore: string };
@@ -11,24 +10,31 @@ interface MigrationExampleProps {
 
 export function MigrationExample({example}: MigrationExampleProps) {
     return (
-        <Flex direction="column" gap="m">
-            <Flex direction="column" gap="xs">
-                <Flex gap="s" alignItems="center">
-                    <h3>{example.title}</h3>
-                    <Tag variant="warning">Utfaset</Tag>
-                </Flex>
-                {example.description && <p>{example.description}</p>}
-            </Flex>
-            <Flex wrap="wrap">
-                <CodeBlock code={example.migrationBefore} hideCopyButton title={<Tag variant="error">
-                    <Icon>close</Icon>
-                    <span>Før</span>
-                </Tag>}/>
-                <CodeBlock code={example.code} title={<Tag variant="success">
-                    <Icon>check</Icon>
-                    <span>Etter</span>
-                </Tag>}/>
-            </Flex>
-        </Flex>
+        <div className="migration-example">
+            <header className="migration-example__header">
+                <h3>{example.title}</h3>
+                <Tag variant="warning">Utfaset</Tag>
+            </header>
+
+            {example.description && <p className="small muted">{example.description}</p>}
+
+            <ol className="migration-example__steps">
+                <li className="migration-example__step">
+                    <span className="migration-example__step-label">Finn denne koden</span>
+                    <CodeBlock code={example.migrationBefore} hideCopyButton/>
+                </li>
+
+                {example.migrationSteps && example.migrationSteps.map((step, i) => (
+                    <li key={i} className="migration-example__step migration-example__step--instruction">
+                        <span className="migration-example__step-label muted">{step}</span>
+                    </li>
+                ))}
+
+                <li className="migration-example__step">
+                    <span className="migration-example__step-label">Erstatt med dette</span>
+                    <CodeBlock code={example.code}/>
+                </li>
+            </ol>
+        </div>
     );
 }

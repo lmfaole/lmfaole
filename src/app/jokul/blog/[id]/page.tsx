@@ -3,18 +3,18 @@ import React from "react";
 import { PostArticle } from "@/components/PostArticle";
 import { NotFound } from "@/components/NotFound";
 import { useParams } from "next/navigation";
-import { getFoundationalPost } from "@/lib/foundationalPosts";
+import { getBlogPost } from "@/lib/blogPosts";
 
-export default function FoundationalPostPage() {
-    const params = useParams();
-    const post = getFoundationalPost(params.id as string);
+export default function PostPage() {
+    const { id } = useParams<{ id: string }>();
+    const post = getBlogPost(id);
 
     if (!post) {
         return (
             <NotFound
                 message="Fant ikke innlegget"
-                backHref="/foundational"
-                backLabel="Tilbake til grunnleggende konsepter"
+                backHref="/"
+                backLabel="Tilbake til forsiden"
             />
         );
     }

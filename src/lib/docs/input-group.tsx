@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { InputGroup, FieldGroup } from "@fremtind/jokul/input-group";
 import { TextInput } from "@fremtind/jokul/text-input";
 import { Checkbox } from "@fremtind/jokul/checkbox";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function InputGroupPreview() {
+    const isHovered = usePreviewHovered();
+    const [value, setValue] = useState("");
+    const text = "1 500";
+
+    useEffect(() => {
+        if (!isHovered) { setValue(""); return; }
+        let i = 0;
+        const id = setInterval(() => {
+            i++;
+            setValue(text.slice(0, i));
+            if (i >= text.length) clearInterval(id);
+        }, 120);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    return (
+        <InputGroup
+            label="Beløp"
+            render={(props) => <TextInput label="" {...props} value={value} onChange={() => {}} />}
+        />
+    );
+}
 
 function BasicInputGroupPreview() {
     return (
@@ -49,11 +74,8 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "InputGroup kombinerer et skjemafelt med label, hjelpetekst og feilmelding på en tilgjengelig måte. FieldGroup bruker et fieldset-element for grupper av relaterte felt som avkrysningsbokser og radioknapper.",
-    notes: [
-        "Bruk render-prop for å sende tilgjengelighetsprops (aria-describedby, aria-invalid, id) automatisk videre til det underliggende inputfeltet.",
-        "Bruk FieldGroup for grupper av felt med felles legend.",
-        "Koble alltid label til input via id/htmlFor — InputGroup håndterer dette automatisk via render-prop.",
-    ],
+    warnings: "Bruk render-prop-mønsteret for å spre tilgjengelighetsprops (id, aria-describedby, aria-invalid) automatisk til det underliggende feltet.",
+    preview: <InputGroupPreview />,
     props: [
         {
             name: "label",
@@ -180,7 +202,7 @@ import { Checkbox } from "@fremtind/jokul/checkbox";
             preview: <FieldGroupCheckboxPreview />,
         },
         {
-            title: "Migrering: helpLabel / errorLabel → supportLabelProps",
+            title: "Hjelpetekst og feilmelding samles i supportLabelProps",
             description: "helpLabel og errorLabel er utfaset. Bruk supportLabelProps med label og labelType i stedet.",
             uses: ["text-input"],
             migrationBefore: `<InputGroup

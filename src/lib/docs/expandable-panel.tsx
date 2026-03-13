@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionListContactPreview } from "./description-list";
+import { usePreviewHovered } from "@/components/PreviewHoverContext";
 import type { ComponentDoc } from "./types";
+
+function ExpandablePanelPreview() {
+    const isHovered = usePreviewHovered();
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        if (!isHovered) { setOpen(false); return; }
+        setOpen(true);
+        const id = setInterval(() => setOpen(o => !o), 1500);
+        return () => clearInterval(id);
+    }, [isHovered]);
+
+    return (
+        <ExpandablePanel open={open} onOpenChange={setOpen}>
+            <ExpandablePanel.Header>Kontaktinformasjon</ExpandablePanel.Header>
+            <ExpandablePanel.Content>
+                <p>Kundeservice: 04444</p>
+                <p>Åpningstider: man–fre 08–20, lør 09–15</p>
+            </ExpandablePanel.Content>
+        </ExpandablePanel>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "expandable-panel",
@@ -10,14 +33,32 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["panel", "interaktiv", "animasjon", "tilgjengelighet"],
     description: "ExpandablePanel er et utviddbart panel med header og innhold.",
-    notes: "Bruk ExpandablePanel.Header for tittelområdet og ExpandablePanel.Content for innholdet.",
+    preview: <ExpandablePanelPreview />,
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innhold med Header og Content sub-komponenter." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "ExpandablePanel.Header og ExpandablePanel.Content." },
         { name: "variant", type: '"fill" | "stroke"', required: false, source: "react", status: "stable", default: '"fill"', description: "Visuell stil." },
         { name: "open", type: "boolean", required: false, source: "custom", status: "stable", description: "Kontrollert åpen-tilstand." },
         { name: "defaultOpen", type: "boolean", required: false, source: "custom", status: "stable", default: "false", description: "Initialt åpen." },
         { name: "onOpenChange", type: "(open: boolean) => void", required: false, source: "react", status: "stable", description: "Kalles ved åpning/lukking." },
     ],
+    subComponents: [
+        {
+            name: "ExpandablePanel.Header",
+            description: "Klikkbar header som viser/skjuler innholdet. Rendres som en knapp.",
+            props: [
+                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tittelinnholdet i headeren." },
+                { name: "icon", type: "React.ReactNode", required: false, source: "custom", status: "stable", description: "Egendefinert ikon i stedet for standard chevron." },
+            ],
+        },
+        {
+            name: "ExpandablePanel.Content",
+            description: "Innholdsområdet som vises og skjules.",
+            props: [
+                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet som vises når panelet er åpent." },
+            ],
+        },
+    ],
+    relatedIds: ["expander"],
     examples: [
         {
             title: "Grunnleggende panel",

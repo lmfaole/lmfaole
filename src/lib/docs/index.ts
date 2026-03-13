@@ -19,6 +19,7 @@ import chipDoc from "./chip";
 import countdownDoc from "./countdown";
 import descriptionListDoc from "./description-list";
 import expandablePanelDoc from "./expandable-panel";
+import expanderDoc from "./expander";
 import fieldGroupDoc from "./field-group";
 import iconDoc from "./icon";
 import iconButtonDoc from "./icon-button";
@@ -35,6 +36,7 @@ import radioButtonDoc from "./radio-button";
 import searchDoc from "./search";
 import segmentedControlDoc from "./segmented-control";
 import selectDoc from "./select";
+import selectStableDoc from "./select-stable";
 import summaryTableDoc from "./summary-table";
 import tableDoc from "./table";
 import tableOfContentsDoc from "./table-of-contents";
@@ -66,6 +68,7 @@ export const componentDocs: ComponentDoc[] = [
     datepickerDoc,
     descriptionListDoc,
     expandablePanelDoc,
+    expanderDoc,
     feedbackDoc,
     fieldGroupDoc,
     fileInputDoc,
@@ -90,6 +93,7 @@ export const componentDocs: ComponentDoc[] = [
     searchDoc,
     segmentedControlDoc,
     selectDoc,
+    selectStableDoc,
     summaryTableDoc,
     tableDoc,
     tableOfContentsDoc,
