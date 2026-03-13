@@ -1,13 +1,13 @@
 .home {
     display: flex;
     flex-direction: column;
-    gap: var(--jkl-spacing-3xl);
+    gap: var(--jkl-spacing-2xl);
 }
 
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 
 .home__hero {
-    padding-block-end: var(--jkl-spacing-3xl);
+    padding-block: var(--jkl-spacing-2xl);
     border-bottom: 1px solid var(--jkl-color-border-subdued);
 }
 
@@ -16,14 +16,14 @@
     font-weight: 500;
     line-height: 1.05;
     letter-spacing: -0.02em;
-    margin: 0 0 var(--jkl-spacing-m);
+    margin: 0 0 var(--jkl-spacing-l);
 }
 
 .home__intro {
     font-size: var(--jkl-font-size-3);
     color: var(--jkl-color-text-subdued);
     max-width: 46ch;
-    margin: 0 0 var(--jkl-spacing-m);
+    margin: 0 0 var(--jkl-spacing-l);
     line-height: var(--jkl-line-height-relaxed);
 }
 
