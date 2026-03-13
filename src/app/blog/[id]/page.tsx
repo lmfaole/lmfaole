@@ -58,22 +58,20 @@ export default function PostPage() {
     const contentWithIds = injectH2Ids(post.content);
 
     return (
-        <Flex gap="xl" alignItems="start" as="main">
+        <Flex as="article" direction="column" gap="m">
+            <Flex as="header" direction="column" gap="s">
+                <h1>{post.title}</h1>
+                <p>{post.excerpt}</p>
+                <PostMeta category={post.category} date={post.date} author={post.author} content={post.content} tags={post.tags} />
+            </Flex>
             {headings.length > 0 && (
-                <TableOfContents label="Innhold" style={{ flexShrink: 0, position: "sticky", top: "2rem" }}>
+                <TableOfContents label="Innhold">
                     {headings.map((h) => (
                         <TableOfContents.Link key={h} href={`#${slugify(h)}`}>{h}</TableOfContents.Link>
                     ))}
                 </TableOfContents>
             )}
-            <Flex as="article" direction="column" gap="m" style={{ flex: 1, minWidth: 0 }}>
-                <Flex as="header" direction="column" gap="s">
-                    <h1>{post.title}</h1>
-                    <p>{post.excerpt}</p>
-                    <PostMeta category={post.category} date={post.date} author={post.author} content={post.content} tags={post.tags} />
-                </Flex>
-                {contentWithIds}
-            </Flex>
+            {contentWithIds}
         </Flex>
     );
 }
