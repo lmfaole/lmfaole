@@ -29,17 +29,7 @@ export default function ComponentPage() {
     }
 
     return (
-        <Flex gap="xl" alignItems="start" as="main">
-            <TableOfContents label="Innhold" style={{ flexShrink: 0, position: "sticky", top: "2rem" }}>
-                <TableOfContents.Link href="#props">Props</TableOfContents.Link>
-                {doc.examples.map((ex) => (
-                    <TableOfContents.Link key={ex.title} href={`#${slugify(ex.title)}`}>
-                        {ex.title}
-                    </TableOfContents.Link>
-                ))}
-            </TableOfContents>
-
-            <Flex as="article" direction="column" gap="xl" style={{ flex: 1, minWidth: 0 }}>
+        <Flex as="article" direction="column" gap="xl">
                 <Flex as="header" direction="column" gap="s">
                     <Flex gap="s" alignItems="center">
                         <h1>{doc.name}</h1>
@@ -51,6 +41,15 @@ export default function ComponentPage() {
                         <Message variant="info">{doc.notes}</Message>
                     )}
                 </Flex>
+
+                <TableOfContents label="Innhold">
+                    <TableOfContents.Link href="#props">Props</TableOfContents.Link>
+                    {doc.examples.map((ex) => (
+                        <TableOfContents.Link key={ex.title} href={`#${slugify(ex.title)}`}>
+                            {ex.title}
+                        </TableOfContents.Link>
+                    ))}
+                </TableOfContents>
 
                 <Flex direction="column" gap="m">
                     <h2 id="props">Props</h2>
@@ -74,7 +73,6 @@ export default function ComponentPage() {
                         </Flex>
                     ))}
                 </Flex>
-            </Flex>
         </Flex>
     );
 }
