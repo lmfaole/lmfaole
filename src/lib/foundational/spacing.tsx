@@ -258,6 +258,7 @@ const post: BlogPost = {
   date: "2024-01-29",
   category: "Foundational",
   type: "foundational",
+  image: "https://images.unsplash.com/photo-1545987796-200677ee1011?w=800&q=80",
   author: "Jøkul-teamet",
   tags: ["spacing", "layout", "flex", "css-variabler", "grid"],
   resources: [

@@ -17,4 +17,5 @@ export interface BlogPost {
   tags: string[];
   resources?: Resource[];
   type?: "standard" | "foundational";
+  image?: string;
 }

@@ -1,26 +1,31 @@
 import {Link} from "@fremtind/jokul/link";
 import {Card} from "@fremtind/jokul/card";
-import {Flex} from "@fremtind/jokul/flex";
-import {PostMeta} from "@/components/PostMeta";
 import type {BlogPost} from "@/lib/blogPosts";
+import "./blog-post-card.scss";
 
 interface BlogPostCardProps {
     post: BlogPost;
+    href?: string;
 }
 
-export function BlogPostCard({post}: BlogPostCardProps) {
+export function BlogPostCard({post, href}: BlogPostCardProps) {
+    const to = href ?? (post.type === "foundational"
+        ? `/jokul/foundational/${post.id}`
+        : `/jokul/blog/${post.id}`);
+
     return (
-        <Card padding="l">
-            <Flex direction="column" gap="s">
-                <h2>
-                    <Link href={`/jokul/blog/${post.id}`}>{post.title}</Link>
+        <Card padding="s" className="post-card">
+            {post.image && (
+                <div className="post-card__image">
+                    <img src={post.image} alt="" aria-hidden="true" loading="lazy" />
+                </div>
+            )}
+            <div className="post-card__body">
+                <h2 className="post-card__title">
+                    <Link href={to}>{post.title}</Link>
                 </h2>
-                <p>{post.excerpt}</p>
-                <Flex as="footer" gap="s" wrap="wrap">
-                    <PostMeta category={post.category} date={post.date} author={post.author} content={post.content}
-                              tags={post.tags}/>
-                </Flex>
-            </Flex>
+                <p className="post-card__excerpt">{post.excerpt}</p>
+            </div>
         </Card>
     );
 }

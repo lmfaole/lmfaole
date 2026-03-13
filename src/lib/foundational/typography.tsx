@@ -263,6 +263,7 @@ font-size: clamp(
   date: "2024-01-15",
   category: "Foundational",
   type: "foundational",
+  image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
   author: "Jøkul-teamet",
   tags: ["typografi", "font", "css-variabler", "responsiv", "tilgjengelighet"],
   resources: [

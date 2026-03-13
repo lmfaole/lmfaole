@@ -245,6 +245,7 @@ const post: BlogPost = {
   date: "2024-01-22",
   category: "Foundational",
   type: "foundational",
+  image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&q=80",
   author: "Jøkul-teamet",
   tags: ["farger", "design-tokens", "tema", "mørk-modus", "tilgjengelighet"],
   resources: [
