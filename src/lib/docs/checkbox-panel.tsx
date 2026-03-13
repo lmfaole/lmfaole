@@ -13,11 +13,11 @@ const doc: ComponentDoc = {
     notes: "Bruk CheckboxPanel når valgene er komplekse nok til å trenge panelvisning.",
     relatedIds: ["checkbox", "radio-panel"],
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "Innhold i panelet." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Innhold i panelet." },
         { name: "name", type: "string", required: true, source: "native", description: "Skjemafeltets navn." },
         { name: "value", type: "string", required: true, source: "native", description: "Verdien ved innsending." },
         { name: "checked", type: "boolean", required: false, source: "native", default: "false", description: "Kontrollert tilstand." },
-        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "native", description: "Kalles ved endring." },
+        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "react", description: "Kalles ved endring." },
     ],
     examples: [
         {

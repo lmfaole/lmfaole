@@ -13,7 +13,7 @@ const doc: ComponentDoc = {
     notes: "Tags er dekorative og ikke interaktive. Sørg for at taggteksten gir mening uten ekstra kontekst.",
     relatedIds: ["message"],
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "Etikettteksten. Hold den kort — maks 3–4 ord." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Etikettteksten. Hold den kort — maks 3–4 ord." },
         { name: "variant", type: '"neutral" | "info" | "success" | "warning" | "error"', required: false, source: "custom", default: '"neutral"', description: "Fargevarianten." },
     ],
     examples: [

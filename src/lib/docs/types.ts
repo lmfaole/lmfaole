@@ -1,7 +1,7 @@
 import type React from "react";
 
 export type PropStatus = "stable" | "deprecated" | "experimental";
-export type PropSource = "custom" | "native";
+export type PropSource = "custom" | "native" | "aria" | "react";
 
 export interface PropDef {
     name: string;

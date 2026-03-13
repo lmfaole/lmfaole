@@ -13,10 +13,10 @@ const doc: ComponentDoc = {
     notes: "Bruk filter-varianten for flervalgsfiltre, input-varianten for tags brukeren kan fjerne.",
     relatedIds: ["tag"],
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "Chip-teksten." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Chip-teksten." },
         { name: "variant", type: '"input" | "filter"', required: true, source: "custom", description: "Visuell variant og funksjon." },
         { name: "selected", type: "boolean", required: false, source: "custom", default: "false", description: "Valgt tilstand, kun for filter-variant." },
-        { name: "onClick", type: "React.ButtonHTMLAttributes<HTMLButtonElement>['onClick']", required: false, source: "native", description: "Klikk-handler." },
+        { name: "onClick", type: "React.ButtonHTMLAttributes<HTMLButtonElement>['onClick']", required: false, source: "react", description: "Klikk-handler." },
     ],
     examples: [
         {

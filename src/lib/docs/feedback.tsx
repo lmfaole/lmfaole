@@ -64,7 +64,7 @@ const doc: ComponentDoc = {
             name: "type",
             type: '"smiley" | "radio"',
             required: true,
-            source: "native",
+            source: "custom",
             description: "Velger mellom smiley-vurdering og radioknapper.",
         },
         {

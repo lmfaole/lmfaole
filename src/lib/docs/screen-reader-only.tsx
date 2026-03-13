@@ -93,7 +93,7 @@ const doc: ComponentDoc = {
             name: "children",
             type: "React.ReactNode",
             required: true,
-            source: "native",
+            source: "react",
             description: "Innholdet som skjules visuelt.",
         },
         {

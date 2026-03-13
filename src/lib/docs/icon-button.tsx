@@ -17,8 +17,8 @@ const doc: ComponentDoc = {
     relatedIds: ["button", "icon"],
     props: [
         { name: "icon", type: "string", required: true, source: "custom", description: "Ikonnavnet (Material Symbol)." },
-        { name: "aria-label", type: "string", required: true, source: "native", description: "Tilgjengelig navn for knappen." },
-        { name: "onClick", type: "React.MouseEventHandler<HTMLButtonElement>", required: false, source: "native", description: "Klikk-handler." },
+        { name: "aria-label", type: "string", required: true, source: "aria", description: "Tilgjengelig navn for knappen." },
+        { name: "onClick", type: "React.MouseEventHandler<HTMLButtonElement>", required: false, source: "react", description: "Klikk-handler." },
         { name: "disabled", type: "boolean", required: false, source: "native", default: "false", description: "Deaktiverer knappen." },
         { name: "variant", type: '"ghost" | "primary"', required: false, source: "custom", default: '"ghost"', description: "Visuell variant." },
     ],

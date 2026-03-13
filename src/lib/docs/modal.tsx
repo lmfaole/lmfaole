@@ -108,7 +108,7 @@ const doc: ComponentDoc = {
             name: "role",
             type: '"dialog" | "alertdialog"',
             required: false,
-            source: "native",
+            source: "aria",
             default: '"dialog"',
             description:
                 "ARIA-rolle. alertdialog forhindrer lukking med Escape eller klikk utenfor.",

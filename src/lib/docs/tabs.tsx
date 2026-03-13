@@ -35,7 +35,7 @@ const doc: ComponentDoc = {
     props: [
         { name: "defaultTab", type: "number", required: false, source: "custom", default: "0", description: "Initialt aktiv fane (indeks)." },
         { name: "onChange", type: "(index: number) => void", required: false, source: "custom", description: "Kalles ved faneskift." },
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "TabList og TabPanel-elementer." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "TabList og TabPanel-elementer." },
     ],
     examples: [
         {

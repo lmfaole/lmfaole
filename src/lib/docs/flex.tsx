@@ -17,7 +17,7 @@ const doc: ComponentDoc = {
     notes: "Flex er ikke ment å erstatte alle layout-behov. For todimensjonale layouts, bruk CSS Grid.",
     relatedIds: ["button", "tag"],
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "native", description: "Innholdet som skal layoutes." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Innholdet som skal layoutes." },
         { name: "direction", type: '"row" | "column" | "row-reverse" | "column-reverse"', required: false, source: "custom", default: '"row"', description: "Retningen barn-elementene plasseres." },
         { name: "gap", type: '"none" | "xxs" | "xs" | "s" | "m" | "l" | "xl"', required: false, source: "custom", default: '"none"', description: "Avstand mellom barn-elementene. Bruker Jøkuls spacing-skala." },
         { name: "wrap", type: '"nowrap" | "wrap" | "wrap-reverse"', required: false, source: "custom", default: '"nowrap"', description: "wrap lar barn-elementene bryte over på ny linje." },

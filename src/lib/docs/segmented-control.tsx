@@ -13,9 +13,9 @@ const doc: ComponentDoc = {
     relatedIds: ["radio-button"],
     props: [
         { name: "legend", type: "string", required: true, source: "custom", description: "Tilgjengelig gruppenavn." },
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "SegmentedControlButton-elementer." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "SegmentedControlButton-elementer." },
         { name: "value", type: "string", required: false, source: "native", description: "Valgt verdi (kontrollert)." },
-        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "native", description: "Kalles ved valg." },
+        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "react", description: "Kalles ved valg." },
     ],
     examples: [
         {

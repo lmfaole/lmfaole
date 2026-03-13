@@ -72,7 +72,7 @@ const doc: ComponentDoc = {
             name: "onChange",
             type: "(e: Event, files: UploadedFile[]) => void",
             required: true,
-            source: "native",
+            source: "custom",
             description: "Kalles når bruker legger til eller fjerner filer.",
         },
         {

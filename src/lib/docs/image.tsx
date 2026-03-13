@@ -70,7 +70,7 @@ const doc: ComponentDoc = {
             source: "native",
             description: "URL til et lavoppløselig plassholdbilde som vises under innlasting.",
         },
-        { name: "className", type: "string", required: false, source: "native", description: "Ekstra CSS-klasser." },
+        { name: "className", type: "string", required: false, source: "react", description: "Ekstra CSS-klasser." },
     ],
     examples: [
         {

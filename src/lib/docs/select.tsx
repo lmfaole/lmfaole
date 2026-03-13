@@ -16,7 +16,7 @@ const doc: ComponentDoc = {
         { name: "label", type: "string", required: true, source: "custom", description: "Synlig label over nedtrekksmenyen." },
         { name: "items", type: "Array<string | { value: string; label: string }>", required: true, source: "custom", description: "Liste over alternativer." },
         { name: "value", type: "string", required: false, source: "native", description: "Valgt verdi (kontrollert)." },
-        { name: "onChange", type: "(value: string | undefined) => void", required: false, source: "native", description: "Kalles ved valg." },
+        { name: "onChange", type: "(value: string | undefined) => void", required: false, source: "custom", description: "Kalles ved valg." },
         { name: "defaultPrompt", type: "string", required: false, source: "custom", default: '"Velg"', description: "Plassholdertekst som standard valg." },
         { name: "errorLabel", type: "string", required: false, source: "custom", description: "Feilmelding." },
         { name: "helpLabel", type: "string", required: false, source: "custom", description: "Hjelpetekst." },

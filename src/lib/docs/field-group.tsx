@@ -14,7 +14,7 @@ const doc: ComponentDoc = {
     relatedIds: ["checkbox", "radio-button"],
     props: [
         { name: "legend", type: "string", required: true, source: "custom", description: "Overskrift for gruppen." },
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "Skjemaelementer i gruppen." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Skjemaelementer i gruppen." },
         { name: "errorLabel", type: "string", required: false, source: "custom", description: "Feilmelding for hele gruppen." },
         { name: "helpLabel", type: "string", required: false, source: "custom", description: "Hjelpetekst for hele gruppen." },
     ],

@@ -20,7 +20,7 @@ const doc: ComponentDoc = {
             name: "children",
             type: "React.ReactNode",
             required: true,
-            source: "custom",
+            source: "react",
             description: "Kortets innhold. Strukturer med Flex, overskrifter og andre komponenter.",
         },
         {
@@ -59,7 +59,7 @@ const doc: ComponentDoc = {
             name: "className",
             type: "string",
             required: false,
-            source: "native",
+            source: "react",
             description: "Egendefinerte CSS-klasser.",
         },
     ],

@@ -16,8 +16,8 @@ const doc: ComponentDoc = {
     props: [
         { name: "value", type: "string", required: true, source: "native", description: "Verdien som sendes ved innsending." },
         { name: "name", type: "string", required: true, source: "native", description: "Skjemafeltets navn (felles for gruppen)." },
-        { name: "children", type: "React.ReactNode", required: false, source: "custom", description: "Innhold i panelet." },
-        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "native", description: "Kalles ved valg." },
+        { name: "children", type: "React.ReactNode", required: false, source: "react", description: "Innhold i panelet." },
+        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "react", description: "Kalles ved valg." },
     ],
     examples: [
         {

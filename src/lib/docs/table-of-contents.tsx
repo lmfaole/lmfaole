@@ -12,7 +12,7 @@ const doc: ComponentDoc = {
     notes: "Bruk TableOfContents.Link for hvert element i innholdsfortegnelsen.",
     props: [
         { name: "label", type: "string", required: true, source: "custom", description: "Overskrift for innholdsfortegnelsen." },
-        { name: "children", type: "React.ReactNode", required: false, source: "native", description: "TableOfContents.Link-elementer." },
+        { name: "children", type: "React.ReactNode", required: false, source: "react", description: "TableOfContents.Link-elementer." },
     ],
     examples: [
         {

@@ -14,7 +14,7 @@ const doc: ComponentDoc = {
     props: [
         { name: "label", type: "string", required: false, source: "custom", default: '"Søk"', description: "Tilgjengelig label." },
         { name: "placeholder", type: "string", required: false, source: "native", description: "Plassholdertekst." },
-        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "native", description: "Kalles ved endring." },
+        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "react", description: "Kalles ved endring." },
         { name: "value", type: "string", required: false, source: "native", description: "Kontrollert verdi." },
     ],
     examples: [

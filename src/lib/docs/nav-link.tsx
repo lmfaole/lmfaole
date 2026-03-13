@@ -13,7 +13,7 @@ const doc: ComponentDoc = {
     notes: "Sett active på gjeldende side for å markere hvilken side brukeren er på.",
     relatedIds: ["link"],
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "Lenketekst." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Lenketekst." },
         { name: "href", type: "string", required: false, source: "native", description: "Destinasjon." },
         { name: "active", type: "boolean", required: false, source: "custom", default: "false", description: "Markerer som aktiv gjeldende side." },
         { name: "back", type: "boolean", required: false, source: "custom", default: "false", description: "Viser tilbake-pil." },

@@ -60,7 +60,7 @@ const doc: ComponentDoc = {
         { name: "label", type: "string", required: true, source: "custom", description: "Synlig label over inputfeltet." },
         { name: "suggestions", type: "string[]", required: true, source: "custom", description: "Liste over forslag som vises under feltet." },
         { name: "value", type: "string", required: false, source: "native", description: "Kontrollert verdi." },
-        { name: "onChange", type: "(value: string) => void", required: false, source: "native", description: "Kalles ved endring i inputverdien." },
+        { name: "onChange", type: "(value: string) => void", required: false, source: "custom", description: "Kalles ved endring i inputverdien." },
         { name: "onSelect", type: "(value: string) => void", required: false, source: "custom", description: "Kalles når brukeren velger et forslag." },
         { name: "helpLabel", type: "string", required: false, source: "custom", description: "Hjelpetekst vist under label." },
         { name: "errorLabel", type: "string", required: false, source: "custom", description: "Feilmelding vist under feltet." },

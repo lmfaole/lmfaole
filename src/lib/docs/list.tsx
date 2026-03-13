@@ -11,7 +11,7 @@ const doc: ComponentDoc = {
     description: "List-komponentene (UnorderedList og OrderedList) brukes for strukturerte lister med konsistent styling.",
     notes: "Bruk UnorderedList for rekkefølge-uavhengige punktlister, OrderedList for nummererte trinn.",
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "ListItem-elementer." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "ListItem-elementer." },
     ],
     examples: [
         {

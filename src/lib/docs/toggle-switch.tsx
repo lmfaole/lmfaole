@@ -17,7 +17,7 @@ const doc: ComponentDoc = {
             name: "children",
             type: "React.ReactNode",
             required: true,
-            source: "custom",
+            source: "react",
             description: "Label-teksten. Beskriv tilstanden som er på, f.eks. «Mørkt tema» eller «Varsler aktivert».",
         },
         {
@@ -39,7 +39,7 @@ const doc: ComponentDoc = {
             name: "onChange",
             type: "React.ChangeEventHandler<HTMLInputElement>",
             required: false,
-            source: "native",
+            source: "react",
             description: "Kalles umiddelbart når brukeren veksler bryteren. Utfør handlingen direkte her.",
         },
         {
@@ -54,7 +54,7 @@ const doc: ComponentDoc = {
             name: "className",
             type: "string",
             required: false,
-            source: "native",
+            source: "react",
             description: "Egendefinerte CSS-klasser.",
         },
     ],

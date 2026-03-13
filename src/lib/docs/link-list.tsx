@@ -14,7 +14,7 @@ const doc: ComponentDoc = {
     props: [
         { name: "label", type: "string", required: true, source: "custom", description: "Overskrift for lenkegruppens seksjon." },
         { name: "hideLabel", type: "boolean", required: false, source: "custom", default: "false", description: "Skjuler overskriften visuelt." },
-        { name: "children", type: "React.ReactNode", required: false, source: "native", description: "LinkList.Link-elementer." },
+        { name: "children", type: "React.ReactNode", required: false, source: "react", description: "LinkList.Link-elementer." },
     ],
     examples: [
         {

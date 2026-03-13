@@ -69,7 +69,7 @@ const doc: ComponentDoc = {
             name: "children",
             type: "ReactNode",
             required: false,
-            source: "custom",
+            source: "react",
             description: "MenuItem, MenuItemCheckbox og MenuDivider elementer.",
         },
         {

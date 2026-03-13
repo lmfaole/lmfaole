@@ -15,7 +15,7 @@ const doc: ComponentDoc = {
         { name: "legend", type: "string", required: true, source: "custom", description: "Overskrift for gruppen (på RadioButtonGroup)." },
         { name: "name", type: "string", required: false, source: "native", description: "Skjemafeltets navn." },
         { name: "value", type: "string", required: false, source: "native", description: "Valgt verdi." },
-        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "native", description: "Kalles ved valg." },
+        { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "react", description: "Kalles ved valg." },
         { name: "errorLabel", type: "string", required: false, source: "custom", description: "Feilmelding." },
         { name: "inline", type: "boolean", required: false, source: "custom", default: "false", description: "Viser radioknappene på én linje." },
     ],

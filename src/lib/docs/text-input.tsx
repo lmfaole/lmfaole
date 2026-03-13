@@ -37,7 +37,7 @@ const doc: ComponentDoc = {
             name: "onChange",
             type: "React.ChangeEventHandler<HTMLInputElement>",
             required: false,
-            source: "native",
+            source: "react",
             description: "Kalles ved hvert tastetrykk. Brukes i kontrollert komponent-mønster.",
         },
         {

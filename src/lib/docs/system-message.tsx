@@ -84,12 +84,12 @@ const doc: ComponentDoc = {
             description: "Viser en lukkeknapp. handleDismiss kalles når brukeren klikker.",
         },
         { name: "id", type: "string", required: false, source: "native", description: "HTML id-attributt." },
-        { name: "className", type: "string", required: false, source: "native", description: "Ekstra CSS-klasser." },
+        { name: "className", type: "string", required: false, source: "react", description: "Ekstra CSS-klasser." },
         {
             name: "role",
             type: "string",
             required: false,
-            source: "native",
+            source: "aria",
             description: "ARIA-rolle, f.eks. 'alert' for kritiske meldinger.",
         },
         {

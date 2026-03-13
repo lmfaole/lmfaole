@@ -11,7 +11,7 @@ const doc: ComponentDoc = {
     description: "ExpandablePanel er et utviddbart panel med header og innhold.",
     notes: "Bruk ExpandablePanel.Header for tittelområdet og ExpandablePanel.Content for innholdet.",
     props: [
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "Innhold med Header og Content sub-komponenter." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Innhold med Header og Content sub-komponenter." },
         { name: "variant", type: '"fill" | "stroke"', required: false, source: "custom", default: '"fill"', description: "Visuell stil." },
         { name: "open", type: "boolean", required: false, source: "custom", description: "Kontrollert åpen-tilstand." },
         { name: "defaultOpen", type: "boolean", required: false, source: "custom", default: "false", description: "Initialt åpen." },

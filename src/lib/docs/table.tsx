@@ -13,7 +13,7 @@ const doc: ComponentDoc = {
     relatedIds: ["summary-table"],
     props: [
         { name: "caption", type: "React.ReactNode", required: true, source: "custom", description: "Tabellbeskrivelse." },
-        { name: "children", type: "React.ReactNode", required: true, source: "custom", description: "TableHead og TableBody." },
+        { name: "children", type: "React.ReactNode", required: true, source: "react", description: "TableHead og TableBody." },
         { name: "collapseToList", type: "boolean", required: false, source: "custom", default: "false", description: "Kollapser til liste på mobil." },
         { name: "fullWidth", type: "boolean", required: false, source: "custom", default: "false", description: "Strekker tabellen til full bredde." },
     ],
