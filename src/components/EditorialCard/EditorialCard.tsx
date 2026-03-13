@@ -9,7 +9,6 @@ export interface EditorialItem {
 }
 
 interface EditorialCardProps {
-    label: string;
     title: string;
     titleHref: string;
     description: string;
@@ -20,7 +19,6 @@ interface EditorialCardProps {
 }
 
 export function EditorialCard({
-                                  label,
                                   title,
                                   titleHref,
                                   description,
@@ -32,7 +30,6 @@ export function EditorialCard({
     return (
         <article className="home__section">
             <div>
-                <span className="home__section-label">{label}</span>
                 <h2 className="home__section-title">
                     <Link href={titleHref}>{title}</Link>
                 </h2>

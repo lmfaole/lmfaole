@@ -12,7 +12,6 @@ export default function Home() {
     return (
         <main className="home">
             <header className="home__hero">
-                <p className="home__eyebrow">Uoffisiell læringsressurs</p>
                 <h1 className="home__headline">Bygg bedre<br/>med Jøkul</h1>
                 <p className="home__intro">
                     Artikler, veiledninger og komponentdokumentasjon for deg som bygger
@@ -29,7 +28,6 @@ export default function Home() {
 
             <div className="home__sections">
                 <EditorialCard
-                    label="Blogg"
                     title="Siste artikler"
                     titleHref="/jokul/blog"
                     description="Dybdeartikler om tilgjengelighet, typografi, farger og komponentbruk."
@@ -44,7 +42,6 @@ export default function Home() {
                     ctaLabel="Se alle artikler"
                 />
                 <EditorialCard
-                    label="Grunnleggende"
                     title="Konsepter"
                     titleHref="/jokul/foundational"
                     description="Fundamentene i Jøkul — typografi, farger og designtokens."
@@ -59,7 +56,6 @@ export default function Home() {
                     ctaLabel="Se alle"
                 />
                 <EditorialCard
-                    label="Komponenter"
                     title="Dokumentasjon"
                     titleHref="/jokul/component"
                     description="Prop-tabeller og kodeeksempler for alle Jøkul-komponenter."
