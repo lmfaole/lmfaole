@@ -1,4 +1,5 @@
 import {Link} from "@fremtind/jokul/link";
+import {Card} from "@fremtind/jokul/card";
 import "./editorial-card.scss";
 
 export interface EditorialItem {
@@ -28,7 +29,7 @@ export function EditorialCard({
                                   ctaLabel,
                               }: EditorialCardProps) {
     return (
-        <article className="editorial-card">
+        <Card as="article" variant="low" padding="l" className="editorial-card">
             <div>
                 <h2 className="editorial-card__title">
                     <Link href={titleHref}>{title}</Link>
@@ -47,6 +48,6 @@ export function EditorialCard({
                 <span className="editorial-card__stat" aria-hidden="true">{stat}</span>
                 <Link href={ctaHref}>{ctaLabel}</Link>
             </div>
-        </article>
+        </Card>
     );
 }
