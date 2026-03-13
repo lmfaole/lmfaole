@@ -221,7 +221,7 @@ export default function ComponentsPage() {
                             <React.Fragment key={entry.propName}>
                                 <DescriptionTerm>
                                     <Flex direction="column" gap="xs">
-                                        <code>{entry.propName} {entry.source && `(${entry.source})`}</code>
+                                        <code>{entry.propName} {entry.source && !propSourceFilter && `(${entry.source})`}</code>
                                     </Flex>
                                 </DescriptionTerm>
                                 {entry.usedBy.map((comp) => (

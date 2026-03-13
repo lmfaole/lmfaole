@@ -18,7 +18,7 @@ const doc: ComponentDoc = {
         { name: "title", type: "string", required: false, source: "custom", description: "Valgfri overskrift i meldingen." },
         { name: "full", type: "boolean", required: false, source: "custom", default: "false", description: "Strekker meldingen til full bredde." },
         { name: "dismissed", type: "boolean", required: false, source: "custom", description: "Kontrollert tilstand for om meldingen er lukket." },
-        { name: "onDismiss", type: "() => void", required: false, source: "custom", description: "Klikk-handler for lukkeknappen." },
+        { name: "onDismiss", type: "() => void", required: false, source: "react", description: "Klikk-handler for lukkeknappen." },
     ],
     examples: [
         {

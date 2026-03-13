@@ -85,7 +85,7 @@ const doc: ComponentDoc = {
             name: "onSubmit",
             type: "({ feedbackValue, intentionalSubmit, message? }: FeedbackSubmitEvent) => void",
             required: true,
-            source: "custom",
+            source: "react",
             description: "Kalles når brukeren sender inn tilbakemeldingen.",
         },
         {

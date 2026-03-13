@@ -100,7 +100,7 @@ const doc: ComponentDoc = {
             name: "onToggle",
             type: "(isOpen: boolean) => void",
             required: false,
-            source: "custom",
+            source: "react",
             description: "Kalles når menyen åpnes eller lukkes.",
         },
         {

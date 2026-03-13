@@ -28,7 +28,7 @@ const doc: ComponentDoc = {
     props: [
         { name: "currentPage", type: "number", required: true, source: "custom", description: "Gjeldende sidenummer (1-basert)." },
         { name: "numberOfPages", type: "number", required: true, source: "custom", description: "Totalt antall sider." },
-        { name: "onPageChange", type: "(toPage: number, fromPage: number) => void", required: true, source: "custom", description: "Kalles ved sidebytte." },
+        { name: "onPageChange", type: "(toPage: number, fromPage: number) => void", required: true, source: "react", description: "Kalles ved sidebytte." },
         { name: "labels", type: '{ previous: string; next: string }', required: false, source: "custom", default: '{ previous: "Forrige", next: "Neste" }', description: "Tekster for forrige/neste-knapper." },
     ],
     examples: [

@@ -90,7 +90,7 @@ const doc: ComponentDoc = {
             name: "onChange",
             type: '(event: { type: "change" | "blur", target: { name: string, value: string, selectedOptions: Array<{value: string, label: string}> } }) => void',
             required: true,
-            source: "custom",
+            source: "react",
             description:
                 "Kalles ved endring. Bruk event.target.selectedOptions for å hente valgte elementer.",
         },
