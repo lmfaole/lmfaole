@@ -15,6 +15,22 @@ const doc: ComponentDoc = {
         { name: "separators", type: "boolean", required: false, source: "react", default: "false", description: "Viser skillelinjer mellom par." },
         { name: "alignment", type: '"horizontal" | "vertical" | "justified"', required: false, source: "custom", default: '"vertical"', description: "Layoutretning for nøkkel-verdi-par." },
     ],
+    subComponents: [
+        {
+            name: "DescriptionTerm",
+            description: "Nøkkelen (dt) i et nøkkel-verdi-par.",
+            props: [
+                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Tekst eller innhold for termen." },
+            ],
+        },
+        {
+            name: "DescriptionDetail",
+            description: "Verdien (dd) i et nøkkel-verdi-par.",
+            props: [
+                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Tekst eller innhold for detaljen." },
+            ],
+        },
+    ],
     examples: [
         {
             title: "Nøkkelverdi-par",

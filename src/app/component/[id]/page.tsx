@@ -44,6 +44,11 @@ export default function ComponentPage() {
 
                 <TableOfContents label="Innhold">
                     <TableOfContents.Link href="#props">Props</TableOfContents.Link>
+                    {doc.subComponents?.map((sub) => (
+                        <TableOfContents.Link key={sub.name} href={`#props-${sub.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
+                            {sub.name}
+                        </TableOfContents.Link>
+                    ))}
                     {doc.examples.map((ex) => (
                         <TableOfContents.Link key={ex.title} href={`#${slugify(ex.title)}`}>
                             {ex.title}
@@ -51,9 +56,21 @@ export default function ComponentPage() {
                     ))}
                 </TableOfContents>
 
-                <Flex direction="column" gap="m">
+                <Flex direction="column" gap="l">
                     <h2 id="props">Props</h2>
-                    <PropTable props={doc.props} />
+                    <Flex direction="column" gap="m">
+                        <h3 id="props-root">{doc.name}</h3>
+                        <PropTable props={doc.props} />
+                    </Flex>
+                    {doc.subComponents?.map((sub) => (
+                        <Flex key={sub.name} direction="column" gap="m">
+                            <Flex direction="column" gap="xs">
+                                <h3 id={`props-${sub.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>{sub.name}</h3>
+                                {sub.description && <p>{sub.description}</p>}
+                            </Flex>
+                            <PropTable props={sub.props} />
+                        </Flex>
+                    ))}
                 </Flex>
 
                 <Flex direction="column" gap="xl">

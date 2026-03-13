@@ -16,6 +16,18 @@ const doc: ComponentDoc = {
         { name: "hideLabel", type: "boolean", required: false, source: "custom", default: "false", description: "Skjuler overskriften visuelt." },
         { name: "children", type: "React.ReactNode", required: false, source: "react", description: "LinkList.Link-elementer." },
     ],
+    subComponents: [
+        {
+            name: "LinkList.Link",
+            description: "En lenke inne i lenkegruppelisten.",
+            props: [
+                { name: "href", type: "string", required: true, source: "native", description: "URL-en lenken peker til." },
+                { name: "target", type: "string", required: false, source: "native", description: "Åpner lenken i nytt vindu/fane (f.eks. \"_blank\")." },
+                { name: "rel", type: "string", required: false, source: "native", description: "Relasjon mellom gjeldende dokument og lenket dokument (f.eks. \"noopener noreferrer\")." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Lenketekst eller innhold." },
+            ],
+        },
+    ],
     examples: [
         {
             title: "Navigasjonsliste",

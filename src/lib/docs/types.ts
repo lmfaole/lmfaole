@@ -25,6 +25,12 @@ export interface ComponentExample {
     tags?: string[];
 }
 
+export interface SubComponentDoc {
+    name: string;
+    description?: string;
+    props: PropDef[];
+}
+
 export interface ComponentDoc {
     id: string;
     name: string;
@@ -35,6 +41,7 @@ export interface ComponentDoc {
     description: string;
     notes?: string;
     props: PropDef[];
+    subComponents?: SubComponentDoc[];
     examples: ComponentExample[];
     relatedIds?: string[];
 }

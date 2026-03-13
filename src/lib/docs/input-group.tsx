@@ -104,6 +104,18 @@ const doc: ComponentDoc = {
         },
         { name: "id", type: "string", required: false, source: "native", description: "Overstyrer generert HTML id." },
     ],
+    subComponents: [
+        {
+            name: "FieldGroup",
+            description: "Grupperer relaterte skjemaelementer (f.eks. avkrysningsbokser, radioknapper) under en felles legend ved hjelp av fieldset.",
+            props: [
+                { name: "legend", type: "string", required: true, source: "custom", description: "Overskrift for gruppen." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Skjemaelementer i gruppen." },
+                { name: "errorLabel", type: "string", required: false, source: "react", description: "Feilmelding for hele gruppen." },
+                { name: "helpLabel", type: "string", required: false, source: "custom", description: "Hjelpetekst for hele gruppen." },
+            ],
+        },
+    ],
     examples: [
         {
             title: "Grunnleggende InputGroup",

@@ -14,6 +14,15 @@ const doc: ComponentDoc = {
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", description: "BreadcrumbItem-elementer." },
     ],
+    subComponents: [
+        {
+            name: "BreadcrumbItem",
+            description: "Et enkelt ledd i brødsmulestien.",
+            props: [
+                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Lenke eller tekst for gjeldende side." },
+            ],
+        },
+    ],
     examples: [
         {
             title: "Standard brødsmulesti",

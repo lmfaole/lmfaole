@@ -17,6 +17,19 @@ const doc: ComponentDoc = {
         { name: "value", type: "string", required: false, source: "native", description: "Valgt verdi (kontrollert)." },
         { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "react", description: "Kalles ved valg." },
     ],
+    subComponents: [
+        {
+            name: "SegmentedControlButton",
+            description: "Et enkelt alternativ i SegmentedControl.",
+            props: [
+                { name: "value", type: "string", required: true, source: "native", description: "Verdien som sendes ved valg." },
+                { name: "checked", type: "boolean", required: false, source: "native", description: "Om dette alternativet er valgt (kontrollert)." },
+                { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "react", description: "Kalles når alternativet velges." },
+                { name: "disabled", type: "boolean", required: false, source: "native", default: "false", description: "Deaktiverer alternativet." },
+                { name: "children", type: "React.ReactNode", required: true, source: "react", description: "Tekst eller innhold i knappen." },
+            ],
+        },
+    ],
     examples: [
         {
             title: "Visningsvalg",
