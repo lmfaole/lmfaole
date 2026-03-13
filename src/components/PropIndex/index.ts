@@ -1,1 +1,0 @@
-export { PropIndex } from "./PropIndex";
