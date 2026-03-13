@@ -5,6 +5,7 @@ import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
 import { Tag } from "@fremtind/jokul/tag";
 import { Flex } from "@fremtind/jokul/flex";
+import { CodeBlock } from "@/components/CodeBlock";
 import type { BlogPost } from "./types";
 
 const post: BlogPost = {
@@ -51,7 +52,7 @@ const post: BlogPost = {
         <code>Flex</code>-komponenten er Jøkuls svar på "hvordan distribuerer jeg elementer uten å
         skrive CSS?". Den tar spacing-verdiene fra skalaen direkte som props:
       </p>
-      <pre><code>{'<Flex gap="m" direction="row" wrap="wrap" align="center">'}</code></pre>
+      <CodeBlock code={'<Flex gap="m" direction="row" wrap="wrap" align="center">'} />
       <p>
         Ingen magiske tall. Ingen inline styles. Bare kontrakt med systemet.
       </p>
@@ -87,11 +88,11 @@ const post: BlogPost = {
             utmerket i alle evergreen-nettlesere, og du fremtidssikrer layouten uten ekstra
             arbeid når en dag dere trenger å støtte arabisk eller hebraisk:
           </p>
-          <pre><code>{`/* Unngå fysiske egenskaper */
+          <CodeBlock code={`/* Unngå fysiske egenskaper */
 .element { margin-left: 1rem; }
 
 /* Bruk logiske egenskaper */
-.element { margin-inline-start: 1rem; }`}</code></pre>
+.element { margin-inline-start: 1rem; }`} />
         </ExpandablePanel.Content>
       </ExpandablePanel>
 

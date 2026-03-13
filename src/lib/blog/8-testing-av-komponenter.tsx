@@ -3,6 +3,7 @@ import { UnorderedList, OrderedList, ListItem } from "@fremtind/jokul/list";
 import { Message } from "@fremtind/jokul/message";
 import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
+import { CodeBlock } from "@/components/CodeBlock";
 import type { BlogPost } from "./types";
 
 const post: BlogPost = {
@@ -47,14 +48,14 @@ const post: BlogPost = {
         ikke hva brukeren gjør. En bruker klikker ikke bare ett DOM-event; de hovrer, fokuserer,
         klikker og blurrer. <code>userEvent</code> simulerer hele sekvensen:
       </p>
-      <pre><code>{`// Unngå
+      <CodeBlock code={`// Unngå
 fireEvent.click(button);
 
 // Foretrekk — simulerer hele interaksjonssekvensen
 await userEvent.click(button);
 
 // For tekstinntasting
-await userEvent.type(input, "Ola Nordmann");`}</code></pre>
+await userEvent.type(input, "Ola Nordmann");`} />
 
       <h2>jest-axe — tilgjengelighet i CI</h2>
       <OrderedList>
@@ -79,7 +80,7 @@ await userEvent.type(input, "Ola Nordmann");`}</code></pre>
             Her er et komprimert eksempel fra kodebasen vår. Testen fanger akkurat feilen vi hadde
             i produksjon — at feilmeldinger ikke ble kunngjort til skjermlesere:
           </p>
-          <pre><code>{`import { render, screen } from "@testing-library/react";
+          <CodeBlock code={`import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe, toHaveNoViolations } from "jest-axe";
 expect.extend(toHaveNoViolations);
@@ -101,7 +102,7 @@ describe("Kontaktskjema", () => {
     const { container } = render(<Kontaktskjema />);
     expect(await axe(container)).toHaveNoViolations();
   });
-});`}</code></pre>
+});`} />
           <p>
             Legg merke til <code>getByRole("alert")</code> — det tester at meldingen faktisk
             bruker riktig ARIA-rolle, ikke bare at den er i DOM-en. Det er forskjellen.

@@ -9,7 +9,7 @@ import {Select} from "@fremtind/jokul/select";
 import {SegmentedControl, SegmentedControlButton} from "@fremtind/jokul/segmented-control";
 import {DescriptionDetail, DescriptionList, DescriptionTerm} from "@fremtind/jokul/description-list";
 import {Link} from "@fremtind/jokul/link";
-import type {PropSource} from "@/lib/componentDocs";
+import type {PropSource, PropStatus} from "@/lib/componentDocs";
 import {componentDocs} from "@/lib/componentDocs";
 import {Grid} from "@/components/Grid";
 import {ComponentCard} from "@/components/ComponentCard";
@@ -19,14 +19,15 @@ import {useLocalStorage} from "@/hooks/useLocalStorage";
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
 const ALL_TAGS = Array.from(new Set(componentDocs.flatMap((d) => d.tags))).sort();
 
-type PropEntry = { propName: string; source: PropSource | undefined; usedBy: { id: string; name: string }[] };
+type PropEntry = { propName: string; source: PropSource; statuses: Set<PropStatus>; usedBy: { id: string; name: string }[] };
 
 const ALL_PROP_ENTRIES: PropEntry[] = (() => {
-    const map = new Map<string, { source: PropSource | undefined; usedBy: { id: string; name: string }[] }>();
+    const map = new Map<string, { source: PropSource; statuses: Set<PropStatus>; usedBy: { id: string; name: string }[] }>();
     for (const doc of componentDocs) {
         for (const prop of doc.props) {
-            const existing = map.get(prop.name) ?? {source: prop.source, usedBy: []};
+            const existing = map.get(prop.name) ?? {source: prop.source, statuses: new Set<PropStatus>(), usedBy: []};
             if (!existing.usedBy.find((e) => e.id === doc.id)) existing.usedBy.push({id: doc.id, name: doc.name});
+            existing.statuses.add(prop.status);
             // if any doc marks it as custom, treat it as custom
             if (prop.source === "custom") existing.source = "custom";
             else if (prop.source === "native" && existing.source == null) existing.source = "native";
@@ -34,7 +35,7 @@ const ALL_PROP_ENTRIES: PropEntry[] = (() => {
         }
     }
     return Array.from(map.entries())
-        .map(([propName, {source, usedBy}]) => ({propName, source, usedBy}))
+        .map(([propName, {source, statuses, usedBy}]) => ({propName, source, statuses, usedBy}))
         .sort((a, b) => a.propName.localeCompare(b.propName, "nb"));
 })();
 
@@ -47,6 +48,7 @@ export default function ComponentsPage() {
     const [propQuery, setPropQuery] = useState("");
     const [propSortBy, setPropSortBy] = useLocalStorage("comp-prop-sort", "az");
     const [propSourceFilter, setPropSourceFilter] = useState<PropSource | null>(null);
+    const [propStatusFilter, setPropStatusFilter] = useState<PropStatus | null>(null);
 
     const filtered = useMemo(() => {
         const q = query.toLowerCase();
@@ -80,13 +82,14 @@ export default function ComponentsPage() {
         const results = ALL_PROP_ENTRIES.filter(
             (e) =>
                 (!q || e.propName.toLowerCase().includes(q) || e.usedBy.some((c) => c.name.toLowerCase().includes(q))) &&
-                (!propSourceFilter || e.source === propSourceFilter),
+                (!propSourceFilter || e.source === propSourceFilter) &&
+                (!propStatusFilter || e.statuses.has(propStatusFilter)),
         );
         if (propSortBy === "za") return results.sort((a, b) => b.propName.localeCompare(a.propName, "nb"));
         if (propSortBy === "most-used") return results.sort((a, b) => b.usedBy.length - a.usedBy.length);
         if (propSortBy === "least-used") return results.sort((a, b) => a.usedBy.length - b.usedBy.length);
         return results.sort((a, b) => a.propName.localeCompare(b.propName, "nb"));
-    }, [propQuery, propSortBy, propSourceFilter]);
+    }, [propQuery, propSortBy, propSourceFilter, propStatusFilter]);
 
     if (!viewReady) {
         return (
@@ -158,30 +161,34 @@ export default function ComponentsPage() {
                                 ]}
                             />
                         </Flex>
-                        <Flex gap="xs" wrap="wrap">
+                        <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
                             {ALL_CATEGORIES.map((cat) => (
-                                <Chip
-                                    key={cat}
-                                    variant="filter"
-                                    selected={activeCategory === cat}
-                                    onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
-                                >
-                                    {cat}
-                                </Chip>
+                                <li key={cat}>
+                                    <Chip
+                                        variant="filter"
+                                        selected={activeCategory === cat}
+                                        onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
+                                    >
+                                        {cat}
+                                    </Chip>
+                                </li>
                             ))}
                         </Flex>
                         <Flex gap="xs" wrap="wrap" alignItems="center">
                             <span className="muted" style={{fontSize: "0.875rem"}}>Tags:</span>
-                            {ALL_TAGS.map((tag) => (
-                                <Chip
-                                    key={tag}
-                                    variant="filter"
-                                    selected={activeTag === tag}
-                                    onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-                                >
-                                    {tag}
-                                </Chip>
-                            ))}
+                            <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
+                                {ALL_TAGS.map((tag) => (
+                                    <li key={tag}>
+                                        <Chip
+                                            variant="filter"
+                                            selected={activeTag === tag}
+                                            onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+                                        >
+                                            {tag}
+                                        </Chip>
+                                    </li>
+                                ))}
+                            </Flex>
                         </Flex>
                     </Flex>
 
@@ -219,18 +226,35 @@ export default function ComponentsPage() {
                             ]}
                         />
                     </Flex>
-                    <Flex gap="xs" wrap="wrap">
+                    <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
                         {(["custom", "native", "react", "aria"] as PropSource[]).map((src) => {
                             const label = src === "custom" ? "Egendefinert" : src === "native" ? "Native HTML" : src === "react" ? "React" : "ARIA";
                             return (
-                                <Chip
-                                    key={src}
-                                    variant="filter"
-                                    selected={propSourceFilter === src}
-                                    onClick={() => setPropSourceFilter(propSourceFilter === src ? null : src)}
-                                >
-                                    {label}
-                                </Chip>
+                                <li key={src}>
+                                    <Chip
+                                        variant="filter"
+                                        selected={propSourceFilter === src}
+                                        onClick={() => setPropSourceFilter(propSourceFilter === src ? null : src)}
+                                    >
+                                        {label}
+                                    </Chip>
+                                </li>
+                            );
+                        })}
+                    </Flex>
+                    <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
+                        {(["stable", "deprecated", "experimental"] as PropStatus[]).map((s) => {
+                            const label = s === "stable" ? "Stabil" : s === "deprecated" ? "Utfaset" : "Eksperimentell";
+                            return (
+                                <li key={s}>
+                                    <Chip
+                                        variant="filter"
+                                        selected={propStatusFilter === s}
+                                        onClick={() => setPropStatusFilter(propStatusFilter === s ? null : s)}
+                                    >
+                                        {label}
+                                    </Chip>
+                                </li>
                             );
                         })}
                     </Flex>
@@ -242,14 +266,13 @@ export default function ComponentsPage() {
                             <React.Fragment key={entry.propName}>
                                 <DescriptionTerm>
                                     <Flex direction="column" gap="xs">
-                                        <code>{entry.propName} {entry.source && !propSourceFilter && `(${entry.source})`}</code>
+                                        <code>{entry.propName} {!propSourceFilter && `(${entry.source})`}</code>
                                     </Flex>
                                 </DescriptionTerm>
                                 {entry.usedBy.map((comp) => (
                                     <DescriptionDetail key={comp.id}><Link
                                         href={`/component/${comp.id}`}>{comp.name}</Link></DescriptionDetail>
                                 ))}
-
                             </React.Fragment>
                         ))}
                     </DescriptionList>

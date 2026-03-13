@@ -44,10 +44,8 @@ export default function BlogPage() {
     return (
         <Flex as="main" direction="column" gap="xl">
             <NavLink href="/" back>Tilbake til forsiden</NavLink>
-            <Flex direction="column" gap="s">
-                <h1>Blogg</h1>
-                <p>Artikler om Jøkul — designsystemet til Fremtind. Tips, dybdeanalyser og god praksis for deg som bygger med komponentbiblioteket.</p>
-            </Flex>
+            <h1>Blogg</h1>
+            <p>Artikler om Jøkul — designsystemet til Fremtind. Tips, dybdeanalyser og god praksis for deg som bygger med komponentbiblioteket.</p>
 
             <Flex direction="column" gap="m">
                 <Flex gap="m" alignItems="end" wrap="wrap">
@@ -70,35 +68,33 @@ export default function BlogPage() {
                         ]}
                     />
                 </Flex>
-                <Flex direction="column" gap="xs">
-                    <p className="muted">Kategori</p>
-                    <Flex gap="xs" wrap="wrap">
-                        {ALL_CATEGORIES.map((cat) => (
+                <p className="muted">Kategori</p>
+                <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
+                    {ALL_CATEGORIES.map((cat) => (
+                        <li key={cat}>
                             <Chip
-                                key={cat}
                                 variant="filter"
                                 selected={activeCategory === cat}
                                 onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
                             >
                                 {cat}
                             </Chip>
-                        ))}
-                    </Flex>
+                        </li>
+                    ))}
                 </Flex>
-                <Flex direction="column" gap="xs">
-                    <p className="muted">Tags</p>
-                    <Flex gap="xs" wrap="wrap">
-                        {ALL_TAGS.map((tag) => (
+                <p className="muted">Tags</p>
+                <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
+                    {ALL_TAGS.map((tag) => (
+                        <li key={tag}>
                             <Chip
-                                key={tag}
                                 variant="filter"
                                 selected={activeTag === tag}
                                 onClick={() => setActiveTag(activeTag === tag ? null : tag)}
                             >
                                 {tag}
                             </Chip>
-                        ))}
-                    </Flex>
+                        </li>
+                    ))}
                 </Flex>
             </Flex>
 

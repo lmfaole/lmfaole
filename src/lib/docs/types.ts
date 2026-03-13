@@ -10,9 +10,9 @@ export interface PropDef {
     default?: string;
     description: string;
     /** Whether this prop is a custom component prop or a native HTML attribute pass-through */
-    source?: PropSource;
-    /** Status for this specific prop, e.g. "deprecated" */
-    status?: PropStatus;
+    source: PropSource;
+    /** Status for this specific prop */
+    status: PropStatus;
     /** Reason shown in a tooltip next to the status badge */
     statusDescription?: string;
 }
@@ -21,8 +21,12 @@ export interface ComponentExample {
     title: string;
     description?: string;
     code: string;
+    /** If set, this example is a migration guide. This field holds the deprecated "before" code, and `code` holds the replacement "after" code. */
+    migrationBefore?: string;
     preview?: React.ReactNode;
     tags?: string[];
+    /** IDs of other Jøkul components used in this example, for showing composition context */
+    uses?: string[];
 }
 
 export interface SubComponentDoc {

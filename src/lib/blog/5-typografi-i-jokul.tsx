@@ -3,6 +3,7 @@ import { UnorderedList, ListItem } from "@fremtind/jokul/list";
 import { Message } from "@fremtind/jokul/message";
 import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
+import { CodeBlock } from "@/components/CodeBlock";
 import type { BlogPost } from "./types";
 
 const post: BlogPost = {
@@ -59,7 +60,7 @@ const post: BlogPost = {
         betyr at du kan inkludere riktig typografi i dine egne komponenter uten å legge til
         ekstra HTML-wrapper-elementer:
       </p>
-      <pre><code>{`@use "@fremtind/jokul/core" as jokul;
+      <CodeBlock code={`@use "@fremtind/jokul/core" as jokul;
 
 .min-komponent__tittel {
   @include jokul.jkl-title-small;
@@ -68,7 +69,7 @@ const post: BlogPost = {
 .min-komponent__brødtekst {
   @include jokul.jkl-body;
   max-width: 66ch;
-}`}</code></pre>
+}`} />
 
       <h2>Linjelengde — den regelen de fleste ignorerer</h2>
       <UnorderedList>

@@ -5,6 +5,7 @@ import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
 import { Tag } from "@fremtind/jokul/tag";
 import { Flex } from "@fremtind/jokul/flex";
+import { CodeBlock } from "@/components/CodeBlock";
 import type { BlogPost } from "../blog/types";
 
 const post: BlogPost = {
@@ -169,16 +170,14 @@ const post: BlogPost = {
         Jøkul støtter fullstendig mørk modus uten ekstra kode i komponentene. Temaet aktiveres
         ved å sette et attributt på et overordnet element:
       </p>
-      <pre>
-        <code>{`<!-- Lys modus (standard) -->
+      <CodeBlock code={`<!-- Lys modus (standard) -->
 <div data-theme="light">...</div>
 
 <!-- Mørk modus -->
 <div data-theme="dark">...</div>
 
 <!-- Følger OS-innstillingen (anbefalt) -->
-<div data-theme="auto">...</div>`}</code>
-      </pre>
+<div data-theme="auto">...</div>`} />
       <p>
         Alle semantiske fargevariabler bytter automatisk verdi basert på det aktive temaet.
         Primitive tokens endres <em>ikke</em>.
@@ -217,8 +216,7 @@ const post: BlogPost = {
         <ExpandablePanel.Header>Bruke fargevariabler i egne komponenter</ExpandablePanel.Header>
         <ExpandablePanel.Content>
           <p>Eksempel på riktig bruk av semantiske fargevariabler i CSS:</p>
-          <pre>
-            <code>{`.mitt-kort {
+          <CodeBlock code={`.mitt-kort {
   background-color: var(--jkl-color-background-subtle);
   border: 1px solid var(--jkl-color-border-default);
   color: var(--jkl-color-content-default);
@@ -232,8 +230,7 @@ const post: BlogPost = {
 .mitt-kort--markert {
   border-color: var(--jkl-color-border-focused);
   background-color: var(--jkl-color-background-default);
-}`}</code>
-          </pre>
+}`} />
         </ExpandablePanel.Content>
       </ExpandablePanel>
 

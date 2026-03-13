@@ -14,7 +14,7 @@ import {PropTable} from "@/components/PropTable";
 import {CodeBlock} from "@/components/CodeBlock";
 import {MigrationExample} from "@/components/MigrationExample";
 
-import { toPascalCase, slugify } from "@/lib/format";
+import {slugify, toPascalCase} from "@/lib/format";
 
 export default function ComponentPage() {
     const params = useParams();
@@ -22,10 +22,10 @@ export default function ComponentPage() {
 
     if (!doc) {
         return (
-            <Flex as="main" direction="column" gap="m">
+            <main>
                 <h1>Fant ikke komponenten</h1>
                 <Link href="/component">Tilbake til alle komponenter</Link>
-            </Flex>
+            </main>
         );
     }
 
@@ -33,19 +33,17 @@ export default function ComponentPage() {
     const migrationExamples = doc.examples.filter((ex) => !!ex.migrationBefore);
 
     return (
-        <Flex as="article" direction="column" gap="xl">
-            <Flex as="header" direction="column" gap="m">
-                <Flex direction="column" gap="s">
-                    <Flex gap="s" alignItems="center">
-                        <h1>{doc.name}</h1>
-                        <Tag variant="neutral">{doc.category}</Tag>
-                    </Flex>
-                    <code className="component-package">{doc.package}</code>
-                    <p>{doc.description}</p>
-                    {doc.notes && (
-                        <Message variant="info">{doc.notes}</Message>
-                    )}
+        <article>
+            <header>
+                <Flex gap="s" alignItems="center">
+                    <h1>{doc.name}</h1>
+                    <Tag variant="neutral">{doc.category}</Tag>
                 </Flex>
+                <code className="component-package">{doc.package}</code>
+                <p>{doc.description}</p>
+                {doc.notes && (
+                    <Message variant="info">{doc.notes}</Message>
+                )}
                 {regularExamples[0]?.preview && (
                     <Card padding="l"
                           style={{display: "flex", alignItems: "center", justifyContent: "center", minHeight: "10rem"}}>
@@ -54,21 +52,19 @@ export default function ComponentPage() {
                         </div>
                     </Card>
                 )}
-            </Flex>
+            </header>
 
             <TableOfContents label="Innhold">
                 <TableOfContents.Link href="#props">Props</TableOfContents.Link>
-                {regularExamples.map((ex) => (
-                    <TableOfContents.Link key={ex.title} href={`#${slugify(ex.title)}`}>
-                        {ex.title}
-                    </TableOfContents.Link>
-                ))}
+                {regularExamples.length > 0 && (
+                    <TableOfContents.Link href="#eksempler">Eksempler</TableOfContents.Link>
+                )}
                 {migrationExamples.length > 0 && (
                     <TableOfContents.Link href="#migrering">Migrering</TableOfContents.Link>
                 )}
             </TableOfContents>
 
-            <Flex direction="column" gap="m">
+            <section>
                 <h2 id="props">Props</h2>
                 {doc.subComponents && doc.subComponents.length > 0 ? (
                     <Tabs>
@@ -102,54 +98,53 @@ export default function ComponentPage() {
                 ) : (
                     <PropTable props={doc.props}/>
                 )}
-            </Flex>
+            </section>
 
-            <Flex direction="column" gap="xl">
-                <h2>Eksempler</h2>
+            <section>
+                <h2 id="eksempler">Eksempler</h2>
                 {regularExamples.map((example) => (
-                    <Flex key={example.title} direction="column" gap="m" className="component-example">
-                        <Flex direction="column" gap="xs">
-                            <h3 id={slugify(example.title)}>{example.title}</h3>
-                            {example.description && <p>{example.description}</p>}
-                            {example.uses && example.uses.length > 0 && (
-                                <Flex gap="xs" alignItems="center" wrap="wrap">
-                                    <span style={{ fontSize: "var(--jkl-font-size-s)", color: "var(--jkl-color-text-subdued)" }}>Bruker:</span>
-                                    <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
-                                        {example.uses.map((id) => (
-                                            <li key={id}>
-                                                <Link href={`/component/${id}`}>
-                                                    <Tag variant="neutral">{toPascalCase(id)}</Tag>
-                                                </Link>
-                                            </li>
-                                        ))}
-                                    </Flex>
+                    <div key={example.title} className="component-example">
+                        <h3 id={slugify(example.title)}>{example.title}</h3>
+                        {example.description && <p>{example.description}</p>}
+                        {example.uses && example.uses.length > 0 && (
+                            <Flex gap="xs" alignItems="center" wrap="wrap">
+                                <span style={{
+                                    fontSize: "var(--jkl-font-size-s)",
+                                    color: "var(--jkl-color-text-subdued)"
+                                }}>Bruker:</span>
+                                <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
+                                    {example.uses.map((id) => (
+                                        <li key={id}>
+                                            <Link href={`/component/${id}`}>
+                                                <Tag variant="neutral">{toPascalCase(id)}</Tag>
+                                            </Link>
+                                        </li>
+                                    ))}
                                 </Flex>
-                            )}
-                        </Flex>
+                            </Flex>
+                        )}
                         {example.preview && (
                             <div className="component-example__preview">
                                 {example.preview}
                             </div>
                         )}
                         <CodeBlock code={example.code}/>
-                    </Flex>
+                    </div>
                 ))}
-            </Flex>
+            </section>
 
             {migrationExamples.length > 0 && (
-                <Flex direction="column" gap="l">
-                    <Flex direction="column" gap="xs">
-                        <h2 id="migrering">Migrering</h2>
-                        <p>Disse eksemplene viser hvordan du erstatter utfasede props med den anbefalte API-en.</p>
-                    </Flex>
+                <section>
+                    <h2 id="migrering">Migrering</h2>
+                    <p>Disse eksemplene viser hvordan du erstatter utfasede props med den anbefalte API-en.</p>
                     {migrationExamples.map((example) => (
                         <MigrationExample
                             key={example.title}
                             example={example as typeof example & { migrationBefore: string }}
                         />
                     ))}
-                </Flex>
+                </section>
             )}
-        </Flex>
+        </article>
     );
 }

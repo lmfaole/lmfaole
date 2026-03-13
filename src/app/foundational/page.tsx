@@ -13,28 +13,22 @@ export default function FoundationalPage() {
     return (
         <Flex as="main" direction="column" gap="xl">
             <NavLink href="/" back>Tilbake til forsiden</NavLink>
-            <Flex direction="column" gap="s">
-                <h1>Grunnleggende konsepter</h1>
-                <p>Fundamentene i Jøkul — typografi, farger og spacing. Les disse for å forstå designsystemets kjerneprinsipper.</p>
-            </Flex>
+            <h1>Grunnleggende konsepter</h1>
+            <p>Fundamentene i Jøkul — typografi, farger og spacing. Les disse for å forstå designsystemets kjerneprinsipper.</p>
             <Grid gap="l">
                 {foundationalPosts.map((post) => (
                     <Card key={post.id} padding="l">
-                        <Flex direction="column" gap="m">
-                            <Flex direction="column" gap="xs">
-                                <h2>
-                                    <Link href={`/foundational/${post.id}`}>{post.title}</Link>
-                                </h2>
-                                <p>{post.excerpt}</p>
+                        <h2>
+                            <Link href={`/foundational/${post.id}`}>{post.title}</Link>
+                        </h2>
+                        <p>{post.excerpt}</p>
+                        {post.tags.length > 0 && (
+                            <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
+                                {post.tags.map((tag) => (
+                                    <li key={tag}><Tag variant="neutral">{tag}</Tag></li>
+                                ))}
                             </Flex>
-                            {post.tags.length > 0 && (
-                                <Flex gap="xs" wrap="wrap">
-                                    {post.tags.map((tag) => (
-                                        <Tag key={tag} variant="neutral">{tag}</Tag>
-                                    ))}
-                                </Flex>
-                            )}
-                        </Flex>
+                        )}
                     </Card>
                 ))}
             </Grid>

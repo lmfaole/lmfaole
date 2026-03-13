@@ -26,6 +26,7 @@ import linkDoc from "./link";
 import linkListDoc from "./link-list";
 import listDoc from "./list";
 import loaderDoc from "./loader";
+import skeletonDoc from "./skeleton";
 import logoDoc from "./logo";
 import navLinkDoc from "./nav-link";
 import paginationDoc from "./pagination";
@@ -75,6 +76,7 @@ export const componentDocs: ComponentDoc[] = [
     linkListDoc,
     listDoc,
     loaderDoc,
+    skeletonDoc,
     logoDoc,
     menuDoc,
     messageDoc,

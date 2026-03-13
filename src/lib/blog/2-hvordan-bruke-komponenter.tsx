@@ -5,6 +5,7 @@ import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
 import { Tag } from "@fremtind/jokul/tag";
 import { Flex } from "@fremtind/jokul/flex";
+import { CodeBlock } from "@/components/CodeBlock";
 import type { BlogPost } from "./types";
 
 const post: BlogPost = {
@@ -30,7 +31,7 @@ const post: BlogPost = {
         Det betyr at du aldri trekker inn knappekode når du bare trenger en tekstinndata. I praksis
         ser en importlinje slik ut:
       </p>
-      <pre><code>{'import { Button } from "@fremtind/jokul/button";'}</code></pre>
+      <CodeBlock code={'import { Button } from "@fremtind/jokul/button";'} />
       <p>
         Enkelt, forutsigbart og lett å grep etter i kodebasen. Ingen magiske re-eksporter som gjemmer
         seg bak et barrel-fil-labyrint.
@@ -72,9 +73,9 @@ const post: BlogPost = {
           <p>
             Løsningen er enkel — importer én gang i rot-filen din:
           </p>
-          <pre><code>{`// app/layout.tsx eller pages/_app.tsx
+          <CodeBlock code={`// app/layout.tsx eller pages/_app.tsx
 import "@fremtind/jokul/core.css";
-// komponent-CSS kan importeres der de brukes`}</code></pre>
+// komponent-CSS kan importeres der de brukes`} />
           <p>
             Etter at vi la dette inn i code review-sjekklisten vår, forsvant hele kategorien av
             "rare styling-bugs" fra backloggen.

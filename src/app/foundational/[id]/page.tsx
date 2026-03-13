@@ -2,15 +2,11 @@
 
 import React from "react";
 import { Link } from "@fremtind/jokul/link";
-import { Flex } from "@fremtind/jokul/flex";
 import { TableOfContents } from "@fremtind/jokul/table-of-contents";
 import { PostMeta } from "@/components/PostMeta";
 import { useParams } from "next/navigation";
 import { getFoundationalPost } from "@/lib/foundationalPosts";
-
-function slugify(text: string) {
-    return text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "");
-}
+import { slugify } from "@/lib/format";
 
 function extractH2s(node: React.ReactNode): string[] {
     const headings: string[] = [];
@@ -47,10 +43,10 @@ export default function FoundationalPostPage() {
 
     if (!post) {
         return (
-            <Flex as="main" direction="column" gap="m">
+            <main>
                 <h1>Fant ikke innlegget</h1>
                 <Link href="/foundational">Tilbake til grunnleggende konsepter</Link>
-            </Flex>
+            </main>
         );
     }
 
@@ -58,12 +54,12 @@ export default function FoundationalPostPage() {
     const contentWithIds = injectH2Ids(post.content);
 
     return (
-        <Flex as="article" direction="column" gap="m">
-            <Flex as="header" direction="column" gap="s">
+        <article>
+            <header>
                 <h1>{post.title}</h1>
                 <p>{post.excerpt}</p>
                 <PostMeta category={post.category} date={post.date} author={post.author} content={post.content} tags={post.tags} />
-            </Flex>
+            </header>
             {headings.length > 0 && (
                 <TableOfContents label="Innhold">
                     {headings.map((h) => (
@@ -72,6 +68,6 @@ export default function FoundationalPostPage() {
                 </TableOfContents>
             )}
             {contentWithIds}
-        </Flex>
+        </article>
     );
 }

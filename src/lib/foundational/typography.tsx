@@ -5,6 +5,7 @@ import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
 import { Tag } from "@fremtind/jokul/tag";
 import { Flex } from "@fremtind/jokul/flex";
+import { CodeBlock } from "@/components/CodeBlock";
 import type { BlogPost } from "../blog/types";
 
 const post: BlogPost = {
@@ -132,8 +133,7 @@ const post: BlogPost = {
 
       <h2>CSS-variabler i praksis</h2>
       <p>Slik bruker du typografi-tokens direkte i CSS:</p>
-      <pre>
-        <code>{`/* Eksempel: egendefinert komponent */
+      <CodeBlock code={`/* Eksempel: egendefinert komponent */
 .min-seksjon__tittel {
   font-size: var(--jkl-font-size-title-small);
   line-height: var(--jkl-line-height-heading);
@@ -145,8 +145,7 @@ const post: BlogPost = {
   font-size: var(--jkl-font-size-body);
   line-height: var(--jkl-line-height-body);
   max-width: 66ch;
-}`}</code>
-      </pre>
+}`} />
 
       <h2>Linjelengde og lesbarhet</h2>
       <p>
@@ -174,14 +173,12 @@ const post: BlogPost = {
         Jøkuls skala er designet for desktopskjermer (1280px+), men fungerer godt på alle
         skjermstørrelser. For jevn skalering kan du bruke CSS <code>clamp()</code>:
       </p>
-      <pre>
-        <code>{`/* Skalerer fra body (16px) til title-small (28px) */
+      <CodeBlock code={`/* Skalerer fra body (16px) til title-small (28px) */
 font-size: clamp(
   var(--jkl-font-size-body),
   1rem + 2vw,
   var(--jkl-font-size-title-small)
-);`}</code>
-      </pre>
+);`} />
       <p>
         I de fleste applikasjoner er det tilstrekkelig å bruke faste størrelser og la layouten
         håndtere tilpasningen via responsive breakpoints.

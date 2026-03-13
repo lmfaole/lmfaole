@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="no">
-      <body className="jkl">
+      <body className="jkl" data-theme="auto">
         {children}
       </body>
     </html>

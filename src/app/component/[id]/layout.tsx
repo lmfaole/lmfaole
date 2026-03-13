@@ -20,17 +20,17 @@ export default function ComponentLayout({ children }: { children: React.ReactNod
             <NavLink href="/component" back>Tilbake til alle komponenter</NavLink>
             {children}
             {related.length > 0 && (
-                <Flex direction="column" gap="s">
+                <>
                     <h2>Relaterte komponenter</h2>
                     <Grid>
                         {related.map((rel) => (
                             <ComponentCard key={rel.id} doc={rel} />
                         ))}
                     </Grid>
-                </Flex>
+                </>
             )}
             {doc && (
-                <Flex as="footer" direction="column" gap="xs">
+                <footer>
                     <p className="muted">
                         Importér fra{" "}
                         <code>{doc.package}</code>
@@ -40,7 +40,7 @@ export default function ComponentLayout({ children }: { children: React.ReactNod
                             Se offisiell Jøkul-dokumentasjon
                         </Link>
                     </p>
-                </Flex>
+                </footer>
             )}
         </Flex>
     );

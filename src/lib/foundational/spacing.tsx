@@ -5,6 +5,7 @@ import { ExpandablePanel } from "@fremtind/jokul/expander";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
 import { Tag } from "@fremtind/jokul/tag";
 import { Flex } from "@fremtind/jokul/flex";
+import { CodeBlock } from "@/components/CodeBlock";
 import type { BlogPost } from "../blog/types";
 
 const post: BlogPost = {
@@ -117,8 +118,7 @@ const post: BlogPost = {
         Jøkul tilbyr en <code>Flex</code>-komponent som er en tynn wrapper rundt CSS Flexbox
         med innebygd støtte for spacing-tokens via <code>gap</code>-propen:
       </p>
-      <pre>
-        <code>{`import { Flex } from "@fremtind/jokul/flex";
+      <CodeBlock code={`import { Flex } from "@fremtind/jokul/flex";
 
 // Horisontal rad med medium gap
 <Flex gap="m" align="center">
@@ -138,8 +138,7 @@ const post: BlogPost = {
   <Tag>React</Tag>
   <Tag>TypeScript</Tag>
   <Tag>Jøkul</Tag>
-</Flex>`}</code>
-      </pre>
+</Flex>`} />
 
       <h2>Tilgjengelige props på Flex</h2>
       <DescriptionList>
@@ -178,8 +177,7 @@ const post: BlogPost = {
         Spacing-tokenene er faste verdier (ikke responsive), men du kan justere dem med
         media queries:
       </p>
-      <pre>
-        <code>{`.min-seksjon {
+      <CodeBlock code={`.min-seksjon {
   padding: var(--jkl-spacing-l);
 }
 
@@ -187,22 +185,19 @@ const post: BlogPost = {
   .min-seksjon {
     padding: var(--jkl-spacing-m);
   }
-}`}</code>
-      </pre>
+}`} />
       <p>
         For Flex-komponenten kan du bruke standard breakpoint-klasser eller betinget rendering
         via React:
       </p>
-      <pre>
-        <code>{`const isMobile = useMediaQuery("(max-width: 768px)");
+      <CodeBlock code={`const isMobile = useMediaQuery("(max-width: 768px)");
 
 <Flex
   direction={isMobile ? "column" : "row"}
   gap={isMobile ? "m" : "l"}
 >
   ...
-</Flex>`}</code>
-      </pre>
+</Flex>`} />
 
       <h2>Spacing i praksis — eksempler</h2>
       <UnorderedList>

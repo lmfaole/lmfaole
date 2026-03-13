@@ -1,35 +1,38 @@
 @use "@fremtind/jokul/styles/fonts/webfonts.scss";
 @use "@fremtind/jokul/styles/core/jkl";
 @use "@fremtind/jokul/styles/core/core.scss";
-@use "@fremtind/jokul/styles/components/button/button.scss";
-@use "@fremtind/jokul/styles/components/card/card.scss";
-@use "@fremtind/jokul/styles/components/flex/flex.scss";
-@use "@fremtind/jokul/styles/components/icon/icon.scss";
-@use "@fremtind/jokul/styles/components/nav-link/nav-link.scss";
-@use "@fremtind/jokul/styles/components/link/link.scss";
-@use "@fremtind/jokul/styles/components/list/list.scss";
-@use "@fremtind/jokul/styles/components/loader/loader.scss";
-@use "@fremtind/jokul/styles/components/logo/logo.scss";
-@use "@fremtind/jokul/styles/components/message/message.scss";
-@use "@fremtind/jokul/styles/components/expander/expandable.scss";
-@use "@fremtind/jokul/styles/components/description-list/description-list.scss";
-@use "@fremtind/jokul/styles/components/tag/tag.scss";
-@use "@fremtind/jokul/styles/components/text-input/text-input.scss";
-@use "@fremtind/jokul/styles/components/toggle-switch/toggle-switch.scss";
 @use "@fremtind/jokul/styles/core/theme/typography.scss";
+
 @use "@fremtind/jokul/styles/components/autosuggest/autosuggest.scss";
 @use "@fremtind/jokul/styles/components/breadcrumb/breadcrumb.scss";
+@use "@fremtind/jokul/styles/components/button/button.scss";
+@use "@fremtind/jokul/styles/components/card/card.scss";
 @use "@fremtind/jokul/styles/components/checkbox/checkbox.scss";
 @use "@fremtind/jokul/styles/components/checkbox-panel/checkbox-panel.scss";
 @use "@fremtind/jokul/styles/components/chip/chip.scss";
 @use "@fremtind/jokul/styles/components/combobox/combobox.scss";
 @use "@fremtind/jokul/styles/components/countdown/countdown.scss";
+// @use "@fremtind/jokul/styles/components/datepicker/datepicker.scss"; // broken: incorrect @layer nesting causes Turbopack CSS parse error
+@use "@fremtind/jokul/styles/components/description-list/description-list.scss";
+@use "@fremtind/jokul/styles/components/expander/expandable.scss";
+@use "@fremtind/jokul/styles/components/feedback/feedback.scss";
 @use "@fremtind/jokul/styles/components/file-input/file-input.scss";
+@use "@fremtind/jokul/styles/components/flex/flex.scss";
+@use "@fremtind/jokul/styles/components/help/help.scss";
+@use "@fremtind/jokul/styles/components/icon/icon.scss";
 @use "@fremtind/jokul/styles/components/icon-button/icon-button.scss";
 @use "@fremtind/jokul/styles/components/image/image.scss";
+@use "@fremtind/jokul/styles/components/input-group/input-group.scss";
+@use "@fremtind/jokul/styles/components/link/link.scss";
 @use "@fremtind/jokul/styles/components/link-list/link-list.scss";
+@use "@fremtind/jokul/styles/components/list/list.scss";
+@use "@fremtind/jokul/styles/components/loader/loader.scss";
+@use "@fremtind/jokul/styles/components/loader/skeleton-loader.scss";
+@use "@fremtind/jokul/styles/components/logo/logo.scss";
 @use "@fremtind/jokul/styles/components/menu/menu.scss";
+@use "@fremtind/jokul/styles/components/message/message.scss";
 @use "@fremtind/jokul/styles/components/modal/modal.scss";
+@use "@fremtind/jokul/styles/components/nav-link/nav-link.scss";
 @use "@fremtind/jokul/styles/components/pagination/pagination.scss";
 @use "@fremtind/jokul/styles/components/popover/popover.scss";
 @use "@fremtind/jokul/styles/components/progress-bar/progress-bar.scss";
@@ -43,10 +46,12 @@
 @use "@fremtind/jokul/styles/components/table/table.scss";
 @use "@fremtind/jokul/styles/components/table-of-contents/table-of-contents.scss";
 @use "@fremtind/jokul/styles/components/tabs/tabs.scss";
+@use "@fremtind/jokul/styles/components/tag/tag.scss";
 @use "@fremtind/jokul/styles/components/text-area/text-area.scss";
+@use "@fremtind/jokul/styles/components/text-input/text-input.scss";
 @use "@fremtind/jokul/styles/components/toast/toast.scss";
+@use "@fremtind/jokul/styles/components/toggle-switch/toggle-switch.scss";
 @use "@fremtind/jokul/styles/components/tooltip/tooltip.scss";
-@use "@fremtind/jokul/styles/components/feedback/feedback.scss";
 
 body {
   background-color: var(--jkl-color-background-page);
@@ -68,32 +73,64 @@ article p {
   max-width: 60ch;
 }
 
+// Flow spacing within articles
+article > header {
+  margin-block-end: var(--jkl-spacing-xl);
+}
+
+article > section {
+  margin-block-start: var(--jkl-spacing-xl);
+}
+
 h1, .h1 {
   @include jkl.text-style("heading-1");
+  margin-block: var(--jkl-spacing-2xl) var(--jkl-spacing-s);
 }
 
 h2, .h2 {
   @include jkl.text-style("heading-2");
+  margin-block: var(--jkl-spacing-xl) var(--jkl-spacing-xs);
 }
 
 h3, .h3 {
   @include jkl.text-style("heading-3");
+  margin-block: var(--jkl-spacing-l) var(--jkl-spacing-2xs);
 }
 
 h4, .h4 {
   @include jkl.text-style("heading-4");
+  margin-block: var(--jkl-spacing-m) var(--jkl-spacing-3xs);
 }
 
 h5, .h5 {
   @include jkl.text-style("heading-5");
+  margin-block: var(--jkl-spacing-s) var(--jkl-spacing-3xs);
 }
 
 p, .p, .p.medium {
   @include jkl.text-style("paragraph-medium");
+  margin-block-end: var(--jkl-spacing-s);
 }
 
 small, .p.small, .small {
   @include jkl.text-style("paragraph-small");
+  margin-block-end: var(--jkl-spacing-xs);
+}
+
+// Prevent unwanted leading space at the top of any container
+h1, h2, h3, h4, h5, p, small {
+  &:first-child {
+    margin-block-start: 0;
+  }
+
+  &:last-child {
+    margin-block-end: 0;
+  }
+}
+
+code {
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+  line-height: var(--jkl-line-height-normal);
 }
 
 .muted {
@@ -104,9 +141,6 @@ small, .p.small, .small {
   background: var(--jkl-color-background-container-subdued);
   border: 1px solid var(--jkl-color-border-subdued);
   border-radius: 3px;
-  color: var(--jkl-color-text-subdued);
-  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
-  font-size: var(--jkl-font-size-2);
   padding: 2px 6px;
 }
 
@@ -131,9 +165,44 @@ small, .p.small, .small {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 38ch), 1fr));
 }
 
+.image-preview {
+  aspect-ratio: 3 / 2;
+  display: block;
+  max-width: 37.5rem;
+  width: 100%;
+
+  .jkl-image {
+    height: 100%;
+    width: 100%;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  &--small {
+    max-width: 18.75rem;
+  }
+
+  &__caption,
+  figcaption {
+    color: var(--jkl-color-text-subdued);
+    font-size: var(--jkl-font-size-s);
+    margin-top: var(--jkl-spacing-xs);
+  }
+}
+
+
 .component-grid {
   display: grid;
   gap: var(--jkl-spacing-l);
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 34ch), 1fr));
 }
 
+/* Reset list styling for ul/ol used as flex/visual containers */
+.chip-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
