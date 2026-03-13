@@ -13,6 +13,7 @@ import type {PropSource} from "@/lib/componentDocs";
 import {componentDocs} from "@/lib/componentDocs";
 import {Grid} from "@/components/Grid";
 import {ComponentCard} from "@/components/ComponentCard";
+import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
 import {useLocalStorage} from "@/hooks/useLocalStorage";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
@@ -38,7 +39,7 @@ const ALL_PROP_ENTRIES: PropEntry[] = (() => {
 })();
 
 export default function ComponentsPage() {
-    const [view, setView] = useLocalStorage<"components" | "props">("comp-view", "components");
+    const [view, setView, viewReady] = useLocalStorage<"components" | "props">("comp-view", "components");
     const [query, setQuery] = useState("");
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
     const [activeTag, setActiveTag] = useState<string | null>(null);
@@ -86,6 +87,25 @@ export default function ComponentsPage() {
         if (propSortBy === "least-used") return results.sort((a, b) => a.usedBy.length - b.usedBy.length);
         return results.sort((a, b) => a.propName.localeCompare(b.propName, "nb"));
     }, [propQuery, propSortBy, propSourceFilter]);
+
+    if (!viewReady) {
+        return (
+            <Flex as="main" direction="column" gap="xl">
+                <NavLink href="/" back>Tilbake til forsiden</NavLink>
+                <Flex direction="column" gap="s">
+                    <h1>Komponentdokumentasjon</h1>
+                    <p>
+                        Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for
+                        komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet.
+                    </p>
+                </Flex>
+                <SkeletonAnimation textDescription="Laster innstillinger…">
+                    <SkeletonElement width="20rem" height="2.5rem" />
+                    <SkeletonElement width="100%" height="12rem" style={{ marginTop: "var(--jkl-spacing-xl)" }} />
+                </SkeletonAnimation>
+            </Flex>
+        );
+    }
 
     return (
         <Flex as="main" direction="column" gap="xl">
