@@ -43,6 +43,11 @@ import tooltipDoc from "./tooltip";
 import radioPanelDoc from "./radio-panel";
 import popoverDoc from "./popover";
 import toastDoc from "./toast";
+import systemMessageDoc from "./system-message";
+import helpDoc from "./help";
+import imageDoc from "./image";
+import inputGroupDoc from "./input-group";
+import screenReaderOnlyDoc from "./screen-reader-only";
 import type { ComponentDoc } from "./types";
 
 export type { ComponentDoc };
@@ -93,4 +98,9 @@ export const componentDocs: ComponentDoc[] = [
     toastDoc,
     toggleSwitchDoc,
     tooltipDoc,
+    systemMessageDoc,
+    helpDoc,
+    imageDoc,
+    inputGroupDoc,
+    screenReaderOnlyDoc,
 ];
