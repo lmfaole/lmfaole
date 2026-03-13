@@ -2,31 +2,24 @@
 
 import { Flex } from "@fremtind/jokul/flex";
 import { NavLink } from "@fremtind/jokul/nav-link";
-import { Card } from "@fremtind/jokul/card";
-import { Link } from "@fremtind/jokul/link";
 import { foundationalPosts } from "@/lib/foundationalPosts";
 import { Grid } from "@/components/Grid";
-import { TagList } from "@/components/TagList";
+import { FoundationalCard } from "@/components/FoundationalCard/FoundationalCard";
+import "./foundational.scss";
 
 export default function FoundationalPage() {
     return (
-        <Flex as="main" direction="column" gap="xl">
+        <main className="foundational-index" data-theme="dark">
             <NavLink href="/jokul" back>Tilbake til forsiden</NavLink>
-            <h1>Grunnleggende konsepter</h1>
-            <p>Fundamentene i Jøkul — typografi, farger og spacing. Les disse for å forstå designsystemets kjerneprinsipper.</p>
+            <header className="foundational-index__header">
+                <h1>Grunnleggende</h1>
+                <p>Fundamentene i Jøkul — typografi, farger og spacing. Les disse for å forstå designsystemets kjerneprinsipper.</p>
+            </header>
             <Grid columns={3} gap="l">
                 {foundationalPosts.map((post) => (
-                    <Card key={post.id} padding="l">
-                        <h2>
-                            <Link href={`/jokul/foundational/${post.id}`}>{post.title}</Link>
-                        </h2>
-                        <p>{post.excerpt}</p>
-                        {post.tags.length > 0 && (
-                            <TagList tags={post.tags} />
-                        )}
-                    </Card>
+                    <FoundationalCard key={post.id} post={post} />
                 ))}
             </Grid>
-        </Flex>
+        </main>
     );
 }

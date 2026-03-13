@@ -65,3 +65,11 @@
         color: var(--jkl-color-text-subdued);
     }
 }
+
+.home__section--dark {
+    background: var(--jkl-color-background-page);
+    border-radius: var(--jkl-border-radius-medium, 4px);
+    margin-inline: -1rem;
+    padding: var(--jkl-spacing-2xl) 1rem;
+    border-bottom: none;
+}

@@ -7,6 +7,7 @@ import {componentDocs} from "@/lib/componentDocs";
 import {foundationalPosts} from "@/lib/foundationalPosts";
 import {BlogPostCard} from "@/components/BlogPostCard";
 import {ComponentCard} from "@/components/ComponentCard";
+import {FoundationalCard} from "@/components/FoundationalCard/FoundationalCard";
 import {Grid} from "@/components/Grid";
 import "./home.scss";
 
@@ -26,14 +27,14 @@ export default function Home() {
                 </SystemMessage>
             </header>
 
-            <section className="home__section">
+            <section className="home__section home__section--dark" data-theme="dark">
                 <div className="home__section-header">
                     <h2><Link href="/jokul/foundational">Grunnleggende</Link></h2>
                     <p>Fundamentene i Jøkul — typografi, farger og designtokens.</p>
                 </div>
                 <Grid columns={3} gap="l">
                     {foundationalPosts.map((post) => (
-                        <BlogPostCard key={post.id} post={post} />
+                        <FoundationalCard key={post.id} post={post} />
                     ))}
                 </Grid>
             </section>
