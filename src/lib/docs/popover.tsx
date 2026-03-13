@@ -1,14 +1,11 @@
 import React from "react";
 import { Popover } from "@fremtind/jokul/popover";
-import { Button } from "@fremtind/jokul/button";
 import type { ComponentDoc } from "./types";
 
 function PopoverBasicPreview() {
     return (
         <Popover>
-            <Popover.Trigger>
-                <Button>Vis info</Button>
-            </Popover.Trigger>
+            <Popover.Trigger>Vis info</Popover.Trigger>
             <Popover.Content padding={16}>
                 Dette er et popover med litt innhold.
             </Popover.Content>
@@ -19,9 +16,7 @@ function PopoverBasicPreview() {
 function PopoverRichPreview() {
     return (
         <Popover>
-            <Popover.Trigger>
-                <Button>Les mer</Button>
-            </Popover.Trigger>
+            <Popover.Trigger>Les mer</Popover.Trigger>
             <Popover.Content padding={24}>
                 <strong style={{ display: "block", marginBottom: "var(--jkl-spacing-s)" }}>
                     Om denne funksjonen
@@ -39,9 +34,9 @@ function PopoverAsChildPreview() {
     return (
         <Popover>
             <Popover.Trigger asChild>
-                <button style={{ textDecoration: "underline", cursor: "pointer", background: "none", border: "none", padding: 0, color: "inherit" }}>
+                <span style={{ textDecoration: "underline", cursor: "pointer" }}>
                     Hva betyr dette?
-                </button>
+                </span>
             </Popover.Trigger>
             <Popover.Content padding={16}>
                 Dette er en forklaring på begrepet.
@@ -60,7 +55,7 @@ const doc: ComponentDoc = {
     description:
         "Popover er en flytende informasjonsboks som vises ved siden av et trigger-element. Den brukes til kontekstuell informasjon og handlinger som ikke krever en full modal.",
     notes:
-        "Popover er en compound component: bruk Popover.Trigger og Popover.Content. Bruk asChild på Trigger for å merge props inn i et eksisterende element.",
+        "Popover er en compound component: Popover.Trigger rendrer som en knapp som standard. Bruk asChild for å merge trigger-props inn i et eksisterende element.",
     props: [
         {
             name: "padding (Popover.Content)",
@@ -71,34 +66,32 @@ const doc: ComponentDoc = {
         },
         {
             name: "initialFocus (Popover.Content)",
-            type: "RefObject<HTMLElement>",
+            type: "number | RefObject<HTMLElement>",
             required: false,
-            description: "Ref til elementet som skal få fokus når popoveren åpnes.",
+            default: "0",
+            description: "Elementet som får fokus når popoveren åpnes. 0 = første fokuserbare element.",
         },
         {
             name: "returnFocus (Popover.Content)",
-            type: "RefObject<HTMLElement>",
+            type: "boolean",
             required: false,
-            description: "Ref til elementet som skal få fokus tilbake når popoveren lukkes.",
+            default: "true",
+            description: "Om fokus returneres til triggeren når popoveren lukkes.",
         },
         {
             name: "asChild (Popover.Trigger)",
             type: "boolean",
             required: false,
-            description: "Merger trigger-props inn i child-elementet i stedet for å wrappe det.",
+            default: "false",
+            description: "Merger trigger-props inn i child-elementet i stedet for å wrappe det i en knapp.",
         },
     ],
     examples: [
         {
             title: "Grunnleggende popover",
-            description: "En enkel popover med litt tekst.",
-            code: `import { Popover } from "@fremtind/jokul/popover";
-import { Button } from "@fremtind/jokul/button";
-
-<Popover>
-    <Popover.Trigger>
-        <Button>Vis info</Button>
-    </Popover.Trigger>
+            description: "Popover.Trigger rendrer som en knapp som standard — ingen ekstra Button-komponent nødvendig.",
+            code: `<Popover>
+    <Popover.Trigger>Vis info</Popover.Trigger>
     <Popover.Content padding={16}>
         Dette er et popover med litt innhold.
     </Popover.Content>
@@ -108,13 +101,8 @@ import { Button } from "@fremtind/jokul/button";
         {
             title: "Med mer innhold",
             description: "Popover med overskrift og avsnitt, og større padding.",
-            code: `import { Popover } from "@fremtind/jokul/popover";
-import { Button } from "@fremtind/jokul/button";
-
-<Popover>
-    <Popover.Trigger>
-        <Button>Les mer</Button>
-    </Popover.Trigger>
+            code: `<Popover>
+    <Popover.Trigger>Les mer</Popover.Trigger>
     <Popover.Content padding={24}>
         <strong style={{ display: "block", marginBottom: "var(--jkl-spacing-s)" }}>
             Om denne funksjonen
@@ -130,12 +118,12 @@ import { Button } from "@fremtind/jokul/button";
         {
             title: "asChild trigger",
             description:
-                "Med asChild merges trigger-props inn i child-elementet, uten ekstra DOM-noder.",
-            code: `import { Popover } from "@fremtind/jokul/popover";
-
-<Popover>
+                "Med asChild merges trigger-props inn i child-elementet, uten ekstra DOM-noder. Nyttig når du vil at en lenke eller annet element skal åpne popoveren.",
+            code: `<Popover>
     <Popover.Trigger asChild>
-        <button>Hva betyr dette?</button>
+        <span style={{ textDecoration: "underline", cursor: "pointer" }}>
+            Hva betyr dette?
+        </span>
     </Popover.Trigger>
     <Popover.Content padding={16}>
         Dette er en forklaring på begrepet.

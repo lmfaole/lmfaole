@@ -6,6 +6,8 @@ import { NavLink } from "@fremtind/jokul/nav-link";
 import { Link } from "@fremtind/jokul/link";
 import { useParams } from "next/navigation";
 import { getComponentDoc, getRelatedDocs } from "@/lib/componentDocs";
+import { ComponentCard } from "@/components/ComponentCard";
+import { Grid } from "@/components/Grid";
 
 export default function ComponentLayout({ children }: { children: React.ReactNode }) {
     const params = useParams();
@@ -20,13 +22,11 @@ export default function ComponentLayout({ children }: { children: React.ReactNod
             {related.length > 0 && (
                 <Flex direction="column" gap="s">
                     <h2>Relaterte komponenter</h2>
-                    <Flex gap="m" wrap="wrap">
+                    <Grid>
                         {related.map((rel) => (
-                            <Link key={rel.id} href={`/component/${rel.id}`}>
-                                {rel.name}
-                            </Link>
+                            <ComponentCard key={rel.id} doc={rel} />
                         ))}
-                    </Flex>
+                    </Grid>
                 </Flex>
             )}
             {doc && (

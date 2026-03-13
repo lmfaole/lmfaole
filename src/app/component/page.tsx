@@ -1,16 +1,14 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
-import { Flex } from "@fremtind/jokul/flex";
-import { Card } from "@fremtind/jokul/card";
-import { Link } from "@fremtind/jokul/link";
-import { NavLink } from "@fremtind/jokul/nav-link";
-import { Search } from "@fremtind/jokul/search";
-import { Chip } from "@fremtind/jokul/chip";
-import { Tag } from "@fremtind/jokul/tag";
-import { Select } from "@fremtind/jokul/select";
-import { componentDocs } from "@/lib/componentDocs";
-import { Grid } from "@/components/Grid";
+import React, {useMemo, useState} from "react";
+import {Flex} from "@fremtind/jokul/flex";
+import {NavLink} from "@fremtind/jokul/nav-link";
+import {Search} from "@fremtind/jokul/search";
+import {Chip} from "@fremtind/jokul/chip";
+import {Select} from "@fremtind/jokul/select";
+import {componentDocs} from "@/lib/componentDocs";
+import {Grid} from "@/components/Grid";
+import {ComponentCard} from "@/components/ComponentCard";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
 const ALL_TAGS = Array.from(new Set(componentDocs.flatMap((d) => d.tags))).sort();
@@ -49,7 +47,6 @@ export default function ComponentsPage() {
     }, [query, activeCategory, activeTag, sortBy]);
 
 
-
     return (
         <Flex as="main" direction="column" gap="xl">
             <NavLink href="/" back>Tilbake til forsiden</NavLink>
@@ -57,7 +54,7 @@ export default function ComponentsPage() {
                 <h1>Komponentdokumentasjon</h1>
                 <p>
                     Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for
-                    komponentene i Jøkul. Bruk dette som referanse når du bygger med designsystemet.
+                    komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet.
                 </p>
             </Flex>
 
@@ -75,10 +72,10 @@ export default function ComponentsPage() {
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
                         items={[
-                            { value: "az", label: "A–Å" },
-                            { value: "za", label: "Å–A" },
-                            { value: "most-props", label: "Flest props" },
-                            { value: "most-examples", label: "Flest eksempler" },
+                            {value: "az", label: "A–Å"},
+                            {value: "za", label: "Å–A"},
+                            {value: "most-props", label: "Flest props"},
+                            {value: "most-examples", label: "Flest eksempler"},
                         ]}
                     />
                 </Flex>
@@ -95,7 +92,7 @@ export default function ComponentsPage() {
                     ))}
                 </Flex>
                 <Flex gap="xs" wrap="wrap" alignItems="center">
-                    <span className="muted" style={{ fontSize: "0.875rem" }}>Tags:</span>
+                    <span className="muted" style={{fontSize: "0.875rem"}}>Tags:</span>
                     {ALL_TAGS.map((tag) => (
                         <Chip
                             key={tag}
@@ -114,20 +111,7 @@ export default function ComponentsPage() {
             ) : (
                 <Grid>
                     {filtered.map((doc) => (
-                        <Card key={doc.id} padding="l">
-                            <Flex direction="column" gap="s">
-                                <Flex gap="xs" alignItems="center">
-                                    <h3 style={{ margin: 0 }}>
-                                        <Link href={`/component/${doc.id}`}>{doc.name}</Link>
-                                    </h3>
-                                    {doc.status === "deprecated" && <Tag variant="warning">Deprecated</Tag>}
-                                    {doc.status === "beta" && <Tag variant="info">Beta</Tag>}
-                                </Flex>
-                                <p>{doc.description.split(".")[0]}.</p>
-                                <small className="muted">{doc.examples.map((ex) => ex.title).join(", ")}</small>
-                                <p className="muted">{doc.props.length} props · {doc.examples.length} eksempler</p>
-                            </Flex>
-                        </Card>
+                        <ComponentCard key={doc.id} doc={doc}/>
                     ))}
                 </Grid>
             )}

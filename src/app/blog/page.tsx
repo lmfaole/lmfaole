@@ -5,6 +5,7 @@ import { Flex } from "@fremtind/jokul/flex";
 import { NavLink } from "@fremtind/jokul/nav-link";
 import { Search } from "@fremtind/jokul/search";
 import { Chip } from "@fremtind/jokul/chip";
+import { Select } from "@fremtind/jokul/select";
 import { blogPosts } from "@/lib/blogPosts";
 import { BlogPostCard } from "@/components/BlogPostCard";
 import { Grid } from "@/components/Grid";
@@ -16,10 +17,11 @@ export default function BlogPage() {
     const [query, setQuery] = useState("");
     const [activeTag, setActiveTag] = useState<string | null>(null);
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
+    const [sortBy, setSortBy] = useState("newest");
 
     const filtered = useMemo(() => {
         const q = query.toLowerCase();
-        return blogPosts.filter((post) => {
+        const results = blogPosts.filter((post) => {
             const matchesQuery =
                 !q ||
                 post.title.toLowerCase().includes(q) ||
@@ -29,16 +31,15 @@ export default function BlogPage() {
             const matchesCategory = !activeCategory || post.category === activeCategory;
             return matchesQuery && matchesTag && matchesCategory;
         });
-    }, [query, activeTag, activeCategory]);
+        return results.sort((a, b) => {
+            if (sortBy === "oldest") return a.id - b.id;
+            if (sortBy === "az") return a.title.localeCompare(b.title, "nb");
+            if (sortBy === "za") return b.title.localeCompare(a.title, "nb");
+            return b.id - a.id; // newest
+        });
+    }, [query, activeTag, activeCategory, sortBy]);
 
-    const grouped = useMemo(() => {
-        const map = new Map<string, typeof filtered>();
-        for (const post of filtered) {
-            if (!map.has(post.category)) map.set(post.category, []);
-            map.get(post.category)!.push(post);
-        }
-        return Array.from(map.entries());
-    }, [filtered]);
+
 
     return (
         <Flex as="main" direction="column" gap="xl">
@@ -49,12 +50,26 @@ export default function BlogPage() {
             </Flex>
 
             <Flex direction="column" gap="m">
-                <Search
-                    label="Søk i artikler"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Tittel, beskrivelse eller tag…"
-                />
+                <Flex gap="m" alignItems="end" wrap="wrap">
+                    <Search
+                        label="Søk i artikler"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder="Tittel, beskrivelse eller tag…"
+                    />
+                    <Select
+                        label="Sorter"
+                        name="sort-blog"
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        items={[
+                            { value: "newest", label: "Nyeste først" },
+                            { value: "oldest", label: "Eldste først" },
+                            { value: "az", label: "A–Å" },
+                            { value: "za", label: "Å–A" },
+                        ]}
+                    />
+                </Flex>
                 <Flex direction="column" gap="xs">
                     <p className="muted">Kategori</p>
                     <Flex gap="xs" wrap="wrap">
@@ -90,18 +105,11 @@ export default function BlogPage() {
             {filtered.length === 0 ? (
                 <p className="muted">Ingen artikler samsvarer med filteret.</p>
             ) : (
-                <Flex direction="column" gap="xl">
-                    {grouped.map(([cat, posts]) => (
-                        <Flex key={cat} direction="column" gap="l">
-                            <h2>{cat}</h2>
-                            <Grid gap="l">
-                                {posts.map((post) => (
-                                    <BlogPostCard key={post.id} post={post} />
-                                ))}
-                            </Grid>
-                        </Flex>
+                <Grid gap="l">
+                    {filtered.map((post) => (
+                        <BlogPostCard key={post.id} post={post} />
                     ))}
-                </Flex>
+                </Grid>
             )}
         </Flex>
     );

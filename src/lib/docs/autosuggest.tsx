@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Autosuggest } from "@fremtind/jokul/autosuggest";
+import { TextInput } from "@fremtind/jokul/text-input";
 import type { ComponentDoc } from "./types";
 
 const ALL_CITIES = ["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"];
@@ -70,37 +71,45 @@ const doc: ComponentDoc = {
             title: "Grunnleggende bruk",
             description: "Autosuggest med statisk forslagsliste.",
             code: `const [value, setValue] = React.useState("");
-const allSuggestions = ["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"];
-const suggestions = allSuggestions.filter(s =>
-    s.toLowerCase().startsWith(value.toLowerCase())
-);
 
 <Autosuggest
     label="Hjemsted"
-    suggestions={suggestions}
+    allItems={["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"]}
     value={value}
+    onInputValueChange={setValue}
     onChange={setValue}
-    onSelect={setValue}
     helpLabel="Begynn å skrive for å se forslag"
 />`,
             tags: ["controlled"],
+            preview: <TextInput label="Hjemsted" value="" helpLabel="Begynn å skrive for å se forslag" onChange={() => {}} />,
+        },
+        {
+            title: "Interaktivt eksempel",
+            description: "Skriv i feltet for å filtrere forslag fra listen.",
+            code: `const [value, setValue] = React.useState("");
+
+<Autosuggest
+    label="Hjemsted"
+    allItems={["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"]}
+    value={value}
+    onInputValueChange={setValue}
+    onChange={setValue}
+    helpLabel="Begynn å skrive for å se forslag"
+/>`,
+            tags: ["controlled", "interaktiv"],
             preview: <AutosuggestPreview />,
         },
         {
             title: "Med feilmelding",
             description: "Autosuggest viser feilmelding når input er ugyldig.",
             code: `const [value, setValue] = React.useState("xyz");
-const allSuggestions = ["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"];
-const suggestions = allSuggestions.filter(s =>
-    s.toLowerCase().startsWith(value.toLowerCase())
-);
 
 <Autosuggest
     label="Hjemsted"
-    suggestions={suggestions}
+    allItems={["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"]}
     value={value}
+    onInputValueChange={setValue}
     onChange={setValue}
-    onSelect={setValue}
     errorLabel="Velg en gyldig by fra listen"
 />`,
             tags: ["error-state", "controlled"],
@@ -110,18 +119,14 @@ const suggestions = allSuggestions.filter(s =>
             title: "Ingen treff-tekst",
             description: "Viser tilpasset tekst når ingen forslag matcher det brukeren har skrevet.",
             code: `const [value, setValue] = React.useState("");
-const allSuggestions = ["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"];
-const suggestions = allSuggestions.filter(s =>
-    s.toLowerCase().startsWith(value.toLowerCase())
-);
 
 <Autosuggest
     label="Hjemsted"
-    suggestions={suggestions}
+    allItems={["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"]}
     value={value}
+    onInputValueChange={setValue}
     onChange={setValue}
-    onSelect={setValue}
-    noSuggestionsText="Ingen byer funnet – prøv et annet søk"
+    noHits={{ items: [], text: "Ingen byer funnet – prøv et annet søk" }}
 />`,
             preview: <AutosuggestNoHitsPreview />,
         },

@@ -111,7 +111,6 @@ small, .p.small, .small {
 }
 
 .component-example {
-  border-bottom: 1px solid var(--jkl-color-border-subdued);
   padding-block: var(--jkl-spacing-m);
 
   &:last-child {
@@ -119,7 +118,6 @@ small, .p.small, .small {
   }
 
   &__preview {
-    background: var(--jkl-color-background-container-subdued);
     border: 1px solid var(--jkl-color-border-subdued);
     border-radius: 4px;
     padding: var(--jkl-spacing-l);
