@@ -22,6 +22,13 @@ const doc: ComponentDoc = {
     ],
     examples: [
         {
+            title: "Info-melding",
+            description: "En enkel informasjonsmelding.",
+            code: `<Message variant="info">Forsikringen din fornyes automatisk 1. januar.</Message>`,
+            preview: <Message variant="info">Forsikringen din fornyes automatisk 1. januar.</Message>,
+            tags: [],
+        },
+        {
             title: "Alle varianter",
             description: "Velg variant basert på innholdets natur.",
             code: `<Flex direction="column" gap="s">

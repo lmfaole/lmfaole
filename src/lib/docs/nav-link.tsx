@@ -20,6 +20,13 @@ const doc: ComponentDoc = {
     ],
     examples: [
         {
+            title: "NavLink",
+            description: "Enkel navigasjonslenke.",
+            code: `<NavLink href="/forsikringer">Mine forsikringer</NavLink>`,
+            preview: <NavLink href="/forsikringer">Mine forsikringer</NavLink>,
+            tags: [],
+        },
+        {
             title: "Navigasjonsmeny",
             description: "NavLink-gruppe der én er markert som aktiv.",
             code: `<Flex direction="column" gap="xs">

@@ -19,6 +19,25 @@ const doc: ComponentDoc = {
     ],
     examples: [
         {
+            title: "Enkel oppsummering",
+            description: "Minimal nøkkel-verdi-tabell.",
+            code: `<SummaryTable
+  caption="Oppsummering"
+  header={["Dekning", "Pris"]}
+  body={<SummaryTableRow header="Bilforsikring" content="349 kr/mnd" />}
+  footer={<SummaryTableRow header="Totalt" content="349 kr/mnd" />}
+/>`,
+            preview: (
+                <SummaryTable
+                    caption="Oppsummering"
+                    header={["Dekning", "Pris"]}
+                    body={<SummaryTableRow header="Bilforsikring" content="349 kr/mnd" />}
+                    footer={<SummaryTableRow header="Totalt" content="349 kr/mnd" />}
+                />
+            ),
+            tags: [],
+        },
+        {
             title: "Forsikringsoppsummering",
             description: "Typisk bruk for oppsummering av kjøp.",
             code: `<SummaryTable

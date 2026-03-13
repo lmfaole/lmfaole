@@ -19,6 +19,41 @@ const doc: ComponentDoc = {
     ],
     examples: [
         {
+            title: "Enkel tabell",
+            description: "Minimal tabell med to kolonner og to rader.",
+            code: `<Table caption="Avtaler">
+  <TableHead>
+    <TableRow>
+      <TableHeader scope="col">Type</TableHeader>
+      <TableHeader scope="col">Status</TableHeader>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    <TableRow>
+      <TableCell>Bilforsikring</TableCell>
+      <TableCell>Aktiv</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>`,
+            preview: (
+                <Table caption="Avtaler">
+                    <TableHead>
+                        <TableRow>
+                            <TableHeader scope="col">Type</TableHeader>
+                            <TableHeader scope="col">Status</TableHeader>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>Bilforsikring</TableCell>
+                            <TableCell>Aktiv</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            ),
+            tags: [],
+        },
+        {
             title: "Grunnleggende tabell",
             description: "Tabell med tre kolonner og to rader.",
             code: `<Table caption="Forsikringsavtaler">

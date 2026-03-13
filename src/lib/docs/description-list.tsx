@@ -17,6 +17,21 @@ const doc: ComponentDoc = {
     ],
     examples: [
         {
+            title: "Nøkkelverdi-par",
+            description: "Enkelt nøkkelverdi-par.",
+            code: `<DescriptionList>
+  <DescriptionTerm>Forsikringstype</DescriptionTerm>
+  <DescriptionDetail>Kasko</DescriptionDetail>
+</DescriptionList>`,
+            preview: (
+                <DescriptionList>
+                    <DescriptionTerm>Forsikringstype</DescriptionTerm>
+                    <DescriptionDetail>Kasko</DescriptionDetail>
+                </DescriptionList>
+            ),
+            tags: [],
+        },
+        {
             title: "Kontaktinformasjon",
             description: "Typisk bruk for å vise detaljer om en entitet.",
             code: `<DescriptionList>

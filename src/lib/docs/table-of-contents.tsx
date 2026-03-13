@@ -17,6 +17,21 @@ const doc: ComponentDoc = {
     examples: [
         {
             title: "Innholdsfortegnelse",
+            description: "Minimal innholdsfortegnelse.",
+            code: `<TableOfContents label="Innhold">
+  <TableOfContents.Link href="#intro">Introduksjon</TableOfContents.Link>
+  <TableOfContents.Link href="#bruk">Grunnleggende bruk</TableOfContents.Link>
+</TableOfContents>`,
+            preview: (
+                <TableOfContents label="Innhold">
+                    <TableOfContents.Link href="#intro">Introduksjon</TableOfContents.Link>
+                    <TableOfContents.Link href="#bruk">Grunnleggende bruk</TableOfContents.Link>
+                </TableOfContents>
+            ),
+            tags: [],
+        },
+        {
+            title: "Innholdsfortegnelse",
             description: "Typisk innholdsfortegnelse for en artikkelside.",
             code: `<TableOfContents label="Innhold">
   <TableOfContents.Link href="#introduksjon">Introduksjon</TableOfContents.Link>
