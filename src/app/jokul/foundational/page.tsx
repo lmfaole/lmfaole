@@ -5,11 +5,14 @@ import { NavLink } from "@fremtind/jokul/nav-link";
 import { foundationalPosts } from "@/lib/foundationalPosts";
 import { Grid } from "@/components/Grid";
 import { FoundationalCard } from "@/components/FoundationalCard/FoundationalCard";
+import { useBodyTheme } from "@/hooks/useBodyTheme";
 import "./foundational.scss";
 
 export default function FoundationalPage() {
+    useBodyTheme("dark");
+
     return (
-        <main className="foundational-index" data-theme="dark">
+        <Flex as="main" direction="column" gap="2xl">
             <NavLink href="/jokul" back>Tilbake til forsiden</NavLink>
             <header className="foundational-index__header">
                 <h1>Grunnleggende</h1>
@@ -20,6 +23,6 @@ export default function FoundationalPage() {
                     <FoundationalCard key={post.id} post={post} />
                 ))}
             </Grid>
-        </main>
+        </Flex>
     );
 }

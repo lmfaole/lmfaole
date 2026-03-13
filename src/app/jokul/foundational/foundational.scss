@@ -1,28 +1,10 @@
-.foundational-index {
-    display: flex;
-    flex-direction: column;
-    gap: var(--jkl-spacing-2xl);
-    min-height: 100vh;
-    background: var(--jkl-color-background-page);
-    /* Compensate for the body padding so the dark bg fills the viewport */
-    margin: -2lh -1rem;
-    padding: 2lh 1rem;
-}
-
 .foundational-index__header {
     display: flex;
     flex-direction: column;
     gap: var(--jkl-spacing-m);
     max-width: 60ch;
 
-    h1 {
+    h1, p {
         margin: 0;
-    }
-
-    p {
-        margin: 0;
-        font-size: var(--jkl-font-size-3);
-        color: var(--jkl-color-text-subdued);
-        line-height: var(--jkl-line-height-relaxed);
     }
 }
