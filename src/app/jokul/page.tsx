@@ -2,6 +2,7 @@
 
 import {Link} from "@fremtind/jokul/link";
 import {Flex} from "@fremtind/jokul/flex";
+import {SystemMessage} from "@fremtind/jokul/system-message";
 import {blogPosts} from "@/lib/blogPosts";
 import {componentDocs} from "@/lib/componentDocs";
 import {foundationalPosts} from "@/lib/foundationalPosts";
@@ -17,13 +18,11 @@ export default function Home() {
                     Artikler, veiledninger og komponentdokumentasjon for deg som bygger
                     med Fremtinds designsystem.
                 </p>
-                <div className="home__disclaimer">
-                    <span>⚠️ Dette er ikke den offisielle dokumentasjonen.</span>
-                    {" "}
-                    <Link href="https://jokul.fremtind.no/" external>
-                        Gå til jokul.fremtind.no
-                    </Link>
-                </div>
+                <SystemMessage variant="warning">
+                    Dette er ikke den offisielle Jøkul-dokumentasjonen.{" "}
+                    Den offisielle finner du på{" "}
+                    <Link href="https://jokul.fremtind.no/" external>jokul.fremtind.no</Link>.
+                </SystemMessage>
             </header>
 
             <div className="home__sections">

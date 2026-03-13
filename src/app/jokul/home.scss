@@ -27,18 +27,6 @@
     line-height: var(--jkl-line-height-relaxed);
 }
 
-.home__disclaimer {
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--jkl-spacing-xs);
-    padding: var(--jkl-spacing-xs) var(--jkl-spacing-s);
-    border-radius: 4px;
-    background: var(--jkl-color-background-warning);
-    color: var(--jkl-color-text-default);
-    font-size: var(--jkl-font-size-2);
-}
-
 /* ── Footer ───────────────────────────────────────────────────────────── */
 
 .home__footer {
