@@ -48,16 +48,6 @@
 
     h2 {
         margin: 0;
-
-        a {
-            color: inherit;
-            text-decoration: none;
-
-            &:hover {
-                text-decoration: underline;
-                text-decoration-thickness: 2px;
-            }
-        }
     }
 
     p {
