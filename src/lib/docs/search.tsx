@@ -12,7 +12,7 @@ const doc: ComponentDoc = {
     notes: "Bruk label for tilgjengelighet, selv om den er visuelt skjult.",
     relatedIds: ["text-input", "autosuggest"],
     props: [
-        { name: "label", type: "string", required: false, description: "Tilgjengelig label." },
+        { name: "label", type: "string", required: false, default: '"Søk"', description: "Tilgjengelig label." },
         { name: "placeholder", type: "string", required: false, description: "Plassholdertekst." },
         { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, description: "Kalles ved endring." },
         { name: "value", type: "string", required: false, description: "Kontrollert verdi." },

@@ -19,8 +19,8 @@ const doc: ComponentDoc = {
         { name: "icon", type: "string", required: true, description: "Ikonnavnet (Material Symbol)." },
         { name: "aria-label", type: "string", required: true, description: "Tilgjengelig navn for knappen." },
         { name: "onClick", type: "React.MouseEventHandler<HTMLButtonElement>", required: false, description: "Klikk-handler." },
-        { name: "disabled", type: "boolean", required: false, description: "Deaktiverer knappen." },
-        { name: "variant", type: '"ghost" | "primary"', required: false, description: "Visuell variant." },
+        { name: "disabled", type: "boolean", required: false, default: "false", description: "Deaktiverer knappen." },
+        { name: "variant", type: '"ghost" | "primary"', required: false, default: '"ghost"', description: "Visuell variant." },
     ],
     examples: [
         {

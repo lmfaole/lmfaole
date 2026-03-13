@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Tabs, Tab, TabList, TabPanel } from "@fremtind/jokul/tabs";
+import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentDoc } from "./types";
+
+function TabsWithListener() {
+    const [activeTab, setActiveTab] = useState(0);
+    const tabNames = ["Personlig", "Bedrift", "Landbruk"];
+    return (
+        <Flex direction="column" gap="s">
+            <p>Aktiv fane: {tabNames[activeTab]}</p>
+            <Tabs defaultTab={0} onChange={setActiveTab}>
+                <TabList>
+                    <Tab>Personlig</Tab>
+                    <Tab>Bedrift</Tab>
+                    <Tab>Landbruk</Tab>
+                </TabList>
+                <TabPanel><p>Forsikringer for privatpersoner.</p></TabPanel>
+                <TabPanel><p>Forsikringer for bedrifter.</p></TabPanel>
+                <TabPanel><p>Forsikringer for landbruk.</p></TabPanel>
+            </Tabs>
+        </Flex>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "tabs",
@@ -36,6 +57,18 @@ const doc: ComponentDoc = {
     <p>Historikk vises her.</p>
   </TabPanel>
 </Tabs>`,
+            preview: (
+                <Tabs defaultTab={0}>
+                    <TabList>
+                        <Tab>Oversikt</Tab>
+                        <Tab>Detaljer</Tab>
+                        <Tab>Historikk</Tab>
+                    </TabList>
+                    <TabPanel><p>Oversiktsinnhold vises her.</p></TabPanel>
+                    <TabPanel><p>Detaljert informasjon vises her.</p></TabPanel>
+                    <TabPanel><p>Historikk vises her.</p></TabPanel>
+                </Tabs>
+            ),
         },
         {
             title: "Med standardfane",
@@ -56,6 +89,18 @@ const doc: ComponentDoc = {
     <p>Avsluttede forsikringsavtaler vises her.</p>
   </TabPanel>
 </Tabs>`,
+            preview: (
+                <Tabs defaultTab={1}>
+                    <TabList>
+                        <Tab>Aktive avtaler</Tab>
+                        <Tab>Utgåtte avtaler</Tab>
+                        <Tab>Avsluttede avtaler</Tab>
+                    </TabList>
+                    <TabPanel><p>Dine aktive forsikringsavtaler vises her.</p></TabPanel>
+                    <TabPanel><p>Forsikringsavtaler som har gått ut vises her.</p></TabPanel>
+                    <TabPanel><p>Avsluttede forsikringsavtaler vises her.</p></TabPanel>
+                </Tabs>
+            ),
         },
         {
             title: "Med endringslytter",
@@ -83,6 +128,7 @@ const tabNames = ["Personlig", "Bedrift", "Landbruk"];
   </Tabs>
 </>`,
             tags: ["controlled"],
+            preview: <TabsWithListener />,
         },
     ],
 };

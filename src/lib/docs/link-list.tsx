@@ -13,7 +13,7 @@ const doc: ComponentDoc = {
     relatedIds: ["link", "nav-link"],
     props: [
         { name: "label", type: "string", required: true, description: "Overskrift for lenkegruppens seksjon." },
-        { name: "hideLabel", type: "boolean", required: false, description: "Skjuler overskriften visuelt." },
+        { name: "hideLabel", type: "boolean", required: false, default: "false", description: "Skjuler overskriften visuelt." },
         { name: "children", type: "React.ReactNode", required: false, description: "LinkList.Link-elementer." },
     ],
     examples: [

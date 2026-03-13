@@ -16,10 +16,10 @@ const doc: ComponentDoc = {
         { name: "children", type: "React.ReactNode", required: true, description: "Label-tekst." },
         { name: "name", type: "string", required: true, description: "Skjemafeltets navn." },
         { name: "value", type: "string", required: true, description: "Verdien som sendes ved innsending." },
-        { name: "checked", type: "boolean", required: false, description: "Kontrollert avkrysset-tilstand." },
+        { name: "checked", type: "boolean", required: false, default: "false", description: "Kontrollert avkrysset-tilstand." },
         { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, description: "Kalles ved endring." },
-        { name: "invalid", type: "boolean", required: false, description: "Markerer feltet som ugyldig." },
-        { name: "indeterminate", type: "boolean", required: false, description: "Viser delvis-valgt tilstand." },
+        { name: "invalid", type: "boolean", required: false, default: "false", description: "Markerer feltet som ugyldig." },
+        { name: "indeterminate", type: "boolean", required: false, default: "false", description: "Viser delvis-valgt tilstand." },
     ],
     examples: [
         {

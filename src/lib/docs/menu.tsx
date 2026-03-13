@@ -74,18 +74,21 @@ const doc: ComponentDoc = {
             name: "initialPlacement",
             type: "string",
             required: false,
+            default: '"bottom-start"',
             description: "Startposisjon for menyen relativt til trigger.",
         },
         {
             name: "openOnHover",
             type: "boolean",
             required: false,
+            default: "false",
             description: "Åpner menyen ved hover i stedet for klikk.",
         },
         {
             name: "keepOpenOnClickOutside",
             type: "boolean",
             required: false,
+            default: "false",
             description: "Forhindrer at menyen lukkes ved klikk utenfor.",
         },
         {

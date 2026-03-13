@@ -88,6 +88,7 @@ const doc: ComponentDoc = {
             name: "placement (ToastProvider)",
             type: '"center" | "left"',
             required: false,
+            default: '"center"',
             description: "Plassering av toast-containeren på skjermen.",
         },
         {
@@ -106,6 +107,7 @@ const doc: ComponentDoc = {
             name: "timeout (add options)",
             type: "number | null | \"off\"",
             required: false,
+            default: "5000",
             description: "Tid i millisekunder før toasten forsvinner. null eller 'off' deaktiverer automatisk lukking.",
         },
         {

@@ -12,7 +12,7 @@ const doc: ComponentDoc = {
     notes: "Gi alltid kontekst rundt Countdown-komponenten.",
     props: [
         { name: "from", type: "number", required: true, description: "Antall millisekunder å telle ned fra." },
-        { name: "isPaused", type: "boolean", required: false, description: "Pause nedtellingen." },
+        { name: "isPaused", type: "boolean", required: false, default: "false", description: "Pause nedtellingen." },
     ],
     examples: [
         {

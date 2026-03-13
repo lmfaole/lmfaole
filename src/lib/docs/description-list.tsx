@@ -12,8 +12,8 @@ const doc: ComponentDoc = {
     notes: "Bruk DescriptionTerm for nøkler og DescriptionDetail for verdier.",
     props: [
         { name: "children", type: "React.ReactNode", required: true, description: "DescriptionTerm og DescriptionDetail-elementer." },
-        { name: "separators", type: "boolean", required: false, description: "Viser skillelinjer mellom par." },
-        { name: "alignment", type: '"horizontal" | "vertical" | "justified"', required: false, description: "Layoutretning for nøkkel-verdi-par." },
+        { name: "separators", type: "boolean", required: false, default: "false", description: "Viser skillelinjer mellom par." },
+        { name: "alignment", type: '"horizontal" | "vertical" | "justified"', required: false, default: '"vertical"', description: "Layoutretning for nøkkel-verdi-par." },
     ],
     examples: [
         {

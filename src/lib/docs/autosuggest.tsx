@@ -1,5 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
+import { Autosuggest } from "@fremtind/jokul/autosuggest";
 import type { ComponentDoc } from "./types";
+
+const ALL_CITIES = ["Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø"];
+
+function AutosuggestPreview() {
+    const [value, setValue] = useState("");
+    return (
+        <Autosuggest
+            label="Hjemsted"
+            allItems={ALL_CITIES}
+            value={value}
+            onInputValueChange={setValue}
+            onChange={setValue}
+            helpLabel="Begynn å skrive for å se forslag"
+        />
+    );
+}
+
+function AutosuggestErrorPreview() {
+    const [value, setValue] = useState("xyz");
+    return (
+        <Autosuggest
+            label="Hjemsted"
+            allItems={ALL_CITIES}
+            value={value}
+            onInputValueChange={setValue}
+            onChange={setValue}
+            errorLabel="Velg en gyldig by fra listen"
+        />
+    );
+}
+
+function AutosuggestNoHitsPreview() {
+    const [value, setValue] = useState("");
+    return (
+        <Autosuggest
+            label="Hjemsted"
+            allItems={ALL_CITIES}
+            value={value}
+            onInputValueChange={setValue}
+            onChange={setValue}
+            noHits={{ items: [], text: "Ingen byer funnet – prøv et annet søk" }}
+        />
+    );
+}
 
 const doc: ComponentDoc = {
     id: "autosuggest",
@@ -39,6 +84,7 @@ const suggestions = allSuggestions.filter(s =>
     helpLabel="Begynn å skrive for å se forslag"
 />`,
             tags: ["controlled"],
+            preview: <AutosuggestPreview />,
         },
         {
             title: "Med feilmelding",
@@ -58,6 +104,7 @@ const suggestions = allSuggestions.filter(s =>
     errorLabel="Velg en gyldig by fra listen"
 />`,
             tags: ["error-state", "controlled"],
+            preview: <AutosuggestErrorPreview />,
         },
         {
             title: "Ingen treff-tekst",
@@ -76,6 +123,7 @@ const suggestions = allSuggestions.filter(s =>
     onSelect={setValue}
     noSuggestionsText="Ingen byer funnet – prøv et annet søk"
 />`,
+            preview: <AutosuggestNoHitsPreview />,
         },
     ],
 };

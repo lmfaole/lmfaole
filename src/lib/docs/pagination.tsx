@@ -1,5 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { Pagination } from "@fremtind/jokul/pagination";
 import type { ComponentDoc } from "./types";
+
+function PaginationPreview() {
+    const [page, setPage] = useState(3);
+    return <Pagination currentPage={page} numberOfPages={10} onPageChange={setPage} />;
+}
+
+function PaginationManyPages() {
+    const [page, setPage] = useState(1);
+    return <Pagination currentPage={page} numberOfPages={50} onPageChange={setPage} />;
+}
+
+function PaginationCustomLabels() {
+    const [page, setPage] = useState(1);
+    return <Pagination currentPage={page} numberOfPages={10} onPageChange={setPage} labels={{ previous: "Forrige side", next: "Neste side" }} />;
+}
 
 const doc: ComponentDoc = {
     id: "pagination",
@@ -13,7 +29,7 @@ const doc: ComponentDoc = {
         { name: "currentPage", type: "number", required: true, description: "Gjeldende sidenummer (1-basert)." },
         { name: "numberOfPages", type: "number", required: true, description: "Totalt antall sider." },
         { name: "onPageChange", type: "(toPage: number, fromPage: number) => void", required: true, description: "Kalles ved sidebytte." },
-        { name: "labels", type: '{ previous: string; next: string }', required: false, description: "Tekster for forrige/neste-knapper." },
+        { name: "labels", type: '{ previous: string; next: string }', required: false, default: '{ previous: "Forrige", next: "Neste" }', description: "Tekster for forrige/neste-knapper." },
     ],
     examples: [
         {
@@ -27,6 +43,7 @@ const doc: ComponentDoc = {
     onPageChange={(toPage) => setPage(toPage)}
 />`,
             tags: ["controlled"],
+            preview: <PaginationPreview />,
         },
         {
             title: "Mange sider",
@@ -38,6 +55,7 @@ const doc: ComponentDoc = {
     numberOfPages={50}
     onPageChange={(toPage) => setPage(toPage)}
 />`,
+            preview: <PaginationManyPages />,
         },
         {
             title: "Egendefinerte knapptekster",
@@ -50,6 +68,7 @@ const doc: ComponentDoc = {
     onPageChange={(toPage) => setPage(toPage)}
     labels={{ previous: "Forrige side", next: "Neste side" }}
 />`,
+            preview: <PaginationCustomLabels />,
         },
     ],
 };

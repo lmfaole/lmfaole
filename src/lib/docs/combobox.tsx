@@ -118,6 +118,7 @@ const doc: ComponentDoc = {
             name: "noMatchingOption",
             type: "string",
             required: false,
+            default: '"Ingen treff"',
             description: "Tekst som vises når søket ikke gir treff.",
         },
     ],

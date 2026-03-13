@@ -16,7 +16,7 @@ const doc: ComponentDoc = {
         { name: "children", type: "React.ReactNode", required: true, description: "Innhold i panelet." },
         { name: "name", type: "string", required: true, description: "Skjemafeltets navn." },
         { name: "value", type: "string", required: true, description: "Verdien ved innsending." },
-        { name: "checked", type: "boolean", required: false, description: "Kontrollert tilstand." },
+        { name: "checked", type: "boolean", required: false, default: "false", description: "Kontrollert tilstand." },
         { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, description: "Kalles ved endring." },
     ],
     examples: [

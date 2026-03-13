@@ -15,8 +15,8 @@ const doc: ComponentDoc = {
     props: [
         { name: "children", type: "React.ReactNode", required: true, description: "Lenketekst." },
         { name: "href", type: "string", required: false, description: "Destinasjon." },
-        { name: "active", type: "boolean", required: false, description: "Markerer som aktiv gjeldende side." },
-        { name: "back", type: "boolean", required: false, description: "Viser tilbake-pil." },
+        { name: "active", type: "boolean", required: false, default: "false", description: "Markerer som aktiv gjeldende side." },
+        { name: "back", type: "boolean", required: false, default: "false", description: "Viser tilbake-pil." },
     ],
     examples: [
         {

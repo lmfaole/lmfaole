@@ -14,7 +14,7 @@ const doc: ComponentDoc = {
     props: [
         { name: "label", type: "React.ReactNode", required: true, description: "Synlig label over tekstfeltet." },
         { name: "rows", type: "number", required: false, default: "4", description: "Antall synlige linjer." },
-        { name: "autoExpand", type: "boolean", required: false, description: "Feltet vokser med innholdet." },
+        { name: "autoExpand", type: "boolean", required: false, default: "false", description: "Feltet vokser med innholdet." },
         { name: "counter", type: "{ maxLength: number; hideProgress?: boolean }", required: false, description: "Tegngrense med visuell teller." },
         { name: "helpLabel", type: "string", required: false, description: "Hjelpetekst." },
         { name: "errorLabel", type: "string", required: false, description: "Feilmelding." },

@@ -17,7 +17,7 @@ const doc: ComponentDoc = {
         { name: "value", type: "string", required: false, description: "Valgt verdi." },
         { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, description: "Kalles ved valg." },
         { name: "errorLabel", type: "string", required: false, description: "Feilmelding." },
-        { name: "inline", type: "boolean", required: false, description: "Viser radioknappene på én linje." },
+        { name: "inline", type: "boolean", required: false, default: "false", description: "Viser radioknappene på én linje." },
     ],
     examples: [
         {

@@ -14,8 +14,8 @@ const doc: ComponentDoc = {
     props: [
         { name: "caption", type: "React.ReactNode", required: true, description: "Tabellbeskrivelse." },
         { name: "children", type: "React.ReactNode", required: true, description: "TableHead og TableBody." },
-        { name: "collapseToList", type: "boolean", required: false, description: "Kollapser til liste på mobil." },
-        { name: "fullWidth", type: "boolean", required: false, description: "Strekker tabellen til full bredde." },
+        { name: "collapseToList", type: "boolean", required: false, default: "false", description: "Kollapser til liste på mobil." },
+        { name: "fullWidth", type: "boolean", required: false, default: "false", description: "Strekker tabellen til full bredde." },
     ],
     examples: [
         {
