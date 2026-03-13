@@ -30,24 +30,26 @@ export function EditorialCard({
                               }: EditorialCardProps) {
     return (
         <Card as="article" variant="low" padding="l" className="editorial-card">
-            <div>
-                <h2 className="editorial-card__title">
-                    <Link href={titleHref}>{title}</Link>
-                </h2>
-                <p className="editorial-card__desc">{description}</p>
+            <div className="editorial-card__lead">
+                <div>
+                    <h2 className="editorial-card__title">
+                        <Link href={titleHref}>{title}</Link>
+                    </h2>
+                    <p className="editorial-card__desc">{description}</p>
+                </div>
+                <div className="editorial-card__footer">
+                    <span className="editorial-card__stat" aria-hidden="true">{stat}</span>
+                    <Link href={ctaHref}>{ctaLabel}</Link>
+                </div>
             </div>
             <ul className="editorial-card__list">
                 {items.map((item) => (
                     <li key={item.key} className="editorial-card__item" inert>
                         <Link href={item.href}>{item.title}</Link>
-                        {item.excerpt && <span className="editorial-card__excerpt">{item.excerpt}</span>}
+                        {item.excerpt && <p className="editorial-card__excerpt">{item.excerpt}</p>}
                     </li>
                 ))}
             </ul>
-            <div className="editorial-card__footer">
-                <span className="editorial-card__stat" aria-hidden="true">{stat}</span>
-                <Link href={ctaHref}>{ctaLabel}</Link>
-            </div>
         </Card>
     );
 }

@@ -1,27 +1,33 @@
 .editorial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: var(--jkl-spacing-xl);
-
-  @media (max-width: 56rem) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (max-width: 36rem) {
-    grid-template-columns: 1fr;
-  }
 }
 
 .editorial-card {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--jkl-spacing-2xl);
+  align-items: start;
+
+  @media (max-width: 48rem) {
+    grid-template-columns: 1fr;
+    gap: var(--jkl-spacing-l);
+  }
+}
+
+.editorial-card__lead {
   display: flex;
   flex-direction: column;
-  gap: var(--jkl-spacing-m);
+  gap: var(--jkl-spacing-l);
+  justify-content: space-between;
+  height: 100%;
 }
 
 .editorial-card__title {
-  font-size: var(--jkl-font-size-5);
+  font-size: var(--jkl-font-size-6);
   font-weight: 500;
-  margin: 0;
+  margin: 0 0 var(--jkl-spacing-s);
 
   a {
     color: inherit;
@@ -41,20 +47,29 @@
   line-height: var(--jkl-line-height-relaxed);
 }
 
+.editorial-card__footer {
+  display: flex;
+  align-items: baseline;
+  gap: var(--jkl-spacing-m);
+}
+
+.editorial-card__stat {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--jkl-color-text-subdued);
+  font-variant-numeric: tabular-nums;
+}
+
 .editorial-card__list {
   list-style: none;
   margin: 0;
   padding: 0;
-  flex: 1;
-  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
 }
 
 .editorial-card__item {
-  padding-block: var(--jkl-spacing-s);
+  padding-block: var(--jkl-spacing-m);
   border-top: 1px solid var(--jkl-color-border-subdued);
-  display: flex;
-  flex-direction: column;
-  gap: var(--jkl-spacing-3xs);
 
   &:last-child {
     border-bottom: 1px solid var(--jkl-color-border-subdued);
@@ -62,22 +77,8 @@
 }
 
 .editorial-card__excerpt {
-  font-size: var(--jkl-font-size-xs);
+  font-size: var(--jkl-font-size-2);
   color: var(--jkl-color-text-subdued);
-}
-
-.editorial-card__footer {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--jkl-spacing-s);
-  margin-top: auto;
-}
-
-.editorial-card__stat {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 500;
-  line-height: 1;
-  color: var(--jkl-color-text-subdued);
-  font-variant-numeric: tabular-nums;
+  margin: var(--jkl-spacing-xs) 0 0;
+  line-height: var(--jkl-line-height-relaxed);
 }
