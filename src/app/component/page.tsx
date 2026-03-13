@@ -13,6 +13,7 @@ import type {PropSource} from "@/lib/componentDocs";
 import {componentDocs} from "@/lib/componentDocs";
 import {Grid} from "@/components/Grid";
 import {ComponentCard} from "@/components/ComponentCard";
+import {useLocalStorage} from "@/hooks/useLocalStorage";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
 const ALL_TAGS = Array.from(new Set(componentDocs.flatMap((d) => d.tags))).sort();
@@ -37,13 +38,13 @@ const ALL_PROP_ENTRIES: PropEntry[] = (() => {
 })();
 
 export default function ComponentsPage() {
-    const [view, setView] = useState<"components" | "props">("components");
+    const [view, setView] = useLocalStorage<"components" | "props">("comp-view", "components");
     const [query, setQuery] = useState("");
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
     const [activeTag, setActiveTag] = useState<string | null>(null);
-    const [sortBy, setSortBy] = useState("az");
+    const [sortBy, setSortBy] = useLocalStorage("comp-sort", "az");
     const [propQuery, setPropQuery] = useState("");
-    const [propSortBy, setPropSortBy] = useState("az");
+    const [propSortBy, setPropSortBy] = useLocalStorage("comp-prop-sort", "az");
     const [propSourceFilter, setPropSourceFilter] = useState<PropSource | null>(null);
 
     const filtered = useMemo(() => {
