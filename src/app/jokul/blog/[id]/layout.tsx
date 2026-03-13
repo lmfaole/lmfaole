@@ -1,5 +1,7 @@
 "use client";
 
+export const runtime = "edge";
+
 import {Flex} from "@fremtind/jokul/flex";
 import {PostNavigation} from "@/components/PostNavigation";
 import {PostResources} from "@/components/PostResources";
