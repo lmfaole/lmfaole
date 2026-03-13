@@ -103,6 +103,15 @@ const doc: ComponentDoc = {
             status: "stable",
             description: "HTML autocomplete-attributt. Bruk alltid autocomplete=\"email\", autocomplete=\"name\" etc. for skjemafelt som brukere forventer autofullfør for.",
         },
+        {
+            name: "action",
+            type: "Action",
+            required: false,
+            source: "custom",
+            status: "deprecated",
+            statusDescription: "Bruk heller actionButton.",
+            description: "Handlingsknapp integrert i inputfeltet.",
+        },
     ],
     examples: [
         {
@@ -181,6 +190,25 @@ const doc: ComponentDoc = {
                     readOnly
                 />
             ),
+        },
+        {
+            title: "Migrering: action → actionButton",
+            description: "action-propen er utfaset. Bruk actionButton med et React-element — typisk en Button eller IconButton — i stedet.",
+            uses: ["button"],
+            migrationBefore: `<TextInput
+    label="Søk"
+    action={{ icon: "search", label: "Søk", onClick: handleSearch }}
+/>`,
+            code: `import { Button } from "@fremtind/jokul/button";
+
+<TextInput
+    label="Søk"
+    actionButton={
+        <Button variant="secondary" onClick={handleSearch}>
+            Søk
+        </Button>
+    }
+/>`,
         },
     ],
 };

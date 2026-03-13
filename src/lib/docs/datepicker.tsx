@@ -135,6 +135,24 @@ const doc: ComponentDoc = {
             status: "stable",
             description: "Tilgjengelig label for å lukke kalenderen.",
         },
+        {
+            name: "extended",
+            type: "boolean",
+            required: false,
+            source: "custom",
+            status: "deprecated",
+            statusDescription: "Kalenderen viser nå alltid navigasjonskontroller. Denne propen gjør ikke lenger noe og kan fjernes.",
+            description: "Viste utvidede navigasjonskontroller i kalenderen.",
+        },
+        {
+            name: "onKeyDown",
+            type: "DatePickerKeyDownEventHandler",
+            required: false,
+            source: "react",
+            status: "deprecated",
+            statusDescription: "Har mye overlapp med onChange. Foretrekk onChange for ny kode.",
+            description: "Kalles ved tastetrykk i inputfeltet.",
+        },
     ],
     examples: [
         {
@@ -188,6 +206,23 @@ function DatePickerWithError() {
     );
 }`,
             preview: <DatePickerErrorPreview />,
+        },
+        {
+            title: "Migrering: extended / onKeyDown",
+            description: "extended gjør ikke lenger noe og kan fjernes. For tastetrykk-hendelser, bruk onChange i stedet for onKeyDown.",
+            migrationBefore: `<DatePicker
+    label="Velg dato"
+    extended
+    onKeyDown={(e) => console.log(e)}
+    onChange={(_e, date) => setValue(date)}
+/>`,
+            code: `<DatePicker
+    label="Velg dato"
+    onChange={(_e, date, meta) => {
+        setValue(date);
+        // meta.value inneholder råstrengen om du trenger den
+    }}
+/>`,
         },
     ],
 };

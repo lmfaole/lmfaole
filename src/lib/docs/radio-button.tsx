@@ -18,6 +18,7 @@ const doc: ComponentDoc = {
         { name: "onChange", type: "React.ChangeEventHandler<HTMLInputElement>", required: false, source: "react", status: "stable", description: "Kalles ved valg." },
         { name: "errorLabel", type: "string", required: false, source: "custom", status: "stable", description: "Feilmelding." },
         { name: "inline", type: "boolean", required: false, source: "custom", status: "stable", default: "false", description: "Viser radioknappene på én linje." },
+        { name: "label", type: "React.ReactNode", required: false, source: "custom", status: "deprecated", statusDescription: "Bruk children i stedet.", description: "Label for en enkelt radioknapp (gammel API)." },
     ],
     examples: [
         {
@@ -74,6 +75,18 @@ const doc: ComponentDoc = {
                     <RadioButton value="basic">Basis</RadioButton>
                     <RadioButton value="plus">Pluss</RadioButton>
                     <RadioButton value="premium">Premium</RadioButton>
+                </RadioButtonGroup>
+            ),
+        },
+        {
+            title: "Migrering: label → children",
+            description: "label-propen på RadioButton er utfaset. Bruk children (tekst som barn av komponenten) i stedet.",
+            migrationBefore: `<RadioButton value="basic" label="Basis" />`,
+            code: `<RadioButton value="basic">Basis</RadioButton>`,
+            preview: (
+                <RadioButtonGroup legend="Forsikringstype" name="migration-radio">
+                    <RadioButton value="basic">Basis</RadioButton>
+                    <RadioButton value="plus">Pluss</RadioButton>
                 </RadioButtonGroup>
             ),
         },

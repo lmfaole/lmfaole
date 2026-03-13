@@ -74,6 +74,21 @@ const doc: ComponentDoc = {
             ),
         },
         {
+            title: "Migrering: iconLeft / iconRight → icon",
+            description: "iconLeft og iconRight er utfaset. Bruk icon-propen med en Icon-komponent, og styr plasseringen med iconPosition.",
+            uses: ["icon"],
+            migrationBefore: `<Button iconLeft={<Icon>add</Icon>}>Ny forsikring</Button>
+<Button iconRight={<Icon>arrow_forward</Icon>}>Se alle</Button>`,
+            code: `<Button icon={<Icon>add</Icon>}>Ny forsikring</Button>
+<Button icon={<Icon>arrow_forward</Icon>} iconPosition="right">Se alle</Button>`,
+            preview: (
+                <Flex gap="s" wrap="wrap">
+                    <Button variant="primary" icon={<Icon>add</Icon>}>Ny forsikring</Button>
+                    <Button variant="ghost" icon={<Icon>arrow_forward</Icon>} iconPosition="right">Se alle</Button>
+                </Flex>
+            ),
+        },
+        {
             title: "Lasteindikator",
             description: "Bruk loader når en handling tar tid. Gi alltid textDescription for skjermlesere.",
             code: `<Button loader={{ showLoader: true, textDescription: "Lagrer endringer" }}>

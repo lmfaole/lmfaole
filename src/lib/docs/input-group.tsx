@@ -18,12 +18,12 @@ function InputGroupWithLabelsPreview() {
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--jkl-spacing-m)" }}>
             <InputGroup
                 label="E-postadresse"
-                helpLabel="Vi bruker e-post til å sende kvittering."
+                supportLabelProps={{ label: "Vi bruker e-post til å sende kvittering.", labelType: "help" }}
                 render={(props) => <TextInput label="" {...props} />}
             />
             <InputGroup
                 label="Telefonnummer"
-                errorLabel="Ugyldig telefonnummer."
+                supportLabelProps={{ label: "Ugyldig telefonnummer.", labelType: "error" }}
                 render={(props) => <TextInput label="" {...props} aria-invalid />}
             />
         </div>
@@ -32,7 +32,7 @@ function InputGroupWithLabelsPreview() {
 
 function FieldGroupCheckboxPreview() {
     return (
-        <FieldGroup legend="Velg interesser" helpLabel="Du kan velge flere alternativ.">
+        <FieldGroup legend="Velg interesser" supportLabelProps={{ label: "Du kan velge flere alternativ.", labelType: "help" }}>
             <Checkbox name="interests" value="sport">Sport</Checkbox>
             <Checkbox name="interests" value="kultur">Kultur</Checkbox>
             <Checkbox name="interests" value="teknologi">Teknologi</Checkbox>
@@ -73,7 +73,8 @@ const doc: ComponentDoc = {
             type: "React.ReactNode",
             required: false,
             source: "custom",
-            status: "stable",
+            status: "deprecated",
+            statusDescription: 'Bruk supportLabelProps={{ label: "...", labelType: "help" }} i stedet.',
             description: "Hjelpetekst vist under feltet.",
         },
         {
@@ -81,7 +82,8 @@ const doc: ComponentDoc = {
             type: "React.ReactNode",
             required: false,
             source: "custom",
-            status: "stable",
+            status: "deprecated",
+            statusDescription: 'Bruk supportLabelProps={{ label: "...", labelType: "error" }} i stedet.',
             description: "Feilmelding vist under feltet. Legger til aria-invalid automatisk.",
         },
         {
@@ -139,20 +141,20 @@ import { TextInput } from "@fremtind/jokul/text-input";
         },
         {
             title: "Med hjelpetekst og feilmelding",
-            description: "helpLabel og errorLabel kobles automatisk til feltet via aria-describedby.",
+            description: "Bruk supportLabelProps for støttetekst under feltet. labelType=\"help\" (standard) viser hjelpetekst, labelType=\"error\" viser feilmelding med ikon.",
             uses: ["text-input"],
             code: `import { InputGroup } from "@fremtind/jokul/input-group";
 import { TextInput } from "@fremtind/jokul/text-input";
 
 <InputGroup
     label="E-postadresse"
-    helpLabel="Vi bruker e-post til å sende kvittering."
+    supportLabelProps={{ label: "Vi bruker e-post til å sende kvittering.", labelType: "help" }}
     render={(props) => <TextInput {...props} />}
 />
 
 <InputGroup
     label="Telefonnummer"
-    errorLabel="Ugyldig telefonnummer."
+    supportLabelProps={{ label: "Ugyldig telefonnummer.", labelType: "error" }}
     render={(props) => <TextInput {...props} aria-invalid />}
 />`,
             preview: <InputGroupWithLabelsPreview />,
@@ -164,12 +166,40 @@ import { TextInput } from "@fremtind/jokul/text-input";
             code: `import { FieldGroup } from "@fremtind/jokul/input-group";
 import { Checkbox } from "@fremtind/jokul/checkbox";
 
-<FieldGroup legend="Velg interesser" helpLabel="Du kan velge flere alternativ.">
+<FieldGroup
+    legend="Velg interesser"
+    supportLabelProps={{ label: "Du kan velge flere alternativ.", labelType: "help" }}
+>
     <Checkbox name="interests" value="sport">Sport</Checkbox>
     <Checkbox name="interests" value="kultur">Kultur</Checkbox>
     <Checkbox name="interests" value="teknologi">Teknologi</Checkbox>
 </FieldGroup>`,
             preview: <FieldGroupCheckboxPreview />,
+        },
+        {
+            title: "Migrering: helpLabel / errorLabel → supportLabelProps",
+            description: "helpLabel og errorLabel er utfaset. Bruk supportLabelProps med label og labelType i stedet.",
+            uses: ["text-input"],
+            migrationBefore: `<InputGroup
+    label="E-postadresse"
+    helpLabel="Vi bruker e-post til å sende kvittering."
+    render={(props) => <TextInput {...props} />}
+/>
+<InputGroup
+    label="Telefonnummer"
+    errorLabel="Ugyldig telefonnummer."
+    render={(props) => <TextInput {...props} aria-invalid />}
+/>`,
+            code: `<InputGroup
+    label="E-postadresse"
+    supportLabelProps={{ label: "Vi bruker e-post til å sende kvittering.", labelType: "help" }}
+    render={(props) => <TextInput {...props} />}
+/>
+<InputGroup
+    label="Telefonnummer"
+    supportLabelProps={{ label: "Ugyldig telefonnummer.", labelType: "error" }}
+    render={(props) => <TextInput {...props} aria-invalid />}
+/>`,
         },
     ],
     relatedIds: ["text-input", "checkbox", "radio-button", "help"],

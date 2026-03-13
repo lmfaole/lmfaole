@@ -94,6 +94,24 @@ const doc: ComponentDoc = {
             default: '"top"',
             description: "Hvilken side popoveret åpner på.",
         },
+        {
+            name: "iconPosition",
+            type: '"left" | "right"',
+            required: false,
+            source: "custom",
+            status: "deprecated",
+            statusDescription: "Teksten vises ikke lenger, så posisjon er ikke lenger relevant.",
+            description: "Plasseringen av ikonet.",
+        },
+        {
+            name: "showButtonText",
+            type: "boolean",
+            required: false,
+            source: "custom",
+            status: "deprecated",
+            statusDescription: "Dersom du vil vise tekst knyttet til hjelpeteksten, bruk heller Button.",
+            description: "Viste tekst ved siden av ?-knappen.",
+        },
     ],
     examples: [
         {
@@ -130,6 +148,25 @@ const doc: ComponentDoc = {
     Fullmakten kan være generell eller begrenset til spesifikke handlinger.
 </Help>`,
             preview: <LongContentPreview />,
+        },
+        {
+            title: "Migrering: iconPosition / showButtonText",
+            description: "iconPosition er utfaset fordi tekst ikke lenger vises. showButtonText er utfaset — bruk heller en vanlig Button ved siden av Help.",
+            uses: ["button"],
+            migrationBefore: `<Help buttonText="Hjelp" iconPosition="right" showButtonText>
+    Hjelpetekst her.
+</Help>`,
+            code: `<Help buttonText="Hjelp" position="right">
+    Hjelpetekst her.
+</Help>
+
+// Vil du ha synlig tekst ved siden av? Bruk Button:
+<Flex gap="xs" alignItems="center">
+    <span>Trenger du hjelp?</span>
+    <Button variant="ghost" onClick={() => openHelpPanel()}>
+        Åpne hjelpepanel
+    </Button>
+</Flex>`,
         },
     ],
     relatedIds: ["tooltip", "popover", "input-group"],

@@ -65,6 +65,8 @@ const doc: ComponentDoc = {
         { name: "helpLabel", type: "string", required: false, source: "custom", status: "stable", description: "Hjelpetekst vist under label." },
         { name: "errorLabel", type: "string", required: false, source: "custom", status: "stable", description: "Feilmelding vist under feltet." },
         { name: "noSuggestionsText", type: "string", required: false, source: "custom", status: "stable", description: "Tekst vist når ingen forslag matcher." },
+        { name: "leadText", type: "string", required: false, source: "custom", status: "deprecated", statusDescription: "Bruk helpLabel, eller flytt teksten over skjemafeltets label.", description: "Tekst over inputfeltet." },
+        { name: "noHitsMessage", type: "React.ReactNode", required: false, source: "custom", status: "deprecated", statusDescription: "Bruk noHits med text og evt. defaultverdier for items.", description: "Melding vist når ingen forslag matcher (gammel API)." },
     ],
     examples: [
         {
@@ -129,6 +131,24 @@ const doc: ComponentDoc = {
     noHits={{ items: [], text: "Ingen byer funnet – prøv et annet søk" }}
 />`,
             preview: <AutosuggestNoHitsPreview />,
+        },
+        {
+            title: "Migrering: leadText / noHitsMessage → helpLabel / noHits",
+            description: "leadText og noHitsMessage er utfaset. Bruk helpLabel for hjelpetekst og noHits-objektet for ingen-treff-melding.",
+            migrationBefore: `<Autosuggest
+    label="Hjemsted"
+    leadText="Begynn å skrive for å se forslag"
+    noHitsMessage={<span>Ingen treff</span>}
+    allItems={cities}
+    onChange={setValue}
+/>`,
+            code: `<Autosuggest
+    label="Hjemsted"
+    helpLabel="Begynn å skrive for å se forslag"
+    noHits={{ items: [], text: "Ingen byer funnet – prøv et annet søk" }}
+    allItems={cities}
+    onChange={setValue}
+/>`,
         },
     ],
 };

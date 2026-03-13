@@ -16,6 +16,7 @@ const doc: ComponentDoc = {
         { name: "bold", type: "boolean", required: false, source: "react", status: "stable", description: "Tykkere strekbredde." },
         { name: "filled", type: "boolean", required: false, source: "custom", status: "stable", description: "Fylt variant av ikonet." },
         { name: "as", type: '"div" | "span"', required: false, source: "custom", status: "stable", default: '"span"', description: "HTML-element ikonet rendres som." },
+        { name: "variant", type: '"small" | "medium" | "inherit"', required: false, source: "custom", status: "deprecated", statusDescription: "Størrelsen settes nå automatisk etter fontstørrelse. Fjern denne propen.", description: "Størrelsesvarianten til ikonet." },
     ],
     examples: [
         {
@@ -51,6 +52,25 @@ const doc: ComponentDoc = {
                     <Icon>favorite</Icon>
                     <Icon filled>favorite</Icon>
                     <Icon bold>favorite</Icon>
+                </Flex>
+            ),
+        },
+        {
+            title: "Migrering: variant → automatisk størrelse",
+            description: "variant-propen er utfaset. Størrelsen settes nå automatisk fra omgivelsenes fontstørrelse. Fjern variant og kontroller størrelsen med CSS font-size på et omsluttende element om nødvendig.",
+            migrationBefore: `<Icon variant="small">home</Icon>
+<Icon variant="medium">home</Icon>`,
+            code: `<Icon>home</Icon>
+
+// Trenger du en spesifikk størrelse, styr med CSS:
+<span style={{ fontSize: "1.5rem" }}>
+    <Icon>home</Icon>
+</span>`,
+            preview: (
+                <Flex gap="m" alignItems="center">
+                    <span style={{ fontSize: "1rem" }}><Icon>home</Icon></span>
+                    <span style={{ fontSize: "1.5rem" }}><Icon>home</Icon></span>
+                    <span style={{ fontSize: "2rem" }}><Icon>home</Icon></span>
                 </Flex>
             ),
         },
