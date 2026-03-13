@@ -24,7 +24,10 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "interaktiv", "datavisning", "liste"],
     description: "Pagination brukes til å dele opp lange lister i sider.",
-    notes: "Oppdater currentPage-state i onPageChange-handler.",
+    notes: [
+    "Oppdater currentPage-state i onPageChange-handler.",
+    "Pagination er utelukkende kontrollert — du må holde rede på gjeldende side selv.",
+],
     props: [
         { name: "currentPage", type: "number", required: true, source: "custom", status: "stable", description: "Gjeldende sidenummer (1-basert)." },
         { name: "numberOfPages", type: "number", required: true, source: "custom", status: "stable", description: "Totalt antall sider." },

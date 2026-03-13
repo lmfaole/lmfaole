@@ -9,7 +9,11 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "søk", "skjemabygging"],
     description: "Select er et nedtrekksmeny-skjemaelement for å velge ett alternativ fra en liste.",
-    notes: "Bruk Select når listen har 5+ alternativer.",
+    notes: [
+    "Bruk Select når listen har 5 eller flere alternativer.",
+    "For færre alternativer, vurder RadioButton i stedet.",
+    "Bruk items-prop med objekt-form ({ value, label }) når visningsnavn og verdi er forskjellige.",
+],
     relatedIds: ["radio-button", "autosuggest"],
     props: [
         { name: "name", type: "string", required: true, source: "native", status: "stable", description: "Skjemafeltets navn." },

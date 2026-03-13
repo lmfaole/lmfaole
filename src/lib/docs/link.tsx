@@ -10,7 +10,10 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "tekst", "interaktiv"],
     description: "Link er Jøkuls grunnleggende lenkestil for inline-lenker og frittstående lenker.",
-    notes: "Bruk Link for navigasjon, ikke Button.",
+    notes: [
+    "Bruk Link for navigasjon, ikke Button.",
+    "Bruk external-prop for lenker som åpner i ny fane — dette legger til visuell og ARIA-indikasjon.",
+],
     relatedIds: ["nav-link", "link-list"],
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Lenketekst." },

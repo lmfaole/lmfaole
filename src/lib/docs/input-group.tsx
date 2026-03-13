@@ -49,8 +49,11 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "InputGroup kombinerer et skjemafelt med label, hjelpetekst og feilmelding på en tilgjengelig måte. FieldGroup bruker et fieldset-element for grupper av relaterte felt som avkrysningsbokser og radioknapper.",
-    notes:
-        "Bruk render-prop for å sende tilgjengelighetsprops (aria-describedby, aria-invalid, id) automatisk videre til det underliggende inputfeltet. Bruk FieldGroup for grupper av felt med felles legend.",
+    notes: [
+        "Bruk render-prop for å sende tilgjengelighetsprops (aria-describedby, aria-invalid, id) automatisk videre til det underliggende inputfeltet.",
+        "Bruk FieldGroup for grupper av felt med felles legend.",
+        "Koble alltid label til input via id/htmlFor — InputGroup håndterer dette automatisk via render-prop.",
+    ],
     props: [
         {
             name: "label",

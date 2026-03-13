@@ -9,7 +9,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "søk", "skjema", "interaktiv"],
     description: "SearchInput er et søkeinputfelt med søkeikon og valgfri label.",
-    notes: "Bruk label for tilgjengelighet, selv om den er visuelt skjult.",
+    notes: [
+    "Bruk label for tilgjengelighet, selv om den er visuelt skjult.",
+    "Koble søkehandlingen til onChange eller onSearch — Search utfører ikke søk selv.",
+],
     relatedIds: ["text-input", "autosuggest"],
     props: [
         { name: "label", type: "string", required: false, source: "custom", status: "stable", default: '"Søk"', description: "Tilgjengelig label." },

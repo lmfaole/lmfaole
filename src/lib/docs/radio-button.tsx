@@ -9,7 +9,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "skjemabygging", "tilgjengelighet"],
     description: "RadioButton og RadioButtonGroup brukes for enovalgslister.",
-    notes: "Bruk alltid RadioButtonGroup som wrapper for tilgjengelighet.",
+    notes: [
+    "Bruk alltid RadioButtonGroup som wrapper — aldri stående alene.",
+    "RadioButtonGroup krever name-prop for riktig skjemainnsending og tilgjengelighet.",
+],
     relatedIds: ["checkbox", "radio-panel"],
     props: [
         { name: "legend", type: "string", required: true, source: "custom", status: "stable", description: "Overskrift for gruppen (på RadioButtonGroup)." },

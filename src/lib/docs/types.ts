@@ -43,7 +43,7 @@ export interface ComponentDoc {
     status?: "stable" | "beta" | "deprecated";
     tags: string[];
     description: string;
-    notes?: string;
+    notes?: string | string[];
     props: PropDef[];
     subComponents?: SubComponentDoc[];
     examples: ComponentExample[];

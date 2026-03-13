@@ -11,7 +11,10 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["overlay", "interaktiv", "tilgjengelighet", "feedback"],
     description: "Tooltip og PopupTip viser tilleggsinformasjon ved hover eller klikk.",
-    notes: "Ikke legg viktig informasjon kun i en tooltip.",
+    notes: [
+    "Tooltip skal kun inneholde utfyllende informasjon — aldri kritisk innhold som ikke finnes andre steder.",
+    "Ikke bruk Tooltip på ikke-interaktive elementer, da de ikke er tilgjengelige for tastaturbrukere.",
+],
     props: [
         { name: "placement", type: '"top" | "top-start" | "top-end" | "left" | "right"', required: false, source: "custom", status: "stable", default: '"top"', description: "Posisjon for tooltip." },
         { name: "triggerOn", type: '"hover" | "click"', required: false, source: "custom", status: "stable", default: '"hover"', description: "Utløsende hendelse." },

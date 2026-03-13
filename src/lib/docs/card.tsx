@@ -53,7 +53,11 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["layout", "panel", "datavisning"],
     description: "Card er en overflate-komponent som grupperer relatert innhold i et visuelt avgrenset område. Den gir bakgrunn, ramme og padding via padding-proppen. Card gjør ikke antagelser om innhold — det er opp til deg å strukturere innholdet med Flex, overskrifter og andre komponenter.",
-    notes: "Card er ikke interaktivt som standard. Bruk clickable + as=\"a\" for klikkbare kort, og sett alltid aria-label.",
+    notes: [
+    "Card er ikke interaktivt som standard.",
+    "Bruk clickable-prop for klikkbare kort, og sett alltid aria-label for tilgjengelighet.",
+    "Ikke legg interaktive elementer (knapper, lenker) inne i et clickable Card — det skaper nested interactives.",
+],
     relatedIds: ["flex"],
     props: [
         {

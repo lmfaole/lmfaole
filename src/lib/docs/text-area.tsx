@@ -9,7 +9,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "skjemabygging"],
     description: "TextArea er et flerlinjers tekstinputfelt for lengre tekstinnhold.",
-    notes: "Bruk autoExpand for å la feltet vokse automatisk med innholdet.",
+    notes: [
+    "Bruk autoExpand for å la feltet vokse automatisk med innholdet.",
+    "Sett alltid label for tilgjengelighet.",
+],
     relatedIds: ["text-input"],
     props: [
         { name: "label", type: "React.ReactNode", required: true, source: "custom", status: "stable", description: "Synlig label over tekstfeltet." },

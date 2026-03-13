@@ -59,6 +59,10 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Feedback er en komponent for å samle inn tilbakemeldinger fra brukere. Den støtter smileys og radioknapper, og kan utvides med et oppfølgingsspørsmål.",
+    notes: [
+        "Feedback er beregnet på å samle brukeropplevelse i produkter — ikke til skjemafeil.",
+        "Bruk onSubmit for å sende tilbakemeldingen til ditt eget API.",
+    ],
     props: [
         {
             name: "type",

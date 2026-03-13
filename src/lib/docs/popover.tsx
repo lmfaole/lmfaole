@@ -54,8 +54,11 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Popover er en flytende informasjonsboks som vises ved siden av et trigger-element. Den brukes til kontekstuell informasjon og handlinger som ikke krever en full modal.",
-    notes:
-        "Popover er en compound component: Popover.Trigger rendrer som en knapp som standard. Bruk asChild for å merge trigger-props inn i et eksisterende element.",
+    notes: [
+        "Popover er en compound component: Popover.Trigger rendrer som en knapp som standard.",
+        "Bruk asChild på Popover.Trigger for å merge trigger-props inn i et eksisterende element.",
+        "Popover lukkes automatisk ved klikk utenfor og Escape-tasten.",
+    ],
     props: [
         {
             name: "children",

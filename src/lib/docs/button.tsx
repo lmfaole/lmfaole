@@ -11,7 +11,11 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["knapp", "interaktiv", "skjema"],
     description: "Button brukes til å utløse handlinger. Knapper er det primære interaksjonselementet og skal alltid kommunisere hva som skjer når brukeren trykker på dem. Velg variant basert på handlingens prioritet — bruk én primary-knapp per kontekst og reserver ghost for lavprioriterte handlinger.",
-    notes: "Ikke bruk Button til navigasjon — bruk Link eller NavLink i stedet. En knapp skal alltid ha en tydelig, handlingsrettet label. Unngå «Klikk her» eller «Send» uten kontekst.",
+    notes: [
+    "Ikke bruk Button til navigasjon — bruk Link eller NavLink i stedet.",
+    "En knapp skal alltid ha en tydelig, handlingsrettet label. Unngå «Klikk her» eller «Send» uten kontekst.",
+    "Bruk én primary-knapp per kontekst. Reserver ghost for lavprioriterte handlinger.",
+],
     relatedIds: ["text-input", "toggle-switch", "icon-button", "icon"],
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekstinnholdet i knappen." },

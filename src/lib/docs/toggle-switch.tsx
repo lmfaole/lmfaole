@@ -10,7 +10,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "tilstandsstyring"],
     description: "ToggleSwitch er et binært vippebryter-element for innstillinger som skal tre i kraft umiddelbart. Forskjellen fra en checkbox er viktig: en checkbox er en del av et skjema som sendes inn, mens ToggleSwitch utløser en umiddelbar handling. Bruk ToggleSwitch for innstillinger som «Slå på varsler», og checkbox for «Godta vilkårene».",
-    notes: "Ikke bruk ToggleSwitch i skjemaer som sendes inn med en Submit-knapp. Bruk heller Checkbox i skjema-kontekst. Bekreft alltid at bryteren fungerer uten JavaScript via fallback.",
+    notes: [
+    "Bruk ToggleSwitch for innstillinger som trer i kraft umiddelbart — ikke for skjemainnsending.",
+    "Bruk Checkbox i stedet hvis handlingen krever at brukeren sender inn et skjema.",
+],
     relatedIds: ["button"],
     props: [
         {

@@ -54,7 +54,11 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "søk", "interaktiv", "kontrollert"],
     description: "Autosuggest er et tekstinputfelt som viser forslag mens brukeren skriver. Passer for søk og fritekstfelt med et endelig sett av gyldige valg.",
-    notes: "Krev ikke valg fra forslagslisten — brukeren skal kunne skrive fritt.",
+    notes: [
+    "Krev ikke valg fra forslagslisten — brukeren skal kunne skrive fritt.",
+    "Forslagene filtreres ikke automatisk — du håndterer filtering i suggestions-prop.",
+    "Bruk onSelect for å reagere når brukeren velger et forslag.",
+],
     relatedIds: ["text-input", "select"],
     props: [
         { name: "label", type: "string", required: true, source: "custom", status: "stable", description: "Synlig label over inputfeltet." },

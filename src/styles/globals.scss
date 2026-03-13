@@ -144,6 +144,37 @@ code {
   padding: 2px 6px;
 }
 
+.component-header {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--jkl-spacing-l);
+  align-items: center;
+
+  @media (min-width: 42rem) {
+    grid-template-columns: 1fr auto;
+  }
+
+  &__text {
+    min-width: 0;
+  }
+
+  &__preview {
+    align-items: center;
+    background: var(--jkl-color-background-container);
+    border: 1px solid var(--jkl-color-border-subdued);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    min-height: 10rem;
+    padding: var(--jkl-spacing-xl);
+    width: clamp(12rem, 30vw, 22rem);
+
+    @media (max-width: 42rem) {
+      width: 100%;
+    }
+  }
+}
+
 .component-example {
   padding-block: var(--jkl-spacing-m);
 

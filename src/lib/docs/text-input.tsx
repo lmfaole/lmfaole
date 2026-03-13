@@ -9,7 +9,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "skjemabygging", "kontrollert"],
     description: "TextInput er en enkeltlinjers tekstinndatafelt. Komponenten inkluderer label, feilmelding og hjelpetekst i ett og håndterer tilgjengelighet automatisk — label er koblet til input via htmlFor/id. Alle skjema-primitiver i Jøkul følger samme API-mønster.",
-    notes: "Bruk alltid label — ikke bruk placeholder som erstatning for label. Placeholder-tekst forsvinner når brukeren skriver og er ikke tilgjengelig. helpLabel brukes for format-hint som «Skriv inn dato som DD.MM.ÅÅÅÅ».",
+    notes: [
+    "Bruk alltid label-prop for tilgjengelighet — ikke bare placeholder.",
+    "Koble feilmeldinger via errorLabel og hjelp via helpLabel, eller bruk InputGroup for mer kontroll.",
+],
     relatedIds: ["button"],
     props: [
         {

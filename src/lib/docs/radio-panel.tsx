@@ -11,7 +11,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "panel", "interaktiv", "pris"],
     description: "RadioPanel er et panelbasert envalgsalternativ.",
-    notes: "Grupper RadioPanel-er i FieldGroup med legend for tilgjengelighet.",
+    notes: [
+    "Grupper RadioPanel-er i FieldGroup med legend for tilgjengelighet.",
+    "Bruk RadioPanel fremfor RadioButton når valgene trenger mer kontekst eller beskrivelse.",
+],
     relatedIds: ["radio-button", "checkbox-panel"],
     props: [
         { name: "value", type: "string", required: true, source: "native", status: "stable", description: "Verdien som sendes ved innsending." },

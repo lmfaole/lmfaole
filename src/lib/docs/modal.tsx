@@ -86,8 +86,11 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Modal er en dialogboks som vises over resten av innholdet. Den brukes til å be om bekreftelse, vise viktig informasjon eller samle inn data uten å navigere bort fra siden.",
-    notes:
-        "Bruk `useModal` for å sette opp instansen og spre props på riktige elementer. Modalen rendres i en portal via `ReactDOM.createPortal`. Bruk `role='alertdialog'` når brukeren ikke skal kunne lukke dialogen med Escape eller klikk utenfor.",
+    notes: [
+        "Bruk useModal() for å sette opp instansen og spre props på riktige elementer.",
+        "Modalen rendres i en portal via ReactDOM.createPortal — unngå å stile den ut fra parent-konteksten.",
+        "Bruk role='alertdialog' når brukeren ikke skal kunne lukke dialogen med Escape eller klikk utenfor.",
+    ],
     props: [
         {
             name: "title",

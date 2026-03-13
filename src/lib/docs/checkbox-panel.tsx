@@ -10,7 +10,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "panel", "interaktiv", "pris"],
     description: "CheckboxPanel er en utvidet avkrysningsboks med et synlig paneldesign.",
-    notes: "Bruk CheckboxPanel når valgene er komplekse nok til å trenge panelvisning.",
+    notes: [
+    "Bruk CheckboxPanel når valgene er komplekse nok til å trenge panelvisning.",
+    "Grupper CheckboxPanel-er i FieldGroup med legend.",
+],
     relatedIds: ["checkbox", "radio-panel"],
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innhold i panelet." },

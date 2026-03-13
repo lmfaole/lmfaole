@@ -63,6 +63,11 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Combobox er et flervalg-skjemaelement med søkefunksjon. Valgte elementer vises som chips og kan fjernes enkeltvis.",
+    notes: [
+        "Combobox er for flervalg med søk — bruk Select for enkeltvalg uten søk.",
+        "Valgte elementer vises som chips og kan fjernes enkeltvis av brukeren.",
+        "Bruk onChange for å holde rede på valgte verdier i kontrollert modus.",
+    ],
     relatedIds: ["select", "autosuggest"],
     props: [
         {

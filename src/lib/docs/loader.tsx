@@ -13,8 +13,11 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Loader viser en spinner-animasjon mens data hentes eller en operasjon pågår. Gi alltid textDescription for skjermlesere.",
-    notes:
-        "For å unngå flimmer ved raske operasjoner kan du bruke delay-prop. Bruk inline for å vise lasteren som del av tekst eller knapper.",
+    notes: [
+        "Bruk delay-prop for å unngå flimmer ved raske operasjoner.",
+        "Bruk inline-variant for å vise lasteren som del av tekst eller knapper.",
+        "Sett alltid textDescription for skjermlesere.",
+    ],
     relatedIds: ["skeleton", "button", "feedback"],
     props: [
         { name: "textDescription", type: "string", required: true, source: "aria", status: "stable", description: "Tilgjengelig beskrivelse for skjermlesere." },

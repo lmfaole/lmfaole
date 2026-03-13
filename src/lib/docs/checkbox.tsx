@@ -10,7 +10,11 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "skjemabygging", "tilgjengelighet"],
     description: "Checkbox brukes for binære valg i skjemaer, typisk for samtykke eller flervalgslister.",
-    notes: "Bruk Checkbox for skjemainnsending, ikke ToggleSwitch.",
+    notes: [
+    "Bruk Checkbox for skjemainnsending med binære valg.",
+    "Bruk ToggleSwitch for innstillinger som trer i kraft umiddelbart uten innsending.",
+    "Grupper flere Checkbox-er i FieldGroup med legend for tilgjengelighet.",
+],
     relatedIds: ["toggle-switch", "checkbox-panel"],
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Label-tekst." },

@@ -10,7 +10,11 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["skjema", "skjemabygging", "tilgjengelighet", "validering"],
     description: "FieldGroup grupperer relaterte skjemaelementer under en felles legend.",
-    notes: "Alltid bruk FieldGroup rundt grupper av avkrysningsbokser og radioknapper for tilgjengelighet.",
+    notes: [
+    "Alltid bruk FieldGroup rundt grupper av avkrysningsbokser og radioknapper for tilgjengelighet.",
+    "legend-prop er påkrevd — den beskriver hva gruppen handler om for skjermlesere.",
+    "Bruk helpLabel og errorLabel på FieldGroup, ikke på hvert enkelt felt i gruppen.",
+],
     relatedIds: ["checkbox", "radio-button"],
     props: [
         { name: "legend", type: "string", required: true, source: "custom", status: "stable", description: "Overskrift for gruppen." },

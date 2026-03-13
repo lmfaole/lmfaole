@@ -30,7 +30,10 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "layout", "interaktiv"],
     description: "Tabs organiser innhold i faner der kun én fane vises om gangen.",
-    notes: "Bruk Tabs for å skjule innhold, ikke for navigasjon mellom sider.",
+    notes: [
+    "Bruk Tabs for å skjule innhold innenfor samme side — ikke for navigasjon mellom sider.",
+    "Faner bør ikke brukes hvis brukeren sannsynligvis trenger innhold fra flere faner samtidig.",
+],
     relatedIds: ["nav-link"],
     props: [
         { name: "defaultTab", type: "number", required: false, source: "custom", status: "stable", default: "0", description: "Initialt aktiv fane (indeks)." },

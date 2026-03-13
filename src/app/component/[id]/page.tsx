@@ -36,23 +36,21 @@ export default function ComponentPage() {
 
     return (
         <article>
-            <header>
-                <Flex gap="s" alignItems="center">
-                    <h1>{doc.name}</h1>
-                    <Tag variant="neutral">{doc.category}</Tag>
-                </Flex>
-                <code className="component-package">{doc.package}</code>
-                <p>{doc.description}</p>
-                {doc.notes && (
-                    <Message variant="info">{doc.notes}</Message>
-                )}
+            <header className="component-header">
+                <div className="component-header__text">
+                    <Flex gap="s" alignItems="center">
+                        <h1>{doc.name}</h1>
+                        <Tag variant="neutral">{doc.category}</Tag>
+                    </Flex>
+                    <code className="component-package">{doc.package}</code>
+                    <p>{doc.description}</p>
+                </div>
                 {regularExamples[0]?.preview && (
-                    <Card padding="l"
-                          style={{display: "flex", alignItems: "center", justifyContent: "center", minHeight: "10rem"}}>
+                    <div className="component-header__preview">
                         <div style={{pointerEvents: "none", userSelect: "none", width: "100%"}}>
                             {regularExamples[0].preview}
                         </div>
-                    </Card>
+                    </div>
                 )}
             </header>
 
@@ -63,6 +61,9 @@ export default function ComponentPage() {
                 )}
                 {migrationExamples.length > 0 && (
                     <TableOfContents.Link href="#migrering">Migrering</TableOfContents.Link>
+                )}
+                {doc.notes && (
+                    <TableOfContents.Link href="#viktig-informasjon">Viktig informasjon</TableOfContents.Link>
                 )}
             </TableOfContents>
 
@@ -145,6 +146,13 @@ export default function ComponentPage() {
                             example={example as typeof example & { migrationBefore: string }}
                         />
                     ))}
+                </section>
+            )}
+
+            {doc.notes && (
+                <section>
+                    <h2 id="viktig-informasjon">Viktig informasjon</h2>
+                    <Message variant="info">{doc.notes}</Message>
                 </section>
             )}
         </article>

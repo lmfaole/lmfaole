@@ -56,8 +56,10 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "SystemMessage brukes til å kommunisere viktig informasjon til brukeren på sidenivå. Finnes i variantene info, success, warning og error. Kan gjøres avvisbar med dismissAction.",
-    notes:
-        "Bruk role='alert' for kritiske meldinger slik at skjermlesere annonserer dem umiddelbart. Bruk de pre-konfigurerte variantene (InfoSystemMessage, SuccessSystemMessage osv.) fremfor å angi variant manuelt.",
+    notes: [
+        "Bruk role='alert' for kritiske meldinger slik at skjermlesere annonserer dem umiddelbart.",
+        "Bruk de pre-konfigurerte variantene (InfoSystemMessage, SuccessSystemMessage osv.) fremfor å angi variant manuelt.",
+    ],
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet i meldingen." },
         {

@@ -52,6 +52,11 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "DatePicker er et skjemafelt for å velge en dato. Den kombinerer et tekstfelt med en interaktiv kalender og validerer datoformatet automatisk.",
+    notes: [
+        "DatePicker validerer datoformatet automatisk og tilpasser seg norsk datoformat (dd.mm.yyyy).",
+        "Bruk minDate og maxDate for å begrense hvilke datoer brukeren kan velge.",
+        "Koble DatePicker til et skjema via name-prop — verdien leveres som string i ISO-format.",
+    ],
     relatedIds: ["text-input", "select"],
     props: [
         {

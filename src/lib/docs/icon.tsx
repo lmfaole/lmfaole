@@ -10,7 +10,10 @@ const doc: ComponentDoc = {
     category: "Visning",
     tags: ["ikon", "media"],
     description: "Icon rendrer Material Symbols-ikoner. Gi navnet på ikonet som child-tekst.",
-    notes: "Bruk alltid aria-label eller ledsagende tekst hvis ikonet er eneste indikasjon på en handling.",
+    notes: [
+    "Bruk alltid aria-label eller ledsagende tekst hvis ikonet er eneste indikasjon på en handling.",
+    "Bruk Icon kun for dekorasjon eller visuell støtte — ikke som primær informasjonsformidler.",
+],
     props: [
         { name: "children", type: "string", required: true, source: "react", status: "stable", description: 'Material Symbol-navn, f.eks. "arrow_forward".' },
         { name: "bold", type: "boolean", required: false, source: "react", status: "stable", description: "Tykkere strekbredde." },

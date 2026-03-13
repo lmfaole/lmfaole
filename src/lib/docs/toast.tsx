@@ -80,8 +80,11 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Toast er en midlertidig varslingskomponent som vises til brukeren etter en handling. Den forsvinner automatisk etter en stund og kan inneholde en handling.",
-    notes:
-        "Wrap appen i ToastProvider og bruk useToast() for å vise toasts. useToast må brukes inne i en ToastProvider.",
+    notes: [
+        "Wrap appen i ToastProvider og bruk useToast() for å vise toasts.",
+        "useToast() må kalles inne i en komponent som er nested under ToastProvider.",
+        "Toast forsvinner automatisk — ikke bruk den for kritisk informasjon som krever brukerhandling.",
+    ],
     relatedIds: ["message"],
     props: [
         {
