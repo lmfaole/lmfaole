@@ -31,6 +31,7 @@ import loaderDoc from "./loader";
 import skeletonDoc from "./skeleton";
 import logoDoc from "./logo";
 import navLinkDoc from "./nav-link";
+import navTabDoc from "./nav-tab";
 import paginationDoc from "./pagination";
 import progressBarDoc from "./progress-bar";
 import radioButtonDoc from "./radio-button";
@@ -87,6 +88,7 @@ export const componentDocs: ComponentDoc[] = [
     messageDoc,
     modalDoc,
     navLinkDoc,
+    navTabDoc,
     paginationDoc,
     popoverDoc,
     progressBarDoc,

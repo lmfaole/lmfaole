@@ -39,6 +39,7 @@ export const COMPONENT_IDS = [
     "message",
     "modal",
     "nav-link",
+    "nav-tab",
     "pagination",
     "popover",
     "progress-bar",

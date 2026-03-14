@@ -1,17 +1,16 @@
 "use client";
 
-import {useState, useEffect, useRef} from "react";
+import {useState, useRef, useEffect} from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import "./component-page.scss";
 import {TableOfContents} from "@fremtind/jokul/table-of-contents";
-import {Tab, TabList, TabPanel, Tabs} from "@fremtind/jokul/tabs";
+import {Tab, TabList, TabPanel, Tabs, NavTab, NavTabs} from "@fremtind/jokul/tabs";
 import {Card} from "@fremtind/jokul/card";
 import {useParams} from "next/navigation";
 import {getComponentDoc} from "@/features/component-docs/data";
 import {PropTable} from "@/features/component-docs/components/PropTable";
 import {ComponentExample} from "@/features/component-docs/components/ComponentExample";
 import {MigrationExample} from "@/features/component-docs/components/MigrationExample";
-import {ChipFilterList} from "@/features/component-docs/components/ChipFilterList";
 import type {Migration} from "@/features/component-docs/data";
 import {NotFound} from "@/shared/components/NotFound";
 import {PreviewContainer} from "@/features/component-docs/components/PreviewContainer";
@@ -22,7 +21,6 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
     const [active, setActive] = useState<string | null>(null);
     const pendingScroll = useRef<string | null>(null);
 
-    // After active changes (re-render), scroll to any pending anchor
     useEffect(() => {
         if (pendingScroll.current) {
             const el = document.getElementById(`migration-${pendingScroll.current}`);
@@ -33,30 +31,37 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
         }
     }, [active]);
 
-    useEffect(() => {
-        function handleHashChange() {
-            const match = window.location.hash.match(/^#migration-(.+)$/);
-            if (!match) return;
-            const name = decodeURIComponent(match[1]);
-            if (!migrations.some((m) => m.deprecates.name === name)) return;
-            // Record the scroll target, then clear the filter so the anchor renders
-            pendingScroll.current = name;
-            setActive(null);
-        }
-        handleHashChange();
-        window.addEventListener("hashchange", handleHashChange);
-        return () => window.removeEventListener("hashchange", handleHashChange);
-    }, [migrations]);
-
     const visible = active ? migrations.filter((m) => m.deprecates.name === active) : migrations;
+
+    function selectTab(name: string | null) {
+        if (name && active !== name) {
+            pendingScroll.current = name;
+        }
+        setActive(name);
+    }
+
     return (
         <Flex as="section" direction="column" gap="m">
             <h2 id="migrering">Migrering</h2>
-            <ChipFilterList
-                items={migrations.map((m) => m.deprecates.name)}
-                selected={active}
-                onChange={setActive}
-            />
+            <NavTabs aria-label="Filtrer migrering">
+                <NavTab
+                    as="button"
+                    aria-selected={active === null}
+                    onClick={() => selectTab(null)}
+                >
+                    Se alle
+                </NavTab>
+                {migrations.map((m) => (
+                    <NavTab
+                        key={m.deprecates.name}
+                        as="button"
+                        aria-selected={active === m.deprecates.name}
+                        onClick={() => selectTab(m.deprecates.name)}
+                    >
+                        {m.deprecates.name}
+                    </NavTab>
+                ))}
+            </NavTabs>
             {visible.map((migration) => (
                 <div key={migration.title} id={`migration-${migration.deprecates.name}`}>
                     <MigrationExample migration={migration} />
