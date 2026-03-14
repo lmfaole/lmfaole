@@ -69,9 +69,14 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
                 ))}
             </NavTabs>
             {visible.map((migration) => (
-                <div key={migration.title} id={`migration-${migration.deprecates.name}`}>
+                <Card
+                    key={migration.title}
+                    padding="l"
+                    id={`migration-${migration.deprecates.name}`}
+                    style={{ scrollMarginTop: "var(--jkl-spacing-3xl)" }}
+                >
                     <MigrationExample migration={migration} />
-                </div>
+                </Card>
             ))}
         </Flex>
     );
