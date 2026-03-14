@@ -56,7 +56,6 @@
 
 html {
   overflow-x: clip;
-  scroll-padding-top: 52px; /* matches sticky SiteHeader height */
 
   /* ── App-level tokens not provided by Jøkul ─────────────────
      font-weight: Jøkul only has bold (700) and normal (400).
@@ -77,12 +76,15 @@ html {
   --app-spacing-3xs: 0.125rem; /* 2px  — below Jøkul's xxs */
   --app-spacing-2xs: 0.25rem;  /* 4px  — alias for Jøkul's xxs */
   --app-spacing-3xl: 5rem;     /* 80px — above Jøkul's 2xl (6.5rem) */
+
+  --app-header-offset: 80px;   /* sticky SiteHeader height + breathing room */
+  scroll-padding-top: var(--app-header-offset);
 }
 
 /* scrollIntoView() respects scroll-margin-top (not scroll-padding-top),
    so apply it globally to all anchor targets to offset the sticky header. */
 [id] {
-  scroll-margin-top: 52px;
+  scroll-margin-top: var(--app-header-offset);
 }
 
 body {

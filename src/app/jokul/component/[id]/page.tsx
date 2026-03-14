@@ -25,8 +25,9 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
         if (pendingScroll.current) {
             const el = document.getElementById(`migration-${pendingScroll.current}`);
             if (el) {
-                const headerOffset = 52 + 16; // sticky header + breathing room
-                const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+                const offsetStr = getComputedStyle(document.documentElement).getPropertyValue("--app-header-offset");
+                const offset = parseFloat(offsetStr) || 80;
+                const top = el.getBoundingClientRect().top + window.scrollY - offset;
                 window.scrollTo({ top, behavior: "smooth" });
                 pendingScroll.current = null;
             }
