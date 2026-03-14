@@ -12,7 +12,7 @@ interface PropTableProps {
     migrations?: Migration[];
 }
 
-const COLUMNS = ["Prop", "Type", "Påkrevd", "Standard", "Beskrivelse"];
+const COLUMNS = ["Prop", "Type", "Påkrevd", "Standard", "Status", "Beskrivelse"];
 
 const STATUS_LABEL: Record<PropStatus, string> = {
     stable: "Stabil",
@@ -35,36 +35,31 @@ const SOURCE_LABEL: Record<PropSource, string> = {
 
 const ALL_SOURCES: PropSource[] = ["custom", "native", "react", "aria"];
 
-function PropNameCell({ name, status, statusDescription, migrationAnchor }: Pick<PropDef, "name" | "status" | "statusDescription"> & { migrationAnchor?: string }) {
+function PropNameCell({ name, status, migrationAnchor }: Pick<PropDef, "name" | "status"> & { migrationAnchor?: string }) {
+    return migrationAnchor && status === "deprecated" ? (
+        <Link href={migrationAnchor}><code>{name}</code></Link>
+    ) : (
+        <code>{name}</code>
+    );
+}
+
+function PropStatusCell({ status, statusDescription }: Pick<PropDef, "status" | "statusDescription">) {
+    if (status === "stable") return <span style={{ color: "var(--jkl-color-text-subdued)" }}>—</span>;
     return (
-        <span style={{ display: "inline-flex", flexDirection: "column", gap: "var(--jkl-spacing-3xs)" }}>
-            {migrationAnchor && status === "deprecated" ? (
-                <Link href={migrationAnchor}><code>{name}</code></Link>
-            ) : (
-                <code>{name}</code>
-            )}
-            {status && status !== "stable" && (
-                <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--jkl-spacing-2xs)", fontSize: "var(--jkl-font-size-s)", color: STATUS_COLOR[status] }}>
-                    {STATUS_LABEL[status]}
-                    {statusDescription && <PopupTip content={statusDescription} placement="top" />}
-                </span>
-            )}
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--jkl-spacing-2xs)", color: STATUS_COLOR[status] }}>
+            {STATUS_LABEL[status]}
+            {statusDescription && <PopupTip content={statusDescription} placement="top" />}
         </span>
     );
 }
 
 function buildRows(props: PropDef[], migrationMap: Map<string, string>): React.ReactNode[][] {
     return props.map((prop) => [
-        <PropNameCell
-            key="name"
-            name={prop.name}
-            status={prop.status}
-            statusDescription={prop.statusDescription}
-            migrationAnchor={migrationMap.get(prop.name)}
-        />,
+        <PropNameCell key="name" name={prop.name} status={prop.status} migrationAnchor={migrationMap.get(prop.name)} />,
         <code key="type">{prop.type}</code>,
         <span key="req">{prop.required ? "Ja" : "Nei"}</span>,
         prop.default ? <code key="default">{prop.default}</code> : "—",
+        <PropStatusCell key="status" status={prop.status} statusDescription={prop.statusDescription} />,
         <span key="desc">{prop.description}</span>,
     ]);
 }
