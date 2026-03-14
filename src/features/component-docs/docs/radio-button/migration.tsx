@@ -9,11 +9,5 @@ export const migrations: Migration[] = [
         replacedBy: [{ name: "children", kind: "prop" }],
         before: `<RadioButton value="basic" label="Basis" />`,
         after: `<RadioButton value="basic">Basis</RadioButton>`,
-        preview: (
-            <RadioButtonGroup legend="Forsikringstype" name="migration-radio">
-                <RadioButton value="basic">Basis</RadioButton>
-                <RadioButton value="plus">Pluss</RadioButton>
-            </RadioButtonGroup>
-        ),
     },
 ];

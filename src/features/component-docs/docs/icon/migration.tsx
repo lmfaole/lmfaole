@@ -15,12 +15,5 @@ export const migrations: Migration[] = [
 <span style={{ fontSize: "1.5rem" }}>
     <Icon>home</Icon>
 </span>`,
-        preview: (
-            <Flex gap="m" alignItems="center">
-                <span style={{ fontSize: "1rem" }}><Icon>home</Icon></span>
-                <span style={{ fontSize: "1.5rem" }}><Icon>home</Icon></span>
-                <span style={{ fontSize: "2rem" }}><Icon>home</Icon></span>
-            </Flex>
-        ),
     },
 ];

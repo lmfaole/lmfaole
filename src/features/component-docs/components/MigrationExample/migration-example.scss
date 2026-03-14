@@ -1,76 +1,45 @@
 .migration-example {
-    &__header {
-        display: flex;
-        align-items: center;
-        gap: var(--jkl-spacing-s);
-        flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    gap: var(--jkl-spacing-s);
 
-        // Suppress h3's block margin — the component manages its own spacing
-        h3 { margin-block: 0; }
+    &__title {
+        display: flex;
+        align-items: baseline;
+        gap: var(--jkl-spacing-xs);
+        margin-block: 0;
     }
 
-    &__steps {
-        list-style: none;
-        padding: 0;
-        margin-block: var(--jkl-spacing-m) 0;
+    &__kind {
+        font-size: var(--jkl-font-size-s);
+        font-weight: normal;
+    }
+
+    &__replaced-by {
+        margin-block: 0;
+    }
+
+    &__blocks {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--jkl-spacing-m);
+
+        @media (max-width: 60rem) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__block {
         display: flex;
         flex-direction: column;
-        counter-reset: migration-step;
+        gap: var(--jkl-spacing-xs);
     }
 
-    &__step {
-        display: grid;
-        grid-template-columns: 2rem 1fr;
-        gap: var(--jkl-spacing-s) var(--jkl-spacing-m);
-        position: relative;
-
-        // Connecting line to next step
-        &:not(:last-child)::after {
-            content: "";
-            position: absolute;
-            top: 2rem;
-            left: calc(1rem - 1px);
-            width: 2px;
-            bottom: 0;
-            background: var(--jkl-color-border-default);
-        }
-
-        // Numbered badge
-        &::before {
-            counter-increment: migration-step;
-            content: counter(migration-step);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            background: var(--jkl-color-background-container);
-            border: 2px solid var(--jkl-color-border-default);
-            font-size: var(--jkl-font-size-s);
-            flex-shrink: 0;
-            line-height: var(--jkl-line-height-flush);
-            z-index: 1;
-        }
-
-        &--instruction {
-            padding-block: var(--jkl-spacing-xs);
-
-            &::before {
-                background: var(--jkl-color-background-default);
-                border-style: dashed;
-            }
-        }
-    }
-
-    &__step-label {
-        align-self: center;
-        grid-column: 2;
+    &__block-label {
+        font-size: var(--jkl-font-size-s);
     }
 
     .code-block {
-        grid-column: 2;
-        width: 100%;
-        margin-block-end: var(--jkl-spacing-m);
+        flex: 1;
     }
 }

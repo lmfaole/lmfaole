@@ -13,7 +13,6 @@ export const migrations: Migration[] = [
         after: `import { SystemMessage } from "@fremtind/jokul/system-message";
 
 <SystemMessage variant="info">Systemet vedlikeholdes lørdag kl. 22–24.</SystemMessage>`,
-        preview: <SystemMessage variant="info">Systemet vedlikeholdes lørdag kl. 22–24.</SystemMessage>,
     },
     {
         title: "SuccessSystemMessage",
@@ -26,7 +25,6 @@ export const migrations: Migration[] = [
         after: `import { SystemMessage } from "@fremtind/jokul/system-message";
 
 <SystemMessage variant="success">Registreringen var vellykket.</SystemMessage>`,
-        preview: <SystemMessage variant="success">Registreringen var vellykket.</SystemMessage>,
     },
     {
         title: "WarningSystemMessage",
@@ -39,7 +37,6 @@ export const migrations: Migration[] = [
         after: `import { SystemMessage } from "@fremtind/jokul/system-message";
 
 <SystemMessage variant="warning">Høy trafikk kan forsinke behandling.</SystemMessage>`,
-        preview: <SystemMessage variant="warning">Høy trafikk kan forsinke behandling.</SystemMessage>,
     },
     {
         title: "ErrorSystemMessage",
@@ -52,6 +49,5 @@ export const migrations: Migration[] = [
         after: `import { SystemMessage } from "@fremtind/jokul/system-message";
 
 <SystemMessage variant="error">Noe gikk galt. Prøv igjen.</SystemMessage>`,
-        preview: <SystemMessage variant="error">Noe gikk galt. Prøv igjen.</SystemMessage>,
     },
 ];

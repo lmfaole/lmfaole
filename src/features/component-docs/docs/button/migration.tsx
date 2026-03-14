@@ -10,7 +10,6 @@ export const migrations: Migration[] = [
         replacedBy: [{ name: "icon", kind: "prop" }],
         before: `<Button iconLeft={<Icon>add</Icon>}>Ny forsikring</Button>`,
         after: `<Button icon={<Icon>add</Icon>}>Ny forsikring</Button>`,
-        preview: <Button variant="primary" icon={<Icon>add</Icon>}>Ny forsikring</Button>,
     },
     {
         title: "iconRight",
@@ -19,6 +18,5 @@ export const migrations: Migration[] = [
         replacedBy: [{ name: "icon", kind: "prop" }, { name: "iconPosition", kind: "prop" }],
         before: `<Button iconRight={<Icon>arrow_forward</Icon>}>Se alle</Button>`,
         after: `<Button icon={<Icon>arrow_forward</Icon>} iconPosition="right">Se alle</Button>`,
-        preview: <Button variant="ghost" icon={<Icon>arrow_forward</Icon>} iconPosition="right">Se alle</Button>,
     },
 ];

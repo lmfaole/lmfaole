@@ -1,5 +1,3 @@
-import type React from "react";
-
 /**
  * A single deprecated or replacement item in a {@link Migration}.
  * Distinguishes between props (attributes on a component) and components
@@ -63,10 +61,4 @@ export interface Migration {
      * Write as valid JSX, imports excluded. Use 4-space indentation.
      */
     after: string;
-
-    /**
-     * Live React element previewing the updated ("after") usage.
-     * Omit when no meaningful visual difference exists.
-     */
-    preview?: React.ReactNode;
 }
