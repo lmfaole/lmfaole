@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import "./component-page.scss";
 import {TableOfContents} from "@fremtind/jokul/table-of-contents";
@@ -20,20 +20,30 @@ import {FullBleed} from "@/shared/components/FullBleed/FullBleed";
 
 function MigrationSection({ migrations }: { migrations: Migration[] }) {
     const [active, setActive] = useState<string | null>(null);
+    const pendingScroll = useRef<string | null>(null);
 
-    // When navigating via a #migration-{name} link (e.g. from the prop table),
-    // ensure the target migration is visible by clearing any conflicting filter.
+    // After active changes (re-render), scroll to any pending anchor
     useEffect(() => {
-        function handleHashChange() {
-            const hash = window.location.hash;
-            const match = hash.match(/^#migration-(.+)$/);
-            if (match) {
-                const name = decodeURIComponent(match[1]);
-                const exists = migrations.some((m) => m.deprecates.name === name);
-                if (exists) setActive(null); // show all so the anchor is in the DOM
+        if (pendingScroll.current) {
+            const el = document.getElementById(`migration-${pendingScroll.current}`);
+            if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+                pendingScroll.current = null;
             }
         }
-        handleHashChange(); // run on mount in case page loaded with a hash
+    }, [active]);
+
+    useEffect(() => {
+        function handleHashChange() {
+            const match = window.location.hash.match(/^#migration-(.+)$/);
+            if (!match) return;
+            const name = decodeURIComponent(match[1]);
+            if (!migrations.some((m) => m.deprecates.name === name)) return;
+            // Record the scroll target, then clear the filter so the anchor renders
+            pendingScroll.current = name;
+            setActive(null);
+        }
+        handleHashChange();
         window.addEventListener("hashchange", handleHashChange);
         return () => window.removeEventListener("hashchange", handleHashChange);
     }, [migrations]);
