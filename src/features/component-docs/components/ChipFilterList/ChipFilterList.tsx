@@ -8,11 +8,22 @@ interface ChipFilterListProps {
     onChange: (value: string | null) => void;
     /** Optional label transform, defaults to identity */
     getLabel?: (item: string) => string;
+    /** Label for the "show all" chip, defaults to "Se alle" */
+    allLabel?: string;
 }
 
-export function ChipFilterList({ items, selected, onChange, getLabel }: ChipFilterListProps) {
+export function ChipFilterList({ items, selected, onChange, getLabel, allLabel = "Se alle" }: ChipFilterListProps) {
     return (
         <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
+            <li>
+                <Chip
+                    variant="filter"
+                    selected={selected === null}
+                    onClick={() => onChange(null)}
+                >
+                    {allLabel}
+                </Chip>
+            </li>
             {items.map((item) => (
                 <li key={item}>
                     <Chip
