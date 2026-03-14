@@ -14,7 +14,7 @@
     max-width: 120ch;
     margin-inline: auto;
     padding-inline: 1rem;
-    padding-block: var(--jkl-spacing-2xl) var(--app-spacing-3xl);
+    padding-block: var(--jkl-spacing-2xl) 5rem;
     display: flex;
     flex-direction: column;
     gap: var(--jkl-spacing-s);
@@ -24,7 +24,7 @@
 
 .blog-article__category {
     font-size: var(--jkl-font-size-1);
-    font-weight: var(--app-font-weight-semibold);
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--jkl-color-text-subdued);
@@ -35,7 +35,7 @@
     margin: 0;
     font-size: clamp(var(--jkl-font-size-8), 5vw, var(--jkl-font-size-10));
     font-weight: var(--jkl-typography-font-weight-bold);
-    line-height: var(--app-line-height-display);
+    line-height: 1.05;
     letter-spacing: -0.03em;
     max-width: 22ch;
     margin-block-start: var(--jkl-spacing-xs);
@@ -63,7 +63,7 @@
 }
 
 .blog-article__author {
-    font-weight: var(--app-font-weight-medium);
+    font-weight: 500;
     color: var(--jkl-color-text-default);
 }
 

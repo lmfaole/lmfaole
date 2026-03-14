@@ -1,14 +1,14 @@
 .ty-pitfalls {
     display: flex;
     flex-direction: column;
-    gap: var(--app-spacing-3xl);
+    gap: 5rem;
 }
 
 .ty-pitfalls__item {
     display: flex;
     flex-direction: column;
     gap: var(--jkl-spacing-m);
-    padding-block-end: var(--app-spacing-3xl);
+    padding-block-end: 5rem;
     border-block-end: 1px solid var(--jkl-color-border-ui);
 
     &:last-child {

@@ -1,7 +1,7 @@
 .ty-scale-demo {
     display: flex;
     flex-direction: column;
-    gap: var(--app-spacing-3xl);
+    gap: 5rem;
 }
 
 /* Section wrapper */
@@ -24,7 +24,7 @@
 .ty-scale-demo__row-meta {
     display: flex;
     flex-direction: column;
-    gap: var(--app-spacing-3xs);
+    gap: var(--jkl-unit-02);
     flex-shrink: 0;
     align-items: flex-end;
 }
@@ -97,7 +97,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: var(--app-spacing-2xs);
+    gap: var(--jkl-spacing-xxs);
     flex-shrink: 0;
 }
 
@@ -111,7 +111,7 @@
 .ty-scale-demo__style-tokens {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--app-spacing-2xs);
+    gap: var(--jkl-spacing-xxs);
     justify-content: flex-end;
 }
 
@@ -123,7 +123,7 @@
     border: 1px solid var(--jkl-color-border-ui);
     border-radius: var(--jkl-border-radius-small);
     padding-block: 1px;
-    padding-inline: var(--app-spacing-2xs);
+    padding-inline: var(--jkl-spacing-xxs);
     white-space: nowrap;
 }
 
@@ -162,7 +162,7 @@
 .ty-scale-demo__lh-card {
     display: flex;
     flex-direction: column;
-    gap: var(--app-spacing-2xs);
+    gap: var(--jkl-spacing-xxs);
     padding: var(--jkl-spacing-l);
     border: 1px solid var(--jkl-color-border-ui);
     border-radius: var(--jkl-border-radius-medium);

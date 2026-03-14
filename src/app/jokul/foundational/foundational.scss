@@ -7,8 +7,8 @@
     h1 {
         margin: 0;
         font-size: clamp(var(--jkl-font-size-8), 5vw, var(--jkl-font-size-10));
-        font-weight: var(--app-font-weight-semibold);
-        line-height: var(--app-line-height-display);
+        font-weight: 600;
+        line-height: 1.05;
         letter-spacing: -0.03em;
     }
 

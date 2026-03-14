@@ -12,7 +12,7 @@
   min-height: 42rem;
   display: flex;
   align-items: stretch;
-  margin-block-end: var(--app-spacing-3xl);
+  margin-block-end: 5rem;
 }
 
 /* Illustration fills the full section behind the text */
@@ -56,7 +56,7 @@
   width: 100%;
   margin-inline-start: max(1rem, calc(50vw - 60ch));
   padding-inline: 1rem;
-  padding-block: var(--app-spacing-3xl);
+  padding-block: 5rem;
   display: flex;
   flex-direction: column;
   gap: var(--jkl-spacing-m);
@@ -66,7 +66,7 @@
 .foundational-header__title {
   margin: 0;
   font-size: clamp(var(--jkl-font-size-7), 4vw, var(--jkl-font-size-9));
-  font-weight: var(--app-font-weight-semibold);
+  font-weight: 600;
   line-height: var(--jkl-line-height-tight);
   letter-spacing: -0.02em;
 }
