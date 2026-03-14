@@ -34,15 +34,10 @@ const SOURCE_LABEL: Record<PropSource, string> = {
 
 const ALL_SOURCES: PropSource[] = ["custom", "native", "react", "aria"];
 
-function PropNameCell({ name, status, statusDescription, source, migrationAnchor }: Pick<PropDef, "name" | "status" | "statusDescription"> & { source?: PropSource; migrationAnchor?: string }) {
+function PropNameCell({ name, status, statusDescription, migrationAnchor }: Pick<PropDef, "name" | "status" | "statusDescription"> & { migrationAnchor?: string }) {
     return (
         <span style={{ display: "inline-flex", flexDirection: "column", gap: "var(--jkl-spacing-3xs)" }}>
             <code style={status === "deprecated" ? { textDecoration: "line-through", opacity: 0.6 } : undefined}>{name}</code>
-            {source && (
-                <span style={{ fontSize: "var(--jkl-font-size-s)", color: "var(--jkl-color-text-subdued)" }}>
-                    {SOURCE_LABEL[source]}
-                </span>
-            )}
             {status && status !== "stable" && (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--jkl-spacing-2xs)", fontSize: "var(--jkl-font-size-s)", color: STATUS_COLOR[status] }}>
                     {migrationAnchor ? (
@@ -57,14 +52,13 @@ function PropNameCell({ name, status, statusDescription, source, migrationAnchor
     );
 }
 
-function buildRows(props: PropDef[], hasSourceInfo: boolean, migrationMap: Map<string, string>): React.ReactNode[][] {
+function buildRows(props: PropDef[], migrationMap: Map<string, string>): React.ReactNode[][] {
     return props.map((prop) => [
         <PropNameCell
             key="name"
             name={prop.name}
             status={prop.status}
             statusDescription={prop.statusDescription}
-            source={hasSourceInfo ? prop.source : undefined}
             migrationAnchor={migrationMap.get(prop.name)}
         />,
         <code key="type">{prop.type}</code>,
@@ -77,27 +71,19 @@ function buildRows(props: PropDef[], hasSourceInfo: boolean, migrationMap: Map<s
 export function PropTable({ props, migrations }: PropTableProps) {
     const [sourceFilter, setSourceFilter] = useState<PropSource | null>(null);
 
-    const activeProps = props.filter((p) => p.status !== "deprecated");
-    const deprecatedProps = props.filter((p) => p.status === "deprecated");
-
     const hasSourceInfo = props.some((p) => p.source != null);
 
-    // Build a map from prop name → migration anchor href
     const migrationMap = new Map<string, string>(
         (migrations ?? []).map((m) => [m.deprecates.name, `#migration-${m.deprecates.name}`])
     );
 
-    // Stable first, then experimental
-    const sortedActive = [...activeProps].sort((a, b) => {
+    const sorted = [...props].sort((a, b) => {
         const order: Record<PropStatus, number> = { stable: 0, experimental: 1, deprecated: 2 };
         return order[a.status] - order[b.status];
     });
 
-    const visibleActive = sortedActive.filter((p) => !sourceFilter || p.source === sourceFilter);
-    const visibleDeprecated = deprecatedProps.filter((p) => !sourceFilter || p.source === sourceFilter);
-
-    const activeRows = buildRows(visibleActive, hasSourceInfo, migrationMap);
-    const deprecatedRows = buildRows(visibleDeprecated, hasSourceInfo, migrationMap);
+    const visible = sorted.filter((p) => !sourceFilter || p.source === sourceFilter);
+    const rows = buildRows(visible, migrationMap);
 
     return (
         <Flex direction="column" gap="m">
@@ -110,33 +96,15 @@ export function PropTable({ props, migrations }: PropTableProps) {
                 />
             )}
 
-            {activeRows.length === 0 ? (
+            {rows.length === 0 ? (
                 <p className="muted">Ingen props samsvarer med filteret.</p>
             ) : (
                 <DataTable
                     caption="Props"
                     columns={COLUMNS}
-                    rows={activeRows}
+                    rows={rows}
                     collapseToList
                 />
-            )}
-
-            {deprecatedProps.length > 0 && (
-                <Flex direction="column" gap="s">
-                    <h3 style={{ color: "var(--jkl-color-text-subdued)", fontSize: "var(--jkl-font-size-s)", fontWeight: "normal", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                        Utfasede props
-                    </h3>
-                    {deprecatedRows.length === 0 ? (
-                        <p className="muted">Ingen utfasede props samsvarer med filteret.</p>
-                    ) : (
-                        <DataTable
-                            caption="Utfasede props"
-                            columns={COLUMNS}
-                            rows={deprecatedRows}
-                            collapseToList
-                        />
-                    )}
-                </Flex>
             )}
         </Flex>
     );
