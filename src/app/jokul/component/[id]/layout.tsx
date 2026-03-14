@@ -5,10 +5,10 @@ export const runtime = "edge";
 import { Flex } from "@fremtind/jokul/flex";
 import { Link } from "@fremtind/jokul/link";
 import { useParams } from "next/navigation";
-import { getComponentDoc, getRelatedDocs } from "@/lib/componentDocs";
-import { ComponentCard } from "@/components/ComponentCard";
-import { Grid } from "@/components/Grid";
-import { CopyableCode } from "@/components/CopyableCode/CopyableCode";
+import { getComponentDoc, getRelatedDocs } from "@/features/component-docs/data";
+import { ComponentCard } from "@/shared/components/ComponentCard";
+import { Grid } from "@/shared/components/Grid";
+import { CopyableCode } from "@/features/component-docs/components/CopyableCode/CopyableCode";
 
 export default function ComponentLayout({ children }: { children: React.ReactNode }) {
     const { id } = useParams<{ id: string }>();

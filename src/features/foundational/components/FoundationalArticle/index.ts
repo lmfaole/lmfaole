@@ -1,0 +1,1 @@
+export { FoundationalArticle } from "./FoundationalArticle";

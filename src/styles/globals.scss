@@ -54,22 +54,54 @@
 @use "@fremtind/jokul/styles/components/toggle-switch/toggle-switch.scss";
 @use "@fremtind/jokul/styles/components/tooltip/tooltip.scss";
 
+html {
+  overflow-x: clip;
+
+  /* ── App-level tokens not provided by Jøkul ─────────────────
+     font-weight: Jøkul only has bold (700) and normal (400).
+     line-height: Jøkul has flush (1), tight (1.3), relaxed (1.6).
+     display line-height (1.05) is intentionally tighter than flush
+     for large editorial headings.
+
+     spacing: Jøkul's named scale ends at 2xl (6.5rem = 104px).
+     --app-spacing-3xs (2px) and --app-spacing-2xs (4px) fill
+     the sub-xxs range. --app-spacing-3xl extends above 2xl.
+     All values follow Jøkul's unit-base (0.5rem) rhythm.
+     ─────────────────────────────────────────────────────────── */
+  --app-font-weight-medium:   500;
+  --app-font-weight-semibold: 600;
+  --app-line-height-display:  1.05;
+  --app-font-size-micro:      0.625rem; /* 10px — below Jøkul's smallest token */
+
+  --app-spacing-3xs: 0.125rem; /* 2px  — below Jøkul's xxs */
+  --app-spacing-2xs: 0.25rem;  /* 4px  — alias for Jøkul's xxs */
+  --app-spacing-3xl: 5rem;     /* 80px — above Jøkul's 2xl (6.5rem) */
+}
+
 body {
   background-color: var(--jkl-color-background-page);
   color: var(--jkl-color-text-default);
   margin: 0 auto;
   max-width: 120ch;
-  overflow-x: hidden;
-  padding: 2lh 1rem;
+  padding: var(--jkl-spacing-xl) 1rem;
+  padding-block-start: 0;
+  padding-block-end: 0;
 }
 
-article h1,
-article h2,
-article h3,
-article h4,
-article h5,
-article p {
-  max-width: 60ch;
+/* Prose max-width: scoped to direct children of .post-prose
+   so demo components (nested deeper) are not constrained.
+   Lists constrain the list container itself (not li) so that
+   Jøkul's list component styles are respected inside. */
+.post-prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--jkl-spacing-l);
+
+  > h1, > h2, > h3, > h4, > h5, > p, > small,
+  > ul, > ol, > .jkl-unordered-list, > .jkl-ordered-list,
+  > dl, > .jkl-description-list {
+    max-width: 60ch;
+  }
 }
 
 h1, .h1 {
@@ -84,17 +116,22 @@ h2, .h2 {
 
 h3, .h3 {
   @include jkl.text-style("heading-3");
-  margin-block: var(--jkl-spacing-l) var(--jkl-spacing-2xs);
+  margin-block: var(--jkl-spacing-l) var(--app-spacing-2xs);
 }
 
 h4, .h4 {
   @include jkl.text-style("heading-4");
-  margin-block: var(--jkl-spacing-m) var(--jkl-spacing-3xs);
+  margin-block: var(--jkl-spacing-m) var(--app-spacing-3xs);
 }
 
 h5, .h5 {
   @include jkl.text-style("heading-5");
-  margin-block: var(--jkl-spacing-s) var(--jkl-spacing-3xs);
+  margin-block: var(--jkl-spacing-s) var(--app-spacing-3xs);
+}
+
+/* Suppress top margin on the very first heading in a prose block */
+.post-prose > :is(h1, h2, h3, h4, h5):first-child {
+  margin-block-start: 0;
 }
 
 p, .p, .p.medium {
@@ -131,4 +168,15 @@ code {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+/* Tags should never be flush — ensure gap wherever they appear adjacent */
+.jkl-tag + .jkl-tag {
+  margin-inline-start: var(--app-spacing-2xs);
+}
+
+/* Tag lists rendered as flex containers already use gap — reset adjacent margin */
+.jkl-flex > .jkl-tag + .jkl-tag,
+[class*="gap"] > .jkl-tag + .jkl-tag {
+  margin-inline-start: 0;
 }

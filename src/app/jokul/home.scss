@@ -56,10 +56,22 @@
     }
 }
 
-.home__section--dark {
-    background: var(--jkl-color-background-page);
-    border-radius: var(--jkl-border-radius-medium, 4px);
-    margin-inline: -1rem;
-    padding: var(--jkl-spacing-2xl) 1rem;
-    border-bottom: none;
+/* ── Dot grid section ─────────────────────────────────────────────────── */
+
+.home__dot-section {
+    /* dot grid handled by FullBleed dots="fade-top" */
+}
+
+.home__dot-inner {
+    position: relative;
+    z-index: 1;
+    max-width: calc(120ch - 2rem);
+    margin-inline: auto;
+    padding-inline: 1rem;
+    padding-block: var(--jkl-spacing-2xl);
+
+    .home__section {
+        border-bottom: none;
+        padding-block-end: 0;
+    }
 }

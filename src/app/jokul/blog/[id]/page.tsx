@@ -1,8 +1,8 @@
 "use client";
-import { PostArticle } from "@/components/PostArticle";
-import { NotFound } from "@/components/NotFound";
+import { BlogArticle } from "@/features/blog/components/BlogArticle";
+import { NotFound } from "@/shared/components/NotFound";
 import { useParams } from "next/navigation";
-import { getBlogPost } from "@/lib/blogPosts";
+import { getBlogPost } from "@/features/blog/data";
 
 export default function PostPage() {
     const { id } = useParams<{ id: string }>();
@@ -19,14 +19,10 @@ export default function PostPage() {
     }
 
     return (
-        <PostArticle
+        <BlogArticle
             title={post.title}
             excerpt={post.excerpt}
-            category={post.category}
-            date={post.date}
-            author={post.author}
             content={post.content}
-            tags={post.tags}
         />
     );
 }

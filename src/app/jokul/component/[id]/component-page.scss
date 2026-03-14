@@ -5,31 +5,10 @@
   gap: var(--jkl-spacing-xl);
   justify-content: center;
   text-align: center;
-  // Break out of body max-width and top padding to fill full viewport
-  left: 50%;
+  /* Full-bleed and dot grid handled by FullBleed dots="fade-bottom" */
   margin-block-start: -2lh;
-  margin-inline: -50vw;
   min-height: 100dvh;
   padding: var(--jkl-spacing-xl) var(--jkl-spacing-2xl) var(--jkl-spacing-2xl);
-  position: relative;
-  right: 50%;
-  width: 100vw;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, var(--jkl-color-border-subdued) 1px, transparent 1px);
-    background-size: 20px 20px;
-    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-    opacity: 0.6;
-    pointer-events: none;
-    z-index: 0;
-
-    @media (prefers-color-scheme: dark) {
-      opacity: 0.25;
-    }
-  }
 
   &__back {
     position: absolute;

@@ -1,1 +1,0 @@
-export { PostResources } from "./PostResources";

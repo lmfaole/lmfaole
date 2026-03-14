@@ -1,0 +1,176 @@
+.ty-scale-demo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-spacing-3xl);
+}
+
+/* Section wrapper */
+.ty-scale-demo__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jkl-spacing-l);
+}
+
+.ty-scale-demo__section-heading {
+    margin: 0;
+}
+
+.ty-scale-demo__section-desc {
+    margin: 0;
+    color: var(--jkl-color-text-subdued);
+}
+
+/* Shared meta column (token + label stacked) */
+.ty-scale-demo__row-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-spacing-3xs);
+    flex-shrink: 0;
+    align-items: flex-end;
+}
+
+/* Shared token + label typography */
+.ty-scale-demo__token {
+    font-size: var(--jkl-font-size-1);
+    color: var(--jkl-color-text-subdued);
+    white-space: nowrap;
+    font-family: "Fremtind Grotesk Mono", monospace;
+}
+
+.ty-scale-demo__label {
+    font-size: var(--jkl-font-size-1);
+    color: var(--jkl-color-text-subdued);
+}
+
+/* ─── 1. Font size scale ─────────────────────────────────── */
+.ty-scale-demo__scale {
+    display: flex;
+    flex-direction: column;
+}
+
+.ty-scale-demo__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--jkl-spacing-l);
+    padding-block: var(--jkl-spacing-s);
+    border-block-end: 1px solid var(--jkl-color-border-ui);
+
+    &:last-child {
+        border-block-end: none;
+    }
+}
+
+.ty-scale-demo__sample {
+    line-height: var(--jkl-line-height-tight);
+    color: var(--jkl-color-text-default);
+}
+
+/* ─── 2. Named text styles ───────────────────────────────── */
+.ty-scale-demo__styles {
+    display: flex;
+    flex-direction: column;
+}
+
+.ty-scale-demo__style-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--jkl-spacing-l);
+    align-items: center;
+    padding-block: var(--jkl-spacing-m);
+    border-block-end: 1px solid var(--jkl-color-border-ui);
+
+    &:last-child {
+        border-block-end: none;
+    }
+}
+
+.ty-scale-demo__style-sample {
+    margin: 0;
+    color: var(--jkl-color-text-default);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ty-scale-demo__style-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--app-spacing-2xs);
+    flex-shrink: 0;
+}
+
+.ty-scale-demo__style-name {
+    font-size: var(--jkl-font-size-2);
+    font-family: "Fremtind Grotesk Mono", monospace;
+    color: var(--jkl-color-text-default);
+    font-weight: var(--jkl-typography-font-weight-bold);
+}
+
+.ty-scale-demo__style-tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--app-spacing-2xs);
+    justify-content: flex-end;
+}
+
+.ty-scale-demo__chip {
+    font-size: var(--jkl-font-size-1);
+    font-family: "Fremtind Grotesk Mono", monospace;
+    color: var(--jkl-color-text-subdued);
+    background: var(--jkl-color-background-container);
+    border: 1px solid var(--jkl-color-border-ui);
+    border-radius: var(--jkl-border-radius-small);
+    padding-block: 1px;
+    padding-inline: var(--app-spacing-2xs);
+    white-space: nowrap;
+}
+
+/* ─── 3. Font weight ─────────────────────────────────────── */
+.ty-scale-demo__weights {
+    display: flex;
+    flex-direction: column;
+}
+
+.ty-scale-demo__weight-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--jkl-spacing-l);
+    padding-block: var(--jkl-spacing-m);
+    border-block-end: 1px solid var(--jkl-color-border-ui);
+
+    &:last-child {
+        border-block-end: none;
+    }
+}
+
+.ty-scale-demo__weight-sample {
+    font-size: var(--jkl-font-size-6);
+    line-height: var(--jkl-line-height-tight);
+    color: var(--jkl-color-text-default);
+}
+
+/* ─── 4. Line height ─────────────────────────────────────── */
+.ty-scale-demo__lh-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: var(--jkl-spacing-l);
+}
+
+.ty-scale-demo__lh-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-spacing-2xs);
+    padding: var(--jkl-spacing-l);
+    border: 1px solid var(--jkl-color-border-ui);
+    border-radius: var(--jkl-border-radius-medium);
+    background: var(--jkl-color-background-container);
+}
+
+.ty-scale-demo__lh-sample {
+    font-size: var(--jkl-font-size-3);
+    color: var(--jkl-color-text-default);
+    margin: 0 0 var(--jkl-spacing-xs);
+}

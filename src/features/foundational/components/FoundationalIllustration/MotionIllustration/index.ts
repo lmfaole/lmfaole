@@ -1,0 +1,1 @@
+export { MotionIllustration } from "./MotionIllustration";

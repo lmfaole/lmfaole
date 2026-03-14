@@ -1,0 +1,31 @@
+.track {
+  position: relative;
+  width: 8px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--jkl-color-background-action);
+  animation: slide-dot var(--preview-timing) var(--preview-easing) infinite alternate;
+  animation-play-state: paused;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    top: 50%;
+  }
+}
+
+:global(tr:hover) .dot {
+  animation-play-state: running;
+}
+
+@keyframes slide-dot {
+  from { top: 0; }
+  to   { top: calc(100% - 8px); }
+}

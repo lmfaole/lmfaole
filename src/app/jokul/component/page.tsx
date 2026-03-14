@@ -9,13 +9,14 @@ import {BETA_Select as Select} from "@fremtind/jokul/select";
 import {SegmentedControl, SegmentedControlButton} from "@fremtind/jokul/segmented-control";
 import {DescriptionDetail, DescriptionList, DescriptionTerm} from "@fremtind/jokul/description-list";
 import {Link} from "@fremtind/jokul/link";
-import type {PropSource, PropStatus} from "@/lib/componentDocs";
-import {componentDocs} from "@/lib/componentDocs";
-import {Grid} from "@/components/Grid";
-import {ComponentCard} from "@/components/ComponentCard";
+import type {PropSource, PropStatus} from "@/features/component-docs/data";
+import {componentDocs} from "@/features/component-docs/data";
+import {Grid} from "@/shared/components/Grid";
+import {ComponentCard} from "@/shared/components/ComponentCard";
 import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
-import {useLocalStorage} from "@/hooks/useLocalStorage";
-import {ChipFilterList} from "@/components/ChipFilterList";
+import {useLocalStorage} from "@/shared/hooks/useLocalStorage";
+import {ChipFilterList} from "@/features/component-docs/components/ChipFilterList";
+import "./component-index.scss";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
 const ALL_TAGS = Array.from(new Set(componentDocs.flatMap((d) => d.tags))).sort();
@@ -94,9 +95,7 @@ export default function ComponentsPage() {
 
     if (!viewReady) {
         return (
-            <Flex as="main" direction="column" gap="xl">
-                <NavLink href="/jokul" back>Tilbake til forsiden</NavLink>
-                <Flex direction="column" gap="s">
+            <Flex as="main" direction="column" gap="xl">                <Flex direction="column" gap="s">
                     <h1>Komponentdokumentasjon</h1>
                     <p>
                         Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for
@@ -105,16 +104,14 @@ export default function ComponentsPage() {
                 </Flex>
                 <SkeletonAnimation textDescription="Laster innstillinger…">
                     <SkeletonElement width="20rem" height="2.5rem" />
-                    <SkeletonElement width="100%" height="12rem" style={{ marginTop: "var(--jkl-spacing-xl)" }} />
+                    <SkeletonElement width="100%" height="12rem" className="component-index__skeleton-gap" />
                 </SkeletonAnimation>
             </Flex>
         );
     }
 
     return (
-        <Flex as="main" direction="column" gap="xl">
-            <NavLink href="/jokul" back>Tilbake til forsiden</NavLink>
-            <Flex direction="column" gap="s">
+        <Flex as="main" direction="column" gap="xl">            <Flex direction="column" gap="s">
                 <h1>Komponentdokumentasjon</h1>
                 <p>
                     Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for
@@ -163,7 +160,7 @@ export default function ComponentsPage() {
                         </Flex>
                         <ChipFilterList items={ALL_CATEGORIES} selected={activeCategory} onChange={setActiveCategory} />
                         <Flex gap="xs" wrap="wrap" alignItems="center">
-                            <span className="muted" style={{fontSize: "0.875rem"}}>Tags:</span>
+                            <span className="muted component-index__tags-label">Tags:</span>
                             <ChipFilterList items={ALL_TAGS} selected={activeTag} onChange={setActiveTag} />
                         </Flex>
                     </Flex>
@@ -233,7 +230,7 @@ export default function ComponentsPage() {
                             );
                         })}
                     </Flex>
-                    <p className="muted" style={{margin: 0, fontSize: "var(--jkl-font-size-s)"}}>
+                    <p className="muted component-index__count">
                         {filteredProps.length} av {ALL_PROP_ENTRIES.length} props
                     </p>
                     <DescriptionList alignment="horizontal" separators>

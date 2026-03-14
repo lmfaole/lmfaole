@@ -1,8 +1,9 @@
 "use client";
-import { PostArticle } from "@/components/PostArticle";
-import { NotFound } from "@/components/NotFound";
+import { FoundationalArticle } from "@/features/foundational/components/FoundationalArticle";
+import { NotFound } from "@/shared/components/NotFound";
 import { useParams } from "next/navigation";
-import { getFoundationalPost } from "@/lib/foundationalPosts";
+import { getFoundationalPost } from "@/features/foundational/data";
+import "./foundational-article.scss";
 
 export default function FoundationalPostPage() {
     const { id } = useParams<{ id: string }>();
@@ -12,21 +13,20 @@ export default function FoundationalPostPage() {
         return (
             <NotFound
                 message="Fant ikke innlegget"
-                backHref="/foundational"
+                backHref="/jokul/foundational"
                 backLabel="Tilbake til grunnleggende konsepter"
             />
         );
     }
 
     return (
-        <PostArticle
+        <FoundationalArticle
             title={post.title}
             excerpt={post.excerpt}
-            category={post.category}
-            date={post.date}
-            author={post.author}
+            illustration={post.illustration}
+            tokenOverview={post.tokenOverview}
+            scssSection={post.scssSection}
             content={post.content}
-            tags={post.tags}
         />
     );
 }

@@ -6,14 +6,14 @@ import {TableOfContents} from "@fremtind/jokul/table-of-contents";
 import {Tab, TabList, TabPanel, Tabs} from "@fremtind/jokul/tabs";
 import {Card} from "@fremtind/jokul/card";
 import {useParams} from "next/navigation";
-import {getComponentDoc} from "@/lib/componentDocs";
-import {PropTable} from "@/components/PropTable";
-import {ComponentExample} from "@/components/ComponentExample";
-import {MigrationExample} from "@/components/MigrationExample";
-import {NotFound} from "@/components/NotFound";
-import {NavLink} from "@fremtind/jokul/nav-link";
-import {PreviewContainer} from "@/components/PreviewContainer";
-import {CopyableCode} from "@/components/CopyableCode/CopyableCode";
+import {getComponentDoc} from "@/features/component-docs/data";
+import {PropTable} from "@/features/component-docs/components/PropTable";
+import {ComponentExample} from "@/features/component-docs/components/ComponentExample";
+import {MigrationExample} from "@/features/component-docs/components/MigrationExample";
+import {NotFound} from "@/shared/components/NotFound";
+import {PreviewContainer} from "@/features/component-docs/components/PreviewContainer";
+import {CopyableCode} from "@/features/component-docs/components/CopyableCode/CopyableCode";
+import {FullBleed} from "@/shared/components/FullBleed/FullBleed";
 
 export default function ComponentPage() {
     const {id} = useParams<{ id: string }>();
@@ -29,14 +29,12 @@ export default function ComponentPage() {
         );
     }
 
-    const regularExamples = doc.examples.filter((ex) => !ex.migrationBefore);
-    const migrationExamples = doc.examples.filter((ex) => !!ex.migrationBefore);
+    const regularExamples = doc.examples.filter((ex) => !ex.migration);
+    const migrationExamples = doc.examples.filter((ex) => !!ex.migration);
 
     return (
         <Flex as="article" direction="column" gap="xl">
-            <PreviewContainer as="header" className="component-header">
-                <NavLink className="component-header__back" href="/jokul/component" back>Tilbake til alle
-                    komponenter</NavLink>
+            <PreviewContainer as={FullBleed} dots="fade-bottom" className="component-header">
                 <Flex direction="column" gap="s" wrap="wrap">
                     <h1>{doc.name}</h1>
                     <div>
@@ -127,7 +125,7 @@ export default function ComponentPage() {
                     {migrationExamples.map((example) => (
                         <MigrationExample
                             key={example.title}
-                            example={example as typeof example & { migrationBefore: string }}
+                            example={example as typeof example & { migration: NonNullable<typeof example["migration"]> }}
                         />
                     ))}
                 </Flex>

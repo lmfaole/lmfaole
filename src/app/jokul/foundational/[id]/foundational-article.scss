@@ -1,1 +1,26 @@
-/* Foundational articles use dark mode via useBodyTheme — no overrides needed */
+/* Foundational articles */
+
+article:has(.foundational-header) {
+    padding-block-start: var(--jkl-spacing-l);
+
+    > .jkl-breadcrumb {
+        position: relative;
+        z-index: 10;
+    }
+
+    > .jkl-card {
+        position: relative;
+        z-index: 5;
+    }
+}
+
+.foundational-toc-card {
+    display: inline-block;
+    margin-block-end: var(--jkl-spacing-2xl);
+}
+
+.foundational-article__meta {
+    margin-block: var(--jkl-spacing-xl);
+    padding-block: var(--jkl-spacing-m);
+    border-block: 1px solid var(--jkl-color-border-subdued);
+}

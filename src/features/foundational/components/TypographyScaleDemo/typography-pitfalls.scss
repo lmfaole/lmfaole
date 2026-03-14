@@ -1,0 +1,36 @@
+.ty-pitfalls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-spacing-3xl);
+}
+
+.ty-pitfalls__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jkl-spacing-m);
+    padding-block-end: var(--app-spacing-3xl);
+    border-block-end: 1px solid var(--jkl-color-border-ui);
+
+    &:last-child {
+        border-block-end: none;
+        padding-block-end: 0;
+    }
+}
+
+.ty-pitfalls__title {
+    margin: 0;
+}
+
+.ty-pitfalls__problem {
+    margin: 0;
+}
+
+.ty-pitfalls__why {
+    margin: 0;
+}
+
+.ty-pitfalls__code-pair {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jkl-spacing-s);
+}

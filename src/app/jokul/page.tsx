@@ -2,13 +2,14 @@
 
 import {Link} from "@fremtind/jokul/link";
 import {SystemMessage} from "@fremtind/jokul/system-message";
-import {blogPosts} from "@/lib/blogPosts";
-import {componentDocs} from "@/lib/componentDocs";
-import {foundationalPosts} from "@/lib/foundationalPosts";
-import {BlogPostCard} from "@/components/BlogPostCard";
-import {ComponentCard} from "@/components/ComponentCard";
-import {FoundationalCard} from "@/components/FoundationalCard/FoundationalCard";
-import {Grid} from "@/components/Grid";
+import {blogPosts} from "@/features/blog/data";
+import {componentDocs} from "@/features/component-docs/data";
+import {foundationalPosts} from "@/features/foundational/data";
+import {BlogPostCard} from "@/shared/components/BlogPostCard";
+import {ComponentCard} from "@/shared/components/ComponentCard";
+import {FoundationalCard} from "@/shared/components/FoundationalCard/FoundationalCard";
+import {FullBleed} from "@/shared/components/FullBleed/FullBleed";
+import {Grid} from "@/shared/components/Grid";
 import "./home.scss";
 
 export default function Home() {
@@ -26,18 +27,6 @@ export default function Home() {
                     <Link href="https://jokul.fremtind.no/" external>jokul.fremtind.no</Link>.
                 </SystemMessage>
             </header>
-
-            <section className="home__section home__section--dark" data-theme="dark">
-                <div className="home__section-header">
-                    <h2><Link href="/jokul/foundational">Grunnleggende</Link></h2>
-                    <p>Fundamentene i Jøkul — typografi, farger og designtokens.</p>
-                </div>
-                <Grid columns={3} gap="l">
-                    {foundationalPosts.map((post) => (
-                        <FoundationalCard key={post.id} post={post} />
-                    ))}
-                </Grid>
-            </section>
 
             <section className="home__section">
                 <div className="home__section-header">
@@ -64,6 +53,23 @@ export default function Home() {
                 </Grid>
                 <Link href="/jokul/component">Se alle {componentDocs.length} komponenter</Link>
             </section>
+
+            <FullBleed dots="fade-top" className="home__dot-section">
+                <div className="home__dot-inner">
+                    <section className="home__section">
+                        <div className="home__section-header">
+                            <h2><Link href="/jokul/foundational">Grunnleggende</Link></h2>
+                            <p>Fundamentene i Jøkul — typografi, farger og designtokens.</p>
+                        </div>
+                        <div className="home__foundational-list">
+                            {foundationalPosts.slice(0, 2).map((post) => (
+                                <FoundationalCard key={post.id} post={post} />
+                            ))}
+                        </div>
+                        <Link href="/jokul/foundational">Se alle {foundationalPosts.length} artikler</Link>
+                    </section>
+                </div>
+            </FullBleed>
         </main>
     );
 }

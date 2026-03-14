@@ -1,0 +1,155 @@
+/* ─────────────────────────────────────────────────────────────
+   ColorIllustration — four overlapping spheres.
+   Concept: material depth and tonal richness.
+   ───────────────────────────────────────────────────────────── */
+@use "../illustration-base";
+
+/* ── Registered animatable color stops ──────────────────────
+   @property lets the browser interpolate colors inside gradients.
+   ─────────────────────────────────────────────────────────── */
+@property --cl-g-hi   { syntax: '<color>'; inherits: false; initial-value: #444141; }
+@property --cl-g-mid  { syntax: '<color>'; inherits: false; initial-value: #313030; }
+@property --cl-g-dark { syntax: '<color>'; inherits: false; initial-value: #1b1917; }
+
+@property --cl-s-hi   { syntax: '<color>'; inherits: false; initial-value: #636060; }
+@property --cl-s-mid  { syntax: '<color>'; inherits: false; initial-value: #444141; }
+@property --cl-s-dark { syntax: '<color>'; inherits: false; initial-value: #313030; }
+
+@property --cl-st-hi   { syntax: '<color>'; inherits: false; initial-value: #c8c5c3; }
+@property --cl-st-mid  { syntax: '<color>'; inherits: false; initial-value: #636060; }
+@property --cl-st-dark { syntax: '<color>'; inherits: false; initial-value: #444141; }
+
+@property --cl-v-hi   { syntax: '<color>'; inherits: false; initial-value: #f9f9f9; }
+@property --cl-v-mid  { syntax: '<color>'; inherits: false; initial-value: #ece9e5; }
+@property --cl-v-dark { syntax: '<color>'; inherits: false; initial-value: #e0dbd4; }
+
+/* Hidden SVG filter definitions */
+.fi__cl-filters {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* ── Ambient light ───────────────────────────────────────── */
+.fi__cl-light {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse 70% 55% at 55% 20%,
+        color-mix(in srgb, var(--jkl-color-brand-varde) 25%, transparent),
+        transparent 70%
+    );
+    pointer-events: none;
+}
+
+/* ── Shared sphere base ─────────────────────────────────── */
+.fi__sphere {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* ── Granitt — dominant mass, upper-left of cluster ───────── */
+.fi__sphere--granitt {
+    width: 26rem;
+    height: 26rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-68%, -62%);
+    animation: cl-sweep-g 3s 0s ease-in-out infinite alternate;
+    background:
+        radial-gradient(ellipse 18% 14% at 28% 22%, rgba(255,255,255,.48) 0%, transparent 100%),
+        radial-gradient(ellipse 50% 40% at 30% 28%, rgba(255,255,255,.07) 0%, transparent 100%),
+        radial-gradient(circle at 35% 30%, var(--cl-g-hi) 0%, var(--cl-g-mid) 45%, var(--cl-g-dark) 100%);
+    box-shadow:
+        inset -6rem  -6rem  9rem    rgba(0,0,0,.72),
+        inset  1.5rem 1.5rem 0.8rem rgba(255,255,255,.06),
+        0 5rem 12rem rgba(0,0,0,.45);
+}
+
+/* ── Skifer — overlaps granitt right ────────────────────── */
+.fi__sphere--skifer {
+    width: 11rem;
+    height: 11rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-5%, -76%);
+    animation: cl-sweep-s 2.3s 0.4s ease-in-out infinite alternate;
+    background:
+        radial-gradient(ellipse 18% 14% at 29% 23%, rgba(255,255,255,.42) 0%, transparent 100%),
+        radial-gradient(ellipse 50% 40% at 30% 28%, rgba(255,255,255,.06) 0%, transparent 100%),
+        radial-gradient(circle at 34% 30%, var(--cl-s-hi) 0%, var(--cl-s-mid) 48%, var(--cl-s-dark) 100%);
+    box-shadow:
+        inset -3rem -3rem 5rem   rgba(0,0,0,.65),
+        inset  0.8rem  0.8rem 0.5rem rgba(255,255,255,.07),
+        0 2.5rem 7rem rgba(0,0,0,.3);
+}
+
+/* ── Stein — overlaps granitt bottom + skifer left ───────── */
+.fi__sphere--stein {
+    width: 6.5rem;
+    height: 6.5rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-52%, 8%);
+    animation: cl-sweep-st 1.8s 0.9s ease-in-out infinite alternate;
+    background:
+        radial-gradient(ellipse 16% 13% at 28% 22%, rgba(255,255,255,.55) 0%, transparent 100%),
+        radial-gradient(ellipse 48% 38% at 30% 28%, rgba(255,255,255,.1) 0%, transparent 100%),
+        radial-gradient(circle at 33% 29%, var(--cl-st-hi) 0%, var(--cl-st-mid) 50%, var(--cl-st-dark) 100%);
+    box-shadow:
+        inset -2rem -2rem 3rem rgba(0,0,0,.45),
+        inset  0.5rem  0.5rem 0.4rem rgba(255,255,255,.18),
+        0 1.5rem 4rem rgba(0,0,0,.2);
+}
+
+/* ── Varde — small accent nestled in the junction ─────────── */
+.fi__sphere--varde {
+    width: 3.5rem;
+    height: 3.5rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(12%, -10%);
+    animation: cl-sweep-v 1.4s 0.2s ease-in-out infinite alternate;
+    background:
+        radial-gradient(ellipse 14% 11% at 27% 22%, rgba(255,255,255,.75) 0%, transparent 100%),
+        radial-gradient(ellipse 45% 35% at 30% 27%, rgba(255,255,255,.2) 0%, transparent 100%),
+        radial-gradient(circle at 32% 28%, var(--cl-v-hi) 0%, var(--cl-v-mid) 48%, var(--cl-v-dark) 100%);
+    box-shadow:
+        inset -0.8rem -0.8rem 1.2rem rgba(0,0,0,.18),
+        inset  0.2rem  0.2rem 0.15rem rgba(255,255,255,.65),
+        0 0.6rem 2rem rgba(0,0,0,.12);
+    border: 1px solid #c8c5c3;
+}
+
+/* ── Color sweep keyframes — always running ─────────────── */
+@keyframes cl-sweep-g {
+    0%   { --cl-g-hi: #444141; --cl-g-mid: #313030; --cl-g-dark: #1b1917; }
+    50%  { --cl-g-hi: #636060; --cl-g-mid: #444141; --cl-g-dark: #313030; }
+    100% { --cl-g-hi: #c8c5c3; --cl-g-mid: #636060; --cl-g-dark: #444141; }
+}
+@keyframes cl-sweep-s {
+    0%   { --cl-s-hi: #636060; --cl-s-mid: #444141; --cl-s-dark: #313030; }
+    50%  { --cl-s-hi: #c8c5c3; --cl-s-mid: #636060; --cl-s-dark: #444141; }
+    100% { --cl-s-hi: #e0dbd4; --cl-s-mid: #c8c5c3; --cl-s-dark: #636060; }
+}
+@keyframes cl-sweep-st {
+    0%   { --cl-st-hi: #c8c5c3; --cl-st-mid: #636060; --cl-st-dark: #444141; }
+    50%  { --cl-st-hi: #ece9e5; --cl-st-mid: #e0dbd4; --cl-st-dark: #c8c5c3; }
+    100% { --cl-st-hi: #f9f9f9; --cl-st-mid: #ece9e5; --cl-st-dark: #e0dbd4; }
+}
+@keyframes cl-sweep-v {
+    0%   { --cl-v-hi: #f9f9f9; --cl-v-mid: #ece9e5; --cl-v-dark: #e0dbd4; }
+    50%  { --cl-v-hi: #ece9e5; --cl-v-mid: #c8c5c3; --cl-v-dark: #636060; }
+    100% { --cl-v-hi: #e0dbd4; --cl-v-mid: #636060; --cl-v-dark: #313030; }
+}
+
+/* ── CRT scan — removed (hover state eliminated) ── */
+.fi--colors {
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fi__sphere { animation: none !important; }
+}

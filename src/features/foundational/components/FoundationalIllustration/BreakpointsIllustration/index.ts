@@ -1,0 +1,1 @@
+export { BreakpointsIllustration } from "./BreakpointsIllustration";

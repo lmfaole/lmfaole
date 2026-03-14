@@ -1,10 +1,12 @@
-import { Footer } from "@/components/Footer/Footer";
+import { SiteFooter } from "@/shared/components/SiteFooter/SiteFooter";
+import { SiteHeader } from "@/shared/components/SiteHeader";
 
 export default function JokulLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
+            <SiteHeader />
             {children}
-            <Footer />
+            <SiteFooter />
         </>
     );
 }

@@ -2,14 +2,13 @@
 
 export const runtime = "edge";
 
-import {Flex} from "@fremtind/jokul/flex";
-import {PostNavigation} from "@/components/PostNavigation";
-import {PostResources} from "@/components/PostResources";
-import {getBlogPost, getNextPost, getPreviousPost, getRelatedPosts} from "@/lib/blogPosts";
-import {NavLink} from "@fremtind/jokul/nav-link";
+import { Flex } from "@fremtind/jokul/flex";
+import { BlogNavigation } from "@/features/blog/components/BlogNavigation";
+import { BlogResources } from "@/features/blog/components/BlogResources";
+import { getBlogPost, getNextPost, getPreviousPost, getRelatedPosts } from "@/features/blog/data";
 import { useParams } from "next/navigation";
 
-export default function PostLayout({children}: { children: React.ReactNode }) {
+export default function PostLayout({ children }: { children: React.ReactNode }) {
     const { id } = useParams<{ id: string }>();
 
     const post = getBlogPost(id);
@@ -19,12 +18,11 @@ export default function PostLayout({children}: { children: React.ReactNode }) {
 
     return (
         <Flex direction="column" gap="xl">
-            <NavLink href="/jokul/blog" back>Tilbake til alle innlegg</NavLink>
             {children}
             {post?.resources && post.resources.length > 0 && (
-                <PostResources resources={post.resources} />
+                <BlogResources resources={post.resources} />
             )}
-            <PostNavigation previous={previous} next={next} related={related}/>
+            <BlogNavigation previous={previous} next={next} related={related} />
         </Flex>
     );
 }

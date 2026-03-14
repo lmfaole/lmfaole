@@ -1,0 +1,55 @@
+import type { PropDef } from "../types";
+
+export const props: PropDef[] = [
+        {
+            name: "triggerElement",
+            type: "ReactNode",
+            required: true,
+            source: "custom",
+            status: "stable",
+            description: "Elementet som trigger menyen når det klikkes.",
+        },
+        {
+            name: "children",
+            type: "ReactNode",
+            required: false,
+            source: "react",
+            status: "stable",
+            description: "MenuItem, MenuItemCheckbox og MenuDivider elementer.",
+        },
+        {
+            name: "initialPlacement",
+            type: "string",
+            required: false,
+            source: "react",
+            status: "stable",
+            default: '"bottom-start"',
+            description: "Startposisjon for menyen relativt til trigger.",
+        },
+        {
+            name: "openOnHover",
+            type: "boolean",
+            required: false,
+            source: "custom",
+            status: "stable",
+            default: "false",
+            description: "Åpner menyen ved hover i stedet for klikk.",
+        },
+        {
+            name: "keepOpenOnClickOutside",
+            type: "boolean",
+            required: false,
+            source: "custom",
+            status: "stable",
+            default: "false",
+            description: "Forhindrer at menyen lukkes ved klikk utenfor.",
+        },
+        {
+            name: "onToggle",
+            type: "(isOpen: boolean) => void",
+            required: false,
+            source: "react",
+            status: "stable",
+            description: "Kalles når menyen åpnes eller lukkes.",
+        },
+    ];
