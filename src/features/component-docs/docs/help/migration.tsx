@@ -2,8 +2,8 @@ import type { Migration } from "../types";
 
 export const migrations: Migration[] = [
     {
-        title: "iconPosition er utfaset",
-        description: "Tekst vises ikke lenger ved siden av ikonet, og iconPosition har dermed ingen effekt. Propen kan fjernes.",
+        title: "iconPosition",
+        description: "Tekst vises ikke lenger ved siden av Help-ikonet, så posisjonen har ingen effekt.",
         deprecates: { name: "iconPosition", kind: "prop" },
         before: `<Help buttonText="Hjelp" iconPosition="right">
     Hjelpetekst her.
@@ -13,16 +13,14 @@ export const migrations: Migration[] = [
 </Help>`,
     },
     {
-        title: "showButtonText er utfaset",
-        description: "Tekst vises ikke lenger ved siden av Help-ikonet. Trenger du synlig tekst, bruk en vanlig Button ved siden av.",
-        uses: ["button"],
+        title: "showButtonText",
+        description: "Tekst vises ikke lenger ved siden av Help-ikonet. Bruk en vanlig Button om du trenger synlig tekst.",
         deprecates: { name: "showButtonText", kind: "prop" },
         replacedBy: [{ name: "Button", kind: "component" }],
         before: `<Help buttonText="Hjelp" showButtonText>
     Hjelpetekst her.
 </Help>`,
-        after: `{/* Bruk Button for synlig tekst ved siden av: */}
-<Flex gap="xs" alignItems="center">
+        after: `<Flex gap="xs" alignItems="center">
     <Button variant="ghost" onClick={() => openHelpPanel()}>
         Åpne hjelpepanel
     </Button>

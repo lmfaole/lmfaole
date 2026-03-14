@@ -2,8 +2,8 @@ import type { Migration } from "../types";
 
 export const migrations: Migration[] = [
     {
-        title: "leadText er utfaset",
-        description: "Bruk helpLabel for hjelpetekst under etiketten.",
+        title: "leadText",
+        description: "Omdøpt til helpLabel for konsistent navngiving med andre skjemakomponenter.",
         deprecates: { name: "leadText", kind: "prop" },
         replacedBy: [{ name: "helpLabel", kind: "prop" }],
         before: `<Autosuggest
@@ -20,8 +20,8 @@ export const migrations: Migration[] = [
 />`,
     },
     {
-        title: "noHitsMessage er utfaset",
-        description: "Bruk noHits-objektet med items og text for å håndtere ingen-treff-tilstanden.",
+        title: "noHitsMessage",
+        description: "Erstattet med noHits-objektet for å gi bedre kontroll over innhold og tekst i ingen-treff-tilstanden.",
         deprecates: { name: "noHitsMessage", kind: "prop" },
         replacedBy: [{ name: "noHits", kind: "prop" }],
         before: `<Autosuggest

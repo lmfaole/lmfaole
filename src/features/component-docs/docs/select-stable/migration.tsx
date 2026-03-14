@@ -2,8 +2,8 @@ import type { Migration } from "../types";
 
 export const migrations: Migration[] = [
     {
-        title: "items er utfaset",
-        description: "BETA_Select bruker native <option>-elementer som children i stedet for en items-array. onChange er nå standard React ChangeEvent.",
+        title: "items",
+        description: "BETA_Select bruker native <option>-elementer som children for å følge standard HTML-mønstre og gi bedre fleksibilitet.",
         deprecates: { name: "items", kind: "prop" },
         replacedBy: [{ name: "children", kind: "prop" }],
         before: `import { Select } from "@fremtind/jokul/select";

@@ -2,9 +2,8 @@ import type { Migration } from "../types";
 
 export const migrations: Migration[] = [
     {
-        title: "helpLabel er utfaset",
-        description: "Bruk supportLabelProps med labelType: \"help\" i stedet.",
-        uses: ["text-input"],
+        title: "helpLabel",
+        description: "Samlet i supportLabelProps for ett konsistent grensesnitt for alle støttetekster.",
         deprecates: { name: "helpLabel", kind: "prop" },
         replacedBy: [{ name: "supportLabelProps", kind: "prop" }],
         before: `<InputGroup
@@ -19,9 +18,8 @@ export const migrations: Migration[] = [
 />`,
     },
     {
-        title: "errorLabel er utfaset",
-        description: "Bruk supportLabelProps med labelType: \"error\" i stedet.",
-        uses: ["text-input"],
+        title: "errorLabel",
+        description: "Samlet i supportLabelProps for ett konsistent grensesnitt for alle støttetekster.",
         deprecates: { name: "errorLabel", kind: "prop" },
         replacedBy: [{ name: "supportLabelProps", kind: "prop" }],
         before: `<InputGroup

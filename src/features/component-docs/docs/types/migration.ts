@@ -25,12 +25,14 @@ export interface MigrationItem {
  * Split unrelated deprecations into separate Migration entries.
  */
 export interface Migration {
-    /** Short title displayed as a heading, e.g. `"iconLeft er utfaset"`. */
+    /** The prop or component name used as the heading, e.g. `"iconLeft"` or `"InfoSystemMessage"`. */
     title: string;
 
     /**
-     * One or two sentences explaining what changed and why.
-     * Omit if the title and before/after code are self-explanatory.
+     * One or two sentences explaining *why* this was deprecated —
+     * the reasoning or design decision behind the change.
+     * The before/after code shows *how* to migrate; this explains *why*.
+     * Omit if no meaningful context exists beyond the code itself.
      */
     description?: string;
 
@@ -71,10 +73,4 @@ export interface Migration {
      * Used to show composition context in the UI and cross-link documentation.
      */
     uses?: string[];
-
-    /**
-     * Short keyword tags for filtering or search, e.g. `["icon", "button"]`.
-     * Use lowercase, no spaces.
-     */
-    tags?: string[];
 }

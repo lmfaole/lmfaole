@@ -4,14 +4,14 @@ import type { Migration } from "../types";
 
 export const migrations: Migration[] = [
     {
-        title: "variant er utfaset",
-        description: "Ikonstørrelse arves nå fra omgivelsenes fontstørrelse. Fjern variant og styr størrelsen med CSS font-size på et omsluttende element om nødvendig.",
+        title: "variant",
+        description: "Størrelse styres nå av omgivelsenes fontstørrelse, noe som gir bedre integrasjon med typografi.",
         deprecates: { name: "variant", kind: "prop" },
         before: `<Icon variant="small">home</Icon>
 <Icon variant="medium">home</Icon>`,
         after: `<Icon>home</Icon>
 
-{/* Styr størrelse med CSS om nødvendig: */}
+{/* Styr størrelse eksplisitt med CSS om nødvendig: */}
 <span style={{ fontSize: "1.5rem" }}>
     <Icon>home</Icon>
 </span>`,
