@@ -3,6 +3,9 @@
    ───────────────────────────────────────────────────────────── */
 
 .site-header {
+    font-size: var(--jkl-font-size-3);
+    line-height: var(--jkl-line-height-tight);
+
     position: sticky;
     top: -1px;
     padding-block-start: 1px;
@@ -25,7 +28,7 @@
         max-width: 120ch;
         margin-inline: auto;
         padding-inline: var(--jkl-spacing-l);
-        height: 52px;
+        padding-block: 0.75lh;
         gap: var(--jkl-spacing-l);
     }
 
@@ -38,7 +41,7 @@
     }
 
     &__logo-mark {
-        height: 28px;
+        height: 1lh;
         width: auto;
         color: var(--jkl-color-text-default);
     }
@@ -59,13 +62,13 @@
     &__trigger {
         display: flex;
         align-items: center;
-        height: 52px;
+        align-self: stretch;
         padding-inline: var(--jkl-spacing-s);
         background: none;
         border: none;
         cursor: pointer;
         color: var(--jkl-color-text-default);
-        font-size: var(--jkl-font-size-3);
+        font-size: inherit;
     }
 
     // ─── Dropdown ───────────────────────────────────────────── //
@@ -168,7 +171,6 @@
 
         &__trigger {
             padding-inline: var(--jkl-spacing-xs);
-            font-size: var(--jkl-font-size-1);
         }
     }
 }
