@@ -21,7 +21,9 @@ import "./component-index.scss";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
 
-type PropEntry = { propName: string; source: PropSource; usedBy: { id: string; name: string; status: PropStatus }[] };
+const STATUS_RANK: Record<PropStatus, number> = { deprecated: 2, experimental: 1, stable: 0 };
+
+type PropEntry = { propName: string; source: PropSource; status: PropStatus; usedBy: { id: string; name: string; status: PropStatus }[] };
 
 const ALL_PROP_ENTRIES: PropEntry[] = (() => {
     const map = new Map<string, { source: PropSource; usedBy: { id: string; name: string; status: PropStatus }[] }>();
@@ -31,14 +33,19 @@ const ALL_PROP_ENTRIES: PropEntry[] = (() => {
             if (!existing.usedBy.find((e) => e.id === doc.id)) {
                 existing.usedBy.push({id: doc.id, name: doc.name, status: prop.status});
             }
-            // if any doc marks it as custom, treat it as custom
             if (prop.source === "custom") existing.source = "custom";
             else if (prop.source === "native" && existing.source == null) existing.source = "native";
             map.set(prop.name, existing);
         }
     }
     return Array.from(map.entries())
-        .map(([propName, {source, usedBy}]) => ({propName, source, usedBy}))
+        .map(([propName, {source, usedBy}]) => {
+            const status = usedBy.reduce<PropStatus>(
+                (worst, c) => STATUS_RANK[c.status] > STATUS_RANK[worst] ? c.status : worst,
+                "stable"
+            );
+            return {propName, source, status, usedBy};
+        })
         .sort((a, b) => a.propName.localeCompare(b.propName, "nb"));
 })();
 
@@ -83,7 +90,7 @@ export default function ComponentsPage() {
             (e) =>
                 (!q || e.propName.toLowerCase().includes(q) || e.usedBy.some((c) => c.name.toLowerCase().includes(q))) &&
                 (!propSourceFilter || e.source === propSourceFilter) &&
-                (!propStatusFilter || e.usedBy.some((c) => c.status === propStatusFilter)),
+                (!propStatusFilter || e.status === propStatusFilter),
         );
         if (propSortBy === "za") return results.sort((a, b) => b.propName.localeCompare(a.propName, "nb"));
         if (propSortBy === "most-used") return results.sort((a, b) => b.usedBy.length - a.usedBy.length);
