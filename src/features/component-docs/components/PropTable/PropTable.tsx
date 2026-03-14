@@ -3,6 +3,7 @@ import { useState } from "react";
 import { DataTable } from "@fremtind/jokul/table";
 import { PopupTip } from "@fremtind/jokul/tooltip";
 import { Flex } from "@fremtind/jokul/flex";
+import { Link } from "@fremtind/jokul/link";
 import type { PropDef, PropStatus, PropSource, Migration } from "@/features/component-docs/data";
 import { ChipFilterList } from "@/features/component-docs/components/ChipFilterList";
 
@@ -38,7 +39,7 @@ function PropNameCell({ name, status, statusDescription, migrationAnchor }: Pick
     return (
         <span style={{ display: "inline-flex", flexDirection: "column", gap: "var(--jkl-spacing-3xs)" }}>
             {migrationAnchor && status === "deprecated" ? (
-                <a href={migrationAnchor}><code>{name}</code></a>
+                <Link href={migrationAnchor}><code>{name}</code></Link>
             ) : (
                 <code>{name}</code>
             )}
