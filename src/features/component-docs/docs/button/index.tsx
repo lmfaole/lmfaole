@@ -19,7 +19,8 @@ const doc: ComponentDoc = {
     relatedIds: ["text-input", "toggle-switch", "icon-button", "icon"],
 
     props,
-    examples: [...examples, ...migrations],
+    examples,
+    migrations,
 };
 
 export default doc;

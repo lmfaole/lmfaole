@@ -23,7 +23,8 @@ const doc: ComponentDoc = {
     relatedIds: ["message", "toast"],
 
     props,
-    examples: [...examples, ...migrations],
+    examples,
+    migrations,
 };
 
 export default doc;

@@ -29,9 +29,6 @@ export default function ComponentPage() {
         );
     }
 
-    const regularExamples = doc.examples.filter((ex) => !ex.migration);
-    const migrationExamples = doc.examples.filter((ex) => !!ex.migration);
-
     return (
         <Flex as="article" direction="column" gap="xl">
             <PreviewContainer as={FullBleed} dots="fade-bottom" className="component-header">
@@ -42,9 +39,9 @@ export default function ComponentPage() {
                     </div>
                     <p>{doc.description}</p>
                 </Flex>
-                {(doc.preview ?? regularExamples[0]?.preview) && (
+                {(doc.preview ?? doc.examples[0]?.preview) && (
                     <div className="component-header__preview">
-                        {doc.preview ?? regularExamples[0].preview}
+                        {doc.preview ?? doc.examples[0].preview}
                     </div>
                 )}
             </PreviewContainer>
@@ -54,10 +51,10 @@ export default function ComponentPage() {
                     <TableOfContents.Link href="#viktig-informasjon">Viktig informasjon</TableOfContents.Link>
                 )}
                 <TableOfContents.Link href="#props">Props</TableOfContents.Link>
-                {regularExamples.length > 0 && (
+                {doc.examples.length > 0 && (
                     <TableOfContents.Link href="#eksempler">Eksempler</TableOfContents.Link>
                 )}
-                {migrationExamples.length > 0 && (
+                {doc.migrations && doc.migrations.length > 0 && (
                     <TableOfContents.Link href="#migrering">Migrering</TableOfContents.Link>
                 )}
             </TableOfContents>
@@ -113,19 +110,19 @@ export default function ComponentPage() {
 
             <Flex as="section" direction="column" gap="m">
                 <h2 id="eksempler">Eksempler</h2>
-                {regularExamples.map((example) => (
+                {doc.examples.map((example) => (
                     <ComponentExample key={example.title} example={example}/>
                 ))}
             </Flex>
 
-            {migrationExamples.length > 0 && (
+            {doc.migrations && doc.migrations.length > 0 && (
                 <Flex as="section" direction="column" gap="m">
                     <h2 id="migrering">Migrering</h2>
                     <p>Disse eksemplene viser hvordan du erstatter utfasede props med den anbefalte API-en.</p>
-                    {migrationExamples.map((example) => (
+                    {doc.migrations.map((migration) => (
                         <MigrationExample
-                            key={example.title}
-                            example={example as typeof example & { migration: NonNullable<typeof example["migration"]> }}
+                            key={migration.title}
+                            migration={migration}
                         />
                     ))}
                 </Flex>

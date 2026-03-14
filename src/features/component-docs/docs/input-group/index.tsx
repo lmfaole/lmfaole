@@ -35,7 +35,8 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples: [...examples, ...migrations],
+    examples,
+    migrations,
 };
 
 export default doc;

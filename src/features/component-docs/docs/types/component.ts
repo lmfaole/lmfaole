@@ -1,6 +1,7 @@
 import type React from "react";
 import type { PropDef } from "./prop";
 import type { ComponentExample } from "./example";
+import type { Migration } from "./migration";
 
 /**
  * Documentation for a compound sub-component such as `Popover.Trigger` or `Tabs.TabPanel`.
@@ -118,6 +119,14 @@ export interface ComponentDoc {
      * Include at least one example; aim for 3–5.
      */
     examples: ComponentExample[];
+
+    /**
+     * API migration guides for deprecated props or components.
+     * Each entry is self-contained with before/after code and optional live preview.
+     * Rendered in a dedicated "Migrering" section on the component page.
+     * Omit for components with no deprecated APIs.
+     */
+    migrations?: Migration[];
 
     /**
      * IDs of related components worth exploring after this one,

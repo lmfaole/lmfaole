@@ -39,7 +39,8 @@ const doc: ComponentDoc = {
     preview: <TextInputPreview />,
 
     props,
-    examples: [...examples, ...migrations],
+    examples,
+    migrations,
 };
 
 export default doc;

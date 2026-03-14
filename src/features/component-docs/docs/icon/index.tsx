@@ -17,7 +17,8 @@ const doc: ComponentDoc = {
     warnings: "Et ikon uten ledsagende tekst må ha aria-label — ellers er det usynlig for skjermlesere.",
 
     props,
-    examples: [...examples, ...migrations],
+    examples,
+    migrations,
 };
 
 export default doc;

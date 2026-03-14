@@ -23,7 +23,8 @@ const doc: ComponentDoc = {
 
     relatedIds: ["tooltip", "popover", "input-group"],
     props,
-    examples: [...examples, ...migrations],
+    examples,
+    migrations,
 };
 
 export default doc;

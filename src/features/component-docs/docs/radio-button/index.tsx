@@ -17,7 +17,8 @@ const doc: ComponentDoc = {
     relatedIds: ["checkbox", "radio-panel"],
 
     props,
-    examples: [...examples, ...migrations],
+    examples,
+    migrations,
 };
 
 export default doc;

@@ -20,7 +20,8 @@ const doc: ComponentDoc = {
     preview: <AutosuggestPreview />,
 
     props,
-    examples: [...examples, ...migrations],
+    examples,
+    migrations,
 };
 
 export default doc;

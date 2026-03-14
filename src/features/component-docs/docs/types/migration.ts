@@ -1,5 +1,7 @@
+import type React from "react";
+
 /**
- * A single deprecated or replacement item in a {@link MigrationGuide}.
+ * A single deprecated or replacement item in a {@link Migration}.
  * Distinguishes between props (attributes on a component) and components
  * (JSX elements or named exports that are being retired).
  */
@@ -16,30 +18,60 @@ export interface MigrationItem {
 }
 
 /**
- * Documents a before/after migration for a deprecated API pattern.
- * Used together with {@link ComponentExample.code} which holds the "after" code.
+ * A self-contained migration guide for a single deprecated API pattern.
+ * Describes what changed, why, and shows a before/after code comparison.
  */
-export interface MigrationGuide {
+export interface Migration {
+    /** Short title displayed as a heading, e.g. `"Ikonknapper bruker nå én icon-prop"`. */
+    title: string;
+
+    /**
+     * One or two sentences explaining what changed and why.
+     * Omit if the title and before/after code are self-explanatory.
+     */
+    description?: string;
+
     /**
      * The props or components being deprecated.
-     * Each entry must declare its {@link MigrationItem.kind} so the UI can clearly
-     * communicate whether a whole component or just a prop is going away.
-     * e.g. `[{ name: "InfoSystemMessage", kind: "component" }]`
-     * or   `[{ name: "iconLeft", kind: "prop" }, { name: "iconRight", kind: "prop" }]`
+     * Each entry must declare its {@link MigrationItem.kind}.
+     * e.g. `[{ name: "iconLeft", kind: "prop" }, { name: "iconRight", kind: "prop" }]`
      */
     deprecates: MigrationItem[];
 
     /**
      * The props or components that replace the deprecated ones.
      * Omit entirely when the deprecated item is simply removed with no replacement.
-     * e.g. `[{ name: "SystemMessage", kind: "component" }, { name: "variant", kind: "prop" }]`
-     * or   `[{ name: "icon", kind: "prop" }, { name: "iconPosition", kind: "prop" }]`
+     * e.g. `[{ name: "icon", kind: "prop" }, { name: "iconPosition", kind: "prop" }]`
      */
     replacedBy?: MigrationItem[];
 
     /**
-     * The deprecated code snippet users should find and remove.
+     * The deprecated code snippet ("before").
      * Write as valid JSX, imports excluded. Use 4-space indentation.
      */
     before: string;
+
+    /**
+     * The replacement code snippet ("after").
+     * Write as valid JSX, imports excluded. Use 4-space indentation.
+     */
+    after: string;
+
+    /**
+     * Live React element previewing the updated ("after") usage.
+     * Omit when no meaningful visual difference exists.
+     */
+    preview?: React.ReactNode;
+
+    /**
+     * IDs of other Jøkul components composed inside this migration example.
+     * Used to show composition context in the UI and cross-link documentation.
+     */
+    uses?: string[];
+
+    /**
+     * Short keyword tags for filtering or search, e.g. `["icon", "button"]`.
+     * Use lowercase, no spaces.
+     */
+    tags?: string[];
 }
