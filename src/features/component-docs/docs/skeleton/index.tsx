@@ -60,7 +60,8 @@ const doc: ComponentDoc = {
         "Skeleton-komponenter bygger opp et innholdsskjelett som matcher layouten til det virkelige innholdet, og gir brukeren en visuell indikasjon på at innhold er på vei.",
     warnings:
         "Wrap alltid Skeleton-komponenter i SkeletonAnimation for å få shimmering-animasjon og en tilgjengelig textDescription for skjermlesere. Bruk SkeletonElement for freeform rektangel-plassholdere.",
-    relatedIds: ["loader", "feedback"],
+    siblingIds: ["loader"],
+    relatedIds: ["feedback"],
     preview: <SkeletonPreview />,
 
     props,

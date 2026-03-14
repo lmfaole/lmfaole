@@ -19,7 +19,7 @@ const doc: ComponentDoc = {
         "Bruk role='alert' på kritiske meldinger som vises dynamisk — uten det annonserer ikke skjermlesere dem automatisk.",
         "InfoSystemMessage, SuccessSystemMessage, WarningSystemMessage og ErrorSystemMessage er utfaset. Bruk <SystemMessage variant=\"...\"> i stedet.",
     ],
-    relatedIds: ["message", "toast"],
+    siblingIds: ["message", "toast"],
 
     props,
     examples,

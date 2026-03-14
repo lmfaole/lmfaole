@@ -10,7 +10,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     description: "LinkList viser en tematisk gruppert liste av lenker med en felles overskrift.",
     warnings: "Bruk LinkList.Link for lenker inne i komponenten for korrekt styling.",
-    relatedIds: ["link", "nav-link"],
+    siblingIds: ["link", "nav-link"],
     preview: (
         <LinkList label="Forsikringer">
             <LinkList.Link href="#">Bilforsikring</LinkList.Link>

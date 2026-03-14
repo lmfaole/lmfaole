@@ -13,7 +13,7 @@ const doc: ComponentDoc = {
     category: "Visning",
     description: "ExpandablePanel er et utviddbart panel med header og innhold.",
 
-    relatedIds: ["expander"],
+    siblingIds: ["expander"],
 
     props,
     subComponents: [

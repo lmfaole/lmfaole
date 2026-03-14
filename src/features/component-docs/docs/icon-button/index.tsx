@@ -16,7 +16,8 @@ const doc: ComponentDoc = {
     status: "deprecated",
     description: "IconButton er en knapp med kun ikon. Krev alltid en aria-label som beskriver handlingen.",
     warnings: "Ikke bruk IconButton uten aria-label.",
-    relatedIds: ["button", "icon"],
+    siblingIds: ["icon"],
+    relatedIds: ["button"],
 
     props,
     examples,

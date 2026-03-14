@@ -13,6 +13,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     description: "Tabs organiser innhold i faner der kun én fane vises om gangen.",
     warnings: "Bruk Tabs for å skjule innhold innenfor samme side — ikke for navigasjon mellom sider.",
+    siblingIds: ["nav-tab"],
     relatedIds: ["nav-link"],
 
     props,

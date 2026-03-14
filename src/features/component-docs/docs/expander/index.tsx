@@ -12,7 +12,7 @@ const doc: ComponentDoc = {
     category: "Visning",
     description: "Expander er en klikkbar knapp som brukes som trigger for ExpandablePanel. Den kan også brukes frittstående som en styrt toggle der du håndterer åpen-tilstand selv.",
 
-    relatedIds: ["expandable-panel"],
+    siblingIds: ["expandable-panel"],
 
     props,
     examples,

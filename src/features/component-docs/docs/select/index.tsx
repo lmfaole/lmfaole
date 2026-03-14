@@ -12,7 +12,8 @@ const doc: ComponentDoc = {
     category: "Skjema",
     status: "beta",
     description: "BETA_Select er en ny, forenklet variant av Select som wrapper det native <select>-elementet med Jøkul-styling. Den bruker children i stedet for en items-array og standard React onChange — i motsetning til den stabile Select som har et egendefinert dropdown-grensesnitt. Planen er at BETA_Select erstatter den stabile varianten.",
-    relatedIds: ["select-stable", "radio-button", "autosuggest"],
+    siblingIds: ["select-stable"],
+    relatedIds: ["radio-button", "autosuggest"],
     warnings: [
         "BETA_Select er ikke ferdigstilt og API-en kan endre seg. Den mangler searchable, maxShownOptions og den egendefinerte SelectChangeEventHandler fra stabil Select.",
     ],

@@ -18,6 +18,7 @@ const doc: ComponentDoc = {
     props,
     examples,
     migrations,
+    siblingIds: ["icon-button"],
 };
 
 export default doc;

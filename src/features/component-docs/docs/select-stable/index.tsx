@@ -13,7 +13,8 @@ const doc: ComponentDoc = {
     category: "Skjema",
     status: "stable",
     description: "Select er nedtrekksmenyen med egendefinert dropdown-grensesnitt. Den tar en items-array og har sin egen SelectChangeEventHandler. En ny, forenklet variant — BETA_Select — er under utvikling og vil erstatte denne over tid.",
-    relatedIds: ["select", "radio-button", "autosuggest"],
+    siblingIds: ["select"],
+    relatedIds: ["radio-button", "autosuggest"],
     warnings: [
         "BETA_Select er den anbefalte veien videre. Se migreringsveiledningen nedenfor for å komme i gang.",
     ],

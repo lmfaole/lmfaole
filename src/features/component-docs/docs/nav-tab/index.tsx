@@ -19,7 +19,8 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     description: "NavTab er lenkefaner for URL-basert navigasjon. Aktiv fane styres av aria-selected basert på gjeldende URL — i motsetning til Tabs som er tilstandsstyrt.",
     warnings: "Bruk NavTab for navigasjon mellom sider eller seksjoner. For innholdsveksling innenfor samme side, bruk Tabs.",
-    relatedIds: ["tabs", "nav-link", "link"],
+    siblingIds: ["tabs"],
+    relatedIds: ["nav-link", "link"],
 
     preview: <NavTabPreview />,
     props,

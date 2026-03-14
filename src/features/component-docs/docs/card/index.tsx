@@ -18,7 +18,8 @@ const doc: ComponentDoc = {
     category: "Visning",
     description: "Card er en overflate-komponent som grupperer relatert innhold i et visuelt avgrenset område. Den gir bakgrunn, ramme og padding via padding-proppen. Card gjør ikke antagelser om innhold — det er opp til deg å strukturere innholdet med Flex, overskrifter og andre komponenter.",
     warnings: "Ikke legg interaktive elementer (knapper, lenker) inne i et clickable Card — det skaper nested interactives som er ugyldige i HTML og problematiske for skjermlesere.",
-    relatedIds: ["flex", "card-image"],
+    siblingIds: ["card-image"],
+    relatedIds: ["flex"],
     preview: <CardPreview />,
 
     props,

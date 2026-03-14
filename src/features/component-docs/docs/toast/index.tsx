@@ -19,7 +19,7 @@ const doc: ComponentDoc = {
         "Wrap appen i ToastProvider — useToast() vil kaste en feil hvis det kalles utenfor.",
         "Toast forsvinner automatisk — ikke bruk den for kritisk informasjon som krever brukerhandling.",
     ],
-    relatedIds: ["message"],
+    siblingIds: ["message", "system-message"],
 
     props,
     examples,
