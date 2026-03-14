@@ -1,6 +1,6 @@
 "use client";
 
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import "./component-page.scss";
 import {TableOfContents} from "@fremtind/jokul/table-of-contents";
@@ -20,6 +20,24 @@ import {FullBleed} from "@/shared/components/FullBleed/FullBleed";
 
 function MigrationSection({ migrations }: { migrations: Migration[] }) {
     const [active, setActive] = useState<string | null>(null);
+
+    // When navigating via a #migration-{name} link (e.g. from the prop table),
+    // ensure the target migration is visible by clearing any conflicting filter.
+    useEffect(() => {
+        function handleHashChange() {
+            const hash = window.location.hash;
+            const match = hash.match(/^#migration-(.+)$/);
+            if (match) {
+                const name = decodeURIComponent(match[1]);
+                const exists = migrations.some((m) => m.deprecates.name === name);
+                if (exists) setActive(null); // show all so the anchor is in the DOM
+            }
+        }
+        handleHashChange(); // run on mount in case page loaded with a hash
+        window.addEventListener("hashchange", handleHashChange);
+        return () => window.removeEventListener("hashchange", handleHashChange);
+    }, [migrations]);
+
     const visible = active ? migrations.filter((m) => m.deprecates.name === active) : migrations;
     return (
         <Flex as="section" direction="column" gap="m">
