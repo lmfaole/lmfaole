@@ -2,10 +2,10 @@ import type { Migration } from "../types";
 
 export const migrations: Migration[] = [
     {
-        title: "Handlingsknappen i tekstfeltet sendes som element",
-        description: "action-propen er utfaset. Bruk actionButton med et React-element — typisk en Button eller IconButton — i stedet.",
+        title: "action er utfaset",
+        description: "Bruk actionButton med et ferdig React-element — typisk en Button eller IconButton.",
         uses: ["button"],
-        deprecates: [{ name: "action", kind: "prop" }],
+        deprecates: { name: "action", kind: "prop" },
         replacedBy: [{ name: "actionButton", kind: "prop" }],
         before: `<TextInput
     label="Søk"

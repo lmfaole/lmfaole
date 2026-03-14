@@ -2,21 +2,27 @@ import type { Migration } from "../types";
 
 export const migrations: Migration[] = [
     {
-        title: "Help viser ikke lenger tekst ved siden av ikonet",
-        description: "iconPosition er utfaset fordi tekst ikke lenger vises. showButtonText er utfaset — bruk heller en vanlig Button ved siden av Help.",
-        uses: ["button"],
-        deprecates: [{ name: "iconPosition", kind: "prop" }, { name: "showButtonText", kind: "prop" }],
-        replacedBy: [{ name: "Button", kind: "component" }],
-        before: `<Help buttonText="Hjelp" iconPosition="right" showButtonText>
+        title: "iconPosition er utfaset",
+        description: "Tekst vises ikke lenger ved siden av ikonet, og iconPosition har dermed ingen effekt. Propen kan fjernes.",
+        deprecates: { name: "iconPosition", kind: "prop" },
+        before: `<Help buttonText="Hjelp" iconPosition="right">
     Hjelpetekst her.
 </Help>`,
-        after: `<Help buttonText="Hjelp" position="right">
+        after: `<Help buttonText="Hjelp">
     Hjelpetekst her.
-</Help>
-
-{/* Vil du ha synlig tekst ved siden av? Bruk Button: */}
+</Help>`,
+    },
+    {
+        title: "showButtonText er utfaset",
+        description: "Tekst vises ikke lenger ved siden av Help-ikonet. Trenger du synlig tekst, bruk en vanlig Button ved siden av.",
+        uses: ["button"],
+        deprecates: { name: "showButtonText", kind: "prop" },
+        replacedBy: [{ name: "Button", kind: "component" }],
+        before: `<Help buttonText="Hjelp" showButtonText>
+    Hjelpetekst her.
+</Help>`,
+        after: `{/* Bruk Button for synlig tekst ved siden av: */}
 <Flex gap="xs" alignItems="center">
-    <span>Trenger du hjelp?</span>
     <Button variant="ghost" onClick={() => openHelpPanel()}>
         Åpne hjelpepanel
     </Button>

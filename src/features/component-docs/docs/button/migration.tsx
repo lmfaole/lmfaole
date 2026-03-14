@@ -5,20 +5,27 @@ import type { Migration } from "../types";
 
 export const migrations: Migration[] = [
     {
-        title: "Ikonknapper bruker nå én icon-prop",
-        description: "iconLeft og iconRight er utfaset. Bruk icon-propen med en Icon-komponent, og styr plasseringen med iconPosition.",
+        title: "iconLeft er utfaset",
+        description: "Bruk icon-propen med en Icon-komponent. Ikonet plasseres til venstre som standard.",
         uses: ["icon"],
-        deprecates: [{ name: "iconLeft", kind: "prop" }, { name: "iconRight", kind: "prop" }],
-        replacedBy: [{ name: "icon", kind: "prop" }, { name: "iconPosition", kind: "prop" }],
-        before: `<Button iconLeft={<Icon>add</Icon>}>Ny forsikring</Button>
-<Button iconRight={<Icon>arrow_forward</Icon>}>Se alle</Button>`,
-        after: `<Button icon={<Icon>add</Icon>}>Ny forsikring</Button>
-<Button icon={<Icon>arrow_forward</Icon>} iconPosition="right">Se alle</Button>`,
+        deprecates: { name: "iconLeft", kind: "prop" },
+        replacedBy: [{ name: "icon", kind: "prop" }],
+        before: `<Button iconLeft={<Icon>add</Icon>}>Ny forsikring</Button>`,
+        after: `<Button icon={<Icon>add</Icon>}>Ny forsikring</Button>`,
         preview: (
-            <Flex gap="s" wrap="wrap">
-                <Button variant="primary" icon={<Icon>add</Icon>}>Ny forsikring</Button>
-                <Button variant="ghost" icon={<Icon>arrow_forward</Icon>} iconPosition="right">Se alle</Button>
-            </Flex>
+            <Button variant="primary" icon={<Icon>add</Icon>}>Ny forsikring</Button>
+        ),
+    },
+    {
+        title: "iconRight er utfaset",
+        description: "Bruk icon-propen kombinert med iconPosition=\"right\" for å plassere ikonet til høyre.",
+        uses: ["icon"],
+        deprecates: { name: "iconRight", kind: "prop" },
+        replacedBy: [{ name: "icon", kind: "prop" }, { name: "iconPosition", kind: "prop" }],
+        before: `<Button iconRight={<Icon>arrow_forward</Icon>}>Se alle</Button>`,
+        after: `<Button icon={<Icon>arrow_forward</Icon>} iconPosition="right">Se alle</Button>`,
+        preview: (
+            <Button variant="ghost" icon={<Icon>arrow_forward</Icon>} iconPosition="right">Se alle</Button>
         ),
     },
 ];

@@ -19,14 +19,12 @@ export function MigrationExample({migration}: MigrationExampleProps) {
 
             <div className="migration-example__props">
                 <span className="migration-example__props-label muted">Utfases:</span>
-                {migration.deprecates.map((item) => (
-                    <span key={item.name} className="migration-example__props-item">
-                        <code>{item.name}</code>
-                        <span className={`migration-example__props-kind migration-example__props-kind--${item.kind}`}>
-                            {item.kind === "component" ? "komponent" : "prop"}
-                        </span>
+                <span className="migration-example__props-item">
+                    <code>{migration.deprecates.name}</code>
+                    <span className={`migration-example__props-kind migration-example__props-kind--${migration.deprecates.kind}`}>
+                        {migration.deprecates.kind === "component" ? "komponent" : "prop"}
                     </span>
-                ))}
+                </span>
                 {migration.replacedBy && <>
                     <span className="migration-example__props-arrow" aria-hidden>→</span>
                     <span className="migration-example__props-label muted">Erstattes av:</span>

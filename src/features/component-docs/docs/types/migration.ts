@@ -20,9 +20,12 @@ export interface MigrationItem {
 /**
  * A self-contained migration guide for a single deprecated API pattern.
  * Describes what changed, why, and shows a before/after code comparison.
+ *
+ * Each migration must describe exactly one deprecated prop or component.
+ * Split unrelated deprecations into separate Migration entries.
  */
 export interface Migration {
-    /** Short title displayed as a heading, e.g. `"Ikonknapper bruker nå én icon-prop"`. */
+    /** Short title displayed as a heading, e.g. `"iconLeft er utfaset"`. */
     title: string;
 
     /**
@@ -32,14 +35,14 @@ export interface Migration {
     description?: string;
 
     /**
-     * The props or components being deprecated.
-     * Each entry must declare its {@link MigrationItem.kind}.
-     * e.g. `[{ name: "iconLeft", kind: "prop" }, { name: "iconRight", kind: "prop" }]`
+     * The single prop or component being deprecated.
+     * e.g. `{ name: "iconLeft", kind: "prop" }`
+     *   or `{ name: "InfoSystemMessage", kind: "component" }`
      */
-    deprecates: MigrationItem[];
+    deprecates: MigrationItem;
 
     /**
-     * The props or components that replace the deprecated ones.
+     * The props or components that replace the deprecated one.
      * Omit entirely when the deprecated item is simply removed with no replacement.
      * e.g. `[{ name: "icon", kind: "prop" }, { name: "iconPosition", kind: "prop" }]`
      */
