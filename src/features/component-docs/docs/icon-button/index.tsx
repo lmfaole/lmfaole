@@ -7,6 +7,8 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import buttonDoc from "../button";
+import iconDoc from "../icon";
 
 const doc: ComponentDoc = {
     id: "icon-button",
@@ -17,7 +19,7 @@ const doc: ComponentDoc = {
     tags: ["knapp", "ikon", "interaktiv"],
     description: "IconButton er en knapp med kun ikon. Krev alltid en aria-label som beskriver handlingen.",
     warnings: "Ikke bruk IconButton uten aria-label.",
-    relatedIds: ["button", "icon"],
+    relatedIds: [buttonDoc.id, iconDoc.id],
 
     props,
     examples,

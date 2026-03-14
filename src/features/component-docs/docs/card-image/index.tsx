@@ -4,6 +4,7 @@ import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import cardDoc from "../card";
 
 const doc: ComponentDoc = {
     id: "card-image",
@@ -13,7 +14,7 @@ const doc: ComponentDoc = {
     tags: ["bilde", "kort", "media"],
     description: "CardImage er en bildekomponent laget for bruk inne i Card. Den håndterer negativ margin automatisk slik at bildet bløder kant-i-kant i kortet, uavhengig av Card sin padding-innstilling. Du slipper å beregne negative marginer manuelt.",
     warnings: "CardImage må brukes som direkte barn av Card. Plasser den utenfor Card, eller nøstet i en wrapper-div, og den negative margin-beregningen slår feil.",
-    relatedIds: ["card"],
+    relatedIds: [cardDoc.id],
 
     props,
     examples,

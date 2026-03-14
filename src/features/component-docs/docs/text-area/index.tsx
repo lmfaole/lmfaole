@@ -4,6 +4,7 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import textInputDoc from "../text-input";
 
 function TextAreaPreview() {
     const isHovered = usePreviewHovered();
@@ -35,7 +36,7 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "skjemabygging"],
     description: "TextArea er et flerlinjers tekstinputfelt for lengre tekstinnhold.",
-    relatedIds: ["text-input"],
+    relatedIds: [textInputDoc.id],
     preview: <TextAreaPreview />,
 
     props,

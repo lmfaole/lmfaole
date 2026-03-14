@@ -5,6 +5,7 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import tagDoc from "../tag";
 
 const doc: ComponentDoc = {
     id: "chip",
@@ -13,7 +14,7 @@ const doc: ComponentDoc = {
     category: "Handling",
     tags: ["interaktiv", "filter", "tag", "skjema"],
     description: "Chip brukes for interaktive filtre og tagger som brukeren kan velge og velge bort.",
-    relatedIds: ["tag"],
+    relatedIds: [tagDoc.id],
 
     props,
     examples,

@@ -5,6 +5,8 @@ import { props } from "./props";
 import { examples } from "./examples";
 import { PopoverBasicPreview } from "./examples";
 import React from "react";
+import tooltipDoc from "../tooltip";
+import modalDoc from "../modal";
 
 const doc: ComponentDoc = {
     id: "popover",
@@ -21,7 +23,7 @@ const doc: ComponentDoc = {
     ],
     preview: <PopoverBasicPreview />,
 
-    relatedIds: ["tooltip", "modal"],
+    relatedIds: [tooltipDoc.id, modalDoc.id],
     props,
     subComponents: [
         {

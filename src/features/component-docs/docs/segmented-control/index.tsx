@@ -4,6 +4,7 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import radioButtonDoc from "../radio-button";
 
 const doc: ComponentDoc = {
     id: "segmented-control",
@@ -12,7 +13,7 @@ const doc: ComponentDoc = {
     category: "Handling",
     tags: ["input", "skjema", "interaktiv", "filter"],
     description: "SegmentedControl er en gruppe av knapper der kun ett alternativ kan velges om gangen.",
-    relatedIds: ["radio-button"],
+    relatedIds: [radioButtonDoc.id],
 
     props,
     subComponents: [

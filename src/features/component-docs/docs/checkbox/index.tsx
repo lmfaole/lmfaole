@@ -5,6 +5,8 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import toggleSwitchDoc from "../toggle-switch";
+import checkboxPanelDoc from "../checkbox-panel";
 
 const doc: ComponentDoc = {
     id: "checkbox",
@@ -14,7 +16,7 @@ const doc: ComponentDoc = {
     tags: ["input", "skjema", "interaktiv", "skjemabygging", "tilgjengelighet"],
     description: "Checkbox brukes for binære valg i skjemaer, typisk for samtykke eller flervalgslister.",
     warnings: "Bruk ToggleSwitch for innstillinger som trer i kraft umiddelbart — Checkbox er for skjemainnsending.",
-    relatedIds: ["toggle-switch", "checkbox-panel"],
+    relatedIds: [toggleSwitchDoc.id, checkboxPanelDoc.id],
 
     props,
     examples,

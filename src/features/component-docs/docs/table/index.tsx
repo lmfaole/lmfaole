@@ -3,6 +3,7 @@ import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell, TableCap
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import summaryTableDoc from "../summary-table";
 
 const doc: ComponentDoc = {
     id: "table",
@@ -12,7 +13,7 @@ const doc: ComponentDoc = {
     tags: ["tabell", "datavisning", "sortering"],
     description: "Table rendrer en tilgjengelig HTML-tabell med Jøkuls stilsett. Støtter sortering via useSortableTableHeader-hooken og responsiv listevisning med collapseToList.",
     warnings: "Alltid inkluder caption for tilgjengelighet. Bruk srOnly på TableCaption når den visuelle konteksten allerede gir tabellen et tydelig navn.",
-    relatedIds: ["summary-table"],
+    relatedIds: [summaryTableDoc.id],
     preview: (
         <Table caption={<TableCaption>Forsikringsoversikt</TableCaption>}>
             <TableHead>

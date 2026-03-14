@@ -5,6 +5,7 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import navLinkDoc from "../nav-link";
 
 const doc: ComponentDoc = {
     id: "tabs",
@@ -14,7 +15,7 @@ const doc: ComponentDoc = {
     tags: ["navigasjon", "layout", "interaktiv"],
     description: "Tabs organiser innhold i faner der kun én fane vises om gangen.",
     warnings: "Bruk Tabs for å skjule innhold innenfor samme side — ikke for navigasjon mellom sider.",
-    relatedIds: ["nav-link"],
+    relatedIds: [navLinkDoc.id],
 
     props,
     subComponents: [

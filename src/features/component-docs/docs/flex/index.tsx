@@ -7,6 +7,8 @@ import { Card } from "@fremtind/jokul/card";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import buttonDoc from "../button";
+import tagDoc from "../tag";
 
 const doc: ComponentDoc = {
     id: "flex",
@@ -16,7 +18,7 @@ const doc: ComponentDoc = {
     tags: ["layout", "responsiv"],
     description: "Flex er den primære layout-primitiven i Jøkul. Den lar deg bygge flexbox-layouts med Jøkuls spacing-skala for gap, uten å skrive CSS. Komponenten rendres som div som standard, men kan rendres som et hvilket som helst HTML-element via as-proppen.",
     warnings: "Flex er ikke ment å erstatte alle layout-behov. For todimensjonale layouts, bruk CSS Grid.",
-    relatedIds: ["button", "tag"],
+    relatedIds: [buttonDoc.id, tagDoc.id],
     preview: (
         <Flex gap="s" wrap="wrap" alignItems="center">
             <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-focus)", borderRadius: "4px" }} />

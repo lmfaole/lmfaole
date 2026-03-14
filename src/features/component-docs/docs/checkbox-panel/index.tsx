@@ -5,6 +5,8 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import checkboxDoc from "../checkbox";
+import radioPanelDoc from "../radio-panel";
 
 const doc: ComponentDoc = {
     id: "checkbox-panel",
@@ -13,7 +15,7 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "panel", "interaktiv", "pris"],
     description: "CheckboxPanel er en utvidet avkrysningsboks med et synlig paneldesign.",
-    relatedIds: ["checkbox", "radio-panel"],
+    relatedIds: [checkboxDoc.id, radioPanelDoc.id],
 
     props,
     examples,

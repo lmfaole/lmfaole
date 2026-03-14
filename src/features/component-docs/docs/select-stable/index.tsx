@@ -5,6 +5,9 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
+import selectDoc from "../select";
+import radioButtonDoc from "../radio-button";
+import autosuggestDoc from "../autosuggest";
 
 const doc: ComponentDoc = {
     id: "select-stable",
@@ -14,7 +17,7 @@ const doc: ComponentDoc = {
     status: "stable",
     tags: ["input", "skjema", "interaktiv", "skjemabygging", "nedtrekksmeny"],
     description: "Select er nedtrekksmenyen med egendefinert dropdown-grensesnitt. Den tar en items-array og har sin egen SelectChangeEventHandler. En ny, forenklet variant — BETA_Select — er under utvikling og vil erstatte denne over tid.",
-    relatedIds: ["select", "radio-button", "autosuggest"],
+    relatedIds: [selectDoc.id, radioButtonDoc.id, autosuggestDoc.id],
     warnings: [
         "BETA_Select er den anbefalte veien videre. Se migreringsveiledningen nedenfor for å komme i gang.",
     ],

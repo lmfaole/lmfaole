@@ -10,6 +10,8 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 import { CardPreview } from "./examples";
+import flexDoc from "../flex";
+import cardImageDoc from "../card-image";
 
 const doc: ComponentDoc = {
     id: "card",
@@ -19,7 +21,7 @@ const doc: ComponentDoc = {
     tags: ["layout", "panel", "datavisning"],
     description: "Card er en overflate-komponent som grupperer relatert innhold i et visuelt avgrenset område. Den gir bakgrunn, ramme og padding via padding-proppen. Card gjør ikke antagelser om innhold — det er opp til deg å strukturere innholdet med Flex, overskrifter og andre komponenter.",
     warnings: "Ikke legg interaktive elementer (knapper, lenker) inne i et clickable Card — det skaper nested interactives som er ugyldige i HTML og problematiske for skjermlesere.",
-    relatedIds: ["flex", "card-image"],
+    relatedIds: [flexDoc.id, cardImageDoc.id],
     preview: <CardPreview />,
 
     props,

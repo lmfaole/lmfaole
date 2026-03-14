@@ -4,6 +4,8 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import textInputDoc from "../text-input";
+import autosuggestDoc from "../autosuggest";
 
 function SearchPreview() {
     const isHovered = usePreviewHovered();
@@ -36,7 +38,7 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "søk", "skjema", "interaktiv"],
     description: "SearchInput er et søkeinputfelt med søkeikon og valgfri label.",
-    relatedIds: ["text-input", "autosuggest"],
+    relatedIds: [textInputDoc.id, autosuggestDoc.id],
     preview: <SearchPreview />,
 
     props,

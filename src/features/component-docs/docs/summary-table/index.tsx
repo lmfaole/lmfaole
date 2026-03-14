@@ -2,6 +2,8 @@ import { SummaryTable, SummaryTableRow } from "@fremtind/jokul/summary-table";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+import descriptionListDoc from "../description-list";
+import tableDoc from "../table";
 
 const doc: ComponentDoc = {
     id: "summary-table",
@@ -11,7 +13,7 @@ const doc: ComponentDoc = {
     tags: ["tabell", "datavisning", "skjema"],
     description: "SummaryTable viser en oppsummering av nøkkel-verdi-par i tabellformat.",
     warnings: "Alltid sett caption — uten det har skjermlesere ingen kontekst for hva tabellen inneholder.",
-    relatedIds: ["description-list", "table"],
+    relatedIds: [descriptionListDoc.id, tableDoc.id],
     preview: (
         <SummaryTable
             caption="Oppsummering"

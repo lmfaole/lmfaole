@@ -3,6 +3,9 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
+import tooltipDoc from "../tooltip";
+import popoverDoc from "../popover";
+import inputGroupDoc from "../input-group";
 
 const doc: ComponentDoc = {
     id: "help",
@@ -21,7 +24,7 @@ const doc: ComponentDoc = {
         </Help>
     ),
 
-    relatedIds: ["tooltip", "popover", "input-group"],
+    relatedIds: [tooltipDoc.id, popoverDoc.id, inputGroupDoc.id],
     props,
     examples,
     migrations,
