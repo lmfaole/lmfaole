@@ -34,7 +34,8 @@ export interface ComponentExample {
     tags?: string[];
 
     /**
-     * IDs of other Jøkul components composed inside this example, e.g. `["button", "icon"]`.
+     * IDs of other Jøkul components composed inside this example.
+     * Each value must match a {@link ComponentDoc.id}, e.g. `["button", "icon"]`.
      * Used to show composition context in the UI and cross-link documentation.
      */
     uses?: string[];

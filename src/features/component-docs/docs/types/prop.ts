@@ -61,7 +61,7 @@ export interface PropDef {
     status: PropStatus;
 
     /**
-     * Shown next to the status badge when status is `"deprecated"` or `"experimental"`.
+     * Shown next to the status badge when {@link PropDef.status} is `"deprecated"` or `"experimental"`.
      * For deprecated props, always include the migration path, e.g.
      * `"Use the size prop instead. Will be removed in v12."`.
      */

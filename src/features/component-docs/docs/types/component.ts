@@ -20,7 +20,7 @@ export interface SubComponentDoc {
      */
     description?: string;
 
-    /** Props accepted by this sub-component. Follow the same rules as {@link PropDef}. */
+    /** Props accepted by this sub-component. Each entry follows the {@link PropDef} shape. */
     props: PropDef[];
 }
 
@@ -96,12 +96,13 @@ export interface ComponentDoc {
     /**
      * Live React element shown in the component card on the listing page and
      * in the page header. Should be compact (fits ~200×120px) and visually representative.
-     * Falls back to `examples[0].preview` when omitted.
+     * Falls back to {@link ComponentExample.preview} of the first entry in {@link ComponentDoc.examples} when omitted.
      */
     preview?: React.ReactNode;
 
     /**
      * Props accepted directly on the root component element.
+     * Each entry follows the {@link PropDef} shape.
      * List all non-trivial props. Native HTML attribute pass-throughs (e.g. `className`,
      * `id`, `aria-*`) only need to be listed if they have special behaviour in this component.
      */
@@ -109,12 +110,14 @@ export interface ComponentDoc {
 
     /**
      * Compound sub-components exported as properties of the root, e.g. `Popover.Trigger`.
+     * Each entry follows the {@link SubComponentDoc} shape.
      * Omit for simple components with no sub-component API.
      */
     subComponents?: SubComponentDoc[];
 
     /**
      * Usage examples ordered from simplest to most advanced.
+     * Each entry follows the {@link ComponentExample} shape.
      * The first example should always show the most common real-world usage.
      * Include at least one example; aim for 3–5.
      */
@@ -122,15 +125,15 @@ export interface ComponentDoc {
 
     /**
      * API migration guides for deprecated props or components.
-     * Each entry is self-contained with before/after code and optional live preview.
+     * Each entry follows the {@link Migration} shape and is self-contained with before/after code.
      * Rendered in a dedicated "Migrering" section on the component page.
      * Omit for components with no deprecated APIs.
      */
     migrations?: Migration[];
 
     /**
-     * IDs of related components worth exploring after this one,
-     * e.g. `["modal", "tooltip"]` on the Popover page.
+     * IDs of related components worth exploring after this one.
+     * Each value must match a {@link ComponentDoc.id}, e.g. `["modal", "tooltip"]`.
      * Used to render a "Se også" section at the bottom of the page.
      */
     relatedIds?: string[];

@@ -38,6 +38,7 @@ export interface Migration {
 
     /**
      * The single prop or component being deprecated.
+     * See {@link MigrationItem} for the shape.
      * e.g. `{ name: "iconLeft", kind: "prop" }`
      *   or `{ name: "InfoSystemMessage", kind: "component" }`
      */
@@ -45,6 +46,7 @@ export interface Migration {
 
     /**
      * The props or components that replace the deprecated one.
+     * Each entry follows the {@link MigrationItem} shape.
      * Omit entirely when the deprecated item is simply removed with no replacement.
      * e.g. `[{ name: "icon", kind: "prop" }, { name: "iconPosition", kind: "prop" }]`
      */
@@ -67,10 +69,4 @@ export interface Migration {
      * Omit when no meaningful visual difference exists.
      */
     preview?: React.ReactNode;
-
-    /**
-     * IDs of other Jøkul components composed inside this migration example.
-     * Used to show composition context in the UI and cross-link documentation.
-     */
-    uses?: string[];
 }
