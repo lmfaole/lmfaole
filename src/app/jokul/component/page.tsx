@@ -5,6 +5,7 @@ import {Flex} from "@fremtind/jokul/flex";
 import {NavLink} from "@fremtind/jokul/nav-link";
 import {Search} from "@fremtind/jokul/search";
 import {Chip} from "@fremtind/jokul/chip";
+import {Tag} from "@fremtind/jokul/tag";
 import {BETA_Select as Select} from "@fremtind/jokul/select";
 import {SegmentedControl, SegmentedControlButton} from "@fremtind/jokul/segmented-control";
 import {DescriptionDetail, DescriptionList, DescriptionTerm} from "@fremtind/jokul/description-list";
@@ -20,15 +21,16 @@ import "./component-index.scss";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
 
-type PropEntry = { propName: string; source: PropSource; statuses: Set<PropStatus>; usedBy: { id: string; name: string }[] };
+type PropEntry = { propName: string; source: PropSource; usedBy: { id: string; name: string; status: PropStatus }[] };
 
 const ALL_PROP_ENTRIES: PropEntry[] = (() => {
-    const map = new Map<string, { source: PropSource; statuses: Set<PropStatus>; usedBy: { id: string; name: string }[] }>();
+    const map = new Map<string, { source: PropSource; usedBy: { id: string; name: string; status: PropStatus }[] }>();
     for (const doc of componentDocs) {
         for (const prop of doc.props) {
-            const existing = map.get(prop.name) ?? {source: prop.source, statuses: new Set<PropStatus>(), usedBy: []};
-            if (!existing.usedBy.find((e) => e.id === doc.id)) existing.usedBy.push({id: doc.id, name: doc.name});
-            existing.statuses.add(prop.status);
+            const existing = map.get(prop.name) ?? {source: prop.source, usedBy: []};
+            if (!existing.usedBy.find((e) => e.id === doc.id)) {
+                existing.usedBy.push({id: doc.id, name: doc.name, status: prop.status});
+            }
             // if any doc marks it as custom, treat it as custom
             if (prop.source === "custom") existing.source = "custom";
             else if (prop.source === "native" && existing.source == null) existing.source = "native";
@@ -36,7 +38,7 @@ const ALL_PROP_ENTRIES: PropEntry[] = (() => {
         }
     }
     return Array.from(map.entries())
-        .map(([propName, {source, statuses, usedBy}]) => ({propName, source, statuses, usedBy}))
+        .map(([propName, {source, usedBy}]) => ({propName, source, usedBy}))
         .sort((a, b) => a.propName.localeCompare(b.propName, "nb"));
 })();
 
@@ -81,7 +83,7 @@ export default function ComponentsPage() {
             (e) =>
                 (!q || e.propName.toLowerCase().includes(q) || e.usedBy.some((c) => c.name.toLowerCase().includes(q))) &&
                 (!propSourceFilter || e.source === propSourceFilter) &&
-                (!propStatusFilter || e.statuses.has(propStatusFilter)),
+                (!propStatusFilter || e.usedBy.some((c) => c.status === propStatusFilter)),
         );
         if (propSortBy === "za") return results.sort((a, b) => b.propName.localeCompare(a.propName, "nb"));
         if (propSortBy === "most-used") return results.sort((a, b) => b.usedBy.length - a.usedBy.length);
@@ -233,10 +235,20 @@ export default function ComponentsPage() {
                                         <code>{entry.propName} {!propSourceFilter && `(${entry.source})`}</code>
                                     </Flex>
                                 </DescriptionTerm>
-                                {entry.usedBy.map((comp) => (
-                                    <DescriptionDetail key={comp.id}><Link
-                                        href={`/jokul/component/${comp.id}`}>{comp.name}</Link></DescriptionDetail>
-                                ))}
+                                {entry.usedBy
+                                    .filter((comp) => !propStatusFilter || comp.status === propStatusFilter)
+                                    .map((comp) => (
+                                        <DescriptionDetail key={comp.id}>
+                                            <Flex gap="xs" alignItems="center">
+                                                <Link href={`/jokul/component/${comp.id}`}>{comp.name}</Link>
+                                                {comp.status !== "stable" && (
+                                                    <Tag variant={comp.status === "deprecated" ? "warning" : "info"}>
+                                                        {comp.status === "deprecated" ? "Utfaset" : "Eksperimentell"}
+                                                    </Tag>
+                                                )}
+                                            </Flex>
+                                        </DescriptionDetail>
+                                    ))}
                             </React.Fragment>
                         ))}
                     </DescriptionList>
