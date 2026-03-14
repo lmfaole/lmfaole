@@ -18,7 +18,7 @@ import {CopyableCode} from "@/features/component-docs/components/CopyableCode/Co
 import {FullBleed} from "@/shared/components/FullBleed/FullBleed";
 
 function MigrationSection({ migrations }: { migrations: Migration[] }) {
-    const [active, setActive] = useState<string | null>(null);
+    const [active, setActive] = useState<string>(migrations[0]?.deprecates.name ?? "");
     const pendingScroll = useRef<string | null>(null);
 
     useEffect(() => {
@@ -31,12 +31,25 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
         }
     }, [active]);
 
-    const visible = active ? migrations.filter((m) => m.deprecates.name === active) : migrations;
-
-    function selectTab(name: string | null) {
-        if (name && active !== name) {
-            pendingScroll.current = name;
+    useEffect(() => {
+        function handleHashChange() {
+            const match = window.location.hash.match(/^#migration-(.+)$/);
+            if (!match) return;
+            const name = decodeURIComponent(match[1]);
+            if (migrations.some((m) => m.deprecates.name === name)) {
+                pendingScroll.current = name;
+                setActive(name);
+            }
         }
+        handleHashChange();
+        window.addEventListener("hashchange", handleHashChange);
+        return () => window.removeEventListener("hashchange", handleHashChange);
+    }, [migrations]);
+
+    const visible = migrations.filter((m) => m.deprecates.name === active);
+
+    function selectTab(name: string) {
+        pendingScroll.current = name;
         setActive(name);
     }
 
@@ -44,13 +57,6 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
         <Flex as="section" direction="column" gap="m">
             <h2 id="migrering">Migrering</h2>
             <NavTabs aria-label="Filtrer migrering">
-                <NavTab
-                    as="button"
-                    aria-selected={active === null}
-                    onClick={() => selectTab(null)}
-                >
-                    Se alle
-                </NavTab>
                 {migrations.map((m) => (
                     <NavTab
                         key={m.deprecates.name}
