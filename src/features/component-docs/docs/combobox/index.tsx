@@ -5,8 +5,6 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 import { ComboboxBasicPreview } from "./examples";
-import selectDoc from "../select";
-import autosuggestDoc from "../autosuggest";
 
 const doc: ComponentDoc = {
     id: "combobox",
@@ -17,7 +15,7 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Combobox er et flervalg-skjemaelement med søkefunksjon. Valgte elementer vises som chips og kan fjernes enkeltvis.",
-    relatedIds: [selectDoc.id, autosuggestDoc.id],
+    relatedIds: ["select", "autosuggest"],
     preview: <ComboboxBasicPreview />,
 
     props,

@@ -7,7 +7,6 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
-import messageDoc from "../message";
 
 const doc: ComponentDoc = {
     id: "tag",
@@ -17,7 +16,7 @@ const doc: ComponentDoc = {
     tags: ["tekst", "datavisning", "feedback"],
     description: "Tag brukes til å vise kategorier, statuser og etiketter. De er kun visuelle elementer — ikke bruk Tag som knapper eller lenker. For klikkbare filtre, bruk Chip-komponenten i stedet.",
     warnings: "Tags er dekorative og ikke interaktive. Sørg for at taggteksten gir mening uten ekstra kontekst.",
-    relatedIds: [messageDoc.id],
+    relatedIds: ["message"],
 
     props,
     examples,

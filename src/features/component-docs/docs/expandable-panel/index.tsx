@@ -5,7 +5,6 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
-import expanderDoc from "../expander";
 
 const doc: ComponentDoc = {
     id: "expandable-panel",
@@ -15,7 +14,7 @@ const doc: ComponentDoc = {
     tags: ["panel", "interaktiv", "animasjon", "tilgjengelighet"],
     description: "ExpandablePanel er et utviddbart panel med header og innhold.",
 
-    relatedIds: [expanderDoc.id],
+    relatedIds: ["expander"],
 
     props,
     subComponents: [

@@ -7,8 +7,6 @@ import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
 import { AutosuggestPreview } from "./examples";
-import textInputDoc from "../text-input";
-import selectDoc from "../select";
 
 const doc: ComponentDoc = {
     id: "autosuggest",
@@ -18,7 +16,7 @@ const doc: ComponentDoc = {
     tags: ["input", "skjema", "søk", "interaktiv", "kontrollert"],
     description: "Autosuggest er et tekstinputfelt som viser forslag mens brukeren skriver. Passer for søk og fritekstfelt med et endelig sett av gyldige valg.",
     warnings: "Forslagene filtreres ikke automatisk — du håndterer filtrering selv og oppdaterer suggestions-prop.",
-    relatedIds: [textInputDoc.id, selectDoc.id],
+    relatedIds: ["text-input", "select"],
     preview: <AutosuggestPreview />,
 
     props,

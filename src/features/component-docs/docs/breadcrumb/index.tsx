@@ -2,8 +2,6 @@ import { Breadcrumb, BreadcrumbItem } from "@fremtind/jokul/breadcrumb";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
-import navLinkDoc from "../nav-link";
-import linkDoc from "../link";
 
 const doc: ComponentDoc = {
     id: "breadcrumb",
@@ -12,7 +10,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "hierarki"],
     description: "Breadcrumb viser hvor brukeren er i nettstedets hierarki og gir snarveier tilbake til overordnede sider.",
-    relatedIds: [navLinkDoc.id, linkDoc.id],
+    relatedIds: ["nav-link", "link"],
     preview: (
         <Breadcrumb>
             <BreadcrumbItem><a href="#">Hjem</a></BreadcrumbItem>

@@ -5,8 +5,6 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
-import checkboxDoc from "../checkbox";
-import radioPanelDoc from "../radio-panel";
 
 const doc: ComponentDoc = {
     id: "radio-button",
@@ -16,7 +14,7 @@ const doc: ComponentDoc = {
     tags: ["input", "skjema", "interaktiv", "skjemabygging", "tilgjengelighet"],
     description: "RadioButton og RadioButtonGroup brukes for enovalgslister.",
     warnings: "Aldri bruk RadioButton uten RadioButtonGroup — den er ikke tilgjengelig uten riktig name og grouping.",
-    relatedIds: [checkboxDoc.id, radioPanelDoc.id],
+    relatedIds: ["checkbox", "radio-panel"],
 
     props,
     examples,

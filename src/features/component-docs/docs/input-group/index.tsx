@@ -8,10 +8,6 @@ import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
 import { InputGroupPreview } from "./examples";
-import textInputDoc from "../text-input";
-import checkboxDoc from "../checkbox";
-import radioButtonDoc from "../radio-button";
-import helpDoc from "../help";
 
 const doc: ComponentDoc = {
     id: "input-group",
@@ -25,7 +21,7 @@ const doc: ComponentDoc = {
     warnings: "Bruk render-prop-mønsteret for å spre tilgjengelighetsprops (id, aria-describedby, aria-invalid) automatisk til det underliggende feltet.",
     preview: <InputGroupPreview />,
 
-    relatedIds: [textInputDoc.id, checkboxDoc.id, radioButtonDoc.id, helpDoc.id],
+    relatedIds: ["text-input", "checkbox", "radio-button", "help"],
     props,
     subComponents: [
         {

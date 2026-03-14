@@ -17,8 +17,6 @@ import { CardBasicPreview } from "../card/examples";
 import { TableBasicPreview } from "../table/examples";
 import { DescriptionListContactPreview } from "../description-list/examples";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
-import loaderDoc from "../loader";
-import feedbackDoc from "../feedback";
 
 function SkeletonPreview() {
     const isHovered = usePreviewHovered();
@@ -63,7 +61,7 @@ const doc: ComponentDoc = {
         "Skeleton-komponenter bygger opp et innholdsskjelett som matcher layouten til det virkelige innholdet, og gir brukeren en visuell indikasjon på at innhold er på vei.",
     warnings:
         "Wrap alltid Skeleton-komponenter i SkeletonAnimation for å få shimmering-animasjon og en tilgjengelig textDescription for skjermlesere. Bruk SkeletonElement for freeform rektangel-plassholdere.",
-    relatedIds: [loaderDoc.id, feedbackDoc.id],
+    relatedIds: ["loader", "feedback"],
     preview: <SkeletonPreview />,
 
     props,

@@ -3,7 +3,6 @@ import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
-import linkDoc from "../link";
 
 const doc: ComponentDoc = {
     id: "nav-link",
@@ -12,7 +11,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     tags: ["navigasjon", "interaktiv"],
     description: "NavLink er en navigasjonslenke med tydelig aktiv tilstand. Brukes i navigasjonsmeny og sidefelt.",
-    relatedIds: [linkDoc.id],
+    relatedIds: ["link"],
     preview: (
         <Flex direction="column" gap="xs">
             <NavLink href="#" active>Oversikt</NavLink>

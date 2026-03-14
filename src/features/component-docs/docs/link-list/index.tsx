@@ -2,8 +2,6 @@ import { LinkList } from "@fremtind/jokul/link-list";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
-import linkDoc from "../link";
-import navLinkDoc from "../nav-link";
 
 const doc: ComponentDoc = {
     id: "link-list",
@@ -13,7 +11,7 @@ const doc: ComponentDoc = {
     tags: ["navigasjon", "liste"],
     description: "LinkList viser en tematisk gruppert liste av lenker med en felles overskrift.",
     warnings: "Bruk LinkList.Link for lenker inne i komponenten for korrekt styling.",
-    relatedIds: [linkDoc.id, navLinkDoc.id],
+    relatedIds: ["link", "nav-link"],
     preview: (
         <LinkList label="Forsikringer">
             <LinkList.Link href="#">Bilforsikring</LinkList.Link>

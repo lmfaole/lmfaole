@@ -5,7 +5,6 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
-import buttonDoc from "../button";
 
 function TextInputPreview() {
     const isHovered = usePreviewHovered();
@@ -36,7 +35,7 @@ const doc: ComponentDoc = {
     category: "Skjema",
     tags: ["input", "skjema", "interaktiv", "skjemabygging", "kontrollert"],
     description: "TextInput er en enkeltlinjers tekstinndatafelt. Komponenten inkluderer label, feilmelding og hjelpetekst i ett og håndterer tilgjengelighet automatisk — label er koblet til input via htmlFor/id. Alle skjema-primitiver i Jøkul følger samme API-mønster.",
-    relatedIds: [buttonDoc.id],
+    relatedIds: ["button"],
     preview: <TextInputPreview />,
 
     props,

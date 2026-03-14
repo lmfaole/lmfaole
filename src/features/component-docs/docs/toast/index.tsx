@@ -6,7 +6,6 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
-import messageDoc from "../message";
 
 const doc: ComponentDoc = {
     id: "toast",
@@ -21,7 +20,7 @@ const doc: ComponentDoc = {
         "Wrap appen i ToastProvider — useToast() vil kaste en feil hvis det kalles utenfor.",
         "Toast forsvinner automatisk — ikke bruk den for kritisk informasjon som krever brukerhandling.",
     ],
-    relatedIds: [messageDoc.id],
+    relatedIds: ["message"],
 
     props,
     examples,

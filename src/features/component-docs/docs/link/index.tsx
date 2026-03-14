@@ -3,8 +3,6 @@ import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
-import navLinkDoc from "../nav-link";
-import linkListDoc from "../link-list";
 
 const doc: ComponentDoc = {
     id: "link",
@@ -14,7 +12,7 @@ const doc: ComponentDoc = {
     tags: ["navigasjon", "tekst", "interaktiv"],
     description: "Link er Jøkuls grunnleggende lenkestil for inline-lenker og frittstående lenker.",
     warnings: "Bruk Link for navigasjon, ikke Button — feil element bryter forventningene til tastaturbrukere og skjermlesere.",
-    relatedIds: [navLinkDoc.id, linkListDoc.id],
+    relatedIds: ["nav-link", "link-list"],
     preview: (
         <Flex direction="column" gap="xs">
             <Link href="#">Les mer om bilforsikring</Link>

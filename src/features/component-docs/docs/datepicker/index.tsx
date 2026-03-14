@@ -4,8 +4,6 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
-import textInputDoc from "../text-input";
-import selectDoc from "../select";
 
 const doc: ComponentDoc = {
     id: "datepicker",
@@ -17,7 +15,7 @@ const doc: ComponentDoc = {
     description:
         "DatePicker er et skjemafelt for å velge en dato. Den kombinerer et tekstfelt med en interaktiv kalender og validerer datoformatet automatisk.",
     warnings: "Verdien leveres som string i dd.mm.yyyy-format, ikke ISO — ta høyde for dette ved skjemainnsending.",
-    relatedIds: [textInputDoc.id, selectDoc.id],
+    relatedIds: ["text-input", "select"],
     preview: (
         <div style={{ maxWidth: "280px", border: "1px solid var(--jkl-color-border-default)", borderRadius: "4px", padding: "var(--jkl-spacing-m)", background: "var(--jkl-color-background-default)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--jkl-spacing-s)" }}>
