@@ -2,6 +2,7 @@ import type React from "react";
 import type { PropDef } from "./prop";
 import type { ComponentExample } from "./example";
 import type { Migration } from "./migration";
+import type { ComponentId } from "./ids";
 
 /**
  * Documentation for a compound sub-component such as `Popover.Trigger` or `Tabs.TabPanel`.
@@ -30,10 +31,11 @@ export interface SubComponentDoc {
  */
 export interface ComponentDoc {
     /**
-     * Unique kebab-case identifier matching the file name and URL segment,
-     * e.g. `"text-input"`, `"expandable-panel"`.
+     * Unique kebab-case identifier matching the URL segment, e.g. `"text-input"`.
+     * Must be a registered value in {@link ComponentId} — add it to `types/ids.ts`
+     * when creating a new component doc.
      */
-    id: string;
+    id: ComponentId;
 
     /**
      * Human-readable display name with normal casing and spaces,
@@ -133,8 +135,10 @@ export interface ComponentDoc {
 
     /**
      * IDs of related components worth exploring after this one.
-     * Each value must match a {@link ComponentDoc.id}, e.g. `["modal", "tooltip"]`.
+     * Each value must be a registered {@link ComponentId}, e.g. `["modal", "tooltip"]`.
+     * TypeScript will error if an ID is not in the registry — update `types/ids.ts`
+     * when adding new components or renaming existing ones.
      * Used to render a "Se også" section at the bottom of the page.
      */
-    relatedIds?: string[];
+    relatedIds?: ComponentId[];
 }
