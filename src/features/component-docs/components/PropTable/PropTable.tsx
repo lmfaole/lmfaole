@@ -56,7 +56,7 @@ function PropStatusCell({ status, statusDescription }: Pick<PropDef, "status" | 
 function buildRows(props: PropDef[], migrationMap: Map<string, string>): React.ReactNode[][] {
     return props.map((prop) => [
         <PropNameCell key="name" name={prop.name} status={prop.status} migrationAnchor={migrationMap.get(prop.name)} />,
-        <code key="type">{prop.type}</code>,
+        <code key="type" style={{ display: "block", maxWidth: "20ch", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={prop.type}>{prop.type}</code>,
         <span key="req">{prop.required ? "Ja" : "Nei"}</span>,
         prop.default ? <code key="default">{prop.default}</code> : "—",
         <PropStatusCell key="status" status={prop.status} statusDescription={prop.statusDescription} />,
