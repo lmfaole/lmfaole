@@ -8,7 +8,6 @@ const doc: ComponentDoc = {
     name: "Summary Table",
     package: "@fremtind/jokul/summary-table",
     category: "Visning",
-    tags: ["tabell", "datavisning", "skjema"],
     description: "SummaryTable viser en oppsummering av nøkkel-verdi-par i tabellformat.",
     warnings: "Alltid sett caption — uten det har skjermlesere ingen kontekst for hva tabellen inneholder.",
     relatedIds: ["description-list", "table"],

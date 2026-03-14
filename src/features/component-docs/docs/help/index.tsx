@@ -9,7 +9,6 @@ const doc: ComponentDoc = {
     name: "Help",
     package: "@fremtind/jokul/help",
     category: "Overlegg",
-    tags: ["hjelp", "popover", "tooltip", "informasjon", "kontekstuell"],
     status: "stable",
     description:
         "Help viser en liten ?-knapp som åpner en flytenede hjelpetekst i et popover. Brukes til å gi kontekstuell hjelp ved skjemafelt uten å ta opp permanent plass i grensesnittet.",

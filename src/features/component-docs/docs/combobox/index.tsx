@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
     name: "Combobox",
     package: "@fremtind/jokul/combobox",
     category: "Skjema",
-    tags: ["multi-select", "chips", "søk", "input", "skjema", "kontrollert"],
     status: "stable",
     description:
         "Combobox er et flervalg-skjemaelement med søkefunksjon. Valgte elementer vises som chips og kan fjernes enkeltvis.",

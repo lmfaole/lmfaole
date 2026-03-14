@@ -10,7 +10,6 @@ const doc: ComponentDoc = {
     name: "Pagination",
     package: "@fremtind/jokul/pagination",
     category: "Navigasjon",
-    tags: ["navigasjon", "interaktiv", "datavisning", "liste"],
     description: "Pagination brukes til å dele opp lange lister i sider.",
     warnings: "Pagination er fullt kontrollert — du er ansvarlig for å oppdatere currentPage i onPageChange.",
 

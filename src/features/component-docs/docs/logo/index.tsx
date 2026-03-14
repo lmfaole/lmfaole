@@ -8,7 +8,6 @@ const doc: ComponentDoc = {
     name: "Logo",
     package: "@fremtind/jokul/logo",
     category: "Visning",
-    tags: ["media", "ikon", "merkevare"],
     description: "Logo rendrer Fremtind-logoen som en SVG-komponent.",
     warnings: "Endre ikke logoens farger eller proporsjoner.",
     preview: (

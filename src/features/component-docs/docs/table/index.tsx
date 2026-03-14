@@ -9,7 +9,6 @@ const doc: ComponentDoc = {
     name: "Table",
     package: "@fremtind/jokul/table",
     category: "Visning",
-    tags: ["tabell", "datavisning", "sortering"],
     description: "Table rendrer en tilgjengelig HTML-tabell med Jøkuls stilsett. Støtter sortering via useSortableTableHeader-hooken og responsiv listevisning med collapseToList.",
     warnings: "Alltid inkluder caption for tilgjengelighet. Bruk srOnly på TableCaption når den visuelle konteksten allerede gir tabellen et tydelig navn.",
     relatedIds: ["summary-table"],

@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
     name: "Radio Button",
     package: "@fremtind/jokul/radio-button",
     category: "Skjema",
-    tags: ["input", "skjema", "interaktiv", "skjemabygging", "tilgjengelighet"],
     description: "RadioButton og RadioButtonGroup brukes for enovalgslister.",
     warnings: "Aldri bruk RadioButton uten RadioButtonGroup — den er ikke tilgjengelig uten riktig name og grouping.",
     relatedIds: ["checkbox", "radio-panel"],

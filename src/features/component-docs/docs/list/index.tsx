@@ -8,7 +8,6 @@ const doc: ComponentDoc = {
     name: "List",
     package: "@fremtind/jokul/list",
     category: "Visning",
-    tags: ["liste", "tekst"],
     description: "List-komponentene (UnorderedList og OrderedList) brukes for strukturerte lister med konsistent styling.",
     preview: (
         <UnorderedList>

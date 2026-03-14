@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
     name: "Expandable Panel",
     package: "@fremtind/jokul/expander",
     category: "Visning",
-    tags: ["panel", "interaktiv", "animasjon", "tilgjengelighet"],
     description: "ExpandablePanel er et utviddbart panel med header og innhold.",
 
     relatedIds: ["expander"],

@@ -8,7 +8,6 @@ const doc: ComponentDoc = {
     name: "Countdown",
     package: "@fremtind/jokul/countdown",
     category: "Visning",
-    tags: ["animasjon", "tekst", "tilstandsstyring"],
     description: "Countdown viser en nedtelling fra et gitt antall millisekunder.",
     preview: (
         <Countdown from={60 * 1000} />

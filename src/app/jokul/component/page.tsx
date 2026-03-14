@@ -19,7 +19,6 @@ import {ChipFilterList} from "@/features/component-docs/components/ChipFilterLis
 import "./component-index.scss";
 
 const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
-const ALL_TAGS = Array.from(new Set(componentDocs.flatMap((d) => d.tags))).sort();
 
 type PropEntry = { propName: string; source: PropSource; statuses: Set<PropStatus>; usedBy: { id: string; name: string }[] };
 
@@ -45,7 +44,6 @@ export default function ComponentsPage() {
     const [view, setView, viewReady] = useLocalStorage<"components" | "props">("comp-view", "components");
     const [query, setQuery] = useState("");
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
-    const [activeTag, setActiveTag] = useState<string | null>(null);
     const [sortBy, setSortBy] = useLocalStorage("comp-sort", "az");
     const [propQuery, setPropQuery] = useState("");
     const [propSortBy, setPropSortBy] = useLocalStorage("comp-prop-sort", "az");
@@ -60,7 +58,6 @@ export default function ComponentsPage() {
                 doc.name.toLowerCase().includes(q) ||
                 doc.description.toLowerCase().includes(q) ||
                 doc.package.toLowerCase().includes(q) ||
-                doc.tags.some(t => t.includes(q)) ||
                 doc.examples.some(
                     (ex) =>
                         ex.title.toLowerCase().includes(q) ||
@@ -68,8 +65,7 @@ export default function ComponentsPage() {
                         ex.tags?.some(t => t.includes(q))
                 );
             const matchesCategory = !activeCategory || doc.category === activeCategory;
-            const matchesTag = !activeTag || doc.tags.includes(activeTag);
-            return matchesQuery && matchesCategory && matchesTag;
+            return matchesQuery && matchesCategory;
         });
         return results.sort((a, b) => {
             if (sortBy === "za") return b.name.localeCompare(a.name, "nb");
@@ -77,7 +73,7 @@ export default function ComponentsPage() {
             if (sortBy === "most-examples") return b.examples.length - a.examples.length;
             return a.name.localeCompare(b.name, "nb");
         });
-    }, [query, activeCategory, activeTag, sortBy]);
+    }, [query, activeCategory, sortBy]);
 
     const filteredProps = useMemo(() => {
         const q = propQuery.toLowerCase().trim();
@@ -159,10 +155,6 @@ export default function ComponentsPage() {
                             </Select>
                         </Flex>
                         <ChipFilterList items={ALL_CATEGORIES} selected={activeCategory} onChange={setActiveCategory} />
-                        <Flex gap="xs" wrap="wrap" alignItems="center">
-                            <span className="muted component-index__tags-label">Tags:</span>
-                            <ChipFilterList items={ALL_TAGS} selected={activeTag} onChange={setActiveTag} />
-                        </Flex>
                     </Flex>
 
                     {filtered.length === 0 ? (

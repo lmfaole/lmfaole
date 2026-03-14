@@ -10,7 +10,6 @@ const doc: ComponentDoc = {
     name: "Modal",
     package: "@fremtind/jokul/modal",
     category: "Overlegg",
-    tags: ["modal", "dialog", "overlay", "tilgjengelighet", "fokus"],
     status: "stable",
     description:
         "Modal er en dialogboks som vises over resten av innholdet. Den brukes til å be om bekreftelse, vise viktig informasjon eller samle inn data uten å navigere bort fra siden.",

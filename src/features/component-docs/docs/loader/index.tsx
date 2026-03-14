@@ -9,7 +9,6 @@ const doc: ComponentDoc = {
     name: "Loader",
     package: "@fremtind/jokul/loader",
     category: "Tilbakemelding",
-    tags: ["animasjon", "feedback", "tilstandsstyring", "spinner", "laster"],
     status: "stable",
     description:
         "Loader viser en spinner-animasjon mens data hentes eller en operasjon pågår. Gi alltid textDescription for skjermlesere.",

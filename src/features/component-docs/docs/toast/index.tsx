@@ -12,7 +12,6 @@ const doc: ComponentDoc = {
     name: "Toast",
     package: "@fremtind/jokul/toast",
     category: "Overlegg",
-    tags: ["varsling", "notification", "toast", "feedback", "dynamisk"],
     status: "stable",
     description:
         "Toast er en midlertidig varslingskomponent som vises til brukeren etter en handling. Den forsvinner automatisk etter en stund og kan inneholde en handling.",

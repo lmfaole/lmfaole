@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
     name: "Tabs",
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
-    tags: ["navigasjon", "layout", "interaktiv"],
     description: "Tabs organiser innhold i faner der kun én fane vises om gangen.",
     warnings: "Bruk Tabs for å skjule innhold innenfor samme side — ikke for navigasjon mellom sider.",
     relatedIds: ["nav-link"],

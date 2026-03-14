@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
     name: "Field Group",
     package: "@fremtind/jokul/input-group",
     category: "Skjema",
-    tags: ["skjema", "skjemabygging", "tilgjengelighet", "validering"],
     description: "FieldGroup grupperer relaterte skjemaelementer under en felles legend.",
     warnings: "Grupper alltid Checkbox og RadioButton innenfor FieldGroup — uten det mangler skjermlesere kontekst for hva gruppen handler om.",
     relatedIds: ["checkbox", "radio-button"],

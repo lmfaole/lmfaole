@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
     name: "Feedback",
     package: "@fremtind/jokul/feedback",
     category: "Visning",
-    tags: ["tilbakemelding", "vurdering", "smiley", "brukeropplevelse", "skjema"],
     status: "stable",
     description:
         "Feedback er en komponent for å samle inn tilbakemeldinger fra brukere. Den støtter smileys og radioknapper, og kan utvides med et oppfølgingsspørsmål.",

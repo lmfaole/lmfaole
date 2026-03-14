@@ -33,7 +33,6 @@ const doc: ComponentDoc = {
     name: "Text Area",
     package: "@fremtind/jokul/text-area",
     category: "Skjema",
-    tags: ["input", "skjema", "interaktiv", "skjemabygging"],
     description: "TextArea er et flerlinjers tekstinputfelt for lengre tekstinnhold.",
     relatedIds: ["text-input"],
     preview: <TextAreaPreview />,

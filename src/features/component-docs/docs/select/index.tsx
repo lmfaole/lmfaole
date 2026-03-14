@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/select",
     category: "Skjema",
     status: "beta",
-    tags: ["input", "skjema", "interaktiv", "skjemabygging", "nedtrekksmeny"],
     description: "BETA_Select er en ny, forenklet variant av Select som wrapper det native <select>-elementet med Jøkul-styling. Den bruker children i stedet for en items-array og standard React onChange — i motsetning til den stabile Select som har et egendefinert dropdown-grensesnitt. Planen er at BETA_Select erstatter den stabile varianten.",
     relatedIds: ["select-stable", "radio-button", "autosuggest"],
     warnings: [

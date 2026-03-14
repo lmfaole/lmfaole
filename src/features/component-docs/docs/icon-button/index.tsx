@@ -14,7 +14,6 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/icon-button",
     category: "Handling",
     status: "deprecated",
-    tags: ["knapp", "ikon", "interaktiv"],
     description: "IconButton er en knapp med kun ikon. Krev alltid en aria-label som beskriver handlingen.",
     warnings: "Ikke bruk IconButton uten aria-label.",
     relatedIds: ["button", "icon"],

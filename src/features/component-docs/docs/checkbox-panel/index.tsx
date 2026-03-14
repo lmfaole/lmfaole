@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
     name: "Checkbox Panel",
     package: "@fremtind/jokul/checkbox-panel",
     category: "Skjema",
-    tags: ["input", "skjema", "panel", "interaktiv", "pris"],
     description: "CheckboxPanel er en utvidet avkrysningsboks med et synlig paneldesign.",
     relatedIds: ["checkbox", "radio-panel"],
 

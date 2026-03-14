@@ -55,7 +55,6 @@ const doc: ComponentDoc = {
     name: "Skeleton",
     package: "@fremtind/jokul/loader",
     category: "Tilbakemelding",
-    tags: ["skeleton", "laster", "plassholder", "animasjon", "tilstandsstyring"],
     status: "stable",
     description:
         "Skeleton-komponenter bygger opp et innholdsskjelett som matcher layouten til det virkelige innholdet, og gir brukeren en visuell indikasjon på at innhold er på vei.",

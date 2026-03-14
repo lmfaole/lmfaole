@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
     name: "Checkbox",
     package: "@fremtind/jokul/checkbox",
     category: "Skjema",
-    tags: ["input", "skjema", "interaktiv", "skjemabygging", "tilgjengelighet"],
     description: "Checkbox brukes for binære valg i skjemaer, typisk for samtykke eller flervalgslister.",
     warnings: "Bruk ToggleSwitch for innstillinger som trer i kraft umiddelbart — Checkbox er for skjemainnsending.",
     relatedIds: ["toggle-switch", "checkbox-panel"],

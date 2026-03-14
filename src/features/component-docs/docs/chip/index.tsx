@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
     name: "Chip",
     package: "@fremtind/jokul/chip",
     category: "Handling",
-    tags: ["interaktiv", "filter", "tag", "skjema"],
     description: "Chip brukes for interaktive filtre og tagger som brukeren kan velge og velge bort.",
     relatedIds: ["tag"],
 

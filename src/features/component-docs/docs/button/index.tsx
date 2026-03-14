@@ -13,7 +13,6 @@ const doc: ComponentDoc = {
     name: "Button",
     package: "@fremtind/jokul/button",
     category: "Handling",
-    tags: ["knapp", "interaktiv", "skjema"],
     description: "Button brukes til å utløse handlinger. Knapper er det primære interaksjonselementet og skal alltid kommunisere hva som skjer når brukeren trykker på dem. Velg variant basert på handlingens prioritet — bruk én primary-knapp per kontekst og reserver ghost for lavprioriterte handlinger.",
     warnings: "Ikke bruk Button til navigasjon — bruk Link eller NavLink i stedet.",
     relatedIds: ["text-input", "toggle-switch", "icon-button", "icon"],

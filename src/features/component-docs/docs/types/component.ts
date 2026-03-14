@@ -75,13 +75,6 @@ export interface ComponentDoc {
     status?: "stable" | "beta" | "deprecated";
 
     /**
-     * Lowercase search/filter keywords, e.g. `["dropdown", "select", "form"]`.
-     * Include synonyms and related concepts users might search for.
-     * Do not repeat the component name — it is already indexed.
-     */
-    tags: string[];
-
-    /**
      * One or two sentences describing what the component is and when to use it.
      * Should answer: "What problem does this solve?"
      * Avoid restating the component name.

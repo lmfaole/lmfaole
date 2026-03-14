@@ -8,7 +8,6 @@ const doc: ComponentDoc = {
     name: "Description List",
     package: "@fremtind/jokul/description-list",
     category: "Visning",
-    tags: ["liste", "datavisning", "tekst"],
     description: "DescriptionList viser nøkkel-verdi-par strukturert som en HTML description list (dl/dt/dd).",
     preview: (
         <DescriptionList>

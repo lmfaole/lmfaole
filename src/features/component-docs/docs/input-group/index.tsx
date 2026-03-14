@@ -14,7 +14,6 @@ const doc: ComponentDoc = {
     name: "Input Group",
     package: "@fremtind/jokul/input-group",
     category: "Skjema",
-    tags: ["skjema", "input", "label", "feil", "hjelp", "fieldset"],
     status: "stable",
     description:
         "InputGroup kombinerer et skjemafelt med label, hjelpetekst og feilmelding på en tilgjengelig måte. FieldGroup bruker et fieldset-element for grupper av relaterte felt som avkrysningsbokser og radioknapper.",

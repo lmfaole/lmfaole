@@ -12,7 +12,6 @@ const doc: ComponentDoc = {
     name: "System Message",
     package: "@fremtind/jokul/system-message",
     category: "Tilbakemelding",
-    tags: ["melding", "varsel", "feil", "info", "suksess", "advarsel"],
     status: "stable",
     description:
         "SystemMessage brukes til å kommunisere viktig informasjon til brukeren på sidenivå. Finnes i variantene info, success, warning og error. Kan gjøres avvisbar med dismissAction.",
