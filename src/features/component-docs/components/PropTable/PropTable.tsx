@@ -37,14 +37,14 @@ const ALL_SOURCES: PropSource[] = ["custom", "native", "react", "aria"];
 function PropNameCell({ name, status, statusDescription, migrationAnchor }: Pick<PropDef, "name" | "status" | "statusDescription"> & { migrationAnchor?: string }) {
     return (
         <span style={{ display: "inline-flex", flexDirection: "column", gap: "var(--jkl-spacing-3xs)" }}>
-            <code style={status === "deprecated" ? { textDecoration: "line-through", opacity: 0.6 } : undefined}>{name}</code>
+            {migrationAnchor && status === "deprecated" ? (
+                <a href={migrationAnchor}><code>{name}</code></a>
+            ) : (
+                <code>{name}</code>
+            )}
             {status && status !== "stable" && (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--jkl-spacing-2xs)", fontSize: "var(--jkl-font-size-s)", color: STATUS_COLOR[status] }}>
-                    {migrationAnchor ? (
-                        <a href={migrationAnchor} style={{ color: "inherit" }}>{STATUS_LABEL[status]}</a>
-                    ) : (
-                        STATUS_LABEL[status]
-                    )}
+                    {STATUS_LABEL[status]}
                     {statusDescription && <PopupTip content={statusDescription} placement="top" />}
                 </span>
             )}
