@@ -4,8 +4,8 @@ export const migrations: Migration[] = [
     {
         title: "helpLabel",
         description: "Samlet i supportLabelProps for ett konsistent grensesnitt for alle støttetekster.",
-        deprecates: { name: "helpLabel", kind: "prop" },
-        replacedBy: [{ name: "supportLabelProps", kind: "prop" }],
+        deprecates: { name: "helpLabel" },
+        replacedBy: [{ name: "supportLabelProps" }],
         before: `<InputGroup
     label="E-postadresse"
     helpLabel="Vi bruker e-post til å sende kvittering."
@@ -20,8 +20,8 @@ export const migrations: Migration[] = [
     {
         title: "errorLabel",
         description: "Samlet i supportLabelProps for ett konsistent grensesnitt for alle støttetekster.",
-        deprecates: { name: "errorLabel", kind: "prop" },
-        replacedBy: [{ name: "supportLabelProps", kind: "prop" }],
+        deprecates: { name: "errorLabel" },
+        replacedBy: [{ name: "supportLabelProps" }],
         before: `<InputGroup
     label="Telefonnummer"
     errorLabel="Ugyldig telefonnummer."

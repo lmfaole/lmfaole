@@ -1,4 +1,5 @@
 import {CodeBlock} from "@/shared/components/CodeBlock";
+import {Grid} from "@/shared/components/Grid";
 import type {Migration} from "@/features/component-docs/docs/types";
 import "./migration-example.scss";
 
@@ -11,15 +12,12 @@ export function MigrationExample({migration}: MigrationExampleProps) {
         <div className="migration-example">
             <h3 className="migration-example__title">
                 <code>{migration.deprecates.name}</code>
-                <span className="muted migration-example__kind">
-                    {migration.deprecates.kind === "component" ? "komponent" : "prop"}
-                </span>
             </h3>
 
             {migration.description && <p className="small muted">{migration.description}</p>}
 
             {migration.replacedBy && (
-                <p className="small muted migration-example__replaced-by">
+                <p className="small muted">
                     Erstattes av:{" "}
                     {migration.replacedBy.map((item, i) => (
                         <span key={item.name}>
@@ -30,7 +28,7 @@ export function MigrationExample({migration}: MigrationExampleProps) {
                 </p>
             )}
 
-            <div className="migration-example__blocks">
+            <Grid columns={2} gap="m">
                 <div className="migration-example__block">
                     <span className="migration-example__block-label muted">Før</span>
                     <CodeBlock code={migration.before} hideCopyButton/>
@@ -39,7 +37,7 @@ export function MigrationExample({migration}: MigrationExampleProps) {
                     <span className="migration-example__block-label muted">Etter</span>
                     <CodeBlock code={migration.after}/>
                 </div>
-            </div>
+            </Grid>
         </div>
     );
 }

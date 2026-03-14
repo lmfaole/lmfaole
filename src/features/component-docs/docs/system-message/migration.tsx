@@ -5,8 +5,8 @@ export const migrations: Migration[] = [
     {
         title: "InfoSystemMessage",
         description: "De fire navngitte variantkomponentene ble slått sammen til én komponent med variant-prop for å redusere API-overflaten.",
-        deprecates: { name: "InfoSystemMessage", kind: "component" },
-        replacedBy: [{ name: "SystemMessage", kind: "component" }, { name: "variant", kind: "prop" }],
+        deprecates: { name: "InfoSystemMessage" },
+        replacedBy: [{ name: "SystemMessage" }, { name: "variant" }],
         before: `import { InfoSystemMessage } from "@fremtind/jokul/system-message";
 
 <InfoSystemMessage>Systemet vedlikeholdes lørdag kl. 22–24.</InfoSystemMessage>`,
@@ -17,8 +17,8 @@ export const migrations: Migration[] = [
     {
         title: "SuccessSystemMessage",
         description: "De fire navngitte variantkomponentene ble slått sammen til én komponent med variant-prop for å redusere API-overflaten.",
-        deprecates: { name: "SuccessSystemMessage", kind: "component" },
-        replacedBy: [{ name: "SystemMessage", kind: "component" }, { name: "variant", kind: "prop" }],
+        deprecates: { name: "SuccessSystemMessage" },
+        replacedBy: [{ name: "SystemMessage" }, { name: "variant" }],
         before: `import { SuccessSystemMessage } from "@fremtind/jokul/system-message";
 
 <SuccessSystemMessage>Registreringen var vellykket.</SuccessSystemMessage>`,
@@ -29,8 +29,8 @@ export const migrations: Migration[] = [
     {
         title: "WarningSystemMessage",
         description: "De fire navngitte variantkomponentene ble slått sammen til én komponent med variant-prop for å redusere API-overflaten.",
-        deprecates: { name: "WarningSystemMessage", kind: "component" },
-        replacedBy: [{ name: "SystemMessage", kind: "component" }, { name: "variant", kind: "prop" }],
+        deprecates: { name: "WarningSystemMessage" },
+        replacedBy: [{ name: "SystemMessage" }, { name: "variant" }],
         before: `import { WarningSystemMessage } from "@fremtind/jokul/system-message";
 
 <WarningSystemMessage>Høy trafikk kan forsinke behandling.</WarningSystemMessage>`,
@@ -41,8 +41,8 @@ export const migrations: Migration[] = [
     {
         title: "ErrorSystemMessage",
         description: "De fire navngitte variantkomponentene ble slått sammen til én komponent med variant-prop for å redusere API-overflaten.",
-        deprecates: { name: "ErrorSystemMessage", kind: "component" },
-        replacedBy: [{ name: "SystemMessage", kind: "component" }, { name: "variant", kind: "prop" }],
+        deprecates: { name: "ErrorSystemMessage" },
+        replacedBy: [{ name: "SystemMessage" }, { name: "variant" }],
         before: `import { ErrorSystemMessage } from "@fremtind/jokul/system-message";
 
 <ErrorSystemMessage>Noe gikk galt. Prøv igjen.</ErrorSystemMessage>`,

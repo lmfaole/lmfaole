@@ -1,18 +1,9 @@
 /**
  * A single deprecated or replacement item in a {@link Migration}.
- * Distinguishes between props (attributes on a component) and components
- * (JSX elements or named exports that are being retired).
  */
 export interface MigrationItem {
     /** The exact name as it appears in JSX or an import statement. */
     name: string;
-
-    /**
-     * Whether this item is a JSX component/named export or a prop on a component.
-     * - `"component"` — a named export / JSX element, e.g. `InfoSystemMessage`
-     * - `"prop"` — an attribute on a component, e.g. `iconLeft`
-     */
-    kind: "component" | "prop";
 }
 
 /**

@@ -4,7 +4,7 @@ export const migrations: Migration[] = [
     {
         title: "iconPosition",
         description: "Tekst vises ikke lenger ved siden av Help-ikonet, så posisjonen har ingen effekt.",
-        deprecates: { name: "iconPosition", kind: "prop" },
+        deprecates: { name: "iconPosition" },
         before: `<Help buttonText="Hjelp" iconPosition="right">
     Hjelpetekst her.
 </Help>`,
@@ -15,8 +15,8 @@ export const migrations: Migration[] = [
     {
         title: "showButtonText",
         description: "Tekst vises ikke lenger ved siden av Help-ikonet. Bruk en vanlig Button om du trenger synlig tekst.",
-        deprecates: { name: "showButtonText", kind: "prop" },
-        replacedBy: [{ name: "Button", kind: "component" }],
+        deprecates: { name: "showButtonText" },
+        replacedBy: [{ name: "Button" }],
         before: `<Help buttonText="Hjelp" showButtonText>
     Hjelpetekst her.
 </Help>`,

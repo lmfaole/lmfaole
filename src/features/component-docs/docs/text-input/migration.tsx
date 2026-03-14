@@ -4,8 +4,8 @@ export const migrations: Migration[] = [
     {
         title: "action",
         description: "Erstattet med actionButton for å gi full kontroll over knappens utseende og oppførsel.",
-        deprecates: { name: "action", kind: "prop" },
-        replacedBy: [{ name: "actionButton", kind: "prop" }],
+        deprecates: { name: "action" },
+        replacedBy: [{ name: "actionButton" }],
         before: `<TextInput
     label="Søk"
     action={{ icon: "search", label: "Søk", onClick: handleSearch }}

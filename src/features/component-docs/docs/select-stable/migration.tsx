@@ -4,8 +4,8 @@ export const migrations: Migration[] = [
     {
         title: "items",
         description: "BETA_Select bruker native <option>-elementer som children for å følge standard HTML-mønstre og gi bedre fleksibilitet.",
-        deprecates: { name: "items", kind: "prop" },
-        replacedBy: [{ name: "children", kind: "prop" }],
+        deprecates: { name: "items" },
+        replacedBy: [{ name: "children" }],
         before: `import { Select } from "@fremtind/jokul/select";
 
 <Select

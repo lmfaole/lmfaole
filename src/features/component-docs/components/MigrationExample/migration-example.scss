@@ -4,29 +4,7 @@
     gap: var(--jkl-spacing-s);
 
     &__title {
-        display: flex;
-        align-items: baseline;
-        gap: var(--jkl-spacing-xs);
         margin-block: 0;
-    }
-
-    &__kind {
-        font-size: var(--jkl-font-size-s);
-        font-weight: normal;
-    }
-
-    &__replaced-by {
-        margin-block: 0;
-    }
-
-    &__blocks {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--jkl-spacing-m);
-
-        @media (max-width: 60rem) {
-            grid-template-columns: 1fr;
-        }
     }
 
     &__block {
@@ -37,9 +15,5 @@
 
     &__block-label {
         font-size: var(--jkl-font-size-s);
-    }
-
-    .code-block {
-        flex: 1;
     }
 }

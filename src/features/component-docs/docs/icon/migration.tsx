@@ -6,7 +6,7 @@ export const migrations: Migration[] = [
     {
         title: "variant",
         description: "Størrelse styres nå av omgivelsenes fontstørrelse, noe som gir bedre integrasjon med typografi.",
-        deprecates: { name: "variant", kind: "prop" },
+        deprecates: { name: "variant" },
         before: `<Icon variant="small">home</Icon>
 <Icon variant="medium">home</Icon>`,
         after: `<Icon>home</Icon>

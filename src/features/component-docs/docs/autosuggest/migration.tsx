@@ -4,8 +4,8 @@ export const migrations: Migration[] = [
     {
         title: "leadText",
         description: "Omdøpt til helpLabel for konsistent navngiving med andre skjemakomponenter.",
-        deprecates: { name: "leadText", kind: "prop" },
-        replacedBy: [{ name: "helpLabel", kind: "prop" }],
+        deprecates: { name: "leadText" },
+        replacedBy: [{ name: "helpLabel" }],
         before: `<Autosuggest
     label="Hjemsted"
     leadText="Begynn å skrive for å se forslag"
@@ -22,8 +22,8 @@ export const migrations: Migration[] = [
     {
         title: "noHitsMessage",
         description: "Erstattet med noHits-objektet for å gi bedre kontroll over innhold og tekst i ingen-treff-tilstanden.",
-        deprecates: { name: "noHitsMessage", kind: "prop" },
-        replacedBy: [{ name: "noHits", kind: "prop" }],
+        deprecates: { name: "noHitsMessage" },
+        replacedBy: [{ name: "noHits" }],
         before: `<Autosuggest
     label="Hjemsted"
     noHitsMessage={<span>Ingen treff</span>}

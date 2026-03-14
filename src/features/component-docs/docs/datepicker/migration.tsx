@@ -4,15 +4,15 @@ export const migrations: Migration[] = [
     {
         title: "extended",
         description: "Funksjonaliteten ble standard oppførsel og propen ble fjernet.",
-        deprecates: { name: "extended", kind: "prop" },
+        deprecates: { name: "extended" },
         before: `<DatePicker label="Velg dato" extended onChange={(_e, date) => setValue(date)} />`,
         after: `<DatePicker label="Velg dato" onChange={(_e, date) => setValue(date)} />`,
     },
     {
         title: "onKeyDown",
         description: "Fjernet til fordel for onChange, som nå eksponerer råstrengen via meta-argumentet.",
-        deprecates: { name: "onKeyDown", kind: "prop" },
-        replacedBy: [{ name: "onChange", kind: "prop" }],
+        deprecates: { name: "onKeyDown" },
+        replacedBy: [{ name: "onChange" }],
         before: `<DatePicker
     label="Velg dato"
     onKeyDown={(e) => console.log(e.key)}
