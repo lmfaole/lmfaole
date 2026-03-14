@@ -79,6 +79,12 @@ html {
   --app-spacing-3xl: 5rem;     /* 80px — above Jøkul's 2xl (6.5rem) */
 }
 
+/* scrollIntoView() respects scroll-margin-top (not scroll-padding-top),
+   so apply it globally to all anchor targets to offset the sticky header. */
+[id] {
+  scroll-margin-top: 52px;
+}
+
 body {
   background-color: var(--jkl-color-background-page);
   color: var(--jkl-color-text-default);
