@@ -1,5 +1,6 @@
 "use client";
 
+import {useState} from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import "./component-page.scss";
 import {TableOfContents} from "@fremtind/jokul/table-of-contents";
@@ -10,10 +11,32 @@ import {getComponentDoc} from "@/features/component-docs/data";
 import {PropTable} from "@/features/component-docs/components/PropTable";
 import {ComponentExample} from "@/features/component-docs/components/ComponentExample";
 import {MigrationExample} from "@/features/component-docs/components/MigrationExample";
+import {ChipFilterList} from "@/features/component-docs/components/ChipFilterList";
+import type {Migration} from "@/features/component-docs/data";
 import {NotFound} from "@/shared/components/NotFound";
 import {PreviewContainer} from "@/features/component-docs/components/PreviewContainer";
 import {CopyableCode} from "@/features/component-docs/components/CopyableCode/CopyableCode";
 import {FullBleed} from "@/shared/components/FullBleed/FullBleed";
+
+function MigrationSection({ migrations }: { migrations: Migration[] }) {
+    const [active, setActive] = useState<string | null>(null);
+    const visible = active ? migrations.filter((m) => m.deprecates.name === active) : migrations;
+    return (
+        <Flex as="section" direction="column" gap="m">
+            <h2 id="migrering">Migrering</h2>
+            <ChipFilterList
+                items={migrations.map((m) => m.deprecates.name)}
+                selected={active}
+                onChange={setActive}
+            />
+            {visible.map((migration) => (
+                <div key={migration.title} id={`migration-${migration.deprecates.name}`}>
+                    <MigrationExample migration={migration} />
+                </div>
+            ))}
+        </Flex>
+    );
+}
 
 export default function ComponentPage() {
     const {id} = useParams<{ id: string }>();
@@ -116,15 +139,7 @@ export default function ComponentPage() {
             </Flex>
 
             {doc.migrations && doc.migrations.length > 0 && (
-                <Flex as="section" direction="column" gap="m">
-                    <h2 id="migrering">Migrering</h2>
-                    <p>Disse eksemplene viser hvordan du erstatter utfasede props med den anbefalte API-en.</p>
-                    {doc.migrations.map((migration) => (
-                        <div key={migration.title} id={`migration-${migration.deprecates.name}`}>
-                            <MigrationExample migration={migration} />
-                        </div>
-                    ))}
-                </Flex>
+                <MigrationSection migrations={doc.migrations} />
             )}
 
         </Flex>
