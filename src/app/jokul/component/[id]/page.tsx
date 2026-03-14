@@ -25,7 +25,9 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
         if (pendingScroll.current) {
             const el = document.getElementById(`migration-${pendingScroll.current}`);
             if (el) {
-                el.scrollIntoView({ behavior: "smooth", block: "start" });
+                const headerOffset = 52 + 16; // sticky header + breathing room
+                const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+                window.scrollTo({ top, behavior: "smooth" });
                 pendingScroll.current = null;
             }
         }
