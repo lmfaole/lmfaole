@@ -10,10 +10,6 @@ interface MigrationExampleProps {
 export function MigrationExample({migration}: MigrationExampleProps) {
     return (
         <div className="migration-example">
-            <h3 className="migration-example__title">
-                <code>{migration.deprecates.name}</code>
-            </h3>
-
             {migration.description && <p className="small muted">{migration.description}</p>}
 
             {migration.replacedBy && (
