@@ -90,7 +90,7 @@ export default function ComponentPage() {
                         </TabList>
                         <TabPanel>
                             <Card padding="l">
-                                <PropTable props={doc.props}/>
+                                <PropTable props={doc.props} migrations={doc.migrations}/>
                             </Card>
                         </TabPanel>
                         {doc.subComponents.map((sub) => (
@@ -98,13 +98,13 @@ export default function ComponentPage() {
                                 <Card padding="l">
                                     {sub.description &&
                                         <p style={{marginBottom: "var(--jkl-spacing-m)"}}>{sub.description}</p>}
-                                    <PropTable props={sub.props}/>
+                                    <PropTable props={sub.props} migrations={doc.migrations}/>
                                 </Card>
                             </TabPanel>
                         ))}
                     </Tabs>
                 ) : (
-                    <PropTable props={doc.props}/>
+                    <PropTable props={doc.props} migrations={doc.migrations}/>
                 )}
             </Flex>
 
@@ -120,10 +120,9 @@ export default function ComponentPage() {
                     <h2 id="migrering">Migrering</h2>
                     <p>Disse eksemplene viser hvordan du erstatter utfasede props med den anbefalte API-en.</p>
                     {doc.migrations.map((migration) => (
-                        <MigrationExample
-                            key={migration.title}
-                            migration={migration}
-                        />
+                        <div key={migration.title} id={`migration-${migration.deprecates.name}`}>
+                            <MigrationExample migration={migration} />
+                        </div>
                     ))}
                 </Flex>
             )}

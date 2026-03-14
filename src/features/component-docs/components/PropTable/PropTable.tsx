@@ -3,11 +3,12 @@ import { useState } from "react";
 import { DataTable } from "@fremtind/jokul/table";
 import { PopupTip } from "@fremtind/jokul/tooltip";
 import { Flex } from "@fremtind/jokul/flex";
-import type { PropDef, PropStatus, PropSource } from "@/features/component-docs/data";
+import type { PropDef, PropStatus, PropSource, Migration } from "@/features/component-docs/data";
 import { ChipFilterList } from "@/features/component-docs/components/ChipFilterList";
 
 interface PropTableProps {
     props: PropDef[];
+    migrations?: Migration[];
 }
 
 const COLUMNS = ["Prop", "Type", "Påkrevd", "Standard", "Beskrivelse"];
@@ -33,7 +34,7 @@ const SOURCE_LABEL: Record<PropSource, string> = {
 
 const ALL_SOURCES: PropSource[] = ["custom", "native", "react", "aria"];
 
-function PropNameCell({ name, status, statusDescription, source }: Pick<PropDef, "name" | "status" | "statusDescription"> & { source?: PropSource }) {
+function PropNameCell({ name, status, statusDescription, source, migrationAnchor }: Pick<PropDef, "name" | "status" | "statusDescription"> & { source?: PropSource; migrationAnchor?: string }) {
     return (
         <span style={{ display: "inline-flex", flexDirection: "column", gap: "var(--jkl-spacing-3xs)" }}>
             <code style={status === "deprecated" ? { textDecoration: "line-through", opacity: 0.6 } : undefined}>{name}</code>
@@ -44,7 +45,11 @@ function PropNameCell({ name, status, statusDescription, source }: Pick<PropDef,
             )}
             {status && status !== "stable" && (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--jkl-spacing-2xs)", fontSize: "var(--jkl-font-size-s)", color: STATUS_COLOR[status] }}>
-                    {STATUS_LABEL[status]}
+                    {migrationAnchor ? (
+                        <a href={migrationAnchor} style={{ color: "inherit" }}>{STATUS_LABEL[status]}</a>
+                    ) : (
+                        STATUS_LABEL[status]
+                    )}
                     {statusDescription && <PopupTip content={statusDescription} placement="top" />}
                 </span>
             )}
@@ -52,9 +57,16 @@ function PropNameCell({ name, status, statusDescription, source }: Pick<PropDef,
     );
 }
 
-function buildRows(props: PropDef[], hasSourceInfo: boolean): React.ReactNode[][] {
+function buildRows(props: PropDef[], hasSourceInfo: boolean, migrationMap: Map<string, string>): React.ReactNode[][] {
     return props.map((prop) => [
-        <PropNameCell key="name" name={prop.name} status={prop.status} statusDescription={prop.statusDescription} source={hasSourceInfo ? prop.source : undefined} />,
+        <PropNameCell
+            key="name"
+            name={prop.name}
+            status={prop.status}
+            statusDescription={prop.statusDescription}
+            source={hasSourceInfo ? prop.source : undefined}
+            migrationAnchor={migrationMap.get(prop.name)}
+        />,
         <code key="type">{prop.type}</code>,
         <span key="req">{prop.required ? "Ja" : "Nei"}</span>,
         prop.default ? <code key="default">{prop.default}</code> : "—",
@@ -62,13 +74,18 @@ function buildRows(props: PropDef[], hasSourceInfo: boolean): React.ReactNode[][
     ]);
 }
 
-export function PropTable({ props }: PropTableProps) {
+export function PropTable({ props, migrations }: PropTableProps) {
     const [sourceFilter, setSourceFilter] = useState<PropSource | null>(null);
 
     const activeProps = props.filter((p) => p.status !== "deprecated");
     const deprecatedProps = props.filter((p) => p.status === "deprecated");
 
     const hasSourceInfo = props.some((p) => p.source != null);
+
+    // Build a map from prop name → migration anchor href
+    const migrationMap = new Map<string, string>(
+        (migrations ?? []).map((m) => [m.deprecates.name, `#migration-${m.deprecates.name}`])
+    );
 
     // Stable first, then experimental
     const sortedActive = [...activeProps].sort((a, b) => {
@@ -79,8 +96,8 @@ export function PropTable({ props }: PropTableProps) {
     const visibleActive = sortedActive.filter((p) => !sourceFilter || p.source === sourceFilter);
     const visibleDeprecated = deprecatedProps.filter((p) => !sourceFilter || p.source === sourceFilter);
 
-    const activeRows = buildRows(visibleActive, hasSourceInfo);
-    const deprecatedRows = buildRows(visibleDeprecated, hasSourceInfo);
+    const activeRows = buildRows(visibleActive, hasSourceInfo, migrationMap);
+    const deprecatedRows = buildRows(visibleDeprecated, hasSourceInfo, migrationMap);
 
     return (
         <Flex direction="column" gap="m">
