@@ -8,6 +8,11 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function IconButtonPreview() {
+    const isHovered = usePreviewHovered();
+    return <IconButton aria-label={isHovered ? "Lukk" : "Søk"}><Icon>{isHovered ? "close" : "search"}</Icon></IconButton>;
+}
+
 const doc: ComponentDoc = {
     id: "icon-button",
     name: "Icon Button",
@@ -21,6 +26,7 @@ const doc: ComponentDoc = {
         related: [{ id: "button", description: "Button er motparten med tekstetikett; bruk den når en synlig etikett forbedrer klarheten for handlingen." }],
     },
 
+    preview: <IconButtonPreview />,
     props,
     examples,
 };

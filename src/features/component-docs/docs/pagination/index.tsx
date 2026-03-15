@@ -5,6 +5,11 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function PaginationPreview() {
+    const [page, setPage] = useState(3);
+    return <Pagination currentPage={page} numberOfPages={10} onPageChange={(to) => setPage(to)} />;
+}
+
 const doc: ComponentDoc = {
     id: "pagination",
     name: "Pagination",
@@ -13,6 +18,7 @@ const doc: ComponentDoc = {
     description: "Pagination brukes til å dele opp lange lister i sider.",
     warnings: "Pagination er fullt kontrollert — du er ansvarlig for å oppdatere currentPage i onPageChange.",
 
+    preview: <PaginationPreview />,
     props,
     examples,
 };

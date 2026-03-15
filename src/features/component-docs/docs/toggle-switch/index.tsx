@@ -6,6 +6,13 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function ToggleSwitchPreview() {
+    const isHovered = usePreviewHovered();
+    const [checked, setChecked] = useState(false);
+    useEffect(() => { setChecked(isHovered); }, [isHovered]);
+    return <ToggleSwitch aria-pressed={checked} onChange={(_e, pressed) => setChecked(pressed)}>Aktiver varsler</ToggleSwitch>;
+}
+
 const doc: ComponentDoc = {
     id: "toggle-switch",
     name: "Toggle Switch",
@@ -17,6 +24,7 @@ const doc: ComponentDoc = {
         related: [{ id: "button", description: "Bruk Button for engangshendelser som krever et separat innsendingstrinn i stedet for en umiddelbar veksling." }],
     },
 
+    preview: <ToggleSwitchPreview />,
     props,
     examples
 };

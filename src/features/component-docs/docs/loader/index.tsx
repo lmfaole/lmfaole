@@ -1,8 +1,24 @@
 import { Loader } from "@fremtind/jokul/loader";
-import { Flex } from "@fremtind/jokul/flex";
+import { useState, useEffect } from "react";
+import { Icon } from "@fremtind/jokul/icon";
+import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+
+function LoaderPreview() {
+    const isHovered = usePreviewHovered();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(true);
+        if (!isHovered) return;
+        const id = setTimeout(() => setLoading(false), 1800);
+        return () => clearTimeout(id);
+    }, [isHovered]);
+    return loading
+        ? <Loader textDescription="Laster" />
+        : <Icon style={{ fontSize: "2rem", color: "var(--jkl-color-text-positive)" }}>check_circle</Icon>;
+}
 
 const doc: ComponentDoc = {
     id: "loader",
@@ -17,13 +33,7 @@ const doc: ComponentDoc = {
         alternatives: [{ id: "skeleton", description: "Bruk Skeleton-plassholdere når formen på innholdet som lastes er kjent på forhånd." }],
         related: [{ id: "button", description: "Erstatt Button-etiketten med Loader mens en asynkron handling pågår for å vise innebygd ladetilstand." }, { id: "feedback", description: "Kombiner Loader med Feedback-mønstre for å kommunisere fremdrift på tvers av en hel side eller seksjon." }],
     },
-    preview: (
-        <Flex gap="l" alignItems="center">
-            <Loader variant="small" textDescription="Laster" />
-            <Loader variant="medium" textDescription="Laster" />
-            <Loader variant="large" textDescription="Laster" />
-        </Flex>
-    ),
+    preview: <LoaderPreview />,
 
     props,
     examples

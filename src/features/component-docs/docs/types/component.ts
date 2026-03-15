@@ -98,9 +98,28 @@ export interface ComponentDoc {
     /**
      * Live React element shown in the component card on the listing page and
      * in the page header. Should be compact (fits ~200×120px) and visually representative.
-     * Falls back to {@link ComponentExample.preview} of the first entry in {@link ComponentDoc.examples} when omitted.
+     *
+     * **Always use a stateful preview — never static JSX.**
+     * Define a local function component above `const doc` that uses `useState`/`useEffect`
+     * and `usePreviewHovered` to animate or interact when the card is hovered.
+     * A static preview fails to communicate what the component _does_.
+     *
+     * @example
+     * ```tsx
+     * function MyPreview() {
+     *     const isHovered = usePreviewHovered();
+     *     const [checked, setChecked] = useState(false);
+     *     useEffect(() => { setChecked(isHovered); }, [isHovered]);
+     *     return <MyComponent checked={checked} onChange={e => setChecked(e.target.checked)} />;
+     * }
+     *
+     * const doc: ComponentDoc = {
+     *     // ...
+     *     preview: <MyPreview />,
+     * };
+     * ```
      */
-    preview?: React.ReactNode;
+    preview: React.ReactNode;
 
     /**
      * Props accepted directly on the root component element.

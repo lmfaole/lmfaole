@@ -8,6 +8,21 @@ import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
 
+function ButtonPreview() {
+    const hovered = usePreviewHovered();
+    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        if (hovered) {
+            setLoading(true);
+            const t = setTimeout(() => setLoading(false), 1500);
+            return () => clearTimeout(t);
+        }
+    }, [hovered]);
+    return loading
+        ? <Button loader={{ showLoader: true, textDescription: "Laster" }}>Send inn</Button>
+        : <Button>Send inn</Button>;
+}
+
 const doc: ComponentDoc = {
     id: "button",
     name: "Button",
@@ -19,6 +34,7 @@ const doc: ComponentDoc = {
         related: [{ id: "text-input", description: "Plasser Button ved siden av TextInput for å sende inn et skjema eller utløse en søkehandling." }, { id: "toggle-switch", description: "Bruk ToggleSwitch i stedet for Button når handlingen er en vedvarende binær innstilling fremfor en engangshendelse." }, { id: "icon-button", description: "IconButton er en kompakt variant av Button som brukes når et merket ikon alene er nok til å formidle handlingen." }, { id: "icon", description: "Legg til Icon inne i Button for å forsterke handlingen med et visuelt symbol ved siden av etiketten." }],
     },
 
+    preview: <ButtonPreview />,
     props,
     examples,
     migrations

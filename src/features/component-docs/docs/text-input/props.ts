@@ -10,6 +10,14 @@ export const props: PropDef[] = [
             description: "Synlig label over inputfeltet. Kobles automatisk til input-elementet for tilgjengelighet. Bruk et beskrivende substantiv, f.eks. «Navn» eller «E-postadresse».",
         },
         {
+            name: "labelProps",
+            type: 'Omit<LabelProps, "children">',
+            required: false,
+            source: "custom",
+            status: "stable",
+            description: "Egenskaper for label-elementet. Bruk f.eks. srOnly: true for å skjule labelen visuelt men beholde tilgjengelighet.",
+        },
+        {
             name: "value",
             type: "string",
             required: false,

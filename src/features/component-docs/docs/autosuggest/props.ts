@@ -2,6 +2,7 @@ import type { PropDef } from "../types";
 
 export const props: PropDef[] = [
         { name: "label", type: "string", required: true, source: "custom", status: "stable", description: "Synlig label over inputfeltet." },
+        { name: "labelProps", type: 'Omit<LabelProps, "children" | "htmlFor" | "standAlone">', required: false, source: "custom", status: "stable", description: "Egenskaper for label-elementet. Bruk f.eks. srOnly: true for å skjule labelen visuelt men beholde tilgjengelighet." },
         { name: "suggestions", type: "string[]", required: true, source: "custom", status: "stable", description: "Liste over forslag som vises under feltet." },
         { name: "value", type: "string", required: false, source: "native", status: "stable", description: "Kontrollert verdi." },
         { name: "onChange", type: "(value: string) => void", required: false, source: "react", status: "stable", description: "Kalles ved endring i inputverdien." },

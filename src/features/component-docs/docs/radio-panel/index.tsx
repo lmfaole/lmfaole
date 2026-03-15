@@ -7,6 +7,20 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function RadioPanelPreview() {
+    const isHovered = usePreviewHovered();
+    const [value, setValue] = useState("bil");
+    useEffect(() => { setValue(isHovered ? "bat" : "bil"); }, [isHovered]);
+    return (
+        <FieldGroup legend="Velg produkt">
+            <Flex gap="s">
+                <RadioPanel name="rp-preview" value="bil" label="Bil" checked={value === "bil"} onChange={() => setValue("bil")} />
+                <RadioPanel name="rp-preview" value="bat" label="Båt" checked={value === "bat"} onChange={() => setValue("bat")} />
+            </Flex>
+        </FieldGroup>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "radio-panel",
     name: "Radio Panel",
@@ -19,6 +33,7 @@ const doc: ComponentDoc = {
         related: [{ id: "checkbox-panel", description: "CheckboxPanel følger samme kortmønster, men tillater flere samtidige valg." }],
     },
 
+    preview: <RadioPanelPreview />,
     props,
     examples,
 };

@@ -7,6 +7,23 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function ToastTrigger() {
+    const { add } = useToast();
+    return (
+        <Button onClick={() => add("Handlingen ble fullført!", { variant: "success" })}>
+            Vis toast
+        </Button>
+    );
+}
+
+function ToastPreview() {
+    return (
+        <ToastProvider>
+            <ToastTrigger />
+        </ToastProvider>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "toast",
     name: "Toast",
@@ -23,6 +40,7 @@ const doc: ComponentDoc = {
         alternatives: [{ id: "message", description: "Bruk Message for vedvarende innebygd tilbakemelding som forblir synlig i sideoppsettet." }, { id: "system-message", description: "Bruk SystemMessage for beskjeder på sidenivå som krever eksplisitt brukerbekreftelse." }],
     },
 
+    preview: <ToastPreview />,
     props,
     examples,
 };

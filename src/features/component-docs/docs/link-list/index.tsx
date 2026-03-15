@@ -1,7 +1,22 @@
 import { LinkList } from "@fremtind/jokul/link-list";
+import { useState, useEffect } from "react";
+import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+
+function LinkListPreview() {
+    const isHovered = usePreviewHovered();
+    const [activeIdx, setActiveIdx] = useState(-1);
+    useEffect(() => { setActiveIdx(isHovered ? 0 : -1); }, [isHovered]);
+    return (
+        <LinkList label="Forsikringer">
+            <LinkList.Link href="#" style={{ fontWeight: activeIdx === 0 ? "bold" : "normal" }}>Bilforsikring</LinkList.Link>
+            <LinkList.Link href="#">Reiseforsikring</LinkList.Link>
+            <LinkList.Link href="#">Innboforsikring</LinkList.Link>
+        </LinkList>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "link-list",
@@ -13,14 +28,7 @@ const doc: ComponentDoc = {
     relationships: {
         alternatives: [{ id: "link", description: "Bruk Link for en enkelt innebygd hyperkobling i brødtekst fremfor en gruppert navigasjonsliste." }, { id: "nav-link", description: "Bruk NavLink for sidefeltsnavigasjonselementer som fremhever den aktive ruten." }],
     },
-    preview: (
-        <LinkList label="Forsikringer">
-            <LinkList.Link href="#">Bilforsikring</LinkList.Link>
-            <LinkList.Link href="#">Reiseforsikring</LinkList.Link>
-            <LinkList.Link href="#">Innboforsikring</LinkList.Link>
-            <LinkList.Link href="#">Helseforsikring</LinkList.Link>
-        </LinkList>
-    ),
+    preview: <LinkListPreview />,
 
     props,
     subComponents: [

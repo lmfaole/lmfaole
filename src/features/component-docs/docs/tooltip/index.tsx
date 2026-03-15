@@ -7,6 +7,16 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function TooltipPreview() {
+    const isHovered = usePreviewHovered();
+    return (
+        <Tooltip key={String(isHovered)} initialOpen={isHovered}>
+            <TooltipTrigger><Button variant="ghost">Mer informasjon</Button></TooltipTrigger>
+            <TooltipContent>Her er tilleggsinformasjon</TooltipContent>
+        </Tooltip>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "tooltip",
     name: "Tooltip",
@@ -17,6 +27,7 @@ const doc: ComponentDoc = {
     "Ikke legg Tooltip på ikke-interaktive elementer — det er ikke tilgjengelig for tastaturbrukere.",
     "Tooltip må aldri inneholde kritisk informasjon som ikke finnes andre steder på siden.",
 ],
+    preview: <TooltipPreview />,
     props,
     examples
 };

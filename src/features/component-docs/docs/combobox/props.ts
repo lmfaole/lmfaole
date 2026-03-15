@@ -10,6 +10,14 @@ export const props: PropDef[] = [
             description: "Synlig label over feltet.",
         },
         {
+            name: "labelProps",
+            type: 'Omit<LabelProps, "children" | "htmlFor" | "standAlone">',
+            required: false,
+            source: "custom",
+            status: "stable",
+            description: "Egenskaper for label-elementet. Bruk f.eks. srOnly: true for å skjule labelen visuelt men beholde tilgjengelighet.",
+        },
+        {
             name: "name",
             type: "string",
             required: true,

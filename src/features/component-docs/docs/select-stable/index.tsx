@@ -6,6 +6,19 @@ import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
 
+function SelectStablePreview() {
+    const [val, setVal] = useState("");
+    return (
+        <Select
+            label="Velg fylke"
+            name="county-preview"
+            items={["Oslo", "Viken", "Agder"]}
+            value={val}
+            onChange={({ target }) => setVal(target.value)}
+        />
+    );
+}
+
 const doc: ComponentDoc = {
     id: "select-stable",
     name: "Select",
@@ -21,6 +34,7 @@ const doc: ComponentDoc = {
         "BETA_Select er den anbefalte veien videre. Se migreringsveiledningen nedenfor for å komme i gang.",
     ],
 
+    preview: <SelectStablePreview />,
     props,
     examples,
     migrations,

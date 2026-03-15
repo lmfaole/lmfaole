@@ -1,10 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, MenuItem, MenuItemCheckbox, MenuDivider } from "@fremtind/jokul/menu";
 import { Button } from "@fremtind/jokul/button";
 import { Icon } from "@fremtind/jokul/icon";
+import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+
+function MenuPreview() {
+    const isHovered = usePreviewHovered();
+    const [open, setOpen] = useState(false);
+    useEffect(() => { setOpen(isHovered); }, [isHovered]);
+    return (
+        <Menu
+            isOpen={open}
+            onToggle={setOpen}
+            triggerElement={<Button variant="secondary" icon={<Icon>more_vert</Icon>}>Handlinger</Button>}
+        >
+            <MenuItem>Rediger</MenuItem>
+            <MenuItem>Dupliser</MenuItem>
+            <MenuDivider />
+            <MenuItem>Slett</MenuItem>
+        </Menu>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "menu",
@@ -14,17 +33,7 @@ const doc: ComponentDoc = {
     status: "stable",
     description:
         "Menu er en dropdown-meny som åpnes av et trigger-element. Den støtter vanlige valg, separatorer og avkrysningselementer.",
-    preview: (
-        <div style={{ display: "inline-flex", flexDirection: "column", gap: "4px", minWidth: "160px" }}>
-            <Button variant="secondary" icon={<Icon>more_vert</Icon>}>Handlinger</Button>
-            <ul style={{ background: "var(--jkl-color-background-default)", border: "1px solid var(--jkl-color-border-default)", borderRadius: "4px", padding: "4px 0", margin: 0, listStyle: "none" }}>
-                <li style={{ padding: "10px 16px" }}>Rediger</li>
-                <li style={{ padding: "10px 16px" }}>Dupliser</li>
-                <li style={{ height: "1px", background: "var(--jkl-color-border-default)", margin: "4px 0" }} />
-                <li style={{ padding: "10px 16px", color: "var(--jkl-color-text-negative)" }}>Slett</li>
-            </ul>
-        </div>
-    ),
+    preview: <MenuPreview />,
 
     props,
     subComponents: [

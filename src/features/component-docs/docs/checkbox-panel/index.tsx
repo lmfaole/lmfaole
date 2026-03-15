@@ -6,6 +6,13 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function CheckboxPanelPreview() {
+    const isHovered = usePreviewHovered();
+    const [checked, setChecked] = useState(false);
+    useEffect(() => { setChecked(isHovered); }, [isHovered]);
+    return <CheckboxPanel name="preview" value="x" label="Inkluder tillegg" checked={checked} onChange={e => setChecked(e.target.checked)} />;
+}
+
 const doc: ComponentDoc = {
     id: "checkbox-panel",
     name: "Checkbox Panel",
@@ -17,6 +24,7 @@ const doc: ComponentDoc = {
         related: [{ id: "radio-panel", description: "RadioPanel følger samme kortmønster, men begrenser valget til ett alternativ om gangen." }],
     },
 
+    preview: <CheckboxPanelPreview />,
     props,
     examples,
 };

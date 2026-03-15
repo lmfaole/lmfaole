@@ -1,8 +1,27 @@
 import { Link } from "@fremtind/jokul/link";
 import { Flex } from "@fremtind/jokul/flex";
+import { useState, useEffect } from "react";
+import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+
+function LinkPreview() {
+    const isHovered = usePreviewHovered();
+    const full = "Les mer om bilforsikring";
+    const [text, setText] = useState(full);
+    useEffect(() => {
+        if (!isHovered) { setText(full); return; }
+        setText("");
+        let i = 0;
+        const id = setInterval(() => {
+            setText(full.slice(0, ++i));
+            if (i >= full.length) clearInterval(id);
+        }, 60);
+        return () => clearInterval(id);
+    }, [isHovered]);
+    return <Link href="#">{text || "\u00a0"}</Link>;
+}
 
 const doc: ComponentDoc = {
     id: "link",
@@ -14,12 +33,7 @@ const doc: ComponentDoc = {
     relationships: {
         alternatives: [{ id: "link-list", description: "Bruk LinkList når flere relaterte lenker bør grupperes under en felles overskrift." }, { id: "nav-link", description: "Bruk NavLink for sidefelts- eller menynavigasjonselementer som fremhever aktiv rute." }],
     },
-    preview: (
-        <Flex direction="column" gap="xs">
-            <Link href="#">Les mer om bilforsikring</Link>
-            <Link href="#" external>Åpne i ny fane</Link>
-        </Flex>
-    ),
+    preview: <LinkPreview />,
 
     props,
     examples,

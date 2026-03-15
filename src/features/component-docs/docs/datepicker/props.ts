@@ -11,6 +11,14 @@ export const props: PropDef[] = [
             description: "Label som vises over datofelet.",
         },
         {
+            name: "labelProps",
+            type: 'Omit<LabelProps, "children">',
+            required: false,
+            source: "custom",
+            status: "stable",
+            description: "Egenskaper for label-elementet. Bruk f.eks. srOnly: true for å skjule labelen visuelt men beholde tilgjengelighet.",
+        },
+        {
             name: "onChange",
             type: '(e: ChangeEvent<HTMLInputElement>, date: Date | null, meta: { error: "WRONG_FORMAT" | "OUTSIDE_LOWER_BOUND" | "OUTSIDE_UPPER_BOUND" | null, value: string }) => void',
             required: false,

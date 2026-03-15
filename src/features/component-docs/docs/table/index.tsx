@@ -1,8 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell, TableCaption, useSortableTableHeader } from "@fremtind/jokul/table";
+import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+
+function TablePreview() {
+    const isHovered = usePreviewHovered();
+    const [highlightRow, setHighlightRow] = useState(-1);
+    useEffect(() => {
+        if (!isHovered) { setHighlightRow(-1); return; }
+        let i = -1;
+        const id = setInterval(() => { i = (i + 1) % 3; setHighlightRow(i); }, 600);
+        return () => clearInterval(id);
+    }, [isHovered]);
+    return (
+        <Table caption={<TableCaption>Forsikringsoversikt</TableCaption>}>
+            <TableHead>
+                <TableRow><TableHeader scope="col">Type</TableHeader><TableHeader scope="col">Status</TableHeader></TableRow>
+            </TableHead>
+            <TableBody>
+                {[["Bilforsikring","Aktiv"],["Reiseforsikring","Aktiv"],["Innboforsikring","Utløpt"]].map(([type, status], idx) => (
+                    <TableRow key={type} style={{ background: highlightRow === idx ? "var(--jkl-color-background-focus)" : undefined }}>
+                        <TableCell>{type}</TableCell>
+                        <TableCell>{status}</TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "table",
@@ -14,29 +41,7 @@ const doc: ComponentDoc = {
     relationships: {
         related: [{ id: "summary-table", description: "Bruk SummaryTable for tokolonnet nøkkel-verdi-sammendrag med en totalsfoter i stedet for fullstendige tabelldata." }],
     },
-    preview: (
-        <Table caption={<TableCaption>Forsikringsoversikt</TableCaption>}>
-            <TableHead>
-                <TableRow>
-                    <TableHeader scope="col">Type</TableHeader>
-                    <TableHeader scope="col">Status</TableHeader>
-                    <TableHeader scope="col">Beløp</TableHeader>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                <TableRow>
-                    <TableCell>Bilforsikring</TableCell>
-                    <TableCell>Aktiv</TableCell>
-                    <TableCell>3 200 kr</TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell>Reiseforsikring</TableCell>
-                    <TableCell>Aktiv</TableCell>
-                    <TableCell>890 kr</TableCell>
-                </TableRow>
-            </TableBody>
-        </Table>
-    ),
+    preview: <TablePreview />,
 
     props,
     subComponents: [

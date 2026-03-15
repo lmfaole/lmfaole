@@ -6,6 +6,18 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function ExpandablePanelPreview() {
+    const isHovered = usePreviewHovered();
+    const [open, setOpen] = useState(false);
+    useEffect(() => { setOpen(isHovered); }, [isHovered]);
+    return (
+        <ExpandablePanel open={open} onOpenChange={setOpen}>
+            <ExpandablePanel.Header>Hva er inkludert?</ExpandablePanel.Header>
+            <ExpandablePanel.Content><p>Forsikringen dekker skader og ansvar.</p></ExpandablePanel.Content>
+        </ExpandablePanel>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "expandable-panel",
     name: "Expandable Panel",
@@ -17,6 +29,7 @@ const doc: ComponentDoc = {
         alternatives: [{ id: "expander", description: "Bruk Expander for en lettere, innebygd utvid/skjul uten den innrammede panelbeholderen." }],
     },
 
+    preview: <ExpandablePanelPreview />,
     props,
     subComponents: [
         {

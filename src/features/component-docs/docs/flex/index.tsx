@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import { Flex } from "@fremtind/jokul/flex";
 import { Button } from "@fremtind/jokul/button";
 import { Message } from "@fremtind/jokul/message";
@@ -7,6 +9,18 @@ import { Card } from "@fremtind/jokul/card";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+
+function FlexPreview() {
+    const isHovered = usePreviewHovered();
+    return (
+        <Flex gap={isHovered ? "l" : "s"} wrap="wrap" alignItems="center" style={{ transition: "gap 0.3s" }}>
+            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-focus)", borderRadius: "4px" }} />
+            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-info)", borderRadius: "4px" }} />
+            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-success)", borderRadius: "4px" }} />
+            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-warning)", borderRadius: "4px" }} />
+        </Flex>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "flex",
@@ -18,14 +32,7 @@ const doc: ComponentDoc = {
     relationships: {
         related: [{ id: "button", description: "Wrapper flere Button-elementer i Flex for å kontrollere mellomrom og justering i en verktøylinje eller skjemafot." }, { id: "tag", description: "Bruk Flex for å legge ut en rad med Tags med konsistent mellomrom og linjebryting." }],
     },
-    preview: (
-        <Flex gap="s" wrap="wrap" alignItems="center">
-            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-focus)", borderRadius: "4px" }} />
-            <div style={{ width: 80, height: 48, background: "var(--jkl-color-background-info)", borderRadius: "4px" }} />
-            <div style={{ width: 64, height: 48, background: "var(--jkl-color-background-success)", borderRadius: "4px" }} />
-            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-warning)", borderRadius: "4px" }} />
-        </Flex>
-    ),
+    preview: <FlexPreview />,
 
     props,
     examples,

@@ -5,6 +5,22 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function SelectPreview() {
+    const [val, setVal] = useState("");
+    return (
+        <Select
+            label="Velg fylke"
+            name="county-beta"
+            value={val}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setVal(e.target.value)}
+        >
+            <option value="">Velg</option>
+            <option value="oslo">Oslo</option>
+            <option value="viken">Viken</option>
+        </Select>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "select",
     name: "Select (beta)",
@@ -20,6 +36,7 @@ const doc: ComponentDoc = {
         "BETA_Select er ikke ferdigstilt og API-en kan endre seg. Den mangler searchable, maxShownOptions og den egendefinerte SelectChangeEventHandler fra stabil Select.",
     ],
 
+    preview: <SelectPreview />,
     props,
     examples
 };

@@ -5,6 +5,17 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function SegmentedControlPreview() {
+    const [value, setValue] = useState("dag");
+    return (
+        <SegmentedControl legend="Velg periode" name="period-preview">
+            <SegmentedControlButton value="dag" checked={value === "dag"} onChange={() => setValue("dag")}>Dag</SegmentedControlButton>
+            <SegmentedControlButton value="uke" checked={value === "uke"} onChange={() => setValue("uke")}>Uke</SegmentedControlButton>
+            <SegmentedControlButton value="maned" checked={value === "maned"} onChange={() => setValue("maned")}>Måned</SegmentedControlButton>
+        </SegmentedControl>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "segmented-control",
     name: "Segmented Control",
@@ -15,6 +26,7 @@ const doc: ComponentDoc = {
         related: [{ id: "radio-button", description: "Bruk RadioButton når alternativene trenger en vertikal stablet listevisning i stedet for en horisontal knappegruppe." }],
     },
 
+    preview: <SegmentedControlPreview />,
     props,
     subComponents: [
         {

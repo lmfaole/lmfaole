@@ -6,6 +6,18 @@ import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
 
+function RadioButtonPreview() {
+    const isHovered = usePreviewHovered();
+    const [value, setValue] = useState("card");
+    useEffect(() => { setValue(isHovered ? "invoice" : "card"); }, [isHovered]);
+    return (
+        <RadioButtonGroup legend="Velg betaling" name="pay-preview" value={value} onChange={e => setValue(e.target.value)}>
+            <RadioButton value="card">Bankkort</RadioButton>
+            <RadioButton value="invoice">Faktura</RadioButton>
+        </RadioButtonGroup>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "radio-button",
     name: "Radio Button",
@@ -18,6 +30,7 @@ const doc: ComponentDoc = {
         related: [{ id: "checkbox", description: "Bruk Checkbox i stedet når brukeren kan velge flere alternativer samtidig." }],
     },
 
+    preview: <RadioButtonPreview />,
     props,
     examples,
     migrations,

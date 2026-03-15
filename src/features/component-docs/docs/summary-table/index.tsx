@@ -1,7 +1,26 @@
 import { SummaryTable, SummaryTableRow } from "@fremtind/jokul/summary-table";
+import { useState, useEffect } from "react";
+import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
+
+function SummaryTablePreview() {
+    const isHovered = usePreviewHovered();
+    return (
+        <SummaryTable
+            caption="Oppsummering"
+            header={["Dekning", "Pris"]}
+            body={
+                <>
+                    <SummaryTableRow header="Bilforsikring" content="3 200 kr" />
+                    <SummaryTableRow header="Reiseforsikring" content="890 kr" />
+                </>
+            }
+            footer={<SummaryTableRow header="Totalt" content={isHovered ? "4 090 kr" : "···"} />}
+        />
+    );
+}
 
 const doc: ComponentDoc = {
     id: "summary-table",
@@ -13,20 +32,7 @@ const doc: ComponentDoc = {
     relationships: {
         related: [{ id: "description-list", description: "Bruk DescriptionList for nøkkel-verdi-par som ikke krever header- og foterstrukturen til SummaryTable." }, { id: "table", description: "Bruk Table for flerkolonnet tabelldata med sorterbare overskrifter i stedet for et tokolonnet sammendrag." }],
     },
-    preview: (
-        <SummaryTable
-            caption="Oppsummering"
-            header={["Dekning", "Pris"]}
-            body={
-                <>
-                    <SummaryTableRow header="Bilforsikring" content="3 200 kr" />
-                    <SummaryTableRow header="Reiseforsikring" content="890 kr" />
-                    <SummaryTableRow header="Innboforsikring" content="1 100 kr" />
-                </>
-            }
-            footer={<SummaryTableRow header="Totalt" content="5 190 kr" />}
-        />
-    ),
+    preview: <SummaryTablePreview />,
 
     props,
     examples,

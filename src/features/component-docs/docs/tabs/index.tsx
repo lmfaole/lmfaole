@@ -6,6 +6,21 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function TabsPreview() {
+    return (
+        <Tabs>
+            <TabList>
+                <Tab>Oversikt</Tab>
+                <Tab>Detaljer</Tab>
+                <Tab>Historikk</Tab>
+            </TabList>
+            <TabPanel>Oversiktsinnhold</TabPanel>
+            <TabPanel>Detaljert informasjon</TabPanel>
+            <TabPanel>Historiske data</TabPanel>
+        </Tabs>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "tabs",
     name: "Tabs",
@@ -18,6 +33,7 @@ const doc: ComponentDoc = {
         related: [{ id: "nav-link", description: "NavLink gir individuelle navigasjonslenker som Tabs kan supplere med innholdspanelbytte." }],
     },
 
+    preview: <TabsPreview />,
     props,
     subComponents: [
         {

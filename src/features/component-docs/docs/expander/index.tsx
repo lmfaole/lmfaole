@@ -5,6 +5,20 @@ import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { examples } from "./examples";
 
+function ExpanderPreview() {
+    const isHovered = usePreviewHovered();
+    const [open, setOpen] = useState(false);
+    useEffect(() => { setOpen(isHovered); }, [isHovered]);
+    return (
+        <ExpandablePanel open={open} onOpenChange={setOpen}>
+            <Expander>Vilkår og betingelser</Expander>
+            <ExpandablePanel.Content>
+                <p>Forsikringen gjelder fra betalingsdato.</p>
+            </ExpandablePanel.Content>
+        </ExpandablePanel>
+    );
+}
+
 const doc: ComponentDoc = {
     id: "expander",
     name: "Expander",
@@ -16,6 +30,7 @@ const doc: ComponentDoc = {
         alternatives: [{ id: "expandable-panel", description: "Bruk ExpandablePanel når det sammenleggbare innholdet trenger en visuelt distinkt innrammet beholder." }],
     },
 
+    preview: <ExpanderPreview />,
     props,
     examples,
 };

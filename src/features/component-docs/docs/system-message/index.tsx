@@ -7,6 +7,15 @@ import { props } from "./props";
 import { examples } from "./examples";
 import { migrations } from "./migration";
 
+function SystemMessagePreview() {
+    const isHovered = usePreviewHovered();
+    const [dismissed, setDismissed] = useState(false);
+    useEffect(() => { setDismissed(false); }, [isHovered]);
+    return dismissed
+        ? <p style={{ color: "var(--jkl-color-text-subdued)", fontSize: "0.9em" }}>Melding avvist</p>
+        : <SystemMessage variant="info" dismissAction={{ handleDismiss: () => setDismissed(true) }}>Planlagt vedlikehold lørdag kl. 02–04.</SystemMessage>;
+}
+
 const doc: ComponentDoc = {
     id: "system-message",
     name: "System Message",
@@ -23,6 +32,7 @@ const doc: ComponentDoc = {
         alternatives: [{ id: "message", description: "Bruk Message for vedvarende innebygd tilbakemelding innenfor en sideseksjon fremfor et banner i full bredde." }, { id: "toast", description: "Bruk Toast for korte selvlukkende varsler som vises i kanten av skjermen." }],
     },
 
+    preview: <SystemMessagePreview />,
     props,
     examples,
     migrations,
