@@ -5,17 +5,22 @@ import { usePreviewHovered } from "@/app/jokul/_component-docs/components/Previe
 
 export function ProgressBarPreview() {
     const isHovered = usePreviewHovered();
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(40);
+
     useEffect(() => {
+        if (!isHovered) {
+            setValue(40);
+            return;
+        }
         setValue(0);
-        if (!isHovered) return;
         let v = 0;
         const id = setInterval(() => {
             v = Math.min(v + 2, 100);
             setValue(v);
             if (v >= 100) clearInterval(id);
-        }, 50);
+        }, 40);
         return () => clearInterval(id);
     }, [isHovered]);
+
     return <ProgressBar aria-valuenow={value} title="Fremdrift" aria-valuetext={`${value} prosent fullført`} />;
 }
