@@ -1,11 +1,9 @@
 "use client";
 import { Help } from "@fremtind/jokul/help";
-import { usePreviewHovered } from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
 export function HelpPreview() {
-    const isHovered = usePreviewHovered();
     return (
-        <Help buttonText="Hjelp om personnummer" position={isHovered ? "right" : "top"}>
+        <Help buttonText="Hjelp om personnummer">
             Personnummeret ditt er et 11-sifret nummer.
         </Help>
     );

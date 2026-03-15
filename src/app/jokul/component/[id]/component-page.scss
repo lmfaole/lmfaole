@@ -1,1 +1,20 @@
 /* Component page — all hero styles now in page-hero.scss */
+
+.component-page-preview {
+    /* Establish a stable height floor that content can't shrink */
+    &__area {
+        position: relative;
+        min-height: 30svh;
+
+        /* Absolute child fills the area without influencing its height */
+        &__inner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Allow overlays (popovers, tooltips) to escape the bounds */
+            overflow: visible;
+        }
+    }
+}

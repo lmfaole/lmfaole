@@ -7,7 +7,8 @@ export function ProgressBarPreview() {
     const isHovered = usePreviewHovered();
     const [value, setValue] = useState(0);
     useEffect(() => {
-        if (!isHovered) { setValue(0); return; }
+        setValue(0);
+        if (!isHovered) return;
         let v = 0;
         const id = setInterval(() => {
             v = Math.min(v + 2, 100);

@@ -7,7 +7,12 @@ export function SystemMessagePreview() {
     const isHovered = usePreviewHovered();
     const [dismissed, setDismissed] = useState(false);
     useEffect(() => { setDismissed(false); }, [isHovered]);
-    return dismissed
-        ? <p style={{ color: "var(--jkl-color-text-subdued)", fontSize: "0.9em" }}>Melding avvist</p>
-        : <SystemMessage variant="info" dismissAction={{ handleDismiss: () => setDismissed(true) }}>Planlagt vedlikehold lørdag kl. 02–04.</SystemMessage>;
+    return (
+        <div style={{ maxWidth: "22rem", width: "100%" }}>
+            {dismissed
+                ? <p style={{ color: "var(--jkl-color-text-subdued)" }}>Melding avvist</p>
+                : <SystemMessage variant="info" dismissAction={{ handleDismiss: () => setDismissed(true) }}>Planlagt vedlikehold lørdag kl. 02–04.</SystemMessage>
+            }
+        </div>
+    );
 }

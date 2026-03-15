@@ -9,10 +9,12 @@ export function FileInputPreview() {
     const [files, setFiles] = useState<UploadedFile[]>([]);
     useEffect(() => { if (!isHovered) setFiles([]); }, [isHovered]);
     return (
-        <FileInput
-            legend="Last opp dokumenter"
-            value={files}
-            onChange={(_e, newFiles) => setFiles(newFiles)}
-        />
+        <div style={{ maxWidth: "20rem", width: "100%" }}>
+            <FileInput
+                legend="Last opp dokumenter"
+                value={files}
+                onChange={(_e, newFiles) => setFiles(newFiles)}
+            />
+        </div>
     );
 }

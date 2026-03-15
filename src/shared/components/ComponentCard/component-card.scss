@@ -2,14 +2,13 @@
     background-image: radial-gradient(circle, color-mix(in srgb, var(--jkl-color-border-subdued) 40%, transparent) 1px, transparent 1px);
     background-size: 20px 20px;
     border-bottom: 1px solid var(--jkl-color-border-subdued);
-    height: 10rem;
+    height: 14rem;
     overflow: hidden;
     padding: var(--jkl-spacing-xl);
 
     &__inner {
         pointer-events: none;
         user-select: none;
-        width: 100%;
-        zoom: 0.72;
+        zoom: 0.55;
     }
 }

@@ -17,6 +17,7 @@ import {SubcomponentsList} from "@/app/jokul/_component-docs/components/Subcompo
 import {RelatedComponentsTable} from "@/app/jokul/_component-docs/components/RelatedComponentsTable";
 import {PageHero} from "@/shared/components/PageHero/PageHero";
 import {DotsIllustration} from "@/shared/components/Illustration";
+import {PreviewHoverContext} from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
 function MigrationSection({ migrations }: { migrations: Migration[] }) {
     const [active, setActive] = useState<string>(migrations[0]?.deprecates.name ?? "");
@@ -103,6 +104,7 @@ export default function ComponentPage() {
     }
 
     const subComponentDocs = subcomponents.map(rel => rel.doc);
+    const [previewHovered, setPreviewHovered] = useState(false);
 
     return (
         <Flex as="article" direction="column" gap="xl">
@@ -110,6 +112,24 @@ export default function ComponentPage() {
                 title={doc.name}
                 background={<DotsIllustration />}
             />
+
+            {doc.preview && (
+                <Card
+                    padding="l"
+                    variant="outlined"
+                    className="component-page-preview"
+                    onMouseEnter={() => setPreviewHovered(true)}
+                    onMouseLeave={() => setPreviewHovered(false)}
+                >
+                    <PreviewHoverContext value={previewHovered}>
+                        <div className="component-page-preview__area">
+                            <div className="component-page-preview__area__inner">
+                                {doc.preview}
+                            </div>
+                        </div>
+                    </PreviewHoverContext>
+                </Card>
+            )}
 
             <TableOfContents label="Innhold">
                 {doc.warnings && (
