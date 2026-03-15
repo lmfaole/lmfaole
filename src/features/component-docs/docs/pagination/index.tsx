@@ -3,7 +3,6 @@ import { Pagination } from "@fremtind/jokul/pagination";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function PaginationPreview() {
     const [page, setPage] = useState(3);
@@ -20,7 +19,6 @@ const doc: ComponentDoc = {
 
     preview: <PaginationPreview />,
     props,
-    examples,
 };
 
 export default doc;

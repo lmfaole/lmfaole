@@ -13,7 +13,7 @@ interface ComponentCardProps {
 }
 
 export function ComponentCard({doc}: ComponentCardProps) {
-    const preview = doc.preview ?? doc.examples[0]?.preview;
+    const preview = doc.preview;
     const [hovered, setHovered] = useState(false);
 
     return (

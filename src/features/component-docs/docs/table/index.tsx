@@ -3,7 +3,6 @@ import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell, TableCap
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function TablePreview() {
     const isHovered = usePreviewHovered();
@@ -94,7 +93,6 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples,
 };
 
 export default doc;

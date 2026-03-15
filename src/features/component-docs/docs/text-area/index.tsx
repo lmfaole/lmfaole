@@ -3,7 +3,6 @@ import { TextArea } from "@fremtind/jokul/text-area";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function TextAreaPreview() {
     const isHovered = usePreviewHovered();
@@ -40,7 +39,6 @@ const doc: ComponentDoc = {
     preview: <TextAreaPreview />,
 
     props,
-    examples,
 };
 
 export default doc;

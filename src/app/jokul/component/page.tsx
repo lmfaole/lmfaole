@@ -32,20 +32,13 @@ export default function ComponentsPage() {
                 !q ||
                 doc.name.toLowerCase().includes(q) ||
                 doc.description.toLowerCase().includes(q) ||
-                doc.package.toLowerCase().includes(q) ||
-                doc.examples.some(
-                    (ex) =>
-                        ex.title.toLowerCase().includes(q) ||
-                        (ex.description ?? "").toLowerCase().includes(q) ||
-                        ex.tags?.some((t) => t.includes(q))
-                );
+                doc.package.toLowerCase().includes(q);
             const matchesCategory = !activeCategory || doc.category === activeCategory;
             return matchesQuery && matchesCategory;
         });
         return results.sort((a, b) => {
             if (sortBy === "za") return b.name.localeCompare(a.name, "nb");
             if (sortBy === "most-props") return b.props.length - a.props.length;
-            if (sortBy === "most-examples") return b.examples.length - a.examples.length;
             return a.name.localeCompare(b.name, "nb");
         });
     }, [query, activeCategory, sortBy]);
@@ -106,7 +99,6 @@ export default function ComponentsPage() {
                     <option value="az">A–Å</option>
                     <option value="za">Å–A</option>
                     <option value="most-props">Flest props</option>
-                    <option value="most-examples">Flest eksempler</option>
                 </Select>
             </Toolbar>
 

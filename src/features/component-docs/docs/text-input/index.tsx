@@ -3,7 +3,6 @@ import { TextInput } from "@fremtind/jokul/text-input";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 import { migrations } from "./migration";
 
 function TextInputPreview() {
@@ -40,7 +39,6 @@ const doc: ComponentDoc = {
     preview: <TextInputPreview />,
 
     props,
-    examples,
     migrations
 };
 

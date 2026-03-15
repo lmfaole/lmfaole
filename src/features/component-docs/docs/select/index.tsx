@@ -3,7 +3,6 @@ import { BETA_Select as Select } from "@fremtind/jokul/select";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function SelectPreview() {
     const [val, setVal] = useState("");
@@ -38,7 +37,6 @@ const doc: ComponentDoc = {
 
     preview: <SelectPreview />,
     props,
-    examples
 };
 
 export default doc;

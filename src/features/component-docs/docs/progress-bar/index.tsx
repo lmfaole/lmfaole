@@ -3,7 +3,6 @@ import { ProgressBar } from "@fremtind/jokul/progress-bar";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function ProgressBarPreview() {
     const isHovered = usePreviewHovered();
@@ -31,7 +30,6 @@ const doc: ComponentDoc = {
 
     preview: <ProgressBarPreview />,
     props,
-    examples,
 };
 
 export default doc;

@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { ExpandablePanel } from "@fremtind/jokul/expander";
-import { DescriptionListContactPreview } from "../description-list/examples";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function ExpandablePanelPreview() {
     const isHovered = usePreviewHovered();
@@ -48,7 +46,6 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples
 };
 
 export default doc;

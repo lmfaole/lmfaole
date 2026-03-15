@@ -56,7 +56,7 @@ import screenReaderOnlyDoc from "./screen-reader-only";
 import type { ComponentDoc } from "./types";
 
 export type { ComponentDoc };
-export type { PropDef, ComponentExample } from "./types";
+export type { PropDef } from "./types";
 export const componentDocs: ComponentDoc[] = [
     autosuggestDoc,
     breadcrumbDoc,

@@ -1,7 +1,6 @@
 import { NavTab, NavTabs } from "@fremtind/jokul/tabs";
 import type { ComponentDoc } from "../types";
 import { props, navTabsProps } from "./props";
-import { examples } from "./examples";
 
 function NavTabPreview() {
     return (
@@ -33,7 +32,6 @@ const doc: ComponentDoc = {
             props: navTabsProps,
         },
     ],
-    examples,
 };
 
 export default doc;

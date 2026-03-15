@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function DescriptionListPreview() {
     const isHovered = usePreviewHovered();
@@ -44,7 +43,6 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples,
 };
 
 export default doc;

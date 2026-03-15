@@ -8,7 +8,6 @@ import { TextInput } from "@fremtind/jokul/text-input";
 import { Card } from "@fremtind/jokul/card";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function FlexPreview() {
     const isHovered = usePreviewHovered();
@@ -35,7 +34,6 @@ const doc: ComponentDoc = {
     preview: <FlexPreview />,
 
     props,
-    examples,
 };
 
 export default doc;

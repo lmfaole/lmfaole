@@ -4,7 +4,6 @@ import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function ModalPreview() {
     return (
@@ -36,7 +35,6 @@ const doc: ComponentDoc = {
 
     preview: <ModalPreview />,
         props,
-    examples
 };
 
 export default doc;

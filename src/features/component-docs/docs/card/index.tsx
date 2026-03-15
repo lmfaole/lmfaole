@@ -8,8 +8,24 @@ import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/j
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
-import { CardPreview } from "./examples";
+
+function CardPreview() {
+    const isHovered = usePreviewHovered();
+    const [selected, setSelected] = useState(false);
+    useEffect(() => { setSelected(isHovered); }, [isHovered]);
+    return (
+        <Card padding="m" style={{ maxWidth: "280px" }}>
+            <Flex direction="column" gap="s">
+                <p style={{ margin: 0, fontWeight: "bold" }}>Bilforsikring kasko</p>
+                <p style={{ margin: 0 }}>Månedspremie: 542 kr</p>
+                {selected && <Tag>Valgt</Tag>}
+                <Button variant="secondary" onClick={() => setSelected(s => !s)}>
+                    {selected ? "Fjern valg" : "Velg"}
+                </Button>
+            </Flex>
+        </Card>
+    );
+}
 
 const doc: ComponentDoc = {
     id: "card",
@@ -25,7 +41,6 @@ const doc: ComponentDoc = {
     preview: <CardPreview />,
 
     props,
-    examples
 };
 
 export default doc;

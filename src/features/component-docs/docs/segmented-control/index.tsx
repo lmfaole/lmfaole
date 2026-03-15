@@ -3,7 +3,6 @@ import { SegmentedControl, SegmentedControlButton } from "@fremtind/jokul/segmen
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function SegmentedControlPreview() {
     const [value, setValue] = useState("dag");
@@ -41,7 +40,6 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples,
 };
 
 export default doc;

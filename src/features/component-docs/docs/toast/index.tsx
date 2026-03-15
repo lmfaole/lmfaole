@@ -5,7 +5,6 @@ import { SuccessIcon, InfoIcon, WarningIcon, ErrorIcon } from "@fremtind/jokul/i
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function ToastTrigger() {
     const { add } = useToast();
@@ -42,7 +41,6 @@ const doc: ComponentDoc = {
 
     preview: <ToastPreview />,
     props,
-    examples,
 };
 
 export default doc;

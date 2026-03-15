@@ -3,7 +3,6 @@ import { Search } from "@fremtind/jokul/search";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function SearchPreview() {
     const isHovered = usePreviewHovered();
@@ -52,7 +51,6 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples,
 };
 
 export default doc;

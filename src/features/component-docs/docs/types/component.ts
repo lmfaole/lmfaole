@@ -1,6 +1,5 @@
 import type React from "react";
 import type { PropDef } from "./prop";
-import type { ComponentExample } from "./example";
 import type { Migration } from "./migration";
 import type { ComponentId } from "./ids";
 
@@ -135,14 +134,6 @@ export interface ComponentDoc {
      * Omit for simple components with no sub-component API.
      */
     subComponents?: SubComponentDoc[];
-
-    /**
-     * Usage examples ordered from simplest to most advanced.
-     * Each entry follows the {@link ComponentExample} shape.
-     * The first example should always show the most common real-world usage.
-     * Include at least one example; aim for 3–5.
-     */
-    examples: ComponentExample[];
 
     /**
      * API migration guides for deprecated props or components.

@@ -4,7 +4,6 @@ import { usePreviewHovered } from "@/features/component-docs/components/PreviewH
 import type { ComponentDoc } from "../types";
 import "./image.scss";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function ImagePreview() {
     const isHovered = usePreviewHovered();
@@ -31,7 +30,6 @@ const doc: ComponentDoc = {
 
     preview: <ImagePreview />,
     props,
-    examples,
 };
 
 export default doc;

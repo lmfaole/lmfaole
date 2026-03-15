@@ -2,7 +2,6 @@ import { Breadcrumb, BreadcrumbItem } from "@fremtind/jokul/breadcrumb";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function BreadcrumbPreview() {
     const isHovered = usePreviewHovered();
@@ -36,7 +35,6 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples
 };
 
 export default doc;

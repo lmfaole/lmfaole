@@ -9,7 +9,6 @@ import {Card} from "@fremtind/jokul/card";
 import {useParams} from "next/navigation";
 import {getComponentDoc, getRelationships} from "@/features/component-docs/data";
 import {PropTable} from "@/features/component-docs/components/PropTable";
-import {ComponentExample} from "@/features/component-docs/components/ComponentExample";
 import {MigrationExample} from "@/features/component-docs/components/MigrationExample";
 import type {Migration} from "@/features/component-docs/data";
 import {NotFound} from "@/shared/components/NotFound";
@@ -121,9 +120,6 @@ export default function ComponentPage() {
                 {subcomponents.length > 0 && (
                     <TableOfContents.Link href="#delkomponenter">Delkomponenter</TableOfContents.Link>
                 )}
-                {doc.examples.length > 0 && (
-                    <TableOfContents.Link href="#eksempler">Eksempler</TableOfContents.Link>
-                )}
                 {related.length > 0 && (
                     <TableOfContents.Link href="#relaterte-komponenter">Relaterte komponenter</TableOfContents.Link>
                 )}
@@ -194,13 +190,6 @@ export default function ComponentPage() {
                     <SubcomponentsList items={subcomponents}/>
                 </Flex>
             )}
-
-            <Flex as="section" direction="column" gap="m">
-                <h2 id="eksempler">Eksempler</h2>
-                {doc.examples.map((example) => (
-                    <ComponentExample key={example.title} example={example}/>
-                ))}
-            </Flex>
 
             {doc.migrations && doc.migrations.length > 0 && (
                 <MigrationSection migrations={doc.migrations} />

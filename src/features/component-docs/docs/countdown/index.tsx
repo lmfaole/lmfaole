@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function CountdownPreview() {
     const isHovered = usePreviewHovered();
@@ -21,7 +20,6 @@ const doc: ComponentDoc = {
     preview: <CountdownPreview />,
 
     props,
-    examples,
 };
 
 export default doc;

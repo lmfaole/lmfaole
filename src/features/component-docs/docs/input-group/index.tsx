@@ -5,9 +5,35 @@ import { Checkbox } from "@fremtind/jokul/checkbox";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 import { migrations } from "./migration";
-import { InputGroupPreview } from "./examples";
+
+function InputGroupPreview() {
+    const isHovered = usePreviewHovered();
+    const [value, setValue] = useState("");
+    const [error, setError] = useState("");
+    useEffect(() => {
+        if (isHovered) { setValue(""); setError(""); }
+    }, [isHovered]);
+    return (
+        <InputGroup
+            label="Registreringsnummer"
+            helpLabel="Skriv inn bilens registreringsnummer"
+            errorLabel={error || undefined}
+            render={inputProps => (
+                <TextInput
+                    {...inputProps}
+                    label="Registreringsnummer"
+                    labelProps={{ srOnly: true }}
+                    value={value}
+                    onChange={e => {
+                        setValue(e.target.value);
+                        setError(e.target.value.length > 0 && e.target.value.length < 2 ? "Må være minst 2 tegn" : "");
+                    }}
+                />
+            )}
+        />
+    );
+}
 
 const doc: ComponentDoc = {
     id: "input-group",
@@ -36,7 +62,6 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples,
     migrations,
 };
 

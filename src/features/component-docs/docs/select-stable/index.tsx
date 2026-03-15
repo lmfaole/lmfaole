@@ -3,7 +3,6 @@ import { Select } from "@fremtind/jokul/select";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 import { migrations } from "./migration";
 
 function SelectStablePreview() {
@@ -36,7 +35,6 @@ const doc: ComponentDoc = {
 
     preview: <SelectStablePreview />,
     props,
-    examples,
     migrations,
 };
 

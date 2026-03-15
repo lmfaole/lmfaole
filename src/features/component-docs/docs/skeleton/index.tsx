@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 import {
     SkeletonAnimation,
     SkeletonElement,
@@ -13,9 +12,6 @@ import {
 } from "@fremtind/jokul/loader";
 import { Flex } from "@fremtind/jokul/flex";
 import { Button } from "@fremtind/jokul/button";
-import { CardBasicPreview } from "../card/examples";
-import { TableBasicPreview } from "../table/examples";
-import { DescriptionListContactPreview } from "../description-list/examples";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 
 function SkeletonPreview() {
@@ -115,7 +111,6 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples,
 };
 
 export default doc;

@@ -1,7 +1,7 @@
 import { componentDocs } from "./docs";
-import type { ComponentDoc, ComponentRelationship, PropDef, PropStatus, PropSource, ComponentExample, Migration } from "./docs/types";
+import type { ComponentDoc, ComponentRelationship, PropDef, PropStatus, PropSource, Migration } from "./docs/types";
 
-export type { ComponentDoc, ComponentRelationship, PropDef, PropStatus, PropSource, ComponentExample, Migration };
+export type { ComponentDoc, ComponentRelationship, PropDef, PropStatus, PropSource, Migration };
 export { componentDocs };
 
 export interface ResolvedRelationship {

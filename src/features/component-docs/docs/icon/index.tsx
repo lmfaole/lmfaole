@@ -4,7 +4,6 @@ import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 import { migrations } from "./migration";
 
 function IconPreview() {
@@ -36,7 +35,6 @@ const doc: ComponentDoc = {
 
     preview: <IconPreview />,
     props,
-    examples,
     migrations,
     relationships: {
         alternatives: [{ id: "icon-button", description: "Bruk IconButton når ikonet må være interaktivt og trenger en tilgjengelig knappeetikett." }],

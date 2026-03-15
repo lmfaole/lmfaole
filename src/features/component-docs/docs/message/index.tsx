@@ -4,7 +4,6 @@ import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function MessagePreview() {
     const isHovered = usePreviewHovered();
@@ -33,7 +32,6 @@ const doc: ComponentDoc = {
 
     preview: <MessagePreview />,
     props,
-    examples,
 };
 
 export default doc;

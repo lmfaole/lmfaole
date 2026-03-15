@@ -13,7 +13,7 @@ interface RelatedComponentCardProps {
 }
 
 export function RelatedComponentCard({doc, description}: RelatedComponentCardProps) {
-    const preview = doc.preview ?? doc.examples[0]?.preview;
+    const preview = doc.preview;
     const [hovered, setHovered] = useState(false);
 
     return (

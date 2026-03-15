@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function LinkPreview() {
     const isHovered = usePreviewHovered();
@@ -36,7 +35,6 @@ const doc: ComponentDoc = {
     preview: <LinkPreview />,
 
     props,
-    examples,
 };
 
 export default doc;

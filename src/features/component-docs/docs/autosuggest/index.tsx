@@ -4,9 +4,22 @@ import { TextInput } from "@fremtind/jokul/text-input";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 import { migrations } from "./migration";
-import { AutosuggestPreview } from "./examples";
+
+function AutosuggestPreview() {
+    const isHovered = usePreviewHovered();
+    const [value, setValue] = useState("");
+    const allItems = ["Bilforsikring", "Båtforsikring", "Hjemforsikring", "Reiseforsikring"];
+    useEffect(() => { if (isHovered) setValue("for"); else setValue(""); }, [isHovered]);
+    return (
+        <Autosuggest
+            label="Søk etter forsikring"
+            value={value}
+            allItems={allItems}
+            onChange={v => setValue(v)}
+        />
+    );
+}
 
 const doc: ComponentDoc = {
     id: "autosuggest",
@@ -21,7 +34,6 @@ const doc: ComponentDoc = {
     preview: <AutosuggestPreview />,
 
     props,
-    examples,
     migrations,
 };
 

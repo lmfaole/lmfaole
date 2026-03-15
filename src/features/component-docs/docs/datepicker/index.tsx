@@ -3,7 +3,6 @@ import { DatePicker } from "@fremtind/jokul/datepicker";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 import { migrations } from "./migration";
 
 function DatePickerPreview() {
@@ -28,7 +27,6 @@ const doc: ComponentDoc = {
     preview: <DatePickerPreview />,
 
     props,
-    examples,
     migrations,
 };
 

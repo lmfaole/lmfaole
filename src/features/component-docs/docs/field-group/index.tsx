@@ -4,7 +4,6 @@ import { Checkbox } from "@fremtind/jokul/checkbox";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function FieldGroupPreview() {
     const isHovered = usePreviewHovered();
@@ -31,7 +30,6 @@ const doc: ComponentDoc = {
 
     preview: <FieldGroupPreview />,
     props,
-    examples,
 };
 
 export default doc;

@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { Tag } from "@fremtind/jokul/tag";
 import { Flex } from "@fremtind/jokul/flex";
-import { CardDetailPreview } from "../card/examples";
-import { FlexCardGridPreview } from "../flex/examples";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 
 function TagPreview() {
     const isHovered = usePreviewHovered();
@@ -39,7 +36,6 @@ const doc: ComponentDoc = {
 
     preview: <TagPreview />,
     props,
-    examples
 };
 
 export default doc;

@@ -5,7 +5,6 @@ import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 import { migrations } from "./migration";
 
 function ButtonPreview() {
@@ -36,7 +35,6 @@ const doc: ComponentDoc = {
 
     preview: <ButtonPreview />,
     props,
-    examples,
     migrations
 };
 

@@ -3,7 +3,6 @@ import { RadioButton, RadioButtonGroup } from "@fremtind/jokul/radio-button";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { examples } from "./examples";
 import { migrations } from "./migration";
 
 function RadioButtonPreview() {
@@ -32,7 +31,6 @@ const doc: ComponentDoc = {
 
     preview: <RadioButtonPreview />,
     props,
-    examples,
     migrations,
 };
 
