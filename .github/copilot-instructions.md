@@ -225,3 +225,18 @@ import { Flex } from "@fremtind/jokul/flex";
 **`Flex` props:** `direction`, `gap`, `wrap`, `alignItems`, `justifyContent`, `inline`. See the Flex component docs or type definitions for the full API.
 
 The only exception is `display: inline-flex` on a non-Jøkul element where wrapping in `<Flex inline>` would be semantically wrong (e.g. a `<span>` that must remain inline).
+
+---
+
+## Reporting Jøkul bugs
+
+When you discover a bug in Jøkul (unexpected behaviour, missing styles, broken animations, incorrect types, etc.), **always create a GitHub issue** in the Jøkul repository before or immediately after applying a workaround.
+
+```
+gh issue create \
+  --repo fremtind/jokul \
+  --title "<Short description of the bug>" \
+  --body "## Beskrivelse\n<What is broken and where>\n\n## Reproduksjon\n<Minimal reproduction steps>\n\n## Forventet oppførsel\n<What should happen>\n\n## Faktisk oppførsel\n<What actually happens>\n\n## Workaround\n<Any patch or workaround applied in this project>"
+```
+
+Also add a comment in the patch file (if one is needed) referencing the issue URL so future maintainers can track it.
