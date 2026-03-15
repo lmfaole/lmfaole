@@ -1,15 +1,6 @@
-import { NavTab, NavTabs } from "@fremtind/jokul/tabs";
 import type { ComponentDoc } from "../types";
 import { props, navTabsProps } from "./props";
-
-function NavTabPreview() {
-    return (
-        <NavTabs aria-label="Eksempel">
-            <NavTab href="#" aria-selected>Aktiv</NavTab>
-            <NavTab href="#">Inaktiv</NavTab>
-        </NavTabs>
-    );
-}
+import { NavTabPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "nav-tab",

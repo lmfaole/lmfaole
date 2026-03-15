@@ -1,24 +1,6 @@
-import { useState, useEffect } from "react";
-import { BETA_Select as Select } from "@fremtind/jokul/select";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function SelectPreview() {
-    const [val, setVal] = useState("");
-    return (
-        <Select
-            label="Velg fylke"
-            name="county-beta"
-            value={val}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setVal(e.target.value)}
-        >
-            <option value="">Velg</option>
-            <option value="oslo">Oslo</option>
-            <option value="viken">Viken</option>
-        </Select>
-    );
-}
+import { SelectPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "select",

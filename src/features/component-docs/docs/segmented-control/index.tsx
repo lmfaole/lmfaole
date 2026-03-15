@@ -1,19 +1,6 @@
-import { useState, useEffect } from "react";
-import { SegmentedControl, SegmentedControlButton } from "@fremtind/jokul/segmented-control";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function SegmentedControlPreview() {
-    const [value, setValue] = useState("dag");
-    return (
-        <SegmentedControl legend="Velg periode" name="period-preview">
-            <SegmentedControlButton value="dag" checked={value === "dag"} onChange={() => setValue("dag")}>Dag</SegmentedControlButton>
-            <SegmentedControlButton value="uke" checked={value === "uke"} onChange={() => setValue("uke")}>Uke</SegmentedControlButton>
-            <SegmentedControlButton value="maned" checked={value === "maned"} onChange={() => setValue("maned")}>Måned</SegmentedControlButton>
-        </SegmentedControl>
-    );
-}
+import { SegmentedControlPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "segmented-control",

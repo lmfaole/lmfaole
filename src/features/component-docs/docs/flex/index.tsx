@@ -1,25 +1,6 @@
-import { useState, useEffect } from "react";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
-import { Flex } from "@fremtind/jokul/flex";
-import { Button } from "@fremtind/jokul/button";
-import { Message } from "@fremtind/jokul/message";
-import { Tag } from "@fremtind/jokul/tag";
-import { TextInput } from "@fremtind/jokul/text-input";
-import { Card } from "@fremtind/jokul/card";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function FlexPreview() {
-    const isHovered = usePreviewHovered();
-    return (
-        <Flex gap={isHovered ? "l" : "s"} wrap="wrap" alignItems="center" style={{ transition: "gap 0.3s" }}>
-            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-focus)", borderRadius: "4px" }} />
-            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-info)", borderRadius: "4px" }} />
-            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-success)", borderRadius: "4px" }} />
-            <div style={{ width: 48, height: 48, background: "var(--jkl-color-background-warning)", borderRadius: "4px" }} />
-        </Flex>
-    );
-}
+import { FlexPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "flex",

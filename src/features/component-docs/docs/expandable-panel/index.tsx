@@ -1,20 +1,6 @@
-import { useState, useEffect } from "react";
-import { ExpandablePanel } from "@fremtind/jokul/expander";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function ExpandablePanelPreview() {
-    const isHovered = usePreviewHovered();
-    const [open, setOpen] = useState(false);
-    useEffect(() => { setOpen(isHovered); }, [isHovered]);
-    return (
-        <ExpandablePanel open={open} onOpenChange={setOpen}>
-            <ExpandablePanel.Header>Hva er inkludert?</ExpandablePanel.Header>
-            <ExpandablePanel.Content><p>Forsikringen dekker skader og ansvar.</p></ExpandablePanel.Content>
-        </ExpandablePanel>
-    );
-}
+import { ExpandablePanelPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "expandable-panel",

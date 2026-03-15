@@ -1,16 +1,7 @@
-import { useState, useEffect } from "react";
-import { DatePicker } from "@fremtind/jokul/datepicker";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
-
-function DatePickerPreview() {
-    const isHovered = usePreviewHovered();
-    const [value, setValue] = useState("");
-    useEffect(() => { if (!isHovered) setValue(""); }, [isHovered]);
-    return <DatePicker label="Velg dato" value={value} onChange={(_e, _date, meta) => setValue(meta.value)} />;
-}
+import { DatePickerPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "datepicker",

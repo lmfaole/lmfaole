@@ -1,23 +1,6 @@
-import { Loader } from "@fremtind/jokul/loader";
-import { useState, useEffect } from "react";
-import { Icon } from "@fremtind/jokul/icon";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function LoaderPreview() {
-    const isHovered = usePreviewHovered();
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        setLoading(true);
-        if (!isHovered) return;
-        const id = setTimeout(() => setLoading(false), 1800);
-        return () => clearTimeout(id);
-    }, [isHovered]);
-    return loading
-        ? <Loader textDescription="Laster" />
-        : <span style={{ fontSize: "2rem", color: "var(--jkl-color-text-positive)" }}><Icon>check_circle</Icon></span>;
-}
+import { LoaderPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "loader",

@@ -1,16 +1,6 @@
-import { useState, useEffect } from "react";
-import { CheckboxPanel } from "@fremtind/jokul/checkbox-panel";
-import { Flex } from "@fremtind/jokul/flex";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function CheckboxPanelPreview() {
-    const isHovered = usePreviewHovered();
-    const [checked, setChecked] = useState(false);
-    useEffect(() => { setChecked(isHovered); }, [isHovered]);
-    return <CheckboxPanel name="preview" value="x" label="Inkluder tillegg" checked={checked} onChange={e => setChecked(e.target.checked)} />;
-}
+import { CheckboxPanelPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "checkbox-panel",

@@ -1,22 +1,7 @@
-import { useState, useEffect } from "react";
-import { Select } from "@fremtind/jokul/select";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
-
-function SelectStablePreview() {
-    const [val, setVal] = useState("");
-    return (
-        <Select
-            label="Velg fylke"
-            name="county-preview"
-            items={["Oslo", "Viken", "Agder"]}
-            value={val}
-            onChange={({ target }) => setVal(target.value)}
-        />
-    );
-}
+import { SelectStablePreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "select-stable",

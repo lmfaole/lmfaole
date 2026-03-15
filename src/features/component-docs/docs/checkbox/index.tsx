@@ -1,16 +1,6 @@
-import { useState, useEffect } from "react";
-import { Checkbox } from "@fremtind/jokul/checkbox";
-import { Flex } from "@fremtind/jokul/flex";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function CheckboxPreview() {
-    const isHovered = usePreviewHovered();
-    const [checked, setChecked] = useState(false);
-    useEffect(() => { setChecked(isHovered); }, [isHovered]);
-    return <Checkbox name="preview" value="x" checked={checked} onChange={e => setChecked(e.target.checked)}>Godta vilkårene</Checkbox>;
-}
+import { CheckboxPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "checkbox",

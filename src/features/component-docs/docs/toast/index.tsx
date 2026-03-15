@@ -1,27 +1,6 @@
-import { useState, useEffect } from "react";
-import { ToastProvider, useToast } from "@fremtind/jokul/toast";
-import { Button } from "@fremtind/jokul/button";
-import { SuccessIcon, InfoIcon, WarningIcon, ErrorIcon } from "@fremtind/jokul/icon";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function ToastTrigger() {
-    const { add } = useToast();
-    return (
-        <Button onClick={() => add("Handlingen ble fullført!", { variant: "success" })}>
-            Vis toast
-        </Button>
-    );
-}
-
-function ToastPreview() {
-    return (
-        <ToastProvider>
-            <ToastTrigger />
-        </ToastProvider>
-    );
-}
+import { ToastTrigger, ToastPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "toast",

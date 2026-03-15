@@ -1,25 +1,7 @@
-import { useState, useEffect } from "react";
-import { Autosuggest } from "@fremtind/jokul/autosuggest";
-import { TextInput } from "@fremtind/jokul/text-input";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
-
-function AutosuggestPreview() {
-    const isHovered = usePreviewHovered();
-    const [value, setValue] = useState("");
-    const allItems = ["Bilforsikring", "Båtforsikring", "Hjemforsikring", "Reiseforsikring"];
-    useEffect(() => { if (isHovered) setValue("for"); else setValue(""); }, [isHovered]);
-    return (
-        <Autosuggest
-            label="Søk etter forsikring"
-            value={value}
-            allItems={allItems}
-            onChange={v => setValue(v)}
-        />
-    );
-}
+import { AutosuggestPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "autosuggest",

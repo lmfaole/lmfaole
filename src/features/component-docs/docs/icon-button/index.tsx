@@ -1,16 +1,6 @@
-import { useState, useEffect } from "react";
-import { IconButton } from "@fremtind/jokul/icon-button";
-import { Icon } from "@fremtind/jokul/icon";
-import { Flex } from "@fremtind/jokul/flex";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@fremtind/jokul/tooltip";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function IconButtonPreview() {
-    const isHovered = usePreviewHovered();
-    return <IconButton aria-label={isHovered ? "Lukk" : "Søk"}><Icon>{isHovered ? "close" : "search"}</Icon></IconButton>;
-}
+import { IconButtonPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "icon-button",

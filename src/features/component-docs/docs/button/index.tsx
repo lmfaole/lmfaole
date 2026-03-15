@@ -1,26 +1,7 @@
-import { useState, useEffect } from "react";
-import { Button } from "@fremtind/jokul/button";
-import { Icon } from "@fremtind/jokul/icon";
-import { Flex } from "@fremtind/jokul/flex";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
-
-function ButtonPreview() {
-    const hovered = usePreviewHovered();
-    const [loading, setLoading] = useState(false);
-    useEffect(() => {
-        if (hovered) {
-            setLoading(true);
-            const t = setTimeout(() => setLoading(false), 1500);
-            return () => clearTimeout(t);
-        }
-    }, [hovered]);
-    return loading
-        ? <Button loader={{ showLoader: true, textDescription: "Laster" }}>Send inn</Button>
-        : <Button>Send inn</Button>;
-}
+import { ButtonPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "button",

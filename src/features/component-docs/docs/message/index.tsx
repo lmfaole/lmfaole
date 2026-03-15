@@ -1,22 +1,6 @@
-import { useState, useEffect } from "react";
-import { Message } from "@fremtind/jokul/message";
-import { Flex } from "@fremtind/jokul/flex";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function MessagePreview() {
-    const isHovered = usePreviewHovered();
-    const variants = ["info", "success", "warning", "error"] as const;
-    const messages = { info: "Ny melding tilgjengelig.", success: "Betaling gjennomført.", warning: "Forsikring utløper snart.", error: "Noe gikk galt." };
-    const [idx, setIdx] = useState(0);
-    useEffect(() => {
-        if (!isHovered) { setIdx(0); return; }
-        const id = setInterval(() => setIdx(p => (p + 1) % variants.length), 1200);
-        return () => clearInterval(id);
-    }, [isHovered]);
-    return <Message variant={variants[idx]}>{messages[variants[idx]]}</Message>;
-}
+import { MessagePreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "message",

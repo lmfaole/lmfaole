@@ -1,12 +1,6 @@
-import { Logo, LogoStamp, ForsikringLevertAvFremtind } from "@fremtind/jokul/logo";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function LogoPreview() {
-    const isHovered = usePreviewHovered();
-    return <Logo style={{ transition: "opacity 0.3s", opacity: isHovered ? 1 : 0.6 }} />;
-}
+import { LogoPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "logo",

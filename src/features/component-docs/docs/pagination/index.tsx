@@ -1,13 +1,6 @@
-import { useState, useEffect } from "react";
-import { Pagination } from "@fremtind/jokul/pagination";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function PaginationPreview() {
-    const [page, setPage] = useState(3);
-    return <Pagination currentPage={page} numberOfPages={10} onPageChange={(to) => setPage(to)} />;
-}
+import { PaginationPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "pagination",

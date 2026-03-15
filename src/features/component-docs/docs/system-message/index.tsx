@@ -1,19 +1,7 @@
-import { useState, useEffect } from "react";
-import { SystemMessage } from "@fremtind/jokul/system-message";
-import { Flex } from "@fremtind/jokul/flex";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
-
-function SystemMessagePreview() {
-    const isHovered = usePreviewHovered();
-    const [dismissed, setDismissed] = useState(false);
-    useEffect(() => { setDismissed(false); }, [isHovered]);
-    return dismissed
-        ? <p style={{ color: "var(--jkl-color-text-subdued)", fontSize: "0.9em" }}>Melding avvist</p>
-        : <SystemMessage variant="info" dismissAction={{ handleDismiss: () => setDismissed(true) }}>Planlagt vedlikehold lørdag kl. 02–04.</SystemMessage>;
-}
+import { SystemMessagePreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "system-message",

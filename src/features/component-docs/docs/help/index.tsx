@@ -1,17 +1,7 @@
-import { Help } from "@fremtind/jokul/help";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { migrations } from "./migration";
-
-function HelpPreview() {
-    const isHovered = usePreviewHovered();
-    return (
-        <Help buttonText="Hjelp om personnummer" position={isHovered ? "right" : "top"}>
-            Personnummeret ditt er et 11-sifret nummer.
-        </Help>
-    );
-}
+import { HelpPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "help",

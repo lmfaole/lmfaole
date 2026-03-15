@@ -1,18 +1,6 @@
-import { Breadcrumb, BreadcrumbItem } from "@fremtind/jokul/breadcrumb";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function BreadcrumbPreview() {
-    const isHovered = usePreviewHovered();
-    return (
-        <Breadcrumb>
-            <BreadcrumbItem><a href="#">Hjem</a></BreadcrumbItem>
-            <BreadcrumbItem><a href="#">Forsikringer</a></BreadcrumbItem>
-            <BreadcrumbItem><span style={{ fontWeight: isHovered ? "bold" : "normal", transition: "font-weight 0.2s" }}>Bilforsikring</span></BreadcrumbItem>
-        </Breadcrumb>
-    );
-}
+import { BreadcrumbPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "breadcrumb",

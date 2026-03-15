@@ -1,20 +1,6 @@
-import { useState, useEffect } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger, PopupTip } from "@fremtind/jokul/tooltip";
-import { Button } from "@fremtind/jokul/button";
-import { Flex } from "@fremtind/jokul/flex";
-import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-
-function TooltipPreview() {
-    const isHovered = usePreviewHovered();
-    return (
-        <Tooltip key={String(isHovered)} initialOpen={isHovered}>
-            <TooltipTrigger><Button variant="ghost">Mer informasjon</Button></TooltipTrigger>
-            <TooltipContent>Her er tilleggsinformasjon</TooltipContent>
-        </Tooltip>
-    );
-}
+import { TooltipPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "tooltip",
