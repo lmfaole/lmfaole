@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Table, TableHead, TableHeader, TableBody, TableRow, TableCell, TableCaption } from "@fremtind/jokul/table";
+import { useSortableTableHeader } from "@fremtind/jokul/table";
 import { PopupTip } from "@fremtind/jokul/tooltip";
 import { Flex } from "@fremtind/jokul/flex";
 import { Link } from "@fremtind/jokul/link";
@@ -13,6 +14,8 @@ interface PropTableProps {
 }
 
 const COLUMNS = ["Prop", "Type", "Påkrevd", "Standard", "Status", "Beskrivelse"];
+const SORTABLE_COLS = ["Prop", "Påkrevd", "Status"] as const;
+type SortKey = typeof SORTABLE_COLS[number];
 
 const STATUS_LABEL: Record<PropStatus, string> = {
     stable: "stable",
@@ -64,8 +67,28 @@ function buildRows(props: PropDef[], migrationMap: Map<string, string>): React.R
     ]);
 }
 
+const STATUS_ORDER: Record<PropStatus, number> = { stable: 0, experimental: 1, deprecated: 2 };
+
+function sortProps(props: PropDef[], key: SortKey, direction: "asc" | "desc" | "none"): PropDef[] {
+    if (direction === "none") return props;
+    const factor = direction === "asc" ? 1 : -1;
+    return [...props].sort((a, b) => {
+        if (key === "Prop") return factor * a.name.localeCompare(b.name);
+        if (key === "Påkrevd") return factor * (Number(a.required) - Number(b.required));
+        if (key === "Status") return factor * (STATUS_ORDER[a.status] - STATUS_ORDER[b.status]);
+        return 0;
+    });
+}
+
 export function PropTable({ props, migrations }: PropTableProps) {
     const [sourceFilter, setSourceFilter] = useState<PropSource | null>(null);
+    const [sortKey, setSortKey] = useState<SortKey>("Status");
+    const [sortDirection, setSortDirection] = useState<"asc" | "desc" | "none">("asc");
+
+    const { getSortProps } = useSortableTableHeader(sortKey, sortDirection, (newKey, newDir) => {
+        setSortKey(newKey as SortKey);
+        setSortDirection(newDir);
+    });
 
     const hasSourceInfo = props.some((p) => p.source != null);
 
@@ -73,11 +96,7 @@ export function PropTable({ props, migrations }: PropTableProps) {
         (migrations ?? []).map((m) => [m.deprecates.name, `#migration-${m.deprecates.name}`])
     );
 
-    const sorted = [...props].sort((a, b) => {
-        const order: Record<PropStatus, number> = { stable: 0, experimental: 1, deprecated: 2 };
-        return order[a.status] - order[b.status];
-    });
-
+    const sorted = sortProps(props, sortKey, sortDirection);
     const visible = sorted.filter((p) => !sourceFilter || p.source === sourceFilter);
     const rows = buildRows(visible, migrationMap);
 
@@ -98,7 +117,11 @@ export function PropTable({ props, migrations }: PropTableProps) {
                 <Table caption={<TableCaption srOnly>Props</TableCaption>} collapseToList>
                     <TableHead>
                         <TableRow>
-                            {COLUMNS.map((col) => <TableHeader key={col}>{col}</TableHeader>)}
+                            {COLUMNS.map((col) => (
+                                <TableHeader key={col} {...(SORTABLE_COLS.includes(col as SortKey) ? getSortProps(col) : {})}>
+                                    {col}
+                                </TableHeader>
+                            ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -115,3 +138,4 @@ export function PropTable({ props, migrations }: PropTableProps) {
         </Flex>
     );
 }
+
