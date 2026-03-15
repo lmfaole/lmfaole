@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/menu",
     category: "Overlegg",
     standalone: false,
-    description: "Et avkrysningselement i menyen for å toggle tilstander.",
+    description: {
+        short: "Avkrysningselement i menyen for å toggle tilstander.",
+        long: "Et avkrysningselement i menyen for å toggle tilstander.",
+    },
     preview: <MenuItemCheckboxPreview />,
     props: [
         { name: "aria-checked", type: "boolean", required: false, source: "native", status: "stable", description: "Angir om elementet er huket av." },

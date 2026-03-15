@@ -8,7 +8,10 @@ const doc: ComponentDoc = {
     name: "Icon",
     package: "@fremtind/jokul/icon",
     category: "Visning",
-    description: "Icon rendrer Material Symbols-ikoner. Gi navnet på ikonet som child-tekst.",
+    description: {
+        short: "Rendrer Material Symbols-ikoner.",
+        long: "Icon rendrer Material Symbols-ikoner. Gi navnet på ikonet som child-tekst.",
+    },
     warnings: "Et ikon uten ledsagende tekst må ha aria-label — ellers er det usynlig for skjermlesere.",
 
     preview: <IconPreview />,

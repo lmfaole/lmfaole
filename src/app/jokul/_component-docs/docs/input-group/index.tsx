@@ -9,8 +9,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/input-group",
     category: "Skjema",
     status: "stable",
-    description:
-        "InputGroup kombinerer et skjemafelt med label, hjelpetekst og feilmelding på en tilgjengelig måte. FieldGroup bruker et fieldset-element for grupper av relaterte felt som avkrysningsbokser og radioknapper.",
+    description: {
+        short: "InputGroup kombinerer et skjemafelt med label hjelpetekst og feilmelding på.",
+        long: "InputGroup kombinerer et skjemafelt med label, hjelpetekst og feilmelding på en tilgjengelig måte. FieldGroup bruker et fieldset-element for grupper av relaterte felt som avkrysningsbokser og radioknapper.",
+    },
     warnings: "Bruk render-prop-mønsteret for å spre tilgjengelighetsprops (id, aria-describedby, aria-invalid) automatisk til det underliggende feltet.",
     preview: <InputGroupPreview />,
 

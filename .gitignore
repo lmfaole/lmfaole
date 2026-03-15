@@ -1,8 +1,11 @@
 _site/
 node_modules/
 .next
+.tsbuildinfo
+.tsbuildinfo.*
 .idea/
 .cache
 .DS_Store
 .env
 .wrangler/
+.vercel/

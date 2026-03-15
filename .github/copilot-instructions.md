@@ -1,12 +1,29 @@
 # Copilot Instructions
 
-This project is a documentation site for **Jøkul** — Fremtind's design system. All component documentation must follow the rules below precisely.
+This project is a documentation site for **Jøkul** — Fremtind's design system. All component documentation must follow
+the rules below precisely.
+
+---
+
+## General Development Principles
+
+Always prioritize **progressive enhancement**, **modern CSS functionality**, **accessible code**, and **native browser
+functions**. Avoid "hacky" workarounds when a cleaner, more standard approach exists.
+
+- **Progressive Enhancement** — Ensure core functionality works for everyone, then enhance with modern features.
+- **Modern CSS** — Use modern CSS features (e.g., `:has()`, `grid`, `aspect-ratio`) instead of JavaScript-heavy layout
+  logic.
+- **Accessibility (a11y)** — Use semantic HTML and follow ARIA best practices. Ensure keyboard navigability and screen
+  reader support.
+- **Native Functions** — Prefer native Web APIs (e.g., `<dialog>` element, `Intl`, `fetch`) over third-party libraries
+  or custom re-implementations.
 
 ---
 
 ## Component docs (`src/features/component-docs/docs/`)
 
-Each component lives in its own folder and exports a `ComponentDoc` object (default export from `index.tsx`) and a `PropDef[]` array (named export from `props.ts`).
+Each component lives in its own folder and exports a `ComponentDoc` object (default export from `index.tsx`) and a
+`PropDef[]` array (named export from `props.ts`).
 
 ### `ComponentDoc` rules
 
@@ -15,10 +32,12 @@ Defined in `src/features/component-docs/docs/types/component.ts`. Key rules:
 - **`id`** — kebab-case, must be registered in `types/ids.ts`.
 - **`name`** — human-readable, e.g. `"Text Input"`.
 - **`package`** — exact npm import path, e.g. `"@fremtind/jokul/text-input"`.
-- **`category`** — one of: `"Layout" | "Skjema" | "Handling" | "Tilbakemelding" | "Navigasjon" | "Visning" | "Overlegg"`.
+- **`category`** — one of:
+  `"Layout" | "Skjema" | "Handling" | "Tilbakemelding" | "Navigasjon" | "Visning" | "Overlegg"`.
 - **`description`** — 1–2 sentences answering "What problem does this solve?". Never restate the component name.
 - **`warnings`** — important gotchas only. Omit if none.
-- **`preview`** — **required on every `ComponentDoc`, including subcomponents (`standalone: false`)**. Must always be a stateful function component — never static inline JSX and never `null as any` (see [Preview rules](#preview-rules)).
+- **`preview`** — **required on every `ComponentDoc`, including subcomponents (`standalone: false`)**. Must always be a
+  stateful function component — never static inline JSX and never `null as any` (see [Preview rules](#preview-rules)).
 - **`props`** — import from `./props`. See [PropDef rules](#propdef-rules).
 - **`examples`** — import from `./examples`. At least one; simplest use case first.
 - **`migrations`** — only when deprecated APIs exist.
@@ -26,7 +45,9 @@ Defined in `src/features/component-docs/docs/types/component.ts`. Key rules:
 
 ### Preview rules
 
-`preview` **must always be a stateful function component** defined above `const doc`. Never use static JSX directly in the field. **Never use `null as any`** — even for subcomponents (`standalone: false`). Subcomponent previews should show the subcomponent rendered inside its parent context.
+`preview` **must always be a stateful function component** defined above `const doc`. Never use static JSX directly in
+the field. **Never use `null as any`** — even for subcomponents (`standalone: false`). Subcomponent previews should show
+the subcomponent rendered inside its parent context.
 
 ```tsx
 // ✅ Correct — subcomponent shown in parent context
@@ -83,12 +104,16 @@ Defined in `src/features/component-docs/docs/types/prop.ts`. Every non-trivial p
 ```
 
 **`source` values:**
+
 - `"custom"` — Jøkul-specific prop (e.g. `variant`, `errorLabel`, `labelProps`)
 - `"native"` — HTML attribute forwarded to DOM (e.g. `disabled`, `placeholder`)
 - `"aria"` — ARIA attribute (e.g. `aria-label`, `role`)
 - `"react"` — React prop (e.g. `children`, `onChange`, `ref`)
 
-**`labelProps` must be documented on every Jøkul form component that supports it.** The prop is `Omit<LabelProps, "children">` (or with additional omissions per component — check the component's type definition). The description must mention that `srOnly: false` makes the label visually visible (labels are hidden by default on some components like `Search`).
+**`labelProps` must be documented on every Jøkul form component that supports it.** The prop is
+`Omit<LabelProps, "children">` (or with additional omissions per component — check the component's type definition). The
+description must mention that `srOnly: false` makes the label visually visible (labels are hidden by default on some
+components like `Search`).
 
 ---
 
@@ -125,13 +150,15 @@ node_modules/@fremtind/jokul/build/es/components/<component>/types.d.ts
 
 - Import from `@fremtind/jokul/<component>`, e.g. `import { Search } from "@fremtind/jokul/search"`.
 - Only use props that exist in the type definitions — do not guess or invent props.
-- `labelProps` on form components defaults to `srOnly: true` on some components (e.g. `Search`). Pass `labelProps={{ srOnly: false }}` to make the label visually visible.
+- `labelProps` on form components defaults to `srOnly: true` on some components (e.g. `Search`). Pass
+  `labelProps={{ srOnly: false }}` to make the label visually visible.
 
 ---
 
 ## Styling rules
 
-**Never override Jøkul component styles.** Jøkul components are self-contained — their visual design is intentional and must not be altered.
+**Never override Jøkul component styles.** Jøkul components are self-contained — their visual design is intentional and
+must not be altered.
 
 ```tsx
 // ❌ Never — overriding Jøkul internals
@@ -152,22 +179,29 @@ node_modules/@fremtind/jokul/build/es/components/<component>/types.d.ts
 ```
 
 **Rules:**
+
 - Do not pass `style` or `className` to a Jøkul component to change its appearance.
 - Do not write CSS that targets Jøkul class names (`.jkl-*`).
 - Use Jøkul design tokens (`var(--jkl-*)`) in your own custom elements to stay visually consistent.
 - Spacing, sizing, and positioning of the surrounding layout is fine — wrap components in your own elements for that.
-- If a visual need cannot be met with the existing Jøkul API, discuss it as a design system contribution rather than a local override.
+- If a visual need cannot be met with the existing Jøkul API, discuss it as a design system contribution rather than a
+  local override.
 
 ---
 
 ## `TabPanel` and `NavTabs` content wrapping
 
-**Always wrap `TabPanel` content in a `<Card padding="l">`** to ensure consistent alignment, padding and visual containment. The same rule applies to the content area that appears directly below a `<NavTabs>` bar — since NavTabs and Tabs are visually identical, their content areas must be treated the same way.
+**Always wrap `TabPanel` content in a `<Card padding="l">`** to ensure consistent alignment, padding and visual
+containment. The same rule applies to the content area that appears directly below a `<NavTabs>` bar — since NavTabs and
+Tabs are visually identical, their content areas must be treated the same way.
 
-**Use the default `<Card>` (no `variant` prop)** for tab panel content. **The tab bar and its content must always be positioned directly adjacent — no spacing between them.** Do not place them inside a `<Flex gap="...">` or any other container that adds space between the tab bar and the panel. The visual connection between the active tab indicator and the card beneath it depends on zero gap.
+**Use the default `<Card>` (no `variant` prop)** for tab panel content. **The tab bar and its content must always be
+positioned directly adjacent — no spacing between them.** Do not place them inside a `<Flex gap="...">` or any other
+container that adds space between the tab bar and the panel. The visual connection between the active tab indicator and
+the card beneath it depends on zero gap.
 
 ```tsx
-import { Card } from "@fremtind/jokul/card";
+import {Card} from "@fremtind/jokul/card";
 
 // ❌ Never — bare content, and gap between tabs and panel
 <Flex gap="l">
@@ -232,44 +266,52 @@ import { Flex } from "@fremtind/jokul/flex";
 </Flex>
 ```
 
-**`Flex` props:** `direction`, `gap`, `wrap`, `alignItems`, `justifyContent`, `inline`. See the Flex component docs or type definitions for the full API.
+**`Flex` props:** `direction`, `gap`, `wrap`, `alignItems`, `justifyContent`, `inline`. See the Flex component docs or
+type definitions for the full API.
 
-The only exception is `display: inline-flex` on a non-Jøkul element where wrapping in `<Flex inline>` would be semantically wrong (e.g. a `<span>` that must remain inline).
+The only exception is `display: inline-flex` on a non-Jøkul element where wrapping in `<Flex inline>` would be
+semantically wrong (e.g. a `<span>` that must remain inline).
 
 ---
 
 ## Updating Jøkul
 
-When `@fremtind/jokul` is upgraded to a new version, **always audit and update the component docs** to reflect the changes before committing:
+When `@fremtind/jokul` is upgraded to a new version, **always audit and update the component docs** to reflect the
+changes before committing:
 
-1. **Check the changelog** — read the release notes for the new version and identify added props, removed props, renamed APIs, new components, and deprecations.
-2. **Update `props` arrays** — add new props, mark deprecated props with `status: "deprecated"`, remove props that no longer exist.
+1. **Check the changelog** — read the release notes for the new version and identify added props, removed props, renamed
+   APIs, new components, and deprecations.
+2. **Update `props` arrays** — add new props, mark deprecated props with `status: "deprecated"`, remove props that no
+   longer exist.
 3. **Update `warnings`** — reflect any new gotchas or removed caveats.
 4. **Update `migrations`** — if APIs changed, add a migration entry showing before/after.
 5. **Update `relationships`** — if new sub-components were added or components were merged/split.
 6. **Update `preview.tsx`** — if component APIs changed, update the preview to use the new API.
-7. **Re-check patches** — if a patch fixes a bug that was resolved upstream, remove the patch. If a new bug was introduced, add a patch and file an issue.
+7. **Re-check patches** — if a patch fixes a bug that was resolved upstream, remove the patch. If a new bug was
+   introduced, add a patch and file an issue.
 8. **Run `npx tsc --noEmit`** — verify zero TypeScript errors after the upgrade.
 
 ---
 
 
 
-When you encounter any of the following while using Jøkul, **always create a GitHub issue** in this repository before or immediately after applying a workaround:
+When you encounter any of the following while using Jøkul, **always create a GitHub issue** in this repository before or
+immediately after applying a workaround:
 
-| Type | Eksempel |
-|------|---------|
-| **Bug** | Uventet oppførsel, statisk animasjon, feil rendering |
-| **Manglende styles** | Komponent mangler CSS, tema fungerer ikke |
-| **Forvirrende API** | Props er vanskelige å forstå eller bruke riktig |
-| **Manglende funksjonalitet** | Ønsket prop eller variant finnes ikke |
-| **TypeScript-feil** | Feil eller manglende typer, `any`-caster nødvendig |
-| **Tilgjengelighetsproblem** | ARIA, tastaturnavigasjon, skjermleser |
-| **SSR/hydration-problem** | Krasj eller mismatch i Next.js |
-| **Ytelsesproblem** | For mange DOM-noder, tunge animasjoner |
-| **Dokumentasjonsmangel** | Feil eller manglende docs i Jøkul |
+| Type                         | Eksempel                                             |
+|------------------------------|------------------------------------------------------|
+| **Bug**                      | Uventet oppførsel, statisk animasjon, feil rendering |
+| **Manglende styles**         | Komponent mangler CSS, tema fungerer ikke            |
+| **Forvirrende API**          | Props er vanskelige å forstå eller bruke riktig      |
+| **Manglende funksjonalitet** | Ønsket prop eller variant finnes ikke                |
+| **TypeScript-feil**          | Feil eller manglende typer, `any`-caster nødvendig   |
+| **Tilgjengelighetsproblem**  | ARIA, tastaturnavigasjon, skjermleser                |
+| **SSR/hydration-problem**    | Krasj eller mismatch i Next.js                       |
+| **Ytelsesproblem**           | For mange DOM-noder, tunge animasjoner               |
+| **Dokumentasjonsmangel**     | Feil eller manglende docs i Jøkul                    |
 
 Rules:
+
 - **Write the issue in Norwegian** — title and body
 - **Be concise** — one short sentence per section, no unnecessary context
 - Always use `--body-file /tmp/issue.md` (not `--body`) to avoid CLI hangs with multiline content
@@ -281,9 +323,11 @@ gh issue create \
   --body-file /tmp/issue.md
 ```
 
-Where `<type>` matches the table above, e.g. `Jøkul-bug`, `Jøkul-API`, `Jøkul-a11y`, `Jøkul-SSR`, `Jøkul-ytelse`, `Jøkul-docs`.
+Where `<type>` matches the table above, e.g. `Jøkul-bug`, `Jøkul-API`, `Jøkul-a11y`, `Jøkul-SSR`, `Jøkul-ytelse`,
+`Jøkul-docs`.
 
 **Bug / manglende styles** body:
+
 ```
 ## Hva skjer
 <Én setning>
@@ -299,6 +343,7 @@ Where `<type>` matches the table above, e.g. `Jøkul-bug`, `Jøkul-API`, `Jøkul
 ```
 
 **Forvirrende API / manglende funksjonalitet / TypeScript** body:
+
 ```
 ## Problem
 <Hva som er vanskelig, mangler eller er feil>
@@ -311,6 +356,7 @@ Where `<type>` matches the table above, e.g. `Jøkul-bug`, `Jøkul-API`, `Jøkul
 ```
 
 **Tilgjengelighet / SSR / ytelse** body:
+
 ```
 ## Problem
 <Hva som ikke fungerer>

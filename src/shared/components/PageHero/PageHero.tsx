@@ -5,9 +5,10 @@ import "./page-hero.scss";
 interface PageHeroProps extends Omit<React.HTMLAttributes<HTMLElement>, "children"> {
     title: string;
     background: React.ReactNode;
+    description?: React.ReactNode;
 }
 
-export function PageHero({ title, background, className, ...rest }: PageHeroProps) {
+export function PageHero({ title, background, description, className, ...rest }: PageHeroProps) {
     return (
         <FullBleed
             as="header"
@@ -20,6 +21,7 @@ export function PageHero({ title, background, className, ...rest }: PageHeroProp
             <div className="page-hero__inner">
                 <div className="page-hero__text">
                     <h1>{title}</h1>
+                    {description && <p className="page-hero__description">{description}</p>}
                 </div>
             </div>
         </FullBleed>

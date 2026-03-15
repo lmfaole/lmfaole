@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/expandable-panel",
     category: "Visning",
     standalone: false,
-    description: "Innholdsområdet som vises og skjules.",
+    description: {
+        short: "Innholdsområdet som vises og skjules.",
+        long: "Innholdsområdet som vises og skjules.",
+    },
     preview: <ExpandablePanelContentPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet som vises når panelet er åpent." },

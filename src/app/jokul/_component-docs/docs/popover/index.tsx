@@ -8,10 +8,13 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/popover",
     category: "Overlegg",
     status: "stable",
-    description:
-        "Popover er en flytende informasjonsboks som vises ved siden av et trigger-element. Den brukes til kontekstuell informasjon, forklaringer og enkle handlinger som ikke krever en full modal. Bygget på Floating UI.",
+    description: {
+        short: "Flytende informasjonsboks som vises ved siden av et trigger-element.",
+        long: "Popover er en flytende informasjonsboks som vises ved siden av et trigger-element. Den brukes til kontekstuell informasjon, forklaringer og enkle handlinger som ikke krever en full modal. Bygget på Floating UI.",
+    },
     warnings: [
         "Popover.Trigger rendrer en <button> som standard. Bruk asChild for å merge trigger-props inn i et eksisterende element uten ekstra DOM-noder.",
+        "Popover har ikke klikk-åpning aktivert som default. Når triggeren skal åpnes med klikk (for eksempel en Jøkul Button brukt med asChild), sett clickOptions={{ enabled: true }} på Popover.",
         "Sett modal={false} når popoveren brukes i navigasjonsmenyer eller andre flater der brukeren skal kunne interagere med bakgrunnen.",
     ],
     preview: <PopoverBasicPreview />,

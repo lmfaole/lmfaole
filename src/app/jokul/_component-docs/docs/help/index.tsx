@@ -9,8 +9,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/help",
     category: "Overlegg",
     status: "stable",
-    description:
-        "Help viser en liten ?-knapp som åpner en flytenede hjelpetekst i et popover. Brukes til å gi kontekstuell hjelp ved skjemafelt uten å ta opp permanent plass i grensesnittet.",
+    description: {
+        short: "Viser en liten knapp som åpner en flytenede hjelpetekst i.",
+        long: "Help viser en liten ?-knapp som åpner en flytenede hjelpetekst i et popover. Brukes til å gi kontekstuell hjelp ved skjemafelt uten å ta opp permanent plass i grensesnittet.",
+    },
     warnings:
         "Help rendres som en knapp — ikke legg den inne i et annet interaktivt element. Bruk buttonText for en tilgjengelig skjermlesertekst.",
     preview: <HelpPreview />,

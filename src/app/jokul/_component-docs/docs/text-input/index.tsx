@@ -8,7 +8,10 @@ const doc: ComponentDoc = {
     name: "Text Input",
     package: "@fremtind/jokul/text-input",
     category: "Skjema",
-    description: "TextInput er en enkeltlinjers tekstinndatafelt. Komponenten inkluderer label, feilmelding og hjelpetekst i ett og håndterer tilgjengelighet automatisk — label er koblet til input via htmlFor/id. Alle skjema-primitiver i Jøkul følger samme API-mønster.",
+    description: {
+        short: "TextInput er en enkeltlinjers tekstinndatafelt.",
+        long: "TextInput er en enkeltlinjers tekstinndatafelt. Komponenten inkluderer label, feilmelding og hjelpetekst i ett og håndterer tilgjengelighet automatisk — label er koblet til input via htmlFor/id. Alle skjema-primitiver i Jøkul følger samme API-mønster.",
+    },
     relationships: {
         related: [
             { id: "text-area", description: "Bruk TextArea for flerlinjers fritekst som kommentarer eller beskrivelser." },

@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/popover",
     category: "Overlegg",
     standalone: false,
-    description: "Elementet som åpner og lukker popoveren. Rendrer som en <button> som standard. Aksepterer alle native HTML-attributter for det aktuelle elementet.",
+    description: {
+        short: "Trigger-elementet som åpner og lukker popoveren.",
+        long: "Trigger-elementet som åpner og lukker popoveren. Rendrer som <button> som standard, og kan dele trigger-props med andre elementer via asChild.",
+    },
     preview: <PopoverTriggerPreview />,
     props: [
         {
@@ -17,7 +20,8 @@ const doc: ComponentDoc = {
             default: "false",
             source: "custom",
             status: "stable",
-            description: "Slår sammen trigger-props med child-elementet i stedet for å wrappe det i en <button>. Nyttig for lenker, ikoner og andre eksisterende elementer.",
+            description:
+                "Slår sammen trigger-props med child-elementet i stedet for å wrappe det i en <button>. Nyttig for lenker, ikoner og andre eksisterende elementer. Ved asChild + klikk-trigger (f.eks. Jøkul Button) må clickOptions={{ enabled: true }} settes på <Popover> for at klikk skal åpne/lukke.",
         },
         {
             name: "children",

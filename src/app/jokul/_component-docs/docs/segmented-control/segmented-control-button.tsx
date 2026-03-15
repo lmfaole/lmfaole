@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/segmented-control",
     category: "Handling",
     standalone: false,
-    description: "Et enkelt alternativ i SegmentedControl.",
+    description: {
+        short: "Enkelt alternativ i SegmentedControl.",
+        long: "Et enkelt alternativ i SegmentedControl.",
+    },
     preview: <SegmentedControlButtonPreview />,
     props: [
         { name: "value", type: "string", required: true, source: "native", status: "stable", description: "Verdien som sendes ved valg." },

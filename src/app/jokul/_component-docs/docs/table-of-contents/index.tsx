@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     name: "Table Of Contents",
     package: "@fremtind/jokul/table-of-contents",
     category: "Navigasjon",
-    description: "TableOfContents viser en navigerbar innholdsfortegnelse for siden.",
+    description: {
+        short: "TableOfContents viser en navigerbar innholdsfortegnelse for siden.",
+        long: "TableOfContents viser en navigerbar innholdsfortegnelse for siden.",
+    },
     preview: <TableOfContentsPreview />,
     relationships: {
         subcomponents: [

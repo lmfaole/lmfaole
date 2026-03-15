@@ -58,6 +58,10 @@ html {
   overflow-x: clip;
 }
 
+:root {
+  --site-max-width: 150ch;
+}
+
 body {
   background-color: var(--jkl-color-background-page);
   color: var(--jkl-color-text-default);
@@ -66,7 +70,7 @@ body {
 }
 
 .site-layout {
-  max-width: 120ch;
+  max-width: var(--site-max-width);
   margin-inline: auto;
   padding-inline: 1rem;
   padding-block: var(--jkl-spacing-xl);

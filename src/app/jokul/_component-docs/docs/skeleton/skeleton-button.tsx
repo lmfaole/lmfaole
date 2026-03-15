@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/skeleton",
     category: "Tilbakemelding",
     standalone: false,
-    description: "Plassholder som matcher bredde og høyde på en Button.",
+    description: {
+        short: "Plassholder som matcher bredde og høyde på en Button.",
+        long: "Plassholder som matcher bredde og høyde på en Button.",
+    },
     preview: <SkeletonButtonPreview />,
     props: [
         { name: "width", type: "string", required: false, source: "custom", status: "stable", description: "Bredde på knapp-plassholderen, f.eks. '8rem'." },

@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/table-of-contents",
     category: "Navigasjon",
     standalone: false,
-    description: "En lenke i innholdsfortegnelsen. Rendres som en <a> som standard, men kan byttes med as-prop.",
+    description: {
+        short: "Lenke i innholdsfortegnelsen.",
+        long: "En lenke i innholdsfortegnelsen. Rendres som en <a> som standard, men kan byttes med as-prop.",
+    },
     preview: <TableOfContentsLinkPreview />,
     props: [
         { name: "href", type: "string", required: true, source: "native", status: "stable", description: "Anker-ID for seksjonen lenken peker til, f.eks. #intro." },

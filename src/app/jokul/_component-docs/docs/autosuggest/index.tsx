@@ -8,7 +8,10 @@ const doc: ComponentDoc = {
     name: "Autosuggest",
     package: "@fremtind/jokul/autosuggest",
     category: "Skjema",
-    description: "Autosuggest er et tekstinputfelt som viser forslag mens brukeren skriver. Passer for søk og fritekstfelt med et endelig sett av gyldige valg.",
+    description: {
+        short: "Tekstinputfelt som viser forslag mens brukeren skriver.",
+        long: "Autosuggest er et tekstinputfelt som viser forslag mens brukeren skriver. Passer for søk og fritekstfelt med et endelig sett av gyldige valg.",
+    },
     warnings: "Forslagene filtreres ikke automatisk — du håndterer filtrering selv og oppdaterer suggestions-prop.",
     relationships: {
         related: [

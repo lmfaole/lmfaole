@@ -2,10 +2,9 @@
 
 import {useMemo, useState} from "react";
 import {Flex} from "@fremtind/jokul/flex";
-import {Card} from "@fremtind/jokul/card";
 import {Search} from "@fremtind/jokul/search";
 import {BETA_Select as Select} from "@fremtind/jokul/select";
-import {NavTab, NavTabs} from "@fremtind/jokul/tabs";
+import {NavLink} from "@fremtind/jokul/nav-link";
 import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
 import {componentDocs} from "@/app/jokul/_component-docs/data";
 import {Grid} from "@/shared/components/Grid";
@@ -31,7 +30,8 @@ export default function ComponentsPage() {
             const matchesQuery =
                 !q ||
                 doc.name.toLowerCase().includes(q) ||
-                doc.description.toLowerCase().includes(q) ||
+                doc.description.short.toLowerCase().includes(q) ||
+                doc.description.long.toLowerCase().includes(q) ||
                 doc.package.toLowerCase().includes(q);
             const matchesCategory = !activeCategory || doc.category === activeCategory;
             return matchesQuery && matchesCategory;
@@ -65,12 +65,8 @@ export default function ComponentsPage() {
                 description="Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet."
             />
 
-            <div>
-            <NavTabs aria-label="Vis">
-                <NavTab href="/jokul/component" aria-selected>Komponenter</NavTab>
-                <NavTab href="/jokul/component/props">Props-oversikt</NavTab>
-            </NavTabs>
-            <Card padding="l">
+            <NavLink href="/jokul/component/props">Props-oversikt</NavLink>
+
             <Toolbar>
                 <Search
                     label="Søk etter komponent"
@@ -111,8 +107,6 @@ export default function ComponentsPage() {
                     ))}
                 </Grid>
             )}
-            </Card>
-            </div>
         </Flex>
     );
 }

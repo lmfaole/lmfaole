@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/table",
     category: "Visning",
     standalone: false,
-    description: "En datacelle i tabellen.",
+    description: {
+        short: "Datacelle i tabellen.",
+        long: "En datacelle i tabellen.",
+    },
     preview: <TableCellPreview />,
     props: [
         { name: "align", type: '"left" | "right" | "center"', required: false, source: "custom", status: "stable", default: '"left"', description: "Horisontal tekstjustering." },

@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     name: "List",
     package: "@fremtind/jokul/list",
     category: "Visning",
-    description: "List-komponentene (UnorderedList og OrderedList) brukes for strukturerte lister med konsistent styling.",
+    description: {
+        short: "Komponentene UnorderedList og OrderedList brukes for strukturerte lister med konsistent.",
+        long: "List-komponentene (UnorderedList og OrderedList) brukes for strukturerte lister med konsistent styling.",
+    },
     preview: <ListPreview />,
 
     props,

@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/table",
     category: "Visning",
     standalone: false,
-    description: "Wrapper for dataradene i tabellen.",
+    description: {
+        short: "Wrapper for dataradene i tabellen.",
+        long: "Wrapper for dataradene i tabellen.",
+    },
     preview: <TableBodyPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "TableRow-elementer." },

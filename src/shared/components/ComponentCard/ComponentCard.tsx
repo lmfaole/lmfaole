@@ -15,6 +15,7 @@ interface ComponentCardProps {
 export function ComponentCard({doc}: ComponentCardProps) {
     const preview = doc.preview;
     const [hovered, setHovered] = useState(false);
+    const description = doc.description.short;
 
     return (
         <Card
@@ -40,12 +41,8 @@ export function ComponentCard({doc}: ComponentCardProps) {
                 </Flex>
             )}
             <Flex direction="column" gap="xs" style={{padding: "var(--jkl-spacing-s)"}}>
-                <Flex gap="xs" alignItems="center">
-                    <strong>{doc.name}</strong>
-                    {doc.status === "deprecated" && <Tag variant="warning">Deprecated</Tag>}
-                    {doc.status === "beta" && <Tag variant="info">Beta</Tag>}
-                </Flex>
-                <p className="jkl-small muted">{doc.description.split(".")[0]}.</p>
+                <p>{doc.name}</p>
+                <p className="jkl-small muted">{description}</p>
             </Flex>
         </Card>
     );

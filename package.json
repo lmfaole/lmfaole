@@ -7,7 +7,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "tsc --noEmit",
     "setup": "patch-package && mkdir -p public/fonts && cp node_modules/@fremtind/jokul/src/fonts/FremtindGrotesk-*.woff* public/fonts/ && cp node_modules/@fremtind/jokul/src/fonts/Fremtind-Material-Symbols.woff2 public/fonts/",
     "pages:dev": "npm run setup && npx @cloudflare/next-on-pages@1 && wrangler pages dev",
     "pages:build": "npm run setup && npx @cloudflare/next-on-pages@1"

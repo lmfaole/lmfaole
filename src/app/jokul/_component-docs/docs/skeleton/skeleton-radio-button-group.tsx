@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/skeleton",
     category: "Tilbakemelding",
     standalone: false,
-    description: "Plassholder for en gruppe radioknapper.",
+    description: {
+        short: "Plassholder for en gruppe radioknapper.",
+        long: "Plassholder for en gruppe radioknapper.",
+    },
     preview: <SkeletonRadioButtonGroupPreview />,
     props: [
         { name: "radioButtons", type: "number", required: true, source: "custom", status: "stable", description: "Antall radioknapper som skal vises som plassholdere." },

@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     name: "Chip",
     package: "@fremtind/jokul/chip",
     category: "Handling",
-    description: "Chip brukes for interaktive filtre og tagger som brukeren kan velge og velge bort.",
+    description: {
+        short: "Brukes for interaktive filtre og tagger som brukeren kan velge.",
+        long: "Chip brukes for interaktive filtre og tagger som brukeren kan velge og velge bort.",
+    },
     relationships: {
         related: [{ id: "tag", description: "Bruk Tag for skrivebeskyttede kategorietiketter; Chip er for interaktive filtreringshandlinger." }],
     },

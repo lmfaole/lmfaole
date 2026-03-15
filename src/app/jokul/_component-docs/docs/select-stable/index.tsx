@@ -9,7 +9,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/select",
     category: "Skjema",
     status: "stable",
-    description: "Select er nedtrekksmenyen med egendefinert dropdown-grensesnitt. Den tar en items-array og har sin egen SelectChangeEventHandler. En ny, forenklet variant — BETA_Select — er under utvikling og vil erstatte denne over tid.",
+    description: {
+        short: "Nedtrekksmenyen med egendefinert dropdown-grensesnitt.",
+        long: "Select er nedtrekksmenyen med egendefinert dropdown-grensesnitt. Den tar en items-array og har sin egen SelectChangeEventHandler. En ny, forenklet variant — BETA_Select — er under utvikling og vil erstatte denne over tid.",
+    },
     relationships: {
         alternatives: [{ id: "select", description: "Select (BETA) er den anbefalte etterfølgeren med forbedret API; migrer når den er stabil." }],
         related: [{ id: "radio-button", description: "Bruk RadioButton når det er få alternativer og du vil at de alltid skal være synlige." }, { id: "autosuggest", description: "Kombiner med Autosuggest når brukeren trenger å søke og filtrere en lang liste med alternativer ved å skrive." }],

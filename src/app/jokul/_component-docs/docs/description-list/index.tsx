@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     name: "Description List",
     package: "@fremtind/jokul/description-list",
     category: "Visning",
-    description: "DescriptionList viser nøkkel-verdi-par strukturert som en HTML description list (dl/dt/dd).",
+    description: {
+        short: "DescriptionList viser nøkkel-verdi-par strukturert som en HTML dl dt dd.",
+        long: "DescriptionList viser nøkkel-verdi-par strukturert som en HTML description list (dl/dt/dd).",
+    },
     preview: <DescriptionListPreview />,
     relationships: {
         subcomponents: [

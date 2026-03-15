@@ -6,6 +6,7 @@ import type {ComponentDoc} from "@/app/jokul/_component-docs/docs/types";
 import {PreviewHoverContext} from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 import {Card} from "@fremtind/jokul/card";
 import Link from "next/link";
+import "./related-component-card.scss";
 
 interface RelatedComponentCardProps {
     doc: ComponentDoc;
@@ -23,20 +24,21 @@ export function RelatedComponentCard({doc, description}: RelatedComponentCardPro
             href={`/jokul/component/${doc.id}`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            padding="xl"
+            padding="s"
+            variant="outlined"
         >
-            <Flex gap="l" alignItems="center">
-                {preview && (
-                    <div className="related-component-card__preview">
-                        <PreviewHoverContext value={hovered}>
+            {preview && (
+                <Flex alignItems="center" justifyContent="center" className="related-component-card__preview">
+                    <PreviewHoverContext value={hovered}>
+                        <div className="related-component-card__preview-inner">
                             {preview}
-                        </PreviewHoverContext>
-                    </div>
-                )}
-                <Flex direction="column" gap="xs">
-                    <p className="h5">{doc.name}</p>
-                    <p className="related-component-card__description">{description}</p>
+                        </div>
+                    </PreviewHoverContext>
                 </Flex>
+            )}
+            <Flex direction="column" gap="xs" style={{padding: "var(--jkl-spacing-s)"}}>
+                <p className="h5">{doc.name}</p>
+                <p className="related-component-card__description">{description}</p>
             </Flex>
         </Card>
     );

@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/skeleton",
     category: "Tilbakemelding",
     standalone: false,
-    description: "Plassholder for en gruppe avkrysningsbokser.",
+    description: {
+        short: "Plassholder for en gruppe avkrysningsbokser.",
+        long: "Plassholder for en gruppe avkrysningsbokser.",
+    },
     preview: <SkeletonCheckboxGroupPreview />,
     props: [
         { name: "checkboxes", type: "number", required: true, source: "custom", status: "stable", description: "Antall avkrysningsbokser som skal vises som plassholdere." },

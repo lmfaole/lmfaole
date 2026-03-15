@@ -41,6 +41,7 @@ import selectDoc from "./select";
 import selectStableDoc from "./select-stable";
 import summaryTableDoc from "./summary-table";
 import tableDoc from "./table";
+import dataTableDoc from "./table/data-table";
 import tableOfContentsDoc from "./table-of-contents";
 import tabsDoc from "./tabs";
 import textAreaDoc from "./text-area";
@@ -48,6 +49,7 @@ import tooltipDoc from "./tooltip";
 import radioPanelDoc from "./radio-panel";
 import popoverDoc from "./popover";
 import toastDoc from "./toast";
+import toastProviderDoc from "./toast-provider";
 import systemMessageDoc from "./system-message";
 import helpDoc from "./help";
 import imageDoc from "./image";
@@ -74,7 +76,13 @@ import tableHeaderDoc from "./table/table-header";
 import tableCellDoc from "./table/table-cell";
 import tableHeadDoc from "./table/table-head";
 import tableBodyDoc from "./table/table-body";
+import tableColumnDoc from "./table/table-column";
+import tableColumnGroupDoc from "./table/table-column-group";
+import tableFooterDoc from "./table/table-footer";
 import tableRowDoc from "./table/table-row";
+import tablePaginationDoc from "./table/table-pagination";
+import expandableTableRowDoc from "./table/expandable-table-row";
+import expandableTableRowControllerDoc from "./table/expandable-table-row-controller";
 import descriptionTermDoc from "./description-list/description-term";
 import descriptionDetailDoc from "./description-list/description-detail";
 import menuItemDoc from "./menu/menu-item";
@@ -82,10 +90,10 @@ import menuItemCheckboxDoc from "./menu/menu-item-checkbox";
 import navTabsDoc from "./nav-tab/nav-tabs";
 import breadcrumbItemDoc from "./breadcrumb/breadcrumb-item";
 import linkListLinkDoc from "./link-list/link-list-link";
-import type { ComponentDoc } from "./types";
+import type {ComponentDoc} from "./types";
 
-export type { ComponentDoc };
-export type { PropDef } from "./types";
+export type {ComponentDoc};
+export type {PropDef} from "./types";
 export const componentDocs: ComponentDoc[] = [
     autosuggestDoc,
     breadcrumbDoc,
@@ -129,12 +137,14 @@ export const componentDocs: ComponentDoc[] = [
     selectStableDoc,
     summaryTableDoc,
     tableDoc,
+    dataTableDoc,
     tableOfContentsDoc,
     tabsDoc,
     tagDoc,
     textAreaDoc,
     textInputDoc,
     toastDoc,
+    toastProviderDoc,
     toggleSwitchDoc,
     tooltipDoc,
     systemMessageDoc,
@@ -163,7 +173,13 @@ export const componentDocs: ComponentDoc[] = [
     tableCellDoc,
     tableHeadDoc,
     tableBodyDoc,
+    tableColumnDoc,
+    tableColumnGroupDoc,
+    tableFooterDoc,
     tableRowDoc,
+    tablePaginationDoc,
+    expandableTableRowDoc,
+    expandableTableRowControllerDoc,
     descriptionTermDoc,
     descriptionDetailDoc,
     menuItemDoc,

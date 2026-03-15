@@ -60,11 +60,24 @@ export interface ComponentDoc {
     standalone?: false;
 
     /**
-     * One or two sentences describing what the component is and when to use it.
-     * Should answer: "What problem does this solve?"
-     * Avoid restating the component name.
+     * Descriptions in two lengths so the UI can pick the right density.
      */
-    description: string;
+    description: {
+        /**
+         * A short, scannable description used in cards and page headers.
+         * Should answer: "Why would I reach for this?"
+         * Avoid restating the component name.
+         *
+         * Keep it very short (around 10 words).
+         */
+        short: string;
+
+        /**
+         * A longer description used when you need more context than fits in a card.
+         * Should still be to the point, but can include key constraints or typical use cases.
+         */
+        long: string;
+    };
 
     /**
      * Important caveats, gotchas or usage constraints surfaced prominently in the UI.
@@ -150,6 +163,14 @@ export interface ComponentRelationships {
      * @example Checkbox → CheckboxPanel, Select → Combobox
      */
     alternatives?: ComponentRelationship[];
+
+    /**
+     * Components that must wrap or be set up around this component for it to work.
+     * Typical use: context providers (e.g. ToastProvider for useToast()).
+     *
+     * These are not subcomponents (they don't render *inside*), and not alternatives.
+     */
+    requires?: ComponentRelationship[];
 
     /**
      * Named child components that are part of this component's API and render *inside* it.

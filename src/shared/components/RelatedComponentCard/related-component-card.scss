@@ -1,0 +1,19 @@
+.related-component-card__preview {
+    background-image: radial-gradient(circle, color-mix(in srgb, var(--jkl-color-border-subdued) 40%, transparent) 1px, transparent 1px);
+    background-size: 20px 20px;
+    border-bottom: 1px solid var(--jkl-color-border-subdued);
+    height: 12rem;
+    overflow: hidden;
+    padding: var(--jkl-spacing-l);
+
+    &-inner {
+        pointer-events: none;
+        user-select: none;
+        zoom: 0.6;
+    }
+}
+
+.related-component-card__description {
+    color: var(--jkl-color-text-subdued);
+    margin: 0;
+}

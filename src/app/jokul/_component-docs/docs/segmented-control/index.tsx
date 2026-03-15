@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     name: "Segmented Control",
     package: "@fremtind/jokul/segmented-control",
     category: "Handling",
-    description: "SegmentedControl er en gruppe av knapper der kun ett alternativ kan velges om gangen.",
+    description: {
+        short: "SegmentedControl er en gruppe av knapper der kun ett alternativ.",
+        long: "SegmentedControl er en gruppe av knapper der kun ett alternativ kan velges om gangen.",
+    },
     relationships: {
         related: [{ id: "radio-button", description: "Bruk RadioButton når alternativene trenger en vertikal stablet listevisning i stedet for en horisontal knappegruppe." }],
         subcomponents: [

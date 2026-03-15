@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/table",
     category: "Visning",
     standalone: false,
-    description: "En rad i tabellen.",
+    description: {
+        short: "Rad i tabellen.",
+        long: "En rad i tabellen.",
+    },
     preview: <TableRowPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "TableHeader og TableCell-elementer." },

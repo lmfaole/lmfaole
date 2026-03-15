@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     name: "Radio Panel",
     package: "@fremtind/jokul/radio-panel",
     category: "Skjema",
-    description: "RadioPanel er et panelbasert envalgsalternativ.",
+    description: {
+        short: "RadioPanel er et panelbasert envalgsalternativ.",
+        long: "RadioPanel er et panelbasert envalgsalternativ.",
+    },
     warnings: "Grupper RadioPanel-er i FieldGroup med legend — uten det mangler skjermlesere kontekst for gruppen.",
     relationships: {
         alternatives: [{ id: "radio-button", description: "Bruk RadioButton for kompakte vertikale lister der et kortlignende valgområde ikke er nødvendig." }],

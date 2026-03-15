@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
     standalone: false,
-    description: "Innholdsområdet tilknyttet en fane.",
+    description: {
+        short: "Innholdsområdet tilknyttet en fane.",
+        long: "Innholdsområdet tilknyttet en fane.",
+    },
     preview: <TabPanelPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet som vises når fanen er aktiv." },

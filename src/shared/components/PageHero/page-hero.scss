@@ -50,7 +50,7 @@
   &__inner {
     position: relative;
     z-index: 1;
-    width: min(100%, 120ch);
+    width: min(100%, var(--site-max-width));
     margin-inline: auto;
     padding-inline: 1rem;
     display: flex;
@@ -61,5 +61,14 @@
 
   &__text {
     text-align: center;
+    max-width: 70ch;
+    margin-inline: auto;
+  }
+
+  &__description {
+    margin-top: var(--jkl-spacing-xs);
+    color: var(--jkl-color-text-subdued);
+    font-size: 1.05rem;
+    line-height: 1.5;
   }
 }

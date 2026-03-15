@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/skeleton",
     category: "Tilbakemelding",
     standalone: false,
-    description: "Plassholder som matcher bredde og høyde på et TextArea-felt.",
+    description: {
+        short: "Plassholder som matcher bredde og høyde på et TextArea-felt.",
+        long: "Plassholder som matcher bredde og høyde på et TextArea-felt.",
+    },
     preview: <SkeletonTextAreaPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: false, source: "react", status: "stable", description: "Valgfritt innhold." },

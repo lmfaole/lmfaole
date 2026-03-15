@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
     standalone: false,
-    description: "En enkelt fane-knapp.",
+    description: {
+        short: "Enkelt fane-knapp.",
+        long: "En enkelt fane-knapp.",
+    },
     preview: <TabPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekst eller innhold i fanen." },

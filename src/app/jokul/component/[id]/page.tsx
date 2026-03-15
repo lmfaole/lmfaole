@@ -1,16 +1,17 @@
 "use client";
 
-import {useState, useRef, useEffect} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import "./component-page.scss";
 import {TableOfContents} from "@fremtind/jokul/table-of-contents";
-import {Tab, TabList, TabPanel, Tabs, NavTab, NavTabs} from "@fremtind/jokul/tabs";
+import {NavTab, NavTabs} from "@fremtind/jokul/tabs";
 import {Card} from "@fremtind/jokul/card";
+import {Breadcrumb, BreadcrumbItem} from "@fremtind/jokul/breadcrumb";
 import {useParams} from "next/navigation";
-import {getComponentDoc, getRelationships} from "@/app/jokul/_component-docs/data";
+import type {Migration} from "@/app/jokul/_component-docs/data";
+import {getComponentDoc, getParentAndSiblings, getRelationships} from "@/app/jokul/_component-docs/data";
 import {PropTable} from "@/app/jokul/_component-docs/components/PropTable";
 import {MigrationExample} from "@/app/jokul/_component-docs/components/MigrationExample";
-import type {Migration} from "@/app/jokul/_component-docs/data";
 import {NotFound} from "@/shared/components/NotFound";
 import {AlternativesList} from "@/app/jokul/_component-docs/components/AlternativesList";
 import {SubcomponentsList} from "@/app/jokul/_component-docs/components/SubcomponentsList";
@@ -19,7 +20,7 @@ import {PageHero} from "@/shared/components/PageHero/PageHero";
 import {DotsIllustration} from "@/shared/components/Illustration";
 import {PreviewHoverContext} from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
-function MigrationSection({ migrations }: { migrations: Migration[] }) {
+function MigrationSection({migrations}: { migrations: Migration[] }) {
     const [active, setActive] = useState<string>(migrations[0]?.deprecates.name ?? "");
     const pendingScroll = useRef<string | null>(null);
 
@@ -29,7 +30,7 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
             if (el) {
                 const offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--jkl-spacing-xl")) || 64;
                 const top = el.getBoundingClientRect().top + window.scrollY - offset;
-                window.scrollTo({ top, behavior: "smooth" });
+                window.scrollTo({top, behavior: "smooth"});
                 pendingScroll.current = null;
             }
         }
@@ -45,6 +46,7 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
                 setActive(name);
             }
         }
+
         handleHashChange();
         window.addEventListener("hashchange", handleHashChange);
         return () => window.removeEventListener("hashchange", handleHashChange);
@@ -59,7 +61,7 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
 
     return (
         <Flex as="section" direction="column" gap="m">
-            <h2 id="migrering">Migrering</h2>
+            <h3 id="migrering">Migrering av deprecated props</h3>
             <div>
                 <NavTabs aria-label="Filtrer migrering">
                     {migrations.map((m) => (
@@ -77,10 +79,10 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
                     <Card
                         key={migration.title}
                         padding="l"
-                       
+
                         id={`migration-${migration.deprecates.name}`}
                     >
-                        <MigrationExample migration={migration} />
+                        <MigrationExample migration={migration}/>
                     </Card>
                 ))}
             </div>
@@ -91,7 +93,8 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
 export default function ComponentPage() {
     const {id} = useParams<{ id: string }>();
     const doc = getComponentDoc(id);
-    const {alternatives, subcomponents, related} = getRelationships(id);
+    const {requires, alternatives, subcomponents, related} = getRelationships(id);
+    const {parent, siblings, kind: parentKind} = getParentAndSiblings(id);
 
     if (!doc) {
         return (
@@ -103,14 +106,43 @@ export default function ComponentPage() {
         );
     }
 
-    const subComponentDocs = subcomponents.map(rel => rel.doc);
-    const [previewHovered, setPreviewHovered] = useState(false);
+    const heroDescription = doc.description.long;
+    const siblingsAnchor = parentKind === "requires" ? "andre-komponenter" : "andre-delkomponenter";
+
+    const [previewHovered, setPreviewHovered] = useState(true);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setPreviewHovered(false);
+        }, 3000);
+        return () => clearTimeout(timeout);
+    }, []);
+
+    const breadcrumb = parent
+        ? [
+            {href: "/jokul/component", label: "Komponenter"},
+            {href: `/jokul/component/${parent.id}`, label: parent.name},
+            {label: doc.name, current: true},
+        ]
+        : [
+            {href: "/jokul/component", label: "Komponenter"},
+            {label: doc.name, current: true},
+        ];
 
     return (
         <Flex as="article" direction="column" gap="xl">
+            <Breadcrumb aria-label="Komponentsti">
+                {breadcrumb.map((item) => (
+                    <BreadcrumbItem key={item.label} aria-current={item.current ? "page" : undefined}>
+                        {item.current ? <span>{item.label}</span> : <a href={item.href!}>{item.label}</a>}
+                    </BreadcrumbItem>
+                ))}
+            </Breadcrumb>
+
             <PageHero
                 title={doc.name}
-                background={<DotsIllustration />}
+                description={heroDescription}
+                background={<DotsIllustration/>}
             />
 
             {doc.preview && (
@@ -135,12 +167,20 @@ export default function ComponentPage() {
                 {doc.warnings && (
                     <TableOfContents.Link href="#viktig-informasjon">Viktig informasjon</TableOfContents.Link>
                 )}
+                {requires.length > 0 && (
+                    <TableOfContents.Link href="#krever">Krever</TableOfContents.Link>
+                )}
                 <TableOfContents.Link href="#props">Props</TableOfContents.Link>
                 {alternatives.length > 0 && (
                     <TableOfContents.Link href="#alternativer">Alternativer</TableOfContents.Link>
                 )}
                 {subcomponents.length > 0 && (
                     <TableOfContents.Link href="#delkomponenter">Delkomponenter</TableOfContents.Link>
+                )}
+                {siblings.length > 0 && (
+                    <TableOfContents.Link href={`#${siblingsAnchor}`}>
+                        {parentKind === "requires" ? "Andre komponenter" : "Andre delkomponenter"}
+                    </TableOfContents.Link>
                 )}
                 {related.length > 0 && (
                     <TableOfContents.Link href="#relaterte-komponenter">Relaterte komponenter</TableOfContents.Link>
@@ -163,47 +203,20 @@ export default function ComponentPage() {
                 </Flex>
             )}
 
+            {requires.length > 0 && (
+                <Flex as="section" direction="column" gap="m">
+                    <h2 id="krever">Krever</h2>
+                    <RelatedComponentsTable items={requires}/>
+                </Flex>
+            )}
+
             <Flex as="section" direction="column" gap="m">
                 <h2 id="props">Props</h2>
-                {subComponentDocs.length > 0 ? (
-                    <Tabs>
-                        <TabList>
-                            <Tab>{doc.name} <span style={{
-                                color: "var(--jkl-color-text-subdued)",
-                                fontVariantNumeric: "tabular-nums"
-                            }}>({doc.props.length})</span></Tab>
-                            {subComponentDocs.map((sub) => (
-                                <Tab key={sub.id}>{sub.name} <span style={{
-                                    color: "var(--jkl-color-text-subdued)",
-                                    fontVariantNumeric: "tabular-nums"
-                                }}>({sub.props.length})</span></Tab>
-                            ))}
-                        </TabList>
-                        <TabPanel>
-                            <Card padding="l">
-                                <PropTable props={doc.props} migrations={doc.migrations}/>
-                            </Card>
-                        </TabPanel>
-                        {subComponentDocs.map((sub) => (
-                            <TabPanel key={sub.id}>
-                                <Card padding="l">
-                                    {sub.description &&
-                                        <p style={{marginBottom: "var(--jkl-spacing-m)"}}>{sub.description}</p>}
-                                    <PropTable props={sub.props} migrations={doc.migrations}/>
-                                </Card>
-                            </TabPanel>
-                        ))}
-                    </Tabs>
-                ) : (
-                    <PropTable props={doc.props} migrations={doc.migrations}/>
-                )}
+                <PropTable props={doc.props} migrations={doc.migrations}/>
             </Flex>
 
-            {alternatives.length > 0 && (
-                <Flex as="section" direction="column" gap="m">
-                    <h2 id="alternativer">Alternativer</h2>
-                    <AlternativesList items={alternatives}/>
-                </Flex>
+            {doc.migrations && doc.migrations.length > 0 && (
+                <MigrationSection migrations={doc.migrations}/>
             )}
 
             {subcomponents.length > 0 && (
@@ -213,8 +226,26 @@ export default function ComponentPage() {
                 </Flex>
             )}
 
-            {doc.migrations && doc.migrations.length > 0 && (
-                <MigrationSection migrations={doc.migrations} />
+            {alternatives.length > 0 && (
+                <Flex as="section" direction="column" gap="m">
+                    <h2 id="alternativer">Alternativer</h2>
+                    <AlternativesList items={alternatives}/>
+                </Flex>
+            )}
+
+            {siblings.length > 0 && (
+                <Flex as="section" direction="column" gap="m">
+                    <h2 id={siblingsAnchor}>
+                        {parentKind === "requires"
+                            ? `Andre komponenter som krever ${parent?.name}`
+                            : `Andre delkomponenter i ${parent?.name}`}
+                    </h2>
+                    {parentKind === "requires" ? (
+                        <RelatedComponentsTable items={siblings}/>
+                    ) : (
+                        <SubcomponentsList items={siblings}/>
+                    )}
+                </Flex>
             )}
 
             {related.length > 0 && (

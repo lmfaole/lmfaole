@@ -8,8 +8,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/loader",
     category: "Tilbakemelding",
     status: "stable",
-    description:
-        "Skeleton-komponenter bygger opp et innholdsskjelett som matcher layouten til det virkelige innholdet, og gir brukeren en visuell indikasjon på at innhold er på vei.",
+    description: {
+        short: "Komponenter bygger opp et innholdsskjelett som matcher layouten til det.",
+        long: "Skeleton-komponenter bygger opp et innholdsskjelett som matcher layouten til det virkelige innholdet, og gir brukeren en visuell indikasjon på at innhold er på vei.",
+    },
     warnings:
         "Wrap alltid Skeleton-komponenter i SkeletonAnimation for å få shimmering-animasjon og en tilgjengelig textDescription for skjermlesere. Bruk SkeletonElement for freeform rektangel-plassholdere.",
     relationships: {

@@ -1,0 +1,67 @@
+import type {ComponentDoc} from "../types";
+import {ExpandableTableRowPreview} from "./preview";
+
+const doc: ComponentDoc = {
+    id: "expandable-table-row",
+    name: "ExpandableTableRow",
+    package: "@fremtind/jokul/table",
+    category: "Visning",
+    standalone: false,
+    description: {
+        short: "Rad som kan utvides for å vise tilleggsinformasjon.",
+        long: "En rad som kan utvides for å vise tilleggsinformasjon.",
+    },
+    preview: <ExpandableTableRowPreview/>,
+    props: [
+        {
+            name: "children",
+            type: "React.ReactNode",
+            required: true,
+            source: "react",
+            status: "stable",
+            description: "Celler i raden, inkluder ExpandableTableRowController for kontroll."
+        },
+        {
+            name: "expandedChildren",
+            type: "React.ReactNode",
+            required: true,
+            source: "custom",
+            status: "stable",
+            description: "Innhold som skal vises når raden er utvidet."
+        },
+        {
+            name: "onToggle",
+            type: "(isOpen: boolean) => void",
+            required: false,
+            source: "custom",
+            status: "stable",
+            description: "Callback som kjøres når raden åpnes eller lukkes."
+        },
+        {
+            name: "isOpen",
+            type: "boolean",
+            required: false,
+            source: "custom",
+            status: "stable",
+            description: "Om raden skal være åpen (kontrollert tilstand)."
+        },
+        {
+            name: "colSpan",
+            type: "number",
+            required: false,
+            source: "custom",
+            status: "stable",
+            description: "Antall kolonner den utvidede raden skal spenne over (standard 100)."
+        },
+        {
+            name: "clickable",
+            type: "boolean | ClickableRowProps",
+            required: false,
+            source: "custom",
+            status: "stable",
+            description: "Om raden skal være klikkbar for å utvide. Kan settes til false for å kun tillate utvidelse via ExpandableTableRowController."
+        },
+    ],
+};
+
+export default doc;

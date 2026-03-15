@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/menu",
     category: "Overlegg",
     standalone: false,
-    description: "Et valgbart element i menyen.",
+    description: {
+        short: "Valgbart element i menyen.",
+        long: "Et valgbart element i menyen.",
+    },
     preview: <MenuItemPreview />,
     props: [
         { name: "icon", type: "ReactNode", required: false, source: "custom", status: "stable", description: "Ikon som vises til venstre for teksten." },

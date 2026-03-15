@@ -8,8 +8,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/menu",
     category: "Overlegg",
     status: "stable",
-    description:
-        "Menu er en dropdown-meny som åpnes av et trigger-element. Den støtter vanlige valg, separatorer og avkrysningselementer.",
+    description: {
+        short: "Dropdown-meny som åpnes av et trigger-element.",
+        long: "Menu er en dropdown-meny som åpnes av et trigger-element. Den støtter vanlige valg, separatorer og avkrysningselementer.",
+    },
     preview: <MenuPreview />,
     relationships: {
         subcomponents: [

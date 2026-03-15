@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/table",
     category: "Visning",
     standalone: false,
-    description: "Wrapper for overskriftsraden i tabellen.",
+    description: {
+        short: "Wrapper for overskriftsraden i tabellen.",
+        long: "Wrapper for overskriftsraden i tabellen.",
+    },
     preview: <TableHeadPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "TableRow-elementer." },

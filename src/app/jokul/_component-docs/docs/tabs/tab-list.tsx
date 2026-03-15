@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
     standalone: false,
-    description: "Wrapper som inneholder Tab-elementene.",
+    description: {
+        short: "Wrapper som inneholder Tab-elementene.",
+        long: "Wrapper som inneholder Tab-elementene.",
+    },
     preview: <TabListPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tab-elementer." },

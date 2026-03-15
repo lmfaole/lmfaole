@@ -1,1 +1,0 @@
-.code-block{overflow:hidden}.code-block__content{position:relative}.code-block__copy{top:var(--jkl-spacing-xs);right:var(--jkl-spacing-xs);z-index:1;opacity:.6;transition:opacity .15s;position:absolute}.code-block__copy:hover,.code-block__copy:focus-visible{opacity:1}.code-block__pre{max-width:none;background:0 0;border-radius:0;margin:0;padding-inline-end:var(--jkl-spacing-2xl)}

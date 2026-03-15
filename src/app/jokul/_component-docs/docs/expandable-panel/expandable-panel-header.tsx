@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/expandable-panel",
     category: "Visning",
     standalone: false,
-    description: "Klikkbar header som viser/skjuler innholdet. Rendres som en knapp.",
+    description: {
+        short: "Klikkbar header som viser skjuler innholdet.",
+        long: "Klikkbar header som viser/skjuler innholdet. Rendres som en knapp.",
+    },
     preview: <ExpandablePanelHeaderPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tittelinnholdet i headeren." },

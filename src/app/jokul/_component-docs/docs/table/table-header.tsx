@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/table",
     category: "Visning",
     standalone: false,
-    description: "En overskriftscelle i tabellen.",
+    description: {
+        short: "Overskriftscelle i tabellen.",
+        long: "En overskriftscelle i tabellen.",
+    },
     preview: <TableHeaderPreview />,
     props: [
         { name: "scope", type: '"col" | "row"', required: false, source: "native", status: "stable", description: "Angir om cellen er overskrift for kolonne eller rad." },

@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/breadcrumb",
     category: "Navigasjon",
     standalone: false,
-    description: "Et enkelt ledd i brødsmulestien.",
+    description: {
+        short: "Enkelt ledd i brødsmulestien.",
+        long: "Et enkelt ledd i brødsmulestien.",
+    },
     preview: <BreadcrumbItemPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Lenke eller tekst for gjeldende side." },

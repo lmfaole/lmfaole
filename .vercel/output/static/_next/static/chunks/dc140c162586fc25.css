@@ -1,1 +1,0 @@
-.token-index__grid{gap:var(--jkl-spacing-m);grid-template-columns:repeat(2,1fr);display:grid}@media (max-width:680px){.token-index__grid{grid-template-columns:1fr}}

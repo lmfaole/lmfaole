@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     name: "Tooltip",
     package: "@fremtind/jokul/tooltip",
     category: "Overlegg",
-    description: "Tooltip og PopupTip viser tilleggsinformasjon ved hover eller klikk.",
+    description: {
+        short: "Og PopupTip viser tilleggsinformasjon ved hover eller klikk.",
+        long: "Tooltip og PopupTip viser tilleggsinformasjon ved hover eller klikk.",
+    },
     warnings: [
     "Ikke legg Tooltip på ikke-interaktive elementer — det er ikke tilgjengelig for tastaturbrukere.",
     "Tooltip må aldri inneholde kritisk informasjon som ikke finnes andre steder på siden.",

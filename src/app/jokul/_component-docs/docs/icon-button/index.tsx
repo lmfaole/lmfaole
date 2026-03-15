@@ -8,7 +8,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/icon-button",
     category: "Handling",
     status: "deprecated",
-    description: "IconButton er en knapp med kun ikon. Krev alltid en aria-label som beskriver handlingen.",
+    description: {
+        short: "IconButton er en knapp med kun ikon.",
+        long: "IconButton er en knapp med kun ikon. Krev alltid en aria-label som beskriver handlingen.",
+    },
     warnings: "Ikke bruk IconButton uten aria-label.",
     relationships: {
         alternatives: [{ id: "icon", description: "Bruk Icon når symbolet er rent dekorativt og ikke trenger å være et fokuserbart interaktivt element." }],

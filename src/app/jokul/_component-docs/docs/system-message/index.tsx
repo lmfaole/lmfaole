@@ -9,8 +9,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/system-message",
     category: "Tilbakemelding",
     status: "stable",
-    description:
-        "SystemMessage brukes til å kommunisere viktig informasjon til brukeren på sidenivå. Finnes i variantene info, success, warning og error. Kan gjøres avvisbar med dismissAction.",
+    description: {
+        short: "SystemMessage brukes til å kommunisere viktig informasjon til brukeren på.",
+        long: "SystemMessage brukes til å kommunisere viktig informasjon til brukeren på sidenivå. Finnes i variantene info, success, warning og error. Kan gjøres avvisbar med dismissAction.",
+    },
     warnings: [
         "Bruk role='alert' på kritiske meldinger som vises dynamisk — uten det annonserer ikke skjermlesere dem automatisk.",
         "InfoSystemMessage, SuccessSystemMessage, WarningSystemMessage og ErrorSystemMessage er utfaset. Bruk <SystemMessage variant=\"...\"> i stedet.",

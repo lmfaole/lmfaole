@@ -2,9 +2,8 @@
 
 import React, {useMemo, useState} from "react";
 import {Flex} from "@fremtind/jokul/flex";
-import {Card} from "@fremtind/jokul/card";
 import {Search} from "@fremtind/jokul/search";
-import {NavTab, NavTabs} from "@fremtind/jokul/tabs";
+import {NavLink} from "@fremtind/jokul/nav-link";
 import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
 import {Toolbar} from "@/shared/components/Toolbar";
 import {
@@ -79,13 +78,9 @@ export default function PropIndexPage() {
                 description="Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet."
             />
 
-            <div>
-            <NavTabs aria-label="Vis">
-                <NavTab href="/jokul/component">Komponenter</NavTab>
-                <NavTab href="/jokul/component/props" aria-selected>Props-oversikt</NavTab>
-            </NavTabs>
-            <Card padding="l">
-                <Toolbar>
+            <NavLink href="/jokul/component">Komponenter</NavLink>
+
+            <Toolbar>
                 <Search
                     label="Filtrer props"
                     labelProps={{ srOnly: false }}
@@ -93,46 +88,44 @@ export default function PropIndexPage() {
                     onChange={(e) => setPropQuery(e.target.value)}
                     placeholder="Propnavn eller komponentnavn…"
                 />
-                </Toolbar>
-                <Table caption={<TableCaption srOnly>Props-oversikt</TableCaption>} collapseToList fullWidth>
-                    <TableHead>
-                        <TableRow>
-                            <TableHeader sortable={getSortProps("name").sortable}>Prop</TableHeader>
-                            <TableHeader sortable={getSortProps("source").sortable}>Kilde</TableHeader>
-                            <TableHeader sortable={getSortProps("status").sortable}>Status</TableHeader>
-                            <TableHeader sortable={getSortProps("usedBy").sortable}>Brukt i</TableHeader>
+            </Toolbar>
+            <Table caption={<TableCaption srOnly>Props-oversikt</TableCaption>} collapseToList fullWidth>
+                <TableHead>
+                    <TableRow>
+                        <TableHeader sortable={getSortProps("name").sortable}>Prop</TableHeader>
+                        <TableHeader sortable={getSortProps("source").sortable}>Kilde</TableHeader>
+                        <TableHeader sortable={getSortProps("status").sortable}>Status</TableHeader>
+                        <TableHeader sortable={getSortProps("usedBy").sortable}>Brukt i</TableHeader>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {filteredProps.map((entry) => (
+                        <TableRow key={entry.propName}>
+                            <TableCell data-th="Prop"><code>{entry.propName}</code></TableCell>
+                            <TableCell data-th="Kilde">{SOURCE_LABEL[entry.source]}</TableCell>
+                            <TableCell data-th="Status">
+                                {entry.status !== "stable" ? (
+                                    <Tag variant={entry.status === "deprecated" ? "warning" : "info"}>
+                                        {STATUS_LABEL[entry.status]}
+                                    </Tag>
+                                ) : (
+                                    <span style={{color: "var(--jkl-color-text-subdued)"}}>—</span>
+                                )}
+                            </TableCell>
+                            <TableCell data-th="Brukt i">
+                                <Flex gap="2xs" wrap="wrap">
+                                    {entry.usedBy.map((comp, i) => (
+                                        <React.Fragment key={comp.id}>
+                                            <Link href={`/jokul/component/${comp.id}`}>{comp.name}</Link>
+                                            {i < entry.usedBy.length - 1 && <span style={{color: "var(--jkl-color-text-subdued)"}}>,</span>}
+                                        </React.Fragment>
+                                    ))}
+                                </Flex>
+                            </TableCell>
                         </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredProps.map((entry) => (
-                            <TableRow key={entry.propName}>
-                                <TableCell data-th="Prop"><code>{entry.propName}</code></TableCell>
-                                <TableCell data-th="Kilde">{SOURCE_LABEL[entry.source]}</TableCell>
-                                <TableCell data-th="Status">
-                                    {entry.status !== "stable" ? (
-                                        <Tag variant={entry.status === "deprecated" ? "warning" : "info"}>
-                                            {STATUS_LABEL[entry.status]}
-                                        </Tag>
-                                    ) : (
-                                        <span style={{color: "var(--jkl-color-text-subdued)"}}>—</span>
-                                    )}
-                                </TableCell>
-                                <TableCell data-th="Brukt i">
-                                    <Flex gap="2xs" wrap="wrap">
-                                        {entry.usedBy.map((comp, i) => (
-                                            <React.Fragment key={comp.id}>
-                                                <Link href={`/jokul/component/${comp.id}`}>{comp.name}</Link>
-                                                {i < entry.usedBy.length - 1 && <span style={{color: "var(--jkl-color-text-subdued)"}}>,</span>}
-                                            </React.Fragment>
-                                        ))}
-                                    </Flex>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </Card>
-            </div>
+                    ))}
+                </TableBody>
+            </Table>
         </Flex>
     );
 }

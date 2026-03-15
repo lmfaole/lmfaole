@@ -8,8 +8,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/combobox",
     category: "Skjema",
     status: "stable",
-    description:
-        "Combobox er et flervalg-skjemaelement med søkefunksjon. Valgte elementer vises som chips og kan fjernes enkeltvis.",
+    description: {
+        short: "Flervalg-skjemaelement med søkefunksjon.",
+        long: "Combobox er et flervalg-skjemaelement med søkefunksjon. Valgte elementer vises som chips og kan fjernes enkeltvis.",
+    },
     relationships: {
         related: [{ id: "select", description: "Bruk Select når ingen fritekstinntasting er nødvendig og listen er liten nok til å bla gjennom." }, { id: "autosuggest", description: "Autosuggest ligner, men støtter ikke flervalg; bruk Combobox når flere verdier må velges." }],
     },

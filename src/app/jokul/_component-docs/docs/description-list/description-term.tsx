@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/description-list",
     category: "Visning",
     standalone: false,
-    description: "Nøkkelen (dt) i et nøkkel-verdi-par.",
+    description: {
+        short: "Nøkkelen dt i et nøkkel-verdi-par.",
+        long: "Nøkkelen (dt) i et nøkkel-verdi-par.",
+    },
     preview: <DescriptionTermPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekst eller innhold for termen." },

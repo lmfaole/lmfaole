@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     name: "Nav Link",
     package: "@fremtind/jokul/nav-link",
     category: "Navigasjon",
-    description: "NavLink er en navigasjonslenke med tydelig aktiv tilstand. Brukes i navigasjonsmeny og sidefelt.",
+    description: {
+        short: "NavLink er en navigasjonslenke med tydelig aktiv tilstand.",
+        long: "NavLink er en navigasjonslenke med tydelig aktiv tilstand. Brukes i navigasjonsmeny og sidefelt.",
+    },
     relationships: {
         alternatives: [{ id: "link", description: "Bruk Link for innebygde hyperkoblinger i tekstinnhold fremfor sidenavigasjon." }, { id: "link-list", description: "Bruk LinkList når du presenterer en gruppert, merket samling av navigasjonslenker i en kolonne." }],
     },

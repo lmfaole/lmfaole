@@ -7,7 +7,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/link-list",
     category: "Navigasjon",
     standalone: false,
-    description: "En lenke inne i lenkegruppelisten.",
+    description: {
+        short: "Lenke inne i lenkegruppelisten.",
+        long: "En lenke inne i lenkegruppelisten.",
+    },
     preview: <LinkListLinkPreview />,
     props: [
         { name: "href", type: "string", required: true, source: "native", status: "stable", description: "URL-en lenken peker til." },
