@@ -239,5 +239,5 @@ When you discover a bug in Jøkul (unexpected behaviour, missing styles, broken 
 gh issue create \
   --repo fremtind/jokul \
   --title "<Kort beskrivelse av buggen>" \
-  --body "## Hva skjer\n<Én setning>\n\n## Hva som burde skje\n<Én setning>\n\n## Fiks\n<Én setning>"
+  --body "## Hva skjer\n<Én setning>\n\n## Hvorfor\n<Én setning>\n\n## Hva som burde skje\n<Én setning>\n\n## Fiks\n<Én setning>"
 ```
