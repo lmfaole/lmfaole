@@ -9,24 +9,13 @@ const doc: ComponentDoc = {
     category: "Visning",
     description: "DescriptionList viser nøkkel-verdi-par strukturert som en HTML description list (dl/dt/dd).",
     preview: <DescriptionListPreview />,
-
+    relationships: {
+        subcomponents: [
+            { id: "description-term", description: "Nøkkelen (dt) i et nøkkel-verdi-par." },
+            { id: "description-detail", description: "Verdien (dd) i et nøkkel-verdi-par." },
+        ],
+    },
     props,
-    subComponents: [
-        {
-            name: "DescriptionTerm",
-            description: "Nøkkelen (dt) i et nøkkel-verdi-par.",
-            props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekst eller innhold for termen." },
-            ],
-        },
-        {
-            name: "DescriptionDetail",
-            description: "Verdien (dd) i et nøkkel-verdi-par.",
-            props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekst eller innhold for detaljen." },
-            ],
-        },
-    ],
 };
 
 export default doc;

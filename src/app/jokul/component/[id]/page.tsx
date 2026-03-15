@@ -102,6 +102,8 @@ export default function ComponentPage() {
         );
     }
 
+    const subComponentDocs = subcomponents.map(rel => rel.doc);
+
     return (
         <Flex as="article" direction="column" gap="xl">
             <PageHero
@@ -143,15 +145,15 @@ export default function ComponentPage() {
 
             <Flex as="section" direction="column" gap="m">
                 <h2 id="props">Props</h2>
-                {doc.subComponents && doc.subComponents.length > 0 ? (
+                {subComponentDocs.length > 0 ? (
                     <Tabs>
                         <TabList>
                             <Tab>{doc.name} <span style={{
                                 color: "var(--jkl-color-text-subdued)",
                                 fontVariantNumeric: "tabular-nums"
                             }}>({doc.props.length})</span></Tab>
-                            {doc.subComponents.map((sub) => (
-                                <Tab key={sub.name}>{sub.name} <span style={{
+                            {subComponentDocs.map((sub) => (
+                                <Tab key={sub.id}>{sub.name} <span style={{
                                     color: "var(--jkl-color-text-subdued)",
                                     fontVariantNumeric: "tabular-nums"
                                 }}>({sub.props.length})</span></Tab>
@@ -162,8 +164,8 @@ export default function ComponentPage() {
                                 <PropTable props={doc.props} migrations={doc.migrations}/>
                             </Card>
                         </TabPanel>
-                        {doc.subComponents.map((sub) => (
-                            <TabPanel key={sub.name}>
+                        {subComponentDocs.map((sub) => (
+                            <TabPanel key={sub.id}>
                                 <Card padding="l">
                                     {sub.description &&
                                         <p style={{marginBottom: "var(--jkl-spacing-m)"}}>{sub.description}</p>}

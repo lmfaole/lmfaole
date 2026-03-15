@@ -1,0 +1,18 @@
+import type { ComponentDoc } from "../types";
+
+const doc: ComponentDoc = {
+    id: "menu-item-checkbox",
+    name: "MenuItemCheckbox",
+    package: "@fremtind/jokul/menu",
+    category: "Overlegg",
+    standalone: false,
+    description: "Et avkrysningselement i menyen for å toggle tilstander.",
+    preview: null as any,
+    props: [
+        { name: "aria-checked", type: "boolean", required: false, source: "native", status: "stable", description: "Angir om elementet er huket av." },
+        { name: "onChange", type: "(event: React.ChangeEvent, pressed: boolean) => void", required: false, source: "react", status: "stable", description: "Kalles når avkrysningsstatus endres." },
+        { name: "children", type: "ReactNode", required: false, source: "react", status: "stable", description: "Tekst eller innhold i elementet." },
+    ],
+};
+
+export default doc;

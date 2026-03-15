@@ -53,6 +53,35 @@ import helpDoc from "./help";
 import imageDoc from "./image";
 import inputGroupDoc from "./input-group";
 import screenReaderOnlyDoc from "./screen-reader-only";
+import tabListDoc from "./tabs/tab-list";
+import tabDoc from "./tabs/tab";
+import tabPanelDoc from "./tabs/tab-panel";
+import expandablePanelHeaderDoc from "./expandable-panel/expandable-panel-header";
+import expandablePanelContentDoc from "./expandable-panel/expandable-panel-content";
+import segmentedControlButtonDoc from "./segmented-control/segmented-control-button";
+import skeletonElementDoc from "./skeleton/skeleton-element";
+import skeletonInputDoc from "./skeleton/skeleton-input";
+import skeletonButtonDoc from "./skeleton/skeleton-button";
+import skeletonTextAreaDoc from "./skeleton/skeleton-text-area";
+import skeletonCheckboxGroupDoc from "./skeleton/skeleton-checkbox-group";
+import skeletonRadioButtonGroupDoc from "./skeleton/skeleton-radio-button-group";
+import tableOfContentsLinkDoc from "./table-of-contents/table-of-contents-link";
+import searchButtonDoc from "./search/search-button";
+import popoverTriggerDoc from "./popover/popover-trigger";
+import popoverContentDoc from "./popover/popover-content";
+import tableCaptionDoc from "./table/table-caption";
+import tableHeaderDoc from "./table/table-header";
+import tableCellDoc from "./table/table-cell";
+import tableHeadDoc from "./table/table-head";
+import tableBodyDoc from "./table/table-body";
+import tableRowDoc from "./table/table-row";
+import descriptionTermDoc from "./description-list/description-term";
+import descriptionDetailDoc from "./description-list/description-detail";
+import menuItemDoc from "./menu/menu-item";
+import menuItemCheckboxDoc from "./menu/menu-item-checkbox";
+import navTabsDoc from "./nav-tab/nav-tabs";
+import breadcrumbItemDoc from "./breadcrumb/breadcrumb-item";
+import linkListLinkDoc from "./link-list/link-list-link";
 import type { ComponentDoc } from "./types";
 
 export type { ComponentDoc };
@@ -113,4 +142,33 @@ export const componentDocs: ComponentDoc[] = [
     imageDoc,
     inputGroupDoc,
     screenReaderOnlyDoc,
+    tabListDoc,
+    tabDoc,
+    tabPanelDoc,
+    expandablePanelHeaderDoc,
+    expandablePanelContentDoc,
+    segmentedControlButtonDoc,
+    skeletonElementDoc,
+    skeletonInputDoc,
+    skeletonButtonDoc,
+    skeletonTextAreaDoc,
+    skeletonCheckboxGroupDoc,
+    skeletonRadioButtonGroupDoc,
+    tableOfContentsLinkDoc,
+    searchButtonDoc,
+    popoverTriggerDoc,
+    popoverContentDoc,
+    tableCaptionDoc,
+    tableHeaderDoc,
+    tableCellDoc,
+    tableHeadDoc,
+    tableBodyDoc,
+    tableRowDoc,
+    descriptionTermDoc,
+    descriptionDetailDoc,
+    menuItemDoc,
+    menuItemCheckboxDoc,
+    navTabsDoc,
+    breadcrumbItemDoc,
+    linkListLinkDoc,
 ];

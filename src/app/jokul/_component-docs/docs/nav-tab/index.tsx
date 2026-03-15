@@ -1,5 +1,5 @@
 import type { ComponentDoc } from "../types";
-import { props, navTabsProps } from "./props";
+import { props } from "./props";
 import { NavTabPreview } from "./preview";
 
 const doc: ComponentDoc = {
@@ -12,17 +12,13 @@ const doc: ComponentDoc = {
     relationships: {
         alternatives: [{ id: "tabs", description: "Bruk Tabs for innholdspanelbytte på siden der URL-en ikke endres mellom visninger." }],
         related: [{ id: "nav-link", description: "NavLink er et enklere enkeltlenke-navigasjonselement uten tablist-rollen og aktiv indikator." }, { id: "link", description: "Bruk Link for innebygde teksthyperkoblinger fremfor en stilisert navigasjonsfanerad." }],
+        subcomponents: [
+            { id: "nav-tabs", description: "Wrapper-komponent som inneholder NavTab-elementene og håndterer tablist-rollen og den animerte indikatoren." },
+        ],
     },
 
     preview: <NavTabPreview />,
     props,
-    subComponents: [
-        {
-            name: "NavTabs",
-            description: "Wrapper-komponent som inneholder NavTab-elementene og håndterer tablist-rollen og den animerte indikatoren.",
-            props: navTabsProps,
-        },
-    ],
 };
 
 export default doc;

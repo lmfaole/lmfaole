@@ -18,74 +18,12 @@ const doc: ComponentDoc = {
 
     relationships: {
         related: [{ id: "tooltip", description: "Bruk Tooltip for korte skrivebeskyttede hint; Popover støtter interaktivt innhold som skjemaer eller handlingsmenyer." }, { id: "modal", description: "Bruk Modal når overlegget må blokkere resten av siden og krever en bevisst avvisning." }],
+        subcomponents: [
+            { id: "popover-trigger", description: "Elementet som åpner og lukker popoveren." },
+            { id: "popover-content", description: "Det flytende innholdsområdet som vises når popoveren er åpen." },
+        ],
     },
     props,
-    subComponents: [
-        {
-            name: "Popover.Trigger",
-            description: "Elementet som åpner og lukker popoveren. Rendrer som en <button> som standard. Aksepterer alle native HTML-attributter for det aktuelle elementet.",
-            props: [
-                {
-                    name: "asChild",
-                    type: "boolean",
-                    required: false,
-                    default: "false",
-                    source: "custom",
-                    status: "stable",
-                    description: "Slår sammen trigger-props med child-elementet i stedet for å wrappe det i en <button>. Nyttig for lenker, ikoner og andre eksisterende elementer.",
-                },
-                {
-                    name: "children",
-                    type: "React.ReactNode",
-                    required: true,
-                    source: "react",
-                    status: "stable",
-                    description: "Innholdet i trigger-elementet.",
-                },
-            ],
-        },
-        {
-            name: "Popover.Content",
-            description: "Det flytende innholdsområdet som vises når popoveren er åpen. Aksepterer alle native div-attributter i tillegg til egne props.",
-            props: [
-                {
-                    name: "padding",
-                    type: "0 | 8 | 16 | 24",
-                    required: false,
-                    default: "0",
-                    source: "custom",
-                    status: "stable",
-                    description: "Innvendig padding i piksler rundt innholdet. Verdiene tilsvarer omtrent jkl-spacing-tokens.",
-                },
-                {
-                    name: "initialFocus",
-                    type: "number | React.RefObject<HTMLElement>",
-                    required: false,
-                    default: "0",
-                    source: "custom",
-                    status: "stable",
-                    description: "Hvilket element som får fokus når popoveren åpnes. Et tall angir en tabbar-index; en ref peker direkte på elementet. Default 0 = første fokuserbare element.",
-                },
-                {
-                    name: "returnFocus",
-                    type: "boolean",
-                    required: false,
-                    default: "true",
-                    source: "custom",
-                    status: "stable",
-                    description: "Om fokus skal returneres til trigger-elementet når popoveren lukkes. Sett til false i navigasjonsdropdowns der fokus skal flyttes videre.",
-                },
-                {
-                    name: "children",
-                    type: "React.ReactNode",
-                    required: false,
-                    source: "react",
-                    status: "stable",
-                    description: "Innholdet i popoveren.",
-                },
-            ],
-        },
-    ],
 };
 
 export default doc;

@@ -1,0 +1,17 @@
+import type { ComponentDoc } from "../types";
+
+const doc: ComponentDoc = {
+    id: "tab-panel",
+    name: "TabPanel",
+    package: "@fremtind/jokul/tabs",
+    category: "Navigasjon",
+    standalone: false,
+    description: "Innholdsområdet tilknyttet en fane.",
+    preview: null as any,
+    props: [
+        { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet som vises når fanen er aktiv." },
+        { name: "tabIndex", type: "number", required: false, source: "native", status: "stable", description: "Overstyrer tabIndex på panelet." },
+    ],
+};
+
+export default doc;

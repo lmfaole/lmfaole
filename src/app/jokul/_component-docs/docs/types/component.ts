@@ -4,27 +4,6 @@ import type { Migration } from "./migration";
 import type { ComponentId } from "./ids";
 
 /**
- * Documentation for a compound sub-component such as `Popover.Trigger` or `Tabs.TabPanel`.
- * Sub-components are rendered in a dedicated section below the root component's prop table.
- */
-export interface SubComponentDoc {
-    /**
-     * Full dot-notation name as used in JSX, e.g. `"Popover.Content"` or `"Tabs.TabList"`.
-     * Must match the exported name exactly.
-     */
-    name: string;
-
-    /**
-     * One or two sentences describing what this sub-component does and how it relates
-     * to the parent. Omit only if the name is entirely self-explanatory.
-     */
-    description?: string;
-
-    /** Props accepted by this sub-component. Each entry follows the {@link PropDef} shape. */
-    props: PropDef[];
-}
-
-/**
  * Complete documentation record for a single Jøkul component.
  * One file per component under `src/app/jokul/_component-docs/docs/`.
  */
@@ -127,13 +106,6 @@ export interface ComponentDoc {
      * `id`, `aria-*`) only need to be listed if they have special behaviour in this component.
      */
     props: PropDef[];
-
-    /**
-     * Compound sub-components exported as properties of the root, e.g. `Popover.Trigger`.
-     * Each entry follows the {@link SubComponentDoc} shape.
-     * Omit for simple components with no sub-component API.
-     */
-    subComponents?: SubComponentDoc[];
 
     /**
      * API migration guides for deprecated props or components.

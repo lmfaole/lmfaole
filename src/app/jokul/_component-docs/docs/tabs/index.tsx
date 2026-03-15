@@ -12,34 +12,15 @@ const doc: ComponentDoc = {
     relationships: {
         alternatives: [{ id: "nav-tab", description: "Bruk NavTab når navigasjon er sideruting fremfor bytte av innholdspaneler på siden." }],
         related: [{ id: "nav-link", description: "NavLink gir individuelle navigasjonslenker som Tabs kan supplere med innholdspanelbytte." }],
+        subcomponents: [
+            { id: "tab-list", description: "Wrapper som inneholder Tab-elementene." },
+            { id: "tab", description: "En enkelt fane-knapp." },
+            { id: "tab-panel", description: "Innholdsområdet tilknyttet en fane." },
+        ],
     },
 
     preview: <TabsPreview />,
     props,
-    subComponents: [
-        {
-            name: "TabList",
-            description: "Wrapper som inneholder Tab-elementene.",
-            props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tab-elementer." },
-            ],
-        },
-        {
-            name: "Tab",
-            description: "En enkelt fane-knapp.",
-            props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekst eller innhold i fanen." },
-            ],
-        },
-        {
-            name: "TabPanel",
-            description: "Innholdsområdet tilknyttet en fane.",
-            props: [
-                { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet som vises når fanen er aktiv." },
-                { name: "tabIndex", type: "number", required: false, source: "native", status: "stable", description: "Overstyrer tabIndex på panelet." },
-            ],
-        },
-    ],
 };
 
 export default doc;
