@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { SkeletonCheckboxGroupPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "skeleton-checkbox-group",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Tilbakemelding",
     standalone: false,
     description: "Plassholder for en gruppe avkrysningsbokser.",
-    preview: null as any,
+    preview: <SkeletonCheckboxGroupPreview />,
     props: [
         { name: "checkboxes", type: "number", required: true, source: "custom", status: "stable", description: "Antall avkrysningsbokser som skal vises som plassholdere." },
     ],

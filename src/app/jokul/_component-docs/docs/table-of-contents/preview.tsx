@@ -1,6 +1,8 @@
 "use client";
 import { TableOfContents } from "@fremtind/jokul/table-of-contents";
 
+export function TableOfContentsLinkPreview() { return <TableOfContentsPreview />; }
+
 export function TableOfContentsPreview() {
     return (
         <TableOfContents label="Innhold">

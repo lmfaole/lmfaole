@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { TabListPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "tab-list",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     standalone: false,
     description: "Wrapper som inneholder Tab-elementene.",
-    preview: null as any,
+    preview: <TabListPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tab-elementer." },
     ],

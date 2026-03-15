@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { LinkListLinkPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "link-list-link",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     standalone: false,
     description: "En lenke inne i lenkegruppelisten.",
-    preview: null as any,
+    preview: <LinkListLinkPreview />,
     props: [
         { name: "href", type: "string", required: true, source: "native", status: "stable", description: "URL-en lenken peker til." },
         { name: "target", type: "string", required: false, source: "native", status: "stable", description: 'Åpner lenken i nytt vindu/fane (f.eks. "_blank").' },

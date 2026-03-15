@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { TableOfContentsLinkPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "table-of-contents-link",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     standalone: false,
     description: "En lenke i innholdsfortegnelsen. Rendres som en <a> som standard, men kan byttes med as-prop.",
-    preview: null as any,
+    preview: <TableOfContentsLinkPreview />,
     props: [
         { name: "href", type: "string", required: true, source: "native", status: "stable", description: "Anker-ID for seksjonen lenken peker til, f.eks. #intro." },
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Lenketeksten." },

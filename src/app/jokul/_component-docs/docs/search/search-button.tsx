@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { SearchButtonPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "search-button",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Skjema",
     standalone: false,
     description: "Frittstående søkeknapp som pares med Search-inputfeltet i et skjema. Rendrer en ghost-knapp med søketekst.",
-    preview: null as any,
+    preview: <SearchButtonPreview />,
     props: [
         { name: "label", type: "string", required: false, source: "custom", status: "stable", default: '"Søk"', description: "Tekst i knappen." },
         { name: "type", type: '"button" | "submit" | "reset"', required: false, source: "native", status: "stable", default: '"button"', description: "HTML-type-attributtet." },

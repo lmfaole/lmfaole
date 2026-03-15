@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { TabPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "tab",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     standalone: false,
     description: "En enkelt fane-knapp.",
-    preview: null as any,
+    preview: <TabPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekst eller innhold i fanen." },
     ],

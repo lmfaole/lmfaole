@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { ExpandablePanelContentPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "expandable-panel-content",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Visning",
     standalone: false,
     description: "Innholdsområdet som vises og skjules.",
-    preview: null as any,
+    preview: <ExpandablePanelContentPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet som vises når panelet er åpent." },
     ],

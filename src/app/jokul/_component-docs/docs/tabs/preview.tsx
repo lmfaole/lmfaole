@@ -2,6 +2,10 @@
 import { Tabs, Tab, TabList, TabPanel } from "@fremtind/jokul/tabs";
 import { Card } from "@fremtind/jokul/card";
 
+export function TabPreview() { return <TabsPreview />; }
+export function TabListPreview() { return <TabsPreview />; }
+export function TabPanelPreview() { return <TabsPreview />; }
+
 export function TabsPreview() {
     return (
         <Tabs>

@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { TabPanelPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "tab-panel",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     standalone: false,
     description: "Innholdsområdet tilknyttet en fane.",
-    preview: null as any,
+    preview: <TabPanelPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Innholdet som vises når fanen er aktiv." },
         { name: "tabIndex", type: "number", required: false, source: "native", status: "stable", description: "Overstyrer tabIndex på panelet." },

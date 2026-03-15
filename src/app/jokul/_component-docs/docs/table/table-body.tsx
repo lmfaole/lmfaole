@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { TableBodyPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "table-body",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Visning",
     standalone: false,
     description: "Wrapper for dataradene i tabellen.",
-    preview: null as any,
+    preview: <TableBodyPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "TableRow-elementer." },
     ],

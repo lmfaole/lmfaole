@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { TableHeadPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "table-head",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Visning",
     standalone: false,
     description: "Wrapper for overskriftsraden i tabellen.",
-    preview: null as any,
+    preview: <TableHeadPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "TableRow-elementer." },
     ],

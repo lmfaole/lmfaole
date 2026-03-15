@@ -18,7 +18,7 @@ Defined in `src/features/component-docs/docs/types/component.ts`. Key rules:
 - **`category`** — one of: `"Layout" | "Skjema" | "Handling" | "Tilbakemelding" | "Navigasjon" | "Visning" | "Overlegg"`.
 - **`description`** — 1–2 sentences answering "What problem does this solve?". Never restate the component name.
 - **`warnings`** — important gotchas only. Omit if none.
-- **`preview`** — **required**. Must always be a stateful function component — never static inline JSX (see [Preview rules](#preview-rules)).
+- **`preview`** — **required on every `ComponentDoc`, including subcomponents (`standalone: false`)**. Must always be a stateful function component — never static inline JSX and never `null as any` (see [Preview rules](#preview-rules)).
 - **`props`** — import from `./props`. See [PropDef rules](#propdef-rules).
 - **`examples`** — import from `./examples`. At least one; simplest use case first.
 - **`migrations`** — only when deprecated APIs exist.
@@ -26,7 +26,17 @@ Defined in `src/features/component-docs/docs/types/component.ts`. Key rules:
 
 ### Preview rules
 
-`preview` **must always be a stateful function component** defined above `const doc`. Never use static JSX directly in the field.
+`preview` **must always be a stateful function component** defined above `const doc`. Never use static JSX directly in the field. **Never use `null as any`** — even for subcomponents (`standalone: false`). Subcomponent previews should show the subcomponent rendered inside its parent context.
+
+```tsx
+// ✅ Correct — subcomponent shown in parent context
+export function TabPreview() { return <TabsPreview />; }
+
+// ❌ Wrong — null is not a valid preview
+const doc: ComponentDoc = {
+    preview: null as any,
+};
+```
 
 ```tsx
 // ✅ Correct

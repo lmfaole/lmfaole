@@ -3,6 +3,8 @@ import { useEffect, useRef } from "react";
 import { Search } from "@fremtind/jokul/search";
 import { usePreviewHovered } from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
+export function SearchButtonPreview() { return <SearchPreview />; }
+
 export function SearchPreview() {
     const isHovered = usePreviewHovered();
     const inputRef = useRef<HTMLInputElement>(null);

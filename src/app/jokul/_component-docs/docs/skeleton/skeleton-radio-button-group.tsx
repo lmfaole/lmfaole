@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { SkeletonRadioButtonGroupPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "skeleton-radio-button-group",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Tilbakemelding",
     standalone: false,
     description: "Plassholder for en gruppe radioknapper.",
-    preview: null as any,
+    preview: <SkeletonRadioButtonGroupPreview />,
     props: [
         { name: "radioButtons", type: "number", required: true, source: "custom", status: "stable", description: "Antall radioknapper som skal vises som plassholdere." },
     ],

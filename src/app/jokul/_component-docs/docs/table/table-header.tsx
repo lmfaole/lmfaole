@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { TableHeaderPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "table-header",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Visning",
     standalone: false,
     description: "En overskriftscelle i tabellen.",
-    preview: null as any,
+    preview: <TableHeaderPreview />,
     props: [
         { name: "scope", type: '"col" | "row"', required: false, source: "native", status: "stable", description: "Angir om cellen er overskrift for kolonne eller rad." },
         { name: "align", type: '"left" | "right" | "center"', required: false, source: "custom", status: "stable", default: '"left"', description: "Horisontal tekstjustering." },

@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { SkeletonInputPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "skeleton-input",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Tilbakemelding",
     standalone: false,
     description: "Plassholder som matcher bredde og høyde på et TextInput-felt.",
-    preview: null as any,
+    preview: <SkeletonInputPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: false, source: "react", status: "stable", description: "Valgfritt innhold." },
     ],

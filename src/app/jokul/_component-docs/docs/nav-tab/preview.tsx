@@ -1,6 +1,8 @@
 "use client";
 import { NavTab, NavTabs } from "@fremtind/jokul/tabs";
 
+export function NavTabsPreview() { return <NavTabPreview />; }
+
 export function NavTabPreview() {
     return (
         <NavTabs aria-label="Eksempel">

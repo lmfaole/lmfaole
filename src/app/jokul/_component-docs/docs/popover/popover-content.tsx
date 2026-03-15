@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { PopoverContentPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "popover-content",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Overlegg",
     standalone: false,
     description: "Det flytende innholdsområdet som vises når popoveren er åpen. Aksepterer alle native div-attributter i tillegg til egne props.",
-    preview: null as any,
+    preview: <PopoverContentPreview />,
     props: [
         {
             name: "padding",

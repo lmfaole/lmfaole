@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { PopoverTriggerPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "popover-trigger",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Overlegg",
     standalone: false,
     description: "Elementet som åpner og lukker popoveren. Rendrer som en <button> som standard. Aksepterer alle native HTML-attributter for det aktuelle elementet.",
-    preview: null as any,
+    preview: <PopoverTriggerPreview />,
     props: [
         {
             name: "asChild",

@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { TableRowPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "table-row",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Visning",
     standalone: false,
     description: "En rad i tabellen.",
-    preview: null as any,
+    preview: <TableRowPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "TableHeader og TableCell-elementer." },
     ],

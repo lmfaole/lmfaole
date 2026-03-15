@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { MenuItemPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "menu-item",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Overlegg",
     standalone: false,
     description: "Et valgbart element i menyen.",
-    preview: null as any,
+    preview: <MenuItemPreview />,
     props: [
         { name: "icon", type: "ReactNode", required: false, source: "custom", status: "stable", description: "Ikon som vises til venstre for teksten." },
         { name: "as", type: "ElementType", required: false, source: "custom", status: "stable", default: '"button"', description: "Polymorfisk prop for å endre underliggende element (f.eks. 'a' for lenker)." },

@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { SkeletonTextAreaPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "skeleton-text-area",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Tilbakemelding",
     standalone: false,
     description: "Plassholder som matcher bredde og høyde på et TextArea-felt.",
-    preview: null as any,
+    preview: <SkeletonTextAreaPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: false, source: "react", status: "stable", description: "Valgfritt innhold." },
     ],

@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { BreadcrumbItemPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "breadcrumb-item",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     standalone: false,
     description: "Et enkelt ledd i brødsmulestien.",
-    preview: null as any,
+    preview: <BreadcrumbItemPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Lenke eller tekst for gjeldende side." },
     ],

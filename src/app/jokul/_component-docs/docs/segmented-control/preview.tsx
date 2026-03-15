@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { SegmentedControl, SegmentedControlButton } from "@fremtind/jokul/segmented-control";
 
+export function SegmentedControlButtonPreview() { return <SegmentedControlPreview />; }
+
 export function SegmentedControlPreview() {
     const [value, setValue] = useState("uke");
     return (

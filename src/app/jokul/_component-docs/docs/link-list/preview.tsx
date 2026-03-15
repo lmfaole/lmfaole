@@ -1,6 +1,8 @@
 "use client";
 import { LinkList } from "@fremtind/jokul/link-list";
 
+export function LinkListLinkPreview() { return <LinkListPreview />; }
+
 export function LinkListPreview() {
     return (
         <LinkList label="Forsikringer">

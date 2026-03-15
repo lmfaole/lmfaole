@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { TableCaptionPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "table-caption",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Visning",
     standalone: false,
     description: "Tilgjengelig tabellbeskrivelse. Bruk srOnly for å skjule den visuelt når konteksten allerede navngir tabellen.",
-    preview: null as any,
+    preview: <TableCaptionPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Beskrivelsesteksten." },
         { name: "srOnly", type: "boolean", required: false, source: "custom", status: "stable", default: "false", description: "Skjuler caption visuelt, men beholder den for skjermlesere." },

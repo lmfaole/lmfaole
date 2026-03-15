@@ -1,9 +1,28 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Menu, MenuItem, MenuDivider } from "@fremtind/jokul/menu";
+import { Menu, MenuItem, MenuItemCheckbox, MenuDivider } from "@fremtind/jokul/menu";
 import { Button } from "@fremtind/jokul/button";
 import { Icon } from "@fremtind/jokul/icon";
 import { usePreviewHovered } from "@/app/jokul/_component-docs/components/PreviewHoverContext";
+
+export function MenuItemPreview() { return <MenuPreview />; }
+
+export function MenuItemCheckboxPreview() {
+    const isHovered = usePreviewHovered();
+    const [open, setOpen] = useState(false);
+    const [checked, setChecked] = useState<Record<string, boolean>>({ kasko: true, ansvar: false });
+    useEffect(() => { setOpen(isHovered); }, [isHovered]);
+    return (
+        <Menu
+            isOpen={open}
+            onToggle={setOpen}
+            triggerElement={<Button variant="secondary" icon={<Icon>more_vert</Icon>}>Vis</Button>}
+        >
+            <MenuItemCheckbox aria-checked={checked.kasko} onChange={() => setChecked(c => ({ ...c, kasko: !c.kasko }))}>Kasko</MenuItemCheckbox>
+            <MenuItemCheckbox aria-checked={checked.ansvar} onChange={() => setChecked(c => ({ ...c, ansvar: !c.ansvar }))}>Ansvar</MenuItemCheckbox>
+        </Menu>
+    );
+}
 
 export function MenuPreview() {
     const isHovered = usePreviewHovered();

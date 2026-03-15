@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { NavTabsPreview } from "./preview";
 import { navTabsProps } from "./props";
 
 const doc: ComponentDoc = {
@@ -8,7 +9,7 @@ const doc: ComponentDoc = {
     category: "Navigasjon",
     standalone: false,
     description: "Wrapper-komponent som inneholder NavTab-elementene og håndterer tablist-rollen og den animerte indikatoren.",
-    preview: null as any,
+    preview: <NavTabsPreview />,
     props: navTabsProps,
 };
 

@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { SkeletonButtonPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "skeleton-button",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Tilbakemelding",
     standalone: false,
     description: "Plassholder som matcher bredde og høyde på en Button.",
-    preview: null as any,
+    preview: <SkeletonButtonPreview />,
     props: [
         { name: "width", type: "string", required: false, source: "custom", status: "stable", description: "Bredde på knapp-plassholderen, f.eks. '8rem'." },
         { name: "children", type: "React.ReactNode", required: false, source: "react", status: "stable", description: "Valgfritt innhold." },

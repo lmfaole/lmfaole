@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { DescriptionDetailPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "description-detail",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Visning",
     standalone: false,
     description: "Verdien (dd) i et nøkkel-verdi-par.",
-    preview: null as any,
+    preview: <DescriptionDetailPreview />,
     props: [
         { name: "children", type: "React.ReactNode", required: true, source: "react", status: "stable", description: "Tekst eller innhold for detaljen." },
     ],

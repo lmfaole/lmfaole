@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { SegmentedControlButtonPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "segmented-control-button",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Handling",
     standalone: false,
     description: "Et enkelt alternativ i SegmentedControl.",
-    preview: null as any,
+    preview: <SegmentedControlButtonPreview />,
     props: [
         { name: "value", type: "string", required: true, source: "native", status: "stable", description: "Verdien som sendes ved valg." },
         { name: "checked", type: "boolean", required: false, source: "native", status: "stable", description: "Om dette alternativet er valgt (kontrollert)." },

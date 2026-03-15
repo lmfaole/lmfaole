@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../types";
+import { MenuItemCheckboxPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "menu-item-checkbox",
@@ -7,7 +8,7 @@ const doc: ComponentDoc = {
     category: "Overlegg",
     standalone: false,
     description: "Et avkrysningselement i menyen for å toggle tilstander.",
-    preview: null as any,
+    preview: <MenuItemCheckboxPreview />,
     props: [
         { name: "aria-checked", type: "boolean", required: false, source: "native", status: "stable", description: "Angir om elementet er huket av." },
         { name: "onChange", type: "(event: React.ChangeEvent, pressed: boolean) => void", required: false, source: "react", status: "stable", description: "Kalles når avkrysningsstatus endres." },

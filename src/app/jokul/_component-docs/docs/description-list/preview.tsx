@@ -1,6 +1,9 @@
 "use client";
 import { DescriptionList, DescriptionTerm, DescriptionDetail } from "@fremtind/jokul/description-list";
 
+export function DescriptionTermPreview() { return <DescriptionListPreview />; }
+export function DescriptionDetailPreview() { return <DescriptionListPreview />; }
+
 export function DescriptionListPreview() {
     return (
         <DescriptionList>
