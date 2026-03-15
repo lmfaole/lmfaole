@@ -9,7 +9,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     description: "TextArea er et flerlinjers tekstinputfelt for lengre tekstinnhold.",
     relationships: {
-        related: [{ id: "text-input", description: "Bruk TextInput for enkeltlinjeverdi; TextArea er for flerlinjers fritekst som kommentarer eller beskrivelser." }],
+        related: [
+            { id: "text-input", description: "Bruk TextInput for enkeltlinjeverdi; TextArea er for flerlinjers fritekst som kommentarer eller beskrivelser." },
+            { id: "input-group", description: "Bruk InputGroup for å legge til hjelpetekst eller feilmelding — men TextArea har dette innebygget og trenger ikke InputGroup selv." },
+        ],
     },
     preview: <TextAreaPreview />,
 

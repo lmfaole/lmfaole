@@ -11,7 +11,11 @@ const doc: ComponentDoc = {
     description: "Autosuggest er et tekstinputfelt som viser forslag mens brukeren skriver. Passer for søk og fritekstfelt med et endelig sett av gyldige valg.",
     warnings: "Forslagene filtreres ikke automatisk — du håndterer filtrering selv og oppdaterer suggestions-prop.",
     relationships: {
-        related: [{ id: "text-input", description: "Autosuggest bygger på TextInput og legger til en nedtrekksliste med forslag som utløses mens brukeren skriver." }, { id: "select", description: "Bruk Select når hele alternativlisten skal vises fra start i stedet for å filtreres av input." }],
+        related: [
+            { id: "text-input", description: "Autosuggest bygger på TextInput og legger til en nedtrekksliste med forslag som utløses mens brukeren skriver." },
+            { id: "combobox", description: "Combobox ligner Autosuggest, men bruker en strukturert items-liste og er bedre egnet for et fast sett av valg." },
+            { id: "select", description: "Bruk Select når hele alternativlisten skal vises fra start i stedet for å filtreres av input." },
+        ],
     },
     preview: <AutosuggestPreview />,
 

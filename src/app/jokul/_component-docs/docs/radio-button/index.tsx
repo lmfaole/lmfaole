@@ -12,7 +12,10 @@ const doc: ComponentDoc = {
     warnings: "Aldri bruk RadioButton uten RadioButtonGroup — den er ikke tilgjengelig uten riktig name og grouping.",
     relationships: {
         alternatives: [{ id: "radio-panel", description: "Bruk RadioPanel når du trenger et større klikkbart kortområde rundt hvert alternativ." }],
-        related: [{ id: "checkbox", description: "Bruk Checkbox i stedet når brukeren kan velge flere alternativer samtidig." }],
+        related: [
+            { id: "input-group", description: "Bruk InputGroup for å gruppere RadioButton-felter under en felles label og dele hjelpetekst." },
+            { id: "checkbox", description: "Bruk Checkbox i stedet når brukeren kan velge flere alternativer samtidig." },
+        ],
     },
 
     preview: <RadioButtonPreview />,
