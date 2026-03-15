@@ -238,7 +238,22 @@ The only exception is `display: inline-flex` on a non-Jøkul element where wrapp
 
 ---
 
-## Reporting Jøkul issues
+## Updating Jøkul
+
+When `@fremtind/jokul` is upgraded to a new version, **always audit and update the component docs** to reflect the changes before committing:
+
+1. **Check the changelog** — read the release notes for the new version and identify added props, removed props, renamed APIs, new components, and deprecations.
+2. **Update `props` arrays** — add new props, mark deprecated props with `status: "deprecated"`, remove props that no longer exist.
+3. **Update `warnings`** — reflect any new gotchas or removed caveats.
+4. **Update `migrations`** — if APIs changed, add a migration entry showing before/after.
+5. **Update `relationships`** — if new sub-components were added or components were merged/split.
+6. **Update `preview.tsx`** — if component APIs changed, update the preview to use the new API.
+7. **Re-check patches** — if a patch fixes a bug that was resolved upstream, remove the patch. If a new bug was introduced, add a patch and file an issue.
+8. **Run `npx tsc --noEmit`** — verify zero TypeScript errors after the upgrade.
+
+---
+
+
 
 When you encounter any of the following while using Jøkul, **always create a GitHub issue** in this repository before or immediately after applying a workaround:
 
