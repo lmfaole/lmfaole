@@ -22,5 +22,12 @@ export function ProgressBarPreview() {
         return () => clearInterval(id);
     }, [isHovered]);
 
-    return <ProgressBar aria-valuenow={value} title="Fremdrift" aria-valuetext={`${value} prosent fullført`} />;
+    return (
+        <div style={{ width: "12rem", display: "flex", flexDirection: "column", gap: "var(--jkl-spacing-s)" }}>
+            <span style={{ fontSize: "var(--jkl-font-size-small)", color: "var(--jkl-color-text-subdued)" }}>
+                {value}%
+            </span>
+            <ProgressBar aria-valuenow={value} title="Fremdrift" aria-valuetext={`${value} prosent fullført`} />
+        </div>
+    );
 }
