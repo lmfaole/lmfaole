@@ -16,7 +16,6 @@ import {NotFound} from "@/shared/components/NotFound";
 import {AlternativesList} from "@/features/component-docs/components/AlternativesList";
 import {SubcomponentsList} from "@/features/component-docs/components/SubcomponentsList";
 import {RelatedComponentsTable} from "@/features/component-docs/components/RelatedComponentsTable";
-import {TokenLinks} from "@/features/component-docs/components/TokenLinks/TokenLinks";
 import {PageHero} from "@/shared/components/PageHero/PageHero";
 import {DotsIllustration} from "@/shared/components/Illustration";
 
@@ -109,9 +108,6 @@ export default function ComponentPage() {
             />
 
             <TableOfContents label="Innhold">
-                {doc.tokens && doc.tokens.length > 0 && (
-                    <TableOfContents.Link href="#tokens">Tokens</TableOfContents.Link>
-                )}
                 {doc.warnings && (
                     <TableOfContents.Link href="#viktig-informasjon">Viktig informasjon</TableOfContents.Link>
                 )}
@@ -143,16 +139,6 @@ export default function ComponentPage() {
                     ) : (
                         <p>{doc.warnings}</p>
                     )}
-                </Flex>
-            )}
-
-            {doc.tokens && doc.tokens.length > 0 && (
-                <Flex as="section" direction="column" gap="s">
-                    <h2 id="tokens">Tokens</h2>
-                    <p style={{ color: "var(--jkl-color-text-subdued)" }}>
-                        Denne komponenten er visuelt styrt av følgende token-kategorier.
-                    </p>
-                    <TokenLinks tokens={doc.tokens} />
                 </Flex>
             )}
 

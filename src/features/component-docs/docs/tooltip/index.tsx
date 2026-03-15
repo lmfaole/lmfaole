@@ -18,8 +18,7 @@ const doc: ComponentDoc = {
     "Tooltip må aldri inneholde kritisk informasjon som ikke finnes andre steder på siden.",
 ],
     props,
-    examples,
-    tokens: ["colors", "spacing", "typography", "motion", "border-radius"],
+    examples
 };
 
 export default doc;

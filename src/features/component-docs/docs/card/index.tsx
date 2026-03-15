@@ -25,8 +25,7 @@ const doc: ComponentDoc = {
     preview: <CardPreview />,
 
     props,
-    examples,
-    tokens: ["colors", "spacing", "border-radius"],
+    examples
 };
 
 export default doc;

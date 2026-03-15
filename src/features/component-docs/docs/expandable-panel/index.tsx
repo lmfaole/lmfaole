@@ -35,8 +35,7 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples,
-    tokens: ["colors", "spacing", "motion", "border-radius"],
+    examples
 };
 
 export default doc;

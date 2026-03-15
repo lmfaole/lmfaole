@@ -43,8 +43,7 @@ const doc: ComponentDoc = {
             ],
         },
     ],
-    examples,
-    tokens: ["colors", "spacing", "typography", "motion"],
+    examples
 };
 
 export default doc;

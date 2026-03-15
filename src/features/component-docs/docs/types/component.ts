@@ -133,14 +133,6 @@ export interface ComponentDoc {
      */
     migrations?: Migration[];
 
-    /**
-     * Token category slugs that this component depends on or is heavily influenced by.
-     * Each value must match a slug in the token documentation (e.g. `"colors"`, `"spacing"`,
-     * `"typography"`, `"motion"`, `"border-radius"`, `"breakpoints"`).
-     * Rendered as links to `/jokul/token/{slug}` on the component detail page.
-     */
-    tokens?: string[];
-
     relationships?: ComponentRelationships;
 }
 
