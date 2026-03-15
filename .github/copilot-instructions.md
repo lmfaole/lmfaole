@@ -239,7 +239,5 @@ When you discover a bug in Jøkul (unexpected behaviour, missing styles, broken 
 gh issue create \
   --repo fremtind/jokul \
   --title "<Kort beskrivelse av buggen>" \
-  --body "## Hva er galt\n<Én setning>\n\n## Reproduksjon\n<Minimale steg>\n\n## Workaround\n<Patch eller annen løsning brukt i dette prosjektet>"
+  --body "## Hva skjer\n<Én setning>\n\n## Hva som burde skje\n<Én setning>\n\n## Fiks\n<Én setning>"
 ```
-
-Also add a comment in the patch file (if one is needed) referencing the issue URL so future maintainers can track it.
