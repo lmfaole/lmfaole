@@ -73,7 +73,7 @@ export default function ComponentsPage() {
 
             <NavTabs aria-label="Vis">
                 <NavTab href="/jokul/component" aria-selected>Komponenter</NavTab>
-                <NavTab href="/jokul/component/props">Prop-indeks</NavTab>
+                <NavTab href="/jokul/component/props">Props-oversikt</NavTab>
             </NavTabs>
 
             <Flex direction="column" gap="m">

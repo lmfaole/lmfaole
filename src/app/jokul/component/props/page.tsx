@@ -79,7 +79,7 @@ export default function PropIndexPage() {
 
             <NavTabs aria-label="Vis">
                 <NavTab href="/jokul/component">Komponenter</NavTab>
-                <NavTab href="/jokul/component/props" aria-selected>Prop-indeks</NavTab>
+                <NavTab href="/jokul/component/props" aria-selected>Props-oversikt</NavTab>
             </NavTabs>
 
             <Flex direction="column" gap="m">
@@ -92,7 +92,7 @@ export default function PropIndexPage() {
                 <p className="muted component-index__count">
                     {filteredProps.length} av {ALL_PROP_ENTRIES.length} props
                 </p>
-                <Table caption="Prop-indeks" collapseToList fullWidth>
+                <Table caption="Props-oversikt" collapseToList fullWidth>
                     <TableHead>
                         <TableRow>
                             <TableHeader sortable={getSortProps("name").sortable}>Prop</TableHeader>
