@@ -28,15 +28,19 @@ function Side({
 }) {
     const hasPreview = Boolean(side.preview);
     return (
-        <Card variant="outlined" padding="m" className="before-after__col jkl-flex flex-direction-column screen-small-row-gap-s">
-            <Flex direction="column" gap="2xs">
-                <Tag variant={variant} className="before-after__badge">{label}</Tag>
-                {side.caption && <p className="before-after__caption">{side.caption}</p>}
+        <Card variant="outlined" padding="m">
+            <Flex direction="column" gap="s">
+                <Flex direction="column" gap="2xs">
+                    <Tag variant={variant} className="before-after__badge">{label}</Tag>
+                    {side.caption && <p className="before-after__caption">{side.caption}</p>}
+                </Flex>
+                {hasPreview && (
+                    <Flex wrap="wrap" alignItems="center" gap="s" className="before-after__preview">
+                        {side.preview}
+                    </Flex>
+                )}
+                <CodeBlock code={side.code} />
             </Flex>
-            {hasPreview && (
-                <Flex wrap="wrap" alignItems="center" gap="s" className="before-after__preview">{side.preview}</Flex>
-            )}
-            <CodeBlock code={side.code} />
         </Card>
     );
 }

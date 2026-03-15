@@ -19,18 +19,15 @@ export function ComponentCard({doc}: ComponentCardProps) {
 
     return (
         <Card
+            as="a"
+            href={`/jokul/component/${doc.id}`}
+            aria-label={doc.name}
             clickable
             padding="s"
             variant="outlined"
-            style={{position: "relative"}}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
-            <a
-                href={`/jokul/component/${doc.id}`}
-                aria-label={doc.name}
-                style={{position: "absolute", inset: 0}}
-            />
             {preview && (
                 <Flex alignItems="center" justifyContent="center" className="component-card-preview">
                     <PreviewHoverContext value={hovered}>
@@ -40,9 +37,9 @@ export function ComponentCard({doc}: ComponentCardProps) {
                     </PreviewHoverContext>
                 </Flex>
             )}
-            <Flex direction="column" gap="xs" style={{padding: "var(--jkl-spacing-s)"}}>
-                <p>{doc.name}</p>
-                <p className="jkl-small muted">{description}</p>
+            <Flex direction="column" gap="xs">
+                <strong>{doc.name}</strong>
+                <small className="muted">{description}</small>
             </Flex>
         </Card>
     );

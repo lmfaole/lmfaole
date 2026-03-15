@@ -15,8 +15,8 @@ export function ScssMixinSection({ mixins }: ScssMixinSectionProps) {
     const current = mixins.find((m) => m.name === active) ?? mixins[0];
 
     return (
-        <>
-            <Flex gap="xs" wrap="wrap" style={{ marginBottom: "var(--jkl-spacing-m)" }} role="group" aria-label="Velg mixin">
+        <Flex direction="column" gap="m">
+            <Flex gap="xs" wrap="wrap" role="group" aria-label="Velg mixin">
                 {mixins.map((mixin) => (
                     <Chip
                         key={mixin.name}
@@ -32,9 +32,9 @@ export function ScssMixinSection({ mixins }: ScssMixinSectionProps) {
             {current && (
                 <>
                     <p>{current.description}</p>
-                    <CodeBlock code={current.example} />
+                    <CodeBlock code={current.example} defaultOpen />
                 </>
             )}
-        </>
+        </Flex>
     );
 }

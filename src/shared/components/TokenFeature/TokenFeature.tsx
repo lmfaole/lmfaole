@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "@fremtind/jokul/card";
+import { Flex } from "@fremtind/jokul/flex";
 import type { TokenPost } from "@/app/jokul/_token/data";
 import { getTokenSlug } from "@/app/jokul/_token/data";
 import "./token-feature.scss";
@@ -16,16 +17,16 @@ export function TokenFeature({ post }: TokenFeatureProps) {
             href={`/jokul/token/${getTokenSlug(post)}`}
             clickable
             aria-label={post.title}
-            className="token-feature jkl-flex flex-direction-column"
-            style={{ padding: 0, position: "relative" }}
         >
-            {post.illustration && (
-                <div className="token-feature__bg" aria-hidden="true">
-                    {post.illustration}
-                </div>
-            )}
-            <div className="token-feature__content">
-                <strong className="token-feature__title">{post.title}</strong>
+            <div className="token-feature">
+                {post.illustration && (
+                    <div className="token-feature__bg" aria-hidden="true">
+                        {post.illustration}
+                    </div>
+                )}
+                <Flex className="token-feature__content" alignItems="center" justifyContent="center">
+                    <strong className="token-feature__title">{post.title}</strong>
+                </Flex>
             </div>
         </Card>
     );

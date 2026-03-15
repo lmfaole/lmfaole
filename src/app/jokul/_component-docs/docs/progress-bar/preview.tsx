@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ProgressBar } from "@fremtind/jokul/progress-bar";
+import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
 export function ProgressBarPreview() {
@@ -23,11 +24,11 @@ export function ProgressBarPreview() {
     }, [isHovered]);
 
     return (
-        <div style={{ width: "12rem", display: "flex", flexDirection: "column", gap: "var(--jkl-spacing-s)" }}>
+        <Flex direction="column" gap="s" style={{ width: "12rem" }}>
             <span style={{ fontSize: "var(--jkl-font-size-small)", color: "var(--jkl-color-text-subdued)" }}>
                 {value}%
             </span>
             <ProgressBar aria-valuenow={value} title="Fremdrift" aria-valuetext={`${value} prosent fullført`} />
-        </div>
+        </Flex>
     );
 }

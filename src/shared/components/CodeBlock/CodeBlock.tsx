@@ -7,13 +7,14 @@ import {ExpandablePanel} from "@fremtind/jokul/expander";
 interface CodeBlockProps {
     code: string;
     label?: string;
+    defaultOpen?: boolean;
 }
 
-export function CodeBlock({code, label = "Kode"}: CodeBlockProps) {
+export function CodeBlock({code, label = "Kode", defaultOpen = false}: CodeBlockProps) {
     const trimmed = code.trim();
 
     return (
-        <ExpandablePanel className="code-block">
+        <ExpandablePanel className="code-block" defaultOpen={defaultOpen}>
             <ExpandablePanel.Header>
                 {label}
             </ExpandablePanel.Header>

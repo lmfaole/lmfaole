@@ -1,5 +1,6 @@
 "use client";
 import { Countdown } from "@fremtind/jokul/countdown";
+import { Flex } from "@fremtind/jokul/flex";
 import { useState, useEffect } from "react";
 import { usePreviewHovered } from "@/app/jokul/_component-docs/components/PreviewHoverContext";
 
@@ -12,11 +13,11 @@ export function CountdownPreview() {
     }, [isHovered]);
 
     return (
-        <div style={{ width: "12rem", display: "flex", flexDirection: "column", gap: "var(--jkl-spacing-s)" }}>
+        <Flex direction="column" gap="s" style={{ width: "12rem" }}>
             <span style={{ fontSize: "var(--jkl-font-size-small)", color: "var(--jkl-color-text-subdued)" }}>
                 {isHovered ? "Teller ned…" : "Hold over for å starte"}
             </span>
             <Countdown key={key} from={5000} isPaused={!isHovered} />
-        </div>
+        </Flex>
     );
 }

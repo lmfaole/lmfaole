@@ -27,17 +27,19 @@ Type-spesifikke regler skal ligge som JSDoc ved typene (ikke i denne fila):
 - Importer alltid fra `@fremtind/jokul/<component>`.
 - Ikke gjett props: verifiser i type defs:
   `node_modules/@fremtind/jokul/build/es/components/<component>/types.d.ts`
+- Når du bruker en ny prop, komponent eller token, må den dokumenteres.
 
 ## Styling (hard rules)
 
 - Ikke overstyr Jøkul-komponenters utseende (ikke bruk `style`/`className` for visuell endring).
-- Ikke skriv CSS som targeter `.jkl-*`.
+- Ikke skriv CSS som targeter `.jkl-*` (unntak: `src/styles/patches/*` for midlertidige upstream-feil i Jøkul, og da skal det finnes et GitHub-issue).
 - Bruk wrappers for layout og Jøkul tokens (`var(--jkl-*)`) for spacing/posisjonering på egne elementer.
+- Bruk Jøkul `Flex` for flex-layouts; unngå `display: flex/grid` i CSS/inline bare for enkel sentrering der `<Flex>` dekker behovet.
+- Aldri endre fonten for stilårsaker (font-weight, letter-spacing, text-transform og lignende).
 
-## Layout
+## Unntak fra Jøkul
 
-- Bruk Jøkul `Flex` for flex-layouts; ikke skriv `display: flex` i CSS/inline.
-- Unntak: `inline-flex` på et ikke-Jøkul element der `<Flex inline>` er semantisk feil.
+- Dersom noe i Jøkul gjør at ting krasjer: lag en patch og et issue (beskrevet nedenfor). Husk å sjekk nøye at det er Jøkul som gjør det.
 
 ## Kommandoer (lokalt/CI)
 
@@ -58,7 +60,7 @@ Merk: A11y-testene bruker Puppeteer/Chrome for Testing og kan installere browser
   - `CLOUDFLARE_ACCOUNT_ID`
 - Wrangler: `wrangler.toml` (build output: `.vercel/output/static`)
 
-## GitHub-issues (påkrevd ved workarounds)
+## GitHub-issues (påkrevd ved workarounds, ulogisk kode, dårlig ytelse, manglende dokumentasjon, med mer...)
 
 Hvis du lager en workaround for Jøkul-problemer (bug/manglende styles/API/a11y/SSR/ytelse/docs), opprett issue på norsk:
 

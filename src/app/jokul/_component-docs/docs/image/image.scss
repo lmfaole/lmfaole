@@ -32,9 +32,13 @@
   height: 120px;
   border-radius: 4px;
   overflow: hidden;
+  position: relative;
 
-  /* jkl-image has no intrinsic height — both children are position:absolute */
-  &.jkl-image {
+  /* The Image component renders a wrapper element (often a <figure>) that needs a height. */
+  > * {
+    width: 100%;
     height: 100%;
   }
+
+  /* The inner image/figure typically uses absolute children; ensure overflow stays clipped. */
 }

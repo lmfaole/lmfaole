@@ -1,13 +1,11 @@
 .ty-scale-demo {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 5rem;
 }
 
 /* Section wrapper */
 .ty-scale-demo__section {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--jkl-spacing-l);
 }
 
@@ -22,8 +20,7 @@
 
 /* Shared meta column (token + label stacked) */
 .ty-scale-demo__row-meta {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--jkl-unit-02);
     flex-shrink: 0;
     align-items: flex-end;
@@ -44,14 +41,13 @@
 
 /* ─── 1. Font size scale ─────────────────────────────────── */
 .ty-scale-demo__scale {
-    display: flex;
-    flex-direction: column;
+    display: grid;
 }
 
 .ty-scale-demo__row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    justify-content: space-between;
     gap: var(--jkl-spacing-l);
     padding-block: var(--jkl-spacing-s);
     border-block-end: 1px solid var(--jkl-color-border-ui);
@@ -68,8 +64,7 @@
 
 /* ─── 2. Named text styles ───────────────────────────────── */
 .ty-scale-demo__styles {
-    display: flex;
-    flex-direction: column;
+    display: grid;
 }
 
 .ty-scale-demo__style-row {
@@ -94,8 +89,7 @@
 }
 
 .ty-scale-demo__style-meta {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     align-items: flex-end;
     gap: var(--jkl-spacing-xxs);
     flex-shrink: 0;
@@ -109,10 +103,10 @@
 }
 
 .ty-scale-demo__style-tokens {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(5rem, max-content));
     gap: var(--jkl-spacing-xxs);
-    justify-content: flex-end;
+    justify-content: end;
 }
 
 .ty-scale-demo__chip {
@@ -129,14 +123,13 @@
 
 /* ─── 3. Font weight ─────────────────────────────────────── */
 .ty-scale-demo__weights {
-    display: flex;
-    flex-direction: column;
+    display: grid;
 }
 
 .ty-scale-demo__weight-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    justify-content: space-between;
     gap: var(--jkl-spacing-l);
     padding-block: var(--jkl-spacing-m);
     border-block-end: 1px solid var(--jkl-color-border-ui);
@@ -160,8 +153,7 @@
 }
 
 .ty-scale-demo__lh-card {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--jkl-spacing-xxs);
     padding: var(--jkl-spacing-l);
     border: 1px solid var(--jkl-color-border-ui);

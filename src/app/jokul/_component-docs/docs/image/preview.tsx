@@ -20,7 +20,13 @@ export function ImagePreview() {
     }, [isHovered]);
 
     return (
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        <Image src={images[imgIdx].src} alt={images[imgIdx].alt} className="image-component-preview" {...{ loading: "eager" } as any} />
+        <div className="image-component-preview">
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            <Image
+                src={images[imgIdx].src}
+                alt={images[imgIdx].alt}
+                {...({ loading: "eager" } as any)}
+            />
+        </div>
     );
 }

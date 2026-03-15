@@ -17,5 +17,22 @@ export const spacingMixins: ScssMixin[] = [
     @include jkl.spacing("16/24/40", "top");
 }`,
   },
-];
+  {
+    name: "data-size-variables",
+    description:
+      "Wrapper for å definere CSS-variabler som varierer med [data-size]. Bruk for å tilby en kompakt/standard romlighet uten å duplisere selectors.",
+    example: `@use "@fremtind/jokul/styles/core/jkl" as jkl;
 
+@include jkl.data-size-variables {
+    --my-component-padding: var(--jkl-spacing-m);
+}
+
+@include jkl.data-size-variables("compact") {
+    --my-component-padding: var(--jkl-spacing-s);
+}
+
+.my-component {
+    padding: var(--my-component-padding);
+}`,
+  },
+];

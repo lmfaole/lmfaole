@@ -3,7 +3,6 @@ import {TableOfContents} from "@fremtind/jokul/table-of-contents";
 import {Card} from "@fremtind/jokul/card";
 import {Flex} from "@fremtind/jokul/flex";
 import {DataTable} from "@fremtind/jokul/table";
-import {Tab, TabList, TabPanel, Tabs} from "@fremtind/jokul/tabs";
 import {PageHero} from "@/shared/components/PageHero/PageHero";
 import {ScssMixinSection} from "@/app/jokul/_token/components/ScssMixinSection";
 import {Section} from "@/app/jokul/_token/components/Section";
@@ -34,16 +33,18 @@ export function TokenArticle({
 
     return (
         <article>
-            <PageHero title={title} background={illustration} />
+            <PageHero title={title} background={illustration} description={excerpt} />
 
             {headings.length > 0 && (
-                <Card padding="l" className="token-toc-card">
-                    <TableOfContents label="Innhold">
-                        {headings.map((h) => (
-                            <TableOfContents.Link key={h} href={`#${slugify(h)}`}>{h}</TableOfContents.Link>
-                        ))}
-                    </TableOfContents>
-                </Card>
+                <div className="token-article__toc-card">
+                    <Card padding="l">
+                        <TableOfContents label="Innhold">
+                            {headings.map((h) => (
+                                <TableOfContents.Link key={h} href={`#${slugify(h)}`}>{h}</TableOfContents.Link>
+                            ))}
+                        </TableOfContents>
+                    </Card>
+                </div>
             )}
 
             {meta && <div className="token-article__meta">{meta}</div>}
@@ -51,36 +52,19 @@ export function TokenArticle({
             <Flex className="post-prose" direction="column" gap="l">
                 {tokenOverview && (
                     <Section title="Tokens">
-                        {tokenOverview.length === 1 ? (
-                            <>
-                                {tokenOverview[0].description && <p>{tokenOverview[0].description}</p>}
-                                <DataTable
-                                    caption={tokenOverview[0].caption}
-                                    columns={tokenOverview[0].columns}
-                                    rows={tokenOverview[0].rows}
-                                />
-                            </>
-                        ) : (
-                            <Tabs>
-                                <TabList aria-label="Token-kategorier">
-                                    {tokenOverview.map((table) => (
-                                        <Tab key={table.caption}>{table.heading ?? table.caption}</Tab>
-                                    ))}
-                                </TabList>
-                                {tokenOverview.map((table) => (
-                                    <TabPanel key={table.caption}>
-                                        <Card padding="l">
-                                            {table.description && <p>{table.description}</p>}
-                                            <DataTable
-                                                caption={table.caption}
-                                                columns={table.columns}
-                                                rows={table.rows}
-                                            />
-                                        </Card>
-                                    </TabPanel>
-                                ))}
-                            </Tabs>
-                        )}
+                        <Flex direction="column" gap="xl">
+                            {tokenOverview.map((table) => (
+                                <div key={table.caption}>
+                                    {tokenOverview.length > 1 && <h3>{table.heading ?? table.caption}</h3>}
+                                    {table.description && <p>{table.description}</p>}
+                                    <DataTable
+                                        caption={table.caption}
+                                        columns={table.columns}
+                                        rows={table.rows}
+                                    />
+                                </div>
+                            ))}
+                        </Flex>
                     </Section>
                 )}
 

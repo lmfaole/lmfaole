@@ -29,6 +29,30 @@ export const typographyMixins: ScssMixin[] = [
 }`,
   },
   {
+    name: "declare-font-variables",
+    description:
+      "Deklarer egne font-variabler (font-size/line-height/font-weight) basert på Jøkuls tokens. Passer når du vil gjenbruke samme nivå i flere selectors uten å kopiere var(--jkl-...).",
+    example: `@use "@fremtind/jokul/styles/core/jkl" as jkl;
+
+:root {
+    @include jkl.declare-font-variables("my-component-title", "heading-3");
+}
+
+.my-component__title {
+    @include jkl.use-font-variables("my-component-title");
+}`,
+  },
+  {
+    name: "use-font-variables",
+    description:
+      "Bruk font-variabler du har laget med declare-font-variables. Setter font-size, line-height og font-weight fra CSS-variabler.",
+    example: `@use "@fremtind/jokul/styles/core/jkl" as jkl;
+
+.my-component__subtitle {
+    @include jkl.use-font-variables("my-component-title");
+}`,
+  },
+  {
     name: "use-font-family",
     description:
       "Setter font-family med korrekte fallback-fonter for Fremtind Grotesk, Fremtind Grotesk Display, Fremtind Grotesk Mono eller Fremtind Material Symbols.",

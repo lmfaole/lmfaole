@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Flex } from "@fremtind/jokul/flex";
 import type { TokenPost } from "@/app/jokul/_token/data";
 import { getTokenSlug } from "@/app/jokul/_token/data";
 import "./token-card.scss";
@@ -15,9 +16,9 @@ export function TokenCard({ post }: TokenCardProps) {
                     {post.illustration}
                 </div>
             )}
-            <div className="token-card__content">
+            <Flex className="token-card__content" alignItems="center" justifyContent="center">
                 <h2 className="token-card__title">{post.title}</h2>
-            </div>
+            </Flex>
         </Link>
     );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { Flex } from "@fremtind/jokul/flex";
 import { FullBleed } from "@/shared/components/FullBleed/FullBleed";
 import "./page-hero.scss";
 
@@ -18,12 +19,12 @@ export function PageHero({ title, background, description, className, ...rest }:
             <div className="page-hero__bg" aria-hidden="true">
                 {background}
             </div>
-            <div className="page-hero__inner">
+            <Flex className="page-hero__inner" alignItems="center" justifyContent="center">
                 <div className="page-hero__text">
                     <h1>{title}</h1>
                     {description && <p className="page-hero__description">{description}</p>}
                 </div>
-            </div>
+            </Flex>
         </FullBleed>
     );
 }

@@ -14,8 +14,8 @@
 .fi__br-grid {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   justify-content: center;
   gap: 3cqi;

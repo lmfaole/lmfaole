@@ -38,4 +38,19 @@ export const colorMixins: ScssMixin[] = [
     }
 }`,
   },
+  {
+    name: "forced-colors-svg-fallback",
+    description:
+      "Hjelper for å sette riktig stroke/fill på SVG-er i Forced Colors-modus (spesielt for Chrome). Bruk når et ikon blir usynlig fordi currentColor ikke tolkes som forventet i høykontrast.",
+    example: `@use "@fremtind/jokul/styles/core/jkl" as jkl;
+
+.icon {
+    color: var(--jkl-color-text-default);
+}
+
+// Sikrer at SVG-ikonet får lesbar farge i forced-colors
+.icon {
+    @include jkl.forced-colors-svg-fallback("ButtonText");
+}`,
+  },
 ];

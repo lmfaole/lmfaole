@@ -94,7 +94,7 @@ export const breakpointMixins: ScssMixin[] = [
 
 .component {
     @include jkl.screen-from(900px) {
-        display: flex;
+        display: grid;
     }
 }`,
   },

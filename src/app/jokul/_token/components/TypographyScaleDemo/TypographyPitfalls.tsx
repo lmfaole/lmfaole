@@ -97,7 +97,7 @@ import "@fremtind/jokul/styles/styles.css";
         badCode: `/* ❌ Bruker h4 fordi du vil ha liten tekst */
 <h4>Seksjonstittel</h4> {/* men dette er faktisk et h2-nivå i hierarkiet */}`,
         goodCode: `/* ✅ Riktig semantikk, riktig stil */
-<h2 className="jkl-heading-4">Seksjonstittel</h2>
+<h2 className="min-seksjon__tittel">Seksjonstittel</h2>
 
 /* Eller i egne komponenter: */
 .min-seksjon__tittel {
@@ -141,8 +141,8 @@ export function TypographyPitfalls() {
                     </Message>
                     {(badCode || goodCode) && (
                         <div className="ty-pitfalls__code-pair">
-                            {badCode && <CodeBlock code={badCode} />}
-                            {goodCode && <CodeBlock code={goodCode} />}
+                            {badCode && <CodeBlock code={badCode} defaultOpen />}
+                            {goodCode && <CodeBlock code={goodCode} defaultOpen />}
                         </div>
                     )}
                     {note && (

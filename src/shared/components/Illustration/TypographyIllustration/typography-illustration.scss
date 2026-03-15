@@ -6,9 +6,8 @@
   overflow: hidden;
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  align-content: center;
   gap: var(--jkl-spacing-m);
   perspective: 40cqi;
   perspective-origin: 50% 40%;

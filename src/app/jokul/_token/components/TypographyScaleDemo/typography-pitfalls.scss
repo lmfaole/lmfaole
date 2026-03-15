@@ -1,12 +1,10 @@
 .ty-pitfalls {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 5rem;
 }
 
 .ty-pitfalls__item {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--jkl-spacing-m);
     padding-block-end: 5rem;
     border-block-end: 1px solid var(--jkl-color-border-ui);
@@ -30,7 +28,6 @@
 }
 
 .ty-pitfalls__code-pair {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--jkl-spacing-s);
 }

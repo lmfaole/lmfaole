@@ -146,21 +146,27 @@ export default function ComponentPage() {
             />
 
             {doc.preview && (
-                <Card
-                    padding="l"
-                    variant="outlined"
+                <div
                     className="component-page-preview"
                     onMouseEnter={() => setPreviewHovered(true)}
                     onMouseLeave={() => setPreviewHovered(false)}
                 >
-                    <PreviewHoverContext value={previewHovered}>
-                        <div className="component-page-preview__area">
-                            <div className="component-page-preview__area__inner" inert aria-hidden="true">
-                                {doc.preview}
+                    <Card padding="l" variant="outlined">
+                        <PreviewHoverContext value={previewHovered}>
+                            <div className="component-page-preview__area">
+                                <Flex
+                                    className="component-page-preview__area__inner"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                    inert
+                                    aria-hidden="true"
+                                >
+                                    {doc.preview}
+                                </Flex>
                             </div>
-                        </div>
-                    </PreviewHoverContext>
-                </Card>
+                        </PreviewHoverContext>
+                    </Card>
+                </div>
             )}
 
             <TableOfContents label="Innhold">
