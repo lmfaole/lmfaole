@@ -1,0 +1,2 @@
+.site-footer__inner{z-index:1;max-width:calc(120ch - 2rem);padding-inline:1rem;padding-block:var(--jkl-spacing-xl);margin-inline:auto;position:relative}
+.site-header{font-size:var(--jkl-font-size-3);line-height:var(--jkl-line-height-tight);width:100%}.site-header__inner{max-width:calc(120ch - 2rem);padding-inline:1rem;padding-block:var(--jkl-spacing-s);margin-inline:auto}.site-header__nav{gap:var(--jkl-spacing-xxs);flex-shrink:0}@media (max-width:640px){.site-header{font-size:var(--jkl-font-size-2)}}

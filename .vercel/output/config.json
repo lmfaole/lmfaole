@@ -183,14 +183,14 @@
       "override": true
     },
     {
-      "src": "^/jokul/token/(?<nxtPid>[^/]+?)(?<rscSuffix>\\.rsc|\\.prefetch\\.rsc|\\.segments/.+\\.segment\\.rsc)(?:/)?$",
-      "dest": "/jokul/token/[id]$rscSuffix?nxtPid=$nxtPid",
+      "src": "^/jokul/token/(?<nxtPslug>[^/]+?)(?<rscSuffix>\\.rsc|\\.prefetch\\.rsc|\\.segments/.+\\.segment\\.rsc)(?:/)?$",
+      "dest": "/jokul/token/[slug]$rscSuffix?nxtPslug=$nxtPslug",
       "check": true,
       "override": true
     },
     {
-      "src": "^/jokul/token/(?<nxtPid>[^/]+?)(?:/)?$",
-      "dest": "/jokul/token/[id]?nxtPid=$nxtPid",
+      "src": "^/jokul/token/(?<nxtPslug>[^/]+?)(?:/)?$",
+      "dest": "/jokul/token/[slug]?nxtPslug=$nxtPslug",
       "check": true,
       "override": true
     },
@@ -198,7 +198,7 @@
       "handle": "hit"
     },
     {
-      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|It\\-8HPUVIPZxBAwCSwQEa)/.+",
+      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|iSxxa90J22FcbXCAnHx6A)/.+",
       "headers": {
         "cache-control": "public,max-age=31536000,immutable"
       },
