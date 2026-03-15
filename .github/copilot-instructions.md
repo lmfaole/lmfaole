@@ -232,11 +232,14 @@ The only exception is `display: inline-flex` on a non-Jøkul element where wrapp
 
 When you discover a bug in Jøkul (unexpected behaviour, missing styles, broken animations, incorrect types, etc.), **always create a GitHub issue** in the Jøkul repository before or immediately after applying a workaround.
 
+- **Write the issue in Norwegian** — title and body
+- **Be concise** — one short sentence per section, no unnecessary context
+
 ```
 gh issue create \
   --repo fremtind/jokul \
-  --title "<Short description of the bug>" \
-  --body "## Beskrivelse\n<What is broken and where>\n\n## Reproduksjon\n<Minimal reproduction steps>\n\n## Forventet oppførsel\n<What should happen>\n\n## Faktisk oppførsel\n<What actually happens>\n\n## Workaround\n<Any patch or workaround applied in this project>"
+  --title "<Kort beskrivelse av buggen>" \
+  --body "## Hva er galt\n<Én setning>\n\n## Reproduksjon\n<Minimale steg>\n\n## Workaround\n<Patch eller annen løsning brukt i dette prosjektet>"
 ```
 
 Also add a comment in the patch file (if one is needed) referencing the issue URL so future maintainers can track it.
