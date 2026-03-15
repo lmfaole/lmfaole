@@ -22,7 +22,7 @@ export function ImagePreview() {
     return (
         <div style={{ width: 200, height: 120, borderRadius: "4px", overflow: "hidden" }}>
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            <Image src={images[imgIdx].src} alt={images[imgIdx].alt} {...{ loading: "eager", style: { width: "100%", height: "100%", objectFit: "cover" } } as any} />
+            <Image src={images[imgIdx].src} alt={images[imgIdx].alt} {...{ loading: "eager", style: { width: "100%", height: "100%" } } as any} />
         </div>
     );
 }
