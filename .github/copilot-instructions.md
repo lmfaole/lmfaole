@@ -230,14 +230,14 @@ The only exception is `display: inline-flex` on a non-Jøkul element where wrapp
 
 ## Reporting Jøkul bugs
 
-When you discover a bug in Jøkul (unexpected behaviour, missing styles, broken animations, incorrect types, etc.), **always create a GitHub issue** in the Jøkul repository before or immediately after applying a workaround.
+When you discover a bug in Jøkul (unexpected behaviour, missing styles, broken animations, incorrect types, etc.), **always create a GitHub issue** in this repository before or immediately after applying a workaround.
 
 - **Write the issue in Norwegian** — title and body
 - **Be concise** — one short sentence per section, no unnecessary context
 
 ```
 gh issue create \
-  --repo fremtind/jokul \
+  --repo lmfaole/lmfaole \
   --title "<Kort beskrivelse av buggen>" \
   --body "## Hva skjer\n<Én setning>\n\n## Hvorfor\n<Én setning>\n\n## Hva som burde skje\n<Én setning>\n\n## Fiks\n<Én setning>"
 ```
