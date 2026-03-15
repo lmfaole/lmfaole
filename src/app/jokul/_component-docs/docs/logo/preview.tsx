@@ -13,5 +13,5 @@ export function LogoPreview() {
         return () => clearInterval(id);
     }, [isHovered]);
 
-    return <Logo isSymbol={isSymbol} animated centered={false} />;
+    return <Logo isSymbol={isSymbol} animated centered={false} style={{ width: "10rem" }} />;
 }
