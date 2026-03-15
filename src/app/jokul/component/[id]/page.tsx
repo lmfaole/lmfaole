@@ -123,7 +123,7 @@ export default function ComponentPage() {
                 >
                     <PreviewHoverContext value={previewHovered}>
                         <div className="component-page-preview__area">
-                            <div className="component-page-preview__area__inner">
+                            <div className="component-page-preview__area__inner" inert aria-hidden="true">
                                 {doc.preview}
                             </div>
                         </div>
