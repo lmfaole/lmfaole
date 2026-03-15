@@ -28,8 +28,8 @@ const SOURCE_LABEL: Record<PropSource, string> = {
 
 const STATUS_LABEL: Record<PropStatus, string> = {
     stable: "—",
-    deprecated: "Utfaset",
-    experimental: "Eksperimentell",
+    deprecated: "deprecated",
+    experimental: "beta",
 };
 
 export default function PropIndexPage() {

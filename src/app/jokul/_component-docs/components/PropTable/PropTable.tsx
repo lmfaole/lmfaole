@@ -15,9 +15,9 @@ interface PropTableProps {
 const COLUMNS = ["Prop", "Type", "Påkrevd", "Standard", "Status", "Beskrivelse"];
 
 const STATUS_LABEL: Record<PropStatus, string> = {
-    stable: "Stabil",
-    deprecated: "Utfaset",
-    experimental: "Eksperimentell",
+    stable: "stable",
+    deprecated: "deprecated",
+    experimental: "beta",
 };
 
 const STATUS_COLOR: Record<PropStatus, string> = {
