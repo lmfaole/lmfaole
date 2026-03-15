@@ -21,6 +21,7 @@ const doc: ComponentDoc = {
     relationships: {
         alternatives: [{ id: "icon-button", description: "Bruk IconButton når ikonet må være interaktivt og trenger en tilgjengelig knappeetikett." }],
     },
+    tokens: ["colors"],
 };
 
 export default doc;

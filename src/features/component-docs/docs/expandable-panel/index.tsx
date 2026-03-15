@@ -36,6 +36,7 @@ const doc: ComponentDoc = {
         },
     ],
     examples,
+    tokens: ["colors", "spacing", "motion", "border-radius"],
 };
 
 export default doc;

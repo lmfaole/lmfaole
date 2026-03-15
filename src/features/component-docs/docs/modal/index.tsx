@@ -18,8 +18,9 @@ const doc: ComponentDoc = {
         "Bruk role='alertdialog' hvis brukeren ikke skal kunne lukke dialogen med Escape eller klikk utenfor.",
     ],
 
-    props,
+        props,
     examples,
+    tokens: ["colors", "spacing", "motion", "border-radius"],
 };
 
 export default doc;

@@ -22,6 +22,7 @@ const doc: ComponentDoc = {
     props,
     examples,
     migrations,
+    tokens: ["colors", "spacing", "typography", "motion", "border-radius"],
 };
 
 export default doc;

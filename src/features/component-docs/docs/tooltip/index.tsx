@@ -17,9 +17,9 @@ const doc: ComponentDoc = {
     "Ikke legg Tooltip på ikke-interaktive elementer — det er ikke tilgjengelig for tastaturbrukere.",
     "Tooltip må aldri inneholde kritisk informasjon som ikke finnes andre steder på siden.",
 ],
-
     props,
     examples,
+    tokens: ["colors", "spacing", "typography", "motion", "border-radius"],
 };
 
 export default doc;

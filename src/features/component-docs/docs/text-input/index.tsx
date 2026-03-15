@@ -42,6 +42,7 @@ const doc: ComponentDoc = {
     props,
     examples,
     migrations,
+    tokens: ["colors", "spacing", "typography", "border-radius"],
 };
 
 export default doc;

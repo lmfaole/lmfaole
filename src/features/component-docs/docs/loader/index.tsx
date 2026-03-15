@@ -27,6 +27,7 @@ const doc: ComponentDoc = {
 
     props,
     examples,
+    tokens: ["colors", "motion"],
 };
 
 export default doc;
