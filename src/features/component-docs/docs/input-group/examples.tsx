@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { InputGroup, FieldGroup } from "@fremtind/jokul/input-group";
+import { Flex } from "@fremtind/jokul/flex";
 import { TextInput } from "@fremtind/jokul/text-input";
 import { Checkbox } from "@fremtind/jokul/checkbox";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
@@ -41,7 +42,7 @@ function BasicInputGroupPreview() {
 
 function InputGroupWithLabelsPreview() {
     return (
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--jkl-spacing-m)" }}>
+        <Flex direction="column" gap="m">
             <InputGroup
                 label="E-postadresse"
                 supportLabelProps={{ label: "Vi bruker e-post til å sende kvittering.", labelType: "help" }}
@@ -52,7 +53,7 @@ function InputGroupWithLabelsPreview() {
                 supportLabelProps={{ label: "Ugyldig telefonnummer.", labelType: "error" }}
                 render={(props) => <TextInput label="" {...props} aria-invalid />}
             />
-        </div>
+        </Flex>
     );
 }
 

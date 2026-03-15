@@ -43,7 +43,7 @@ export function ComponentExample({example}: ComponentExampleProps) {
                     )}
 
                     {example.uses && example.uses.length > 0 && (
-                        <ul className="chip-list">
+                        <ul className="list-bare">
                             {example.uses.map((id) => (
                                 <li key={id}>
                                     <Link href={`/jokul/component/${id}`}>
@@ -56,13 +56,17 @@ export function ComponentExample({example}: ComponentExampleProps) {
                 </header>
 
                 {example.preview && (
-                    <div
+                    <Flex
+                        wrap="wrap"
+                        alignItems="center"
+                        justifyContent="center"
+                        gap="m"
                         className="component-example-preview"
                         {...(size ? {"data-size": size} : {})}
                         {...(theme ? {"data-theme": theme} : {})}
                     >
                         {example.preview}
-                    </div>
+                    </Flex>
                 )}
 
                 {example.preview && (
@@ -86,7 +90,7 @@ export function ComponentExample({example}: ComponentExampleProps) {
                     </Flex>
                 )}
 
-                <CodeBlock code={example.code} bare collapsible/>
+                <CodeBlock code={example.code} />
             </Flex>
         </Card>
     );

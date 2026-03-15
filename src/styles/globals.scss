@@ -56,24 +56,20 @@
 
 html {
   overflow-x: clip;
-
-  --app-header-offset: 80px;   /* sticky SiteHeader height + breathing room */
-  scroll-padding-top: var(--app-header-offset);
-}
-
-/* scrollIntoView() respects scroll-margin-top (not scroll-padding-top),
-   so apply it globally to all anchor targets to offset the sticky header. */
-[id] {
-  scroll-margin-top: var(--app-header-offset);
 }
 
 body {
   background-color: var(--jkl-color-background-page);
   color: var(--jkl-color-text-default);
-  margin: 0 auto;
+  margin: 0;
+  padding: 0;
+}
+
+.site-layout {
   max-width: 120ch;
-  padding: var(--jkl-spacing-xl) 1rem;
-  padding-block-start: 0;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  padding-block: var(--jkl-spacing-xl);
   padding-block-end: 0;
 }
 
@@ -82,10 +78,6 @@ body {
    Lists constrain the list container itself (not li) so that
    Jøkul's list component styles are respected inside. */
 .post-prose {
-  display: flex;
-  flex-direction: column;
-  gap: var(--jkl-spacing-l);
-
   > h1, > h2, > h3, > h4, > h5, > p, > small,
   > ul, > ol, > .jkl-unordered-list, > .jkl-ordered-list,
   > dl, > .jkl-description-list {
@@ -93,44 +85,65 @@ body {
   }
 }
 
-h1, .h1 {
-  @include jkl.text-style("heading-1");
-  margin-block: var(--jkl-spacing-2xl) var(--jkl-spacing-s);
+// ============================================================
+// Default element typography using Jøkul mixins
+// ============================================================
+
+h1 { @include jkl.text-style("heading-1"); max-width: 30ch; }
+h2 { @include jkl.text-style("heading-2"); max-width: 35ch; }
+h3 { @include jkl.text-style("heading-3"); max-width: 40ch; }
+h4 { @include jkl.text-style("heading-4"); max-width: 45ch; }
+h5 { @include jkl.text-style("heading-5"); max-width: 50ch; }
+
+p { @include jkl.text-style("paragraph-medium"); max-width: 65ch; }
+
+.lead { @include jkl.text-style("paragraph-large"); max-width: 65ch; }
+
+small { @include jkl.text-style("text-small"); max-width: 65ch; }
+
+strong, b {
+  font-weight: jkl.$typography-weight-bold;
 }
 
-h2, .h2 {
-  @include jkl.text-style("heading-2");
-  margin-block: var(--jkl-spacing-xl) var(--jkl-spacing-xs);
+code, kbd, samp {
+  @include jkl.use-font-family("Fremtind Grotesk Mono");
+  font-size: 0.875em;
 }
 
-h3, .h3 {
-  @include jkl.text-style("heading-3");
-  margin-block: var(--jkl-spacing-l) var(--jkl-spacing-xxs);
+pre {
+  @include jkl.use-font-family("Fremtind Grotesk Mono");
+  overflow-x: auto;
+  max-width: 80ch;
+  padding: var(--jkl-spacing-m);
+  background-color: var(--jkl-color-background-container-low);
+  border-radius: var(--jkl-border-radius-s);
+
+  code {
+    font-size: inherit;
+  }
 }
 
-h4, .h4 {
-  @include jkl.text-style("heading-4");
-  margin-block: var(--jkl-spacing-m) var(--jkl-unit-02);
-}
-
-h5, .h5 {
-  @include jkl.text-style("heading-5");
-  margin-block: var(--jkl-spacing-s) var(--jkl-unit-02);
-}
-
-/* Suppress top margin on the very first heading in a prose block */
-.post-prose > :is(h1, h2, h3, h4, h5):first-child {
-  margin-block-start: 0;
-}
-
-p, .p, .p.medium {
+blockquote {
   @include jkl.text-style("paragraph-medium");
-  margin-block-end: var(--jkl-spacing-s);
+  max-width: 65ch;
+  margin-inline: 0;
+  padding-inline-start: var(--jkl-spacing-m);
+  border-inline-start: 3px solid var(--jkl-color-border-ui);
+  color: var(--jkl-color-text-subdued);
 }
 
-small, .p.small, .small {
-  @include jkl.text-style("paragraph-small");
-  margin-block-end: var(--jkl-spacing-xs);
+hr {
+  border: 0;
+  border-block-start: 1px solid var(--jkl-color-border-subdued);
+  margin-block: var(--jkl-spacing-l);
+}
+
+/* Utility: unstyled list — use when a semantic list is needed without browser defaults.
+   Prefer Jøkul's List/UnorderedList/OrderedList components for all content lists. */
+.list-bare {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 // Prevent unwanted leading space at the top of any container
@@ -144,19 +157,8 @@ h1, h2, h3, h4, h5, p, small {
   }
 }
 
-code {
-  font-family: "Fremtind Grotesk Mono", monospace;
-}
-
 .muted {
   color: var(--jkl-color-text-subdued);
-}
-
-/* Reset list styling for ul/ol used as flex/visual containers */
-.chip-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 /* Tags should never be flush — ensure gap wherever they appear adjacent */

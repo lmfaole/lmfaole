@@ -60,8 +60,10 @@ const doc: ComponentDoc = {
         "Skeleton-komponenter bygger opp et innholdsskjelett som matcher layouten til det virkelige innholdet, og gir brukeren en visuell indikasjon på at innhold er på vei.",
     warnings:
         "Wrap alltid Skeleton-komponenter i SkeletonAnimation for å få shimmering-animasjon og en tilgjengelig textDescription for skjermlesere. Bruk SkeletonElement for freeform rektangel-plassholdere.",
-    siblingIds: ["loader"],
-    relatedIds: ["feedback"],
+    relationships: {
+        alternatives: [{ id: "loader", description: "Bruk Loader som et snurreoverlegg når den nøyaktige innholdsformen ikke kan forutsies på forhånd." }],
+        related: [{ id: "feedback", description: "Kombiner med Feedback-mønstre for å kommunisere ladetilstand på tvers av en hel sideseksjon." }],
+    },
     preview: <SkeletonPreview />,
 
     props,

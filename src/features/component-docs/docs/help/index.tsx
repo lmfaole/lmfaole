@@ -20,7 +20,9 @@ const doc: ComponentDoc = {
         </Help>
     ),
 
-    relatedIds: ["tooltip", "popover", "input-group"],
+    relationships: {
+        related: [{ id: "tooltip", description: "Tooltip viser et kort ikke-interaktivt hint; Help gir et avvisbart panel med fyldigere veiledningstext." }, { id: "popover", description: "Help er bygget på Popover og deler den samme flytende posisjoneringssett." }, { id: "input-group", description: "Fest Help til en InputGroup for å gi kontekstuell veiledning uten å rote til feltets etikett." }],
+    },
     props,
     examples,
     migrations,

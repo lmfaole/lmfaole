@@ -12,8 +12,10 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/checkbox-panel",
     category: "Skjema",
     description: "CheckboxPanel er en utvidet avkrysningsboks med et synlig paneldesign.",
-    siblingIds: ["checkbox"],
-    relatedIds: ["radio-panel"],
+    relationships: {
+        alternatives: [{ id: "checkbox", description: "Bruk Checkbox for kompakte innebygde valg der et kortlignende klikkområde ikke er nødvendig." }],
+        related: [{ id: "radio-panel", description: "RadioPanel følger samme kortmønster, men begrenser valget til ett alternativ om gangen." }],
+    },
 
     props,
     examples,

@@ -20,7 +20,9 @@ const doc: ComponentDoc = {
     ],
     preview: <PopoverBasicPreview />,
 
-    relatedIds: ["tooltip", "modal"],
+    relationships: {
+        related: [{ id: "tooltip", description: "Bruk Tooltip for korte skrivebeskyttede hint; Popover støtter interaktivt innhold som skjemaer eller handlingsmenyer." }, { id: "modal", description: "Bruk Modal når overlegget må blokkere resten av siden og krever en bevisst avvisning." }],
+    },
     props,
     subComponents: [
         {

@@ -5,7 +5,9 @@ export default function JokulLayout({ children }: { children: React.ReactNode })
     return (
         <>
             <SiteHeader />
-            {children}
+            <div className="site-layout">
+                {children}
+            </div>
             <SiteFooter />
         </>
     );

@@ -1,1 +1,0 @@
-export { FoundationalResources } from "./FoundationalResources";

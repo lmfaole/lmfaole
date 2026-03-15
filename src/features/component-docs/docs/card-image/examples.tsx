@@ -12,10 +12,10 @@ function CardImageTopPreview() {
     return (
         <Card padding="s" style={{ maxWidth: "20rem", width: "100%" }}>
             <CardImage src={IMAGE_URL} alt="Typografi" placement="top" style={{ height: "12rem", objectFit: "cover" }} />
-            <div style={{ paddingBlockStart: "var(--jkl-spacing-m)" }}>
-                <h2 style={{ margin: 0 }}>Typografi</h2>
-                <p style={{ margin: 0, color: "var(--jkl-color-text-subdued)" }}>Fremtind Grotesk og dens bruksområder.</p>
-            </div>
+            <Flex direction="column" gap="xs" style={{ paddingBlockStart: "var(--jkl-spacing-m)" }}>
+                <h2>Typografi</h2>
+                <p className="muted">Fremtind Grotesk og dens bruksområder.</p>
+            </Flex>
         </Card>
     );
 }
@@ -23,9 +23,11 @@ function CardImageTopPreview() {
 function CardImageMiddlePreview() {
     return (
         <Card padding="m" style={{ maxWidth: "20rem", width: "100%" }}>
-            <h2 style={{ margin: "0 0 var(--jkl-spacing-s)" }}>Farger</h2>
-            <CardImage src={IMAGE_URL_2} alt="Fargepalett" placement="middle" style={{ height: "10rem", objectFit: "cover" }} />
-            <p style={{ margin: "var(--jkl-spacing-s) 0 0", color: "var(--jkl-color-text-subdued)" }}>Fargeskalaen som binder Jøkul-universet sammen.</p>
+            <Flex direction="column" gap="s">
+                <h2>Farger</h2>
+                <CardImage src={IMAGE_URL_2} alt="Fargepalett" placement="middle" style={{ height: "10rem", objectFit: "cover" }} />
+                <p className="muted">Fargeskalaen som binder Jøkul-universet sammen.</p>
+            </Flex>
         </Card>
     );
 }
@@ -48,7 +50,7 @@ function CardImageClickablePreview() {
                 >
                     <CardImage src={img} alt="" placement="top" style={{ height: "9rem", objectFit: "cover" }} />
                     <div style={{ paddingBlockStart: "var(--jkl-spacing-m)" }}>
-                        <h2 style={{ margin: 0 }}>{title}</h2>
+                        <h2>{title}</h2>
                     </div>
                 </Card>
             ))}
@@ -107,7 +109,7 @@ export const examples: ComponentExample[] = [
                 preview: <CardImageMiddlePreview />,
             },
     {
-                title: "Klikkbare bildekort (BlogPostCard / FoundationalCard-mønster)",
+                title: "Klikkbare bildekort (BlogPostCard / TokenCard-mønster)",
                 description: "Kombiner Card as={Link} clickable med CardImage for fullt klikkbare bildekort. Sett aria-label på Card — ikke nøst en ekstra Link inne i kortet.",
                 tags: ["clickable", "grid", "navigasjon"],
                 uses: ["card"],

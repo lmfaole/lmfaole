@@ -34,7 +34,9 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/text-input",
     category: "Skjema",
     description: "TextInput er en enkeltlinjers tekstinndatafelt. Komponenten inkluderer label, feilmelding og hjelpetekst i ett og håndterer tilgjengelighet automatisk — label er koblet til input via htmlFor/id. Alle skjema-primitiver i Jøkul følger samme API-mønster.",
-    relatedIds: ["button"],
+    relationships: {
+        related: [{ id: "button", description: "Plasser Button ved siden av TextInput for å lage et søkefelt eller en innebygd skjemahandling." }],
+    },
     preview: <TextInputPreview />,
 
     props,

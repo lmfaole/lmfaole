@@ -1,4 +1,5 @@
 import { Link } from "@fremtind/jokul/link";
+import { Flex } from "@fremtind/jokul/flex";
 import { FullBleed } from "@/shared/components/FullBleed/FullBleed";
 import "./footer.scss";
 
@@ -16,16 +17,15 @@ export function Footer() {
 
                     <nav className="site-footer__col" aria-label="Innhold på denne siden">
                         <h2 className="site-footer__heading">Innhold</h2>
-                        <ul className="site-footer__links">
-                            <li><Link href="/jokul/blog">Blogg</Link></li>
-                            <li><Link href="/jokul/foundational">Grunnleggende</Link></li>
+                        <Flex as="ul" className="list-bare" direction="column" gap="xs">
+                            <li><Link href="/jokul/token">Designtokens</Link></li>
                             <li><Link href="/jokul/component">Komponenter</Link></li>
-                        </ul>
+                        </Flex>
                     </nav>
 
                     <nav className="site-footer__col" aria-label="Offisielle Jøkul-ressurser">
                         <h2 className="site-footer__heading">Jøkul</h2>
-                        <ul className="site-footer__links">
+                        <Flex as="ul" className="list-bare" direction="column" gap="xs">
                             <li>
                                 <Link href="https://jokul.fremtind.no/" external>
                                     Dokumentasjon
@@ -51,7 +51,7 @@ export function Footer() {
                                     GitHub
                                 </Link>
                             </li>
-                        </ul>
+                        </Flex>
                     </nav>
                 </div>
 

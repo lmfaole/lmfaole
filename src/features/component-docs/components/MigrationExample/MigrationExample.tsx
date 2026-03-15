@@ -1,3 +1,4 @@
+import {Flex} from "@fremtind/jokul/flex";
 import {CodeBlock} from "@/shared/components/CodeBlock";
 import {Grid} from "@/shared/components/Grid";
 import type {Migration} from "@/features/component-docs/docs/types";
@@ -9,7 +10,7 @@ interface MigrationExampleProps {
 
 export function MigrationExample({migration}: MigrationExampleProps) {
     return (
-        <div className="migration-example">
+        <Flex direction="column" gap="s" className="migration-example">
             {migration.description && <p className="small muted">{migration.description}</p>}
 
             {migration.replacedBy && (
@@ -25,15 +26,15 @@ export function MigrationExample({migration}: MigrationExampleProps) {
             )}
 
             <Grid columns={2} gap="m">
-                <div className="migration-example__block">
+                <Flex direction="column" gap="xs" className="migration-example__block">
                     <span className="migration-example__block-label muted">Før</span>
-                    <CodeBlock code={migration.before} hideCopyButton/>
-                </div>
-                <div className="migration-example__block">
+                    <CodeBlock code={migration.before}/>
+                </Flex>
+                <Flex direction="column" gap="xs" className="migration-example__block">
                     <span className="migration-example__block-label muted">Etter</span>
                     <CodeBlock code={migration.after}/>
-                </div>
+                </Flex>
             </Grid>
-        </div>
+        </Flex>
     );
 }

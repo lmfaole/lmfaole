@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ToastProvider, useToast } from "@fremtind/jokul/toast";
+import { Flex } from "@fremtind/jokul/flex";
 import { Button } from "@fremtind/jokul/button";
 import { SuccessIcon, InfoIcon, WarningIcon, ErrorIcon } from "@fremtind/jokul/icon";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
@@ -27,12 +28,12 @@ function ToastPreview() {
 function ToastVariantsTrigger() {
     const { add } = useToast();
     return (
-        <div style={{ display: "flex", gap: "var(--jkl-spacing-s)", flexWrap: "wrap" }}>
+        <Flex gap="s" wrap="wrap">
             <Button onClick={() => add("Informasjon", { variant: "info" })}>Info</Button>
             <Button onClick={() => add("Suksess!", { variant: "success" })}>Suksess</Button>
             <Button onClick={() => add("Advarsel", { variant: "warning" })}>Advarsel</Button>
             <Button onClick={() => add("Feil oppstod", { variant: "error" })}>Feil</Button>
-        </div>
+        </Flex>
     );
 }
 

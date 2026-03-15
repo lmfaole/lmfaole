@@ -15,7 +15,9 @@ const doc: ComponentDoc = {
     category: "Visning",
     description: "Tag brukes til å vise kategorier, statuser og etiketter. De er kun visuelle elementer — ikke bruk Tag som knapper eller lenker. For klikkbare filtre, bruk Chip-komponenten i stedet.",
     warnings: "Tags er dekorative og ikke interaktive. Sørg for at taggteksten gir mening uten ekstra kontekst.",
-    relatedIds: ["message"],
+    relationships: {
+        related: [{ id: "message", description: "Tag kan legges inn i Message for å merke tilbakemeldingskategorien med et fargekodet merke." }],
+    },
 
     props,
     examples,

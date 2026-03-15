@@ -35,7 +35,9 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/search",
     category: "Skjema",
     description: "SearchInput er et søkeinputfelt med søkeikon og valgfri label.",
-    relatedIds: ["text-input", "autosuggest"],
+    relationships: {
+        related: [{ id: "text-input", description: "Search utvider TextInput med en dedikert søkerolle og en valgfri innsendingsknapp." }, { id: "autosuggest", description: "Kombiner Search med Autosuggest for å vise direkteforslag mens brukeren skriver et søk." }],
+    },
     preview: <SearchPreview />,
 
     props,

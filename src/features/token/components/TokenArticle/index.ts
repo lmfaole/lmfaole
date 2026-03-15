@@ -1,0 +1,1 @@
+export { TokenArticle } from "./TokenArticle";

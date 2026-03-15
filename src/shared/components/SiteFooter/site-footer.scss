@@ -1,43 +1,10 @@
-/* Constrain inner content back to body max-width with matching padding */
+@use "@fremtind/jokul/styles/core/jkl" as jkl;
+
 .site-footer__inner {
     position: relative;
     z-index: 1;
     max-width: calc(120ch - 2rem);
     margin-inline: auto;
     padding-inline: 1rem;
-    padding-block: var(--jkl-spacing-2xl);
-}
-
-.site-footer__grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: var(--jkl-spacing-2xl);
-
-    @media (max-width: 640px) {
-        grid-template-columns: 1fr;
-        gap: var(--jkl-spacing-xl);
-    }
-}
-
-.site-footer__col {
-    // LinkList inside footer columns should use footer's subdued tone
-    .jkl-link-list__heading {
-        font-size: var(--jkl-font-size-2);
-    }
-}
-
-.site-footer__about {
-    font-size: var(--jkl-font-size-2);
-    color: var(--jkl-color-text-subdued);
-    line-height: var(--jkl-line-height-relaxed);
-    max-width: 40ch;
-    margin: 0;
-}
-
-.site-footer__disclaimer {
-    margin-block-start: var(--jkl-spacing-2xl);
-    padding-block-start: var(--jkl-spacing-m);
-    border-top: 1px solid var(--jkl-color-border-subdued);
-    font-size: var(--jkl-font-size-1);
-    color: var(--jkl-color-text-subdued);
+    padding-block: var(--jkl-spacing-xl);
 }

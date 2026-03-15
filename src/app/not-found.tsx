@@ -14,8 +14,7 @@ export default function NotFound() {
                     <LinkList.Link href="/">Forsiden</LinkList.Link>
                     <LinkList.Link href="/jokul">Jøkul</LinkList.Link>
                     <LinkList.Link href="/jokul/component">Komponenter</LinkList.Link>
-                    <LinkList.Link href="/jokul/blog">Blogg</LinkList.Link>
-                    <LinkList.Link href="/jokul/foundational">Grunnleggende konsepter</LinkList.Link>
+                    <LinkList.Link href="/jokul/token">Designtokens</LinkList.Link>
                 </LinkList>
             </nav>
         </main>

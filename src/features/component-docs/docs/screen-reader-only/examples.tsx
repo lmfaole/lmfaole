@@ -1,4 +1,5 @@
 import { ScreenReaderOnly } from "@fremtind/jokul/screen-reader-only";
+import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentExample } from "../types";
 
 
@@ -50,7 +51,7 @@ function SkipLinkPreview() {
 
 function IconButtonPreview() {
     return (
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--jkl-spacing-s)" }}>
+        <Flex alignItems="center" gap="s">
             <button
                 style={{
                     background: "none",
@@ -73,7 +74,7 @@ function IconButtonPreview() {
             <span style={{ fontSize: "var(--jkl-font-size-small)", color: "var(--jkl-color-text-subdued)" }}>
                 Ikonknapp — kun synlig for skjermlesere via ScreenReaderOnly
             </span>
-        </div>
+        </Flex>
     );
 }
 

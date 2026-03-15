@@ -14,7 +14,9 @@ const doc: ComponentDoc = {
     description:
         "DatePicker er et skjemafelt for å velge en dato. Den kombinerer et tekstfelt med en interaktiv kalender og validerer datoformatet automatisk.",
     warnings: "Verdien leveres som string i dd.mm.yyyy-format, ikke ISO — ta høyde for dette ved skjemainnsending.",
-    relatedIds: ["text-input", "select"],
+    relationships: {
+        related: [{ id: "text-input", description: "DatePicker bruker TextInput som triggerfelt for manuell datoregistrering." }, { id: "select", description: "Bruk Select for enkle måneds-/årsnedfellslister når en full kalendervelger er unødvendig." }],
+    },
     preview: (
         <div style={{ maxWidth: "280px", border: "1px solid var(--jkl-color-border-default)", borderRadius: "4px", padding: "var(--jkl-spacing-m)", background: "var(--jkl-color-background-default)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--jkl-spacing-s)" }}>
@@ -22,7 +24,7 @@ const doc: ComponentDoc = {
                 <strong>Juni 2025</strong>
                 <button style={{ background: "none", border: "none", cursor: "pointer" }}>›</button>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "2px", textAlign: "center", fontSize: "0.85em" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "var(--jkl-spacing-xxs)", textAlign: "center", fontSize: "0.85em" }}>
                 {["Ma","Ti","On","To","Fr","Lø","Sø"].map(d => <span key={d} style={{ fontWeight: "bold", padding: "4px" }}>{d}</span>)}
                 {[...Array(2)].map((_,i) => <span key={`e${i}`} />)}
                 {[...Array(30)].map((_,i) => (

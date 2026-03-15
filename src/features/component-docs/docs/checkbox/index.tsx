@@ -13,8 +13,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     description: "Checkbox brukes for binære valg i skjemaer, typisk for samtykke eller flervalgslister.",
     warnings: "Bruk ToggleSwitch for innstillinger som trer i kraft umiddelbart — Checkbox er for skjemainnsending.",
-    siblingIds: ["checkbox-panel"],
-    relatedIds: ["toggle-switch"],
+    relationships: {
+        alternatives: [{ id: "checkbox-panel", description: "Bruk CheckboxPanel når du trenger et større klikkbart kortområde som inkluderer etiketten." }],
+        related: [{ id: "toggle-switch", description: "Bruk ToggleSwitch for binære av/på-innstillinger som trer i kraft umiddelbart uten en innsendingshandling." }],
+    },
 
     props,
     examples,

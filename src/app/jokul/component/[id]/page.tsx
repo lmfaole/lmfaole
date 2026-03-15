@@ -7,15 +7,17 @@ import {TableOfContents} from "@fremtind/jokul/table-of-contents";
 import {Tab, TabList, TabPanel, Tabs, NavTab, NavTabs} from "@fremtind/jokul/tabs";
 import {Card} from "@fremtind/jokul/card";
 import {useParams} from "next/navigation";
-import {getComponentDoc} from "@/features/component-docs/data";
+import {getComponentDoc, getRelationships} from "@/features/component-docs/data";
 import {PropTable} from "@/features/component-docs/components/PropTable";
 import {ComponentExample} from "@/features/component-docs/components/ComponentExample";
 import {MigrationExample} from "@/features/component-docs/components/MigrationExample";
 import type {Migration} from "@/features/component-docs/data";
 import {NotFound} from "@/shared/components/NotFound";
-import {PreviewContainer} from "@/features/component-docs/components/PreviewContainer";
-import {CopyableCode} from "@/features/component-docs/components/CopyableCode/CopyableCode";
-import {FullBleed} from "@/shared/components/FullBleed/FullBleed";
+import {AlternativesList} from "@/features/component-docs/components/AlternativesList";
+import {SubcomponentsList} from "@/features/component-docs/components/SubcomponentsList";
+import {RelatedComponentsTable} from "@/features/component-docs/components/RelatedComponentsTable";
+import {PageHero} from "@/shared/components/PageHero/PageHero";
+import {DotsIllustration} from "@/features/token/components/TokenIllustration";
 
 function MigrationSection({ migrations }: { migrations: Migration[] }) {
     const [active, setActive] = useState<string>(migrations[0]?.deprecates.name ?? "");
@@ -25,8 +27,7 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
         if (pendingScroll.current) {
             const el = document.getElementById(`migration-${pendingScroll.current}`);
             if (el) {
-                const offsetStr = getComputedStyle(document.documentElement).getPropertyValue("--app-header-offset");
-                const offset = parseFloat(offsetStr) || 80;
+                const offset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--jkl-spacing-xl")) || 64;
                 const top = el.getBoundingClientRect().top + window.scrollY - offset;
                 window.scrollTo({ top, behavior: "smooth" });
                 pendingScroll.current = null;
@@ -59,29 +60,27 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
     return (
         <Flex as="section" direction="column" gap="m">
             <h2 id="migrering">Migrering</h2>
-            <div>
-                <NavTabs aria-label="Filtrer migrering">
-                    {migrations.map((m) => (
-                        <NavTab
-                            key={m.deprecates.name}
-                            as="button"
-                            aria-selected={active === m.deprecates.name}
-                            onClick={() => selectTab(m.deprecates.name)}
-                        >
-                            {m.deprecates.name}
-                        </NavTab>
-                    ))}
-                </NavTabs>
-                {visible.map((migration) => (
-                    <Card
-                        key={migration.title}
-                        padding="l"
-                        id={`migration-${migration.deprecates.name}`}
+            <NavTabs aria-label="Filtrer migrering">
+                {migrations.map((m) => (
+                    <NavTab
+                        key={m.deprecates.name}
+                        as="button"
+                        aria-selected={active === m.deprecates.name}
+                        onClick={() => selectTab(m.deprecates.name)}
                     >
-                        <MigrationExample migration={migration} />
-                    </Card>
+                        {m.deprecates.name}
+                    </NavTab>
                 ))}
-            </div>
+            </NavTabs>
+            {visible.map((migration) => (
+                <Card
+                    key={migration.title}
+                    padding="l"
+                    id={`migration-${migration.deprecates.name}`}
+                >
+                    <MigrationExample migration={migration} />
+                </Card>
+            ))}
         </Flex>
     );
 }
@@ -89,6 +88,7 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
 export default function ComponentPage() {
     const {id} = useParams<{ id: string }>();
     const doc = getComponentDoc(id);
+    const {alternatives, subcomponents, related} = getRelationships(id);
 
     if (!doc) {
         return (
@@ -102,28 +102,27 @@ export default function ComponentPage() {
 
     return (
         <Flex as="article" direction="column" gap="xl">
-            <PreviewContainer as={FullBleed} dots="fade-bottom" className="component-header">
-                <Flex direction="column" gap="s" wrap="wrap">
-                    <h1>{doc.name}</h1>
-                    <div>
-                        <CopyableCode>{doc.package}</CopyableCode>
-                    </div>
-                    <p>{doc.description}</p>
-                </Flex>
-                {(doc.preview ?? doc.examples[0]?.preview) && (
-                    <div className="component-header__preview">
-                        {doc.preview ?? doc.examples[0].preview}
-                    </div>
-                )}
-            </PreviewContainer>
+            <PageHero
+                title={doc.name}
+                background={<DotsIllustration />}
+            />
 
             <TableOfContents label="Innhold">
                 {doc.warnings && (
                     <TableOfContents.Link href="#viktig-informasjon">Viktig informasjon</TableOfContents.Link>
                 )}
                 <TableOfContents.Link href="#props">Props</TableOfContents.Link>
+                {alternatives.length > 0 && (
+                    <TableOfContents.Link href="#alternativer">Alternativer</TableOfContents.Link>
+                )}
+                {subcomponents.length > 0 && (
+                    <TableOfContents.Link href="#delkomponenter">Delkomponenter</TableOfContents.Link>
+                )}
                 {doc.examples.length > 0 && (
                     <TableOfContents.Link href="#eksempler">Eksempler</TableOfContents.Link>
+                )}
+                {related.length > 0 && (
+                    <TableOfContents.Link href="#relaterte-komponenter">Relaterte komponenter</TableOfContents.Link>
                 )}
                 {doc.migrations && doc.migrations.length > 0 && (
                     <TableOfContents.Link href="#migrering">Migrering</TableOfContents.Link>
@@ -179,6 +178,20 @@ export default function ComponentPage() {
                 )}
             </Flex>
 
+            {alternatives.length > 0 && (
+                <Flex as="section" direction="column" gap="m">
+                    <h2 id="alternativer">Alternativer</h2>
+                    <AlternativesList items={alternatives}/>
+                </Flex>
+            )}
+
+            {subcomponents.length > 0 && (
+                <Flex as="section" direction="column" gap="m">
+                    <h2 id="delkomponenter">Delkomponenter</h2>
+                    <SubcomponentsList items={subcomponents}/>
+                </Flex>
+            )}
+
             <Flex as="section" direction="column" gap="m">
                 <h2 id="eksempler">Eksempler</h2>
                 {doc.examples.map((example) => (
@@ -188,6 +201,13 @@ export default function ComponentPage() {
 
             {doc.migrations && doc.migrations.length > 0 && (
                 <MigrationSection migrations={doc.migrations} />
+            )}
+
+            {related.length > 0 && (
+                <Flex as="section" direction="column" gap="m">
+                    <h2 id="relaterte-komponenter">Relaterte komponenter</h2>
+                    <RelatedComponentsTable items={related}/>
+                </Flex>
             )}
 
         </Flex>

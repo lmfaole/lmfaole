@@ -14,8 +14,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     description: "RadioPanel er et panelbasert envalgsalternativ.",
     warnings: "Grupper RadioPanel-er i FieldGroup med legend — uten det mangler skjermlesere kontekst for gruppen.",
-    siblingIds: ["radio-button"],
-    relatedIds: ["checkbox-panel"],
+    relationships: {
+        alternatives: [{ id: "radio-button", description: "Bruk RadioButton for kompakte vertikale lister der et kortlignende valgområde ikke er nødvendig." }],
+        related: [{ id: "checkbox-panel", description: "CheckboxPanel følger samme kortmønster, men tillater flere samtidige valg." }],
+    },
 
     props,
     examples,

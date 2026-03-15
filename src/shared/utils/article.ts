@@ -1,6 +1,6 @@
 /**
  * Shared article utilities.
- * Used by both BlogArticle and FoundationalArticle to extract and
+ * Used by both BlogArticle and TokenArticle to extract and
  * inject ids into h2 headings for TableOfContents linking.
  */
 import React from "react";

@@ -1,31 +1,29 @@
 import { Help } from "@fremtind/jokul/help";
+import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentExample } from "../types";
 
 
 function BasicHelpPreview() {
     return (
         <div style={{ padding: "var(--jkl-spacing-xl) 0" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "var(--jkl-spacing-s)" }}>
+            <Flex alignItems="center" gap="s">
                 <span>Personnummer</span>
                 <Help buttonText="Hjelp om personnummer" position="right">
                     Personnummeret ditt er et 11-sifret nummer som identifiserer deg i offentlige registre.
                 </Help>
-            </div>
+            </Flex>
         </div>
     );
 }
 
 function PositionsPreview() {
     return (
-        <div
-            style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "var(--jkl-spacing-xl)",
-                padding: "var(--jkl-spacing-xl)",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
+        <Flex
+            wrap="wrap"
+            gap="xl"
+            alignItems="center"
+            justifyContent="center"
+            style={{ padding: "var(--jkl-spacing-xl)" }}
         >
             <Help buttonText="Hjelp øverst" position="top">
                 Popover vises over knappen.
@@ -39,20 +37,20 @@ function PositionsPreview() {
             <Help buttonText="Hjelp til høyre" position="right">
                 Popover vises til høyre.
             </Help>
-        </div>
+        </Flex>
     );
 }
 
 function LongContentPreview() {
     return (
         <div style={{ padding: "var(--jkl-spacing-xl) 0" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "var(--jkl-spacing-s)" }}>
+            <Flex alignItems="center" gap="s">
                 <span>Hva er en fullmakt?</span>
                 <Help buttonText="Forklaring av fullmakt" position="bottom">
                     En fullmakt er et dokument som gir en person rett til å handle på vegne av en annen. Fullmakten kan
                     være generell eller begrenset til spesifikke handlinger, og kan trekkes tilbake når som helst.
                 </Help>
-            </div>
+            </Flex>
         </div>
     );
 }

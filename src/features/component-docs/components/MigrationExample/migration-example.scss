@@ -1,14 +1,4 @@
 .migration-example {
-    display: flex;
-    flex-direction: column;
-    gap: var(--jkl-spacing-s);
-
-    &__block {
-        display: flex;
-        flex-direction: column;
-        gap: var(--jkl-spacing-xs);
-    }
-
     &__block-label {
         font-size: var(--jkl-font-size-s);
     }

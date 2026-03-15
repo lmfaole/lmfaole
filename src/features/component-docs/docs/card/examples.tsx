@@ -25,10 +25,12 @@ export function CardPreview() {
 
     return (
         <Card variant={CARD_VARIANTS[step] as "high" | "low" | "outlined"}>
-            <Tag variant="success">Aktiv</Tag>
-            <h3 style={{ margin: "var(--jkl-spacing-xs) 0" }}>Bilforsikring</h3>
-            <p style={{ margin: "0 0 var(--jkl-spacing-m)" }}>Kaskoforsikring — fornyes 1. januar 2025</p>
-            <Button variant="secondary">Se detaljer</Button>
+            <Flex direction="column" gap="s">
+                <Tag variant="success">Aktiv</Tag>
+                <h3>Bilforsikring</h3>
+                <p>Kaskoforsikring — fornyes 1. januar 2025</p>
+                <Button variant="secondary">Se detaljer</Button>
+            </Flex>
         </Card>
     );
 }
@@ -38,7 +40,7 @@ export function CardDetailPreview() {
         <Card padding="l" style={{ maxWidth: "28rem", width: "100%" }}>
             <Flex direction="column" gap="m">
                 <Flex justifyContent="space-between" alignItems="center">
-                    <h2 style={{ margin: 0 }}>Bilforsikring kasko</h2>
+                    <h2>Bilforsikring kasko</h2>
                     <Tag variant="success">Aktiv</Tag>
                 </Flex>
                 <DescriptionList>
@@ -75,31 +77,18 @@ export function CardBasicPreview() {
 
 function BlogPostCardPreview() {
     return (
-        <Card
-            as={Link}
-            href="#"
-            padding="s"
-            clickable
-            aria-label="Artikkel om typografi"
-            style={{ maxWidth: "22rem", width: "100%" }}
-        >
-            <CardImage
-                src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&auto=format&fit=crop"
-                alt=""
-                placement="top"
-                style={{ height: "12rem", objectFit: "cover" }}
-            />
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--jkl-spacing-s)", paddingBlockStart: "var(--jkl-spacing-m)" }}>
-                <h2 style={{ margin: 0 }}>Typografi i Jøkul</h2>
-                <p style={{ margin: 0, color: "var(--jkl-color-text-subdued)" }}>
+        <Card padding="l" style={{ maxWidth: "22rem", width: "100%" }}>
+            <Flex direction="column" gap="s" style={{ paddingBlockStart: "var(--jkl-spacing-m)" }}>
+                <h2>Typografi i Jøkul</h2>
+                <p className="muted">
                     Hvordan Fremtind Grotesk bygger opp hierarki og lesbarhet på tvers av flater.
                 </p>
-            </div>
+            </Flex>
         </Card>
     );
 }
 
-function FoundationalCardPreview() {
+function TokenCardPreview() {
     return (
         <Flex gap="m" wrap="wrap">
             {[
@@ -117,7 +106,7 @@ function FoundationalCardPreview() {
                 >
                     <CardImage src={img} alt="" placement="top" style={{ height: "10rem", objectFit: "cover" }} />
                     <div style={{ paddingBlockStart: "var(--jkl-spacing-m)" }}>
-                        <h2 style={{ margin: 0 }}>{title}</h2>
+                        <h2>{title}</h2>
                     </div>
                 </Card>
             ))}
@@ -166,15 +155,15 @@ export const examples: ComponentExample[] = [
                     <Flex gap="m" wrap="wrap">
                         <Card variant="high" padding="m" style={{ flex: 1, minWidth: "10rem" }}>
                             <strong>high</strong>
-                            <p className="muted" style={{ margin: 0 }}>Sterk skygge. Bruk på hvit bakgrunn.</p>
+                            <p className="muted">Sterk skygge. Bruk på hvit bakgrunn.</p>
                         </Card>
                         <Card variant="low" padding="m" style={{ flex: 1, minWidth: "10rem" }}>
                             <strong>low</strong>
-                            <p className="muted" style={{ margin: 0 }}>Svak skygge. Bruk på lys grå bakgrunn.</p>
+                            <p className="muted">Svak skygge. Bruk på lys grå bakgrunn.</p>
                         </Card>
                         <Card variant="outlined" padding="m" style={{ flex: 1, minWidth: "10rem" }}>
                             <strong>outlined</strong>
-                            <p className="muted" style={{ margin: 0 }}>Kantlinje, ingen skygge.</p>
+                            <p className="muted">Kantlinje, ingen skygge.</p>
                         </Card>
                     </Flex>
                 ),
@@ -212,7 +201,7 @@ export const examples: ComponentExample[] = [
                                     <strong>Bilforsikring</strong>
                                     <Tag variant="success">Aktiv</Tag>
                                 </Flex>
-                                <p className="muted" style={{ margin: 0 }}>Kasko · Utløper 31.12.2026</p>
+                                <p className="muted">Kasko · Utløper 31.12.2026</p>
                             </Flex>
                         </Card>
                         <Card as="a" href="#" clickable aria-label="Innboforsikring" style={{ flex: 1, minWidth: "12rem" }}>
@@ -221,7 +210,7 @@ export const examples: ComponentExample[] = [
                                     <strong>Innboforsikring</strong>
                                     <Tag variant="warning">Fornyes snart</Tag>
                                 </Flex>
-                                <p className="muted" style={{ margin: 0 }}>Standard · Utløper 01.06.2026</p>
+                                <p className="muted">Standard · Utløper 01.06.2026</p>
                             </Flex>
                         </Card>
                     </Flex>
@@ -255,7 +244,7 @@ export const examples: ComponentExample[] = [
                 preview: <BlogPostCardPreview />,
             },
     {
-                title: "Bildekortgrid (FoundationalCard-mønster)",
+                title: "Bildekortgrid (TokenCard-mønster)",
                 description: "Flere klikkbare kort med bilde i et grid. CardImage sørger for riktig bleed uavhengig av padding på kortet — ingen manuell negativ margin nødvendig.",
                 tags: ["bilde", "grid", "clickable"],
                 uses: ["card-image", "flex"],
@@ -277,7 +266,7 @@ export const examples: ComponentExample[] = [
         </Card>
       ))}
     </Flex>`,
-                preview: <FoundationalCardPreview />,
+                preview: <TokenCardPreview />,
             },
     {
                 title: "Detaljkort med oppsummering",

@@ -75,6 +75,13 @@ export interface ComponentDoc {
     status?: "stable" | "beta" | "deprecated";
 
     /**
+     * Set to `false` for components that are subcomponents of another and should
+     * not appear as standalone entries in the component overview.
+     * Defaults to `true`.
+     */
+    standalone?: false;
+
+    /**
      * One or two sentences describing what the component is and when to use it.
      * Should answer: "What problem does this solve?"
      * Avoid restating the component name.
@@ -126,12 +133,56 @@ export interface ComponentDoc {
      */
     migrations?: Migration[];
 
+    relationships?: ComponentRelationships;
+}
+
+/**
+ * A single relationship entry — an ID plus a human-readable description
+ * of why/how the two components relate.
+ */
+export interface ComponentRelationship {
+    id: ComponentId;
+    /** One sentence describing the relationship, e.g. "Use CheckboxPanel when you need a larger click target with an embedded label." */
+    description: string;
+}
+
+/**
+ * Relationships to other components, grouped by kind.
+ *
+ * ## Choosing the right bucket
+ *
+ * | Field           | Question to ask                                              | Example                          |
+ * |-----------------|--------------------------------------------------------------|----------------------------------|
+ * | `alternatives`  | "Could the user pick THIS instead of the current component?" | Checkbox → CheckboxPanel         |
+ * | `subcomponents` | "Is this a named child that lives INSIDE the current one?"   | Card → CardImage, Tabs → TabList |
+ * | `related`       | "Is this commonly used ALONGSIDE the current component?"     | TextInput → Label, Help          |
+ *
+ * A component that is a **subcomponent** of another should NEVER appear in `alternatives`.
+ * It should also have `standalone: false` on its own doc so it is hidden from the overview.
+ */
+export interface ComponentRelationships {
     /**
-     * IDs of related components worth exploring after this one.
-     * Each value must be a registered {@link ComponentId}, e.g. `["modal", "tooltip"]`.
-     * TypeScript will error if an ID is not in the registry — update `types/ids.ts`
-     * when adding new components or renaming existing ones.
-     * Used to render a "Se også" section at the bottom of the page.
+     * Other components the user could choose instead of this one to solve the same problem.
+     * These must be independent, top-level components — never a child/subcomponent.
+     *
+     * @example Checkbox → CheckboxPanel, Select → Combobox
      */
-    relatedIds?: ComponentId[];
+    alternatives?: ComponentRelationship[];
+
+    /**
+     * Named child components that are part of this component's API and render *inside* it.
+     * They are not interchangeable alternatives — they extend or compose this component.
+     * Any component listed here should also have `standalone: false` on its own doc.
+     *
+     * @example Card → CardImage, Tabs → TabList, Popover → Popover.Trigger
+     */
+    subcomponents?: ComponentRelationship[];
+
+    /**
+     * Independent components that are frequently used alongside this one,
+     * or that this component is typically embedded within.
+     *
+     * @example TextInput → Label, CheckboxPanel → Checkbox
+     */
+    related?: ComponentRelationship[];
 }

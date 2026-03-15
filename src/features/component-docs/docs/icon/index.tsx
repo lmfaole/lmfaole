@@ -18,7 +18,9 @@ const doc: ComponentDoc = {
     props,
     examples,
     migrations,
-    siblingIds: ["icon-button"],
+    relationships: {
+        alternatives: [{ id: "icon-button", description: "Bruk IconButton når ikonet må være interaktivt og trenger en tilgjengelig knappeetikett." }],
+    },
 };
 
 export default doc;

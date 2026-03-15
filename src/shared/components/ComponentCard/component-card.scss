@@ -2,17 +2,11 @@
     background-image: radial-gradient(circle, color-mix(in srgb, var(--jkl-color-border-subdued) 40%, transparent) 1px, transparent 1px);
     background-size: 20px 20px;
     border-bottom: 1px solid var(--jkl-color-border-subdued);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 10rem;
     overflow: hidden;
     padding: var(--jkl-spacing-xl);
 
     &__inner {
-        align-items: center;
-        display: flex;
-        justify-content: center;
         pointer-events: none;
         user-select: none;
         width: 100%;

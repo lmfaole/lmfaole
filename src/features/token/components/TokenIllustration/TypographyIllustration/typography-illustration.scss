@@ -1,0 +1,48 @@
+@use "../illustration-base" as fi-base;
+@use "@fremtind/jokul/styles/core/jkl/index" as jkl;
+
+.fi--typography {
+  background: var(--jkl-color-background-container-low);
+  overflow: hidden;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--jkl-spacing-m);
+  perspective: 40cqi;
+  perspective-origin: 50% 40%;
+}
+
+.fi__ty-row {
+  overflow: hidden;
+  transform: rotateX(22deg);
+  transform-style: preserve-3d;
+}
+
+/*
+ * The inner element holds one long string (repeated via JS).
+ * Duplicate rendered via second <span> so translateX(-50%) = seamless loop.
+ */
+.fi__ty-inner {
+  display: inline-block;
+  white-space: nowrap;
+  font-family: "Fremtind Grotesk", sans-serif;
+  font-size: var(--ty-size, var(--jkl-font-size-3));
+  font-weight: var(--ty-weight, var(--jkl-typography-font-weight-normal));
+  line-height: var(--ty-lh, var(--jkl-line-height-tight));
+  color: var(--jkl-color-text-default);
+  user-select: none;
+  pointer-events: none;
+  animation: ty-scroll-left var(--ty-dur, 60s) var(--ty-delay, 0s) linear infinite;
+  will-change: transform;
+}
+
+@keyframes ty-scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@include jkl.prefers-reduced-motion {
+  .fi__ty-inner { animation: none; }
+}

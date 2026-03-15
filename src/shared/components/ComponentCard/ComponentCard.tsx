@@ -30,13 +30,13 @@ export function ComponentCard({doc}: ComponentCardProps) {
                 style={{position: "absolute", inset: 0}}
             />
             {preview && (
-                <div className="component-card-preview">
+                <Flex alignItems="center" justifyContent="center" className="component-card-preview">
                     <PreviewHoverContext value={hovered}>
                         <div className="component-card-preview__inner">
                             {preview}
                         </div>
                     </PreviewHoverContext>
-                </div>
+                </Flex>
             )}
             <Flex direction="column" gap="xs" style={{padding: "var(--jkl-spacing-s)"}}>
                 <Flex gap="xs" alignItems="center">
@@ -44,8 +44,7 @@ export function ComponentCard({doc}: ComponentCardProps) {
                     {doc.status === "deprecated" && <Tag variant="warning">Deprecated</Tag>}
                     {doc.status === "beta" && <Tag variant="info">Beta</Tag>}
                 </Flex>
-                <p className="muted"
-                   style={{fontSize: "var(--jkl-font-size-2)", margin: 0}}>{doc.description.split(".")[0]}.</p>
+                <p className="jkl-small muted">{doc.description.split(".")[0]}.</p>
             </Flex>
         </Card>
     );

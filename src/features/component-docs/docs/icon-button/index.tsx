@@ -16,8 +16,10 @@ const doc: ComponentDoc = {
     status: "deprecated",
     description: "IconButton er en knapp med kun ikon. Krev alltid en aria-label som beskriver handlingen.",
     warnings: "Ikke bruk IconButton uten aria-label.",
-    siblingIds: ["icon"],
-    relatedIds: ["button"],
+    relationships: {
+        alternatives: [{ id: "icon", description: "Bruk Icon når symbolet er rent dekorativt og ikke trenger å være et fokuserbart interaktivt element." }],
+        related: [{ id: "button", description: "Button er motparten med tekstetikett; bruk den når en synlig etikett forbedrer klarheten for handlingen." }],
+    },
 
     props,
     examples,

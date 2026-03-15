@@ -1,51 +1,30 @@
 .code-block {
   overflow: hidden;
 
-  // Scope monospace font to code content only — not Jøkul UI (buttons, expander)
-  pre, code {
-    font-family: "Fremtind Grotesk Mono", "Adjusted Courier New Fallback", monospace;
+  &__content {
+    position: relative;
   }
 
-  // Toolbar: same layout for both collapsible and non-collapsible
-  &__toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--jkl-spacing-s);
-    padding: var(--jkl-spacing-s) var(--jkl-spacing-s) var(--jkl-spacing-s) var(--jkl-spacing-m);
-    border-block-end: 1px solid var(--jkl-color-border-subdued);
-  }
+  &__copy {
+    position: absolute;
+    top: var(--jkl-spacing-xs);
+    right: var(--jkl-spacing-xs);
+    z-index: 1;
+    opacity: 0.6;
+    transition: opacity 150ms ease;
 
-  &__toolbar-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--jkl-spacing-2xs);
-  }
-
-  &__lang {
-    font-size: var(--jkl-font-size-1);
-    color: var(--jkl-color-text-subdued);
-  }
-
-  // Chevron rotates when open
-  &__toggle {
-    transition: transform 200ms ease;
-
-    &--open {
-      transform: rotate(180deg);
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
     }
   }
 
-  pre {
+  &__pre {
     margin: 0;
-    overflow-x: auto;
-    padding: var(--jkl-spacing-m);
-  }
-
-  // When rendered without its own Card, bleed to parent card edges
-  &:not(.jkl-card) {
-    border-block-start: 1px solid var(--jkl-color-border-subdued);
-    margin-inline: calc(-1 * var(--jkl-spacing-m));
-    margin-block-end: calc(-1 * var(--jkl-spacing-m));
+    max-width: none;
+    background: none;
+    border-radius: 0;
+    // Pad right side so long lines don't run under the copy button
+    padding-inline-end: var(--jkl-spacing-2xl);
   }
 }

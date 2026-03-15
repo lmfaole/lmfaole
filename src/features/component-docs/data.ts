@@ -1,17 +1,39 @@
 import { componentDocs } from "./docs";
-import type { ComponentDoc, PropDef, PropStatus, PropSource, ComponentExample, Migration } from "./docs/types";
+import type { ComponentDoc, ComponentRelationship, PropDef, PropStatus, PropSource, ComponentExample, Migration } from "./docs/types";
 
-export type { ComponentDoc, PropDef, PropStatus, PropSource, ComponentExample, Migration };
+export type { ComponentDoc, ComponentRelationship, PropDef, PropStatus, PropSource, ComponentExample, Migration };
 export { componentDocs };
+
+export interface ResolvedRelationship {
+    doc: ComponentDoc;
+    description: string;
+}
 
 export function getComponentDoc(id: string): ComponentDoc | undefined {
     return componentDocs.find((doc) => doc.id === id);
 }
 
-export function getRelatedDocs(id: string): ComponentDoc[] {
+function resolveRelationships(entries: ComponentRelationship[] = []): ResolvedRelationship[] {
+    return entries.flatMap((entry) => {
+        const doc = getComponentDoc(entry.id);
+        return doc ? [{ doc, description: entry.description }] : [];
+    });
+}
+
+export function getRelationships(id: string): {
+    alternatives: ResolvedRelationship[];
+    subcomponents: ResolvedRelationship[];
+    related: ResolvedRelationship[];
+} {
     const doc = getComponentDoc(id);
-    if (!doc?.relatedIds) return [];
-    return doc.relatedIds
-        .map((relId) => getComponentDoc(relId))
-        .filter((d): d is ComponentDoc => d !== undefined);
+    return {
+        alternatives: resolveRelationships(doc?.relationships?.alternatives),
+        subcomponents: resolveRelationships(doc?.relationships?.subcomponents),
+        related: resolveRelationships(doc?.relationships?.related),
+    };
+}
+
+/** @deprecated use getRelationships(id).related */
+export function getRelatedDocs(id: string): ComponentDoc[] {
+    return getRelationships(id).related.map(({ doc }) => doc);
 }

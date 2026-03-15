@@ -1,6 +1,7 @@
 import React from "react";
 import { Popover } from "@fremtind/jokul/popover";
 import { Link } from "@fremtind/jokul/link";
+import { Flex } from "@fremtind/jokul/flex";
 import type { ComponentExample } from "../types";
 
 
@@ -45,7 +46,7 @@ function PopoverAsChildPreview() {
 
 function PopoverPlacementPreview() {
     return (
-        <div style={{ display: "flex", gap: "var(--jkl-spacing-s)", flexWrap: "wrap" }}>
+        <Flex gap="s" wrap="wrap">
             {(["top", "bottom", "left", "right"] as const).map((placement) => (
                 <Popover key={placement} placement={placement}>
                     <Popover.Trigger>{placement}</Popover.Trigger>
@@ -54,14 +55,14 @@ function PopoverPlacementPreview() {
                     </Popover.Content>
                 </Popover>
             ))}
-        </div>
+        </Flex>
     );
 }
 
 function PopoverControlledPreview() {
     const [open, setOpen] = React.useState(false);
     return (
-        <div style={{ display: "flex", gap: "var(--jkl-spacing-s)", alignItems: "center" }}>
+        <Flex gap="s" alignItems="center">
             <Popover open={open} onOpenChange={setOpen}>
                 <Popover.Trigger>
                     {open ? "Lukk" : "Åpne"} popover
@@ -70,7 +71,7 @@ function PopoverControlledPreview() {
                     Denne popoveren er kontrollert utenfra.
                 </Popover.Content>
             </Popover>
-        </div>
+        </Flex>
     );
 }
 

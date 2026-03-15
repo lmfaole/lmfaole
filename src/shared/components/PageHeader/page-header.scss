@@ -1,0 +1,12 @@
+.page-header {
+    max-width: 60ch;
+
+    &__title {
+        margin: 0;
+    }
+
+    &__description {
+        margin: 0;
+        color: var(--jkl-color-content-muted);
+    }
+}

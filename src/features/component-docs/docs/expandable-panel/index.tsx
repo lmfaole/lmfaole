@@ -13,7 +13,9 @@ const doc: ComponentDoc = {
     category: "Visning",
     description: "ExpandablePanel er et utviddbart panel med header og innhold.",
 
-    siblingIds: ["expander"],
+    relationships: {
+        alternatives: [{ id: "expander", description: "Bruk Expander for en lettere, innebygd utvid/skjul uten den innrammede panelbeholderen." }],
+    },
 
     props,
     subComponents: [

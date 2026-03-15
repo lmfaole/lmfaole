@@ -1,9 +1,3 @@
-.before-after {
-    display: flex;
-    flex-direction: column;
-    gap: var(--jkl-spacing-s);
-}
-
 .before-after__label {
     margin: 0;
     font-size: var(--jkl-font-size-2);
@@ -22,18 +16,6 @@
     }
 }
 
-.before-after__col {
-    display: flex;
-    flex-direction: column;
-    gap: var(--jkl-spacing-s);
-}
-
-.before-after__col-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--jkl-spacing-2xs);
-}
-
 .before-after__badge {
     align-self: flex-start;
 }
@@ -47,10 +29,6 @@
 
 /* Canvas area for live previews */
 .before-after__preview {
-    display: flex;
-    align-items: center;
-    gap: var(--jkl-spacing-s);
-    flex-wrap: wrap;
     padding: var(--jkl-spacing-l);
     border-radius: var(--jkl-border-radius-small);
     border: 1px dashed var(--jkl-color-border-ui);

@@ -10,7 +10,9 @@ const doc: ComponentDoc = {
     package: "@fremtind/jokul/nav-link",
     category: "Navigasjon",
     description: "NavLink er en navigasjonslenke med tydelig aktiv tilstand. Brukes i navigasjonsmeny og sidefelt.",
-    siblingIds: ["link", "link-list"],
+    relationships: {
+        alternatives: [{ id: "link", description: "Bruk Link for innebygde hyperkoblinger i tekstinnhold fremfor sidenavigasjon." }, { id: "link-list", description: "Bruk LinkList når du presenterer en gruppert, merket samling av navigasjonslenker i en kolonne." }],
+    },
     preview: (
         <Flex direction="column" gap="xs">
             <NavLink href="#" active>Oversikt</NavLink>

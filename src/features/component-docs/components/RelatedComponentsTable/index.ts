@@ -1,0 +1,1 @@
+export { RelatedComponentsTable } from "./RelatedComponentsTable";

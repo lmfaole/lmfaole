@@ -19,7 +19,9 @@ const doc: ComponentDoc = {
         "Wrap appen i ToastProvider — useToast() vil kaste en feil hvis det kalles utenfor.",
         "Toast forsvinner automatisk — ikke bruk den for kritisk informasjon som krever brukerhandling.",
     ],
-    siblingIds: ["message", "system-message"],
+    relationships: {
+        alternatives: [{ id: "message", description: "Bruk Message for vedvarende innebygd tilbakemelding som forblir synlig i sideoppsettet." }, { id: "system-message", description: "Bruk SystemMessage for beskjeder på sidenivå som krever eksplisitt brukerbekreftelse." }],
+    },
 
     props,
     examples,

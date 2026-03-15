@@ -20,7 +20,9 @@ const doc: ComponentDoc = {
     warnings: "Bruk render-prop-mønsteret for å spre tilgjengelighetsprops (id, aria-describedby, aria-invalid) automatisk til det underliggende feltet.",
     preview: <InputGroupPreview />,
 
-    relatedIds: ["text-input", "checkbox", "radio-button", "help"],
+    relationships: {
+        related: [{ id: "text-input", description: "InputGroup wrapper TextInput (og lignende felt) for å legge til prefiks-/suffiksikoner eller knapper." }, { id: "checkbox", description: "Integrer Checkbox inne i InputGroup når en boolsk modifikator er tett koblet til inndataverdien." }, { id: "radio-button", description: "Grupper RadioButtons inne i InputGroups FieldGroup-underkomponent for en felles tilgjengelig legende." }, { id: "help", description: "Fest Help til en InputGroup for å gi kontekstuell veiledning uten å rote til etiketten." }],
+    },
     props,
     subComponents: [
         {

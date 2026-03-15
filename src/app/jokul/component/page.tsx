@@ -14,12 +14,13 @@ import type {PropSource, PropStatus} from "@/features/component-docs/data";
 import {componentDocs} from "@/features/component-docs/data";
 import {Grid} from "@/shared/components/Grid";
 import {ComponentCard} from "@/shared/components/ComponentCard";
+import {PageHeader} from "@/shared/components/PageHeader";
 import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
 import {useLocalStorage} from "@/shared/hooks/useLocalStorage";
 import {ChipFilterList} from "@/features/component-docs/components/ChipFilterList";
 import "./component-index.scss";
 
-const ALL_CATEGORIES = Array.from(new Set(componentDocs.map((d) => d.category))).sort();
+const ALL_CATEGORIES = Array.from(new Set(componentDocs.filter((d) => d.standalone !== false).map((d) => d.category))).sort();
 
 const STATUS_RANK: Record<PropStatus, number> = { deprecated: 2, experimental: 1, stable: 0 };
 
@@ -62,6 +63,7 @@ export default function ComponentsPage() {
     const filtered = useMemo(() => {
         const q = query.toLowerCase();
         const results = componentDocs.filter((doc) => {
+            if (doc.standalone === false) return false;
             const matchesQuery =
                 !q ||
                 doc.name.toLowerCase().includes(q) ||
@@ -100,13 +102,10 @@ export default function ComponentsPage() {
 
     if (!viewReady) {
         return (
-            <Flex as="main" direction="column" gap="xl">                <Flex direction="column" gap="s">
-                    <h1>Komponentdokumentasjon</h1>
-                    <p>
-                        Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for
-                        komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet.
-                    </p>
-                </Flex>
+            <Flex as="main" direction="column" gap="xl"> <PageHeader
+                title="Komponentdokumentasjon"
+                description="Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet."
+            />
                 <SkeletonAnimation textDescription="Laster innstillinger…">
                     <SkeletonElement width="20rem" height="2.5rem" />
                     <SkeletonElement width="100%" height="12rem" className="component-index__skeleton-gap" />
@@ -116,13 +115,10 @@ export default function ComponentsPage() {
     }
 
     return (
-        <Flex as="main" direction="column" gap="xl">            <Flex direction="column" gap="s">
-                <h1>Komponentdokumentasjon</h1>
-                <p>
-                    Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for
-                    komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet.
-                </p>
-            </Flex>
+        <Flex as="main" direction="column" gap="xl"> <PageHeader
+            title="Komponentdokumentasjon"
+            description="Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet."
+        />
 
             <SegmentedControl legend="Vis">
                 <SegmentedControlButton
@@ -199,7 +195,7 @@ export default function ComponentsPage() {
                             <option value="least-used">Minst brukt</option>
                         </Select>
                     </Flex>
-                    <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
+                    <Flex as="ul" className="list-bare" gap="xs" wrap="wrap">
                         {(["custom", "native", "react", "aria"] as PropSource[]).map((src) => {
                             const label = src === "custom" ? "Egendefinert" : src === "native" ? "Native HTML" : src === "react" ? "React" : "ARIA";
                             return (
@@ -215,7 +211,7 @@ export default function ComponentsPage() {
                             );
                         })}
                     </Flex>
-                    <Flex as="ul" className="chip-list" gap="xs" wrap="wrap">
+                    <Flex as="ul" className="list-bare" gap="xs" wrap="wrap">
                         {(["stable", "deprecated", "experimental"] as PropStatus[]).map((s) => {
                             const label = s === "stable" ? "Stabil" : s === "deprecated" ? "Utfaset" : "Eksperimentell";
                             return (

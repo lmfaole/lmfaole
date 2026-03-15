@@ -1,81 +1,53 @@
 import { useState, useEffect } from "react";
 import { Button } from "@fremtind/jokul/button";
+import { Card } from "@fremtind/jokul/card";
+import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentExample } from "../types";
 
 
 function ModalBasicPreview() {
     return (
-        <div
-            style={{
-                border: "1px solid var(--jkl-color-border-default)",
-                borderRadius: "4px",
-                padding: "var(--jkl-spacing-l)",
-                maxWidth: "400px",
-                background: "var(--jkl-color-background-default)",
-            }}
-        >
-            <strong style={{ display: "block", marginBottom: "var(--jkl-spacing-s)" }}>
-                Bekreft handling
-            </strong>
-            <p style={{ margin: "0 0 var(--jkl-spacing-m)" }}>
-                Er du sikker på at du vil slette dette elementet?
-            </p>
-            <div style={{ display: "flex", gap: "var(--jkl-spacing-s)" }}>
-                <Button>Slett</Button>
-                <Button variant="secondary">Avbryt</Button>
-            </div>
-        </div>
+        <Card padding="l" style={{ maxWidth: "400px", width: "100%" }}>
+            <Flex direction="column" gap="m">
+                <strong>Bekreft handling</strong>
+                <p>Er du sikker på at du vil slette dette elementet?</p>
+                <Flex gap="s">
+                    <Button>Slett</Button>
+                    <Button variant="secondary">Avbryt</Button>
+                </Flex>
+            </Flex>
+        </Card>
     );
 }
 
 function AlertDialogPreview() {
     return (
-        <div
-            style={{
-                border: "2px solid var(--jkl-color-border-error)",
-                borderRadius: "4px",
-                padding: "var(--jkl-spacing-l)",
-                maxWidth: "400px",
-                background: "var(--jkl-color-background-default)",
-            }}
-        >
-            <strong style={{ display: "block", marginBottom: "var(--jkl-spacing-s)" }}>
-                Advarsel
-            </strong>
-            <p style={{ margin: "0 0 var(--jkl-spacing-m)" }}>
-                Denne handlingen kan ikke angres. Alle data vil bli permanent slettet.
-            </p>
-            <div style={{ display: "flex", gap: "var(--jkl-spacing-s)" }}>
-                <Button>Ja, slett alt</Button>
-                <Button variant="secondary">Avbryt</Button>
-            </div>
-        </div>
+        <Card variant="outlined" padding="l" style={{ maxWidth: "400px", width: "100%", borderColor: "var(--jkl-color-border-error)" }}>
+            <Flex direction="column" gap="m">
+                <strong>Advarsel</strong>
+                <p>Denne handlingen kan ikke angres. Alle data vil bli permanent slettet.</p>
+                <Flex gap="s">
+                    <Button>Ja, slett alt</Button>
+                    <Button variant="secondary">Avbryt</Button>
+                </Flex>
+            </Flex>
+        </Card>
     );
 }
 
 function ConfirmationPreview() {
     return (
-        <div
-            style={{
-                border: "1px solid var(--jkl-color-border-default)",
-                borderRadius: "4px",
-                padding: "var(--jkl-spacing-l)",
-                maxWidth: "400px",
-                background: "var(--jkl-color-background-default)",
-            }}
-        >
-            <strong style={{ display: "block", marginBottom: "var(--jkl-spacing-s)" }}>
-                Send inn skjema?
-            </strong>
-            <p style={{ margin: "0 0 var(--jkl-spacing-m)" }}>
-                Du er i ferd med å sende inn søknaden. Vil du fortsette?
-            </p>
-            <div style={{ display: "flex", gap: "var(--jkl-spacing-s)" }}>
-                <Button>Send inn</Button>
-                <Button variant="secondary">Gå tilbake</Button>
-            </div>
-        </div>
+        <Card padding="l" style={{ maxWidth: "400px", width: "100%" }}>
+            <Flex direction="column" gap="m">
+                <strong>Send inn skjema?</strong>
+                <p>Du er i ferd med å sende inn søknaden. Vil du fortsette?</p>
+                <Flex gap="s">
+                    <Button>Send inn</Button>
+                    <Button variant="secondary">Gå tilbake</Button>
+                </Flex>
+            </Flex>
+        </Card>
     );
 }
 

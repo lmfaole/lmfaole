@@ -13,8 +13,10 @@ const doc: ComponentDoc = {
     category: "Skjema",
     description: "RadioButton og RadioButtonGroup brukes for enovalgslister.",
     warnings: "Aldri bruk RadioButton uten RadioButtonGroup — den er ikke tilgjengelig uten riktig name og grouping.",
-    siblingIds: ["radio-panel"],
-    relatedIds: ["checkbox"],
+    relationships: {
+        alternatives: [{ id: "radio-panel", description: "Bruk RadioPanel når du trenger et større klikkbart kortområde rundt hvert alternativ." }],
+        related: [{ id: "checkbox", description: "Bruk Checkbox i stedet når brukeren kan velge flere alternativer samtidig." }],
+    },
 
     props,
     examples,
