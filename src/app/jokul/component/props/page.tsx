@@ -3,12 +3,11 @@
 import React, {useMemo, useState} from "react";
 import {Flex} from "@fremtind/jokul/flex";
 import {Search} from "@fremtind/jokul/search";
-import {Chip} from "@fremtind/jokul/chip";
-import {Tag} from "@fremtind/jokul/tag";
 import {BETA_Select as Select} from "@fremtind/jokul/select";
 import {NavTab, NavTabs} from "@fremtind/jokul/tabs";
 import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
-import {DescriptionDetail, DescriptionList, DescriptionTerm} from "@fremtind/jokul/description-list";
+import {DataTable} from "@fremtind/jokul/table";
+import {Tag} from "@fremtind/jokul/tag";
 import {Link} from "@fremtind/jokul/link";
 import type {PropSource, PropStatus} from "@/features/component-docs/data";
 import {ALL_PROP_ENTRIES} from "@/features/component-docs/prop-index";
@@ -16,25 +15,57 @@ import {PageHeader} from "@/shared/components/PageHeader";
 import {useLocalStorage} from "@/shared/hooks/useLocalStorage";
 import "../component-index.scss";
 
+const SOURCE_LABEL: Record<PropSource, string> = {
+    custom: "Egendefinert",
+    native: "Native HTML",
+    aria: "ARIA",
+    react: "React",
+};
+
+const STATUS_LABEL: Record<PropStatus, string> = {
+    stable: "—",
+    deprecated: "Utfaset",
+    experimental: "Eksperimentell",
+};
+
+const COLUMNS = ["Prop", "Kilde", "Status", "Brukt i"];
+
 export default function PropIndexPage() {
     const [propQuery, setPropQuery] = useState("");
     const [propSortBy, setPropSortBy, ready] = useLocalStorage("comp-prop-sort", "az");
-    const [propSourceFilter, setPropSourceFilter] = useState<PropSource | null>(null);
-    const [propStatusFilter, setPropStatusFilter] = useState<PropStatus | null>(null);
 
     const filteredProps = useMemo(() => {
         const q = propQuery.toLowerCase().trim();
         const results = ALL_PROP_ENTRIES.filter(
-            (e) =>
-                (!q || e.propName.toLowerCase().includes(q) || e.usedBy.some((c) => c.name.toLowerCase().includes(q))) &&
-                (!propSourceFilter || e.source === propSourceFilter) &&
-                (!propStatusFilter || e.status === propStatusFilter),
+            (e) => !q || e.propName.toLowerCase().includes(q) || e.usedBy.some((c) => c.name.toLowerCase().includes(q))
         );
         if (propSortBy === "za") return results.sort((a, b) => b.propName.localeCompare(a.propName, "nb"));
         if (propSortBy === "most-used") return results.sort((a, b) => b.usedBy.length - a.usedBy.length);
         if (propSortBy === "least-used") return results.sort((a, b) => a.usedBy.length - b.usedBy.length);
         return results.sort((a, b) => a.propName.localeCompare(b.propName, "nb"));
-    }, [propQuery, propSortBy, propSourceFilter, propStatusFilter]);
+    }, [propQuery, propSortBy]);
+
+    const rows = useMemo(() =>
+        filteredProps.map((entry) => [
+            <code key="name">{entry.propName}</code>,
+            <span key="source">{SOURCE_LABEL[entry.source]}</span>,
+            entry.status !== "stable" ? (
+                <Tag key="status" variant={entry.status === "deprecated" ? "warning" : "info"}>
+                    {STATUS_LABEL[entry.status]}
+                </Tag>
+            ) : (
+                <span key="status" style={{color: "var(--jkl-color-text-subdued)"}}>—</span>
+            ),
+            <Flex key="usedBy" gap="2xs" wrap="wrap">
+                {entry.usedBy.map((comp, i) => (
+                    <React.Fragment key={comp.id}>
+                        <Link href={`/jokul/component/${comp.id}`}>{comp.name}</Link>
+                        {i < entry.usedBy.length - 1 && <span style={{color: "var(--jkl-color-text-subdued)"}}>,</span>}
+                    </React.Fragment>
+                ))}
+            </Flex>,
+        ]),
+    [filteredProps]);
 
     if (!ready) {
         return (
@@ -83,66 +114,15 @@ export default function PropIndexPage() {
                         <option value="least-used">Minst brukt</option>
                     </Select>
                 </Flex>
-                <Flex as="ul" className="list-bare" gap="xs" wrap="wrap">
-                    {(["custom", "native", "react", "aria"] as PropSource[]).map((src) => {
-                        const label = src === "custom" ? "Egendefinert" : src === "native" ? "Native HTML" : src === "react" ? "React" : "ARIA";
-                        return (
-                            <li key={src}>
-                                <Chip
-                                    variant="filter"
-                                    selected={propSourceFilter === src}
-                                    onClick={() => setPropSourceFilter(propSourceFilter === src ? null : src)}
-                                >
-                                    {label}
-                                </Chip>
-                            </li>
-                        );
-                    })}
-                </Flex>
-                <Flex as="ul" className="list-bare" gap="xs" wrap="wrap">
-                    {(["stable", "deprecated", "experimental"] as PropStatus[]).map((s) => {
-                        const label = s === "stable" ? "Stabil" : s === "deprecated" ? "Utfaset" : "Eksperimentell";
-                        return (
-                            <li key={s}>
-                                <Chip
-                                    variant="filter"
-                                    selected={propStatusFilter === s}
-                                    onClick={() => setPropStatusFilter(propStatusFilter === s ? null : s)}
-                                >
-                                    {label}
-                                </Chip>
-                            </li>
-                        );
-                    })}
-                </Flex>
                 <p className="muted component-index__count">
                     {filteredProps.length} av {ALL_PROP_ENTRIES.length} props
                 </p>
-                <DescriptionList alignment="horizontal" separators>
-                    {filteredProps.map((entry) => (
-                        <React.Fragment key={entry.propName}>
-                            <DescriptionTerm>
-                                <Flex direction="column" gap="xs">
-                                    <code>{entry.propName} {!propSourceFilter && `(${entry.source})`}</code>
-                                </Flex>
-                            </DescriptionTerm>
-                            {entry.usedBy
-                                .filter((comp) => !propStatusFilter || comp.status === propStatusFilter)
-                                .map((comp) => (
-                                    <DescriptionDetail key={comp.id}>
-                                        <Flex gap="xs" alignItems="center">
-                                            <Link href={`/jokul/component/${comp.id}`}>{comp.name}</Link>
-                                            {comp.status !== "stable" && (
-                                                <Tag variant={comp.status === "deprecated" ? "warning" : "info"}>
-                                                    {comp.status === "deprecated" ? "Utfaset" : "Eksperimentell"}
-                                                </Tag>
-                                            )}
-                                        </Flex>
-                                    </DescriptionDetail>
-                                ))}
-                        </React.Fragment>
-                    ))}
-                </DescriptionList>
+                <DataTable
+                    caption="Prop-indeks"
+                    columns={COLUMNS}
+                    rows={rows}
+                    collapseToList
+                />
             </Flex>
         </Flex>
     );
