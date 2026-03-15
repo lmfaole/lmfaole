@@ -228,22 +228,37 @@ The only exception is `display: inline-flex` on a non-Jøkul element where wrapp
 
 ---
 
-## Reporting Jøkul bugs and confusing APIs
+## Reporting Jøkul issues
 
-When you discover a bug in Jøkul (unexpected behaviour, missing styles, broken animations, incorrect types, etc.) **or** an API that is difficult to understand or use correctly, **always create a GitHub issue** in this repository before or immediately after applying a workaround.
+When you encounter any of the following while using Jøkul, **always create a GitHub issue** in this repository before or immediately after applying a workaround:
 
+| Type | Eksempel |
+|------|---------|
+| **Bug** | Uventet oppførsel, statisk animasjon, feil rendering |
+| **Manglende styles** | Komponent mangler CSS, tema fungerer ikke |
+| **Forvirrende API** | Props er vanskelige å forstå eller bruke riktig |
+| **Manglende funksjonalitet** | Ønsket prop eller variant finnes ikke |
+| **TypeScript-feil** | Feil eller manglende typer, `any`-caster nødvendig |
+| **Tilgjengelighetsproblem** | ARIA, tastaturnavigasjon, skjermleser |
+| **SSR/hydration-problem** | Krasj eller mismatch i Next.js |
+| **Ytelsesproblem** | For mange DOM-noder, tunge animasjoner |
+| **Dokumentasjonsmangel** | Feil eller manglende docs i Jøkul |
+
+Rules:
 - **Write the issue in Norwegian** — title and body
 - **Be concise** — one short sentence per section, no unnecessary context
-- Use the bug template for bugs, and the API note template for confusing APIs
+- Always use `--body-file /tmp/issue.md` (not `--body`) to avoid CLI hangs with multiline content
 
-Bug template:
 ```
 gh issue create \
   --repo lmfaole/lmfaole \
-  --title "Jøkul-bug: <Kort beskrivelse>" \
+  --title "Jøkul-<type>: <Komponent> – <Kort beskrivelse>" \
   --body-file /tmp/issue.md
 ```
-Body (`/tmp/issue.md`):
+
+Where `<type>` matches the table above, e.g. `Jøkul-bug`, `Jøkul-API`, `Jøkul-a11y`, `Jøkul-SSR`, `Jøkul-ytelse`, `Jøkul-docs`.
+
+**Bug / manglende styles** body:
 ```
 ## Hva skjer
 <Én setning>
@@ -258,21 +273,26 @@ Body (`/tmp/issue.md`):
 <Én setning>
 ```
 
-API note template:
-```
-gh issue create \
-  --repo lmfaole/lmfaole \
-  --title "Jøkul-API: <Komponent> – <Kort beskrivelse>" \
-  --body-file /tmp/issue.md
-```
-Body (`/tmp/issue.md`):
+**Forvirrende API / manglende funksjonalitet / TypeScript** body:
 ```
 ## Problem
-<Hva som er vanskelig å forstå eller bruke riktig>
+<Hva som er vanskelig, mangler eller er feil>
 
 ## Eksempel
 <Kort kodeeksempel eller beskrivelse av forvirringen>
 
 ## Forslag
 <Hva som kunne gjort det enklere>
+```
+
+**Tilgjengelighet / SSR / ytelse** body:
+```
+## Problem
+<Hva som ikke fungerer>
+
+## Kontekst
+<Komponent, rammeverk, reproduksjonssteg>
+
+## Forslag
+<Mulig fiks eller workaround>
 ```
