@@ -1,0 +1,56 @@
+/* ─────────────────────────────────────────────────────────────
+   BorderRadiusIllustration — 6 shapes in a row, each with a
+   different border-radius step. They pulse with a staggered
+   opacity fade to draw attention to the radius differences.
+   ───────────────────────────────────────────────────────────── */
+@use "../illustration-base" as fi-base;
+@use "@fremtind/jokul/styles/core/jkl/index" as jkl;
+
+.fi--border-radius {
+  background: var(--jkl-color-background-container-low);
+  overflow: hidden;
+}
+
+.fi__br-grid {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 3cqi;
+  padding: 4cqb 6cqi;
+}
+
+.fi__br-shape {
+  flex: 1;
+  aspect-ratio: 1;
+  max-width: 14cqb;
+  max-height: 14cqb;
+  background: var(--jkl-color-background-container-high);
+  border: 1.5px solid var(--jkl-color-border-separator);
+  border-radius: var(--br-radius, 0);
+  will-change: opacity, transform;
+  animation:
+    br-pulse
+    9s
+    var(--br-delay, 0s)
+    #{jkl.easing("entrance")}
+    infinite;
+}
+
+@keyframes br-pulse {
+  0%   { opacity: 0.2; transform: scale(0.88); }
+  20%  { opacity: 1;   transform: scale(1);    }
+  70%  { opacity: 1;   transform: scale(1);    }
+  90%  { opacity: 0.2; transform: scale(0.88); }
+  100% { opacity: 0.2; transform: scale(0.88); }
+}
+
+@include jkl.prefers-reduced-motion {
+  .fi__br-shape {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

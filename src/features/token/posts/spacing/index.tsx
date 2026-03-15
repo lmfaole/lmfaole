@@ -1,4 +1,4 @@
-import { SpacingIllustration } from "@/features/token/components/TokenIllustration";
+import { SpacingIllustration } from "@/shared/components/Illustration";
 import { spacingTokens, unitTokens } from "./tokens";
 import { spacingMixins } from "./mixins";
 import type { TokenPost } from "../types";

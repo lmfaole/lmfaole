@@ -1,6 +1,5 @@
 import React from "react";
 import { Card } from "@fremtind/jokul/card";
-import { Flex } from "@fremtind/jokul/flex";
 import type { TokenPost } from "@/features/token/data";
 import { getTokenSlug } from "@/features/token/data";
 import "./token-feature.scss";
@@ -25,10 +24,9 @@ export function TokenFeature({ post }: TokenFeatureProps) {
                     {post.illustration}
                 </div>
             )}
-            <Flex className="token-feature__content" direction="column" gap="xs">
+            <div className="token-feature__content">
                 <strong className="token-feature__title">{post.title}</strong>
-                <p className="token-feature__excerpt">{post.excerpt}</p>
-            </Flex>
+            </div>
         </Card>
     );
 }

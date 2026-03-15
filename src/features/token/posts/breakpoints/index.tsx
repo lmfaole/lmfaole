@@ -1,4 +1,4 @@
-import { BreakpointsIllustration } from "@/features/token/components/TokenIllustration";
+import { BreakpointsIllustration } from "@/shared/components/Illustration";
 import { breakpointTokens, breakpointRanges } from "./tokens";
 import { breakpointMixins } from "./mixins";
 import type { TokenPost } from "../types";

@@ -17,7 +17,7 @@ import {AlternativesList} from "@/features/component-docs/components/Alternative
 import {SubcomponentsList} from "@/features/component-docs/components/SubcomponentsList";
 import {RelatedComponentsTable} from "@/features/component-docs/components/RelatedComponentsTable";
 import {PageHero} from "@/shared/components/PageHero/PageHero";
-import {DotsIllustration} from "@/features/token/components/TokenIllustration";
+import {DotsIllustration} from "@/shared/components/Illustration";
 
 function MigrationSection({ migrations }: { migrations: Migration[] }) {
     const [active, setActive] = useState<string>(migrations[0]?.deprecates.name ?? "");

@@ -1,4 +1,4 @@
-import { DotsIllustration } from "@/features/token/components/TokenIllustration";
+import { BorderRadiusIllustration } from "@/shared/components/Illustration";
 import { borderRadiusTokens } from "./tokens";
 import type { TokenPost } from "../types";
 
@@ -31,7 +31,7 @@ const post: TokenPost = {
       ]),
     },
   ],
-  illustration: <DotsIllustration />,
+  illustration: <BorderRadiusIllustration />,
   relatedComponents: ["button", "card", "chip", "modal", "popover"],
   resources: [
     { title: "MDN: border-radius", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius" },

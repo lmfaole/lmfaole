@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Flex } from "@fremtind/jokul/flex";
 import type { TokenPost } from "@/features/token/data";
 import { getTokenSlug } from "@/features/token/data";
 import "./token-card.scss";
@@ -16,10 +15,9 @@ export function TokenCard({ post }: TokenCardProps) {
                     {post.illustration}
                 </div>
             )}
-            <Flex direction="column" gap="xs" className="token-card__content">
+            <div className="token-card__content">
                 <h2 className="token-card__title">{post.title}</h2>
-                <p className="token-card__excerpt">{post.excerpt}</p>
-            </Flex>
+            </div>
         </Link>
     );
 }

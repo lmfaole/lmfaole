@@ -1,4 +1,4 @@
-import { ColorIllustration } from "@/features/token/components/TokenIllustration";
+import { ColorIllustration } from "@/shared/components/Illustration";
 import {
   primitiveColorTokens,
   backgroundTokens,

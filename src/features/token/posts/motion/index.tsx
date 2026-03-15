@@ -1,4 +1,4 @@
-import {MotionIllustration} from "@/features/token/components/TokenIllustration";
+import {MotionIllustration} from "@/shared/components/Illustration";
 import {MotionPreview} from "@/features/token/components/MotionPreview";
 import {easingTokens, timingTokens} from "./tokens";
 import {motionMixins} from "./mixins";

@@ -1,4 +1,4 @@
-import { TypographyIllustration } from "@/features/token/components/TokenIllustration";
+import { TypographyIllustration } from "@/shared/components/Illustration";
 import { fontSizeReference, lineHeightReference, fontWeightReference } from "./tokens";
 import { typographyMixins } from "./mixins";
 import type { TokenPost } from "../types";
