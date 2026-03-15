@@ -26,3 +26,15 @@
     margin-top: var(--jkl-spacing-xs);
   }
 }
+
+.image-component-preview {
+  width: 200px;
+  height: 120px;
+  border-radius: 4px;
+  overflow: hidden;
+
+  /* jkl-image has no intrinsic height — both children are position:absolute */
+  &.jkl-image {
+    height: 100%;
+  }
+}
