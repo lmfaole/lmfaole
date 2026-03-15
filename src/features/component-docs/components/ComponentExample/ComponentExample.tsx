@@ -10,9 +10,9 @@ import "./component-example.scss";
 import {Card} from "@fremtind/jokul/card";
 import {Flex} from "@fremtind/jokul/flex";
 import type {ColorScheme} from "@fremtind/jokul/core";
+import {DescriptionDetail, DescriptionList, DescriptionTerm} from "@fremtind/jokul/description-list";
 
 const SIZE_OPTIONS: Array<{ value: "small" | "medium" | "large" | ""; label: string }> = [
-    {value: "", label: "Default"},
     {value: "small", label: "Small"},
     {value: "medium", label: "Medium"},
     {value: "large", label: "Large"},
@@ -29,8 +29,8 @@ interface ComponentExampleProps {
 }
 
 export function ComponentExample({example}: ComponentExampleProps) {
-    const [size, setSize] = useState("");
-    const [theme, setTheme] = useState("");
+    const [size, setSize] = useState(SIZE_OPTIONS[1].value);
+    const [theme, setTheme] = useState(THEME_OPTIONS[0].value);
 
     return (
         <Card variant="outlined" padding="m">
@@ -43,15 +43,16 @@ export function ComponentExample({example}: ComponentExampleProps) {
                     )}
 
                     {example.uses && example.uses.length > 0 && (
-                        <ul className="list-bare">
+                        <DescriptionList>
+                            <DescriptionTerm>Består av</DescriptionTerm>
                             {example.uses.map((id) => (
-                                <li key={id}>
+                                <DescriptionDetail key={id}>
                                     <Link href={`/jokul/component/${id}`}>
                                         {toPascalCase(id)}
                                     </Link>
-                                </li>
+                                </DescriptionDetail>
                             ))}
-                        </ul>
+                        </DescriptionList>
                     )}
                 </header>
 
@@ -90,7 +91,7 @@ export function ComponentExample({example}: ComponentExampleProps) {
                     </Flex>
                 )}
 
-                <CodeBlock code={example.code} />
+                <CodeBlock code={example.code}/>
             </Flex>
         </Card>
     );

@@ -34,7 +34,7 @@ function SkeletonPreview() {
                 <Flex direction="column" gap="m">
                     <p style={{ margin: 0, fontWeight: "bold" }}>Bilforsikring kasko</p>
                     <p style={{ margin: 0 }}>Månedspremie: 542 kr</p>
-                    <Button variant="secondary" style={{ width: "8rem" }}>Se detaljer</Button>
+                    <div style={{ width: "8rem" }}><Button variant="secondary">Se detaljer</Button></div>
                 </Flex>
             </div>
         );

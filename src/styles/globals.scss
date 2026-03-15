@@ -79,8 +79,8 @@ body {
    Jøkul's list component styles are respected inside. */
 .post-prose {
   > h1, > h2, > h3, > h4, > h5, > p, > small,
-  > ul, > ol, > .jkl-unordered-list, > .jkl-ordered-list,
-  > dl, > .jkl-description-list {
+  > ul, > ol,
+  > dl {
     max-width: 60ch;
   }
 }
@@ -161,13 +161,13 @@ h1, h2, h3, h4, h5, p, small {
   color: var(--jkl-color-text-subdued);
 }
 
-/* Tags should never be flush — ensure gap wherever they appear adjacent */
-.jkl-tag + .jkl-tag {
+/* Tags should never be flush — ensure gap wherever they appear adjacent.
+   Targets the data-component attribute to avoid relying on internal jkl class names. */
+[data-component="tag"] + [data-component="tag"] {
   margin-inline-start: var(--jkl-spacing-xxs);
 }
 
 /* Tag lists rendered as flex containers already use gap — reset adjacent margin */
-.jkl-flex > .jkl-tag + .jkl-tag,
-[class*="gap"] > .jkl-tag + .jkl-tag {
+[class*="gap"] > [data-component="tag"] + [data-component="tag"] {
   margin-inline-start: 0;
 }

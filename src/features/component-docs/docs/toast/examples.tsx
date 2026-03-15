@@ -96,7 +96,7 @@ export const examples: ComponentExample[] = [
     function ToastVariants() {
         const { add } = useToast();
         return (
-            <div style={{ display: "flex", gap: "var(--jkl-spacing-s)", flexWrap: "wrap" }}>
+            <Flex gap="s" wrap="wrap">
                 <Button onClick={() => add("Info-melding", { variant: "info" })}>Info</Button>
                 <Button onClick={() => add("Handlingen ble fullført!", { variant: "success" })}>
                     Suksess
@@ -105,7 +105,7 @@ export const examples: ComponentExample[] = [
                     Advarsel
                 </Button>
                 <Button onClick={() => add("Noe gikk galt", { variant: "error" })}>Feil</Button>
-            </div>
+            </Flex>
         );
     }
 

@@ -2,12 +2,14 @@
 
 import {useMemo, useState} from "react";
 import {Flex} from "@fremtind/jokul/flex";
+import {Card} from "@fremtind/jokul/card";
 import {Search} from "@fremtind/jokul/search";
 import {BETA_Select as Select} from "@fremtind/jokul/select";
 import {NavTab, NavTabs} from "@fremtind/jokul/tabs";
 import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
 import {componentDocs} from "@/features/component-docs/data";
 import {Grid} from "@/shared/components/Grid";
+import {Toolbar} from "@/shared/components/Toolbar";
 import {ComponentCard} from "@/shared/components/ComponentCard";
 import {PageHeader} from "@/shared/components/PageHeader";
 import {useLocalStorage} from "@/shared/hooks/useLocalStorage";
@@ -70,14 +72,16 @@ export default function ComponentsPage() {
                 description="Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet."
             />
 
+            <div>
             <NavTabs aria-label="Vis">
                 <NavTab href="/jokul/component" aria-selected>Komponenter</NavTab>
                 <NavTab href="/jokul/component/props">Props-oversikt</NavTab>
             </NavTabs>
-
-            <div className="component-index__controls">
+            <Card padding="l">
+            <Toolbar>
                 <Search
                     label="Søk etter komponent"
+                    labelProps={{ srOnly: false }}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Navn, beskrivelse eller pakke…"
@@ -104,7 +108,7 @@ export default function ComponentsPage() {
                     <option value="most-props">Flest props</option>
                     <option value="most-examples">Flest eksempler</option>
                 </Select>
-            </div>
+            </Toolbar>
 
             {filtered.length === 0 ? (
                 <p className="muted">Ingen komponenter samsvarer med søket.</p>
@@ -115,6 +119,8 @@ export default function ComponentsPage() {
                     ))}
                 </Grid>
             )}
+            </Card>
+            </div>
         </Flex>
     );
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Tabs, Tab, TabList, TabPanel } from "@fremtind/jokul/tabs";
+import { Card } from "@fremtind/jokul/card";
 import { Flex } from "@fremtind/jokul/flex";
 import { usePreviewHovered } from "@/features/component-docs/components/PreviewHoverContext";
 import type { ComponentExample } from "../types";
@@ -17,9 +18,9 @@ function TabsWithListener() {
                     <Tab>Bedrift</Tab>
                     <Tab>Landbruk</Tab>
                 </TabList>
-                <TabPanel><p>Forsikringer for privatpersoner.</p></TabPanel>
-                <TabPanel><p>Forsikringer for bedrifter.</p></TabPanel>
-                <TabPanel><p>Forsikringer for landbruk.</p></TabPanel>
+                <TabPanel><Card padding="l"><p>Forsikringer for privatpersoner.</p></Card></TabPanel>
+                <TabPanel><Card padding="l"><p>Forsikringer for bedrifter.</p></Card></TabPanel>
+                <TabPanel><Card padding="l"><p>Forsikringer for landbruk.</p></Card></TabPanel>
             </Tabs>
         </Flex>
     );
@@ -37,13 +38,19 @@ export const examples: ComponentExample[] = [
         <Tab>Historikk</Tab>
       </TabList>
       <TabPanel>
-        <p>Oversiktsinnhold vises her.</p>
+        <Card padding="l">
+          <p>Oversiktsinnhold vises her.</p>
+        </Card>
       </TabPanel>
       <TabPanel>
-        <p>Detaljert informasjon vises her.</p>
+        <Card padding="l">
+          <p>Detaljert informasjon vises her.</p>
+        </Card>
       </TabPanel>
       <TabPanel>
-        <p>Historikk vises her.</p>
+        <Card padding="l">
+          <p>Historikk vises her.</p>
+        </Card>
       </TabPanel>
     </Tabs>`,
                 preview: (
@@ -53,9 +60,9 @@ export const examples: ComponentExample[] = [
                             <Tab>Detaljer</Tab>
                             <Tab>Historikk</Tab>
                         </TabList>
-                        <TabPanel><p>Oversiktsinnhold vises her.</p></TabPanel>
-                        <TabPanel><p>Detaljert informasjon vises her.</p></TabPanel>
-                        <TabPanel><p>Historikk vises her.</p></TabPanel>
+                        <TabPanel><Card padding="l"><p>Oversiktsinnhold vises her.</p></Card></TabPanel>
+                        <TabPanel><Card padding="l"><p>Detaljert informasjon vises her.</p></Card></TabPanel>
+                        <TabPanel><Card padding="l"><p>Historikk vises her.</p></Card></TabPanel>
                     </Tabs>
                 ),
             },
@@ -69,13 +76,19 @@ export const examples: ComponentExample[] = [
         <Tab>Avsluttede avtaler</Tab>
       </TabList>
       <TabPanel>
-        <p>Dine aktive forsikringsavtaler vises her.</p>
+        <Card padding="l">
+          <p>Dine aktive forsikringsavtaler vises her.</p>
+        </Card>
       </TabPanel>
       <TabPanel>
-        <p>Forsikringsavtaler som har gått ut vises her.</p>
+        <Card padding="l">
+          <p>Forsikringsavtaler som har gått ut vises her.</p>
+        </Card>
       </TabPanel>
       <TabPanel>
-        <p>Avsluttede forsikringsavtaler vises her.</p>
+        <Card padding="l">
+          <p>Avsluttede forsikringsavtaler vises her.</p>
+        </Card>
       </TabPanel>
     </Tabs>`,
                 preview: (
@@ -85,9 +98,9 @@ export const examples: ComponentExample[] = [
                             <Tab>Utgåtte avtaler</Tab>
                             <Tab>Avsluttede avtaler</Tab>
                         </TabList>
-                        <TabPanel><p>Dine aktive forsikringsavtaler vises her.</p></TabPanel>
-                        <TabPanel><p>Forsikringsavtaler som har gått ut vises her.</p></TabPanel>
-                        <TabPanel><p>Avsluttede forsikringsavtaler vises her.</p></TabPanel>
+                        <TabPanel><Card padding="l"><p>Dine aktive forsikringsavtaler vises her.</p></Card></TabPanel>
+                        <TabPanel><Card padding="l"><p>Forsikringsavtaler som har gått ut vises her.</p></Card></TabPanel>
+                        <TabPanel><Card padding="l"><p>Avsluttede forsikringsavtaler vises her.</p></Card></TabPanel>
                     </Tabs>
                 ),
             },
@@ -106,13 +119,19 @@ export const examples: ComponentExample[] = [
           <Tab>Landbruk</Tab>
         </TabList>
         <TabPanel>
-          <p>Forsikringer for privatpersoner.</p>
+          <Card padding="l">
+            <p>Forsikringer for privatpersoner.</p>
+          </Card>
         </TabPanel>
         <TabPanel>
-          <p>Forsikringer for bedrifter.</p>
+          <Card padding="l">
+            <p>Forsikringer for bedrifter.</p>
+          </Card>
         </TabPanel>
         <TabPanel>
-          <p>Forsikringer for landbruk.</p>
+          <Card padding="l">
+            <p>Forsikringer for landbruk.</p>
+          </Card>
         </TabPanel>
       </Tabs>
     </>`,

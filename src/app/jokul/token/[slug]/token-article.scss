@@ -3,12 +3,12 @@ body:has(.token-header) {
 }
 
 article:has(.token-header) {
-    > .jkl-breadcrumb {
+    > .token-article__breadcrumb {
         position: relative;
         z-index: 10;
     }
 
-    > .jkl-card {
+    > .token-article__toc-card {
         position: relative;
         z-index: 5;
     }

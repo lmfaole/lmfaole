@@ -234,12 +234,12 @@ export const examples: ComponentExample[] = [
         placement="top"
         style={{ height: "12rem", objectFit: "cover" }}
       />
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--jkl-spacing-s)", paddingBlockStart: "var(--jkl-spacing-m)" }}>
+      <Flex direction="column" gap="s" style={{ paddingBlockStart: "var(--jkl-spacing-m)" }}>
         <h2 style={{ margin: 0 }}>Typografi i Jøkul</h2>
         <p style={{ margin: 0, color: "var(--jkl-color-text-subdued)" }}>
           Hvordan Fremtind Grotesk bygger opp hierarki og lesbarhet.
         </p>
-      </div>
+      </Flex>
     </Card>`,
                 preview: <BlogPostCardPreview />,
             },

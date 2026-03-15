@@ -4,7 +4,8 @@
   max-width: 37.5rem;
   width: 100%;
 
-  .jkl-image {
+  /* Stretch whichever image element renders inside the preview container */
+  img, figure {
     height: 100%;
     width: 100%;
   }

@@ -17,7 +17,7 @@ function LoaderPreview() {
     }, [isHovered]);
     return loading
         ? <Loader textDescription="Laster" />
-        : <Icon style={{ fontSize: "2rem", color: "var(--jkl-color-text-positive)" }}>check_circle</Icon>;
+        : <span style={{ fontSize: "2rem", color: "var(--jkl-color-text-positive)" }}><Icon>check_circle</Icon></span>;
 }
 
 const doc: ComponentDoc = {

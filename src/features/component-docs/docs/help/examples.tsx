@@ -61,13 +61,14 @@ export const examples: ComponentExample[] = [
                 title: "Grunnleggende bruk",
                 description: "Plasser Help ved siden av et felt for å gi kontekstuell hjelp.",
                 code: `import { Help } from "@fremtind/jokul/help";
+    import { Flex } from "@fremtind/jokul/flex";
 
-    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+    <Flex alignItems="center" gap="xs">
         <span>Personnummer</span>
         <Help buttonText="Hjelp om personnummer" position="right">
             Personnummeret ditt er et 11-sifret nummer som identifiserer deg i offentlige registre.
         </Help>
-    </div>`,
+    </Flex>`,
                 preview: <BasicHelpPreview />,
             },
     {

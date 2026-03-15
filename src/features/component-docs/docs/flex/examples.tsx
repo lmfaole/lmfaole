@@ -22,9 +22,9 @@ export function FlexCardGridPreview() {
                             <Tag variant={variant}>{status}</Tag>
                         </Flex>
                         <span style={{ fontSize: "0.9em" }}>Forfall: {due}</span>
-                        <Button variant="ghost" style={{ alignSelf: "flex-start" }}>
+                        <div style={{ alignSelf: "flex-start" }}><Button variant="ghost">
                             Se detaljer
-                        </Button>
+                        </Button></div>
                     </Flex>
                 </Card>
             ))}
@@ -146,9 +146,9 @@ export const examples: ComponentExample[] = [
               <Tag variant={variant}>{status}</Tag>
             </Flex>
             <span style={{ fontSize: "0.9em" }}>Forfall: {due}</span>
-            <Button variant="ghost" style={{ alignSelf: "flex-start" }}>
+            <div style={{ alignSelf: "flex-start" }}><Button variant="ghost">
               Se detaljer
-            </Button>
+            </Button></div>
           </Flex>
         </Card>
       ))}

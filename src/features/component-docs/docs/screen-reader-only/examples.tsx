@@ -58,7 +58,7 @@ function IconButtonPreview() {
                     border: "none",
                     cursor: "pointer",
                     padding: "var(--jkl-spacing-xs)",
-                    display: "flex",
+                    display: "inline-flex",
                     alignItems: "center",
                 }}
                 aria-label="Slett element"

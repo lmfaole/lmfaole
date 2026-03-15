@@ -2,9 +2,11 @@
 
 import React, {useMemo, useState} from "react";
 import {Flex} from "@fremtind/jokul/flex";
+import {Card} from "@fremtind/jokul/card";
 import {Search} from "@fremtind/jokul/search";
 import {NavTab, NavTabs} from "@fremtind/jokul/tabs";
 import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
+import {Toolbar} from "@/shared/components/Toolbar";
 import {
     Table, TableHead, TableHeader, TableBody, TableRow, TableCell, TableCaption,
     useSortableTableHeader,
@@ -77,21 +79,21 @@ export default function PropIndexPage() {
                 description="Detaljert API-dokumentasjon, prop-tabeller og levende eksempler for komponenter fra Jøkul. Bruk dette som referanse når du bygger med designsystemet."
             />
 
+            <div>
             <NavTabs aria-label="Vis">
                 <NavTab href="/jokul/component">Komponenter</NavTab>
                 <NavTab href="/jokul/component/props" aria-selected>Props-oversikt</NavTab>
             </NavTabs>
-
-            <Flex direction="column" gap="m">
+            <Card padding="l">
+                <Toolbar>
                 <Search
                     label="Filtrer props"
+                    labelProps={{ srOnly: false }}
                     value={propQuery}
                     onChange={(e) => setPropQuery(e.target.value)}
                     placeholder="Propnavn eller komponentnavn…"
                 />
-                <p className="muted component-index__count">
-                    {filteredProps.length} av {ALL_PROP_ENTRIES.length} props
-                </p>
+                </Toolbar>
                 <Table caption={<TableCaption srOnly>Props-oversikt</TableCaption>} collapseToList fullWidth>
                     <TableHead>
                         <TableRow>
@@ -129,7 +131,8 @@ export default function PropIndexPage() {
                         ))}
                     </TableBody>
                 </Table>
-            </Flex>
+            </Card>
+            </div>
         </Flex>
     );
 }

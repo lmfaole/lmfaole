@@ -20,6 +20,7 @@ export function ComponentCard({doc}: ComponentCardProps) {
         <Card
             clickable
             padding="s"
+            variant="outlined"
             style={{position: "relative"}}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}

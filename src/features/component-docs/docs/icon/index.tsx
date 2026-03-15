@@ -20,7 +20,7 @@ function IconPreview() {
     return (
         <Flex gap="m" alignItems="center">
             {icons.map((name, idx) => (
-                <Icon key={name} style={{ transition: "transform 0.2s, color 0.2s", transform: active === idx ? "scale(1.5)" : "scale(1)", color: active === idx ? "var(--jkl-color-text-link)" : undefined }}>{name}</Icon>
+                <span key={name} style={{ transition: "transform 0.2s, color 0.2s", transform: active === idx ? "scale(1.5)" : "scale(1)", color: active === idx ? "var(--jkl-color-text-link)" : undefined, display: "inline-flex" }}><Icon>{name}</Icon></span>
             ))}
         </Flex>
     );

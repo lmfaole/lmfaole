@@ -60,27 +60,30 @@ function MigrationSection({ migrations }: { migrations: Migration[] }) {
     return (
         <Flex as="section" direction="column" gap="m">
             <h2 id="migrering">Migrering</h2>
-            <NavTabs aria-label="Filtrer migrering">
-                {migrations.map((m) => (
-                    <NavTab
-                        key={m.deprecates.name}
-                        as="button"
-                        aria-selected={active === m.deprecates.name}
-                        onClick={() => selectTab(m.deprecates.name)}
+            <div>
+                <NavTabs aria-label="Filtrer migrering">
+                    {migrations.map((m) => (
+                        <NavTab
+                            key={m.deprecates.name}
+                            as="button"
+                            aria-selected={active === m.deprecates.name}
+                            onClick={() => selectTab(m.deprecates.name)}
+                        >
+                            {m.deprecates.name}
+                        </NavTab>
+                    ))}
+                </NavTabs>
+                {visible.map((migration) => (
+                    <Card
+                        key={migration.title}
+                        padding="l"
+                       
+                        id={`migration-${migration.deprecates.name}`}
                     >
-                        {m.deprecates.name}
-                    </NavTab>
+                        <MigrationExample migration={migration} />
+                    </Card>
                 ))}
-            </NavTabs>
-            {visible.map((migration) => (
-                <Card
-                    key={migration.title}
-                    padding="l"
-                    id={`migration-${migration.deprecates.name}`}
-                >
-                    <MigrationExample migration={migration} />
-                </Card>
-            ))}
+            </div>
         </Flex>
     );
 }
