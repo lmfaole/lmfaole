@@ -11,7 +11,6 @@ import {Grid} from "@/shared/components/Grid";
 import {ComponentCard} from "@/shared/components/ComponentCard";
 import {PageHeader} from "@/shared/components/PageHeader";
 import {useLocalStorage} from "@/shared/hooks/useLocalStorage";
-import {ChipFilterList} from "@/features/component-docs/components/ChipFilterList";
 import "./component-index.scss";
 
 const ALL_CATEGORIES = Array.from(
@@ -85,6 +84,17 @@ export default function ComponentsPage() {
                         placeholder="Navn, beskrivelse eller pakke…"
                     />
                     <Select
+                        label="Kategori"
+                        name="filter-category"
+                        value={activeCategory ?? ""}
+                        onChange={(e) => setActiveCategory(e.target.value || null)}
+                    >
+                        <option value="">Alle kategorier</option>
+                        {ALL_CATEGORIES.map((cat) => (
+                            <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                    </Select>
+                    <Select
                         label="Sorter"
                         name="sort-components"
                         value={sortBy}
@@ -96,7 +106,6 @@ export default function ComponentsPage() {
                         <option value="most-examples">Flest eksempler</option>
                     </Select>
                 </Flex>
-                <ChipFilterList items={ALL_CATEGORIES} selected={activeCategory} onChange={setActiveCategory} />
             </Flex>
 
             {filtered.length === 0 ? (
