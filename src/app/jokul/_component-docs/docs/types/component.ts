@@ -48,16 +48,21 @@ export interface ComponentDoc {
      *
      * - `"stable"`     — Default. Production-ready.
      * - `"beta"`       — Functional but API may change.
-     * - `"deprecated"` — Will be removed. Add a migration note in `warnings`.
+     * - `"deprecated"` — Will be removed. Add a migration note in the doc description.
      */
     status?: "stable" | "beta" | "deprecated";
 
     /**
-     * Set to `false` for components that are subcomponents of another and should
-     * not appear as standalone entries in the component overview.
-     * Defaults to `true`.
+     * Set to `false` to hide this doc from the component overview page (and other
+     * top-level component listings).
+     *
+     * Defaults to `true` when omitted.
+     *
+     * Typical use:
+     * - subcomponents (e.g. TabList, TableRow)
+     * - providers / required wrappers (e.g. ToastProvider)
      */
-    standalone?: false;
+    showOnOverview?: false;
 
     /**
      * Descriptions in two lengths so the UI can pick the right density.
@@ -78,13 +83,6 @@ export interface ComponentDoc {
          */
         long: string;
     };
-
-    /**
-     * Important caveats, gotchas or usage constraints surfaced prominently in the UI.
-     * Use a single string for one warning, or an array for multiple.
-     * Examples: accessibility requirements, known browser quirks, required peer components.
-     */
-    warnings?: string | string[];
 
     /**
      * Live React element shown in the component card on the listing page and
@@ -153,7 +151,7 @@ export interface ComponentRelationship {
  * | `related`       | "Is this commonly used ALONGSIDE the current component?"     | TextInput → Label, Help          |
  *
  * A component that is a **subcomponent** of another should NEVER appear in `alternatives`.
- * It should also have `standalone: false` on its own doc so it is hidden from the overview.
+ * It should also have `showOnOverview: false` on its own doc so it is hidden from the overview.
  */
 export interface ComponentRelationships {
     /**
@@ -175,7 +173,7 @@ export interface ComponentRelationships {
     /**
      * Named child components that are part of this component's API and render *inside* it.
      * They are not interchangeable alternatives — they extend or compose this component.
-     * Any component listed here should also have `standalone: false` on its own doc.
+     * Any component listed here should also have `showOnOverview: false` on its own doc.
      *
      * @example Card → CardImage, Tabs → TabList, Popover → Popover.Trigger
      */

@@ -17,9 +17,6 @@ const doc: ComponentDoc = {
         alternatives: [{ id: "select", description: "Select (BETA) er den anbefalte etterfølgeren med forbedret API; migrer når den er stabil." }],
         related: [{ id: "radio-button", description: "Bruk RadioButton når det er få alternativer og du vil at de alltid skal være synlige." }, { id: "autosuggest", description: "Kombiner med Autosuggest når brukeren trenger å søke og filtrere en lang liste med alternativer ved å skrive." }],
     },
-    warnings: [
-        "BETA_Select er den anbefalte veien videre. Se migreringsveiledningen nedenfor for å komme i gang.",
-    ],
 
     preview: <SelectStablePreview />,
     props,

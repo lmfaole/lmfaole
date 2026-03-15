@@ -1,6 +1,7 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
 import { IconButtonPreview } from "./preview";
+import { migrations } from "./migration";
 
 const doc: ComponentDoc = {
     id: "icon-button",
@@ -9,17 +10,19 @@ const doc: ComponentDoc = {
     category: "Handling",
     status: "deprecated",
     description: {
-        short: "IconButton er en knapp med kun ikon.",
-        long: "IconButton er en knapp med kun ikon. Krev alltid en aria-label som beskriver handlingen.",
+        short: "Kompakt knapp for handlinger uten synlig tekst.",
+        long: "Kompakt knapp for handlinger som kun trenger et ikon. Gi alltid en aria-label som beskriver handlingen. Deprecated: bruk heller Button med variant=\"ghost\" og icon.",
     },
-    warnings: "Ikke bruk IconButton uten aria-label.",
     relationships: {
-        alternatives: [{ id: "icon", description: "Bruk Icon når symbolet er rent dekorativt og ikke trenger å være et fokuserbart interaktivt element." }],
-        related: [{ id: "button", description: "Button er motparten med tekstetikett; bruk den når en synlig etikett forbedrer klarheten for handlingen." }],
+        alternatives: [
+            { id: "button", description: "Bruk Button med variant=\"ghost\" og icon-prop for ikonknapper." },
+            { id: "icon", description: "Bruk Icon når symbolet er rent dekorativt og ikke trenger å være et fokuserbart interaktivt element." },
+        ],
     },
 
     preview: <IconButtonPreview />,
     props,
+    migrations,
 };
 
 export default doc;

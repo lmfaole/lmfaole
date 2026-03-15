@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "SkeletonInput",
     package: "@fremtind/jokul/skeleton",
     category: "Tilbakemelding",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Plassholder som matcher bredde og høyde på et TextInput-felt.",
         long: "Plassholder som matcher bredde og høyde på et TextInput-felt.",

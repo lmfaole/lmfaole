@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "ExpandablePanel.Header",
     package: "@fremtind/jokul/expandable-panel",
     category: "Visning",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Klikkbar header som viser skjuler innholdet.",
         long: "Klikkbar header som viser/skjuler innholdet. Rendres som en knapp.",

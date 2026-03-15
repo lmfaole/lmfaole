@@ -173,6 +173,21 @@ const toastOptions: PropDef[] = [
     {name: "action", type: "ToastActionProps", required: false, source: "custom", status: "stable", description: "Valgfri handling med label og onClick."},
 ];
 
+const dismissActionProps: PropDef[] = [
+    {name: "handleDismiss", type: "() => void", required: true, source: "custom", status: "stable", description: "Kalles nar meldingen avvises."},
+    {name: "buttonTitle", type: "string", required: false, source: "custom", status: "stable", description: "Tekst for lukkeknappen."},
+];
+
+const messageProps: PropDef[] = [
+    {name: "title", type: "string", required: false, source: "custom", status: "stable", description: "Valgfri overskrift i meldingen."},
+    {name: "variant", type: '"info" | "success" | "warning" | "error"', required: false, source: "custom", status: "stable", default: '"info"', description: "Visuell variant som signaliserer alvorlighetsgrad."},
+    {name: "fullWidth", type: "boolean", required: false, source: "custom", status: "stable", default: "false", description: "Strekker meldingen til full bredde."},
+    {name: "dismissed", type: "boolean", required: false, source: "custom", status: "stable", description: "Kontrollert tilstand for om meldingen er lukket."},
+    {name: "dismissAction", type: "DismissActionProps", required: false, source: "custom", status: "stable", description: "Aktiverer lukkeknapp og gir callback for avvisning."},
+    {name: "className", type: "string", required: false, source: "native", status: "stable", description: "Ekstra CSS-klasser pa wrapper-elementet."},
+    {name: "id", type: "string", required: false, source: "native", status: "stable", description: "ID pa wrapper-elementet."},
+];
+
 export const commonProps: Record<string, PropDef[]> = {
     LabelProps: labelProps,
     SupportLabelProps: supportLabelProps,
@@ -184,4 +199,6 @@ export const commonProps: Record<string, PropDef[]> = {
     RoleOptions: roleOptions,
     ToastOptions: toastOptions,
     ToastActionProps: toastActionProps,
+    MessageProps: messageProps,
+    DismissActionProps: dismissActionProps,
 };

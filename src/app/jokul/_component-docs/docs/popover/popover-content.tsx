@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "Popover.Content",
     package: "@fremtind/jokul/popover",
     category: "Overlegg",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Det flytende innholdsområdet som vises når popoveren er åpen.",
         long: "Det flytende innholdsområdet som vises når popoveren er åpen. Aksepterer alle native div-attributter i tillegg til egne props.",

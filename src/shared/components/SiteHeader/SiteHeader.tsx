@@ -11,6 +11,7 @@ export function SiteHeader() {
                 <Button as="a" href="/jokul" variant="ghost">Jøkul</Button>
                 <Flex as="nav" aria-label="Primærnavigasjon" className="site-header__nav">
                     <Button as="a" href="/jokul/token" variant="ghost">Designtokens</Button>
+                    <Button as="a" href="/jokul/monster" variant="ghost">Mønster</Button>
                     <Button as="a" href="/jokul/component" variant="ghost">Komponenter</Button>
                 </Flex>
             </Flex>

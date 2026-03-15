@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "TabPanel",
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Innholdsområdet tilknyttet en fane.",
         long: "Innholdsområdet tilknyttet en fane.",

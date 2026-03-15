@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "ExpandableTableRow",
     package: "@fremtind/jokul/table",
     category: "Visning",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Rad som kan utvides for å vise tilleggsinformasjon.",
         long: "En rad som kan utvides for å vise tilleggsinformasjon.",

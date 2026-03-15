@@ -25,6 +25,7 @@ export const COMPONENT_IDS = [
     "field-group",
     "file-input",
     "flex",
+    "form-error-message",
     "help",
     "icon",
     "icon-button",

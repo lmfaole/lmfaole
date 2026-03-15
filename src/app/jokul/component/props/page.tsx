@@ -10,9 +10,8 @@ import {
     Table, TableHead, TableHeader, TableBody, TableRow, TableCell, TableCaption,
     useSortableTableHeader,
 } from "@fremtind/jokul/table";
-import {Tag} from "@fremtind/jokul/tag";
 import {Link} from "@fremtind/jokul/link";
-import type {PropSource, PropStatus} from "@/app/jokul/_component-docs/data";
+import type {PropSource} from "@/app/jokul/_component-docs/data";
 import {ALL_PROP_ENTRIES} from "@/app/jokul/_component-docs/prop-index";
 import {PageHeader} from "@/shared/components/PageHeader";
 import {useLocalStorage} from "@/shared/hooks/useLocalStorage";
@@ -23,12 +22,6 @@ const SOURCE_LABEL: Record<PropSource, string> = {
     native: "Native HTML",
     aria: "ARIA",
     react: "React",
-};
-
-const STATUS_LABEL: Record<PropStatus, string> = {
-    stable: "—",
-    deprecated: "deprecated",
-    experimental: "beta",
 };
 
 export default function PropIndexPage() {
@@ -50,7 +43,6 @@ export default function PropIndexPage() {
         return results.sort((a, b) => {
             const dir = sortDirection === "desc" ? -1 : 1;
             if (sortKey === "source") return dir * a.source.localeCompare(b.source, "nb");
-            if (sortKey === "status") return dir * a.status.localeCompare(b.status, "nb");
             if (sortKey === "usedBy") return dir * (a.usedBy.length - b.usedBy.length);
             return dir * a.propName.localeCompare(b.propName, "nb");
         });
@@ -94,7 +86,6 @@ export default function PropIndexPage() {
                     <TableRow>
                         <TableHeader sortable={getSortProps("name").sortable}>Prop</TableHeader>
                         <TableHeader sortable={getSortProps("source").sortable}>Kilde</TableHeader>
-                        <TableHeader sortable={getSortProps("status").sortable}>Status</TableHeader>
                         <TableHeader sortable={getSortProps("usedBy").sortable}>Brukt i</TableHeader>
                     </TableRow>
                 </TableHead>
@@ -103,24 +94,13 @@ export default function PropIndexPage() {
                         <TableRow key={entry.propName}>
                             <TableCell data-th="Prop"><code>{entry.propName}</code></TableCell>
                             <TableCell data-th="Kilde">{SOURCE_LABEL[entry.source]}</TableCell>
-                            <TableCell data-th="Status">
-                                {entry.status !== "stable" ? (
-                                    <Tag variant={entry.status === "deprecated" ? "warning" : "info"}>
-                                        {STATUS_LABEL[entry.status]}
-                                    </Tag>
-                                ) : (
-                                    <span style={{color: "var(--jkl-color-text-subdued)"}}>—</span>
-                                )}
-                            </TableCell>
                             <TableCell data-th="Brukt i">
-                                <Flex gap="2xs" wrap="wrap">
                                     {entry.usedBy.map((comp, i) => (
-                                        <React.Fragment key={comp.id}>
+                                        <span key={comp.id}>
                                             <Link href={`/jokul/component/${comp.id}`}>{comp.name}</Link>
-                                            {i < entry.usedBy.length - 1 && <span style={{color: "var(--jkl-color-text-subdued)"}}>,</span>}
-                                        </React.Fragment>
+                                            {i < entry.usedBy.length - 1 && <span style={{color: "var(--jkl-color-text-subdued)"}}>, </span>}
+                                        </span>
                                     ))}
-                                </Flex>
                             </TableCell>
                         </TableRow>
                     ))}

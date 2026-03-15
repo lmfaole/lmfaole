@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "TabList",
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Wrapper som inneholder Tab-elementene.",
         long: "Wrapper som inneholder Tab-elementene.",

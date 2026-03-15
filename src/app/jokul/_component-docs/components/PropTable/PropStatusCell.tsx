@@ -19,8 +19,9 @@ export function PropStatusCell({
             }}
         >
             {STATUS_LABEL[status]}
-            {statusDescription && <PopupTip content={statusDescription} placement="top" />}
+            {status !== "deprecated" && statusDescription && (
+                <PopupTip content={statusDescription} placement="top" />
+            )}
         </span>
     );
 }
-

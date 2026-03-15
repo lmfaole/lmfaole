@@ -15,18 +15,19 @@ import {useLocalStorage} from "@/shared/hooks/useLocalStorage";
 import "./component-index.scss";
 
 const ALL_CATEGORIES = Array.from(
-    new Set(componentDocs.filter((d) => d.standalone !== false).map((d) => d.category))
+    new Set(componentDocs.filter((d) => d.showOnOverview !== false).map((d) => d.category))
 ).sort();
 
 export default function ComponentsPage() {
     const [query, setQuery] = useState("");
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
+    const [activeStatus, setActiveStatus] = useState<"stable" | "beta" | "deprecated" | null>(null);
     const [sortBy, setSortBy, ready] = useLocalStorage("comp-sort", "az");
 
     const filtered = useMemo(() => {
         const q = query.toLowerCase();
         const results = componentDocs.filter((doc) => {
-            if (doc.standalone === false) return false;
+            if (doc.showOnOverview === false) return false;
             const matchesQuery =
                 !q ||
                 doc.name.toLowerCase().includes(q) ||
@@ -34,14 +35,16 @@ export default function ComponentsPage() {
                 doc.description.long.toLowerCase().includes(q) ||
                 doc.package.toLowerCase().includes(q);
             const matchesCategory = !activeCategory || doc.category === activeCategory;
-            return matchesQuery && matchesCategory;
+            const status = doc.status ?? "stable";
+            const matchesStatus = !activeStatus || status === activeStatus;
+            return matchesQuery && matchesCategory && matchesStatus;
         });
         return results.sort((a, b) => {
             if (sortBy === "za") return b.name.localeCompare(a.name, "nb");
             if (sortBy === "most-props") return b.props.length - a.props.length;
             return a.name.localeCompare(b.name, "nb");
         });
-    }, [query, activeCategory, sortBy]);
+    }, [query, activeCategory, activeStatus, sortBy]);
 
     if (!ready) {
         return (
@@ -85,6 +88,17 @@ export default function ComponentsPage() {
                     {ALL_CATEGORIES.map((cat) => (
                         <option key={cat} value={cat}>{cat}</option>
                     ))}
+                </Select>
+                <Select
+                    label="Status"
+                    name="filter-status"
+                    value={activeStatus ?? ""}
+                    onChange={(e) => setActiveStatus((e.target.value as "stable" | "beta" | "deprecated") || null)}
+                >
+                    <option value="">Alle statuser</option>
+                    <option value="stable">Stable</option>
+                    <option value="beta">Beta</option>
+                    <option value="deprecated">Deprecated</option>
                 </Select>
                 <Select
                     label="Sorter"

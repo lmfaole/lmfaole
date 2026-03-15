@@ -12,13 +12,12 @@ const doc: ComponentDoc = {
         short: "Rendrer Material Symbols-ikoner.",
         long: "Icon rendrer Material Symbols-ikoner. Gi navnet på ikonet som child-tekst.",
     },
-    warnings: "Et ikon uten ledsagende tekst må ha aria-label — ellers er det usynlig for skjermlesere.",
 
     preview: <IconPreview />,
     props,
     migrations,
     relationships: {
-        alternatives: [{ id: "icon-button", description: "Bruk IconButton når ikonet må være interaktivt og trenger en tilgjengelig knappeetikett." }],
+        alternatives: [{ id: "button", description: "Bruk Button med variant=\"ghost\" og icon-prop når ikonet må være interaktivt og ha en tilgjengelig knappeetikett." }],
     }
 };
 

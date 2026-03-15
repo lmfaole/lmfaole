@@ -4,6 +4,22 @@ import type { ComponentDoc, ComponentRelationship, PropDef, PropStatus, PropSour
 export type { ComponentDoc, ComponentRelationship, PropDef, PropStatus, PropSource, Migration };
 export { componentDocs };
 
+/**
+ * Central lookup map so all relationship resolving uses a single source of truth.
+ * This also lets us validate IDs and catch typos early in development.
+ */
+const componentDocById = new Map<ComponentDoc["id"], ComponentDoc>();
+for (const doc of componentDocs) {
+    const existing = componentDocById.get(doc.id);
+    if (existing) {
+        throw new Error(
+            `Duplicate ComponentDoc id "${doc.id}". ` +
+            `Docs "${existing.name}" (${existing.package}) and "${doc.name}" (${doc.package}) share the same id.`,
+        );
+    }
+    componentDocById.set(doc.id, doc);
+}
+
 function countWords(text: string): number {
     return (text.match(/[\p{L}\p{N}][\p{L}\p{N}'’\-]*/gu) || []).length;
 }
@@ -53,6 +69,7 @@ function validateShortDescriptions(docs: ComponentDoc[]) {
 
 if (process.env.NODE_ENV !== "production") {
     validateShortDescriptions(componentDocs);
+    validateRelationshipIds(componentDocs);
 }
 
 export interface ResolvedRelationship {
@@ -61,7 +78,7 @@ export interface ResolvedRelationship {
 }
 
 export function getComponentDoc(id: string): ComponentDoc | undefined {
-    return componentDocs.find((doc) => doc.id === id);
+    return componentDocById.get(id as ComponentDoc["id"]);
 }
 
 function resolveRelationships(entries: ComponentRelationship[] = []): ResolvedRelationship[] {
@@ -122,4 +139,63 @@ export function getParentAndSiblings(id: string): {
 /** @deprecated use getRelationships(id).related */
 export function getRelatedDocs(id: string): ComponentDoc[] {
     return getRelationships(id).related.map(({ doc }) => doc);
+}
+
+function validateRelationshipIds(docs: ComponentDoc[]) {
+    const missing: Array<{
+        from: ComponentDoc["id"];
+        kind: keyof NonNullable<ComponentDoc["relationships"]>;
+        to: string;
+    }> = [];
+
+    const kinds: Array<keyof NonNullable<ComponentDoc["relationships"]>> = [
+        "requires",
+        "alternatives",
+        "subcomponents",
+        "related",
+    ];
+
+    for (const doc of docs) {
+        for (const kind of kinds) {
+            const rels = doc.relationships?.[kind] ?? [];
+            for (const rel of rels) {
+                if (!componentDocById.has(rel.id)) {
+                    missing.push({ from: doc.id, kind, to: rel.id });
+                }
+            }
+        }
+    }
+
+    // A subcomponent is used as the breadcrumb "parent". Multiple parents makes the UI ambiguous.
+    const subcomponentParents = new Map<ComponentDoc["id"], ComponentDoc["id"][]>();
+    for (const doc of docs) {
+        const subs = doc.relationships?.subcomponents ?? [];
+        for (const sub of subs) {
+            const parents = subcomponentParents.get(sub.id) ?? [];
+            parents.push(doc.id);
+            subcomponentParents.set(sub.id, parents);
+        }
+    }
+    const multiParent = Array.from(subcomponentParents.entries())
+        .filter(([, parents]) => parents.length > 1)
+        .map(([child, parents]) => ({ child, parents }));
+
+    if (missing.length === 0 && multiParent.length === 0) return;
+
+    const missingLines = missing
+        .slice(0, 30)
+        .map((m) => `- ${m.from} -> relationships.${m.kind}: "${m.to}" not found in componentDocs`)
+        .join("\n");
+
+    const parentLines = multiParent
+        .slice(0, 30)
+        .map((m) => `- "${m.child}" listed as subcomponent by: ${m.parents.join(", ")}`)
+        .join("\n");
+
+    const parts = [
+        missing.length > 0 ? `Invalid relationship ids:\n${missingLines}` : null,
+        multiParent.length > 0 ? `Ambiguous subcomponent parents:\n${parentLines}` : null,
+    ].filter(Boolean).join("\n\n");
+
+    throw new Error(parts);
 }

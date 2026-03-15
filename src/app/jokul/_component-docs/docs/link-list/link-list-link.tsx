@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "LinkList.Link",
     package: "@fremtind/jokul/link-list",
     category: "Navigasjon",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Lenke inne i lenkegruppelisten.",
         long: "En lenke inne i lenkegruppelisten.",

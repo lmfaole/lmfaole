@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
         short: "ProgressBar viser fremgang i en prosess.",
         long: "ProgressBar viser fremgang i en prosess.",
     },
-    warnings: "Gi alltid en beskrivende title og aria-valuetext for skjermlesere.",
 
     preview: <ProgressBarPreview />,
     props,

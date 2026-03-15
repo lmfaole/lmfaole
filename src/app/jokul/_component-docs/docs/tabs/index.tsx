@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
         short: "Organiser innhold i faner der kun én fane vises om.",
         long: "Tabs organiser innhold i faner der kun én fane vises om gangen.",
     },
-    warnings: "Bruk Tabs for å skjule innhold innenfor samme side — ikke for navigasjon mellom sider.",
     relationships: {
         alternatives: [{ id: "nav-tab", description: "Bruk NavTab når navigasjon er sideruting fremfor bytte av innholdspaneler på siden." }],
         related: [{ id: "nav-link", description: "NavLink gir individuelle navigasjonslenker som Tabs kan supplere med innholdspanelbytte." }],

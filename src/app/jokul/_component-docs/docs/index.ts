@@ -4,6 +4,7 @@ import datepickerDoc from "./datepicker";
 import feedbackDoc from "./feedback";
 import fileInputDoc from "./file-input";
 import messageDoc from "./message";
+import formErrorMessageDoc from "./form-error-message";
 import menuDoc from "./menu";
 import modalDoc from "./modal";
 import tagDoc from "./tag";
@@ -123,6 +124,7 @@ export const componentDocs: ComponentDoc[] = [
     logoDoc,
     menuDoc,
     messageDoc,
+    formErrorMessageDoc,
     modalDoc,
     navLinkDoc,
     navTabDoc,

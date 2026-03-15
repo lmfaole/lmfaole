@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "SkeletonElement",
     package: "@fremtind/jokul/skeleton",
     category: "Tilbakemelding",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Freeform rektangulær eller sirkulær plassholder med tilpassbar størrelse.",
         long: "Freeform rektangulær eller sirkulær plassholder med tilpassbar størrelse. Bruk for alt som ikke har en dedikert Skeleton-variant.",

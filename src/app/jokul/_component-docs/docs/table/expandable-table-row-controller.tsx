@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "ExpandableTableRowController",
     package: "@fremtind/jokul/table",
     category: "Visning",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Kontrollerer for utvidbar rad.",
         long: "Kontrollerer for utvidbar rad. Inneholder knappen som toggler den utvidede visningen. Skal brukes inni ExpandableTableRow.",

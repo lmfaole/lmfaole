@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "TableColumnGroup",
     package: "@fremtind/jokul/table",
     category: "Visning",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Wrapper for TableColumn-elementer colgroup for å gruppere kolonner med felles.",
         long: "Wrapper for TableColumn-elementer (colgroup) for å gruppere kolonner med felles egenskaper.",

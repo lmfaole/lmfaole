@@ -12,3 +12,7 @@ export function getTokenSlug(post: TokenPost): string {
 export function getTokenPost(slug: string): TokenPost | undefined {
     return tokenPosts.find((p) => slugify(p.title) === slug);
 }
+
+export function getTokenPostById(id: number): TokenPost | undefined {
+    return tokenPosts.find((p) => p.id === id);
+}

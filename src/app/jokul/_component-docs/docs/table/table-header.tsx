@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "TableHeader",
     package: "@fremtind/jokul/table",
     category: "Visning",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Overskriftscelle i tabellen.",
         long: "En overskriftscelle i tabellen.",

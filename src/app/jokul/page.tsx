@@ -26,12 +26,12 @@ export default function Home() {
                     <p>Prop-tabeller og kodeeksempler for alle Jøkul-komponenter.</p>
                 </Flex>
                 <Grid columns={4} gap="m">
-                    {componentDocs.filter((d) => d.standalone !== false).slice(0, 8).map((doc) => (
+                    {componentDocs.filter((d) => d.showOnOverview !== false).slice(0, 8).map((doc) => (
                         <ComponentCard key={doc.id} doc={doc} />
                     ))}
                 </Grid>
                 <Link href="/jokul/component">Se
-                    alle {componentDocs.filter((d) => d.standalone !== false).length} komponenter</Link>
+                    alle {componentDocs.filter((d) => d.showOnOverview !== false).length} komponenter</Link>
             </Flex>
 
             <Flex as="section" className="home__section" direction="column" gap="l">

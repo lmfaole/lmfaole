@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "MenuItem",
     package: "@fremtind/jokul/menu",
     category: "Overlegg",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Valgbart element i menyen.",
         long: "Et valgbart element i menyen.",

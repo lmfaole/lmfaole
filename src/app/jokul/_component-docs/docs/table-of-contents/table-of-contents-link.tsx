@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "TableOfContents.Link",
     package: "@fremtind/jokul/table-of-contents",
     category: "Navigasjon",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Lenke i innholdsfortegnelsen.",
         long: "En lenke i innholdsfortegnelsen. Rendres som en <a> som standard, men kan byttes med as-prop.",

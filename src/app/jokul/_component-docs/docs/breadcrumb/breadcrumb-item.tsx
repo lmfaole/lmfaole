@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "BreadcrumbItem",
     package: "@fremtind/jokul/breadcrumb",
     category: "Navigasjon",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Enkelt ledd i brødsmulestien.",
         long: "Et enkelt ledd i brødsmulestien.",

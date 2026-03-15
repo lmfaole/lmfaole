@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "TableCell",
     package: "@fremtind/jokul/table",
     category: "Visning",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Datacelle i tabellen.",
         long: "En datacelle i tabellen.",

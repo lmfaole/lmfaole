@@ -16,9 +16,6 @@ const doc: ComponentDoc = {
         alternatives: [{ id: "select-stable", description: "Bruk den stabile Select (SelectStable) i produksjon inntil denne BETA-komponentens API er ferdigstilt." }],
         related: [{ id: "radio-button", description: "Bruk RadioButton når det er få alternativer og du vil at de alltid skal være synlige uten nedtrekksliste." }, { id: "autosuggest", description: "Kombiner med Autosuggest når brukeren trenger å skrive-filtrere en svært lang liste med alternativer." }],
     },
-    warnings: [
-        "BETA_Select er ikke ferdigstilt og API-en kan endre seg. Den mangler searchable, maxShownOptions og den egendefinerte SelectChangeEventHandler fra stabil Select.",
-    ],
 
     preview: <SelectPreview />,
     props,

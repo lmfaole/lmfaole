@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
         short: "Rendrer en tilgjengelig HTML-tabell med Jøkuls stilsett.",
         long: "Table rendrer en tilgjengelig HTML-tabell med Jøkuls stilsett. Støtter sortering via useSortableTableHeader-hooken og responsiv listevisning med collapseToList.",
     },
-    warnings: "Alltid inkluder caption for tilgjengelighet. Bruk srOnly på TableCaption når den visuelle konteksten allerede gir tabellen et tydelig navn.",
     relationships: {
         related: [{
             id: "summary-table",

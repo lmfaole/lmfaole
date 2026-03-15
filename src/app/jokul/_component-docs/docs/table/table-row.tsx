@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "TableRow",
     package: "@fremtind/jokul/table",
     category: "Visning",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Rad i tabellen.",
         long: "En rad i tabellen.",

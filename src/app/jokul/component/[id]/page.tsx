@@ -164,9 +164,6 @@ export default function ComponentPage() {
             )}
 
             <TableOfContents label="Innhold">
-                {doc.warnings && (
-                    <TableOfContents.Link href="#viktig-informasjon">Viktig informasjon</TableOfContents.Link>
-                )}
                 {requires.length > 0 && (
                     <TableOfContents.Link href="#krever">Krever</TableOfContents.Link>
                 )}
@@ -189,19 +186,6 @@ export default function ComponentPage() {
                     <TableOfContents.Link href="#migrering">Migrering</TableOfContents.Link>
                 )}
             </TableOfContents>
-
-            {doc.warnings && (
-                <Flex as="section" direction="column" gap="m">
-                    <h2 id="viktig-informasjon">Viktig informasjon</h2>
-                    {Array.isArray(doc.warnings) ? (
-                        <ul>
-                            {doc.warnings.map((note, i) => <li key={i}>{note}</li>)}
-                        </ul>
-                    ) : (
-                        <p>{doc.warnings}</p>
-                    )}
-                </Flex>
-            )}
 
             {requires.length > 0 && (
                 <Flex as="section" direction="column" gap="m">

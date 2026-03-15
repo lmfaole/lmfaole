@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "SkeletonTextArea",
     package: "@fremtind/jokul/skeleton",
     category: "Tilbakemelding",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Plassholder som matcher bredde og høyde på et TextArea-felt.",
         long: "Plassholder som matcher bredde og høyde på et TextArea-felt.",

@@ -12,8 +12,6 @@ const doc: ComponentDoc = {
         short: "ScreenReaderOnly skjuler innhold visuelt mens det forblir tilgjengelig for skjermlesere.",
         long: "ScreenReaderOnly skjuler innhold visuelt mens det forblir tilgjengelig for skjermlesere og annen hjelpemiddelteknologi. Bruk det til å gi ekstra kontekst for ikonknapper, skip-links og annet innhold som er meningsløst uten visuelle ledetråder.",
     },
-    warnings:
-        "Med showOnFocus blir innholdet synlig når det fokuseres, som er det klassiske mønsteret for en skip-link. Bruk aldri ScreenReaderOnly til å skjule funksjonelt innhold — kun til tilleggsinformasjon.",
     preview: <ScreenReaderOnlyPreview />,
 
     props,

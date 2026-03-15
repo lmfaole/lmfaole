@@ -1,6 +1,6 @@
 import type { ComponentDoc } from "../types";
 import { props } from "./props";
-import { ToastTrigger, ToastPreview } from "./preview";
+import { ToastPreview } from "./preview";
 
 const doc: ComponentDoc = {
     id: "toast",
@@ -12,10 +12,6 @@ const doc: ComponentDoc = {
         short: "Midlertidig varslingskomponent som vises til brukeren etter en handling.",
         long: "Toast er en midlertidig varslingskomponent som vises til brukeren etter en handling. Den forsvinner automatisk etter en stund og kan inneholde en handling.",
     },
-    warnings: [
-        "Wrap appen i ToastProvider — useToast() vil kaste en feil hvis det kalles utenfor.",
-        "Toast forsvinner automatisk — ikke bruk den for kritisk informasjon som krever brukerhandling.",
-    ],
     relationships: {
         requires: [
             { id: "toast-provider", description: "Ma vaere omsluttet av ToastProvider for at useToast() skal fungere." },

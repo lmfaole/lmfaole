@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "Tab",
     package: "@fremtind/jokul/tabs",
     category: "Navigasjon",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Enkelt fane-knapp.",
         long: "En enkelt fane-knapp.",

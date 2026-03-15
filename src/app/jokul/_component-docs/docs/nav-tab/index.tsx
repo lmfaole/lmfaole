@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
         short: "NavTab er lenkefaner for URL-basert navigasjon.",
         long: "NavTab er lenkefaner for URL-basert navigasjon. Aktiv fane styres av aria-selected basert på gjeldende URL — i motsetning til Tabs som er tilstandsstyrt.",
     },
-    warnings: "Bruk NavTab for navigasjon mellom sider eller seksjoner. For innholdsveksling innenfor samme side, bruk Tabs.",
     relationships: {
         alternatives: [{ id: "tabs", description: "Bruk Tabs for innholdspanelbytte på siden der URL-en ikke endres mellom visninger." }],
         related: [{ id: "nav-link", description: "NavLink er et enklere enkeltlenke-navigasjonselement uten tablist-rollen og aktiv indikator." }, { id: "link", description: "Bruk Link for innebygde teksthyperkoblinger fremfor en stilisert navigasjonsfanerad." }],

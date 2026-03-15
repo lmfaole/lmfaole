@@ -11,7 +11,6 @@ const doc: ComponentDoc = {
         short: "SummaryTable viser en oppsummering av nøkkel-verdi-par i tabellformat.",
         long: "SummaryTable viser en oppsummering av nøkkel-verdi-par i tabellformat.",
     },
-    warnings: "Alltid sett caption — uten det har skjermlesere ingen kontekst for hva tabellen inneholder.",
     relationships: {
         related: [{ id: "description-list", description: "Bruk DescriptionList for nøkkel-verdi-par som ikke krever header- og foterstrukturen til SummaryTable." }, { id: "table", description: "Bruk Table for flerkolonnet tabelldata med sorterbare overskrifter i stedet for et tokolonnet sammendrag." }],
     },

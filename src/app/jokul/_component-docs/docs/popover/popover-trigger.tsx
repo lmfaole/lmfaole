@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "Popover.Trigger",
     package: "@fremtind/jokul/popover",
     category: "Overlegg",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Trigger-elementet som åpner og lukker popoveren.",
         long: "Trigger-elementet som åpner og lukker popoveren. Rendrer som <button> som standard, og kan dele trigger-props med andre elementer via asChild.",

@@ -6,7 +6,7 @@ const doc: ComponentDoc = {
     name: "TableBody",
     package: "@fremtind/jokul/table",
     category: "Visning",
-    standalone: false,
+    showOnOverview: false,
     description: {
         short: "Wrapper for dataradene i tabellen.",
         long: "Wrapper for dataradene i tabellen.",
