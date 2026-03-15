@@ -11,4 +11,15 @@
         margin: 0;
         font-size: var(--jkl-font-size-s);
     }
+
+    &__controls {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        align-items: end;
+        gap: var(--jkl-spacing-m);
+
+        @media (max-width: 40rem) {
+            grid-template-columns: 1fr;
+        }
+    }
 }

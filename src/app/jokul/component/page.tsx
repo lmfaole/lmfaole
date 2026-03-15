@@ -75,38 +75,36 @@ export default function ComponentsPage() {
                 <NavTab href="/jokul/component/props">Props-oversikt</NavTab>
             </NavTabs>
 
-            <Flex direction="column" gap="m">
-                <Flex gap="m" alignItems="end" wrap="wrap">
-                    <Search
-                        label="Søk etter komponent"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Navn, beskrivelse eller pakke…"
-                    />
-                    <Select
-                        label="Kategori"
-                        name="filter-category"
-                        value={activeCategory ?? ""}
-                        onChange={(e) => setActiveCategory(e.target.value || null)}
-                    >
-                        <option value="">Alle kategorier</option>
-                        {ALL_CATEGORIES.map((cat) => (
-                            <option key={cat} value={cat}>{cat}</option>
-                        ))}
-                    </Select>
-                    <Select
-                        label="Sorter"
-                        name="sort-components"
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                    >
-                        <option value="az">A–Å</option>
-                        <option value="za">Å–A</option>
-                        <option value="most-props">Flest props</option>
-                        <option value="most-examples">Flest eksempler</option>
-                    </Select>
-                </Flex>
-            </Flex>
+            <div className="component-index__controls">
+                <Search
+                    label="Søk etter komponent"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Navn, beskrivelse eller pakke…"
+                />
+                <Select
+                    label="Kategori"
+                    name="filter-category"
+                    value={activeCategory ?? ""}
+                    onChange={(e) => setActiveCategory(e.target.value || null)}
+                >
+                    <option value="">Alle kategorier</option>
+                    {ALL_CATEGORIES.map((cat) => (
+                        <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                </Select>
+                <Select
+                    label="Sorter"
+                    name="sort-components"
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                >
+                    <option value="az">A–Å</option>
+                    <option value="za">Å–A</option>
+                    <option value="most-props">Flest props</option>
+                    <option value="most-examples">Flest eksempler</option>
+                </Select>
+            </div>
 
             {filtered.length === 0 ? (
                 <p className="muted">Ingen komponenter samsvarer med søket.</p>
