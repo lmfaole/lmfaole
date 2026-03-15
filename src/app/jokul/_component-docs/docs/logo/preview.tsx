@@ -9,9 +9,9 @@ export function LogoPreview() {
 
     useEffect(() => {
         if (!isHovered) { setIsSymbol(false); return; }
-        const id = setInterval(() => setIsSymbol(s => !s), 1000);
+        const id = setInterval(() => setIsSymbol(s => !s), 2000);
         return () => clearInterval(id);
     }, [isHovered]);
 
-    return <Logo isSymbol={isSymbol} animated />;
+    return <Logo isSymbol={isSymbol} animated centered={false} />;
 }
