@@ -228,16 +228,51 @@ The only exception is `display: inline-flex` on a non-Jøkul element where wrapp
 
 ---
 
-## Reporting Jøkul bugs
+## Reporting Jøkul bugs and confusing APIs
 
-When you discover a bug in Jøkul (unexpected behaviour, missing styles, broken animations, incorrect types, etc.), **always create a GitHub issue** in this repository before or immediately after applying a workaround.
+When you discover a bug in Jøkul (unexpected behaviour, missing styles, broken animations, incorrect types, etc.) **or** an API that is difficult to understand or use correctly, **always create a GitHub issue** in this repository before or immediately after applying a workaround.
 
 - **Write the issue in Norwegian** — title and body
 - **Be concise** — one short sentence per section, no unnecessary context
+- Use the bug template for bugs, and the API note template for confusing APIs
 
+Bug template:
 ```
 gh issue create \
   --repo lmfaole/lmfaole \
-  --title "<Kort beskrivelse av buggen>" \
-  --body "## Hva skjer\n<Én setning>\n\n## Hvorfor\n<Én setning>\n\n## Hva som burde skje\n<Én setning>\n\n## Fiks\n<Én setning>"
+  --title "Jøkul-bug: <Kort beskrivelse>" \
+  --body-file /tmp/issue.md
+```
+Body (`/tmp/issue.md`):
+```
+## Hva skjer
+<Én setning>
+
+## Hvorfor
+<Én setning>
+
+## Hva som burde skje
+<Én setning>
+
+## Fiks
+<Én setning>
+```
+
+API note template:
+```
+gh issue create \
+  --repo lmfaole/lmfaole \
+  --title "Jøkul-API: <Komponent> – <Kort beskrivelse>" \
+  --body-file /tmp/issue.md
+```
+Body (`/tmp/issue.md`):
+```
+## Problem
+<Hva som er vanskelig å forstå eller bruke riktig>
+
+## Eksempel
+<Kort kodeeksempel eller beskrivelse av forvirringen>
+
+## Forslag
+<Hva som kunne gjort det enklere>
 ```
