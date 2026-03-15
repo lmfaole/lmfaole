@@ -13,8 +13,8 @@ import {
 } from "@fremtind/jokul/table";
 import {Tag} from "@fremtind/jokul/tag";
 import {Link} from "@fremtind/jokul/link";
-import type {PropSource, PropStatus} from "@/features/component-docs/data";
-import {ALL_PROP_ENTRIES} from "@/features/component-docs/prop-index";
+import type {PropSource, PropStatus} from "@/app/jokul/_component-docs/data";
+import {ALL_PROP_ENTRIES} from "@/app/jokul/_component-docs/prop-index";
 import {PageHeader} from "@/shared/components/PageHeader";
 import {useLocalStorage} from "@/shared/hooks/useLocalStorage";
 import "../component-index.scss";

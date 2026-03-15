@@ -7,7 +7,7 @@ import {Search} from "@fremtind/jokul/search";
 import {BETA_Select as Select} from "@fremtind/jokul/select";
 import {NavTab, NavTabs} from "@fremtind/jokul/tabs";
 import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
-import {componentDocs} from "@/features/component-docs/data";
+import {componentDocs} from "@/app/jokul/_component-docs/data";
 import {Grid} from "@/shared/components/Grid";
 import {Toolbar} from "@/shared/components/Toolbar";
 import {ComponentCard} from "@/shared/components/ComponentCard";

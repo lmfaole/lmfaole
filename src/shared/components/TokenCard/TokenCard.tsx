@@ -1,6 +1,6 @@
 import Link from "next/link";
-import type { TokenPost } from "@/features/token/data";
-import { getTokenSlug } from "@/features/token/data";
+import type { TokenPost } from "@/app/jokul/_token/data";
+import { getTokenSlug } from "@/app/jokul/_token/data";
 import "./token-card.scss";
 
 interface TokenCardProps {

@@ -1,5 +1,5 @@
 import {Flex} from "@fremtind/jokul/flex";
-import {tokenPosts} from "@/features/token/data";
+import {tokenPosts} from "@/app/jokul/_token/data";
 import {TokenFeature} from "@/shared/components/TokenFeature";
 import {PageHeader} from "@/shared/components/PageHeader";
 import "./token.scss";

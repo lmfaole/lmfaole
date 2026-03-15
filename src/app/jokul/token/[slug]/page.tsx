@@ -1,8 +1,8 @@
 "use client";
-import { TokenArticle } from "@/features/token/components/TokenArticle";
+import { TokenArticle } from "@/app/jokul/_token/components/TokenArticle";
 import { NotFound } from "@/shared/components/NotFound";
 import { useParams } from "next/navigation";
-import { getTokenPost } from "@/features/token/data";
+import { getTokenPost } from "@/app/jokul/_token/data";
 import "./token-article.scss";
 
 export default function TokenPostPage() {

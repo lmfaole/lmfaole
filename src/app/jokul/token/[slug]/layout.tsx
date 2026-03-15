@@ -3,8 +3,8 @@
 export const runtime = "edge";
 
 import {Flex} from "@fremtind/jokul/flex";
-import {TokenResources} from "@/features/token/components/TokenResources";
-import {getTokenPost} from "@/features/token/data";
+import {TokenResources} from "@/app/jokul/_token/components/TokenResources";
+import {getTokenPost} from "@/app/jokul/_token/data";
 import {useParams} from "next/navigation";
 
 export default function TokenPostLayout({children}: { children: React.ReactNode }) {

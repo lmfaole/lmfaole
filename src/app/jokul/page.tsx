@@ -1,7 +1,7 @@
 "use client";
 
-import {tokenPosts} from "@/features/token/data";
-import {componentDocs} from "@/features/component-docs/data";
+import {tokenPosts} from "@/app/jokul/_token/data";
+import {componentDocs} from "@/app/jokul/_component-docs/data";
 import {TokenFeature} from "@/shared/components/TokenFeature";
 import {ComponentCard} from "@/shared/components/ComponentCard";
 import {Grid} from "@/shared/components/Grid";
