@@ -6,7 +6,7 @@ import {Search} from "@fremtind/jokul/search";
 import {NavTab, NavTabs} from "@fremtind/jokul/tabs";
 import {SkeletonAnimation, SkeletonElement} from "@fremtind/jokul/loader";
 import {
-    Table, TableHead, TableHeader, TableBody, TableRow, TableCell,
+    Table, TableHead, TableHeader, TableBody, TableRow, TableCell, TableCaption,
     useSortableTableHeader,
 } from "@fremtind/jokul/table";
 import {Tag} from "@fremtind/jokul/tag";
@@ -92,7 +92,7 @@ export default function PropIndexPage() {
                 <p className="muted component-index__count">
                     {filteredProps.length} av {ALL_PROP_ENTRIES.length} props
                 </p>
-                <Table caption="Props-oversikt" collapseToList fullWidth>
+                <Table caption={<TableCaption srOnly>Props-oversikt</TableCaption>} collapseToList fullWidth>
                     <TableHead>
                         <TableRow>
                             <TableHeader sortable={getSortProps("name").sortable}>Prop</TableHeader>

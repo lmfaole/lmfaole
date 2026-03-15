@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { DataTable } from "@fremtind/jokul/table";
+import React, { useState } from "react";
+import { Table, TableHead, TableHeader, TableBody, TableRow, TableCell, TableCaption } from "@fremtind/jokul/table";
 import { PopupTip } from "@fremtind/jokul/tooltip";
 import { Flex } from "@fremtind/jokul/flex";
 import { Link } from "@fremtind/jokul/link";
@@ -95,12 +95,22 @@ export function PropTable({ props, migrations }: PropTableProps) {
             {rows.length === 0 ? (
                 <p className="muted">Ingen props samsvarer med filteret.</p>
             ) : (
-                <DataTable
-                    caption="Props"
-                    columns={COLUMNS}
-                    rows={rows}
-                    collapseToList
-                />
+                <Table caption={<TableCaption srOnly>Props</TableCaption>} collapseToList>
+                    <TableHead>
+                        <TableRow>
+                            {COLUMNS.map((col) => <TableHeader key={col}>{col}</TableHeader>)}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((cells, i) => (
+                            <TableRow key={i}>
+                                {cells.map((cell, j) => (
+                                    <TableCell key={j} data-th={COLUMNS[j]}>{cell}</TableCell>
+                                ))}
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
             )}
         </Flex>
     );
