@@ -46,10 +46,14 @@ export function readUsers(cookie: (name: string) => string | undefined): Users {
   return { lastfm: cleanUsername(cookie(COOKIE.lastfm)), trakt: cleanUsername(cookie(COOKIE.trakt)), listenbrainz: cleanUsername(cookie(COOKIE.listenbrainz)), steam: cleanUsername(cookie(COOKIE.steam)), retroachievements: cleanUsername(cookie(COOKIE.retroachievements)) }
 }
 
-/** The address to go back to after the form: a path on this site, never another site's (`//host`, `/\host`, a scheme). */
-export function safeBack(value: unknown, fallback = "/"): string {
-  if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//") || value.includes("\\") || /[\u0000-\u001f\u007f]/.test(value)) return fallback
-  return value
+/**
+ * The address to go back to after the form: a path on this site, under its `base` (the origin's other paths are other apps'), never another site's (`//host`, `/\host`, a scheme); else the base.
+ * Dot segments are resolved first, so `/medier/../start/` is not under it.
+ */
+export function safeBack(value: unknown, base = "/"): string {
+  if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//") || value.includes("\\") || /[\u0000-\u001f\u007f]/.test(value)) return base
+  const url = new URL(value, "https://medier.invalid")
+  return url.pathname.startsWith(base) ? path(url) : base
 }
 
 const without = (back: string): URL => {

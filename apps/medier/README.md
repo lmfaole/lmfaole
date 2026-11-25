@@ -1,13 +1,13 @@
 # medier
 
-Hva du hører på og ser: en side på Cloudflare Workers, <https://medier.lmfaole.party/>, laget med designsystemet
+Hva du hører på og ser: en side på Cloudflare Workers, <https://lmfaole.party/medier/>, laget med designsystemet
 [`@lmfaole/designsystem`](https://github.com/lmfaole/designsystem).
 
 ## How it works
 
 - **Whose data.** The visitor's own: they give their Last.fm and Trakt usernames in a form (the design system's `UsernameForm`, in `src/components/UsernameGate.astro`, posted to `src/pages/api/brukernavn.ts`, no JS needed), which checks each with its
   service (Last.fm's `user.getinfo`; Trakt's profile, which must be public; ListenBrainz's `listen-count`; Steam's `ResolveVanityURL`, or a SteamID as it is; RetroAchievements' `API_GetUserProfile`) and keeps it in a cookie for a year (`lastfm_user`, `trakt_user`, `listenbrainz_user`,
-  `steam_user`, `retroachievements_user`; path `/`, `SameSite=Lax`, `Secure`, `HttpOnly`), signed with the Worker's `COOKIE_SECRET` (`name.<HMAC-SHA256>`, `src/lib/signed-cookie.ts`): a cookie made by hand is no username, so only a name the site checked is ever asked about with its keys. An empty field forgets it. ListenBrainz, Steam and RetroAchievements are only under Innstillinger › Kontoer (Steam and RetroAchievements only where the site has their keys), not in the first-run wizard.
+  `steam_user`, `retroachievements_user`; path `/medier/`, `SameSite=Lax`, `Secure`, `HttpOnly`), signed with the Worker's `COOKIE_SECRET` (`name.<HMAC-SHA256>`, `src/lib/signed-cookie.ts`): a cookie made by hand is no username, so only a name the site checked is ever asked about with its keys. An empty field forgets it. ListenBrainz, Steam and RetroAchievements are only under Innstillinger › Kontoer (Steam and RetroAchievements only where the site has their keys), not in the first-run wizard.
   Without a username a page shows the form instead of data: Musikk and its pages (its Historikk and Wrapped too) need Last.fm, Film and TV and theirs Trakt, and the front page shows what has a username and asks for the rest.
   Musikk, its Historikk, the front page and what plays now take ListenBrainz's plays where there is no Last.fm username (the rest of the music's pages stay Last.fm's); Spill needs Steam or RetroAchievements.
   Whose data it is is shown only under Innstillinger › Kontoer, not on every page (`/brukernavn/` is a redirect there now).
@@ -26,7 +26,7 @@ Hva du hører på og ser: en side på Cloudflare Workers, <https://medier.lmfaol
   The root layout spreads `htmlAttributes(prefs)` on `<html>` (`data-theme`, `data-effects`, `data-tilt`), and the front page shows only the sections chosen (all until some are; none says so), in the
   visitor's order (`orderSections`); a form for a missing username stands where that service's first section would.
 - **The first visit.** Musikk, Film, TV and the Historikk of each have a short intro (`IntroCallout`, the texts in `src/lib/onboarding.ts`), and the front page offers to install the app (`InstallPrompt`). What has been dismissed is kept in the design system's `seen` cookie
-  (path `/`), read by the server so nothing flashes; an intro is never shown where the page shows the username form instead. An empty list says why and what to do about it (`EmptyState` with one action). Only public data is shown: the site's keys are used, never a sign-in of the visitor's. The Worker has no username of its own.
+  (path `/medier/`, as every cookie of the site: `SEEN_PATH` in `src/lib/onboarding.ts`), read by the server so nothing flashes; an intro is never shown where the page shows the username form instead. An empty list says why and what to do about it (`EmptyState` with one action). Only public data is shown: the site's keys are used, never a sign-in of the visitor's. The Worker has no username of its own.
   Each visitor (by address) gets 60 pages and API calls, 120 server islands and 10 posts of the forms a minute (Workers' rate limits in `wrangler.jsonc`, `src/lib/guard.ts`), then «429 For mange forespørsler»; every answer has the security headers
   (`frame-ancestors 'none'` and the rest, `src/lib/guard.ts`, `public/_headers`). A «not found» from a source (a username that is not one) is kept ten minutes like an answer, so it is not asked again on every page (`src/lib/negative-cache.ts`).
   Every page is `Cache-Control: private` with `Vary: Cookie` (`src/middleware.ts`), the Worker's cache is keyed by the address (which has the username in it), and the service worker keeps one visitor's pages at a time.
@@ -159,9 +159,9 @@ are made of; both are tested.
 ## Installed app (PWA)
 
 The site installs on a phone or a computer and opens without the browser around it: «Legg til på Hjem-skjerm» on iOS, the install offer in the address bar on Android and desktop Chrome (there is no install button
-of our own). `public/manifest.webmanifest` is the identity (`id` and scope `/`, never changed once installed; the brand's amber as `theme_color` and the dark page as `background_color`, `any` and `maskable` icons at 192 and 512), and
-`public/sw.js` the service worker: a page from the network first with the last copy of each page when there is no network (the forty last, kept by address with the query, and only the current visitor's: a page for other usernames or other `prefs` or with the wizard open or closed, by the server's `X-Medier-Who`, drops the ones before), the front page and then `/offline/` when there
-is none; the built files and icons from the cache. Nothing from another site is kept (the covers are Spotify's, Last.fm's and TMDB's own), a redirect or an error is never kept as a page, and a new version waits until the
+of our own). `public/manifest.webmanifest` is the identity (`id`, `start_url` and scope `/medier/`, never changed once installed; the brand's amber as `theme_color` and the dark page as `background_color`, `any` and `maskable` icons at 192 and 512), and
+`public/sw.js` the service worker: a page from the network first with the last copy of each page when there is no network (the forty last, kept by address with the query, and only the current visitor's: a page for other usernames or other `prefs` or with the wizard open or closed, by the server's `X-Medier-Who`, drops the ones before), the front page and then `/medier/offline/` when there
+is none; the built files and icons from the cache. It is registered at `/medier/sw.js` with the scope `/medier/` and touches nothing outside it (the origin's other paths are other apps'), and of the origin's caches it only ever deletes its own (`medier-…`). Nothing from another site is kept (the covers are Spotify's, Last.fm's and TMDB's own), a redirect or an error is never kept as a page, and a new version waits until the
 app is closed (no `skipWaiting`) and then deletes the old caches: change `VERSION` in `sw.js` to make it. A bar at the foot on a phone, a rail from tablet width, goes between Forside, Musikk, Film, TV, Spill (with Steam's or RetroAchievements' key) and Innstillinger (on a phone it scrolls sideways, the current place brought into view; the bar is an island for that);
 `ConnectionBanner` says so when the device is offline and the page is the last one fetched. `src/pwa.test.ts` pins the manifest and runs the worker against a cache and a network of its own.
 
@@ -201,9 +201,12 @@ row. The artists' pictures are Spotify's and are cropped to the circle, which it
 
 1. **Cloudflare.** A Cloudflare API token that may edit Workers, and the account id, as GitHub Actions secrets of this repository: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
    (Settings → Secrets and variables → Actions). A push to `main` then deploys the relay and the site (`.github/workflows/medier.yml` at the repository's root).
-2. **The address.** `medier.lmfaole.party` is the Worker's custom domain (`wrangler.jsonc`). Cloudflare makes its DNS record when the site is deployed, so the old record that pointed it at GitHub Pages
-   (a CNAME to `lmfaole.github.io`) must be gone first, and the custom domain under Settings → Pages removed.
-3. **Spotify, once.** The redirect address must be a loopback one registered in the Spotify dashboard (the monorepo's `SPOTIFY_REDIRECT_URI` is):
+2. **The address.** The site is <https://lmfaole.party/medier/>: Astro's `base` is `/medier` (`astro.config.ts`) and the Worker has the zone route `lmfaole.party/medier*` (`wrangler.jsonc`), on the
+   origin it shares with the front page (`/`), the start page (`/start`), the CV (`/cv`) and Storybook (`/design/`). Everything of the site is under `/medier/`: its pages, the built files
+   (`dist/client/medier/…`, served by the Worker's static assets before the Worker), the cookies (`Path=/medier/`), the service worker and the manifest. The route needs the zone's DNS record for
+   `lmfaole.party` (proxied), which the front page already has.
+3. **Spotify, once.** The redirect address must be a loopback one registered in the Spotify dashboard (the monorepo's `SPOTIFY_REDIRECT_URI` is); the site's own address is never one, so the move to
+   `/medier/` changed nothing there:
 
    ```sh
    npm run spotify:auth -- ~/Applikasjoner/Documents/monorepo/secrets/music-sync.env   # approve in the browser; writes .spotify.env (not committed)
@@ -225,7 +228,7 @@ row. The artists' pictures are Spotify's and are cropped to the circle, which it
    `image.tmdb.org`, `lastfm.freetls.fastly.net`, `i.scdn.co`, `cdn.cloudflare.steamstatic.com`, `media.retroachievements.org`,
    `coverartarchive.org` and `archive.org` (ListenBrainz's covers). Then set `IMAGE_TRANSFORMS` to `"1"` in `wrangler.jsonc` and push. Check a page with pictures after: if the zone cannot fetch a host
    (the same 525 the Worker gets), set it back to `"0"`.
-7. **Web Analytics** (optional). In the dashboard, Web Analytics › Add a site › `medier.lmfaole.party`, without the automatic setup (the site draws the beacon itself), and put the site's token in
+7. **Web Analytics** (optional). In the dashboard, Web Analytics › Add a site › `lmfaole.party`, without the automatic setup (the site draws the beacon itself), and put the site's token in
    `CF_BEACON_TOKEN` in `wrangler.jsonc` (it is public) and push.
 
 ## Made-up data (no keys, no network)
@@ -242,7 +245,7 @@ The JSON and the pictures in `public/mock/` were fetched once by `node scripts/f
 ```sh
 npm install
 npm test && npm run typecheck   # the parsers', the loaders' and the relay's tests, and the types
-npm run dev                      # http://localhost:4321/ (keys in a .dev.vars file, not committed: LASTFM_API_KEY=… and so on; a source without its key is left out)
+npm run dev                      # http://localhost:4321/medier/ (keys in a .dev.vars file, not committed: LASTFM_API_KEY=… and so on; a source without its key is left out)
 npm run preview                  # the built Worker as it runs on Cloudflare (without MOCK_DATA it asks the relay through its binding: run `npx wrangler dev -c upstream/wrangler.jsonc` beside it)
 npm run deploy                   # from here, instead of from the workflow
 npm run skills                   # the design system's skills, after a change to them

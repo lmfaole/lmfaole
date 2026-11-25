@@ -9,6 +9,11 @@ test("back is a path on this site, never another site's", () => {
   assert.equal(safeBack("//x", "/film/"), "/film/")
 })
 
+test("back is under the site's base: never another app's path on the same origin", () => {
+  assert.equal(safeBack("/medier/musikk/?a=1", "/medier/"), "/medier/musikk/?a=1")
+  for (const other of ["/", "/start", "/cv/", "/medier", "/medierx/", "/medier/../start/", "/medier/%2e%2e/start/"]) assert.equal(safeBack(other, "/medier/"), "/medier/", other)
+})
+
 test("an error goes on the way back and off again once the username is found", () => {
   const sent = backWithError("/musikk/?side=2&brukernavn-feil=trakt&brukernavn-verdi=old", "lastfm", "nobody here")
   assert.deepEqual(formError(new URL(sent, "https://x").searchParams), { service: "lastfm", value: "nobody here" })

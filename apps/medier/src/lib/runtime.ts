@@ -71,7 +71,7 @@ export const usersOf = (cookies: AstroCookies): Users => verified.get(cookies) ?
  * Without a relay (`astro dev`) the source is asked directly.
  */
 async function ask(url: string, request: { headers?: Record<string, string>; method?: "GET" | "POST"; body?: string; timeout?: number }): Promise<Response> {
-  if (mocking()) return mockFetch(url, request)
+  if (mocking()) return underBase(mockFetch(url, request))
   const upstream = asService(binding("UPSTREAM"))
   const route = routeOf(url, { upstream: upstream !== null, relay: settings()["UPSTREAM_URL"], key: settings()["UPSTREAM_KEY"] })
   const headers: Record<string, string> = { "User-Agent": AGENT, Accept: "application/json", ...request.headers }
@@ -84,6 +84,13 @@ async function ask(url: string, request: { headers?: Record<string, string>; met
     case "direct":
       return fetch(route.url, { ...init, headers })
   }
+}
+
+/** The made-up data's pictures (`public/mock/`, `/mock/…` in its answers) are the site's own files, so under its base (`/medier/mock/…`). */
+async function underBase(answer: Response): Promise<Response> {
+  const base = import.meta.env.BASE_URL
+  if (base === "/") return answer
+  return new Response((await answer.text()).replaceAll('"/mock/', `"${base}mock/`), answer)
 }
 
 /** Where an answer is kept. Made-up answers are kept apart, so a run on real data never gets one. */

@@ -26,7 +26,7 @@ const mark = (headers: Headers, who: string): void => {
 /** Whether the visitor (by address) is over a limit the request counts against (`lib/guard`); where a binding is missing (`astro dev`), it is not. */
 async function overLimit(request: Request, pathname: string): Promise<boolean> {
   const key = request.headers.get('CF-Connecting-IP') ?? 'unknown'
-  for (const name of limitersFor(request.method, pathname)) {
+  for (const name of limitersFor(request.method, pathname, import.meta.env.BASE_URL)) {
     const limiter = asRateLimit(binding(name))
     if (limiter !== null && !(await limiter.limit({ key })).success) return true
   }

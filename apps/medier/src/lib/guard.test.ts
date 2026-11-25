@@ -17,6 +17,13 @@ test("a post to the API, which may check usernames with their services, counts a
   assert.deepEqual(limitersFor("POST", "/api/brukernavn/"), ["LIMITER", "CHECK_LIMITER"])
 })
 
+test("under the site's base, its islands and its API are known by their paths there", () => {
+  assert.deepEqual(limitersFor("GET", "/medier/_server-islands/TopTracksIsland", "/medier/"), ["ISLAND_LIMITER"])
+  assert.deepEqual(limitersFor("POST", "/medier/api/innstillinger/", "/medier/"), ["LIMITER", "CHECK_LIMITER"])
+  assert.deepEqual(limitersFor("GET", "/medier/_astro/client.abc123", "/medier/"), [])
+  assert.deepEqual(limitersFor("GET", "/medier/musikk/", "/medier/"), ["LIMITER"])
+})
+
 test("only a binding with `limit` is a rate limit: without one (astro dev), nothing is limited", () => {
   const binding = { limit: async () => ({ success: true }) }
   assert.equal(asRateLimit(binding), binding)

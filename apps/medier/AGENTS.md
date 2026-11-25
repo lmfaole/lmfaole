@@ -11,6 +11,9 @@ deploy; `npm run settings:push` sets them). Kept small on purpose; read `README.
   the Worker's cache for as long as each source's `TTL` says. Reading an API's answer is a pure function in `src/lib/` with a test next to it (`node --test`).
 - A Worker on the lmfaole.party zone cannot reach Last.fm, Trakt, TMDB, Spotify or MusicBrainz (525): everything goes through the relay in `upstream/`, which allows only those hosts and only with the key the
   two share. A new source is: a parser and its test in `src/lib/`, a loader in `src/lib/sources.ts`, its host in `upstream/worker.ts` (and its test), its setting in `src/lib/settings.ts`, and a section.
+- The site is <https://lmfaole.party/medier/>: Astro's `base` `/medier` and the zone route `lmfaole.party/medier*` (`wrangler.jsonc`), on an origin shared with other apps (`/`, `/start`, `/cv`, `/design/`). Nothing of the site leaves
+  `/medier/`: every address of its own through `import.meta.env.BASE_URL` (never a hard-coded `/…`), every cookie with `Path=/medier/` (`SEEN_PATH`, `src/lib/visitor-cookies.ts`), the service worker's scope and caches
+  (`public/sw.js`, only its own `medier-…` caches), the manifest, `public/_headers`, and a form's `back` (`safeBack`, under the base only).
 - The site reaches the relay through the `UPSTREAM` service binding (`UPSTREAM_URL` only without it); which way a request goes is `src/lib/route.ts`.
   `IMAGE_TRANSFORMS` and `CF_BEACON_TOKEN` are `vars` in `wrangler.jsonc`: a new picture goes through `sourcesOf`/`transformed` in `src/lib/image-sources.ts`, and the CSP is built in `src/lib/guard.ts`
   (never loosen it beyond the site and the beacon). See the README's «Cloudflare» for what is deliberately not used (Cron, KV, Workers AI).

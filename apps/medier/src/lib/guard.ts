@@ -14,11 +14,11 @@ export type LimiterName = "LIMITER" | "ISLAND_LIMITER" | "CHECK_LIMITER"
 export const asRateLimit = (value: unknown): RateLimit | null =>
   typeof value === "object" && value !== null && typeof (value as { limit?: unknown }).limit === "function" ? (value as RateLimit) : null
 
-/** The limits a request counts against: none for a built file, the islands' for an island, the pages' for the rest, and the checks' too for a post to the API. */
-export function limitersFor(method: string, pathname: string): LimiterName[] {
-  if (pathname.startsWith("/_astro/") || /\.[a-z0-9]+$/i.test(pathname)) return []
-  if (pathname.startsWith("/_server-islands/")) return ["ISLAND_LIMITER"]
-  return method === "POST" && pathname.startsWith("/api/") ? ["LIMITER", "CHECK_LIMITER"] : ["LIMITER"]
+/** The limits a request counts against: none for a built file, the islands' for an island, the pages' for the rest, and the checks' too for a post to the API; the paths under the site's `base`. */
+export function limitersFor(method: string, pathname: string, base = "/"): LimiterName[] {
+  if (pathname.startsWith(`${base}_astro/`) || /\.[a-z0-9]+$/i.test(pathname)) return []
+  if (pathname.startsWith(`${base}_server-islands/`)) return ["ISLAND_LIMITER"]
+  return method === "POST" && pathname.startsWith(`${base}api/`) ? ["LIMITER", "CHECK_LIMITER"] : ["LIMITER"]
 }
 
 export const RETRY_AFTER = 60

@@ -3,6 +3,8 @@
  * page of the title's providers (which links on to JustWatch). Pure, with a test.
  */
 
+import { isMockPicture } from "./tmdb.ts"
+
 const API = "https://api.themoviedb.org/3"
 const LOGOS = "https://image.tmdb.org/t/p/w92"
 
@@ -42,7 +44,7 @@ function providers(value: unknown): Provider[] {
       if (seen.has(name)) return []
       seen.add(name)
       const path = one["logo_path"]
-      return [{ name, logo: typeof path === "string" && path.startsWith("/") ? (path.startsWith("/mock/") ? path : `${LOGOS}${path}`) : null }]
+      return [{ name, logo: typeof path === "string" && path.startsWith("/") ? (isMockPicture(path) ? path : `${LOGOS}${path}`) : null }]
     })
 }
 

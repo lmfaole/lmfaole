@@ -15,12 +15,14 @@ export function authorize(key: string, url: string): { url: string; headers: Rec
   return { url: `${url}${url.includes("?") ? "&" : "?"}api_key=${encodeURIComponent(key)}`, headers: {} }
 }
 
+/** `/mock/…` (under the site's base, `/medier/mock/…`) is a picture of this site's own (`src/lib/mock.ts`, `MOCK_DATA=1`), not one of TMDB's (`/<file>`). */
+export const isMockPicture = (path: string): boolean => /^\/(?:[^/]+\/)*mock\//.test(path)
+
 /** The poster's address from TMDB's answer, or `null` where it has none. */
 export function parsePoster(answer: unknown): string | null {
   if (typeof answer !== "object" || answer === null) return null
   const path = (answer as Record<string, unknown>)["poster_path"]
-  // `/mock/…` is a picture of this site's own (`src/lib/mock.ts`, `MOCK_DATA=1`), not one of TMDB's.
-  return typeof path === "string" && path.startsWith("/") ? (path.startsWith("/mock/") ? path : `${IMAGES}${path}`) : null
+  return typeof path === "string" && path.startsWith("/") ? (isMockPicture(path) ? path : `${IMAGES}${path}`) : null
 }
 
 /** What the site keeps of a film or a show beyond its poster: a few lines to know it by. Anything TMDB has not got is `null` (or none). */
@@ -101,7 +103,7 @@ function dedupe(credits: readonly Credit[]): Credit[] {
 /** A person's picture in the widths TMDB has for profiles (not the poster's: `w92` is no size of a profile, and the address would be nothing). */
 export function profileSources(profile: string | null): { src: string; width: number }[] {
   if (profile === null) return []
-  if (profile.startsWith("/mock/")) return [{ src: profile, width: 185 }]
+  if (isMockPicture(profile)) return [{ src: profile, width: 185 }]
   return [{ src: `https://image.tmdb.org/t/p/w45${profile}`, width: 45 }, { src: `https://image.tmdb.org/t/p/w185${profile}`, width: 185 }, { src: `https://image.tmdb.org/t/p/h632${profile}`, width: 421 }]
 }
 

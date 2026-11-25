@@ -1,5 +1,6 @@
 // The service worker, at /start/sw.js. Its scope is /start (the page itself has no trailing slash), which is wider than
 // the folder it is in, so it says so with Service-Worker-Allowed. It handles /start and what is under /start/, never /startfoo; a page is kept by its address with the query.
+// Other apps share the origin (lmfaole.party/medier, /design), so on an update it deletes only its own old caches (startside-…).
 // A page shows the GitHub data of the username in this browser's cookie, so the kept pages are emptied when the username form is sent.
 
 const SCRIPT = String.raw`
@@ -19,7 +20,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((key) => key !== STATIC && key !== PAGES).map((key) => caches.delete(key))))
+      .then((keys) => Promise.all(keys.filter((key) => key.startsWith("startside-") && key !== STATIC && key !== PAGES).map((key) => caches.delete(key))))
       .then(() => self.clients.claim()),
   )
 })

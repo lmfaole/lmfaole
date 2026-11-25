@@ -1,12 +1,12 @@
-/*
+/medier/*
   Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self'
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
-/sw.js
+/medier/sw.js
   Cache-Control: no-cache
-/manifest.webmanifest
+/medier/manifest.webmanifest
   Content-Type: application/manifest+json
   Cache-Control: public, max-age=3600
-/icons/*
+/medier/icons/*
   Cache-Control: public, max-age=31536000, immutable

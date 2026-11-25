@@ -18,6 +18,9 @@ test("the poster is the image address, and nothing where TMDB has none", () => {
   assert.equal(parsePoster({ poster_path: "/h1.jpg" }), "https://image.tmdb.org/t/p/w185/h1.jpg")
   assert.equal(parsePoster({ poster_path: null }), null)
   assert.equal(parsePoster({ poster_path: "h1.jpg" }), null)
+  // The made-up data's own pictures, under the site's base or not, are not TMDB's.
+  assert.equal(parsePoster({ poster_path: "/medier/mock/poster-1.jpg" }), "/medier/mock/poster-1.jpg")
+  assert.equal(parsePoster({ poster_path: "/mock/poster-1.jpg" }), "/mock/poster-1.jpg")
   assert.equal(parsePoster("junk"), null)
 })
 

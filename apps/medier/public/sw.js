@@ -1,5 +1,6 @@
-// The service worker of the installed app (scope «/»). Pages: the network first, the last good copy of each when there is no network, the front page then, and last our own
-// offline page. The built files (`/_astro/`, the icons) never change under one name: from the cache when there, else fetched and kept. Nothing from another site is touched
+// The service worker of the installed app (scope: the site's base, `/medier/`, where it is: the origin's other paths are other apps'). Pages: the network first, the last good copy of
+// each when there is no network, the front page then, and last our own offline page. The built files (`_astro/`, the icons) never change under one name: from the cache when there, else
+// fetched and kept. Nothing outside the base is touched, and of the origin's caches only our own (`medier-…`) are ever deleted. Nothing from another site is touched
 // (the covers and pictures are other sites' own, Spotify's among them, and are not kept). A new worker waits until the app is closed: no `skipWaiting`, so an old page is never
 // served by a new worker. Change `VERSION` and the old caches are deleted when it takes over. A page is made for the visitor's usernames (cookies): the server says whose it is (`X-Medier-Who`),
 // and as what it was drawn (the visitor's theme, effects and sections, and whether the first-run wizard was open), and the pages kept are of one such at a time, so a page from before a change
@@ -8,11 +9,13 @@
 const VERSION = "v6"
 const STATIC = `medier-static-${VERSION}`
 const PAGES = `medier-pages-${VERSION}`
-const OFFLINE = "/offline/"
+/** The site's base, where this file is: `/medier/`. */
+const BASE = new URL("./", self.location.href).pathname
+const OFFLINE = `${BASE}offline/`
 /** How many pages are kept: the last visited, so the cache stays small and nothing in it is old for long. */
 const MAX_PAGES = 40
 /** Whose pages are kept: an entry of its own in the pages' cache, with the server's `X-Medier-Who` of the last page kept. */
-const WHO = "/__medier-who__"
+const WHO = `${BASE}__medier-who__`
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -30,7 +33,7 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((key) => key !== STATIC && key !== PAGES).map((key) => caches.delete(key))))
+      .then((keys) => Promise.all(keys.filter((key) => key.startsWith("medier-") && key !== STATIC && key !== PAGES).map((key) => caches.delete(key))))
       .then(() => self.clients.claim()),
   )
 })
@@ -53,9 +56,9 @@ async function trim(cache) {
 self.addEventListener("fetch", (event) => {
   const request = event.request
   const url = new URL(request.url)
-  if (request.method !== "GET" || url.origin !== self.location.origin) return
+  if (request.method !== "GET" || url.origin !== self.location.origin || !url.pathname.startsWith(BASE)) return
 
-  if (url.pathname.startsWith("/_astro/") || url.pathname.startsWith("/icons/")) {
+  if (url.pathname.startsWith(`${BASE}_astro/`) || url.pathname.startsWith(`${BASE}icons/`)) {
     event.respondWith(
       caches.open(STATIC).then(async (cache) => {
         const cached = await cache.match(request)
@@ -87,7 +90,7 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(async () => {
           const cache = await caches.open(PAGES)
-          return (await cache.match(key)) ?? (await cache.match("/")) ?? (await cache.match(OFFLINE)) ?? Response.error()
+          return (await cache.match(key)) ?? (await cache.match(BASE)) ?? (await cache.match(OFFLINE)) ?? Response.error()
         }),
     )
   }

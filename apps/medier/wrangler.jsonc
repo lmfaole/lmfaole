@@ -3,12 +3,13 @@
   "name": "medier",
   "compatibility_date": "2026-11-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  // Only the custom domain: no workers.dev or preview address, so the site has one address.
+  // Only the zone's route: no workers.dev or preview address, so the site has one address.
   "workers_dev": false,
   "preview_urls": false,
   "observability": { "enabled": true },
   // Whose plays and viewings are shown is the visitor's (their usernames, in cookies), never a setting. The sources' keys, and the key the site shares with the relay, are secrets (`src/lib/settings.ts`).
-  "routes": [{ "pattern": "medier.lmfaole.party", "custom_domain": true }],
+  // The site is https://lmfaole.party/medier/, a path of the origin the other apps share (`/`, `/start`, `/cv`, `/design/` are other Workers'): the route takes only `/medier…`.
+  "routes": [{ "pattern": "lmfaole.party/medier*", "zone_name": "lmfaole.party" }],
   // Each page asks the sources with the site's keys, so a visitor (by address) gets so many a minute (`src/lib/guard.ts`, `src/middleware.ts`): pages and the API, the server islands
   // (a page has up to five), and the posts that check usernames with their services.
   // The relay (`upstream/`) is a Worker of this account: the site asks it Worker to Worker through this binding, not over the internet (`src/lib/route.ts`). It is deployed

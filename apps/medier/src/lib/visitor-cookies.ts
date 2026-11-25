@@ -2,6 +2,7 @@ import type { AstroCookies } from 'astro'
 import { addSeen, isSeen, parseSeen, SEEN_COOKIE } from '@lmfaole/designsystem/lib/onboarding'
 import { PREFS_COOKIE, serializePrefs, type Prefs } from '@lmfaole/designsystem/lib/preferences'
 
+import { SEEN_PATH } from './onboarding'
 import { cookieSecret, lastfmUserFound, listenbrainzUserFound, retroUserFound, steamUserFound, traktUserFound } from './runtime'
 import { sign } from './signed-cookie'
 import { FIRST_RUN, STEP_PARAM, withoutSeen, type UsernamePlan } from './settings-form'
@@ -12,7 +13,8 @@ import { SALES_COOKIE, seenSalesValue } from './steam-wishlist'
 const FOUND: Record<Service, (user: string) => Promise<boolean>> = { lastfm: lastfmUserFound, trakt: traktUserFound, listenbrainz: listenbrainzUserFound, steam: steamUserFound, retroachievements: retroUserFound }
 export const userFound = (service: Service, user: string): Promise<boolean> => FOUND[service](user)
 
-const YEAR = { path: '/', maxAge: COOKIE_MAX_AGE, sameSite: 'lax', secure: true } as const
+/** Every cookie under the site's base (`Path=/medier/`), as the `seen` cookie the design system's islands write. */
+const YEAR = { path: SEEN_PATH, maxAge: COOKIE_MAX_AGE, sameSite: 'lax', secure: true } as const
 
 /**
  * The usernames that were found are kept (`HttpOnly`: only the server reads them), signed by the site (`signed-cookie.ts`) so that only a name it checked is ever asked about; the emptied ones forgotten,
@@ -20,7 +22,7 @@ const YEAR = { path: '/', maxAge: COOKIE_MAX_AGE, sameSite: 'lax', secure: true 
  */
 export async function keepUsernames(cookies: AstroCookies, plan: UsernamePlan): Promise<void> {
   const secret = cookieSecret()
-  for (const service of plan.clear) cookies.delete(COOKIE[service], { path: '/' })
+  for (const service of plan.clear) cookies.delete(COOKIE[service], { path: SEEN_PATH })
   for (const [service, user] of Object.entries(plan.set) as [Service, string][]) {
     cookies.set(COOKIE[service], secret === null ? user : await sign(COOKIE[service], user, secret), { ...YEAR, httpOnly: true })
   }

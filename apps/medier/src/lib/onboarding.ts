@@ -2,7 +2,8 @@
  * The first-visit help of the site: the intros of the pages and the offer to install, each remembered in the design system's `seen` cookie (`@lmfaole/designsystem/lib/onboarding`) under the whole
  * site. Raise an intro's version to show a changed one again.
  */
-export const SEEN_PATH = "/"
+/** The path every cookie of the site is kept under (this one and those of `visitor-cookies.ts`): the site's base, `/medier/`, never the origin's root, whose other paths are other apps'. */
+export const SEEN_PATH = import.meta.env.BASE_URL
 
 export interface Intro {
   id: string

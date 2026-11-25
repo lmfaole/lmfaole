@@ -16,11 +16,11 @@ const NO_STORE = { 'Cache-Control': 'no-store' }
  * - else the settings (the wizard, or one of the subpages of «Innstillinger», each with only its own fields): the usernames found are kept and the emptied forgotten (as `/api/brukernavn/`), the theme,
  *   the effects, the tilt, the sections and their order in `prefs` (with a no-JS `move=<id>:up|down` from `ReorderList` applied), and the wizard marked seen when all was well; a username not found
  *   sends the visitor back to the field (in the wizard, to its step).
- * Then 303 to `back`, a path on this site only (a subpage's own address with `?lagret=1`).
+ * Then 303 to `back`, a path under the site's base only (a subpage's own address with `?lagret=1`).
  */
 export const POST: APIRoute = async ({ request, cookies }) => {
   const form = await request.formData().catch(() => new FormData())
-  const back = safeBack(form.get('back'))
+  const back = safeBack(form.get('back'), import.meta.env.BASE_URL)
   const plan = await planUsernames(form, userFound)
   if (form.has('validate') && (request.headers.get('accept') ?? '').includes('application/json')) {
     return Response.json({ errors: stepErrors(plan) }, { headers: NO_STORE })

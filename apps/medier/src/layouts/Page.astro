@@ -49,12 +49,12 @@ const beacon = Astro.isPrerendered ? '' : beaconToken()
     <title>{current === 'front' ? title : `${title} – Medier`}</title>
     <meta name="description" content={lead} />
     <!-- The installed app: the manifest, the colour of the bar in each scheme (the brand's amber, light and dark: `npx designsystem-app-icons`), the icons, and Safari's own way of saying «installed». -->
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="manifest" href={`${base}manifest.webmanifest`} />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#9c640d" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#c6811c" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="icon" href={`${base}favicon.png`} type="image/png" />
+    <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`} />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Medier" />
@@ -77,9 +77,10 @@ const beacon = Astro.isPrerendered ? '' : beaconToken()
       listenForPendingForms()
     </script>
     <WebAnalytics token={beacon} />
-    <script is:inline>
-      // The service worker makes the app open without a network (`public/sw.js`); a browser without one, or one that refuses it, simply has the site as before.
-      if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {}))
+    <script is:inline define:vars={{ base }}>
+      // The service worker makes the app open without a network (`public/sw.js`); a browser without one, or one that refuses it, simply has the site as before. Its scope is the site's base
+      // (`/medier/`), never the origin's root, which is the other apps'.
+      if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register(`${base}sw.js`, { scope: base }).catch(() => {}))
     </script>
   </body>
 </html>

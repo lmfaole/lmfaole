@@ -1,18 +1,18 @@
 {
-  "id": "/",
+  "id": "/medier/",
   "name": "Medier",
   "short_name": "Medier",
   "description": "Hva jeg hører på og ser: musikk fra Last.fm og Spotify, film og TV fra Trakt.",
   "lang": "nb",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/medier/",
+  "scope": "/medier/",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#9c640d",
   "categories": ["entertainment"],
   "icons": [
-    { "src": "/icons/amber/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/amber/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/amber/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/medier/icons/amber/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/medier/icons/amber/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/medier/icons/amber/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

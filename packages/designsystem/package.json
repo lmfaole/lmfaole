@@ -13,7 +13,7 @@
     "use-cases": "node scripts/use-cases.mjs",
     "verify": "npm run -s typecheck && npm run -s lint && npm test",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o storybook-static",
+    "build-storybook": "storybook build -o storybook-static/design",
     "deploy": "npm run build-storybook && wrangler deploy",
     "test:stories": "vitest run --project=\"storybook-*\"",
     "test:visual": "vitest run --project=visual",

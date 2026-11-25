@@ -1,6 +1,6 @@
 name: medier
 
-# Every push that touches the site is tested, type-checked and built; a push to main, or a manual run, is also deployed to Cloudflare Workers: the site (medier.lmfaole.party) and the relay
+# Every push that touches the site is tested, type-checked and built; a push to main, or a manual run, is also deployed to Cloudflare Workers: the site (https://lmfaole.party/medier/) and the relay
 # it asks its sources through (`apps/medier/upstream/`). The site asks Last.fm, Trakt, TMDB and Spotify when a page is asked for, so nothing is fetched here. The sources' keys are
 # secrets of the Worker (`npm run settings:push`); the Cloudflare secrets, STEAM_API_KEY, SETLISTFM_API_KEY, RETROACHIEVEMENTS_API_KEY and COOKIE_SECRET are this repository's (the last four are uploaded with the deploy).
 on:
