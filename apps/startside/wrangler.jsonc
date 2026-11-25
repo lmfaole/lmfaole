@@ -18,8 +18,7 @@
   "d1_databases": [
     { "binding": "WATCHING", "database_name": "watching", "database_id": "de856333-5317-41e0-99be-0b01e43101ec", "migrations_dir": "../../workers/activity/migrations/watching" },
     { "binding": "GAMEPLAY", "database_name": "gameplay", "database_id": "5d315e5c-61b7-465a-a7e0-d3e3ab6d44bc", "migrations_dir": "../../workers/activity/migrations/gameplay" },
-    // Fill in the id printed by `npx wrangler d1 create library` (as in packages/db/wrangler.jsonc) before this is deployed.
-    { "binding": "LIBRARY", "database_name": "library", "database_id": "library-not-created-yet", "migrations_dir": "../../packages/db/library/migrations" }
+    { "binding": "LIBRARY", "database_name": "library", "database_id": "8f891a67-47c8-4232-88ea-a2acf01e9573", "migrations_dir": "../../packages/db/library/migrations" }
   ],
   // No cron of its own: workers/scheduler calls `scheduled` (worker.mjs) every 15 minutes to put the shared sources into the snapshot. 96 runs a day, at most five KV writes each.
   "triggers": { "crons": [] },
