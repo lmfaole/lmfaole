@@ -2,6 +2,7 @@ import { strict as assert } from "node:assert"
 import { test } from "node:test"
 
 import { discussionNodes } from "./discussions.ts"
+import { isPublicRepository } from "./github-query.ts"
 import { mockFetch } from "./mock.ts"
 import { readStatuses } from "./pr-status.ts"
 import { discussionSteps, discussionTimeline, issueSteps, issueTimeline, prSpans, prSteps, prTimeline } from "./timeline.ts"
@@ -34,17 +35,16 @@ test("discussions come under the aliases the query asks for, and issues for a wa
   assert.ok(issues.length > 0)
 })
 
-test("any username is a user, and the searches by a username find the captured data", async () => {
-  const user = (await mockFetch("https://api.github.com/users/hvem-som-helst").json()) as { login: string; type: string }
-  assert.deepEqual(user, { login: "hvem-som-helst", type: "User" })
+test("the searches by a username find the captured data, all of it public", async () => {
   const assigned = (await mockFetch(`https://api.github.com/search/issues?q=${encodeURIComponent("is:open is:issue assignee:octocat archived:false is:public")}`).json()) as { items: unknown[] }
   assert.ok(assigned.items.length > 0)
   const ci = await graphql('query CiRepos($login: String!) { user(login: $login) { repositories { nodes { ...R } } } }', { login: "octocat" })
   assert.ok(ci.data.user.repositories.nodes.length > 0)
   const replies = await graphql("query Replies($q: String!) { search(query: $q, type: ISSUE, first: 30) { nodes { id } } }", { q: "involves:octocat is:public" })
   assert.ok(Array.isArray(replies.data.search.nodes))
-  const repo = (await mockFetch("https://api.github.com/repos/fremtind/jokul").json()) as { private: boolean }
-  assert.equal(repo.private, false)
+  assert.ok(replies.data.search.nodes.every((node: { repository: unknown }) => isPublicRepository(node.repository as never)))
+  assert.ok(isPublicRepository((await mockFetch("https://api.github.com/repos/fremtind/jokul").json()) as never))
+  assert.ok(isPublicRepository(ci.data.user.repositories.nodes[0]))
 })
 
 test("a detail is there for a captured pull request and null for one that is not", async () => {

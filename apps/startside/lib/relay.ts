@@ -15,6 +15,9 @@ export interface Relay {
   key?: string
 }
 
+/** The relay from the Worker's bindings and variables: the service binding, its address as the fallback, and the shared key. */
+export const relayOf = (env: { UPSTREAM?: Fetcher; UPSTREAM_URL?: string; UPSTREAM_KEY?: string }): Relay => ({ binding: env.UPSTREAM, url: env.UPSTREAM_URL, key: env.UPSTREAM_KEY })
+
 /** The address of a source on the relay: `/<host><path><query>`. */
 export function relayPath(url: string): string {
   const target = new URL(url)

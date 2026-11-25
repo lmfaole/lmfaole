@@ -3,10 +3,22 @@ export interface Position {
   lon: number
 }
 
-/** The cookie that holds the device's position: `lat,lon`, three decimals (about a hundred metres), for the nearest stations and the forecast. */
-export const POSITION_COOKIE = "startside-pos"
+/** Where a page's address has the device's position (`?pos=lat,lon`, three decimals): the server reads no cookie, so a page is the same for everyone at the same address. */
+export const POSITION_PARAM = "pos"
 
-/** A position from a cookie value; nothing for anything that is not a position on Earth. */
+/** A page's query, as Next gives it. */
+export type SearchParams = Record<string, string | string[] | undefined>
+
+/** The first value of a query parameter. */
+export const firstParam = (value: string | string[] | undefined): string | undefined => (Array.isArray(value) ? value[0] : value)
+
+/** The position in a page's address, or nothing. */
+export const positionParam = (params: SearchParams): Position | null => parsePosition(firstParam(params[POSITION_PARAM]))
+
+/** The query that carries a position on to the next page (`?pos=…`), or nothing without one. */
+export const positionQuery = (position: Position | null): string => (position === null ? "" : `?${POSITION_PARAM}=${formatPosition(position)}`)
+
+/** A position from the address (`lat,lon`); nothing for anything that is not a position on Earth. */
 export function parsePosition(value: string | undefined): Position | null {
   if (value === undefined) return null
   const match = /^(-?\d{1,2}(?:\.\d+)?),(-?\d{1,3}(?:\.\d+)?)$/.exec(decodeURIComponent(value).trim())
@@ -34,43 +46,4 @@ export function coarsePosition({ lat, lon }: Position): Position {
 export function movedFar(from: Position, to: Position): boolean {
   // In thousandths of a degree, since 59.931 - 59.929 is not exactly 0.002; a degree of longitude is about half as long as one of latitude this far north.
   return Math.round(Math.abs(from.lat - to.lat) * 1000) >= 2 || Math.round(Math.abs(from.lon - to.lon) * 1000) >= 4
-}
-
-/** The cookie that holds the name of a place searched for and chosen in the settings; while it is there, the position is that place and not the device's, so the page does not follow the device. */
-export const PLACE_COOKIE = "startside-sted"
-
-/** The chosen place's name from its cookie; nothing when the position is the device's. */
-export function parsePlaceName(value: string | undefined): string | null {
-  if (value === undefined || value === "") return null
-  try {
-    const name = decodeURIComponent(value).trim().slice(0, 80)
-    return name === "" ? null : name
-  } catch {
-    return null
-  }
-}
-
-/** A place in a search's answer, as the form sends it: `lat,lon|name`. */
-export function formatChosenPlace(position: Position, name: string): string {
-  return `${formatPosition(roundPosition(position))}|${name}`
-}
-
-/** The place the form sent (`formatChosenPlace`), or nothing for anything else. */
-export function parseChosenPlace(value: string | undefined): { position: Position; name: string } | null {
-  if (value === undefined) return null
-  const at = value.indexOf("|")
-  if (at === -1) return null
-  const position = parsePosition(value.slice(0, at))
-  const name = value.slice(at + 1).trim().slice(0, 80)
-  return position === null || name === "" ? null : { position, name }
-}
-
-const YEAR = 60 * 60 * 24 * 365
-
-/** The `Set-Cookie`s that keep a chosen place for a year: its position and its name. */
-export function chosenPlaceCookies({ position, name }: { position: Position; name: string }, path: string): string[] {
-  return [
-    `${POSITION_COOKIE}=${formatPosition(position)}; Path=${path}; Max-Age=${YEAR}; SameSite=Lax; Secure`,
-    `${PLACE_COOKIE}=${encodeURIComponent(name)}; Path=${path}; Max-Age=${YEAR}; SameSite=Lax; Secure`,
-  ]
 }

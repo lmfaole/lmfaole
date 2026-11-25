@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import { averagePrice, cheapestSpan, formatPrice, isPriceDate, priceExtremes, parsePriceArea, parsePrices, priceAreaCookie, priceAreaFor, priceNow, pricesUrl } from "./power.ts"
+import { averagePrice, cheapestSpan, formatPrice, isPriceDate, priceExtremes, parsePriceArea, parsePrices, priceAreaFor, priceNow, pricesUrl, withArea } from "./power.ts"
 
 const hourly = Array.from({ length: 24 }, (_, hour) => ({ NOK_per_kWh: [5, 6, 7].includes(hour) ? 0.2 : 1 + hour / 10, time_start: `2026-11-21T${String(hour).padStart(2, "0")}:00:00+01:00`, time_end: `2026-11-21T${String(hour + 1).padStart(2, "0")}:00:00+01:00` }))
 
@@ -15,12 +15,10 @@ test("the price area is guessed from the position, NO1 without one", () => {
   assert.equal(priceAreaFor({ lat: 69.65, lon: 18.96 }), "NO4")
 })
 
-test("the chosen area is read loosely and written as a cookie", () => {
+test("the chosen area is read loosely", () => {
   assert.equal(parsePriceArea("no3"), "NO3")
   assert.equal(parsePriceArea("NO6"), null)
   assert.equal(parsePriceArea(undefined), null)
-  assert.match(priceAreaCookie("NO2", "/start"), /^startside_strom=NO2; Path=\/start; Max-Age=31536000/)
-  assert.match(priceAreaCookie(null, "/start"), /Max-Age=0/)
 })
 
 test("quarter hours are averaged into hours", () => {
@@ -58,4 +56,10 @@ test("the cheapest and the dearest hour of a day", () => {
 
 test("a day has a page from the first prices up to tomorrow, and only a real date", () => {
   assert.deepEqual(["2026-11-21", "2026-11-23", "2026-11-24", "2021-11-30", "2026-02-30", "2026-1-01", "x"].map((date) => isPriceDate(date, "2026-11-23")), [true, true, false, false, false, false, false])
+})
+
+test("a chosen area is added to the position's query, and nothing is added without one", () => {
+  assert.equal(withArea("", "NO3"), "?omrade=NO3")
+  assert.equal(withArea("?pos=59.91,10.75", "NO3"), "?pos=59.91,10.75&omrade=NO3")
+  assert.equal(withArea("?pos=59.91,10.75", null), "?pos=59.91,10.75")
 })

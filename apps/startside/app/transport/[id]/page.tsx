@@ -3,7 +3,6 @@ import { ErrorMessage } from "@lmfaole/designsystem/components/error-message"
 import { Freshness } from "@lmfaole/designsystem/components/freshness"
 import { DetailLayout } from "@lmfaole/designsystem/components/detail-layout"
 import { PageSection } from "@lmfaole/designsystem/components/page-section"
-import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 
 import { Shell } from "../../../components/shell"
@@ -11,7 +10,7 @@ import { StopLines } from "../../../components/stop"
 import { now } from "../../../lib/day"
 import { getStop } from "../../../lib/entur"
 import { withBase } from "../../../lib/links"
-import { parsePosition, POSITION_COOKIE } from "../../../lib/position"
+import { positionParam, positionQuery, type SearchParams } from "../../../lib/position"
 import { settle } from "../../../lib/settle"
 import { linePath, stopIdOf, toBoard } from "../../../lib/transit"
 
@@ -23,28 +22,28 @@ const STALE_AFTER = 180
 const TRAIL = [{ path: "/transport", label: "Transport" }]
 
 /** One stop: every departure of the next three hours in the order they leave, by the hour, each line a chip (and a link) to its own page from here, with a map of where the stop is in the rail. */
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+export default async function Page({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<SearchParams> }) {
   const id = stopIdOf((await params).id)
   if (id === null) notFound()
   const instant = now()
+  const from = positionParam(await searchParams)
   const result = await settle(getStop(id))
   if (!result.ok) {
     return (
-      <Shell current="transport" width="wide" trail={TRAIL} title="Avganger">
+      <Shell current="transport" position={from} width="wide" trail={TRAIL} title="Avganger">
         <ErrorMessage what="avganger fra Entur" error={result.error} retry />
       </Shell>
     )
   }
   const stop = result.value
   if (stop === null) notFound()
-  const from = parsePosition((await cookies()).get(POSITION_COOKIE)?.value)
 
   return (
-    <Shell current="transport" width="wide" trail={TRAIL} title={stop.name} lead={<>Alle avganger de neste tre timene · <Freshness at={instant.toISOString()} now={instant.toISOString()} staleAfterSeconds={STALE_AFTER} /></>}>
+    <Shell current="transport" position={from} width="wide" trail={TRAIL} title={stop.name} lead={<>Alle avganger de neste tre timene · <Freshness at={instant.toISOString()} now={instant.toISOString()} staleAfterSeconds={STALE_AFTER} /></>}>
       <DetailLayout map={stop.at === null ? undefined : { at: stop.at, ...(from === null ? {} : { from }), label: `Kart over ${stop.name}` }}>
         <PageSection id="departures" title="Avganger" icon="bus">
           <StopLines stop={stop} current={null} />
-          <DepartureList departures={stop.departures.map((departure) => toBoard(departure))} now={instant.toISOString()} lineHref={(line) => withBase(linePath(stop.id, line.line))} emptyMessage="Ingenting går herfra de neste tre timene." />
+          <DepartureList departures={stop.departures.map((departure) => toBoard(departure))} now={instant.toISOString()} lineHref={(line) => withBase(linePath(stop.id, line.line)) + positionQuery(from)} emptyMessage="Ingenting går herfra de neste tre timene." />
         </PageSection>
       </DetailLayout>
     </Shell>

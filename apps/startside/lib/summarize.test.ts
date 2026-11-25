@@ -12,10 +12,6 @@ test("the model is given the task, the title and a cut text", () => {
   assert.ok((messages[1]?.content.length ?? 0) < 3800)
 })
 
-test("alerts are given as lines", () => {
-  assert.match(buildMessages("varsler", { title: "Varsler", lines: ["a/b: CI feilet"] })[1]?.content ?? "", /- a\/b: CI feilet/)
-})
-
 test("an answer is cleaned to plain text, and an empty one is nothing", () => {
   assert.equal(cleanSummary("**Oppsummering:** Den legger til *tema*.\n\nDen venter på review."), "Den legger til tema. Den venter på review.")
   assert.equal(cleanSummary(""), null)

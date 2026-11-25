@@ -119,4 +119,6 @@ test("a private repository, and its issues, are never kept", async () => {
   assert.deepEqual(store.writes, [])
   const open = await refreshSnapshot(store, sharedJobs({ GITHUB_WATCH_REPOS: "me/open" }).slice(2), async (job) => new Response(job.url.includes("/issues") ? "[]" : JSON.stringify({ private: false })), Date.UTC(2026, 10, 22, 12))
   assert.equal(open.written, 2)
+  const internal = await refreshSnapshot(memory(), list, async (job) => new Response(job.url.includes("/issues") ? "[]" : JSON.stringify({ private: false, visibility: "internal" })), Date.UTC(2026, 10, 22, 12))
+  assert.equal(internal.written, 0)
 })

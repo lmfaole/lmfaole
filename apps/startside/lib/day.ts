@@ -45,7 +45,7 @@ export function partOfHour(hour: number, starts: DaySettings["starts"] = DEFAULT
   return partOfMinute(hour * 60, starts)
 }
 
-/** The time of day at an instant, with the visitor's starts and weekend days (`startside_day`, lib/day-settings.ts). */
+/** The time of day at an instant, with the starts and weekend days of lib/day-settings.ts. */
 export function dayOf(instant: Date, settings: Pick<DaySettings, "starts" | "weekendDays"> = DEFAULT_DAY_SETTINGS): Day {
   const { date: calendar, hour, minute } = osloTime(instant)
   const minutes = hour * 60 + minute

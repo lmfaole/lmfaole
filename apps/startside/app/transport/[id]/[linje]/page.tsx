@@ -8,14 +8,13 @@ import { PageSection } from "@lmfaole/designsystem/components/page-section"
 import { Text } from "@lmfaole/designsystem/components/text"
 import { StopSequence } from "@lmfaole/designsystem/components/stop-sequence"
 import { clock, MODE_NAMES } from "@lmfaole/designsystem/lib/departures"
-import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 
 import { Shell } from "../../../../components/shell"
 import { StopLines } from "../../../../components/stop"
 import { now } from "../../../../lib/day"
 import { getStop, getTrip } from "../../../../lib/entur"
-import { parsePosition, POSITION_COOKIE } from "../../../../lib/position"
+import { positionParam, type SearchParams } from "../../../../lib/position"
 import { settle } from "../../../../lib/settle"
 import { withBase } from "../../../../lib/links"
 import { destinationsOf, isJourneyId, lineOf, shownTrip, stopIdOf, stopPath, toBoard, tripPosition, type Departure, type Stop, type TripStop } from "../../../../lib/transit"
@@ -33,16 +32,17 @@ const LATER = 5
  * it is at each, then the times of the departures after it; with the other lines a chip away and a map of the stop. Without the trip (Entur has
  * none), the section lists the departures instead.
  */
-export default async function Page({ params }: { params: Promise<{ id: string; linje: string }> }) {
+export default async function Page({ params, searchParams }: { params: Promise<{ id: string; linje: string }>; searchParams: Promise<SearchParams> }) {
   const segments = await params
   const id = stopIdOf(segments.id)
   const line = lineOf(segments.linje)
   if (id === null || line === null) notFound()
   const instant = now()
+  const from = positionParam(await searchParams)
   const result = await settle(getStop(id))
   if (!result.ok) {
     return (
-      <Shell current="transport" width="wide" trail={[{ path: "/transport", label: "Transport" }]} title={`Linje ${line}`}>
+      <Shell current="transport" position={from} width="wide" trail={[{ path: "/transport", label: "Transport" }]} title={`Linje ${line}`}>
         <ErrorMessage what="avganger fra Entur" error={result.error} retry />
       </Shell>
     )
@@ -52,11 +52,11 @@ export default async function Page({ params }: { params: Promise<{ id: string; l
   const departures = stop.departures.filter((departure) => departure.line === line)
   const mode = departures[0]?.mode
   const name = mode === undefined || mode === "walk" ? `Linje ${line}` : `${MODE_NAMES[mode]} ${line}`
-  const from = parsePosition((await cookies()).get(POSITION_COOKIE)?.value)
 
   return (
     <Shell
       current="transport"
+      position={from}
       width="wide"
       trail={[{ path: "/transport", label: "Transport" }, { path: stopPath(stop.id), label: stop.name }]}
       title={name}

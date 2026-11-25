@@ -87,7 +87,7 @@ export async function getPrices(device: Position | null, chosen: PriceArea | nul
 
 /**
  * Oslo Bysykkel's stations near the device, with bikes and docks now (the status every minute, the stations every hour). Nothing without a position:
- * the place in the settings is a forecast's, not where the reader stands.
+ * the site's place is a forecast's, not where the reader stands.
  */
 export async function getBikes(device: Position | null): Promise<BikeStation[]> {
   // Oslo Bysykkel is in Oslo: no need to ask from elsewhere.

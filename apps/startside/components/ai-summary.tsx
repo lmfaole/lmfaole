@@ -2,27 +2,26 @@ import { PageSection } from "@lmfaole/designsystem/components/page-section"
 import { Text } from "@lmfaole/designsystem/components/text"
 import { StreamedSection } from "@lmfaole/designsystem/components/streamed-section"
 
-import { summarize } from "../lib/ai"
-import type { SummaryInput, SummaryKind } from "../lib/summarize"
+import { storedSummary } from "../lib/ai"
 
-async function Summary({ kind, input }: { kind: SummaryKind; input: SummaryInput }) {
-  const text = await summarize(kind, input)
-  if (text === null) return null
+async function Summary({ repo, number }: { repo: string; number: number }) {
+  const summary = await storedSummary(repo, number)
+  if (summary === null) return null
   return (
     <PageSection id="summary" title="Oppsummering" icon="idea">
-      <Text role="quiet">{text}</Text>
+      <Text role="quiet">{summary.text}</Text>
       <Text role="note">
-        Skrevet av KI ut fra teksten, så den kan ha feil.
+        Skrevet av KI ut fra teksten, så den kan ha feil. Den lages jevnlig, så den kan ligge litt etter siste endring.
       </Text>
     </PageSection>
   )
 }
 
-/** The summary at the top of a page: made while the rest of the page is sent, so it never holds the page back, and left out if it cannot be made. */
-export function AiSummary({ kind, input }: { kind: SummaryKind; input: SummaryInput }) {
+/** The summary at the top of a page, as the scheduled job made it (`lib/summaries.ts`): sent after the rest of the page, and left out if there is none. */
+export function AiSummary({ repo, number }: { repo: string; number: number }) {
   return (
     <StreamedSection title="Oppsummering" icon="idea" lines={1}>
-      <Summary kind={kind} input={input} />
+      <Summary repo={repo} number={number} />
     </StreamedSection>
   )
 }

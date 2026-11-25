@@ -1,5 +1,6 @@
 import { truncateMarkdown } from "./digest"
 import { env, mocking } from "./env"
+import { isPublicRepository } from "./github-query"
 import type { Ref } from "./links"
 import type { DiscussionComment, GitHubActor, Timeline, TimelineItem } from "./timeline"
 import { throughRelay, upstream } from "./upstream"
@@ -83,9 +84,9 @@ function toTimeline(timeline: TimelineNodes): Timeline {
   return { items, total: timeline.totalCount, truncated: timeline.pageInfo.hasPreviousPage }
 }
 
-/** The repository where it is public, `null` otherwise: the token can read private ones, and those are never shown (as `publicRepo` in github-check.ts). */
-function publicOnly<T extends { isPrivate: boolean }>(repository: T | null | undefined): T | null {
-  return repository?.isPrivate === false ? repository : null
+/** The repository where it is public (`isPrivate: false` and `visibility: PUBLIC`), `null` otherwise, so the page is a 404: should the token read private ones, those are never shown. */
+function publicOnly<T extends { isPrivate: boolean; visibility?: string }>(repository: T | null | undefined): T | null {
+  return repository !== null && repository !== undefined && repository.visibility !== undefined && isPublicRepository(repository) ? repository : null
 }
 
 async function ask<T>(query: string, ref: Ref): Promise<T> {
@@ -157,8 +158,8 @@ export async function getPull(ref: Ref): Promise<PullDetail | null> {
     comments: Comments
     timelineItems: TimelineNodes
   }
-  const data = await ask<{ repository: { isPrivate: boolean; pullRequest: Node | null } | null }>(
-    `query ($owner: String!, $name: String!, $number: Int!) { repository(owner: $owner, name: $name) { isPrivate pullRequest(number: $number) {
+  const data = await ask<{ repository: { isPrivate: boolean; visibility: string; pullRequest: Node | null } | null }>(
+    `query ($owner: String!, $name: String!, $number: Int!) { repository(owner: $owner, name: $name) { isPrivate visibility pullRequest(number: $number) {
       title url state isDraft body createdAt updatedAt mergedAt closedAt author { login } headRefName baseRefName additions deletions changedFiles reviewDecision mergeable
       labels(first: 10) { nodes { name } }
       reviewRequests(first: 10) { nodes { requestedReviewer { ... on User { login } ... on Team { name } } } }
@@ -216,8 +217,8 @@ export async function getIssue(ref: Ref): Promise<IssueDetail | null> {
     title: string; url: string; state: string; stateReason: string | null; closedAt: string | null; body: string; createdAt: string; updatedAt: string; author: { login: string } | null
     labels: { nodes: { name: string }[] }; assignees: { nodes: { login: string }[] }; comments: Comments; timelineItems: TimelineNodes
   }
-  const data = await ask<{ repository: { isPrivate: boolean; issue: Node | null } | null }>(
-    `query ($owner: String!, $name: String!, $number: Int!) { repository(owner: $owner, name: $name) { isPrivate issue(number: $number) {
+  const data = await ask<{ repository: { isPrivate: boolean; visibility: string; issue: Node | null } | null }>(
+    `query ($owner: String!, $name: String!, $number: Int!) { repository(owner: $owner, name: $name) { isPrivate visibility issue(number: $number) {
       title url state stateReason closedAt body createdAt updatedAt author { login }
       labels(first: 10) { nodes { name } }
       assignees(first: 5) { nodes { login } }
@@ -281,8 +282,8 @@ export async function getDiscussion(ref: Ref): Promise<DiscussionDetail | null> 
     answer: (ThreadNode & { replyTo: { id: string } | null }) | null; answerChosenAt: string | null; answerChosenBy: { login: string } | null; closedAt: string | null
     comments: { totalCount: number; pageInfo: { hasPreviousPage: boolean }; nodes: (ThreadNode | null)[] }
   }
-  const data = await ask<{ repository: { isPrivate: boolean; discussion: Node | null } | null }>(
-    `query ($owner: String!, $name: String!, $number: Int!) { repository(owner: $owner, name: $name) { isPrivate discussion(number: $number) {
+  const data = await ask<{ repository: { isPrivate: boolean; visibility: string; discussion: Node | null } | null }>(
+    `query ($owner: String!, $name: String!, $number: Int!) { repository(owner: $owner, name: $name) { isPrivate visibility discussion(number: $number) {
       title url body createdAt updatedAt isAnswered author { login } category { name }
       answer { id url author { login } createdAt body isAnswer upvoteCount replies { totalCount } replyTo { id } } answerChosenAt answerChosenBy { login } closedAt
       comments(last: ${THREAD_MAX}) { totalCount pageInfo { hasPreviousPage } nodes { id url createdAt body isAnswer upvoteCount replies { totalCount } author { login } } }

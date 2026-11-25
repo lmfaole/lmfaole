@@ -17,7 +17,6 @@ import { skyRows } from "./sky"
 import type { Item } from "../lib/github"
 import { groupIssues, type IssueGroupId } from "../lib/issues"
 import { internalHref, withBase } from "../lib/links"
-import { USERNAME_PAGE } from "../lib/username"
 import { ageLabels, compactLabels, statusLabels, type Label } from "../lib/pr-status"
 import { groupPulls, type GroupId } from "../lib/pulls"
 import type { Settled } from "../lib/settle"
@@ -77,9 +76,6 @@ function Quiet({ id, title, icon, what }: { id: string; title: string; icon: Ico
     </PageSection>
   )
 }
-
-/** When a GitHub list is empty, the name may be the wrong one. */
-const CHANGE_USER = { href: USERNAME_PAGE, label: "Bytt brukernavn" }
 
 const PULLS_PATH = withBase("/pull-requests")
 const ISSUES_PATH = withBase("/issues")
@@ -167,7 +163,7 @@ export function DiscussionsSection({ data, mode, counts = [] }: { data: Settled<
   const groups = groupDiscussions(data.value)
   if (groups.length === 0) return mode === "full" ? (
       <PageSection id="discussions" title="Discussions" icon="discussion">
-        <EmptyState reason="nothing-yet" what="discussions" description="Her kommer offentlige discussions brukeren har startet, svart i eller er nevnt i. Venter du noen her, kan brukernavnet være feil." action={CHANGE_USER} />
+        <EmptyState reason="nothing-yet" what="discussions" description="Her kommer offentlige discussions brukeren har startet, svart i eller er nevnt i." />
       </PageSection>
     ) : null
   if (mode === "full") {

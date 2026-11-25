@@ -1,9 +1,9 @@
 import { strict as assert } from "node:assert"
 import { test } from "node:test"
 
-import { coarsePosition, formatPosition, movedFar, parsePosition, roundPosition } from "./position.ts"
+import { coarsePosition, formatPosition, movedFar, parsePosition, positionParam, positionQuery, roundPosition } from "./position.ts"
 
-test("a position from a cookie, rounded to three decimals", () => {
+test("a position from the address, rounded to three decimals", () => {
   assert.deepEqual(parsePosition("59.91394,10.75228"), { lat: 59.914, lon: 10.752 })
   assert.deepEqual(parsePosition("59.91%2C10.75"), { lat: 59.91, lon: 10.75 })
   assert.deepEqual(parsePosition("-33.87,151.21"), { lat: -33.87, lon: 151.21 })
@@ -29,4 +29,13 @@ test("moving about two hundred metres counts as moving", () => {
   assert.equal(movedFar({ lat: 59.929, lon: 10.765 }, { lat: 59.93, lon: 10.767 }), false)
   assert.equal(movedFar({ lat: 59.929, lon: 10.765 }, { lat: 59.931, lon: 10.765 }), true)
   assert.equal(movedFar({ lat: 59.929, lon: 10.765 }, { lat: 59.929, lon: 10.769 }), true)
+})
+
+test("the position is the address's ?pos=, and goes on to the next page the same way", () => {
+  assert.deepEqual(positionParam({ pos: "59.91394,10.75228" }), { lat: 59.914, lon: 10.752 })
+  assert.deepEqual(positionParam({ pos: ["59.9,10.7", "1,1"] }), { lat: 59.9, lon: 10.7 })
+  assert.equal(positionParam({}), null)
+  assert.equal(positionParam({ pos: "x" }), null)
+  assert.equal(positionQuery({ lat: 59.9, lon: 10.75 }), "?pos=59.900,10.750")
+  assert.equal(positionQuery(null), "")
 })

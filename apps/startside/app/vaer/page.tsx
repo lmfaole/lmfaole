@@ -5,7 +5,6 @@ import { Text } from "@lmfaole/designsystem/components/text"
 import { WeatherStage } from "@lmfaole/designsystem/components/weather-stage"
 import { DumbbellChart } from "@lmfaole/designsystem/components/dumbbell-chart"
 import { Meteogram } from "@lmfaole/designsystem/components/meteogram"
-import { cookies } from "next/headers"
 
 import { PositionControl, PositionPermission } from "../../components/position"
 import { Shell } from "../../components/shell"
@@ -13,9 +12,8 @@ import { addDays, dayOf, now } from "../../lib/day"
 import { dailyOutlook, nextHours } from "../../lib/forecast"
 import { dateLine, degrees, number } from "../../lib/format"
 import { withBase } from "../../lib/links"
-import { parsePlaceName, parsePosition, PLACE_COOKIE, POSITION_COOKIE } from "../../lib/position"
+import { positionParam, positionQuery, type SearchParams } from "../../lib/position"
 import { settle } from "../../lib/settle"
-import { visitorDaySettings } from "../../lib/visitor"
 import { describeSymbol, getForecast } from "../../lib/yr"
 import { getKp } from "../../lib/space-weather"
 import { darkSpans } from "../../lib/sun"
@@ -31,14 +29,13 @@ export const metadata = { title: "Vær · Startside" }
  * marked, the sun today with the UV and the daylight through the year, the chance of the northern lights through the night, the air hour by hour, and
  * the coming week as lowest to highest. Around it: the warnings in force (MET and Varsom) and the radar's next ninety minutes.
  */
-export default async function Page() {
+export default async function Page({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const instant = now()
-  const day = dayOf(instant, await visitorDaySettings())
-  const jar = await cookies()
-  const position = parsePosition(jar.get(POSITION_COOKIE)?.value)
-  const place = parsePlaceName(jar.get(PLACE_COOKIE)?.value)
+  const day = dayOf(instant)
+  const position = positionParam(await searchParams)
+  const query = positionQuery(position)
   const [forecast, kp, warnings, nowcast, air, moon] = await Promise.all([
-    settle(getForecast(position, place)),
+    settle(getForecast(position)),
     settle(getKp()),
     getWarnings(position, instant),
     getNowcast(position),
@@ -54,17 +51,17 @@ export default async function Page() {
 
   return (
     <WeatherStage symbol={symbol ?? "cloudy"} page>
-    <Shell current="weather" title={forecast.ok ? `Vær i ${forecast.value.place}` : "Vær"} lead={
+    <Shell current="weather" position={position} title={forecast.ok ? `Vær i ${forecast.value.place}` : "Vær"} lead={
         current && symbol
           ? `Nå ${degrees(current.data.instant.details.air_temperature)} og ${describeSymbol(symbol).toLowerCase()}, vind ${number.format(current.data.instant.details.wind_speed)} m/s.`
           : "Meldingen fra Yr: det neste døgnet og de neste dagene."
-      } actions={position === null ? undefined : <PositionControl current={position} place={place} />}>
+      } actions={position === null ? undefined : <PositionControl current={position} />}>
       <>
         <PositionPermission
           current={position}
           title="Været der du er"
-          description="Del posisjonen for å få været akkurat der du er. Den rundes av og lagres bare i en informasjonskapsel i denne nettleseren."
-          fallback={<Text role="quiet">{forecast.ok ? `Du ser været for ${forecast.value.place}, stedet i innstillingene.` : "Du ser været for stedet i innstillingene."}</Text>}
+          description="Del posisjonen for å få været akkurat der du er. Den rundes av, står bare i adressen til siden og lagres ikke."
+          fallback={<Text role="quiet">{forecast.ok ? `Du ser været for ${forecast.value.place}, standardstedet.` : "Du ser været for standardstedet."}</Text>}
         />
         <WarningsSection warnings={warnings} instant={instant} />
         <NowcastSection nowcast={nowcast} instant={instant} />
@@ -74,7 +71,7 @@ export default async function Page() {
           <>
           {chartHours.length > 1 ? (
             <WeatherStage symbol={symbol ?? "cloudy"}>
-              <PageSection id="next-hours" title="Neste døgn" icon="time" more={{ href: withBase(`/vaer/${addDays(day.date, 1)}`), label: "Se i morgen time for time" }}>
+              <PageSection id="next-hours" title="Neste døgn" icon="time" more={{ href: withBase(`/vaer/${addDays(day.date, 1)}`) + query, label: "Se i morgen time for time" }}>
                 <Meteogram data={chartHours} dark={dark} ariaLabel="Været de neste 24 timene" />
               </PageSection>
             </WeatherStage>
@@ -86,7 +83,7 @@ export default async function Page() {
             <PageSection id="outlook" title="Kommende dager" icon="calendar">
               <ChartCard title="Laveste og høyeste temperatur">
                 <DumbbellChart
-                  data={outlook.map((one) => ({ label: `${dateLine.format(new Date(`${one.date}T12:00:00Z`))} · ${describeSymbol(one.symbol)}`, from: Math.round(one.min), to: Math.round(one.max), href: withBase(`/vaer/${one.date}`) }))}
+                  data={outlook.map((one) => ({ label: `${dateLine.format(new Date(`${one.date}T12:00:00Z`))} · ${describeSymbol(one.symbol)}`, from: Math.round(one.min), to: Math.round(one.max), href: withBase(`/vaer/${one.date}`) + query }))}
                   fromLabel="Laveste"
                   toLabel="Høyeste"
                   ariaLabel="Laveste og høyeste temperatur de neste dagene"

@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert"
 import { test } from "node:test"
 
-import { isWatched, repliesQuery, repoQualifiers, scope, userQueries } from "./github-query.ts"
+import { githubUser, isPublicRepository, isWatched, parseLogin, publicSearch, repliesQuery, repoQualifiers, scope, userQueries } from "./github-query.ts"
 
 test("only public repositories, without the excluded organisations", () => {
   assert.equal(scope(undefined), "is:public")
@@ -51,4 +51,28 @@ test("every search is by the username and limited to public repositories, never 
 test("a username that is not a login cannot get into a query", () => {
   assert.throws(() => userQueries("kari is:private", undefined))
   assert.throws(() => repliesQuery("kari", "2026-11-18 is:private", undefined))
+})
+
+test("a login is letters, digits and dashes, with an @ in front allowed; anything that could add search terms is not one", () => {
+  assert.equal(parseLogin(" lmfaole "), "lmfaole")
+  assert.equal(parseLogin("@Ole-Jorgen"), "Ole-Jorgen")
+  for (const bad of ["", "-x", "a b", "me is:private", "a".repeat(40), undefined]) assert.equal(parseLogin(bad), null, String(bad))
+  assert.equal(githubUser("lmfaole"), "lmfaole")
+  assert.throws(() => githubUser(undefined))
+  assert.throws(() => githubUser("me is:private"))
+})
+
+test("a repository is public only when every field GitHub gave says so, and at least one is there", () => {
+  assert.equal(isPublicRepository({ isPrivate: false, visibility: "PUBLIC" }), true)
+  assert.equal(isPublicRepository({ private: false, visibility: "public" }), true)
+  assert.equal(isPublicRepository({ isPrivate: false }), true)
+  for (const repo of [{ isPrivate: true, visibility: "PUBLIC" }, { isPrivate: false, visibility: "INTERNAL" }, { private: true }, { visibility: "private" }, { isPrivate: null }, {}, null, undefined]) {
+    assert.equal(isPublicRepository(repo), false, JSON.stringify(repo))
+  }
+})
+
+test("no search goes out without is:public", () => {
+  for (const query of Object.values(userQueries("lmfaole", "fremtind"))) assert.equal(publicSearch(query), query)
+  assert.equal(publicSearch(repliesQuery("lmfaole", "2026-11-18", undefined)), repliesQuery("lmfaole", "2026-11-18", undefined))
+  for (const bad of ["author:lmfaole", "author:lmfaole is:publicx", "author:lmfaole -is:public", "is:private"]) assert.throws(() => publicSearch(bad), bad)
 })

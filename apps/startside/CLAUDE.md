@@ -1,6 +1,6 @@
 # startside
 
-A personal start page (Next.js SSR on Cloudflare Workers) built from the design system `@lmfaole/designsystem`. See README.md for what
+An open, read-only start page (Next.js SSR on Cloudflare Workers) built from the design system `@lmfaole/designsystem`. See README.md for what
 it is, where it runs and how it is deployed.
 
 ## UI work follows the design system's skills
@@ -14,11 +14,18 @@ Before building or changing anything a person sees, use the skills in `.claude/s
 - `designsystem-content`: the words (Norwegian bokmål)
 - `designsystem-components`: which component for what
 - `designsystem-brand`: the brand (teal, the glyph `sunrise`, «lmfaole», and its motion accent; only where the components put it, see README «Brand»)
-- `designsystem-haptics`: vibration (`<Haptics />` in the layout, `data-haptic` sparingly, «Vibrasjon» under Utseende; see README «Motion and haptics»)
+- `designsystem-haptics`: vibration (`<Haptics />` in the layout, `data-haptic` sparingly; see README «Motion and haptics»)
 - `designsystem-pwa`: the installed app (manifest and icons, service worker and offline, updates, downloads, push and badges, sharing)
 - `designsystem-review`: run before calling UI work done
 
 ## Rules of this project
+
+- The page is **open and the same for everyone**: no login, no settings, no forms that add or change anything, no POST/PUT/DELETE
+  handlers, and the server reads **no cookie**. What a visitor brings is only in the address (`?pos=`, `?omrade=`), and only parameters
+  the page reads are in the edge cache's key (`lib/page-cache.ts`).
+- **Public GitHub data only**, for the fixed user `GITHUB_USER`: every search goes through `publicSearch` (`is:public`), every node is
+  checked with `isPublicRepository`, detail pages 404 on anything not public, and GitHub's notifications API is never used.
+- **Nothing a request can trigger may run the AI model**: summaries are made by the cron only (`lib/summaries.ts`) and read from KV.
 
 - The project writes **no styling of its own**: no `className`, `style` or stylesheet. When nothing fits, add a component to the design
   system (a minor version), then use it here.
@@ -29,7 +36,8 @@ Before building or changing anything a person sees, use the skills in `.claude/s
 - The design system is the workspace `packages/designsystem` of this repository (`"@lmfaole/designsystem": "*"`); after a change to its skills, `npm run skills` brings them in step.
 - Cloudflare (README «How it runs», «Deploy»): sources go through the relay by the service binding `UPSTREAM` (`lib/relay.ts`; the relay has no
   public address); the cron fills the KV snapshot `SNAPSHOT` with what every visitor shares (`lib/snapshot.ts`,
-  at most five writes a run; never anything per visitor); summaries go through AI Gateway `AI_GATEWAY` (`lib/ai-gateway.ts`); avatars through
+  at most three bodies a run, plus the index and the summaries; never anything per visitor); summaries are made by the cron through AI Gateway `AI_GATEWAY`
+  (`lib/summaries.ts`, `lib/ai-gateway.ts`); a visitor is held to `LIMITER` (rate limit) and pages are kept a minute at the edge (`worker.mjs`); avatars through
   Image Transformations when `IMAGE_TRANSFORMS=1`; Web Analytics with `CF_BEACON_TOKEN`. The CSP is `lib/csp.ts`: widen it only for a real need.
 
 ## Git: work on main

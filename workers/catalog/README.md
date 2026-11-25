@@ -38,7 +38,7 @@ Hyllene mine på Hardcover (`HARDCOVER_TOKEN`), lagt over `books` slik boksynken
 - Bøker som fjernes fra Hardcover, slettes ikke her.
 - Tokenet utløper etter ett år. Lag et nytt på hardcover.app/account/api. Når det har utløpt, feiler kjøringen med «has the token expired?».
 
-Open Library, BGG, IGDB og TMDB hentes ikke: appene slår opp der når de trenger det. Egne føringer kommer fra skjemaet i startsiden, ikke herfra.
+Open Library, BGG, IGDB og TMDB hentes ikke: appene slår opp der når de trenger det. Ingen side legger til egne føringer.
 
 ## Gratiskvoter
 

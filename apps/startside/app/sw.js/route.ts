@@ -1,12 +1,11 @@
 // The service worker, at /start/sw.js. Its scope is /start (the page itself has no trailing slash), which is wider than
 // the folder it is in, so it says so with Service-Worker-Allowed. It handles /start and what is under /start/, never /startfoo; a page is kept by its address with the query.
 // Other apps share the origin (lmfaole.party/medier, /design), so on an update it deletes only its own old caches (startside-…).
-// A page shows the GitHub data of the username in this browser's cookie, so the kept pages are emptied when the username form is sent.
-// Logg's pages (/start/logg) are never kept: an old copy of a list or a form would show what has since been changed as it was.
+// Every page is the same for everyone (nothing is posted, no settings): a kept copy is only ever old, never someone else's.
 
 const SCRIPT = String.raw`
 const STATIC = "startside-static-v1"
-const PAGES = "startside-pages-v2"
+const PAGES = "startside-pages-v3"
 const OFFLINE = "/start/offline"
 
 self.addEventListener("install", (event) => {
@@ -29,11 +28,6 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const request = event.request
   const url = new URL(request.url)
-  // A new GitHub username or new settings (repos, theme, sections): the pages kept were drawn for the old ones, so they go (all but the offline page).
-  if (request.method === "POST" && url.origin === location.origin && (url.pathname === "/start/api/brukernavn" || url.pathname === "/start/api/innstillinger")) {
-    event.waitUntil(caches.open(PAGES).then(async (cache) => Promise.all((await cache.keys()).filter((key) => new URL(key.url).pathname !== OFFLINE).map((key) => cache.delete(key)))))
-    return
-  }
   if (request.method !== "GET" || url.origin !== location.origin || !(url.pathname === "/start" || url.pathname.startsWith("/start/"))) return
 
   // The built files never change under one name: from the cache when there, else fetched and kept.
@@ -50,14 +44,13 @@ self.addEventListener("fetch", (event) => {
     return
   }
 
-  // A page: always fresh from the network, which may send it to the Cloudflare Access login. The last good copy of each page
-  // is kept by its address, and shown when there is no network (else the front page, else the offline page); Logg's, only the offline page.
+  // A page: always fresh from the network. The last good copy of each page is kept by its address (with the position, ?pos=), and
+  // shown when there is no network: else the same page without the query, else the front page, else the offline page.
   if (request.mode === "navigate") {
-    const log = url.pathname === "/start/logg" || url.pathname.startsWith("/start/logg/")
     event.respondWith(
       fetch(request)
         .then((response) => {
-          if (response.ok && response.type === "basic" && url.pathname !== OFFLINE && !log) {
+          if (response.ok && response.type === "basic" && url.pathname !== OFFLINE) {
             const copy = response.clone()
             caches.open(PAGES).then((cache) => cache.put(url.pathname + url.search, copy))
           }
@@ -65,8 +58,7 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(async () => {
           const cache = await caches.open(PAGES)
-          if (log) return (await cache.match(OFFLINE)) ?? Response.error()
-          return (await cache.match(url.pathname + url.search)) ?? (await cache.match("/start")) ?? (await cache.match(OFFLINE)) ?? Response.error()
+          return (await cache.match(url.pathname + url.search)) ?? (await cache.match(url.pathname)) ?? (await cache.match("/start")) ?? (await cache.match(OFFLINE)) ?? Response.error()
         }),
     )
   }

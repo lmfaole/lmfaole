@@ -4,7 +4,6 @@ import { KeyFigures } from "@lmfaole/designsystem/components/key-figures"
 import { Meteogram } from "@lmfaole/designsystem/components/meteogram"
 import { PageSection } from "@lmfaole/designsystem/components/page-section"
 import { WeatherStage } from "@lmfaole/designsystem/components/weather-stage"
-import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 
 import { Shell } from "../../../components/shell"
@@ -12,7 +11,7 @@ import { now, osloTime } from "../../../lib/day"
 import { dayHours, dayLabel, dayOutlook, forecastDates, summariseHours, uvLevel, uvPeak } from "../../../lib/forecast"
 import { dateLine, degrees, number } from "../../../lib/format"
 import { withBase } from "../../../lib/links"
-import { parsePlaceName, parsePosition, PLACE_COOKIE, POSITION_COOKIE } from "../../../lib/position"
+import { positionParam, positionQuery, type SearchParams } from "../../../lib/position"
 import { settle } from "../../../lib/settle"
 import { formatClock, sunFigures } from "../../../lib/sky"
 import { darkSpans } from "../../../lib/sun"
@@ -28,18 +27,16 @@ const title = (date: string): string => {
 }
 
 /** One day of the forecast: its figures (lowest and highest, the rain, the strongest wind, the sun) and every hour of it as a meteogram, with the other days a chip away. */
-export default async function Page({ params }: { params: Promise<{ dato: string }> }) {
+export default async function Page({ params, searchParams }: { params: Promise<{ dato: string }>; searchParams: Promise<SearchParams> }) {
   const { dato } = await params
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dato)) notFound()
   const instant = now()
   const today = osloTime(instant).date
-  const jar = await cookies()
-  const position = parsePosition(jar.get(POSITION_COOKIE)?.value)
-  const place = parsePlaceName(jar.get(PLACE_COOKIE)?.value)
-  const forecast = await settle(getForecast(position, place))
+  const position = positionParam(await searchParams)
+  const forecast = await settle(getForecast(position))
   if (!forecast.ok) {
     return (
-      <Shell current="weather" trail={TRAIL} title={title(dato)}>
+      <Shell current="weather" position={position} trail={TRAIL} title={title(dato)}>
         <ErrorMessage what="været" error={forecast.error} retry />
       </Shell>
     )
@@ -63,9 +60,9 @@ export default async function Page({ params }: { params: Promise<{ dato: string 
 
   return (
     <WeatherStage symbol={outlook.symbol} page>
-      <Shell current="weather" trail={TRAIL} title={title(dato)} lead={`${forecast.value.place}: ${describeSymbol(outlook.symbol).toLowerCase()}.`}>
+      <Shell current="weather" position={position} trail={TRAIL} title={title(dato)} lead={`${forecast.value.place}: ${describeSymbol(outlook.symbol).toLowerCase()}.`}>
         <>
-          <FilterChips label="Dag" chips={dates.map((date) => ({ key: date, label: dayLabel(date, today), href: withBase(`/vaer/${date}`), current: date === dato }))} />
+          <FilterChips label="Dag" chips={dates.map((date) => ({ key: date, label: dayLabel(date, today), href: withBase(`/vaer/${date}`) + positionQuery(position), current: date === dato }))} />
           <KeyFigures figures={figures} />
           <PageSection id="hours" title={sixHourly ? "Gjennom dagen" : "Time for time"} icon="time">
             <Meteogram data={hours} dark={dark} symbolEvery={sixHourly ? 1 : 3} ariaLabel={`Været i ${forecast.value.place} ${dayLabel(dato, today).toLowerCase()}, ${sixHourly ? "gjennom dagen" : "time for time"}`} />

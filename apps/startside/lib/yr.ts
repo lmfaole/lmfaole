@@ -54,17 +54,17 @@ export interface Forecast {
   timeseries: Timeseries[]
 }
 
-/** Where the weather is asked for: the device's position, rounded so neighbours share an answer, or the place in the settings (Oslo without one). */
+/** Where the weather is asked for: the device's position (from the address), rounded so neighbours share an answer, or the site's place (`WEATHER_*`, Oslo). */
 export function weatherPosition(device: Position | null): Position {
   if (device !== null) return coarsePosition(device)
   return { lat: Number(env("WEATHER_LAT") ?? "59.91"), lon: Number(env("WEATHER_LON") ?? "10.75") }
 }
 
-/** The whole forecast from MET Norway (the data Yr shows) for the device's position, or for the place in the settings. The complete one, for its UV index. */
-export async function getForecast(device: Position | null = null, chosen: string | null = null): Promise<Forecast> {
+/** The whole forecast from MET Norway (the data Yr shows) for the device's position, or for the site's place. The complete one, for its UV index. */
+export async function getForecast(device: Position | null = null): Promise<Forecast> {
   const position = device === null ? null : coarsePosition(device)
   const { lat, lon } = weatherPosition(device)
-  const place = position === null ? (env("WEATHER_PLACE") ?? "Oslo") : (chosen ?? (await placeName(position.lat, position.lon)) ?? "din posisjon")
+  const place = position === null ? (env("WEATHER_PLACE") ?? "Oslo") : ((await placeName(position.lat, position.lon)) ?? "din posisjon")
   const response = await upstream(forecastUrl(lat, lon), {
     // MET's terms ask for an identifying User-Agent, and that the same forecast in the Nordic area is not asked for more than once in 30 minutes (longer when its `Expires` says so; see `upstream.ts`).
     headers: { "User-Agent": "startside github.com/lmfaole/lmfaole" },

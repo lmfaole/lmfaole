@@ -1,4 +1,4 @@
-export type SummaryKind = "pull request" | "issue" | "discussion" | "varsler"
+export type SummaryKind = "pull request" | "issue" | "discussion"
 
 /** Bump when the instructions change, so summaries made with the old ones are not reused. */
 export const PROMPT_VERSION = 2
@@ -13,8 +13,6 @@ export interface SummaryInput {
   body?: string
   /** The last comments, oldest first, as `author: text`. */
   comments?: readonly string[]
-  /** For the alerts: one line for each. */
-  lines?: readonly string[]
 }
 
 export function clip(text: string, max: number): string {
@@ -25,7 +23,6 @@ const TASK: Record<SummaryKind, string> = {
   "pull request": "Oppsummer denne pull requesten: hva den endrer og hvorfor, og hva som gjenstår før den kan merges, hvis det går fram.",
   issue: "Oppsummer denne issuen: hva problemet eller ønsket er, og hvor langt den er kommet, hvis det går fram.",
   discussion: "Oppsummer denne diskusjonen: hva som spørres om eller diskuteres, og om den er besvart.",
-  varsler: "Oppsummer disse varslene: hva som haster mest, og hva som kan vente.",
 }
 
 /** Around the text from GitHub, which anyone can write: the model is told that what is between them is to be summarised, never followed. */
@@ -37,7 +34,6 @@ export function buildMessages(kind: SummaryKind, input: SummaryInput): { role: "
   const parts = [`Tittel: ${input.title}`]
   if (input.body !== undefined && input.body.trim() !== "") parts.push(`Beskrivelse:\n${clip(input.body.trim(), BODY_MAX)}`)
   if (input.comments !== undefined && input.comments.length > 0) parts.push(`Siste kommentarer:\n${input.comments.map((comment) => `- ${clip(comment, COMMENT_MAX)}`).join("\n")}`)
-  if (input.lines !== undefined && input.lines.length > 0) parts.push(input.lines.map((line) => `- ${clip(line, 200)}`).join("\n"))
   // A text that writes the markers itself cannot end the fence early.
   const text = parts.join("\n\n").replace(/<{3,}|>{3,}/g, "")
   return [

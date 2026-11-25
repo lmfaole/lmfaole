@@ -1,5 +1,5 @@
-# Copy to .dev.vars for local development. In production: `wrangler secret put GITHUB_TOKEN`.
-# A fine-grained or classic token that can read your pull requests and issues.
+# Copy to .dev.vars for local development. In production the token is a secret on the relay (`startside-upstream`).
+# A fine-grained token with «Public repositories (read-only)» and no other access: the page is open to anyone, so it must not be able to read anything private.
 GITHUB_TOKEN=
 
 # No keys and no network: every upstream answers from fixtures (lib/mock.ts). Never set this in production.
@@ -7,7 +7,3 @@ GITHUB_TOKEN=
 # GITHUB_WATCH_REPOS=fremtind/jokul,navikt/aksel
 # HOME_LAT=59.9226
 # HOME_LON=10.7586
-
-# `npm run preview` (wrangler dev) has no Cloudflare Access in front, so the Worker's check of its token is skipped.
-# Never set this in wrangler.jsonc or as a secret in production.
-# ACCESS_SKIP=1

@@ -4,7 +4,7 @@ import { Grid } from "@lmfaole/designsystem/components/layout"
 import { PageSection } from "@lmfaole/designsystem/components/page-section"
 
 import { withBase } from "../lib/links"
-import type { Position } from "../lib/position"
+import { positionQuery, type Position } from "../lib/position"
 import type { Settled } from "../lib/settle"
 import { linePath, stopPath, toBoard, walkMinutesOver, type Stop } from "../lib/transit"
 
@@ -28,7 +28,7 @@ function Boards({ stops, instant, from }: { stops: Stop[]; instant: Date; from: 
   return (
     <Grid columns="charts">
       {shown.map((stop) => (
-        <DepartureBoard key={stop.id} stop={stop.name} now={instant.toISOString()} departures={stop.departures.map((departure) => toBoard(departure))} walkMinutes={walkMinutesOver(stop.distance)} distance={stop.distance} limit={LIMIT} continues={{ href: withBase(stopPath(stop.id)), label: `Se alle avganger fra ${stop.name}` }} lineHref={(line) => withBase(linePath(stop.id, line.line))} {...(stop.at === null ? {} : { at: stop.at, from })} />
+        <DepartureBoard key={stop.id} stop={stop.name} now={instant.toISOString()} departures={stop.departures.map((departure) => toBoard(departure))} walkMinutes={walkMinutesOver(stop.distance)} distance={stop.distance} limit={LIMIT} continues={{ href: withBase(stopPath(stop.id)) + positionQuery(from), label: `Se alle avganger fra ${stop.name}` }} lineHref={(line) => withBase(linePath(stop.id, line.line)) + positionQuery(from)} {...(stop.at === null ? {} : { at: stop.at, from })} />
       ))}
     </Grid>
   )

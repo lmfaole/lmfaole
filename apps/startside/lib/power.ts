@@ -10,8 +10,11 @@ export type PriceArea = (typeof PRICE_AREAS)[number]
 /** Each area as the reader knows it. */
 export const PRICE_AREA_NAMES: Record<PriceArea, string> = { NO1: "Øst-Norge", NO2: "Sørvest-Norge", NO3: "Midt-Norge", NO4: "Nord-Norge", NO5: "Vest-Norge" }
 
-/** The cookie that holds the chosen price area; without it the area is guessed from the position. */
-export const PRICE_AREA_COOKIE = "startside_strom"
+/** Where a page's address has a chosen price area (`?omrade=NO3`); without it the area is guessed from the position, and is NO1 (Oslo) without that. */
+export const AREA_PARAM = "omrade"
+
+/** A page's query (`positionQuery`, `""` or `?pos=…`) with the chosen area added, as the links between the power pages carry both on. */
+export const withArea = (query: string, area: PriceArea | null): string => (area === null ? query : `${query === "" ? "?" : `${query}&`}${AREA_PARAM}=${area}`)
 
 export const parsePriceArea = (value: string | undefined | null): PriceArea | null => ((PRICE_AREAS as readonly string[]).includes(String(value).toUpperCase()) ? (String(value).toUpperCase() as PriceArea) : null)
 
@@ -28,11 +31,6 @@ export function priceAreaFor(position: Position | null): PriceArea {
   if (lat >= 59.8 && lon < 7.5) return "NO5"
   if (lat < 59.8 && lon < 9.8) return "NO2"
   return "NO1"
-}
-
-/** A `Set-Cookie` for the area, a year at `path`; none (`"auto"`) removes it. */
-export function priceAreaCookie(area: PriceArea | null, path: string): string {
-  return area === null ? `${PRICE_AREA_COOKIE}=; Path=${path}; Max-Age=0; SameSite=Lax; Secure; HttpOnly` : `${PRICE_AREA_COOKIE}=${area}; Path=${path}; Max-Age=${60 * 60 * 24 * 365}; SameSite=Lax; Secure; HttpOnly`
 }
 
 export interface PriceHour {

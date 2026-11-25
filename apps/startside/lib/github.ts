@@ -1,13 +1,17 @@
 import { ciFailures, fromOthers, type CiFailure, type InvolvedNode, type RepoNode, type Reply } from "./alerts"
 import { osloDateDaysAgo } from "./day"
 import { discussionNodes, type DiscussionItem } from "./discussions"
-import { isWatched, parseRepos, repliesQuery, userQueries } from "./github-query"
+import { githubUser, isPublicRepository, isWatched, parseRepos, publicSearch, repliesQuery, userQueries } from "./github-query"
 import { env, mocking } from "./env"
 import { readStatuses, withStatus, type PullStatus, type Statuses } from "./pr-status"
 import { repoIssuesUrl, repoUrl } from "./snapshot"
 import { throughRelay, upstream } from "./upstream"
-import { watchedRepoList } from "./visitor"
-import { sameLogin } from "./username"
+
+/** The user the page is about: `GITHUB_USER`, else lmfaole. Fixed, the same for every visitor. */
+export const githubLogin = (): string => githubUser(env("GITHUB_USER") ?? "lmfaole")
+
+/** The watched repositories (`GITHUB_WATCH_REPOS`), as the comma-separated list `parseRepos` reads. */
+const watchedRepoList = (): string => env("GITHUB_WATCH_REPOS") ?? ""
 
 export interface Item {
   key: string
@@ -27,7 +31,7 @@ interface SearchResult {
 }
 
 async function search(token: string | undefined, query: string, perPage = 15): Promise<Item[]> {
-  const response = await upstream(`https://api.github.com/search/issues?per_page=${perPage}&sort=updated&q=${encodeURIComponent(query)}`, {
+  const response = await upstream(`https://api.github.com/search/issues?per_page=${perPage}&sort=updated&q=${encodeURIComponent(publicSearch(query))}`, {
     headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}), Accept: "application/vnd.github+json", "User-Agent": "startside", "X-GitHub-Api-Version": "2022-11-28" },
     revalidate: 60,
   })
@@ -49,7 +53,7 @@ const PULLS = `query ($q: String!) {
     nodes {
       ... on PullRequest {
         databaseId url title updatedAt isDraft reviewDecision mergeable additions deletions changedFiles
-        repository { nameWithOwner }
+        repository { nameWithOwner isPrivate visibility }
         author { login }
         commits(last: 1) { nodes { commit { statusCheckRollup { state } } } }
         reviewThreads(first: 50) { nodes { isResolved } }
@@ -71,11 +75,15 @@ async function pulls(token: string | undefined, query: string): Promise<Item[]> 
 async function graphql(token: string | undefined, query: string): Promise<Statuses> {
   const response = await upstream("https://api.github.com/graphql", {
     headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}), "User-Agent": "startside" },
-    json: { query: PULLS, variables: { q: `${query} is:pr sort:updated-desc` } },
+    json: { query: PULLS, variables: { q: publicSearch(`${query} is:pr sort:updated-desc`) } },
     revalidate: 60,
   })
   if (!response.ok) throw new Error(`GitHub (GraphQL) svarte ${response.status}`)
-  return readStatuses((await response.json()) as Parameters<typeof readStatuses>[0])
+  type Body = Parameters<typeof readStatuses>[0] & { data?: { search?: { nodes?: ({ repository?: unknown } | null)[] } } }
+  const body = (await response.json()) as Body
+  const nodes = body.data?.search?.nodes
+  if (nodes !== undefined) body.data!.search!.nodes = nodes.filter((node) => node !== null && isPublicRepository(node.repository as Parameters<typeof isPublicRepository>[0]))
+  return readStatuses(body)
 }
 
 function token(): string | undefined {
@@ -113,7 +121,7 @@ async function repoIssues(token: string | undefined, repo: string): Promise<Item
     revalidate: 3600,
   })
   if (!about.ok) throw new Error(about.status === 500 ? await about.text() : `GitHub svarte ${about.status}`)
-  if (((await about.json()) as { private?: boolean }).private !== false) return []
+  if (!isPublicRepository((await about.json()) as { private?: unknown; visibility?: unknown })) return []
   const response = await upstream(repoIssuesUrl(repo), {
     headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}), Accept: "application/vnd.github+json", "User-Agent": "startside", "X-GitHub-Api-Version": "2022-11-28" },
     revalidate: 60,
@@ -125,15 +133,15 @@ async function repoIssues(token: string | undefined, repo: string): Promise<Item
 }
 
 /**
- * Issues, for `groupIssues`: the ones assigned to the user in any public repository, the ones you are involved in in the
- * watched repositories (the `github_repos` cookie), and in them the 50 that moved last, from which the new ones nobody owns come.
+ * Issues, for `groupIssues`: the ones assigned to the user in any public repository, the ones they are involved in in the
+ * watched repositories (`GITHUB_WATCH_REPOS`), and in them the 50 that moved last, from which the new ones nobody owns come.
  * Searching on a repository or an organisation is blocked by SAML single sign-on for the token, so «involved» searches by
  * you and is filtered to the repositories here, and the repositories' own issues are read straight from them.
  */
 export async function getIssues(user: string): Promise<{ assigned: Item[]; involved: Item[]; recent: Item[] }> {
   const accessToken = token()
   const queries = userQueries(user, env("GITHUB_EXCLUDE_ORGS"))
-  const watchedRepos = await watchedRepoList()
+  const watchedRepos = watchedRepoList()
   const [assigned, involved, recent] = await Promise.all([
     search(accessToken, queries.assigned),
     search(accessToken, queries.involved, 50).then((items) => items.filter((item) => isWatched(item.repo, watchedRepos))),
@@ -146,7 +154,7 @@ const DISCUSSION = `fragment D on Discussion {
   id url title createdAt updatedAt isAnswered
   category { name }
   comments { totalCount }
-  repository { nameWithOwner }
+  repository { nameWithOwner isPrivate visibility }
 }`
 
 /**
@@ -155,7 +163,7 @@ const DISCUSSION = `fragment D on Discussion {
  * and is filtered to the repositories here, and the repositories' own discussions are read straight from them.
  */
 export async function getDiscussions(user: string): Promise<{ involved: DiscussionItem[]; recent: DiscussionItem[] }> {
-  const watchedRepos = await watchedRepoList()
+  const watchedRepos = watchedRepoList()
   const repos = parseRepos(watchedRepos)
   if (repos.length === 0) return { involved: [], recent: [] }
   const accessToken = token()
@@ -166,7 +174,7 @@ export async function getDiscussions(user: string): Promise<{ involved: Discussi
   })
   const response = await upstream("https://api.github.com/graphql", {
     headers: { ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}), "User-Agent": "startside" },
-    json: { query: `query Discussions($q: String!) { involved: search(query: $q, type: DISCUSSION, first: 30) { nodes { ...D } } ${perRepo.join(" ")} } ${DISCUSSION}`, variables: { q: userQueries(user, env("GITHUB_EXCLUDE_ORGS")).discussions } },
+    json: { query: `query Discussions($q: String!) { involved: search(query: $q, type: DISCUSSION, first: 30) { nodes { ...D } } ${perRepo.join(" ")} } ${DISCUSSION}`, variables: { q: publicSearch(userQueries(user, env("GITHUB_EXCLUDE_ORGS")).discussions) } },
     revalidate: 60,
   })
   if (!response.ok) throw new Error(response.status === 500 ? await response.text() : `GitHub (GraphQL) svarte ${response.status}`)
@@ -176,9 +184,10 @@ export async function getDiscussions(user: string): Promise<{ involved: Discussi
   const involved = (body.data.involved as { nodes: Nodes } | null)?.nodes ?? []
   const recent = repos.flatMap((_, index) => {
     const repo = body.data?.[`r${index}`] as { isPrivate?: boolean; discussions: { nodes: Nodes } } | null
-    return repo === null || repo === undefined || repo.isPrivate === true ? [] : repo.discussions.nodes
+    return repo === null || repo === undefined || repo.isPrivate !== false ? [] : repo.discussions.nodes
   })
-  return { involved: discussionNodes(involved).filter((item) => isWatched(item.repo, watchedRepos)), recent: discussionNodes(recent) }
+  const open = (nodes: Nodes) => nodes.filter((node) => node !== null && isPublicRepository((node as { repository?: Parameters<typeof isPublicRepository>[0] }).repository))
+  return { involved: discussionNodes(open(involved)).filter((item) => isWatched(item.repo, watchedRepos)), recent: discussionNodes(open(recent)) }
 }
 
 async function askGraphql<T>(token: string | undefined, query: string, variables: Record<string, string> = {}, revalidate = 60): Promise<T> {
@@ -193,17 +202,17 @@ async function askGraphql<T>(token: string | undefined, query: string, variables
   return body.data
 }
 
-const REPO = `fragment R on Repository { nameWithOwner isArchived isPrivate defaultBranchRef { name target { ... on Commit { oid url messageHeadline committedDate statusCheckRollup { state } } } } }`
+const REPO = `fragment R on Repository { nameWithOwner isArchived isPrivate visibility defaultBranchRef { name target { ... on Commit { oid url messageHeadline committedDate statusCheckRollup { state } } } } }`
 
 /** An aliased `repository(...)` of the answer, as a repository, or nothing where it is not one or is not public. */
 function asRepo(value: unknown): RepoNode | null {
-  return typeof value === "object" && value !== null && "nameWithOwner" in value && (value as { isPrivate?: boolean }).isPrivate !== true ? (value as RepoNode) : null
+  return typeof value === "object" && value !== null && "nameWithOwner" in value && isPublicRepository(value as { isPrivate?: unknown; visibility?: unknown }) ? (value as RepoNode) : null
 }
 
-/** The repositories whose default branch is red: the user's own public ones that moved last, and the watched public ones (the `github_repos` cookie). */
+/** The repositories whose default branch is red: the user's own public ones that moved last, and the watched public ones (`GITHUB_WATCH_REPOS`). */
 export async function getCiFailures(user: string): Promise<CiFailure[]> {
   const accessToken = token()
-  const watched = parseRepos(await watchedRepoList())
+  const watched = parseRepos(watchedRepoList())
   const aliases = watched.map((repo, index) => {
     const [owner, name] = repo.split("/")
     return `w${index}: repository(owner: "${owner}", name: "${name}") { ...R }`
@@ -224,15 +233,6 @@ export async function getDependabot(user: string): Promise<Item[]> {
   return pulls(token(), userQueries(user, env("GITHUB_EXCLUDE_ORGS")).dependabot)
 }
 
-/**
- * Whether the user is the owner of the token: the alerts are shown to the owner only. The login of the token is kept for an hour;
- * it is compared and never shown.
- */
-export async function isTokenOwner(user: string): Promise<boolean> {
-  const data = await askGraphql<{ viewer: { login: string } }>(token(), "query Viewer { viewer { login } }", {}, 3600)
-  return sameLogin(data.viewer.login, user)
-}
-
 /** Things the user is involved in (public) that have moved in the last days, where somebody else wrote last: the replies and reviews that are for them to read. */
 export async function getReplies(user: string, instant: Date): Promise<Reply[]> {
   const since = osloDateDaysAgo(instant, 3)
@@ -240,10 +240,10 @@ export async function getReplies(user: string, instant: Date): Promise<Reply[]> 
   const data = await askGraphql<Data>(
     token(),
     `query Replies($q: String!) { search(query: $q, type: ISSUE, first: 30) { nodes {
-      ... on Issue { id url title repository { nameWithOwner } comments(last: 1) { nodes { author { login } createdAt } } }
-      ... on PullRequest { id url title repository { nameWithOwner } comments(last: 1) { nodes { author { login } createdAt } } reviews(last: 1) { nodes { author { login } submittedAt state } } }
+      ... on Issue { id url title repository { nameWithOwner isPrivate visibility } comments(last: 1) { nodes { author { login } createdAt } } }
+      ... on PullRequest { id url title repository { nameWithOwner isPrivate visibility } comments(last: 1) { nodes { author { login } createdAt } } reviews(last: 1) { nodes { author { login } submittedAt state } } }
     } } }`,
-    { q: repliesQuery(user, since, env("GITHUB_EXCLUDE_ORGS")) },
+    { q: publicSearch(repliesQuery(user, since, env("GITHUB_EXCLUDE_ORGS"))) },
   )
-  return fromOthers(data.search.nodes, user, instant, 3)
+  return fromOthers(data.search.nodes.filter((node) => node !== null && isPublicRepository(node.repository as Parameters<typeof isPublicRepository>[0])), user, instant, 3)
 }

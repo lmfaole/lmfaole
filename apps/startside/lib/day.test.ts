@@ -2,7 +2,7 @@ import { strict as assert } from "node:assert"
 import { test } from "node:test"
 
 import { addDays, dayOf, now, osloDateDaysAgo, partOfHour } from "./day.ts"
-import { chosenSections, planFor } from "./plan.ts"
+import { planFor } from "./plan.ts"
 
 // 2026-11-18 is a Wednesday, CET (UTC+1); 2026-07-15 is a Wednesday, CEST (UTC+2).
 const at = (iso: string) => dayOf(new Date(iso))
@@ -142,13 +142,6 @@ test("a day's own chart has its hours while there are hours, then its six-hour e
 test("the days with a page are the Oslo dates the forecast reaches, from today", () => {
   assert.deepEqual(forecastDates(hourly("2026-11-18T22:00:00Z", 3), "2026-11-18"), ["2026-11-18", "2026-11-19"])
   assert.deepEqual(forecastDates(hourly("2026-11-18T22:00:00Z", 3), "2026-11-19"), ["2026-11-19"])
-})
-
-test("the front page leaves out the sections the visitor turned off", () => {
-  const plan = planFor({ part: "morgen", weekend: false })
-  assert.deepEqual(chosenSections(plan.sections, undefined), plan.sections)
-  assert.deepEqual(chosenSections(plan.sections, ["weather", "pulls"]), ["pulls", "weather"])
-  assert.deepEqual(chosenSections(plan.sections, []), [])
 })
 
 test("a day in a row of days is today, tomorrow, or its weekday and date", () => {

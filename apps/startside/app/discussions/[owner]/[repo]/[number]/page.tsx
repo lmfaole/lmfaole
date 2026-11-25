@@ -7,7 +7,7 @@ import { Text } from "@lmfaole/designsystem/components/text"
 import { notFound } from "next/navigation"
 
 import { AiSummary } from "../../../../../components/ai-summary"
-import { About, DetailIntro, History, TimeInState } from "../../../../../components/detail"
+import { About, History, TimeInState } from "../../../../../components/detail"
 import { GitHubPerson } from "../../../../../components/person"
 import { Byline } from "../../../../../components/byline"
 import { GITHUB, Shell } from "../../../../../components/shell"
@@ -51,8 +51,7 @@ export default async function Page({ params }: { params: Promise<{ owner: string
         links={[{ href: discussion.url, label: "Åpne på GitHub" }]}
         updated={{ at: discussion.updated, now: at }}
       >
-        <DetailIntro />
-        <AiSummary kind="discussion" input={{ title: discussion.title, body: discussion.body.text, comments: discussion.comments.latest.map((comment) => `${comment.author}: ${comment.text}`) }} />
+        <AiSummary repo={`${ref.owner}/${ref.repo}`} number={ref.number} />
         <About body={discussion.body} />
         {discussion.answer === null ? null : (
           <PageSection id="answer" title="Svaret" icon="discussion">

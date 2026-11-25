@@ -1,27 +1,11 @@
 import { DurationBars } from "@lmfaole/designsystem/components/duration-bars"
 import { PageSection } from "@lmfaole/designsystem/components/page-section"
 import { Markdown } from "@lmfaole/designsystem/components/markdown"
-import { IntroCallout } from "@lmfaole/designsystem/components/intro-callout"
 import { Text, TextLink } from "@lmfaole/designsystem/components/text"
 import { Timeline, type TimelineEvent } from "@lmfaole/designsystem/components/timeline"
 
 import type { Body } from "../lib/detail"
 import type { DurationSpan, GitHubEvent } from "../lib/timeline"
-import { introSeen, SEEN_PATH } from "../lib/visitor"
-
-/** The first time a pull request, an issue or a discussion is opened: what the parts of the page say. One for all three. */
-export async function DetailIntro() {
-  return (
-    <IntroCallout
-      id="intro-detail"
-      seen={await introSeen("intro-detail")}
-      title="Hele historien på én side"
-      description="Stegene øverst viser hvor saken står og hva som gjenstår. «Tid i hver tilstand» viser hvor lenge den har ventet på hva, og historikken lister alt som har skjedd, det nyeste først."
-      icon="history"
-      cookiePath={SEEN_PATH}
-    />
-  )
-}
 
 /** How long it has spent in each state (waiting for review, in draft, changes requested), as bars on a wide screen and a list on a phone. */
 export function TimeInState({ spans, now }: { spans: DurationSpan[]; now: string }) {

@@ -4,36 +4,32 @@
   "main": "worker.mjs",
   "compatibility_date": "2026-11-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  // Only the route: no workers.dev or preview address that would get round Cloudflare Access.
+  // Only the route: one address, behind the page cache and the rate limit in worker.mjs.
   "workers_dev": false,
   "preview_urls": false,
-  // Workers AI, for the summaries (lib/ai.ts); without it the pages simply have none.
+  // Workers AI, for the summaries: only the cron job calls it (lib/summaries.ts, at most two a run); the pages read them from KV.
   "ai": { "binding": "AI" },
   // The relay (upstream/), called inside Cloudflare instead of over its workers.dev address (lib/relay.ts). Deployed first (deploy.yml).
   "services": [{ "binding": "UPSTREAM", "service": "startside-upstream" }],
-  // The snapshot the cron fills (lib/snapshot.ts). No id: wrangler deploy creates the namespace the first time (automatic provisioning).
+  // The snapshot and the summaries the cron fills (lib/snapshot.ts, lib/summaries.ts). No id: wrangler deploy creates the namespace the first time (automatic provisioning).
   "kv_namespaces": [{ "binding": "SNAPSHOT" }],
-  // The owner's logs, written by Logg (/start/logg, lib/log-db.ts). The tables are not this app's: the migrations are the activity
-  // worker's (watching, gameplay) and packages/db's (library), and are applied from there; the dirs are here only for local D1.
-  "d1_databases": [
-    { "binding": "WATCHING", "database_name": "watching", "database_id": "de856333-5317-41e0-99be-0b01e43101ec", "migrations_dir": "../../workers/activity/migrations/watching" },
-    { "binding": "GAMEPLAY", "database_name": "gameplay", "database_id": "5d315e5c-61b7-465a-a7e0-d3e3ab6d44bc", "migrations_dir": "../../workers/activity/migrations/gameplay" },
-    { "binding": "LIBRARY", "database_name": "library", "database_id": "8f891a67-47c8-4232-88ea-a2acf01e9573", "migrations_dir": "../../packages/db/library/migrations" }
-  ],
-  // No cron of its own: workers/scheduler calls `scheduled` (worker.mjs) every 15 minutes to put the shared sources into the snapshot. 96 runs a day, at most five KV writes each.
+  // No cron of its own: workers/scheduler calls `scheduled` (worker.mjs) every 15 minutes to put the shared sources into the snapshot. 96 runs a day, at most five KV writes each (three snapshot bodies, the index, the summaries).
   "triggers": { "crons": [] },
+  // Per visitor (CF-Connecting-IP) and colo, for everything but the static files (worker.mjs): the page is open, and a page that is not
+  // in the cache calls the relay. The namespace id is the account's own number for this limit, unique among the account's Workers.
+  "ratelimits": [{ "name": "LIMITER", "namespace_id": "1201", "simple": { "limit": 120, "period": 60 } }],
   "observability": { "enabled": true },
   "routes": [{ "pattern": "lmfaole.party/start*", "zone_name": "lmfaole.party" }],
   "vars": {
+    // GitHub: whose public data the page shows (the only user; there are no settings).
+    "GITHUB_USER": "lmfaole",
     // GitHub: the repositories whose issues are watched (the ones you are involved in, new ones nobody owns, what moved lately).
     "GITHUB_WATCH_REPOS": "fremtind/jokul",
+    // The place for the weather and the front page when the address has no position (?pos=): also the price area's default (NO1).
     "WEATHER_PLACE": "Oslo",
     "WEATHER_LAT": "59.91",
     "WEATHER_LON": "10.75",
-    // Cloudflare Access (the application «Startside»): the Worker checks the token Access signs (worker.mjs, lib/access.ts).
-    "ACCESS_TEAM_DOMAIN": "https://party-7ry-pages.cloudflareaccess.com",
-    "ACCESS_AUD": "f12d1eec25593141673629b11f25f1cf106ec59c65ba8e7c2548f0ebb6f21ebc",
-    // AI Gateway for the summaries (lib/ai-gateway.ts): «default» is created by Cloudflare on the first call; empty for none.
+    // AI Gateway for the summaries (lib/ai-gateway.ts, called by the cron only): «default» is created by Cloudflare on the first call; empty for none.
     "AI_GATEWAY": "default",
     // "1" once Image Transformations is on for lmfaole.party with github.com and avatars.githubusercontent.com allowed: avatars as AVIF/WebP via /cdn-cgi/image.
     "IMAGE_TRANSFORMS": "0",

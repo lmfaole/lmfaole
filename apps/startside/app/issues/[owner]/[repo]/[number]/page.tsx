@@ -4,7 +4,7 @@ import type { Status } from "@lmfaole/designsystem/components/status-line"
 import { notFound } from "next/navigation"
 
 import { AiSummary } from "../../../../../components/ai-summary"
-import { About, DetailIntro, History, TimeInState } from "../../../../../components/detail"
+import { About, History, TimeInState } from "../../../../../components/detail"
 import { GitHubPerson } from "../../../../../components/person"
 import { Byline } from "../../../../../components/byline"
 import { GITHUB, Shell } from "../../../../../components/shell"
@@ -48,8 +48,7 @@ export default async function Page({ params }: { params: Promise<{ owner: string
         links={[{ href: issue.url, label: "Åpne på GitHub" }]}
         updated={{ at: issue.updated, now: at }}
       >
-        <DetailIntro />
-        <AiSummary kind="issue" input={{ title: issue.title, body: issue.body.text, comments: issue.comments.latest.map((comment) => `${comment.author}: ${comment.text}`) }} />
+        <AiSummary repo={`${ref.owner}/${ref.repo}`} number={ref.number} />
         <About body={issue.body} />
         <TimeInState spans={issueSpans(issue, at)} now={at} />
         <History label={`Historikk for issue #${ref.number}`} events={issueTimeline(issue)} note={truncatedNote(issue.timeline)} url={issue.url} now={at} />

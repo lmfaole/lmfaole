@@ -6,7 +6,7 @@ import type { Status } from "@lmfaole/designsystem/components/status-line"
 import { notFound } from "next/navigation"
 
 import { AiSummary } from "../../../../../components/ai-summary"
-import { About, DetailIntro, History, TimeInState } from "../../../../../components/detail"
+import { About, History, TimeInState } from "../../../../../components/detail"
 import { GitHubPerson } from "../../../../../components/person"
 import { Byline } from "../../../../../components/byline"
 import { GITHUB, Shell } from "../../../../../components/shell"
@@ -57,8 +57,7 @@ export default async function Page({ params }: { params: Promise<{ owner: string
         links={[{ href: pull.url, label: "Åpne på GitHub" }]}
         updated={{ at: pull.updated, now: at }}
       >
-        <DetailIntro />
-        <AiSummary kind="pull request" input={{ title: pull.title, body: pull.body.text, comments: pull.comments.latest.map((comment) => `${comment.author}: ${comment.text}`) }} />
+        <AiSummary repo={`${ref.owner}/${ref.repo}`} number={ref.number} />
         <About body={pull.body} />
         {pull.checkLines.length === 0 ? null : (
           <PageSection id="checks" title="Tester" icon="tasks">

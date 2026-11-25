@@ -2,14 +2,15 @@
 // scheduled job every 15 minutes (`scheduled` in worker.mjs, called by workers/scheduler) and kept in Workers KV (`SNAPSHOT`), so a page has it at once, and still has it when a source is down.
 // Pure: the store, the fetch and the clock are given, so a test pins what is fetched, when it is written and what a page may use.
 
+import { isPublicRepository } from "./github-query.ts"
 import { fingerprint } from "./summarize.ts"
 
 /** How often the job runs (`STARTSIDE` in workers/scheduler/src/jobs.ts): a snapshot entry is good at least this long. */
 export const CRON_SECONDS = 15 * 60
 /** How old a snapshot entry may be and still stand in for a source that fails. */
 export const FALLBACK_SECONDS = 24 * 60 * 60
-/** The most bodies one run writes (the index is one more): 96 runs a day × 5 stays far under KV's 1000 free writes a day. */
-export const MAX_WRITES = 4
+/** The most bodies one run writes (the index and the summaries, lib/summaries.ts, are one more each): 96 runs a day × 5 stays under KV's 1000 free writes a day. */
+export const MAX_WRITES = 3
 /** The most watched repositories kept in the snapshot (two requests each). */
 export const MAX_REPOS = 2
 /** A body that has not changed is written again after this long, so its `expirationTtl` never runs out while it is in use. */
@@ -45,10 +46,10 @@ export interface Job {
   requires?: string
 }
 
-/** Whether a repository's facts say it is public (the token could read the owner's private ones, and nothing private is kept). */
+/** Whether a repository's facts say it is public (`private: false`, and `visibility: public` where it is there): nothing private is kept. */
 function isPublicRepo(body: string): boolean {
   try {
-    return (JSON.parse(body) as { private?: unknown }).private === false
+    return isPublicRepository(JSON.parse(body) as { private?: unknown; visibility?: unknown })
   } catch {
     return false
   }

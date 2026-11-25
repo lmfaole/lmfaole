@@ -118,6 +118,8 @@ function issuesFor(kind: "assigned" | "involved"): { repo: string; issue: Issue 
   return mine.length > 0 ? mine : all.filter(({ issue }) => issue.assignees.length > 0 || kind === "involved").slice(0, 4)
 }
 
+/** A repository as GraphQL has it, public: the page drops anything that does not say so (lib/github-query.ts `isPublicRepository`). */
+const PUBLIC = (repo: string) => ({ nameWithOwner: repo, isPrivate: false, visibility: "PUBLIC" })
 const searchItem = (repo: string, item: { id: number; url: string; title: string; created: string; updated: string }, assignees: string[]) => ({
   id: item.id, html_url: item.url, title: item.title, repository_url: `https://api.github.com/repos/${repo}`, created_at: item.created, updated_at: item.updated, assignees: assignees.map((login) => ({ login })),
 })
@@ -131,23 +133,23 @@ const repoIssues = (repo: string): unknown => (nameOf(repo, github().repos)?.iss
 
 const prNode = ({ repo, pull }: { repo: string; pull: Pull }) => ({
   databaseId: pull.id, url: pull.url, title: pull.title, updatedAt: pull.updated, isDraft: pull.draft, reviewDecision: decisionOf(pull), mergeable: mergeableOf(pull),
-  additions: pull.additions, deletions: pull.deletions, changedFiles: pull.files, repository: { nameWithOwner: repo }, author: pull.author === null ? null : { login: pull.author },
+  additions: pull.additions, deletions: pull.deletions, changedFiles: pull.files, repository: PUBLIC(repo), author: pull.author === null ? null : { login: pull.author },
   commits: { nodes: [{ commit: { statusCheckRollup: asChecks(pull.checks.state) } }] }, reviewThreads: { nodes: [] },
 })
 
-const discussionNode = (repo: string, d: Discussion) => ({ id: `D_${repo}_${d.number}`, url: d.url, title: d.title, createdAt: d.created, updatedAt: d.updated, isAnswered: d.answered, category: { name: d.category }, comments: { totalCount: d.comments }, repository: { nameWithOwner: repo } })
+const discussionNode = (repo: string, d: Discussion) => ({ id: `D_${repo}_${d.number}`, url: d.url, title: d.title, createdAt: d.created, updatedAt: d.updated, isAnswered: d.answered, category: { name: d.category }, comments: { totalCount: d.comments }, repository: PUBLIC(repo) })
 
 const ALIAS = /(\w+): repository\(owner: "([^"]+)", name: "([^"]+)"\)/g
 
 function discussions(query: string): unknown {
   const { me, repos } = github()
   const data: Record<string, unknown> = { involved: { nodes: repos.flatMap(([repo, entry]) => entry.discussions.filter((d) => d.author === me).map((d) => discussionNode(repo, d))) } }
-  for (const [, alias, owner, name] of query.matchAll(ALIAS)) data[alias as string] = { discussions: { nodes: (nameOf(`${owner}/${name}`, repos)?.discussions ?? []).map((d) => discussionNode(`${owner}/${name}`, d)) } }
+  for (const [, alias, owner, name] of query.matchAll(ALIAS)) data[alias as string] = { isPrivate: false, visibility: "PUBLIC", discussions: { nodes: (nameOf(`${owner}/${name}`, repos)?.discussions ?? []).map((d) => discussionNode(`${owner}/${name}`, d)) } }
   return { data }
 }
 
 const repoNode = (repo: string, data: Repo) => ({
-  nameWithOwner: repo, isArchived: false,
+  ...PUBLIC(repo), isArchived: false,
   defaultBranchRef: { name: data.branch, target: { oid: data.commit.sha, url: data.commit.url, messageHeadline: data.commit.headline, committedDate: data.commit.date, statusCheckRollup: asChecks(data.commit.checks.state) } },
 })
 
@@ -167,13 +169,13 @@ function replies(): unknown {
   const issues = repos.flatMap(([repo, entry]) => Object.entries(entry.issueComments).flatMap(([number, comments]) => {
     const issue = entry.issues.find((candidate) => candidate.number === Number(number))
     const last = comments.at(-1)
-    return issue === undefined || last === undefined ? [] : [{ id: `I_${repo}_${number}`, url: issue.url, title: issue.title, repository: { nameWithOwner: repo }, comments: { nodes: [{ author: { login: last.author }, createdAt: last.created }] } }]
+    return issue === undefined || last === undefined ? [] : [{ id: `I_${repo}_${number}`, url: issue.url, title: issue.title, repository: PUBLIC(repo), comments: { nodes: [{ author: { login: last.author }, createdAt: last.created }] } }]
   }))
   const pulls = repos.flatMap(([repo, entry]) => entry.pulls.flatMap((pull) => {
     const review = pull.reviews.at(-1)
-    return review === undefined ? [] : [{ id: `PR_${repo}_${pull.number}`, url: pull.url, title: pull.title, repository: { nameWithOwner: repo }, comments: { nodes: [] }, reviews: { nodes: [{ author: { login: review.author }, submittedAt: review.submitted, state: review.state }] } }]
+    return review === undefined ? [] : [{ id: `PR_${repo}_${pull.number}`, url: pull.url, title: pull.title, repository: PUBLIC(repo), comments: { nodes: [] }, reviews: { nodes: [{ author: { login: review.author }, submittedAt: review.submitted, state: review.state }] } }]
   }))
-  return { data: { viewer: { login: me }, search: { nodes: [...issues, ...pulls] } } }
+  return { data: { search: { nodes: [...issues, ...pulls] } } }
 }
 
 const toComment = (comment: Comment) => ({ author: { login: comment.author }, createdAt: comment.created, body: comment.body })
@@ -218,6 +220,7 @@ function pullDetail(repo: string, number: number): unknown {
     data: {
       repository: {
         isPrivate: false,
+        visibility: "PUBLIC",
         pullRequest: {
           title: pull.title, url: pull.url, state: pull.state ?? "OPEN", isDraft: pull.draft, body: pull.body, createdAt: pull.created, updatedAt: pull.updated, mergedAt: pull.merged ?? null, closedAt: pull.closed ?? null, author: pull.author === null ? null : { login: pull.author },
           headRefName: pull.head, baseRefName: pull.base, additions: pull.additions, deletions: pull.deletions, changedFiles: pull.files, reviewDecision: decisionOf(pull), mergeable: mergeableOf(pull),
@@ -238,7 +241,7 @@ function issueDetail(repo: string, number: number): unknown {
   const issue = [...(entry?.issues ?? []), ...(entry?.closedIssues ?? [])].find((candidate) => candidate.number === number)
   if (entry === undefined || issue === undefined) return { data: { repository: { issue: null } } }
   const closing = { stateReason: issue.stateReason ?? null, closedAt: issue.closed ?? null, timelineItems: timelineItems(issue.timeline) }
-  return { data: { repository: { isPrivate: false, issue: { ...closing, title: issue.title, url: issue.url, state: issue.state ?? "OPEN", body: issue.body, createdAt: issue.created, updatedAt: issue.updated, author: issue.author === null ? null : { login: issue.author }, labels: { nodes: issue.labels.map((name) => ({ name })) }, assignees: { nodes: issue.assignees.map((login) => ({ login })) }, comments: { totalCount: issue.comments, nodes: (entry.issueComments[String(number)] ?? []).map(toComment) } } } } }
+  return { data: { repository: { isPrivate: false, visibility: "PUBLIC", issue: { ...closing, title: issue.title, url: issue.url, state: issue.state ?? "OPEN", body: issue.body, createdAt: issue.created, updatedAt: issue.updated, author: issue.author === null ? null : { login: issue.author }, labels: { nodes: issue.labels.map((name) => ({ name })) }, assignees: { nodes: issue.assignees.map((login) => ({ login })) }, comments: { totalCount: issue.comments, nodes: (entry.issueComments[String(number)] ?? []).map(toComment) } } } } }
 }
 
 function discussionDetail(repo: string, number: number): unknown {
@@ -252,6 +255,7 @@ function discussionDetail(repo: string, number: number): unknown {
     data: {
       repository: {
         isPrivate: false,
+        visibility: "PUBLIC",
         discussion: {
           title: d.title, url: d.url, body: d.body, createdAt: d.created, updatedAt: d.updated, isAnswered: d.answered, author: { login: d.author }, category: { name: d.category },
           answer: answer === undefined ? null : { ...node(answer), replyTo: answer.replyTo === undefined ? null : { id: answer.replyTo } },
@@ -275,7 +279,6 @@ function graphql(init: MockInit): Response {
   if (query.includes("type: DISCUSSION")) return reply(discussions(query))
   if (query.includes("user(login: $login)")) return reply(ci(query))
   if (query.startsWith("query Replies")) return reply(replies())
-  if (query.includes("viewer { login }")) return reply({ data: { viewer: { login: github().me } } })
   if (query.includes("search(query: $q")) return reply({ data: { search: { nodes: pullsFor(String(variables["q"] ?? "")).map(prNode) } } })
   return reply({ errors: [{ message: "Ingen mock for denne spørringen" }] })
 }
@@ -283,11 +286,8 @@ function graphql(init: MockInit): Response {
 function githubAnswer(target: URL, init: MockInit): Response {
   if (target.pathname === "/graphql") return graphql(init)
   if (target.pathname === "/search/issues") return reply(search(target.searchParams.get("q") ?? ""))
-  const user = /^\/users\/([^/]+)$/.exec(target.pathname)
-  // Any username is a user in mock data: the lists come from the captured data, whoever is asked for.
-  if (user !== null) return reply({ login: user[1], type: "User" })
   const repo = /^\/repos\/([^/]+\/[^/]+)$/.exec(target.pathname)
-  if (repo !== null) return reply({ full_name: repo[1], private: false })
+  if (repo !== null) return reply({ full_name: repo[1], private: false, visibility: "public" })
   const issues = /^\/repos\/([^/]+\/[^/]+)\/issues$/.exec(target.pathname)
   return issues === null ? notFound(target.href) : reply(repoIssues(issues[1] as string))
 }
@@ -523,21 +523,6 @@ function bikes(target: URL): Response {
   return notFound(target.href)
 }
 
-const PLACES = [
-  { name: "Bergen", display_name: "Bergen, Vestland, Norge", lat: "60.3943055", lon: "5.3259192" },
-  { name: "Bergen", display_name: "Bergen, Noord-Holland, Nederland", lat: "52.6698", lon: "4.6970" },
-  { name: "Tromsø", display_name: "Tromsø, Troms, Norge", lat: "69.6496", lon: "18.9560" },
-  { name: "Trondheim", display_name: "Trondheim, Trøndelag, Norge", lat: "63.4305", lon: "10.3951" },
-  { name: "Oslo", display_name: "Oslo, Norge", lat: "59.9133", lon: "10.7389" },
-  { name: "Lillehammer", display_name: "Lillehammer, Innlandet, Norge", lat: "61.1153", lon: "10.4662" },
-]
-
-/** Nominatim's search, over a handful of places: those whose name starts with the search. */
-function placeSearch(target: URL): Response {
-  const q = (target.searchParams.get("q") ?? "").trim().toLowerCase()
-  return reply(q === "" ? [] : PLACES.filter((place) => place.name.toLowerCase().startsWith(q)))
-}
-
 /** A short summary in Norwegian for a page, in place of the model that only runs on Cloudflare. */
 export function mockSummary(): string {
   return "Dette er en lokal eksempeltekst: endringen er liten, testene går gjennom, og det eneste som gjenstår er en gjennomgang. Ingenting er hentet fra en KI-modell."
@@ -554,7 +539,7 @@ export function mockFetch(address: string, init: MockInit = {}): Response {
     case "api.met.no":
       return met(target)
     case "nominatim.openstreetmap.org":
-      return target.pathname === "/search" ? placeSearch(target) : reply(nominatimData)
+      return reply(nominatimData)
     case "services.swpc.noaa.gov":
       return kp()
     case "www.hvakosterstrommen.no":

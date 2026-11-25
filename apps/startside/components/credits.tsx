@@ -1,8 +1,8 @@
 import type { Source } from "@lmfaole/designsystem/components/app-settings"
 
-/** Where the data comes from, once, at the foot of «Innstillinger» (`SourcesSettings`) rather than on the pages that use it: each source with its mark beside its name, what it gives, and the credit its licence asks for. */
+/** Where the data comes from, once, at the foot of «Om» (`SourcesSettings`) rather than on the pages that use it: each source with its mark beside its name, what it gives, and the credit its licence asks for. */
 export const SOURCES: Source[] = [
-  { name: "GitHub", brand: "github", href: "https://github.com", description: "Offentlige pull requests, saker og diskusjoner for brukeren du har valgt." },
+  { name: "GitHub", brand: "github", href: "https://github.com", description: "Offentlige pull requests, issues, discussions og CI-status for brukeren siden viser." },
   { name: "Entur", brand: "entur", href: "https://entur.no", description: "Stasjoner og avganger." },
   { name: "Yr", brand: "yr", href: "https://www.yr.no", description: "Værdata fra Meteorologisk institutt." },
   { name: "Meteorologisk institutt", href: "https://api.met.no", description: "Farevarsler, nedbørradar, UV-indeks, luftkvalitet og månen.", credit: "Data fra MET Norway (CC BY 4.0)." },

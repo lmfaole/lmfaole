@@ -5,7 +5,6 @@ import { Inline } from "@lmfaole/designsystem/components/layout"
 import { LinkButton } from "@lmfaole/designsystem/components/link-button"
 import { PageSection } from "@lmfaole/designsystem/components/page-section"
 import { Text, TextLink } from "@lmfaole/designsystem/components/text"
-import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 
 import { ColumnChart } from "../../../components/column-chart"
@@ -15,8 +14,8 @@ import { getPrices } from "../../../lib/conditions"
 import { addDays, now, osloTime } from "../../../lib/day"
 import { dateLine } from "../../../lib/format"
 import { withBase } from "../../../lib/links"
-import { parsePosition, POSITION_COOKIE } from "../../../lib/position"
-import { averagePrice, FIRST_PRICE_DATE, isPriceDate, parsePriceArea, PRICE_AREA_COOKIE, PRICE_AREA_NAMES, PRICE_AREAS, PRICE_CREDIT } from "../../../lib/power"
+import { firstParam, positionParam, positionQuery, type SearchParams } from "../../../lib/position"
+import { AREA_PARAM, averagePrice, FIRST_PRICE_DATE, isPriceDate, parsePriceArea, PRICE_AREA_NAMES, PRICE_AREAS, PRICE_CREDIT, withArea } from "../../../lib/power"
 
 export const dynamic = "force-dynamic"
 
@@ -28,15 +27,16 @@ const title = (date: string): string => {
 }
 
 /** One day's spot price: its mean and its cheapest and dearest hour, the day hour by hour, the price areas side by side, and the day before and after a click away. */
-export default async function Page({ params }: { params: Promise<{ dato: string }> }) {
+export default async function Page({ params, searchParams }: { params: Promise<{ dato: string }>; searchParams: Promise<SearchParams> }) {
   const { dato } = await params
   const instant = now()
   const today = osloTime(instant).date
   const tomorrow = addDays(today, 1)
   if (!isPriceDate(dato, tomorrow)) notFound()
-  const jar = await cookies()
-  const position = parsePosition(jar.get(POSITION_COOKIE)?.value)
-  const chosen = parsePriceArea(jar.get(PRICE_AREA_COOKIE)?.value)
+  const search = await searchParams
+  const position = positionParam(search)
+  const chosen = parsePriceArea(firstParam(search[AREA_PARAM]))
+  const query = withArea(positionQuery(position), chosen)
   const [prices, ...areas] = await Promise.all([getPrices(position, chosen, instant, dato), ...PRICE_AREAS.map((area) => getPrices(null, area, instant, dato))])
   const means = areas.flatMap((one) => {
     const mean = one === null ? undefined : averagePrice(one.hours)
@@ -49,13 +49,14 @@ export default async function Page({ params }: { params: Promise<{ dato: string 
   return (
     <Shell
       current="power"
+      position={position}
       trail={TRAIL}
       title={title(dato)}
       lead={prices === null ? "Spotpris time for time, uten mva og nettleie." : `Spotpris i ${prices.area} (${PRICE_AREA_NAMES[prices.area]}), uten mva og nettleie.`}
       actions={
         <Inline>
-          {before < FIRST_PRICE_DATE ? null : <LinkButton href={withBase(`/strom/${before}`)} icon="arrow-left">Dagen før</LinkButton>}
-          {after > tomorrow ? null : <LinkButton href={withBase(`/strom/${after}`)} icon="arrow-right">Dagen etter</LinkButton>}
+          {before < FIRST_PRICE_DATE ? null : <LinkButton href={withBase(`/strom/${before}`) + query} icon="arrow-left">Dagen før</LinkButton>}
+          {after > tomorrow ? null : <LinkButton href={withBase(`/strom/${after}`) + query} icon="arrow-right">Dagen etter</LinkButton>}
         </Inline>
       }
     >
