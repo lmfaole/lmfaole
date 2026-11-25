@@ -17,6 +17,8 @@ Built after the design system's «Pages and navigation» rules (5.3): three leve
 | `/start/transport/{stopp}` | One **stop**: every departure of the next three hours in the order they leave, by the hour (`DepartureList`), each line a chip and a link to its own page from the stop, with a map of the stop. The address is the national register's number (`58366` for `NSR:StopPlace:58366`), any other id encoded (`stopPath`, checked by `stopIdOf`) |
 | `/start/transport/{stopp}/{linje}` | One **line from a stop** (`/start/transport/58366/31`): a section for each way it goes with every stop of the next trip from there (`StopSequence`: the stops before folded, ride minutes and real-time times, each stop a link to its page) and the times of the departures after it; the stop's other lines as chips and its map. Without a trip from Entur the section lists the departures. The line is checked by `lineOf`, the trip by `isJourneyId` |
 | `/start/varsler` | What wants a look: **feilende CI** (a default branch whose last commit is red, in the user's public repositories and the watched ones), **nytt fra andre** (replies and reviews on what the user is in, last three days, where somebody else wrote last) and **Dependabot** (its open pull requests in the user's public repositories, with their checks). Only when the username is the token's owner (see below) |
+| `/start/logg` | **Logg** (before Innstillinger in the menu): the owner's own log of film, TV, games, books, board games and cinemas, kept in D1 (see «Logg» below). A card per kind with the three latest, «Ny …» and its foot to the whole list |
+| `/start/logg/{film,tv,spill,boker,brettspill,kinoer}` | One kind's **list**, newest first (100, the rest by searching the title, `?q=`), «Ny …» as the page's action; `?lagret=1` / `?slettet=1` say «Lagret» / «Slettet». `…/ny` is the form for a new one; `…/{nøkkel}` (the id; `log-12` or `collection-3` for books and board games; a cinema's name) the form to change it, with «Slett …», which asks first (`?slett=1`) |
 | `/start/innstillinger` | **Innstillinger** (last in the menu): an overview (`SubPages` with what is chosen now) of the subpages `konto` (GitHub username, the only place it is shown; and where `/start/brukernavn` redirects), `repoer`, `forside` (sections and their order), `tid` (time of day: the switch and greeting, with its own subpages `tid/deler`, `tid/helg`, `tid/innhold` and one per part, `tid/morgen` … `tid/natt`), `posisjon`, `utseende` (theme, effects with «Vibrasjon», tilt) and `app` (install, «Vis introen igjen»), each with its own small form; «Vis introen igjen» also at the bottom of the overview |
 | `/start/vaer` | The whole forecast, in figures and charts more than words: the next 24 hours as a meteogram, the coming days as lowest to highest. Around it: **farevarsler** in force (MET and Varsom, `HazardList`), **nedbør neste 90 minutter** (the radar) as a chart, the sun as figures with the **UV** and the daylight through the year as charts, the northern lights as figures (with the **moon**) above their chart, and **luftkvalitet** hour by hour. Each coming day links to its page, and «Neste døgn» to tomorrow's |
 | `/start/vaer/{dato}` | One **day** of the forecast (`2026-11-24`, today to as far as the forecast reaches): lowest and highest, the rain, the strongest wind, the UV and the sun as figures, and the day as a meteogram (by the hour, or every sixth hour further out), the other days as chips |
@@ -30,6 +32,49 @@ tabs. A description or a comment is Markdown, shown with `Markdown` and cut at a
 A row links to the app's own page for the thing (`lib/links.ts`), never straight out to GitHub: leaving is the last action on
 the detail page. The detail pages read one item from GitHub's GraphQL (`lib/detail.ts`); the address is checked before it is
 used (`parseRef`). The service worker keeps the last copy of each page by its address, so the pages open offline.
+
+## Logg
+
+What the owner has seen, played and read was kept by hand in CSV files in the old monorepo and imported every night; now the D1
+databases are where it is kept, and `/start/logg` is where it is written. It is the owner's alone: behind Access like the rest, and the
+endpoint checks again (below).
+
+| Kind | Table | Database (binding) | The form |
+| --- | --- | --- | --- |
+| Film | `film_log` | `watching` (`WATCHING`) | date, title, year, TMDB id, cinema (from `cinemas`), seat, note |
+| TV | `tv_log` | `watching` | date, show, season, episode, episode title, TMDB id |
+| Spill | `game_log` | `gameplay` (`GAMEPLAY`) | date, title, status (spiller, ferdig, avbrutt), hours, platform, note |
+| Bøker | `books` | `library` (`LIBRARY`) | status (lest, leser, avbrutt: the log; eier, vil ha: the collection), title, year, date, rating (0,5–5), format |
+| Brettspill | `boardgames` | `library` | title, status (spilt: the log; eier: the collection), format |
+| Kinoer | `cinemas` | `watching` | name, city, country (ISO code), website |
+
+- **The tables are not this app's.** Their migrations are the activity worker's (`workers/activity/migrations/watching`, `…/gameplay`) and
+  `packages/db`'s (`library/migrations`), and are applied from there; `wrangler.jsonc` names the same directories only so local D1 can be set up from here.
+- **What the form checks** is in `lib/log.ts` (pure, `lib/log.test.ts`): a date as `25.11.2026` (or ISO), not after tomorrow; years, whole and
+  decimal numbers, a rating in halves, a status of the kind's, a cinema that is in `cinemas`, a country code with a name, an `http(s)` address.
+  The errors come back to the form with what was written (cookie `logg-feil`, `Path=/start/logg`, two minutes, never on `/`).
+- **Ids** are made as the schema expects: an `INTEGER PRIMARY KEY` gets SQLite's next one (the highest plus one); a book or a board game the next
+  line in its list (`log` or `collection`), and a new one when its status moves it to the other list. A cinema's name is its key: renamed, its films
+  follow; one films were seen at is not deleted. Only the form's columns are written: what the import brought besides (`film_log.same_as`,
+  `game_log.source` and `igdb_id`, `books.source` and `openlibrary_id`) is kept. The queries are `lib/log-db.ts` (tested against the real migrations with `node:sqlite`).
+- **Who may write.** `POST /start/api/logg` checks Access's token itself (`lib/access-gate.ts`, the same check `worker.mjs` makes of every request),
+  and that the form was sent from a page under `/start/logg` on this origin: `Origin` (or `Sec-Fetch-Site: same-origin`), and a `Referer` under
+  `/start/logg`, since `/medier`, `/cv` and `/design` share the origin. Anything else is 403.
+- **Not kept offline.** The service worker does not keep Logg's pages (an old copy would show what has since changed); offline they are the offline page.
+
+Locally (`next dev` has no D1; use the Worker build):
+
+```sh
+npx wrangler d1 migrations apply watching --local
+npx wrangler d1 migrations apply gameplay --local
+npx wrangler d1 migrations apply library --local
+echo ACCESS_SKIP=1 >> .dev.vars
+npm run preview                  # http://localhost:8787/start/logg
+```
+
+In preview the app is at `localhost`, so the form works from a browser there; with `curl`, send `Origin: http://localhost:8787` and a
+`Referer` under `http://localhost:8787/start/logg`. The local databases are in `.wrangler/state` (gitignored); without `ACCESS_SKIP=1` every
+request, and so every write, is 403.
 
 ## Whose data: the GitHub username
 
@@ -325,7 +370,9 @@ app-filer», a bypass policy), since browsers fetch them without the login cooki
 Routes: Edit on `lmfaole.party`, **Workers KV Storage: Edit**, for the snapshot's namespace, which `wrangler deploy` creates the first time
 since `kv_namespaces` has no id) and `CLOUDFLARE_ACCOUNT_ID`; without them the run only builds. `npm run deploy` deploys the page from a machine.
 
-Bindings and settings of `startside` (`wrangler.jsonc`): `AI` (Workers AI), `UPSTREAM` (the relay), `SNAPSHOT` (KV), the cron
+Bindings and settings of `startside` (`wrangler.jsonc`): `AI` (Workers AI), `UPSTREAM` (the relay), `SNAPSHOT` (KV), the D1 databases
+`WATCHING` (`watching`), `GAMEPLAY` (`gameplay`) and `LIBRARY` (`library`, for Logg; its `database_id` is `library-not-created-yet` until
+`npx wrangler d1 create library` has made it, and must be filled in, here and in `packages/db/wrangler.jsonc`, with its migrations applied, before this deploys), the cron
 `*/15 * * * *`, and the vars `AI_GATEWAY` (`default`), `IMAGE_TRANSFORMS` (`0`) and `CF_BEACON_TOKEN` (empty). For the owner, in the dashboard:
 
 - **AI Gateway:** nothing for `default` (created on the first call); for another name, create it and set `AI_GATEWAY`.
@@ -366,7 +413,7 @@ The page shows personal data, so `lmfaole.party/start` is behind Cloudflare Acce
 
 The Worker does not rely on Access alone: `worker.mjs` checks the token Access signs for every request (`Cf-Access-Jwt-Assertion`, RS256, with Access's keys from
 `<team>/cdn-cgi/access/certs`, kept for an hour and fetched through the relay if need be; `iss` and `aud` from `ACCESS_TEAM_DOMAIN` and `ACCESS_AUD` in `wrangler.jsonc`; `lib/access.ts`)
-and answers 403 without a good one. Only what Access lets through without a login is open: `/start/manifest.webmanifest`, `/start/icon.png`, `/start/apple-icon.png`,
+and answers 403 without a good one (the Logg endpoint, which writes, checks it once more: «Logg» above). Only what Access lets through without a login is open: `/start/manifest.webmanifest`, `/start/icon.png`, `/start/apple-icon.png`,
 `/start/icons/*` and the built files under `/start/_next/static/` (no personal data). `npm run preview` has no Access in front: put `ACCESS_SKIP=1` in `.dev.vars`
 (never in `wrangler.jsonc` or as a secret). The detail pages also refuse a pull request, issue or discussion in a private repository, whatever the token can read.
 Every answer has a Content-Security-Policy (`lib/csp.ts`: no framing, no `<object>`, forms only to the page and Access, pictures only from the page, GitHub and OpenStreetMap's tiles,

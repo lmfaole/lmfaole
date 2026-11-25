@@ -2,6 +2,7 @@ import { strict as assert } from "node:assert"
 import { test } from "node:test"
 
 import { claimsValid, isPublicPath, keyStore, verifyAccessJwt } from "./access.ts"
+import { accessAllowed } from "./access-gate.ts"
 
 const CONFIG = { issuer: "https://team.cloudflareaccess.com", audience: "app-aud" }
 const NOW = 1_800_000_000
@@ -85,4 +86,14 @@ test("only the manifest, the icons and the embedded built files are open", () =>
   assert.equal(isPublicPath("/start/_next/static/chunks/a.js", true), true)
   assert.equal(isPublicPath("/start/_next/static/chunks/a.js", false), false)
   for (const path of ["/start", "/start/", "/start/pull-requests/a/b/1", "/start/icon.png/x", "/start/sw.js", "/start/api/x"]) assert.equal(isPublicPath(path, true), false)
+})
+
+test("the gate: no token, or no team or audience configured, is refused without asking for keys; only ACCESS_SKIP=1 lets that through", async () => {
+  const env = { ACCESS_TEAM_DOMAIN: "https://team.cloudflareaccess.com", ACCESS_AUD: "app-aud" }
+  const withToken = new Headers({ "Cf-Access-Jwt-Assertion": await sign({ aud: "app-aud", iss: env.ACCESS_TEAM_DOMAIN, exp: NOW }) })
+  assert.equal(await accessAllowed(new Headers(), env), false)
+  assert.equal(await accessAllowed(withToken, {}), false)
+  assert.equal(await accessAllowed(withToken, { ...env, ACCESS_AUD: "" }), false)
+  assert.equal(await accessAllowed(new Headers(), { ...env, ACCESS_SKIP: "true" }), false)
+  assert.equal(await accessAllowed(new Headers(), { ACCESS_SKIP: "1" }), true)
 })

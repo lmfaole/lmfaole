@@ -2,6 +2,7 @@
 // the folder it is in, so it says so with Service-Worker-Allowed. It handles /start and what is under /start/, never /startfoo; a page is kept by its address with the query.
 // Other apps share the origin (lmfaole.party/medier, /design), so on an update it deletes only its own old caches (startside-…).
 // A page shows the GitHub data of the username in this browser's cookie, so the kept pages are emptied when the username form is sent.
+// Logg's pages (/start/logg) are never kept: an old copy of a list or a form would show what has since been changed as it was.
 
 const SCRIPT = String.raw`
 const STATIC = "startside-static-v1"
@@ -50,12 +51,13 @@ self.addEventListener("fetch", (event) => {
   }
 
   // A page: always fresh from the network, which may send it to the Cloudflare Access login. The last good copy of each page
-  // is kept by its address, and shown when there is no network (else the front page, else the offline page).
+  // is kept by its address, and shown when there is no network (else the front page, else the offline page); Logg's, only the offline page.
   if (request.mode === "navigate") {
+    const log = url.pathname === "/start/logg" || url.pathname.startsWith("/start/logg/")
     event.respondWith(
       fetch(request)
         .then((response) => {
-          if (response.ok && response.type === "basic" && url.pathname !== OFFLINE) {
+          if (response.ok && response.type === "basic" && url.pathname !== OFFLINE && !log) {
             const copy = response.clone()
             caches.open(PAGES).then((cache) => cache.put(url.pathname + url.search, copy))
           }
@@ -63,6 +65,7 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(async () => {
           const cache = await caches.open(PAGES)
+          if (log) return (await cache.match(OFFLINE)) ?? Response.error()
           return (await cache.match(url.pathname + url.search)) ?? (await cache.match("/start")) ?? (await cache.match(OFFLINE)) ?? Response.error()
         }),
     )
