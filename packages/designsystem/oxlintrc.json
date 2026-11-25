@@ -1,5 +1,8 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "$schema": "../../node_modules/oxlint/configuration_schema.json",
+  // The repository's lint (`../../oxlintrc.json`, what `npm run lint` at the root holds everything to) and, on top, the design system's own
+  // stricter rules below. A rule both have is set here as the design system wants it.
+  "extends": ["../../oxlintrc.json"],
   // `plugins` replaces oxlint's default list, it does not extend it. The
   // list below is therefore the whole set: dropping a name here silently
   // switches off every rule that plugin owns. `unicorn` was missing until

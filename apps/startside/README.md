@@ -44,7 +44,7 @@ checked by `githubUser`), never for the token's owner (`@me`, `viewer`). The wat
 
 **Public data only**, in layers, so a token that could read more still shows nothing private:
 
-- **The token** (`GITHUB_TOKEN`, a secret on the relay `startside-upstream`, and on `startside` only if it is ever set there) is a
+- **The token** (`GITHUB_TOKEN`, a secret on the relay `medier-upstream`, and on `startside` only if it is ever set there) is a
   fine-grained token with **«Public repositories (read-only)»** and nothing else: it can read only what anyone can.
 - **Every search** goes through `publicSearch` (`lib/github-query.ts`, tested), which refuses a query without `is:public`, and uses the
   name (`author:<u>`, `review-requested:<u>`, `assignee:<u>`, `involves:<u>`, Dependabot's `user:<u>`; `userQueries`, `repliesQuery`).
@@ -97,7 +97,7 @@ the summary, in the morning, the workday, the evening and the weekend, but not a
 | Kartverket (`ws.geonorge.no/kommuneinfo/v1/punkt`) | The municipality number at the position, for NVE's warnings by municipality. Kept a week | none |
 | Hva koster strømmen.no (`/api/v1/prices/YYYY/MM-DD_NOx.json`) | Today's spot price by the hour (quarter hours averaged), the price now and the cheapest three hours left (`lib/power.ts`), without VAT and grid rent, as the page says. The price area is the one chosen on Strøm (`?omrade=NO1`–`NO5`, carried on by the links between the power pages), else guessed from the position (an estimate, borders follow the grid), else NO1. Every hour. Credited «Strømpriser levert av Hva koster strømmen.no» wherever a price is shown | none |
 | Oslo Bysykkel (GBFS, `gbfs.urbansharing.com/oslobysykkel.no/…`) | Stations within 500 m with bikes and free docks (`lib/bikes.ts`): status every minute, stations every hour; not asked more than 25 km from Oslo. The relay sends the `Client-Identifier` it asks for. NLOD, credited under the list | none |
-| GitHub | For `GITHUB_USER` (above), public repositories only: pull requests awaiting their review, their open pull requests, issues assigned to them | `GITHUB_USER`, `GITHUB_WATCH_REPOS`, `GITHUB_EXCLUDE_ORGS` in `wrangler.jsonc`; secret `GITHUB_TOKEN` (public repositories, read-only) on `startside-upstream` |
+| GitHub | For `GITHUB_USER` (above), public repositories only: pull requests awaiting their review, their open pull requests, issues assigned to them | `GITHUB_USER`, `GITHUB_WATCH_REPOS`, `GITHUB_EXCLUDE_ORGS` in `wrangler.jsonc`; secret `GITHUB_TOKEN` (public repositories, read-only) on the relay `medier-upstream` |
 
 **The sun and the northern lights.** The sunrise, the sunset, the polar night and the midnight sun are worked out here (`lib/sun.ts`, NOAA's
 solar formulas), with no request: the meteogram on Vær shades the dark hours and marks the sunrise and sunset (`Meteogram dark`), «Sola i dag»
@@ -207,22 +207,22 @@ for the stations, the forecast and what goes with it (warnings, radar, air, moon
 
 - **`startside`** (`worker.mjs`, `wrangler.jsonc`): the page, on the route `lmfaole.party/start*`. The static files are
   embedded in the script (`scripts/embed-assets.mjs`), so a deploy is one upload.
-- **`startside-upstream`** (`upstream/`): a relay. A Worker on the `lmfaole.party` zone gets 525 when it fetches GitHub
+- **`medier-upstream`** (`workers/relay` at the repository's root): the relay this page shares with medier. A Worker on the `lmfaole.party` zone gets 525 when it fetches GitHub
   (and, earlier, other origins outside Cloudflare) itself, so the page fetches every source through it: through the **service binding** `UPSTREAM`
   (`services` in `wrangler.jsonc`, a call inside Cloudflare, `lib/relay.ts`), and over its workers.dev address `UPSTREAM_URL`
-  (`workers_dev: true` in `upstream/wrangler.jsonc`) where the binding answers 520–530 or throws. That fallback is needed: called through the binding
+  where the binding answers 520–530 or throws. That fallback is needed: called through the binding
   during a request to lmfaole.party, the relay's own fetch of api.github.com has answered 525 (every GitHub part showed «GitHub svarte 525»),
   while the cron's calls through the same binding, and MET's, worked. The relay marks what it passes on with `X-Relay`, and the page logs each fallback
   («Reléet via binding svarte 525 for api.github.com (fra kilden bak reléet); prøver adressen»), so `wrangler tail startside` shows which it was.
-  The deploy puts the relay up first, so the binding always has a Worker to point to. It takes
-  only GET (and POST of GraphQL queries, never mutations, to GitHub and Entur, and Spotify's token form), only those hosts (MET, GitHub, Nominatim, Entur, Spotify, NOAA, hvakosterstrommen.no, NVE, Kartverket, Oslo Bysykkel's GBFS, which it gives the `Client-Identifier` `lmfaole-startside`), and only with the shared secret `UPSTREAM_KEY` (set on both Workers). It holds `GITHUB_TOKEN`. It passes `If-Modified-Since` on and `Expires`, `Last-Modified` and a 304 back, so a source with nothing new need not send it again.
+  It is deployed by its own workflow (`relay.yml`) and only ever gains hosts, so the page may go out before or after it. It takes
+  only GET (and POST of GraphQL queries, never mutations, to GitHub and Entur, and Spotify's token form), only the hosts in its table (here: MET, GitHub, Nominatim, Entur, Spotify, NOAA, hvakosterstrommen.no, NVE, Kartverket, Oslo Bysykkel's GBFS, which it gives the `Client-Identifier` `lmfaole-startside`; and medier's), and only with the shared secret `UPSTREAM_KEY`. It holds `GITHUB_TOKEN`. It passes `If-Modified-Since` on and `Expires`, `Last-Modified` and a 304 back, so a source with nothing new need not send it again. A new source is a host in `workers/relay/src/routes.ts`, out before the page asks it.
 
 Every source is fetched by `askSource` (`lib/relay.ts`), for the pages (`lib/upstream.ts`) and the cron (`worker.mjs`) alike, and a test
 (`lib/relay.test.ts`) fails on a `fetch(` anywhere else on the server. Where `UPSTREAM_KEY` is set, a source is never fetched directly: with neither the
 binding nor the address, the part shows «Reléet er ikke tilgjengelig …» instead. Only `next dev` with no `UPSTREAM_KEY` fetches the sources directly.
 
 The relay checks the shared key on every call, constant-time: it is what keeps its workers.dev address closed to others.
-Nothing else uses it (the other lmfaole apps have relays of their own).
+medier asks it with the same key; a new key goes to the relay, medier and this page at once, with no call refused (`npm run rotate-key -w workers/relay`, workers/relay/README.md «Nøkkelen»).
 
 ### Snapshot (scheduled job and KV)
 
@@ -291,8 +291,8 @@ of the page, so it opens without network (registered by `components/service-work
 
 ## Deploy
 
-`.github/workflows/startside.yml` (at the repository's root) builds and type-checks every push. On the default branch it also deploys both Workers, the relay first
-(the page's service binding points to it), once the repository has the secrets `CLOUDFLARE_API_TOKEN` (Workers Scripts: Edit, Workers
+`.github/workflows/startside.yml` (at the repository's root, the steps of `astro-app.yml` with `build: build:worker`) tests, type-checks and builds every push. On the default branch it also deploys the page
+(the relay is deployed by `relay.yml`), once the repository has the secrets `CLOUDFLARE_API_TOKEN` (Workers Scripts: Edit, Workers
 Routes: Edit on `lmfaole.party`, **Workers KV Storage: Edit**, for the snapshot's namespace, which `wrangler deploy` creates the first time
 since `kv_namespaces` has no id) and `CLOUDFLARE_ACCOUNT_ID`; without them the run only builds. `npm run deploy` deploys the page from a machine.
 
@@ -311,8 +311,8 @@ Secrets on the Workers, set with `wrangler secret put` or in the dashboard as **
 
 | Worker | Secret |
 | --- | --- |
-| `startside` | `UPSTREAM_KEY` |
-| `startside-upstream` | `UPSTREAM_KEY` (the same), `GITHUB_TOKEN`: a **fine-grained token with «Public repositories (read-only)»** and no other access. The page is open, so the token must not be able to read anything private (the code checks too: «Open and public») |
+| `startside` | `UPSTREAM_KEY` (set by `npm run rotate-key -w workers/relay`, with the relay's and medier's) |
+| `medier-upstream` (the relay, `workers/relay`) | `UPSTREAM_KEY` (the same), `GITHUB_TOKEN`: a **fine-grained token with «Public repositories (read-only)»** and no other access. The page is open, so the token must not be able to read anything private (the code checks too: «Open and public») |
 
 ## Develop
 
@@ -321,7 +321,7 @@ cp .dev.vars.example .dev.vars   # add GITHUB_TOKEN (or export it)
 npm run dev
 npm run preview                  # the Worker build, locally
 npm run deploy
-wrangler secret put GITHUB_TOKEN --config upstream/wrangler.jsonc
+npx wrangler secret put GITHUB_TOKEN --config ../../workers/relay/wrangler.jsonc
 ```
 
 ### Mock data (no keys, no network)

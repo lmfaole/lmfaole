@@ -18,9 +18,11 @@ Kontoens eneste cron. Gratisplanen tillater fem cron-triggere per konto, så all
 
 1. Gi workeren en `scheduled(controller, env, ctx)`, og sett `"triggers": { "crons": [] }` i dens `wrangler.jsonc`.
 2. Legg til en service binding i `wrangler.jsonc` her, og en linje i `src/jobs.ts`. Cronen må treffe et helt kvarter (:00, :15, :30, :45). Trenger en jobb oftere, endre cronen i `wrangler.jsonc` til `*/5`.
-3. Deploy den nye workeren først, så denne: en service binding til en worker som ikke finnes, stopper deployen. Kjør så `npm run deploy`.
+3. Deploy den nye workeren først, så denne: en service binding til en worker som ikke finnes, stopper deployen. Hver worker har sin egen workflow, og de går samtidig, så den nye workeren pushes (og deployes) før bindingen her. For hånd: `npm run deploy` der, så her.
 
 ## Bruk
+
+En push til `main` som endrer workeren (eller `packages/worker`) blir testet, typesjekket, lintet og deployet av `.github/workflows/scheduler.yml` (stegene er `worker.yml` sine), med `npm run deploy` som under. Hemmelighetene blir liggende på workeren.
 
 ```sh
 npm test

@@ -1,6 +1,6 @@
 /** The read-only API. Every answer is cached for a while: D1's free plan counts every row a query reads. */
 
-import type { Database } from "./db.ts"
+import type { Database } from "@lmfaole/worker/d1"
 
 const json = (body: unknown, status = 200): Response =>
   new Response(JSON.stringify(body, null, 2), { status, headers: { "Content-Type": "application/json; charset=utf-8", "Access-Control-Allow-Origin": "*", "Cache-Control": "public, max-age=900" } })

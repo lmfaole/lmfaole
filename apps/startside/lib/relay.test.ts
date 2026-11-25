@@ -44,7 +44,7 @@ test("the binding is asked first, with the key and without the page's Authorizat
   const response = await viaRelay("https://api.github.com/graphql", { method: "POST", body: "{}", headers: { Authorization: "Bearer t" } }, { binding: binding(200), url: "https://relay.example/", key: "k" }, byUrl)
   assert.equal(await response?.text(), "b")
   assert.equal(calls.length, 1)
-  assert.equal(calls[0].url, "https://startside-upstream/api.github.com/graphql")
+  assert.equal(calls[0].url, "https://relay.internal/api.github.com/graphql")
   assert.equal(calls[0].init.method, "POST")
   assert.deepEqual(calls[0].init.headers, { "X-Upstream-Key": "k" })
 })
@@ -64,10 +64,10 @@ test("a 52x or a throw from the binding goes on to the address; any other answer
 
 test("GitHub answering 525 through the binding goes on to the address (the live failure: no address meant «GitHub svarte 525»)", async () => {
   calls.length = 0
-  const relayed525 = { fetch: async (url: string, init?: RequestInit) => (calls.push({ via: "binding", url, init: init ?? {} }), new Response("", { status: 525, headers: { "X-Relay": "startside-upstream" } })) }
+  const relayed525 = { fetch: async (url: string, init?: RequestInit) => (calls.push({ via: "binding", url, init: init ?? {} }), new Response("", { status: 525, headers: { "X-Relay": "lmfaole-relay" } })) }
   const response = await askSource("https://api.github.com/search/issues?q=is%3Apublic", {}, { binding: relayed525, url: "https://relay.example", key: "k" }, byUrl)
   assert.equal(response.status, 200)
-  assert.deepEqual(calls.map((call) => call.url), ["https://startside-upstream/api.github.com/search/issues?q=is%3Apublic", "https://relay.example/api.github.com/search/issues?q=is%3Apublic"])
+  assert.deepEqual(calls.map((call) => call.url), ["https://relay.internal/api.github.com/search/issues?q=is%3Apublic", "https://relay.example/api.github.com/search/issues?q=is%3Apublic"])
 })
 
 test("without an address, the binding's answer or error stands", async () => {
@@ -80,7 +80,7 @@ test("without an address, the binding's answer or error stands", async () => {
 test("nothing on the server fetches a source except through askSource", () => {
   const root = join(import.meta.dirname, "..")
   const allowed = new Set(["app/sw.js/route.ts"])
-  const files: string[] = ["worker.mjs", "upstream/worker.js"]
+  const files: string[] = ["worker.mjs"]
   const walk = (dir: string): void => {
     for (const name of readdirSync(join(root, dir))) {
       const path = join(dir, name)
@@ -91,8 +91,9 @@ test("nothing on the server fetches a source except through askSource", () => {
   for (const dir of ["lib", "app", "components"]) walk(dir)
   // A call to the global `fetch`, not a method (`binding.fetch(`, `next.fetch(`) nor a method's own definition (`async fetch(request, env)`).
   const calls = (text: string): boolean => text.split("\n").some((line) => !/^\s*(async\s+)?fetch\(/.test(line) && /(?<![.\w])fetch\(/.test(line))
-  const offenders = files.filter((file) => !allowed.has(file) && file !== "upstream/worker.js" && calls(readFileSync(join(root, file), "utf8")))
+  const offenders = files.filter((file) => !allowed.has(file) && calls(readFileSync(join(root, file), "utf8")))
   assert.deepEqual(offenders, [])
-  // The relay itself is where the sources are fetched; it is the only other place.
-  assert.ok(calls(readFileSync(join(root, "upstream/worker.js"), "utf8")))
+  // The check finds a call where there is one, and not a method's.
+  assert.ok(calls("  const response = await fetch(url)"))
+  assert.ok(!calls("  return relay.binding.fetch(path)\n  async fetch(request, env) {"))
 })

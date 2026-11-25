@@ -17,7 +17,7 @@ function lb(listens: Listen[]) {
     const url = new URL(input)
     const min = Number(url.searchParams.get("min_ts")), count = Number(url.searchParams.get("count"))
     calls.push(min)
-    const page = listens.filter((l) => l.listened_at > min).sort((a, b) => a.listened_at - b.listened_at).slice(0, count).reverse()
+    const page = listens.filter((l) => l.listened_at > min).toSorted((a, b) => a.listened_at - b.listened_at).slice(0, count).toReversed()
     return Response.json({ payload: { listens: page } })
   }
   return { fetch, calls }

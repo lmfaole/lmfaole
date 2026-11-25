@@ -51,4 +51,5 @@ En Cloudflare Worker som hver mandag kl. 05:00 UTC tar sangene du har likt på S
 ## Utvikling
 
 - `npm test` og `npm run typecheck`.
+- En push til `main` som endrer workeren (eller `packages/worker`) blir testet, typesjekket, lintet og deployet av `.github/workflows/likes-sync.yml` (stegene er `worker.yml` sine). Hemmelighetene blir liggende på workeren.
 - `npm run dev` starter workeren lokalt. Med en `.dev.vars` som har de seks hemmelighetene, kjører `curl "http://localhost:8787/__scheduled?cron=0+5+*+*+1"` én synk.

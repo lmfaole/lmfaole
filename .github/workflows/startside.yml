@@ -1,12 +1,13 @@
 name: startside
 
-# Every push that touches the app is built and type-checked; a push to the default branch, or a manual run, is also deployed to
-# Cloudflare Workers (lmfaole.party/start).
+# Every push that touches the app is tested, type-checked and built; a push to the default branch, or a manual run, is also deployed to
+# Cloudflare Workers (lmfaole.party/start). The steps are `astro-app.yml`'s, with the OpenNext build of the Worker. The sources are asked through the
+# relay (`workers/relay`, deployed by `relay.yml`).
 on:
   push:
-    paths: [apps/startside/**, packages/designsystem/**, package-lock.json, .github/workflows/startside.yml]
+    paths: [apps/startside/**, packages/designsystem/**, packages/web/**, package-lock.json, .github/workflows/startside.yml, .github/workflows/astro-app.yml]
   pull_request:
-    paths: [apps/startside/**, packages/designsystem/**, package-lock.json, .github/workflows/startside.yml]
+    paths: [apps/startside/**, packages/designsystem/**, packages/web/**, package-lock.json, .github/workflows/startside.yml, .github/workflows/astro-app.yml]
   workflow_dispatch:
 
 concurrency:
@@ -16,35 +17,10 @@ concurrency:
 permissions:
   contents: read
 
-defaults:
-  run:
-    working-directory: apps/startside
-
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
-          cache: npm
-      - run: npm ci
-        working-directory: .
-      - run: npm run skills:check
-      - run: npm run typecheck
-      - run: npm test
-      - run: npm run build:worker
-
-      - name: Deploy
-        if: github.event_name != 'pull_request' && github.ref_name == github.event.repository.default_branch
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo "::notice::CLOUDFLARE_API_TOKEN is not set as a repository secret, so this run only builds."
-            exit 0
-          fi
-          npx wrangler deploy -c upstream/wrangler.jsonc
-          npx wrangler deploy
+    uses: ./.github/workflows/astro-app.yml
+    with:
+      app: apps/startside
+      build: build:worker
+    secrets: inherit

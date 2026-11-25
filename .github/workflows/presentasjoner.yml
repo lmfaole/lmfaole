@@ -5,9 +5,9 @@ name: presentasjoner
 # lmfaole.party/presentasjoner and lmfaole.party/presentasjoner/*). The PDFs in R2 are put there by hand (`scripts/export_pdf.sh`). The steps are `astro-app.yml`'s.
 on:
   push:
-    paths: [apps/presentasjoner/**, packages/designsystem/**, packages/web/**, package-lock.json, .github/workflows/presentasjoner.yml, .github/workflows/astro-app.yml]
+    paths: [apps/presentasjoner/**, packages/designsystem/**, packages/web/**, packages/worker/**, package-lock.json, .github/workflows/presentasjoner.yml, .github/workflows/astro-app.yml]
   pull_request:
-    paths: [apps/presentasjoner/**, packages/designsystem/**, packages/web/**, package-lock.json, .github/workflows/presentasjoner.yml, .github/workflows/astro-app.yml]
+    paths: [apps/presentasjoner/**, packages/designsystem/**, packages/web/**, packages/worker/**, package-lock.json, .github/workflows/presentasjoner.yml, .github/workflows/astro-app.yml]
   workflow_dispatch:
 
 concurrency:

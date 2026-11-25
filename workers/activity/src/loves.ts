@@ -1,7 +1,7 @@
 /** Every track loved on Last.fm. New loves from the first pages (newest first) until one is older than the newest stored; until the start is reached, `backfillPages` further pages each run. New loves only push older ones to later pages, so the backfill may see some twice but misses none; the key keeps them single. Unloving isn't followed. */
 
-import type { Database, Statement } from "./db.ts"
-import type { Fetch } from "./listenbrainz.ts"
+import type { Database, Statement } from "@lmfaole/worker/d1"
+import type { Fetch } from "@lmfaole/worker/fetch"
 
 export interface LovesOptions {
   user: string

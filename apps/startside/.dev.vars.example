@@ -1,4 +1,4 @@
-# Copy to .dev.vars for local development. In production the token is a secret on the relay (`startside-upstream`).
+# Copy to .dev.vars for local development. In production the token is a secret on the relay (`workers/relay`, the Worker `medier-upstream`).
 # A fine-grained token with «Public repositories (read-only)» and no other access: the page is open to anyone, so it must not be able to read anything private.
 GITHUB_TOKEN=
 

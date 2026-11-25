@@ -17,7 +17,7 @@ const dir = mkdtempSync(join(tmpdir(), "listens-"))
 const d1 = (...args: string[]): string => execFileSync("npx", ["wrangler", "d1", "execute", "music", "--remote", "-y", ...args], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] })
 const literal = (value: unknown): string => (value === null || value === undefined ? "NULL" : typeof value === "number" ? String(value) : `'${String(value).replaceAll("'", "''")}'`)
 const parts = `${UPSERT};`.split("?")
-const insert = (values: unknown[]): string => parts.reduce((sql, part, i) => sql + part + (i < values.length ? literal(values[i]) : ""), "")
+const insert = (params: unknown[]): string => parts.reduce((sql, part, i) => sql + part + (i < params.length ? literal(params[i]) : ""), "")
 const setCursor = (cursor: number) => `INSERT INTO state (key, value) VALUES ('cursor', '${cursor}') ON CONFLICT (key) DO UPDATE SET value = excluded.value;`
 
 const stored = JSON.parse(d1("--json", "--command", "SELECT value FROM state WHERE key = 'cursor'")) as { results: { value: string }[] }[]

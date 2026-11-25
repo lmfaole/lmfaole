@@ -21,6 +21,8 @@ import { dirname, join, relative, resolve } from "node:path"
 import { createInterface } from "node:readline/promises"
 import { fileURLToPath } from "node:url"
 import { parseArgs } from "node:util"
+import { parseEnvFile } from "@lmfaole/worker/env"
+
 import { parseJsonc, readConfig, type Binding } from "./cf-audit.ts"
 import { rowsWrittenToday } from "./import-dump.ts"
 
@@ -91,7 +93,7 @@ export const importDays = (need: number, used: number, maxDay = MAX_DAY): number
 }
 
 /** The steps to run: all, those from `from` on, or the `only` ones (in the steps' own order). */
-export function selectSteps(names: readonly string[], o: { from?: string; only?: string }): string[] {
+export function selectSteps(names: readonly string[], o: { from?: string | undefined; only?: string | undefined }): string[] {
   if (o.from && o.only) throw new Error("--from and --only don't go together")
   const known = (name: string): string => {
     if (!names.includes(name)) throw new Error(`no step "${name}"; the steps are ${names.join(", ")}`)
@@ -135,19 +137,8 @@ export const reportedToday = (output: string): number | undefined => {
   return last ? count(last[1]!) : undefined
 }
 
-/** KEY=value lines (`export`, quotes and comments allowed). */
-export function parseEnv(text: string): Record<string, string> {
-  const out: Record<string, string> = {}
-  for (const line of text.split("\n")) {
-    const m = line.match(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$/)
-    if (!m) continue
-    let v = m[2]!
-    if (/^(["']).*\1$/.test(v)) v = v.slice(1, -1)
-    else v = v.replace(/\s+#.*$/, "")
-    out[m[1]!] = v
-  }
-  return out
-}
+/** KEY=value lines (`export`, quotes and comments allowed), as every script reads them (`@lmfaole/worker/env`). */
+export const parseEnv = (text: string): Record<string, string> => Object.fromEntries(parseEnvFile(text))
 
 export interface Obj {
   key: string
@@ -196,7 +187,7 @@ function capture(c: Cmd): string {
     return execFileSync(BIN[c.bin], c.args, { cwd: c.cwd ?? ROOT, encoding: "utf8", maxBuffer: 1 << 28, stdio: ["ignore", "pipe", "pipe"] })
   } catch (error) {
     const e = error as { stdout?: string; stderr?: string }
-    throw new Error(`${show(c)} failed:\n${`${e.stdout ?? ""}\n${e.stderr ?? ""}`.trim().split("\n").slice(-15).join("\n")}`)
+    throw new Error(`${show(c)} failed:\n${`${e.stdout ?? ""}\n${e.stderr ?? ""}`.trim().split("\n").slice(-15).join("\n")}`, { cause: error })
   }
 }
 

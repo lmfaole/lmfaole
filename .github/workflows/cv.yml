@@ -4,9 +4,9 @@ name: cv
 # Cloudflare Workers (the Worker `work`, lmfaole.party/cv and lmfaole.party/cv/*). The steps are `astro-app.yml`'s.
 on:
   push:
-    paths: [apps/cv/**, packages/designsystem/**, packages/web/**, packages/db/site/**, package-lock.json, .github/workflows/cv.yml, .github/workflows/astro-app.yml]
+    paths: [apps/cv/**, packages/designsystem/**, packages/web/**, packages/worker/**, packages/db/site/**, package-lock.json, .github/workflows/cv.yml, .github/workflows/astro-app.yml]
   pull_request:
-    paths: [apps/cv/**, packages/designsystem/**, packages/web/**, packages/db/site/**, package-lock.json, .github/workflows/cv.yml, .github/workflows/astro-app.yml]
+    paths: [apps/cv/**, packages/designsystem/**, packages/web/**, packages/worker/**, packages/db/site/**, package-lock.json, .github/workflows/cv.yml, .github/workflows/astro-app.yml]
   workflow_dispatch:
 
 concurrency:

@@ -1,7 +1,8 @@
 /** Copies new listens from ListenBrainz into D1. The cursor is the newest `listened_at` stored; once caught up, each run starts `overlap` seconds before it, so listens that reach ListenBrainz late (offline players, MusicBrainz matches added afterwards) still come in. While still filling in the past it starts at the cursor: a few busy days hold more plays than a run fetches, and starting before them would never get past them. */
 
-import type { Database } from "./db.ts"
-import { listensAfter, row, type Fetch } from "./listenbrainz.ts"
+import type { Database } from "@lmfaole/worker/d1"
+import type { Fetch } from "@lmfaole/worker/fetch"
+import { listensAfter, row } from "./listenbrainz.ts"
 
 export interface Options {
   user: string

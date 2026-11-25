@@ -15,8 +15,14 @@ test("push sets what it finds and names what it lacks; nothing else in the files
   assert.ok(!missing.some((setting) => setting.name === "DISCOGS_KEY"))
 })
 
-test("what is optional (Spotify, the posters, the relay's address beside its binding) or made by the push (the relay's key) is not required of the files", () => {
+test("what is optional (Spotify, the posters, the relay's address beside its binding) or not the push's (the relay's key) is not required of the files", () => {
   const names = required(SETTINGS).map((setting) => setting.name)
   assert.ok(!names.some((name) => name.startsWith("SPOTIFY_") || name === "TMDB_API_KEY" || name === "UPSTREAM_KEY" || name === "UPSTREAM_URL"))
   assert.ok(names.includes("LASTFM_API_KEY") && names.includes("CLOUDFLARE_API_TOKEN"))
+})
+
+test("the relay's key is never set by a push, also when a file has it: it is the relay's rotation's, for every Worker that shares it at once", () => {
+  const { set, missing } = plan(SETTINGS, new Map([["UPSTREAM_KEY", "k"], ["LASTFM_API_KEY", "l"]]))
+  assert.deepEqual(set.map(({ setting }) => setting.name), ["LASTFM_API_KEY"])
+  assert.ok(!missing.some((setting) => setting.name === "UPSTREAM_KEY"))
 })

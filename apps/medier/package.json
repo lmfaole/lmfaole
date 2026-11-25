@@ -10,7 +10,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro build && wrangler dev",
-    "deploy": "astro build && wrangler deploy --config upstream/wrangler.jsonc && wrangler deploy",
+    "deploy": "astro build && wrangler deploy",
     "test": "node --test",
     "typecheck": "tsc --noEmit",
     "skills": "designsystem-skills",

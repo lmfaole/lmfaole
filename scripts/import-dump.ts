@@ -177,18 +177,18 @@ export function matchFilms(log: LoggedFilm[], seen: Viewing[]): Map<number, stri
   }
   const dated = log.filter((f) => f.watched_on !== null)
   for (const f of dated) {
-    const v = seen.find((v) => !used.has(v.ref) && v.days.includes(f.watched_on!) && sameFilm(f, v))
+    const v = seen.find((view) => !used.has(view.ref) && view.days.includes(f.watched_on!) && sameFilm(f, view))
     if (v) take(f, v)
   }
   for (const day of new Set(dated.filter((f) => !out.has(f.id)).map((f) => f.watched_on!))) {
     const films = dated.filter((f) => !out.has(f.id) && f.watched_on === day)
     const views = seen.filter((v) => !used.has(v.ref) && v.days.includes(day))
     const [f] = films, [v] = views
-    const one = new Set(views.map((v) => v.tmdb_id ?? norm(v.title))).size === 1
+    const one = new Set(views.map((view) => view.tmdb_id ?? norm(view.title))).size === 1
     if (films.length === 1 && one && f && v && (f.year === null || v.year === null || Math.abs(f.year - v.year) <= 1)) take(f, v)
   }
-  for (const f of log.filter((f) => f.watched_on === null)) {
-    const v = seen.find((v) => !used.has(v.ref) && sameFilm(f, v))
+  for (const f of log.filter((film) => film.watched_on === null)) {
+    const v = seen.find((view) => !used.has(view.ref) && sameFilm(f, view))
     if (v) take(f, v)
   }
   return out
@@ -463,7 +463,7 @@ export const SPECS: Spec[] = [
     lookups: { loves: "SELECT artist, track FROM loves" },
     prepare: (ctx) => {
       const have = new Set(ctx.lookup("loves").map((r) => `${fold(r.artist)}\u0000${fold(r.track)}`))
-      const loved = [...ctx.read("music/lastfm_loved")].sort((a, b) => Number(a.loved_at) - Number(b.loved_at))
+      const loved = [...ctx.read("music/lastfm_loved")].toSorted((a, b) => Number(a.loved_at) - Number(b.loved_at))
       return firstOf(
         loved.map((r) => (have.has(`${fold(r.artist_name)}\u0000${fold(r.track_name)}`) ? null : [text(r.artist_name), text(r.track_name), num(r.loved_at)])),
         (row) => `${fold(row[0])}\u0000${fold(row[1])}`,
@@ -492,7 +492,7 @@ export const horizon = (ctx: Context): number => Number(ctx.lookup("cursor")[0]?
 export function listenRows(listens: Rec[], estimates: Rec[], inD1: Map<string, number[]>, now: number): (Row | null)[] {
   const key = (at: unknown, artist: unknown, track: unknown) => `${at}\u0000${fold(artist)}\u0000${fold(track)}`
   const guessed = new Set(estimates.map((e) => key(e.listened_at, e.artist_name, e.track_name)))
-  const sorted = [...listens].sort(
+  const sorted = [...listens].toSorted(
     (a, b) => Number(a.listened_at) - Number(b.listened_at) || fold(a.artist_name).localeCompare(fold(b.artist_name)) || fold(a.track_name).localeCompare(fold(b.track_name)),
   )
   return firstOf(
@@ -590,7 +590,7 @@ function wrangler(args: string[]): string {
     return execFileSync(join(ROOT, "node_modules/.bin/wrangler"), args, { cwd: ROOT, encoding: "utf8", maxBuffer: 1 << 30, stdio: ["ignore", "pipe", "pipe"] })
   } catch (error) {
     const e = error as { stdout?: string; stderr?: string }
-    throw new Error(`wrangler ${args.slice(0, 3).join(" ")} failed:\n${e.stdout ?? ""}\n${e.stderr ?? ""}`)
+    throw new Error(`wrangler ${args.slice(0, 3).join(" ")} failed:\n${e.stdout ?? ""}\n${e.stderr ?? ""}`, { cause: error })
   }
 }
 

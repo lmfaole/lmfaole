@@ -9,10 +9,15 @@ interface Props {
   app: string
   /** As `Document`'s. */
   appleTouchIcon?: boolean
+  /** As `Document`'s. */
+  favicon?: boolean
+  /** As `Document`'s. */
+  attributes?: Record<string, string> | undefined
 }
-const { app, appleTouchIcon = false } = Astro.props
+const { app, appleTouchIcon = false, favicon = true, attributes } = Astro.props
 ---
 
-<Document title={`Siden finnes ikke – ${app}`} appleTouchIcon={appleTouchIcon}>
+<Document title={`Siden finnes ikke – ${app}`} appleTouchIcon={appleTouchIcon} favicon={favicon} attributes={attributes}>
+  <slot name="head" slot="head" />
   <NotFoundPage home={import.meta.env.BASE_URL} />
 </Document>

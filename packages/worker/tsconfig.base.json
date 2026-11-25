@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  // The strictness every TypeScript project in the repository shares, and how its code is written (node runs the .ts as it is: imports keep their
+  // ending, types only). A project's own tsconfig adds its target, lib, module and files: tsconfig.worker.json here for the Workers, packages/web's
+  // tsconfig.app.json for the Astro apps. A package may be stricter, never looser.
+  //
+  // It lives in this package, not at the root, so a shared tsconfig can name it as `@lmfaole/worker/tsconfig.base.json`: Vite (an app's build)
+  // reads a tsconfig through the node_modules link without resolving it, where a path up to the root ends in node_modules/. The root's
+  // tsconfig.base.json is this file, for the projects at the root (the scripts, the design system).
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+    "noEmit": true,
+    "skipLibCheck": true
+  }
+}

@@ -12,8 +12,14 @@
     "node": ">=24"
   },
   "scripts": {
-    "test": "npm run test --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present",
+    "check": "npm run lint && npm run typecheck && npm test && npm run skills:check",
+    "lint": "oxlint -c oxlintrc.json && npm run lint --workspaces --if-present",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "test": "npm run test --workspaces --if-present && npm run test:scripts",
+    "test:scripts": "node --test \"scripts/*.test.ts\"",
+    "typecheck": "npm run typecheck --workspaces --if-present && tsc -p scripts",
+    "skills:check": "npm run skills:check --workspaces --if-present",
     "hooks": "git config core.hooksPath .githooks",
     "cf:audit": "node scripts/cf-audit.ts",
     "rollout": "node scripts/rollout.ts",
@@ -23,5 +29,11 @@
     "@opennextjs/cloudflare": {
       "glob": "^14.0.6"
     }
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "oxfmt": "^0.79.0",
+    "oxlint": "^1.94.0",
+    "typescript": "~7.0.2"
   }
 }

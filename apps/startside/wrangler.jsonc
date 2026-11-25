@@ -9,7 +9,10 @@
   "preview_urls": false,
   // Workers AI, for the summaries: only the cron job calls it (lib/summaries.ts, at most two a run); the pages read them from KV.
   "ai": { "binding": "AI" },
-  // The relay (upstream/), called inside Cloudflare, with its workers.dev address UPSTREAM_URL as the fallback (lib/relay.ts). Deployed first (startside.yml).
+  // The relay medier and this app share (workers/relay at the repository's root, the Worker medier-upstream), called inside Cloudflare, with its workers.dev
+  // address UPSTREAM_URL as the fallback (lib/relay.ts). Deployed by its own workflow (relay.yml); it only ever gains hosts, so the order does not matter.
+  // TODO: still the old relay `startside-upstream` until the shared one (medier-upstream) has the secret GITHUB_TOKEN; then switch the binding and UPSTREAM_URL
+  // to medier-upstream and delete startside-upstream (README «Secrets»).
   "services": [{ "binding": "UPSTREAM", "service": "startside-upstream" }],
   // The snapshot and the summaries the cron fills (lib/snapshot.ts, lib/summaries.ts). No id: wrangler deploy creates the namespace the first time (automatic provisioning).
   "kv_namespaces": [{ "binding": "SNAPSHOT" }],

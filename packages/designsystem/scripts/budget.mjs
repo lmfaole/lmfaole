@@ -48,7 +48,7 @@ const attributes = (html, tag, attribute) => [...html.matchAll(new RegExp(`<${ta
 
 let failed = false
 const rows = []
-for (const page of pages.sort()) {
+for (const page of pages.toSorted()) {
   const html = readFileSync(page, "utf8")
   const parts = [{ kind: "html", bytes: gzipped(page) }]
   const seen = new Set()

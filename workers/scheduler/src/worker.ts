@@ -1,6 +1,7 @@
 /** The Worker: the account's one cron (the free plan has five). Every quarter hour it calls `scheduled` on the Workers whose jobs are due (src/jobs.ts) through their service bindings, all at once, and fails the run if one of them failed. */
 
-import { matches } from "./cron.ts"
+import { matches } from "@lmfaole/worker/cron"
+
 import { JOBS, type Binding } from "./jobs.ts"
 
 /** A service binding: calling `scheduled` runs that Worker's own `scheduled(controller, env, ctx)` as a new invocation. */

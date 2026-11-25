@@ -77,7 +77,7 @@ test("every year from the first comes round in turn", () => {
   const sixHours = 6 * 3_600_000
   const start = Date.UTC(2026, 5, 1)
   const years = new Set(Array.from({ length: 9 }, (_, i) => yearOfRun(2018, start + i * sixHours)))
-  assert.deepEqual([...years].sort(), [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026])
+  assert.deepEqual([...years].toSorted(), [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026])
   assert.equal(yearOfRun(2026, start), 2026)
 })
 

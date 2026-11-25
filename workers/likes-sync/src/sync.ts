@@ -100,7 +100,7 @@ export async function sync(env: Env, store: Store, options: Options): Promise<Re
     return { loved: 0, left: 0, failed: 0, cursor: newest }
   }
 
-  const pending = (await likedSince(cursor, token, options)).reverse()
+  const pending = (await likedSince(cursor, token, options)).toReversed()
   const batch = pending.slice(0, options.limit)
   let handled = 0
   let loved = 0

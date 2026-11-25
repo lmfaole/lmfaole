@@ -1,7 +1,7 @@
 /** Trakt's watch history and ratings, read from the public profile (only the app's client id is needed). The history is filled two ways: new entries from a week before the newest stored, and, until it reaches the start, `backfillPages` older pages each run. */
 
-import type { Database, Statement } from "./db.ts"
-import type { Fetch } from "./listenbrainz.ts"
+import type { Database, Statement } from "@lmfaole/worker/d1"
+import type { Fetch } from "@lmfaole/worker/fetch"
 
 const API = "https://api.trakt.tv"
 

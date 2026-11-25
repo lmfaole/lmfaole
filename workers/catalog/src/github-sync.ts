@@ -2,7 +2,8 @@
  *  and the latest commit in each CV project's repository. A row is only written when GitHub says something new; a run writes a handful.
  *  Each step goes on when another fails, and the run fails at the end if one did, so the log shows it. */
 
-import { type Database, type Fetch, rowsWritten, type Statement } from "./db.ts"
+import { type Database, rowsWritten, type Statement } from "@lmfaole/worker/d1"
+import type { Fetch } from "@lmfaole/worker/fetch"
 import {
   CALENDAR_QUERY,
   commitsQuery,

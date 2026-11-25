@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import { parseJsonc, wranglerProblems } from "@lmfaole/web/conventions"
+import { parseJsonc, wranglerProblems } from "@lmfaole/worker/conventions"
 import { headersFileRules, SECURITY_HEADERS } from "@lmfaole/web/headers"
 
 import { appFiles, refusal, withReadmeRow } from "./new-app.ts"

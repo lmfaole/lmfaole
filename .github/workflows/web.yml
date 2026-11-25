@@ -5,9 +5,9 @@ name: web
 # from it. The apps that use it are built by their own workflows.
 on:
   push:
-    paths: [packages/web/**, scripts/new-app.ts, scripts/new-app.test.ts, apps/*/wrangler.jsonc, apps/*/astro.config.ts, apps/*/tsconfig.json, apps/*/package.json, package-lock.json, .github/workflows/web.yml]
+    paths: [packages/web/**, packages/worker/**, scripts/new-app.ts, scripts/new-app.test.ts, apps/*/wrangler.jsonc, apps/*/astro.config.ts, apps/*/tsconfig.json, apps/*/package.json, package-lock.json, .github/workflows/web.yml]
   pull_request:
-    paths: [packages/web/**, scripts/new-app.ts, scripts/new-app.test.ts, apps/*/wrangler.jsonc, apps/*/astro.config.ts, apps/*/tsconfig.json, apps/*/package.json, package-lock.json, .github/workflows/web.yml]
+    paths: [packages/web/**, packages/worker/**, scripts/new-app.ts, scripts/new-app.test.ts, apps/*/wrangler.jsonc, apps/*/astro.config.ts, apps/*/tsconfig.json, apps/*/package.json, package-lock.json, .github/workflows/web.yml]
 
 concurrency:
   group: web-${{ github.ref }}

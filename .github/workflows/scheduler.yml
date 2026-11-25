@@ -1,0 +1,25 @@
+name: scheduler
+
+# Every push that touches the Worker is tested, type-checked, linted and bundled; a push to the default branch, or a manual run, is also deployed
+# (the Worker `scheduler`, the account's one cron, and its service bindings to the others). The steps are `worker.yml`'s.
+on:
+  push:
+    paths: [workers/scheduler/**, packages/worker/**, tsconfig.base.json, oxlintrc.json, package-lock.json, .github/workflows/scheduler.yml, .github/workflows/worker.yml]
+  pull_request:
+    paths: [workers/scheduler/**, packages/worker/**, tsconfig.base.json, oxlintrc.json, package-lock.json, .github/workflows/scheduler.yml, .github/workflows/worker.yml]
+  workflow_dispatch:
+
+# A deploy (with its D1 migrations) is never cancelled halfway; a pull request's check is, by the next push.
+concurrency:
+  group: scheduler-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    uses: ./.github/workflows/worker.yml
+    with:
+      worker: workers/scheduler
+    secrets: inherit

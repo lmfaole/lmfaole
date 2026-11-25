@@ -42,16 +42,16 @@ Musikk, film, TV og spill: en side på Cloudflare Workers, <https://lmfaole.part
   shows seen that they are named in. A person has a page only while a title seen names them. Spotify content links back to Spotify; its mark (small, one colour), what each source gives and
   TMDB's statement are under «Kilder» at the foot of the front page, not on every page (a page only says it when a source did not answer). Everything is kept for a day at most (a poster and a title's facts for a month), and the site writes nothing anywhere.
 - The site has no database of its own (it reads the activity Worker's) and nothing is committed as data. `src/lib/` reads the APIs' answers (pure, with tests); `src/components/` and `src/pages/` show them.
-- A Worker on the lmfaole.party zone cannot reach origins outside Cloudflare (every such fetch ends in 525), so the site asks through a small relay, `upstream/` (the Worker `medier-upstream`):
-  only those hosts (and Wikidata; MusicBrainz's with the site's name as the User-Agent, as it asks), only GET (and Spotify's token), only with a key the site and the relay share. The site reaches it through a
-  **service binding** (`UPSTREAM` in `wrangler.jsonc`), Worker to Worker and not over the internet; the key is still asked for. The relay has no public address (`workers_dev` is off); `UPSTREAM_URL` is only the way where there is no binding (a relay run elsewhere)
-  (`src/lib/route.ts`, with a test).
+- A Worker on the lmfaole.party zone cannot reach origins outside Cloudflare (every such fetch ends in 525), so the site asks through the relay it shares with startside, `workers/relay` at the repository's root (the Worker `medier-upstream`):
+  only the hosts in its table (and Wikidata; MusicBrainz's with the site's name as the User-Agent, as it asks), only GET (and Spotify's token), only with the key the site, startside and the relay share. The site reaches it through a
+  **service binding** (`UPSTREAM` in `wrangler.jsonc`), Worker to Worker and not over the internet; the key is still asked for. The relay also has a workers.dev address, for startside's fallback, closed without the key;
+  `UPSTREAM_URL` is only the way where there is no binding (`src/lib/route.ts`, with a test).
 
 ## Cloudflare
 
 What the site uses of Cloudflare besides the Worker, its cache and its rate limits:
 
-- **Service bindings.** `UPSTREAM` → `medier-upstream` (the relay, deployed before the site by the workflow and by `npm run deploy`, so the binding always has a Worker to go to).
+- **Service bindings.** `UPSTREAM` → `medier-upstream` (the relay, `workers/relay`, deployed by its own workflow `relay.yml`; it only ever gains hosts, so the site may go out before or after it).
 - **D1**, read only: `MUSIC` → `music`, `WATCHING` → `watching`, `GAMES` → `gameplay`, the activity Worker's databases (the same `database_id`s as `workers/activity/wrangler.jsonc`; their migrations are
   its, never run from here). The deploy token must be allowed to bind them. Locally, `npx wrangler d1 export <name> --remote --output <file>` and `npx wrangler d1 execute <name> --local --file <file>` give `npm run preview` a copy.
 - **Image Transformations** (`IMAGE_TRANSFORMS` in `wrangler.jsonc`'s `vars`, `"0"` until it is turned on). With `"1"`, every cover, poster, portrait and game picture is the largest the source gives, made by
@@ -69,7 +69,7 @@ What the site uses of Cloudflare besides the Worker, its cache and its rate limi
 
 ## Sources
 
-Each is asked through the relay (its host is in `GET_HOSTS` in `upstream/worker.ts`) and kept for its `TTL` (`src/lib/sources.ts`); one that is not set up, or has no username, leaves its part out. What each gives and the attribution it asks for are also under «Kilder» at the foot of the front page (`src/components/credits.tsx`).
+Each is asked through the relay (its host is in `workers/relay/src/routes.ts`) and kept for its `TTL` (`src/lib/sources.ts`); one that is not set up, or has no username, leaves its part out. What each gives and the attribution it asks for are also under «Kilder» at the foot of the front page (`src/components/credits.tsx`).
 
 | Source | What | Key or username | Kept | Code |
 | --- | --- | --- | --- | --- |
@@ -194,7 +194,7 @@ row. The artists' pictures are Spotify's and are cropped to the circle, which it
 ## Set up once
 
 1. **Cloudflare.** A Cloudflare API token that may edit Workers, and the account id, as GitHub Actions secrets of this repository: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
-   (Settings → Secrets and variables → Actions). A push to `main` then deploys the relay and the site (`.github/workflows/medier.yml` at the repository's root).
+   (Settings → Secrets and variables → Actions). A push to `main` then deploys the site (`.github/workflows/medier.yml` at the repository's root, the steps of `astro-app.yml`); the relay is deployed by `relay.yml`.
 2. **The address.** The site is <https://lmfaole.party/medier/>: Astro's `base` is `/medier` (`astro.config.ts`) and the Worker has the zone route `lmfaole.party/medier*` (`wrangler.jsonc`), on the
    origin it shares with the front page (`/`), the start page (`/start`), the CV (`/cv`) and Storybook (`/design/`). Everything of the site is under `/medier/`: its pages, the built files
    (`dist/client/medier/…`, served by the Worker's static assets before the Worker), the one cookie (`seen`, `Path=/medier/`), the service worker and the manifest. The route needs the zone's DNS record for
@@ -208,8 +208,8 @@ row. The artists' pictures are Spotify's and are cropped to the circle, which it
 
    The token it makes lasts six months; run it again then (the page just shows no song when it has run out).
 4. **The Worker's settings**, from the env files the private monorepo already has, after the first deploy (a Worker has secrets only once it exists). Only the names in `src/lib/settings.ts` are taken;
-   each value goes to `wrangler` or `gh` on stdin and is never printed. The key the site and the relay share is made if it is not in the files (the site reaches the relay through its binding;
-   `UPSTREAM_URL`, a relay's address, is only needed where there is no binding):
+   each value goes to `wrangler` or `gh` on stdin and is never printed. The key the site shares with the relay (`UPSTREAM_KEY`) is not among them: it is set on the relay, the site and startside at once by
+   `npm run rotate-key -w workers/relay` (workers/relay/README.md, «Nøkkelen»). `UPSTREAM_URL`, the relay's address, is only needed where there is no binding:
 
    ```sh
    npm run settings:push -- ~/Applikasjoner/Documents/monorepo/secrets/music-sync.env ~/Applikasjoner/Documents/monorepo/secrets/film-sync.env .spotify.env
@@ -238,9 +238,9 @@ The JSON and the pictures in `public/mock/` were fetched once by `node scripts/f
 
 ```sh
 npm install
-npm test && npm run typecheck   # the parsers', the loaders' and the relay's tests, and the types
+npm test && npm run typecheck   # the parsers' and the loaders' tests, and the types (the relay's are in workers/relay)
 npm run dev                      # http://localhost:4321/medier/ (keys in a .dev.vars file, not committed: LASTFM_API_KEY=… and so on; a source without its key is left out)
-npm run preview                  # the built Worker as it runs on Cloudflare (without MOCK_DATA it asks the relay through its binding: run `npx wrangler dev -c upstream/wrangler.jsonc` beside it)
+npm run preview                  # the built Worker as it runs on Cloudflare (without MOCK_DATA it asks the relay through its binding: run `npm run dev -w workers/relay` beside it)
 npm run deploy                   # from here, instead of from the workflow
 npm run skills                   # the design system's skills, after a change to them
 ```

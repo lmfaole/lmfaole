@@ -1,5 +1,5 @@
 /**
- * Which way an ask to a source goes (`runtime.ts`'s `ask`), pure so a test pins it. The relay (`upstream/`) is a Worker of the same account, so the site asks it through a
+ * Which way an ask to a source goes (`runtime.ts`'s `ask`), pure so a test pins it. The relay (`workers/relay` at the repository's root) is a Worker of the same account, so the site asks it through a
  * service binding (`UPSTREAM` in `wrangler.jsonc`): Worker to Worker, never over the public internet. A relay's address (`UPSTREAM_URL`) is the way where there is no
  * binding (a mock, a run without one); without a relay at all (`astro dev` with no settings) the source is asked directly. The key the two share goes with every ask to the
  * relay, by either way: the relay still says no without it.

@@ -1,9 +1,12 @@
-/** The bits of D1 this Worker uses, so the tests can stand in for it. */
+/** As much of D1's binding as the Workers use, so the tests can stand in for it (`sqliteD1` in `testing.ts`). The apps read through the narrower
+ *  `@lmfaole/web/d1`; a `Database` here is one there too. Pure. */
+
+export type Row = Record<string, unknown>
 
 export interface Statement {
   bind(...values: unknown[]): Statement
-  first<Row = Record<string, unknown>>(): Promise<Row | null>
-  all<Row = Record<string, unknown>>(): Promise<{ results: Row[] }>
+  first<R = Row>(): Promise<R | null>
+  all<R = Row>(): Promise<{ results: R[] }>
   run(): Promise<unknown>
 }
 
@@ -12,9 +15,7 @@ export interface Database {
   batch(statements: Statement[]): Promise<unknown[]>
 }
 
-export type Fetch = (input: string, init?: RequestInit) => Promise<Response>
-
-/** The rows a batch wrote, as D1 reports them (`meta.rows_written`, which counts index writes too); 0 from the test stand-in. */
+/** The rows a batch wrote, as D1 reports them (`meta.rows_written`, which counts index writes too; the stand-in counts changed rows). */
 export function rowsWritten(results: unknown[]): number {
   let sum = 0
   for (const result of results) {

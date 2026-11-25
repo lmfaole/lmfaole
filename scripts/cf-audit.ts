@@ -16,10 +16,12 @@ import { dirname, join, relative, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import { parseArgs } from "node:util"
 
+import { CRON_WORKER, parseJsonc } from "@lmfaole/worker/conventions"
+
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..")
 const ACCOUNT = process.env.CLOUDFLARE_ACCOUNT_ID || "5d49b98b68b70cbd1c81be0f18501262"
-/** The only Worker that may have Cron Triggers: it calls the others' `scheduled` (workers/scheduler). */
-export const CRON_WORKER = "scheduler"
+// The only Worker that may have Cron Triggers, and JSON with comments as wrangler reads it: the conventions every Worker is checked against.
+export { CRON_WORKER, parseJsonc }
 
 // ---------------------------------------------------------------------------------------------------------------- the desired state
 
@@ -33,7 +35,7 @@ export interface Binding {
   type: "d1" | "kv" | "r2" | "queue" | "service" | "durable_object" | "hyperdrive" | "vectorize" | "workflow"
   binding: string
   /** What it points at: a D1/KV/Hyperdrive id (absent when wrangler provisions it), a bucket, queue, Worker, index or workflow name, `script.Class` for a Durable Object. */
-  target?: string
+  target?: string | undefined
   /** D1's database_name: the name it gets when created. */
   name?: string
 }
@@ -54,39 +56,6 @@ export interface Config {
   /** Queues it consumes. */
   consumes: string[]
   vars: Record<string, unknown>
-}
-
-/** JSON with comments and trailing commas, as wrangler reads it. */
-export function parseJsonc(text: string): unknown {
-  /** `text` with `step` applied outside strings: it returns what to emit at `i` and how far it read. */
-  const outsideStrings = (text: string, step: (i: number) => [string, number]): string => {
-    let out = ""
-    for (let i = 0; i < text.length; ) {
-      if (text[i] === '"') {
-        let j = i + 1
-        while (j < text.length && text[j] !== '"') j += text[j] === "\\" ? 2 : 1
-        out += text.slice(i, j + 1)
-        i = j + 1
-      } else {
-        const [emit, next] = step(i)
-        out += emit
-        i = next
-      }
-    }
-    return out
-  }
-  const plain = outsideStrings(text, (i) => {
-    if (text.startsWith("//", i)) {
-      const end = text.indexOf("\n", i)
-      return ["", end < 0 ? text.length : end]
-    }
-    if (text.startsWith("/*", i)) {
-      const end = text.indexOf("*/", i + 2)
-      return [" ", end < 0 ? text.length : end + 2]
-    }
-    return [text[i]!, i + 1]
-  })
-  return JSON.parse(outsideStrings(plain, (i) => [plain[i] === "," && /^\s*[}\]]/.test(plain.slice(i + 1)) ? "" : plain[i]!, i + 1]))
 }
 
 type Raw = Record<string, any>
@@ -144,7 +113,7 @@ export function findConfigs(root = ROOT): Config[] {
     }
   }
   walk(root)
-  return configs.sort((a, b) => a.file.localeCompare(b.file))
+  return configs.toSorted((a, b) => a.file.localeCompare(b.file))
 }
 
 export interface AllowEntry {
@@ -161,33 +130,33 @@ export const KINDS: Kind[] = ["zone", "worker", "route", "custom_domain", "cron"
 export interface ActualWorker {
   name: string
   /** Undefined where the token could not read it. */
-  workersDev?: boolean
-  previews?: boolean
-  crons?: string[]
-  bindings?: Binding[]
+  workersDev?: boolean | undefined
+  previews?: boolean | undefined
+  crons?: string[] | undefined
+  bindings?: Binding[] | undefined
 }
 
 /** What Cloudflare has. A list left undefined was not read, and `notChecked` says why. */
 export interface Actual {
-  zones?: { id: string; name: string }[]
-  workers?: ActualWorker[]
-  routes?: { zone: string; pattern: string; script: string | null }[]
-  customDomains?: { hostname: string; zone: string; service: string }[]
-  d1?: { id: string; name: string }[]
-  kv?: { id: string; title: string }[]
-  r2?: string[]
-  queues?: string[]
-  pages?: string[]
+  zones?: { id: string; name: string }[] | undefined
+  workers?: ActualWorker[] | undefined
+  routes?: { zone: string; pattern: string; script: string | null }[] | undefined
+  customDomains?: { hostname: string; zone: string; service: string }[] | undefined
+  d1?: { id: string; name: string }[] | undefined
+  kv?: { id: string; title: string }[] | undefined
+  r2?: string[] | undefined
+  queues?: string[] | undefined
+  pages?: string[] | undefined
   /** `script.Class`. */
-  durableObjects?: string[]
+  durableObjects?: string[] | undefined
   /** Ids. */
-  hyperdrive?: string[]
-  vectorize?: string[]
-  workflows?: string[]
-  aiGateways?: string[]
+  hyperdrive?: string[] | undefined
+  vectorize?: string[] | undefined
+  workflows?: string[] | undefined
+  aiGateways?: string[] | undefined
   /** `content` with a TXT record's quotes; `proxied` undefined for a type Cloudflare cannot proxy. */
-  dns?: { zone: string; name: string; type: string; content: string; proxied?: boolean }[]
-  access?: { name: string; aud: string; domains: string[] }[]
+  dns?: { zone: string; name: string; type: string; content: string; proxied?: boolean | undefined }[] | undefined
+  access?: { name: string; aud: string; domains: string[] }[] | undefined
   notChecked: Partial<Record<Kind, string>>
 }
 
@@ -200,8 +169,8 @@ export interface Row {
   status: Status
   resource: string
   /** The config file(s) that own it, or the allow-list's reason. */
-  owner?: string
-  detail?: string
+  owner?: string | undefined
+  detail?: string | undefined
 }
 
 const UUID = /^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$/i
@@ -216,7 +185,7 @@ const reaches = (pattern: string, target: string): boolean => {
 }
 /** The zone a host is in: the longest zone name it ends with. */
 const zoneOf = (host: string, zones: string[]): string | undefined =>
-  zones.filter((z) => host === z || host.endsWith(`.${z}`) || (host.startsWith("*.") && host.endsWith(z))).sort((a, b) => b.length - a.length)[0]
+  zones.filter((z) => host === z || host.endsWith(`.${z}`) || (host.startsWith("*.") && host.endsWith(z))).toSorted((a, b) => b.length - a.length)[0]
 /** The record types a route or custom domain needs: what a proxied hostname resolves through. */
 const WEB_RECORDS = new Set(["A", "AAAA", "CNAME"])
 const files = (cs: Config[]): string | undefined => [...new Set(cs.map((c) => c.file))].join(", ") || undefined
@@ -347,7 +316,7 @@ export function audit(configs: Config[], actual: Actual, allow: AllowEntry[] = [
       else if (workers.some((c) => c.name === route.script)) add({ kind: "route", status: "drift", resource, owner: files(workers.filter((c) => c.name === route.script)), detail: "in Cloudflare, not in the config" })
       else orphan("route", resource, route.script ? "its Worker has no config" : "a route with no Worker", allowed("route", route.pattern) ?? allowed("zone", route.zone) ?? allowed("worker", route.script))
     }
-    for (const d of declared.filter((d) => !d.r.customDomain)) {
+    for (const d of declared.filter((decl) => !decl.r.customDomain)) {
       if (actual.routes.some((r) => r.pattern === d.r.pattern && (!d.zone || r.zone === d.zone))) continue
       const live = deployed.has(d.c.name)
       add({ kind: "route", status: live ? "drift" : "missing", resource: `${d.r.pattern} → ${d.c.name}`, owner: d.c.file, detail: live ? "in the config, not in Cloudflare" : "Worker not deployed" })
@@ -364,7 +333,7 @@ export function audit(configs: Config[], actual: Actual, allow: AllowEntry[] = [
       else if (workers.some((c) => c.name === domain.service)) add({ kind: "custom_domain", status: "drift", resource, owner: files(workers.filter((c) => c.name === domain.service)), detail: "in Cloudflare, not in the config" })
       else orphan("custom_domain", resource, "no config declares it", allowed("custom_domain", domain.hostname) ?? allowed("zone", domain.zone) ?? allowed("worker", domain.service))
     }
-    for (const d of declared.filter((d) => d.r.customDomain)) {
+    for (const d of declared.filter((decl) => decl.r.customDomain)) {
       if (actual.customDomains.some((x) => x.hostname === hostOf(d.r.pattern))) continue
       const live = deployed.has(d.c.name)
       add({ kind: "custom_domain", status: live ? "drift" : "missing", resource: `${hostOf(d.r.pattern)} → ${d.c.name}`, owner: d.c.file, detail: live ? "in the config, not in Cloudflare" : "Worker not deployed" })
@@ -471,7 +440,7 @@ export function audit(configs: Config[], actual: Actual, allow: AllowEntry[] = [
   }
 
   const order: Status[] = ["unowned", "drift", "missing", "not_checked", "external", "owned"]
-  return rows.sort((a, b) => KINDS.indexOf(a.kind) - KINDS.indexOf(b.kind) || order.indexOf(a.status) - order.indexOf(b.status) || a.resource.localeCompare(b.resource))
+  return rows.toSorted((a, b) => KINDS.indexOf(a.kind) - KINDS.indexOf(b.kind) || order.indexOf(a.status) - order.indexOf(b.status) || a.resource.localeCompare(b.resource))
 }
 
 /** True when the audit should fail: something in Cloudflare has no owner, or differs from its config. */

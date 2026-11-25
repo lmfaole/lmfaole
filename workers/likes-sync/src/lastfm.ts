@@ -9,7 +9,7 @@ export const authUrl = (apiKey: string, token: string): string => `https://www.l
 export function sign(params: Record<string, string>, secret: string): string {
   const signed = Object.keys(params)
     .filter((name) => name !== "format" && name !== "callback")
-    .sort()
+    .toSorted()
     .map((name) => `${name}${params[name]}`)
     .join("")
   return createHash("md5").update(`${signed}${secret}`, "utf8").digest("hex")

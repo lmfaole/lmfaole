@@ -1,6 +1,4 @@
 import type { NavItem } from "@lmfaole/designsystem/components/nav-bar"
-import { PageLayout } from "@lmfaole/designsystem/components/page-layout"
-import type { ReactNode } from "react"
 
 export type Place = "front" | "music" | "film" | "tv" | "games"
 
@@ -21,16 +19,4 @@ export function navItems(base: string, current: Place | undefined, shown: Shown)
     { key: "games", label: "Spill", href: `${base}spill/`, icon: "game" },
   ] as const
   return places.filter((place) => place.key === "front" || shown[place.key]).map((place) => ({ ...place, current: place.key === current }))
-}
-
-/**
- * The frame of every page: the bar between the places, and the page's own column. The bar comes in from the Astro layout as the named slot `nav` (an island, so the part of it that scrolls the
- * current place into view on a phone runs); a slot is the way an element made in an `.astro` file reaches a React component.
- */
-export function Frame({ width, nav, children }: { width: "reading" | "pane"; nav?: ReactNode; children: ReactNode }) {
-  return (
-    <PageLayout width={width} nav={nav}>
-      {children}
-    </PageLayout>
-  )
 }

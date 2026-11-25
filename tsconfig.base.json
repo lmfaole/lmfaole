@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  // The strictness every TypeScript project in the repository shares: packages/worker/tsconfig.base.json, where the shared tsconfigs of the Workers
+  // and the apps can reach it by package name (`@lmfaole/worker/tsconfig.base.json`).
+  "extends": "./packages/worker/tsconfig.base.json"
+}

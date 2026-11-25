@@ -1,0 +1,30 @@
+{
+  "name": "@lmfaole/worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "What every Worker on lmfaole.party shares: the wrangler conventions, D1's interface and its SQLite stand-in for the tests, fetch, the scheduled run's helpers, env files and the tsconfig of a cron Worker. Shipped as source.",
+  "repository": "github:lmfaole/lmfaole",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    "./conventions": "./src/conventions.ts",
+    "./d1": "./src/d1.ts",
+    "./fetch": "./src/fetch.ts",
+    "./scheduled": "./src/scheduled.ts",
+    "./cron": "./src/cron.ts",
+    "./env": "./src/env.ts",
+    "./testing": "./src/testing.ts",
+    "./tsconfig.worker.json": "./tsconfig.worker.json",
+    "./tsconfig.base.json": "./tsconfig.base.json"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "~7.0.2"
+  }
+}

@@ -1,7 +1,7 @@
 /** Letterboxd's diary, read from the public RSS feed (it has no open API). The feed holds only the newest entries, so each run keeps what it shows: a diary entry is kept by its id, and a changed rating or review replaces the stored one. Lists and other items without a watched day are not diary entries and are left out. */
 
-import type { Database } from "./db.ts"
-import type { Fetch } from "./listenbrainz.ts"
+import type { Database } from "@lmfaole/worker/d1"
+import type { Fetch } from "@lmfaole/worker/fetch"
 
 export interface DiaryEntry {
   id: string

@@ -1,6 +1,7 @@
 /** Asks Hardcover for the owner's shelves and writes what changed into `books`. Daily is plenty: it is a few calls and, most days, no writes. */
 
-import { type Database, type Fetch, rowsWritten } from "./db.ts"
+import { type Database, rowsWritten } from "@lmfaole/worker/d1"
+import type { Fetch } from "@lmfaole/worker/fetch"
 import { type Change, type Line, parseShelves, plan, SHELVES_QUERY, type Shelved } from "./hardcover.ts"
 
 export interface HardcoverOptions {

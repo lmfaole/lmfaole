@@ -1,6 +1,6 @@
 /** Steam's Web API: the library with minutes played, and one game's unlocked achievements. */
 
-import type { Fetch } from "./listenbrainz.ts"
+import type { Fetch } from "@lmfaole/worker/fetch"
 
 const API = "https://api.steampowered.com"
 

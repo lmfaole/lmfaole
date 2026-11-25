@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // The relay of medier and startside (README). It keeps the name of medier's old relay, `medier-upstream`, so medier's binding and key went on working
+  // the moment this code replaced that relay's. The name can be changed later in the dashboard (Workers → medier-upstream → Settings → Name); then
+  // change `name` here and the `UPSTREAM` binding's `service` in apps/medier/wrangler.jsonc and apps/startside/wrangler.jsonc, and startside's
+  // `UPSTREAM_URL`, in the same commit.
+  "name": "medier-upstream",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-11-01",
+  // The apps call it through their service binding UPSTREAM, and startside over this workers.dev address (its UPSTREAM_URL) where the binding answers
+  // 52x. Every ask needs the key (src/guard.ts), which keeps the address closed to anyone else. No preview addresses.
+  "workers_dev": true,
+  "preview_urls": false,
+  // No cron: a deploy takes away one set by hand in the dashboard.
+  "triggers": { "crons": [] },
+  "observability": { "enabled": true }
+  // Secrets: UPSTREAM_KEY (the apps' key), UPSTREAM_KEY_NEXT (only while a new key is handed out: `npm run rotate-key`), GITHUB_TOKEN (fine-grained,
+  // public repositories read-only: startside's GitHub parts).
+}

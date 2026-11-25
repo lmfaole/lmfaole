@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "target": "es2023",
     "lib": ["ES2023", "DOM"],
@@ -20,7 +21,9 @@
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
     "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    // The one setting of the shared base it does not have yet: 17 props pass `undefined` for an optional one. TODO: turn it on.
+    "exactOptionalPropertyTypes": false
   },
   "include": ["src", "stories", ".storybook"]
 }

@@ -1,0 +1,26 @@
+name: relay
+
+# The relay of medier and startside (`workers/relay`, the Worker `medier-upstream`): every push that touches it is tested, type-checked, linted and
+# bundled; a push to the default branch, or a manual run, is also deployed. The steps are `worker.yml`'s. It only ever gains hosts before an app asks
+# them (workers/relay/README.md), so it may go out before or after the apps of the same push. Its secrets (UPSTREAM_KEY, GITHUB_TOKEN) stay on the Worker.
+on:
+  push:
+    paths: [workers/relay/**, packages/worker/**, tsconfig.base.json, oxlintrc.json, package-lock.json, .github/workflows/relay.yml, .github/workflows/worker.yml]
+  pull_request:
+    paths: [workers/relay/**, packages/worker/**, tsconfig.base.json, oxlintrc.json, package-lock.json, .github/workflows/relay.yml, .github/workflows/worker.yml]
+  workflow_dispatch:
+
+# A deploy is never cancelled halfway; a pull request's check is, by the next push.
+concurrency:
+  group: relay-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    uses: ./.github/workflows/worker.yml
+    with:
+      worker: workers/relay
+    secrets: inherit

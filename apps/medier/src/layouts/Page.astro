@@ -1,10 +1,10 @@
 ---
-import '@lmfaole/web/styles.css'
+import Document from '@lmfaole/web/Document.astro'
 import { Breadcrumbs, type Crumb } from '@lmfaole/designsystem/components/breadcrumbs'
 import { PageHeader } from '@lmfaole/designsystem/components/page-header'
 import { ConnectionBanner } from '@lmfaole/designsystem/components/connection-banner'
 
-import { Frame, navItems, type Place } from '../components/frame'
+import { navItems, type Place } from '../components/frame'
 import { NavBar } from '@lmfaole/designsystem/components/nav-bar'
 import { brandAttributes } from '@lmfaole/designsystem/lib/brand'
 import { transitionAttributes } from '@lmfaole/designsystem/lib/motion'
@@ -33,16 +33,11 @@ const shown = users === null
   : { music: hasMusic(users), film: users.trakt !== null, tv: users.trakt !== null, games: (hasSteam() && users.steam !== null) || (hasRetro() && users.retroachievements !== null) }
 // Cloudflare Web Analytics (`CF_BEACON_TOKEN`, public): drawn here, on the server, with no island (it is a plain script tag); nothing without a token, or on a page made ahead of time.
 const beacon = Astro.isPrerendered ? '' : beaconToken()
-// With the brand's hue, a change of page is the browser's own view transition (`transitionAttributes()`): the menu's current place slides to the new one and `<main>` rises in (design system, «Motion» §9; no `ClientRouter`).
+// The document and its frame are the apps' shared one (`@lmfaole/web`), with medier's own: the brand, the installed app's head and the menu. With the brand's hue, a change of page is the browser's own view transition (`transitionAttributes()`): the menu's current place slides to the new one and `<main>` rises in (design system, «Motion» §9; no `ClientRouter`).
 ---
 
-<!doctype html>
-<html lang="nb" {...brandAttributes('amber')} {...transitionAttributes()}>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{current === 'front' ? title : `${title} – Medier`}</title>
-    <meta name="description" content={lead} />
+<Document title={current === 'front' ? title : `${title} – Medier`} description={lead} width={width} favicon={false} attributes={{ ...brandAttributes('amber'), ...transitionAttributes() }}>
+  <Fragment slot="head">
     <!-- The installed app: the manifest, the colour of the bar in each scheme (the brand's amber, light and dark: `npx designsystem-app-icons`), the icons, and Safari's own way of saying «installed». -->
     <link rel="manifest" href={`${base}manifest.webmanifest`} />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#9c640d" />
@@ -54,27 +49,23 @@ const beacon = Astro.isPrerendered ? '' : beaconToken()
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Medier" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  </head>
-  <body>
-    <Frame width={width}>
-      <NavBar slot="nav" client:load title="Medier" glyph="play" items={navItems(base, current, shown)} />
-      <ConnectionBanner client:idle />
-      {crumbs === undefined ? null : <Breadcrumbs items={crumbs} />}
-      {bare ? null : <PageHeader title={title} description={lead} />}
-      <slot />
-    </Frame>
-    <script>
-      // The controls marked `data-haptic` give a short buzz where the phone can (design system, «Haptics»).
-      import { listenForHaptics } from '@lmfaole/designsystem/lib/haptics'
-      import { listenForPendingForms } from '@lmfaole/designsystem/lib/pending-forms'
-      listenForHaptics()
-      listenForPendingForms()
-    </script>
-    <WebAnalytics token={beacon} />
-    <script is:inline define:vars={{ base }}>
-      // The service worker makes the app open without a network (`public/sw.js`); a browser without one, or one that refuses it, simply has the site as before. Its scope is the site's base
-      // (`/medier/`), never the origin's root, which is the other apps'.
-      if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register(`${base}sw.js`, { scope: base }).catch(() => {}))
-    </script>
-  </body>
-</html>
+  </Fragment>
+  <NavBar slot="nav" client:load title="Medier" glyph="play" items={navItems(base, current, shown)} />
+  <ConnectionBanner client:idle />
+  {crumbs === undefined ? null : <Breadcrumbs items={crumbs} />}
+  {bare ? null : <PageHeader title={title} description={lead} />}
+  <slot />
+  <script>
+    // The controls marked `data-haptic` give a short buzz where the phone can (design system, «Haptics»).
+    import { listenForHaptics } from '@lmfaole/designsystem/lib/haptics'
+    import { listenForPendingForms } from '@lmfaole/designsystem/lib/pending-forms'
+    listenForHaptics()
+    listenForPendingForms()
+  </script>
+  <WebAnalytics token={beacon} />
+  <script is:inline define:vars={{ base }}>
+    // The service worker makes the app open without a network (`public/sw.js`); a browser without one, or one that refuses it, simply has the site as before. Its scope is the site's base
+    // (`/medier/`), never the origin's root, which is the other apps'.
+    if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register(`${base}sw.js`, { scope: base }).catch(() => {}))
+  </script>
+</Document>

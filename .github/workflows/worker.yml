@@ -1,0 +1,54 @@
+name: worker
+
+# The one build of a Worker without a page (`workers/<name>`, made with `@lmfaole/worker`), called by the Worker's own workflow, which says when it
+# runs (its paths), its concurrency and its permissions: tested, type-checked, linted and bundled (`wrangler deploy --dry-run`); a push to the default
+# branch, or a manual run, is also deployed: the Worker's own `npm run deploy` (its D1 migrations, `--remote`, then `wrangler deploy`). The
+# Worker's secrets stay on the Worker: `wrangler deploy` keeps them.
+on:
+  workflow_call:
+    inputs:
+      worker:
+        description: The Worker's directory, e.g. workers/catalog.
+        required: true
+        type: string
+    secrets:
+      CLOUDFLARE_API_TOKEN:
+        required: false
+      CLOUDFLARE_ACCOUNT_ID:
+        required: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ${{ inputs.worker }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+        working-directory: .
+      - run: npm test
+      - run: npm run typecheck
+      - run: npx oxlint -c oxlintrc.json "$WORKER"
+        working-directory: .
+        env:
+          WORKER: ${{ inputs.worker }}
+      - run: npx wrangler deploy --dry-run --outdir "$RUNNER_TEMP/bundle"
+
+      # `github` is the caller's: its event and branch.
+      - name: Deploy
+        if: github.event_name != 'pull_request' && github.ref_name == github.event.repository.default_branch
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::notice::CLOUDFLARE_API_TOKEN is not set as a repository secret, so this run only checks."
+            exit 0
+          fi
+          npm run deploy

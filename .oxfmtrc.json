@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  // The repository's formatting (`npm run format`, `npm run format:check`), as the code is mostly written already: no semicolons, double quotes,
+  // trailing commas, long lines. The Astro apps made from packages/web write single quotes, as their template does.
+  "printWidth": 160,
+  "semi": false,
+  "singleQuote": false,
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  // package.json keys stay in the order they are written.
+  "sortPackageJson": false,
+  "overrides": [
+    {
+      "files": ["packages/web/**", "apps/cv/**", "apps/forside/**", "apps/presentasjoner/**"],
+      "options": { "singleQuote": true }
+    }
+  ],
+  // Markdown is left as written (the formatter pads every table to its widest cell), and so is what is generated, built or vendored.
+  "ignorePatterns": [
+    "**/*.md",
+    "**/*.mdx",
+    "package-lock.json",
+    "**/upstream/**",
+    "**/dist/**",
+    "**/.astro/**",
+    "**/.next/**",
+    "**/.open-next/**",
+    "**/.wrangler/**",
+    "**/storybook-static/**"
+  ]
+}

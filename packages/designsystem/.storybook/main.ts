@@ -25,11 +25,11 @@ const config: StorybookConfig = {
     experimental: { defaultFilterSelection: "exclude" },
     deprecated: { defaultFilterSelection: "exclude" },
   },
-  viteFinal: (config) => ({
-    ...config,
+  viteFinal: (vite) => ({
+    ...vite,
     // Served from a path on GitHub Pages / a Pages project: relative asset URLs work under any of them.
     base: "./",
-    plugins: [...(config.plugins ?? []), tailwindcss()],
+    plugins: [...(vite.plugins ?? []), tailwindcss()],
   }),
 }
 

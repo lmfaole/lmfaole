@@ -1,6 +1,6 @@
 /** RetroAchievements' Web API: recently played games, the profile's rich presence and unlocks in a period. */
 
-import type { Fetch } from "./listenbrainz.ts"
+import type { Fetch } from "@lmfaole/worker/fetch"
 
 const API = "https://retroachievements.org/API"
 

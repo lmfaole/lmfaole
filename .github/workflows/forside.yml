@@ -4,9 +4,9 @@ name: forside
 # Cloudflare Workers (the Worker `forside`, lmfaole.party/*). The steps are `astro-app.yml`'s.
 on:
   push:
-    paths: [apps/forside/**, packages/designsystem/**, packages/web/**, packages/db/site/**, package-lock.json, .github/workflows/forside.yml, .github/workflows/astro-app.yml]
+    paths: [apps/forside/**, packages/designsystem/**, packages/web/**, packages/worker/**, packages/db/site/**, package-lock.json, .github/workflows/forside.yml, .github/workflows/astro-app.yml]
   pull_request:
-    paths: [apps/forside/**, packages/designsystem/**, packages/web/**, packages/db/site/**, package-lock.json, .github/workflows/forside.yml, .github/workflows/astro-app.yml]
+    paths: [apps/forside/**, packages/designsystem/**, packages/web/**, packages/worker/**, packages/db/site/**, package-lock.json, .github/workflows/forside.yml, .github/workflows/astro-app.yml]
   workflow_dispatch:
 
 concurrency:

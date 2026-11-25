@@ -1,4 +1,4 @@
-// How the page reaches the relay (`upstream/`): through the service binding `UPSTREAM` when the Worker has it (a call inside Cloudflare,
+// How the page reaches the relay (`workers/relay` at the repository's root, shared with medier): through the service binding `UPSTREAM` when the Worker has it (a call inside Cloudflare,
 // never over the internet), else over its public address `UPSTREAM_URL`, and that too where the binding answers with Cloudflare's own
 // origin errors, 520–530: called through the binding during a request to lmfaole.party, the relay's own fetch of api.github.com has
 // ended in 525 (README «How it runs»), so the address is not optional. The shared key goes with either. Pure: the fetches are given.
@@ -8,7 +8,7 @@ export interface Fetcher {
 }
 
 export interface Relay {
-  /** The service binding `UPSTREAM` (`startside-upstream`). */
+  /** The service binding `UPSTREAM` (the Worker `medier-upstream`). */
   binding?: Fetcher
   /** The relay's public address, for `next dev` against the relay and as the fallback. */
   url?: string
@@ -62,7 +62,7 @@ export async function viaRelay(
   if (relay.binding !== undefined) {
     try {
       // The host is the binding's to ignore; the relay reads only the path.
-      const response = await relay.binding.fetch(`https://startside-upstream${path}`, request())
+      const response = await relay.binding.fetch(`https://relay.internal${path}`, request())
       if (!unreachable(response.status)) return response
       // `X-Relay` is set by the relay on what it passes on: without it, the binding itself failed; with it, the relay's own fetch of the source did.
       const from = response.headers.get("X-Relay") === null ? "bindingen" : "kilden bak reléet"

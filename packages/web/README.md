@@ -14,13 +14,13 @@ What every Astro app on lmfaole.party shares: the Astro config, the security hea
 | `@lmfaole/web/middleware` | `secured(answer, headers?)`: the middleware that gives every answer of the Worker the security headers (built pages have them from `public/_headers`). `pageCache({ cacheable, ttl?, keep?, byQuery?, everyPage?, marker?, uncached?, edge? })`: the page from the edge's copy (`caches.default`), or drawn and kept there. `withHeaders`, `edge`, the type `Answer`. |
 | `@lmfaole/web/page-cache` | `PAGE_TTL` (300 s), `pageCacheControl(ttl)` (`public, max-age=0, s-maxage=…`), `keptCacheControl(ttl)`, `cacheablePaths(paths)` (GET on those paths), `cacheableResponse` (200 without `no-store`/`private`/`Set-Cookie`), `cacheablePage` (the same, HTML only). |
 | `@lmfaole/web/d1` | `asDatabase(binding)`, `readAll(db, queries)` (one batch), `readOr(binding, what, ask, fallback)` (the fallback when the binding or a table is missing or D1 fails), `optional(rows)`, `isMissingTable`, `num`, `str`, the types `Row`, `Param`, `Query`, `Database`. |
-| `@lmfaole/web/testing` | For the apps' `node --test`: `testHeadersFile(url, pattern)` (`public/_headers` says what `secure` does), `migratedSqlite(migrations, migrated?)` and `sqliteD1(db)` (the real migration in `node:sqlite` behind the D1 interface). |
-| `@lmfaole/web/conventions` | `ZONE`, `COMPATIBILITY_DATE`, `parseJsonc`, `allowedRoutes(base)` and `wranglerProblems(config, base)`: what an app's `wrangler.jsonc` must say. |
-| `@lmfaole/web/Document.astro` | The document around a page: `<head>` (title, description, canonical address, Open Graph, favicon, JSON-LD) and the design system's `PageLayout`. Props: `title`, `description?`, `url?`, `width?` (`reading`/`pane`), `image?` (`{ file, width, height }` in the app's `public/`), `appleTouchIcon?`, `jsonLd?`. |
-| `@lmfaole/web/NotFound.astro` | The 404 page. Props: `app` (the name of the link back), `appleTouchIcon?`. |
+| `@lmfaole/web/testing` | For the apps' `node --test`: `testHeadersFile(url, pattern)` (`public/_headers` says what `secure` does), `migratedSqlite(migrations, migrated?)` and `sqliteD1(db)` (the real migration in `node:sqlite` behind the D1 interface; `@lmfaole/worker/testing`'s, handed on). |
+| `@lmfaole/web/conventions` | `ZONE`, `COMPATIBILITY_DATE`, `parseJsonc`, `allowedRoutes(base)` and `wranglerProblems(config, base)`: what an app's `wrangler.jsonc` must say. `@lmfaole/worker/conventions`, handed on: the conventions of every Worker live there. |
+| `@lmfaole/web/Document.astro` | The document around a page: `<head>` (title, description, canonical address, Open Graph, favicon, JSON-LD) and the design system's `PageLayout`. Props: `title`, `description?`, `url?`, `width?` (`reading`/`pane`), `image?` (`{ file, width, height }` in the app's `public/`), `appleTouchIcon?`, `jsonLd?`, `favicon?` (`false`: no `favicon.ico`), `attributes?` (more of `<html>`'s). Slots: the page, `head` (the end of `<head>`), `nav` (`PageLayout`'s menu). |
+| `@lmfaole/web/NotFound.astro` | The 404 page. Props: `app` (the name of the link back), `appleTouchIcon?`, `favicon?`, `attributes?`; slot `head`. |
 | `@lmfaole/web/styles.css` | The stylesheet: the design system's theme. |
 | `@lmfaole/web/env` | The types of `src/env.d.ts` (`/// <reference types="@lmfaole/web/env" />`): Astro's, `cloudflare:workers` and `caches.default`. |
-| `@lmfaole/web/tsconfig.app.json` | The tsconfig an app extends: `strictest`, React JSX, its `src`, `astro.config.ts` and `.astro/types.d.ts`. |
+| `@lmfaole/web/tsconfig.app.json` | The tsconfig an app extends: `strictest` and the repository's strictness (`@lmfaole/worker/tsconfig.base.json`), React JSX, its `src`, `astro.config.ts` and `.astro/types.d.ts`. |
 
 ## Use
 

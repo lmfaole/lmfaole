@@ -23,7 +23,7 @@ export function throughRelay(): boolean {
 }
 
 /**
- * Fetches a source: through the relay (`upstream/`, by the service binding or its address) when it is set, as on lmfaole.party, where a Worker cannot
+ * Fetches a source: through the relay (`workers/relay` at the repository's root, by the service binding or its address) when it is set, as on lmfaole.party, where a Worker cannot
  * reach GitHub itself; straight to the source only where there is no relay key at all, as in `next dev` (`askSource`). Through the relay, the relay adds the GitHub token.
  */
 async function fetchSource(url: string, init: { headers?: Record<string, string>; revalidate: number; /** How long past `revalidate` a kept answer may still be shown while it is asked for anew (default `STALE_SECONDS`; 0 for what must not be old, like what plays now). */ staleFor?: number; /** A JSON body makes it a POST (GitHub's GraphQL, which the relay allows). */ json?: unknown; /** A text body makes it a POST too (a form); the caller sets its Content-Type. */ body?: string }): Promise<Response> {

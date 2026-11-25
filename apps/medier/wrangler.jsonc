@@ -13,8 +13,9 @@
   "routes": [{ "pattern": "lmfaole.party/medier*", "zone_name": "lmfaole.party" }],
   // Each page asks the sources with the site's keys, so a visitor (by address) gets so many a minute (`src/lib/guard.ts`, `src/middleware.ts`): pages and the API, and the server islands
   // (a page has up to five).
-  // The relay (`upstream/`) is a Worker of this account: the site asks it Worker to Worker through this binding, not over the internet (`src/lib/route.ts`). It is deployed
-  // before the site (`.github/workflows/medier.yml` at the repository's root), so the binding always has a Worker to go to.
+  // The relay (`workers/relay` at the repository's root, the Worker `medier-upstream`, shared with startside) is a Worker of this account: the site asks it Worker to Worker
+  // through this binding, not over the internet (`src/lib/route.ts`). It is deployed by its own workflow (`.github/workflows/relay.yml`), and only ever gains hosts, so the site
+  // may go out before or after it.
   "services": [
     { "binding": "UPSTREAM", "service": "medier-upstream" }
   ],

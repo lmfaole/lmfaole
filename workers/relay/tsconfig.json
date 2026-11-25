@@ -1,0 +1,3 @@
+{
+  "extends": "@lmfaole/worker/tsconfig.worker.json"
+}

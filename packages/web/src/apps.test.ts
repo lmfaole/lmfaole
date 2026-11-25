@@ -41,7 +41,11 @@ test('every app has the versions of this package’s dependencies, and the same 
   for (const app of apps) {
     const manifest = JSON.parse(read(app, 'package.json')) as Manifest
     for (const kind of ['dependencies', 'devDependencies'] as const) {
-      for (const [name, version] of Object.entries(OWN[kind] ?? {})) assert.equal(manifest[kind]?.[name], version, `${app}: ${kind}.${name}`)
+      for (const [name, version] of Object.entries(OWN[kind] ?? {})) {
+        // The conventions and the D1 stand-in come through this package; an app need not name it.
+        if (name === '@lmfaole/worker') continue
+        assert.equal(manifest[kind]?.[name], version, `${app}: ${kind}.${name}`)
+      }
     }
     wranglers.add(manifest.dependencies?.['wrangler'])
   }

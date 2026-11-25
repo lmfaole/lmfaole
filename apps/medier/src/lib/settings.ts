@@ -1,14 +1,14 @@
 /**
  * Every setting the site needs, in one list. The sources' keys, Spotify's sign-in and the key the site shares with its relay are **secrets of the Worker**
  * (`wrangler secret put`); the two Cloudflare tokens the deploy uses are **secrets of this GitHub repository**. Nothing of it is ever in a file here.
- * `npm run settings:push` sets each from env files kept elsewhere (the private monorepo's `secrets/`), the value on stdin, never on a command line. What is not secret is a `var` in `wrangler.jsonc`:
+ * `npm run settings:push` sets each (but the relay's key: `UPSTREAM_KEY`) from env files kept elsewhere (the private monorepo's `secrets/`), the value on stdin, never on a command line. What is not secret is a `var` in `wrangler.jsonc`:
  * whose data is shown (the owner's usernames, `LASTFM_USER`, `TRAKT_USER`, `LISTENBRAINZ_USER`, `STEAM_USER`, `RETROACHIEVEMENTS_USER`: `users.ts`), `IMAGE_TRANSFORMS` and `CF_BEACON_TOKEN`; and a
  * binding is no setting at all.
  */
 
 export interface Setting {
   name: string
-  /** `worker` for the site's Worker (and its relay for the key they share), `github` for the repository's Actions secrets. */
+  /** `worker` for the site's Worker, `github` for the repository's Actions secrets. */
   where: "worker" | "github"
   /** What it is and where to get one. */
   about: string
@@ -16,6 +16,8 @@ export interface Setting {
   optional?: boolean
   /** Kept as a secret of this GitHub repository, and uploaded with the deploy as the Worker's (`.github/workflows/medier.yml` at the repository's root), not with `wrangler secret put`. */
   deploy?: true
+  /** Not the push's: set by the relay's key rotation (`workers/relay`), on every Worker that shares it at once. */
+  rotated?: true
 }
 
 export const SETTINGS: readonly Setting[] = [
@@ -28,8 +30,8 @@ export const SETTINGS: readonly Setting[] = [
   { name: "SETLISTFM_API_KEY", where: "worker", deploy: true, optional: true, about: "setlist.fm API key, for an artist's concerts and setlists: https://www.setlist.fm/settings/api" },
   { name: "STEAM_API_KEY", where: "worker", deploy: true, optional: true, about: "Steam Web API key, for the games: https://steamcommunity.com/dev/apikey (the profile's game details must be public)" },
   { name: "RETROACHIEVEMENTS_API_KEY", where: "worker", deploy: true, optional: true, about: "RetroAchievements web API key, for the old console games: https://retroachievements.org/controlpanel.php (Keys)" },
-  { name: "UPSTREAM_URL", where: "worker", optional: true, about: "a relay's address (medier-upstream has no workers.dev address of its own), only where the Worker has no `UPSTREAM` binding to it (`wrangler.jsonc`; a Worker on this zone cannot reach Last.fm, Trakt, TMDB, Spotify or MusicBrainz itself)" },
-  { name: "UPSTREAM_KEY", where: "worker", about: "the key the site and the relay share; made when it is not in the files, and set on both" },
+  { name: "UPSTREAM_URL", where: "worker", optional: true, about: "the relay's address (https://medier-upstream.olejorgenbakken.workers.dev), only where the Worker has no `UPSTREAM` binding to it (`wrangler.jsonc`; a Worker on this zone cannot reach Last.fm, Trakt, TMDB, Spotify or MusicBrainz itself)" },
+  { name: "UPSTREAM_KEY", where: "worker", rotated: true, about: "the key the site, startside and the relay share: set on all three by the relay's `npm run rotate-key -w workers/relay`, never by a push" },
   { name: "CLOUDFLARE_API_TOKEN", where: "github", about: "a Cloudflare API token that may edit Workers: https://dash.cloudflare.com/profile/api-tokens (the deploy uses it)" },
   { name: "CLOUDFLARE_ACCOUNT_ID", where: "github", about: "the Cloudflare account's id (the dashboard's sidebar)" },
 ]
@@ -46,11 +48,12 @@ export function parseEnvFile(text: string): Map<string, string> {
   return values
 }
 
-/** The settings found in the given values (later files win), and the ones not found: what `push` sets and what it says is missing. */
+/** The settings found in the given values (later files win), and the ones not found: what `push` sets and what it says is missing. The relay's key is neither. */
 export function plan(settings: readonly Setting[], values: ReadonlyMap<string, string>): { set: { setting: Setting; value: string }[]; missing: Setting[] } {
   const set: { setting: Setting; value: string }[] = []
   const missing: Setting[] = []
   for (const setting of settings) {
+    if (setting.rotated === true) continue
     const value = values.get(setting.name)
     if (value === undefined || value === "") missing.push(setting)
     else set.push({ setting, value })
@@ -60,5 +63,5 @@ export function plan(settings: readonly Setting[], values: ReadonlyMap<string, s
 
 /** The settings that are neither in the files nor optional: what a push cannot do and says so. */
 export function required(missing: readonly Setting[]): Setting[] {
-  return missing.filter((setting) => setting.optional !== true && setting.name !== "UPSTREAM_KEY")
+  return missing.filter((setting) => setting.optional !== true && setting.rotated !== true)
 }

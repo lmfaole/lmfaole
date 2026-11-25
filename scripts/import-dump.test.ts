@@ -69,7 +69,7 @@ describe("films against Trakt and Letterboxd", () => {
       [film(1, "2026-11-02", "Markens grøde", null, null), film(2, "2026-11-10", "Wolfs", 2024, 877817), film(3, "2026-11-10", "Wolfs", 2024, 877817), film(4, null, "Alien", 1979, null), film(5, "2020-01-01", "Heat", 1995, null)],
       [seen("trakt:0", ["2026-11-02"], "Growth of the Soil", 2026, 1729732), seen("letterboxd:a", ["2026-11-02"], "Growth of the Soil", 2026, 1729732), seen("trakt:1", ["2026-11-10", "2026-11-09"], "Wolfs", 2024, 877817), seen("trakt:2", ["1979-05-25"], "Alien", 1979, 348), seen("trakt:3", ["2020-01-01"], "Joker", 2019, 475557)],
     )
-    assert.deepEqual([...matches].sort(), [
+    assert.deepEqual([...matches].toSorted(), [
       [1, "trakt:0"],
       [2, "trakt:1"],
       [4, "trakt:2"],
@@ -103,7 +103,7 @@ describe("episodes against Trakt", () => {
         { watched_at: at, show: "Skam", season: 1, episode: 3 },
       ],
     )
-    assert.deepEqual([...matched].sort(), [1, 3])
+    assert.deepEqual([...matched].toSorted(), [1, 3])
   })
 
   it("drops TMDB's stand-in episode names", () => {

@@ -1,0 +1,73 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  // The lint every workspace and script shares (`npm run lint` at the root). It is the design system's set, less the rules that are its own house
+  // style rather than bugs: `packages/designsystem/oxlintrc.json` extends this file and adds them back (no `as`, no `!`, no `console.log`, no
+  // shadowing, no mutating `sort`/`reverse`), and its `npm run lint` holds it to them.
+  //
+  // `plugins` replaces oxlint's default list, it does not extend it: the list below is the whole set.
+  "plugins": ["react", "typescript", "oxc", "unicorn"],
+  "categories": {
+    // `correctness` is oxlint's default and stays; `suspicious` is where the mutation and shadowing bugs live.
+    "suspicious": "error"
+  },
+  "rules": {
+    // The automatic JSX runtime is on (`"jsx": "react-jsx"` in every tsconfig), so `React` is not in scope and never was.
+    "react/react-in-jsx-scope": "off",
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+
+    // The typing rules. `strict` in the tsconfigs covers null and implicit any; these stop the escapes it leaves open.
+    "typescript/no-explicit-any": "error",
+    "typescript/consistent-type-imports": "error",
+    "typescript/no-empty-object-type": "error",
+    "typescript/no-wrapper-object-types": "error",
+    "typescript/no-unsafe-declaration-merging": "error",
+    "typescript/no-duplicate-type-constituents": "error",
+    // No `@ts-ignore`, `@ts-expect-error` or `@ts-nocheck`: a type that needs silencing is a type to fix.
+    "typescript/ban-ts-comment": "error",
+
+    "eslint/no-implicit-coercion": "error",
+    "unicorn/no-useless-spread": "error",
+    "unicorn/no-useless-fallback-in-spread": "error",
+    "unicorn/prefer-spread": "error",
+    // Off: it fires on every test fixture and stub factory that closes over nothing, which is most of a test file.
+    "unicorn/consistent-function-scoping": "off",
+    // `process.exit` in a Worker or a test is the wrong tool; the scripts (overrides) are the exit points.
+    "unicorn/no-process-exit": "error",
+    // Off: a name's underscore is style, not a bug, and some are the formula's own (OKLab's `l_`, `m_`, `s_` in the design system's app-icon script).
+    "eslint/no-underscore-dangle": "off"
+  },
+  "overrides": [
+    {
+      // A story's `render` is rendered as a component (Storybook calls it inside React), so it may use hooks; its name is not a component's.
+      "files": ["**/*.stories.tsx"],
+      "rules": {
+        "react/rules-of-hooks": "off"
+      }
+    },
+    {
+      // Scripts run by hand or in CI (the root's and each workspace's scripts/): they end the process with a code when something is missing, and
+      // read the Cloudflare API's answers as loose JSON (`Record<string, any>`) rather than typing every one. `need` in packages/worker/src/env.ts
+      // is the scripts' helper.
+      "files": ["scripts/**", "*/*/scripts/**", "packages/worker/src/env.ts"],
+      "rules": {
+        "unicorn/no-process-exit": "off",
+        "typescript/no-explicit-any": "off"
+      }
+    }
+  ],
+  // Built output, generated files and the upstream copies an app vendors are not linted.
+  // TODO: apps/medier and apps/startside are linted once their own errors are fixed (see the root README); until then they are left out here so
+  // `npm run lint` passes. A Worker's directory is never left out: worker.yml lints it by name, and oxlint fails when it finds nothing to lint.
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/.astro/**",
+    "**/.next/**",
+    "**/.open-next/**",
+    "**/.wrangler/**",
+    "**/storybook-static/**",
+    "**/upstream/**",
+    "apps/medier/**",
+    "apps/startside/**"
+  ]
+}

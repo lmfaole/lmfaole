@@ -1,7 +1,7 @@
 /** Copies what is played on Steam and RetroAchievements into D1. Neither service keeps a history of sessions, so it is made here: each run compares with what was stored and keeps the difference as an event. Only what changed is written. */
 
-import type { Database, Statement } from "./db.ts"
-import type { Fetch } from "./listenbrainz.ts"
+import type { Database, Statement } from "@lmfaole/worker/d1"
+import type { Fetch } from "@lmfaole/worker/fetch"
 import { earnedBetween, profile, recentGames, utc } from "./retroachievements.ts"
 import { achievements, mainPlatform, ownedGames } from "./steam.ts"
 
@@ -66,7 +66,7 @@ export async function syncGames(db: Database, options: GamesOptions): Promise<{ 
   // Games played since their achievements were last fetched, the most recently played first.
   const due = owned
     .filter((game) => game.playtime_forever > 0 && stored.get(`steam:${game.appid}`)?.achievements_checked !== game.playtime_forever)
-    .sort((a, b) => (b.rtime_last_played ?? 0) - (a.rtime_last_played ?? 0))
+    .toSorted((a, b) => (b.rtime_last_played ?? 0) - (a.rtime_last_played ?? 0))
     .slice(0, options.maxAchievementGames)
   for (const game of due) {
     const list = await achievements(options.steam.key, options.steam.id, game.appid, options.fetch)

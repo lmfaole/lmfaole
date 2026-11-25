@@ -45,7 +45,7 @@ export const beaconToken = (): string => settings()["CF_BEACON_TOKEN"] ?? ""
 export const binding = (name: string): unknown => env[name]
 
 /**
- * Workers on this zone cannot reach an origin outside Cloudflare (every such fetch ends in 525): the relay (`upstream/`) asks on the page's behalf, only for the hosts it knows and
+ * Workers on this zone cannot reach an origin outside Cloudflare (every such fetch ends in 525): the relay (`workers/relay` at the repository's root) asks on the page's behalf, only for the hosts it knows and
  * only with the key the two share, through its service binding (`UPSTREAM`), or at its address where there is none (`route.ts`).
  * Without a relay (`astro dev`) the source is asked directly.
  */

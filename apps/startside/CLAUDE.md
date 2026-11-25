@@ -34,7 +34,7 @@ Before building or changing anything a person sees, use the skills in `.claude/s
 - Plain `<a>` links in the design system's components do not get the base path: write `/start/...` (`withBase` in `lib/links.ts`).
 - A row links to the app's own page for the thing; a link out to GitHub is the last action on the detail page.
 - The design system is the workspace `packages/designsystem` of this repository (`"@lmfaole/designsystem": "*"`); after a change to its skills, `npm run skills` brings them in step.
-- Cloudflare (README «How it runs», «Deploy»): sources go through the relay, by the service binding `UPSTREAM` and its workers.dev address `UPSTREAM_URL`
+- Cloudflare (README «How it runs», «Deploy»): sources go through the relay shared with medier (`workers/relay` at the repository's root; a new host goes there, out before the page uses it), by the service binding `UPSTREAM` and its workers.dev address `UPSTREAM_URL`
   where the binding answers 52x (`askSource` in `lib/relay.ts`, the only place a source is fetched; a test fails on any other `fetch(` on the server); the cron fills the KV snapshot `SNAPSHOT` with what every visitor shares (`lib/snapshot.ts`,
   at most three bodies a run, plus the index and the summaries; never anything per visitor); summaries are made by the cron through AI Gateway `AI_GATEWAY`
   (`lib/summaries.ts`, `lib/ai-gateway.ts`); a visitor is held to `LIMITER` (rate limit) and pages are kept a minute at the edge (`worker.mjs`); avatars through

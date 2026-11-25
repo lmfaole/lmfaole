@@ -1,5 +1,7 @@
 /** ListenBrainz's listens and the row each becomes. */
 
+import type { Fetch } from "@lmfaole/worker/fetch"
+
 export interface Listen {
   listened_at: number
   inserted_at?: number
@@ -12,8 +14,6 @@ export interface Listen {
     mbid_mapping?: { recording_mbid?: string; release_mbid?: string; artist_mbids?: string[] }
   }
 }
-
-export type Fetch = (input: string, init?: RequestInit) => Promise<Response>
 
 /** The `count` oldest listens after `minTs` (newest first, as ListenBrainz sends them). */
 export async function listensAfter(user: string, minTs: number, count: number, fetch: Fetch): Promise<Listen[]> {

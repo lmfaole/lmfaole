@@ -14,9 +14,12 @@
     "undated": "node scripts/undated.ts",
     "backfill": "node scripts/backfill.ts"
   },
+  "dependencies": {
+    "@lmfaole/worker": "*"
+  },
   "devDependencies": {
     "@types/node": "^24.13.3",
     "typescript": "~7.0.2",
-    "wrangler": "^4.150.0"
+    "wrangler": "^4.164.0"
   }
 }

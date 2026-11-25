@@ -9,7 +9,7 @@ export interface MediumInfo {
   /** Its overview, under the site's base: `musikk/`. */
   path: string
   label: string
-  /** Its place in the navigation (`Frame`). */
+  /** Its place in the navigation (`navItems`). */
   place: "music" | "film" | "tv"
 }
 

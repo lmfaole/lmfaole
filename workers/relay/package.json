@@ -1,0 +1,22 @@
+{
+  "name": "@lmfaole/relay",
+  "private": true,
+  "type": "module",
+  "description": "Reléet til medier og startside: henter kildene for appene, fordi en worker på lmfaole.party-sonen får 525 mot origins utenfor Cloudflare",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "tsc --noEmit",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "rotate-key": "node scripts/rotate-key.ts"
+  },
+  "devDependencies": {
+    "@lmfaole/worker": "*",
+    "@types/node": "^24.13.3",
+    "typescript": "~7.0.2",
+    "wrangler": "^4.164.0"
+  }
+}

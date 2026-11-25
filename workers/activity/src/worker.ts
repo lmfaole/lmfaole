@@ -1,7 +1,10 @@
 /** The Worker. Every three hours (workers/scheduler calls `scheduled`) it copies, each into its D1 database: new listens from ListenBrainz and loves from Last.fm, what was played on Steam and RetroAchievements, what was watched and rated on Trakt, and the Letterboxd diary. It also answers the read-only API. */
 
+import type { Database } from "@lmfaole/worker/d1"
+import { workerFetch } from "@lmfaole/worker/fetch"
+import { settle } from "@lmfaole/worker/scheduled"
+
 import { handle } from "./api.ts"
-import type { Database } from "./db.ts"
 import { syncGames } from "./games.ts"
 import { syncLetterboxd } from "./letterboxd.ts"
 import { syncLoves } from "./loves.ts"
@@ -28,16 +31,9 @@ interface Context {
   waitUntil(promise: Promise<unknown>): void
 }
 
-async function settle(jobs: Promise<unknown>[]): Promise<void> {
-  const failed = (await Promise.allSettled(jobs)).filter((result) => result.status === "rejected")
-  for (const result of failed) console.error(result.reason)
-  if (failed.length > 0) throw new AggregateError(failed.map((result) => result.reason), "sync failed")
-}
-
 export default {
   async scheduled(controller: { scheduledTime: number }, env: Env, _ctx: Context): Promise<void> {
-    // fetch is wrapped: called as options.fetch, workerd throws «Illegal invocation».
-    const fetcher = (input: string, init?: RequestInit) => fetch(input, init)
+    const fetcher = workerFetch()
     const at = new Date(controller.scheduledTime)
     const now = Math.floor(at.getTime() / 1000)
     // The free plan allows 50 subrequests a run, a D1 batch counting as one. At most: music 2 fetches + 5 queries, loves 4 + 3,

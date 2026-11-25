@@ -43,7 +43,7 @@ function importSnapshot(db: DatabaseSync, cv: Cv): void {
   cv.education.forEach((education, i) => rows.push(['cv_education', { id: i + 10, ...education, kortbeskrivelse: null }]))
   rows.push(['cv_education', { id: 1, fra: '2003-08-01', til: '2010-06-30', aar: 2010, grad: 'Grunnskole, 1.–7. trinn', institusjon: 'Barneskolen', beskrivelse: null, kortbeskrivelse: null }])
   cv.links.forEach((link, i) => rows.push(['cv_link', { id: i + 1, ...link }]))
-  for (const [table, row] of rows.reverse()) insert(db, table, row)
+  for (const [table, row] of rows.toReversed()) insert(db, table, row)
 }
 
 test('before the migration the database cannot answer, and an empty one has no CV: the snapshot is shown in both cases', async () => {

@@ -14,7 +14,7 @@ import { dirname, join, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import { parseArgs } from "node:util"
 
-import { COMPATIBILITY_DATE, parseJsonc, ZONE } from "@lmfaole/web/conventions"
+import { COMPATIBILITY_DATE, parseJsonc, ZONE } from "@lmfaole/worker/conventions"
 import { headersFile } from "@lmfaole/web/headers"
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..")
@@ -29,7 +29,7 @@ interface Manifest {
 }
 
 const readJson = <T>(file: string): T => JSON.parse(readFileSync(file, "utf8")) as T
-const sorted = (record: Record<string, string>): Record<string, string> => Object.fromEntries(Object.entries(record).sort(([a], [b]) => a.localeCompare(b)))
+const sorted = (record: Record<string, string>): Record<string, string> => Object.fromEntries(Object.entries(record).toSorted(([a], [b]) => a.localeCompare(b)))
 
 /** A TypeScript string in single quotes. */
 const quoted = (text: string): string => `'${text.replaceAll("\\", "\\\\").replaceAll("'", "\\'")}'`
@@ -208,7 +208,7 @@ En push til \`main\` som rører appen, bygges og publiseres av \`.github/workflo
 
 /** The app's workflow: when it runs, and the steps of `astro-app.yml`. */
 export const workflow = (name: string, title: string): string => {
-  const paths = `[apps/${name}/**, packages/designsystem/**, packages/web/**, package-lock.json, .github/workflows/${name}.yml, .github/workflows/astro-app.yml]`
+  const paths = `[apps/${name}/**, packages/designsystem/**, packages/web/**, packages/worker/**, package-lock.json, .github/workflows/${name}.yml, .github/workflows/astro-app.yml]`
   return `name: ${name}
 
 # Every push that touches the app is tested, type-checked and built; a push to the default branch, or a manual run, is also deployed to

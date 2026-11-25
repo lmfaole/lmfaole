@@ -91,6 +91,8 @@ Rådata ligger urørt her:
 
 ## Bruk
 
+En push til `main` som endrer workeren (eller `packages/worker`) blir testet, typesjekket, lintet og deployet av `.github/workflows/activity.yml` (stegene er `worker.yml` sine), med `npm run deploy` som under. Hemmelighetene blir liggende på workeren.
+
 ```sh
 npm test
 npm run deploy      # migrasjoner for alle tre databasene + deploy

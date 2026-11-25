@@ -12,8 +12,9 @@
   scripts without a build. Dependencies are the apps' own, at the same versions (`src/apps.test.ts` checks it); never a version younger than seven days.
 - `src/headers.ts` is the one source of the security headers: each app's `public/_headers` says the same for its base, and its `src/headers.test.ts`
   (`testHeadersFile`) checks it. A new header goes into `SECURITY_HEADERS` and every app's `public/_headers` in the same commit.
-- The conventions of an app's Worker (`src/conventions.ts`: zone, routes, `compatibility_date`, no workers.dev or preview address, observability) are checked
-  for every app by `src/apps.test.ts`; a newer `compatibility_date` is set here and in every app's `wrangler.jsonc` at once.
+- The conventions of an app's Worker (zone, routes, `compatibility_date`, no workers.dev or preview address, observability) live in
+  `packages/worker/src/conventions.ts` (`src/conventions.ts` hands them on) and are checked for every app by `src/apps.test.ts`; a newer
+  `compatibility_date` is set there and in every `wrangler.jsonc` at once.
 - Code comments in English and say why; anything on screen (`NotFound.astro`) is Norwegian bokmål and built from the design system's components.
 - CI: `.github/workflows/web.yml`. The apps' own workflows run on a change here too (`packages/web/**` in their paths), except `medier.yml`.
 

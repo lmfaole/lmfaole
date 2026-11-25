@@ -53,6 +53,8 @@ Open Library, BGG, IGDB og TMDB hentes ikke: appene slår opp der når de trenge
 
 ## Bruk
 
+En push til `main` som endrer workeren (eller `packages/worker`, eller skjemaene til `site` og `library` i `packages/db`) blir testet, typesjekket, lintet og deployet av `.github/workflows/catalog.yml` (stegene er `worker.yml` sine), med `npm run deploy` som under. Hemmelighetene blir liggende på workeren.
+
 ```sh
 npm test
 npm run typecheck
@@ -71,7 +73,7 @@ curl "http://localhost:8787/__scheduled?cron=15+*/6+*+*+*"
 
 Databasene deles med andre (skjemaene ligger i `packages/db`). Id-ene i `wrangler.jsonc` må være de samme som i `packages/db/wrangler.jsonc`.
 
-Deploy denne før `workers/scheduler`: en service binding til en worker som ikke finnes, stopper deployen.
+Deploy denne før `workers/scheduler`: en service binding til en worker som ikke finnes, stopper deployen. I CI har de hver sin workflow, så en ny binding i scheduler kommer i en senere push enn workeren den peker på.
 
 Secrets:
 
