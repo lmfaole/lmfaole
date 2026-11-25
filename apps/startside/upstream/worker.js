@@ -1,12 +1,12 @@
-// A small relay on workers.dev for the start page. Workers on the lmfaole.party zone cannot reach origins outside
-// Cloudflare (every such fetch ends in 525), while a fetch to workers.dev works, so the page fetches its sources here.
+// A small relay for the start page. A Worker on the lmfaole.party zone cannot reach GitHub itself (the fetch ends in 525), so the page
+// fetches its sources here: through its service binding UPSTREAM, and over this Worker's workers.dev address where the binding answers
+// 520–530 (as GitHub through the binding has, during a request to lmfaole.party; ../lib/relay.ts).
 // Only GET (and POST to the GraphQL of GitHub and Entur, which is how they are asked, queries only), only the hosts below, and only with the key the page and this Worker share (UPSTREAM_KEY).
 // GITHUB_TOKEN lives here, so the page never holds it.
 
 import { readOnlyQuery, sameKey } from "./guard.js"
 
-// The first is Cloudflare Access's signing keys (public), for the page's check of its token where it cannot fetch them itself.
-const HOSTS = new Set(["party-7ry-pages.cloudflareaccess.com", "api.met.no", "api.github.com", "nominatim.openstreetmap.org", "api.entur.io", "api.spotify.com", "services.swpc.noaa.gov", "www.hvakosterstrommen.no", "api01.nve.no", "gbfs.urbansharing.com", "ws.geonorge.no"])
+const HOSTS = new Set(["api.met.no", "api.github.com", "nominatim.openstreetmap.org", "api.entur.io", "api.spotify.com", "services.swpc.noaa.gov", "www.hvakosterstrommen.no", "api01.nve.no", "gbfs.urbansharing.com", "ws.geonorge.no"])
 const USER_AGENT = "startside github.com/lmfaole/lmfaole"
 /** The largest body a POST may have (a GraphQL query, Spotify's token form). */
 const BODY_MAX = 64 * 1024
@@ -59,7 +59,8 @@ export default {
       for (const name of ["authorization", "content-type"]) if (request.headers.has(name)) headers.set(name, request.headers.get(name))
     }
     const response = await fetch(`https://${host}/${rest.join("/")}${url.search}`, graphql || spotifyToken ? { method: "POST", headers, body } : { headers })
-    const out = new Headers({ "Content-Type": response.headers.get("Content-Type") ?? "application/json" })
+    // `X-Relay`: the answer is the source's, passed on by the relay, so the page can tell a 52x of the source's from one of the binding's.
+    const out = new Headers({ "Content-Type": response.headers.get("Content-Type") ?? "application/json", "X-Relay": "startside-upstream" })
     // When the answer may be asked for again, and the time to ask about.
     for (const name of ["Expires", "Last-Modified"]) if (response.headers.has(name)) out.set(name, response.headers.get(name))
     return new Response(response.status === 304 ? null : response.body, { status: response.status, headers: out })

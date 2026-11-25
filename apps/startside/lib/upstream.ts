@@ -3,7 +3,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare"
 import { freshSeconds, STALE_SECONDS, verdict } from "./cache-policy"
 import { env, mocking } from "./env"
 import { mockFetch } from "./mock"
-import { viaRelay, type Fetcher, type Relay } from "./relay"
+import { askSource, type Fetcher, type Relay } from "./relay"
 import { isFresh, readIndex, readSnapshot, requestKey, type Snapshot, type SnapshotIndex, type Store } from "./snapshot"
 
 /** The relay as this Worker has it: the service binding `UPSTREAM`, the address `UPSTREAM_URL`, the shared key `UPSTREAM_KEY` (`lib/relay.ts`). */
@@ -17,23 +17,20 @@ function relay(): Relay {
   return { binding, url: env("UPSTREAM_URL"), key: env("UPSTREAM_KEY") }
 }
 
-/** Whether the sources are asked through the relay (which holds GitHub's token), so the page needs no token of its own. */
+/** Whether the sources are asked through the relay (which holds GitHub's token), so the page needs no token of its own: wherever the key is set (`askSource`). */
 export function throughRelay(): boolean {
-  const { binding, url, key } = relay()
-  return Boolean(key && (binding !== undefined || url))
+  return Boolean(env("UPSTREAM_KEY"))
 }
 
 /**
  * Fetches a source: through the relay (`upstream/`, by the service binding or its address) when it is set, as on lmfaole.party, where a Worker cannot
- * reach origins outside Cloudflare; straight to the source otherwise, as in `next dev`. Through the relay, the relay adds the GitHub token.
+ * reach GitHub itself; straight to the source only where there is no relay key at all, as in `next dev` (`askSource`). Through the relay, the relay adds the GitHub token.
  */
 async function fetchSource(url: string, init: { headers?: Record<string, string>; revalidate: number; /** How long past `revalidate` a kept answer may still be shown while it is asked for anew (default `STALE_SECONDS`; 0 for what must not be old, like what plays now). */ staleFor?: number; /** A JSON body makes it a POST (GitHub's GraphQL, which the relay allows). */ json?: unknown; /** A text body makes it a POST too (a form); the caller sets its Content-Type. */ body?: string }): Promise<Response> {
   if (mocking()) return mockFetch(url, init)
   const headers: Record<string, string> = { ...init.headers, ...(init.json === undefined ? {} : { "Content-Type": "application/json" }) }
   const post = init.json !== undefined ? { method: "POST", body: JSON.stringify(init.json) } : init.body !== undefined ? { method: "POST", body: init.body } : {}
-  const relayed = await viaRelay(url, { ...post, headers }, relay())
-  if (relayed !== null) return relayed
-  return fetch(url, { ...post, headers, next: { revalidate: init.revalidate } } as RequestInit)
+  return askSource(url, { ...post, headers, next: { revalidate: init.revalidate } }, relay())
 }
 
 /** The snapshot the cron keeps in KV (`lib/snapshot.ts`), or none (as in `next dev`, or before the binding is there). */

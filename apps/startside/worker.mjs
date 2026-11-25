@@ -7,7 +7,7 @@ import { WEB_ANALYTICS_CSP } from "@lmfaole/designsystem/lib/cloudflare"
 import { gatewayOptions, runModel } from "./lib/ai-gateway.ts"
 import { contentSecurityPolicy } from "./lib/csp.ts"
 import { cacheableRequest, cacheableResponse, cacheKey, keptCacheControl, pageCacheControl, ttlFor } from "./lib/page-cache.ts"
-import { relayOf, viaRelay } from "./lib/relay.ts"
+import { askSource, relayOf } from "./lib/relay.ts"
 import { refreshSnapshot, sharedJobs } from "./lib/snapshot.ts"
 import { MODEL, refreshSummaries, SUMMARY_QUERY, summaryVariables } from "./lib/summaries.ts"
 
@@ -103,7 +103,7 @@ export default {
   async scheduled(controller, env, ctx) {
     if (env.SNAPSHOT === undefined) return
     const relay = relayOf(env)
-    const ask = async (job, signal) => (await viaRelay(job.url, { headers: job.headers, signal }, relay)) ?? fetch(job.url, { headers: job.headers, signal })
+    const ask = (job, signal) => askSource(job.url, { headers: job.headers, signal }, relay)
     ctx.waitUntil(
       refreshSnapshot(env.SNAPSHOT, sharedJobs(env), ask, controller.scheduledTime).then(
         (report) => console.log("Øyeblikksbilde", report),
@@ -118,8 +118,10 @@ export default {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         signal: AbortSignal.timeout(15_000),
       }
-      const response = (await viaRelay("https://api.github.com/graphql", init, relay)) ?? (env.GITHUB_TOKEN ? await fetch("https://api.github.com/graphql", { ...init, headers: { ...init.headers, Authorization: `Bearer ${env.GITHUB_TOKEN}`, "User-Agent": "startside" } }) : null)
-      if (response === null) throw new Error("Verken relé eller GITHUB_TOKEN er satt")
+      if (!relay.key && !env.GITHUB_TOKEN) throw new Error("Verken relé eller GITHUB_TOKEN er satt")
+      // The token is only used where there is no relay (askSource drops it on the way to the relay, which holds its own).
+      const token = env.GITHUB_TOKEN ? { Authorization: `Bearer ${env.GITHUB_TOKEN}` } : {}
+      const response = await askSource("https://api.github.com/graphql", { ...init, headers: { ...init.headers, ...token, "User-Agent": "startside" } }, relay)
       if (!response.ok) throw new Error(`GitHub svarte ${response.status}`)
       return (await response.json()).data
     }

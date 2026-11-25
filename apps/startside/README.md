@@ -207,15 +207,21 @@ for the stations, the forecast and what goes with it (warnings, radar, air, moon
 
 - **`startside`** (`worker.mjs`, `wrangler.jsonc`): the page, on the route `lmfaole.party/start*`. The static files are
   embedded in the script (`scripts/embed-assets.mjs`), so a deploy is one upload.
-- **`startside-upstream`** (`upstream/`): a relay. A Worker on the `lmfaole.party` zone gets 525 on every
-  fetch to an origin outside Cloudflare, so the page fetches Yr and GitHub through it: through the **service binding** `UPSTREAM`
-  (`services` in `wrangler.jsonc`, a call inside Cloudflare, `lib/relay.ts`). It has no public address (`workers_dev: false`); `lib/relay.ts`
-  still takes an address `UPSTREAM_URL` for `next dev` against a relay, but the Worker sets none. The deploy puts the relay up first, so the binding always has a Worker to point to. It takes
+- **`startside-upstream`** (`upstream/`): a relay. A Worker on the `lmfaole.party` zone gets 525 when it fetches GitHub
+  (and, earlier, other origins outside Cloudflare) itself, so the page fetches every source through it: through the **service binding** `UPSTREAM`
+  (`services` in `wrangler.jsonc`, a call inside Cloudflare, `lib/relay.ts`), and over its workers.dev address `UPSTREAM_URL`
+  (`workers_dev: true` in `upstream/wrangler.jsonc`) where the binding answers 520–530 or throws. That fallback is needed: called through the binding
+  during a request to lmfaole.party, the relay's own fetch of api.github.com has answered 525 (every GitHub part showed «GitHub svarte 525»),
+  while the cron's calls through the same binding, and MET's, worked. The relay marks what it passes on with `X-Relay`, and the page logs each fallback
+  («Reléet via binding svarte 525 for api.github.com (fra kilden bak reléet); prøver adressen»), so `wrangler tail startside` shows which it was.
+  The deploy puts the relay up first, so the binding always has a Worker to point to. It takes
   only GET (and POST of GraphQL queries, never mutations, to GitHub and Entur, and Spotify's token form), only those hosts (MET, GitHub, Nominatim, Entur, Spotify, NOAA, hvakosterstrommen.no, NVE, Kartverket, Oslo Bysykkel's GBFS, which it gives the `Client-Identifier` `lmfaole-startside`), and only with the shared secret `UPSTREAM_KEY` (set on both Workers). It holds `GITHUB_TOKEN`. It passes `If-Modified-Since` on and `Expires`, `Last-Modified` and a 304 back, so a source with nothing new need not send it again.
 
-In `next dev` there is no `UPSTREAM_URL`, so the page fetches the sources directly.
+Every source is fetched by `askSource` (`lib/relay.ts`), for the pages (`lib/upstream.ts`) and the cron (`worker.mjs`) alike, and a test
+(`lib/relay.test.ts`) fails on a `fetch(` anywhere else on the server. Where `UPSTREAM_KEY` is set, a source is never fetched directly: with neither the
+binding nor the address, the part shows «Reléet er ikke tilgjengelig …» instead. Only `next dev` with no `UPSTREAM_KEY` fetches the sources directly.
 
-The relay still checks the shared key on every call, though only the binding reaches it now: a second lock should it ever get an address again.
+The relay checks the shared key on every call, constant-time: it is what keeps its workers.dev address closed to others.
 Nothing else uses it (the other lmfaole apps have relays of their own).
 
 ### Snapshot (scheduled job and KV)
@@ -292,7 +298,7 @@ since `kv_namespaces` has no id) and `CLOUDFLARE_ACCOUNT_ID`; without them the r
 
 Bindings and settings of `startside` (`wrangler.jsonc`): `AI` (Workers AI, used by the cron only), `UPSTREAM` (the relay), `SNAPSHOT` (KV:
 the snapshot and the key `summaries`), `LIMITER` (the rate limit, `namespace_id` `1201`, 120 a minute), the cron `*/15 * * * *`, and the vars
-`GITHUB_USER` (`lmfaole`), `GITHUB_WATCH_REPOS`, `WEATHER_*`, `AI_GATEWAY` (`default`), `IMAGE_TRANSFORMS` (`0`) and `CF_BEACON_TOKEN` (empty). For the owner, in the dashboard:
+`GITHUB_USER` (`lmfaole`), `GITHUB_WATCH_REPOS`, `WEATHER_*`, `UPSTREAM_URL` (the relay's workers.dev address), `AI_GATEWAY` (`default`), `IMAGE_TRANSFORMS` (`0`) and `CF_BEACON_TOKEN` (empty). For the owner, in the dashboard:
 
 - **AI Gateway:** nothing for `default` (created on the first call); for another name, create it and set `AI_GATEWAY`.
 - **Image Transformations:** turn it on for `lmfaole.party` (Images › Transformations), allow the origins `github.com` and

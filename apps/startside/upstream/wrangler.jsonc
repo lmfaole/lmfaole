@@ -3,8 +3,9 @@
   "name": "startside-upstream",
   "main": "worker.js",
   "compatibility_date": "2026-11-01",
-  // Only the page's service binding UPSTREAM reaches it: no workers.dev and no preview addresses.
-  "workers_dev": false,
+  // The page calls it through its service binding UPSTREAM, and over workers.dev (the page's UPSTREAM_URL) where the binding answers 52x:
+  // GitHub through the binding has answered 525 during requests to lmfaole.party (README «How it runs»). The key keeps the address closed. No preview addresses.
+  "workers_dev": true,
   "preview_urls": false,
   "observability": { "enabled": true }
   // Secrets: UPSTREAM_KEY (the same as the page's), GITHUB_TOKEN (fine-grained, public repositories read-only: the page is open, README «Open and public»).

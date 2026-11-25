@@ -59,6 +59,13 @@ test("GitHub still gets the relay's token and ignores the caller's; other hosts 
   assert.equal((await ask("/api.spotify.com/v1/me/player/currently-playing")).status, 204)
 })
 
+test("a source's answer, also a 525 of its own, is marked as passed on by the relay, so the page can tell it from the binding's", async () => {
+  spy(525)
+  const response = await ask("/api.github.com/search/issues?q=is%3Apublic")
+  assert.equal(response.status, 525)
+  assert.equal(response.headers.get("X-Relay"), "startside-upstream")
+})
+
 test("Oslo Bysykkel is told who asks; the other open sources are let through without it", async () => {
   const calls = spy()
   await ask("/gbfs.urbansharing.com/oslobysykkel.no/station_status.json")

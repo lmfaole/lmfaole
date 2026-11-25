@@ -9,7 +9,7 @@
   "preview_urls": false,
   // Workers AI, for the summaries: only the cron job calls it (lib/summaries.ts, at most two a run); the pages read them from KV.
   "ai": { "binding": "AI" },
-  // The relay (upstream/), called inside Cloudflare instead of over its workers.dev address (lib/relay.ts). Deployed first (deploy.yml).
+  // The relay (upstream/), called inside Cloudflare, with its workers.dev address UPSTREAM_URL as the fallback (lib/relay.ts). Deployed first (startside.yml).
   "services": [{ "binding": "UPSTREAM", "service": "startside-upstream" }],
   // The snapshot and the summaries the cron fills (lib/snapshot.ts, lib/summaries.ts). No id: wrangler deploy creates the namespace the first time (automatic provisioning).
   "kv_namespaces": [{ "binding": "SNAPSHOT" }],
@@ -29,6 +29,8 @@
     "WEATHER_PLACE": "Oslo",
     "WEATHER_LAT": "59.91",
     "WEATHER_LON": "10.75",
+    // The relay's address: where the binding UPSTREAM answers 520–530 (lib/relay.ts); its key is the secret UPSTREAM_KEY.
+    "UPSTREAM_URL": "https://startside-upstream.olejorgenbakken.workers.dev",
     // AI Gateway for the summaries (lib/ai-gateway.ts, called by the cron only): «default» is created by Cloudflare on the first call; empty for none.
     "AI_GATEWAY": "default",
     // "1" once Image Transformations is on for lmfaole.party with github.com and avatars.githubusercontent.com allowed: avatars as AVIF/WebP via /cdn-cgi/image.
