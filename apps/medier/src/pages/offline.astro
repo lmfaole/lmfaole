@@ -7,6 +7,6 @@ import Page from '../layouts/Page.astro'
 export const prerender = true
 ---
 
-<Page firstRun={false} title="Frakoblet" lead="Siden trenger nett for å hente det som er nytt.">
-  <ErrorMessage what="siden" error="Ingen nett. Sidene du har sett nylig, kan fortsatt åpnes." retry />
+<Page title="Frakoblet" lead="Siden trenger nett for å hente det som er nytt.">
+  <ErrorMessage what="siden" error="Ingen nett. Sider som er åpnet nylig, kan fortsatt åpnes." retry />
 </Page>

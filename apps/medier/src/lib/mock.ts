@@ -8,9 +8,9 @@
 import data from "./mock-data.json" with { type: "json" }
 import { plain } from "./spotify.ts"
 
-/** The settings of a run on made-up data: what is not set (no keys are) is given a name that is no key, so every source is «set up». The usernames are the visitor's, as always (any one is taken). */
+/** The settings of a run on made-up data: what is not set (no keys are) is given a name that is no key, so every source is «set up», and a username where `wrangler.jsonc` has none (any one is taken). */
 export function mockSettings(env: Readonly<Partial<Record<string, string>>>): Record<string, string> {
-  const defaults = { LASTFM_API_KEY: "mock", TRAKT_CLIENT_ID: "mock", TMDB_API_KEY: "mock", SPOTIFY_CLIENT_ID: "mock", SPOTIFY_CLIENT_SECRET: "mock", SPOTIFY_REFRESH_TOKEN: "mock", SETLISTFM_API_KEY: "mock", STEAM_API_KEY: "mock", RETROACHIEVEMENTS_API_KEY: "mock" }
+  const defaults = { LASTFM_API_KEY: "mock", TRAKT_CLIENT_ID: "mock", TMDB_API_KEY: "mock", SPOTIFY_CLIENT_ID: "mock", SPOTIFY_CLIENT_SECRET: "mock", SPOTIFY_REFRESH_TOKEN: "mock", SETLISTFM_API_KEY: "mock", STEAM_API_KEY: "mock", RETROACHIEVEMENTS_API_KEY: "mock", LASTFM_USER: "demo", TRAKT_USER: "demo", LISTENBRAINZ_USER: "demo", STEAM_USER: "demo", RETROACHIEVEMENTS_USER: "demo" }
   return { ...defaults, ...Object.fromEntries(Object.entries(env).filter((entry): entry is [string, string] => typeof entry[1] === "string" && entry[1] !== "")) }
 }
 
@@ -720,7 +720,6 @@ function retro(url: URL, now: number): Response {
   const utc = (seconds: number): string => new Date(seconds * 1000).toISOString().slice(0, 19).replace("T", " ")
   const played = (at: number): number => now - at * 3 * 24 * 3600 - 3600
   const done = (at: number, total: number): number => at === 5 ? total : Math.round((total * ((at * 3 + 2) % 10)) / 10)
-  if (url.pathname.endsWith("/API_GetUserProfile.php")) return json({ User: url.searchParams.get("u"), TotalPoints: 1234 })
   if (url.pathname.endsWith("/API_GetUserRecentlyPlayedGames.php")) {
     return json(RETRO_GAMES.map(([GameID, Title, ConsoleID, ConsoleName, ImageTitle, ImageBoxArt, , , , , total], at) => ({ GameID, Title, ConsoleID, ConsoleName, ImageTitle, ImageBoxArt, LastPlayed: utc(played(at)), NumPossibleAchievements: total, NumAchieved: done(at, total) })))
   }
@@ -846,7 +845,6 @@ function listenbrainz(url: URL, now: number): Response {
     return json({ payload: { count, user_id: name, listens: playsIn(0, now, now).slice(0, count).map((play) => listen(play, play.at)) } })
   }
   if (kind === "user" && what === "playing-now") return json({ payload: { count: 1, playing_now: true, user_id: name, listens: [listen(nowTrack(now), null)] } })
-  if (kind === "user" && what === "listen-count") return json({ payload: { count: playsIn(0, now, now).length } })
   if (kind === "stats" && what === "artists") {
     const plays = playsIn(now - 30 * DAY, now, now)
     const artists = ARTISTS.map((artist, index) => ({ artist_mbid: mockMbid(index), artist_name: artist.name, listen_count: plays.filter((play) => play.artist === artist).length })).filter((one) => one.listen_count > 0).sort((a, b) => b.listen_count - a.listen_count)

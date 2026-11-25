@@ -1,42 +1,31 @@
 ---
-import Intro from '../../components/Intro.astro'
-import { INTROS } from '../../lib/onboarding'
 import { PageSection } from '@lmfaole/designsystem/components/page-section'
 import type { Continuation } from '@lmfaole/designsystem/components/page-section'
 import { mediumHref } from '../../lib/media'
 import { monthAt } from '../../lib/months'
 
 import { Fetched, ShowRows, WatchRows } from '../../components/sections'
-import UsernameGate from '../../components/UsernameGate.astro'
 import Page from '../../layouts/Page.astro'
-import { usersOf, watched } from '../../lib/runtime'
+import { owner, watched } from '../../lib/runtime'
 
 const base = import.meta.env.BASE_URL
-const users = usersOf(Astro.cookies)
-const seen = users.trakt === null ? null : await watched(users)
+const users = owner()
+if (users.trakt === null) return Astro.rewrite('/404/')
+const seen = await watched(users)
 const episodes = (seen?.items ?? []).filter((watch) => watch.kind === 'episode')
 // Each section is a card leading on to the subpage it is an excerpt of: the episodes to the history, the series to this month's wrapped.
 const history: Continuation = { href: mediumHref(base, 'tv', 'historikk/'), label: 'Se hele TV-historikken' }
 const wrapped: Continuation = { href: mediumHref(base, 'tv', 'maned/', monthAt(Date.now()).id), label: 'Se månedens Wrapped' }
 ---
 
-<Page current="tv" title="TV" lead="Episodene og seriene du har sett sist, fra Trakt.">
-  {
-    users.trakt === null ? (
-      <UsernameGate services={['trakt']} />
-    ) : (
-      <>
-        <Intro intro={INTROS.tv} />
-        <PageSection id="sett" title="Siste episoder" icon="tv" continues={history}>
-          <WatchRows items={episodes} base={base} kind="episode" />
-        </PageSection>
-        {episodes.length > 0 && (
-          <PageSection id="serier" title="Serier" icon="tv" continues={wrapped}>
-            <ShowRows items={episodes} base={base} />
-          </PageSection>
-        )}
-        <Fetched sources={[{ at: seen?.at ?? null, source: 'Trakt' }]} />
-      </>
-    )
-  }
+<Page current="tv" title="TV" lead="Sist sette episoder og serier, fra Trakt.">
+  <PageSection id="sett" title="Siste episoder" icon="tv" continues={history}>
+    <WatchRows items={episodes} base={base} kind="episode" />
+  </PageSection>
+  {episodes.length > 0 && (
+    <PageSection id="serier" title="Serier" icon="tv" continues={wrapped}>
+      <ShowRows items={episodes} base={base} />
+    </PageSection>
+  )}
+  <Fetched sources={[{ at: seen?.at ?? null, source: 'Trakt' }]} />
 </Page>

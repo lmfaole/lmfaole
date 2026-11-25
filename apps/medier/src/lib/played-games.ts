@@ -76,7 +76,7 @@ export interface GameView {
   platforms: { label: string; minutes: number }[]
   achievements: Achievements | null
   points: { got: number; of: number } | null
-  /** The highest award the visitor has for it, in words («Mestret»). */
+  /** The highest award the owner has for it, in words («Mestret»). */
   award: string | null
   /** How many have played it on the service, where it says. */
   players: number | null
@@ -102,7 +102,7 @@ export function storeDay(written: string | null): string | null {
 const yearOf = (released: string | null): string | undefined => released?.match(/\d{4}/)?.[0]
 const kindOf = (platform: string, released: string | null): string => [platform, yearOf(released)].filter(Boolean).join(" · ")
 
-/** A Steam game's page: the visitor's time with it, the store's words of it, and their achievements. */
+/** A Steam game's page: the owner's time with it, the store's words of it, and their achievements. */
 export function steamView({ game, recentMinutes, store, achievements }: { game: OwnedGame; recentMinutes: number; store: StoreGame | null; achievements: Achievements | null }): GameView {
   const platform = steamPlatform(game)
   const developer = store === null || store.developers.length === 0 ? null : store.developers.join(", ")
@@ -134,7 +134,7 @@ export function steamView({ game, recentMinutes, store, achievements }: { game: 
   }
 }
 
-/** A retro game's page: the visitor's time with it and their achievements and points, from RetroAchievements; `lastPlayed` from its recent list. */
+/** A retro game's page: the owner's time with it and their achievements and points, from RetroAchievements; `lastPlayed` from its recent list. */
 export function retroView(game: RetroGameDetail, lastPlayed: number | null): GameView {
   const held = retroCase(game.consoleId)
   const platform = game.console || "Retrospill"

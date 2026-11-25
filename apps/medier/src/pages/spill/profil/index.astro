@@ -5,24 +5,23 @@ import { PageSection } from '@lmfaole/designsystem/components/page-section'
 
 import { BadgeRows, LevelBar } from '../../../components/steam'
 import { Head } from '../../../components/head'
-import UsernameGate from '../../../components/UsernameGate.astro'
 import Page from '../../../layouts/Page.astro'
 import { transformed } from '../../../lib/image-sources'
-import { games, hasSteam, steamBadges, steamPresence, usersOf } from '../../../lib/runtime'
+import { games, hasSteam, steamBadges, steamPresence, owner } from '../../../lib/runtime'
 import { presenceFor } from '../../../lib/steam-view'
 
-if (!hasSteam()) return Astro.rewrite('/404/')
+const users = owner()
+if (!hasSteam() || users.steam === null) return Astro.rewrite('/404/')
 const base = import.meta.env.BASE_URL
-const users = usersOf(Astro.cookies)
-const [presence, badges, played] = users.steam === null ? [null, null, null] : await Promise.all([steamPresence(users), steamBadges(users), games(users)])
+const [presence, badges, played] = await Promise.all([steamPresence(users), steamBadges(users), games(users)])
 const owned = new Set((played?.entries ?? []).map((entry) => entry.id))
 const crumbs = [{ label: 'Medier', href: base }, { label: 'Spill', href: `${base}spill/` }, { label: 'Steam-profil', href: `${base}spill/profil/` }]
 ---
 
 {
   presence === null ? (
-    <Page current="games" title="Steam-profil" lead="Hvem du er på Steam, og hva du spiller nå." crumbs={crumbs}>
-      {users.steam === null ? <UsernameGate services={['steam']} /> : <ErrorMessage what="Steam-profilen" error="Steam svarte ikke, eller profilen finnes ikke." />}
+    <Page current="games" title="Steam-profil" lead="Profilen på Steam, og hva som spilles nå." crumbs={crumbs}>
+      <ErrorMessage what="Steam-profilen" error="Steam svarte ikke, eller profilen finnes ikke." />
     </Page>
   ) : (
     <Page bare current="games" width="reading" title={presence.name} lead="Steam-profil" crumbs={crumbs}>

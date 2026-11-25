@@ -2,28 +2,24 @@
 import { TitleDetail } from '../../components/detail'
 import { Head } from '../../components/head'
 import { sourcesOf } from '../../lib/image-sources'
-import NeedsUsername from '../../components/NeedsUsername.astro'
 import Page from '../../layouts/Page.astro'
 import WatchProvidersIsland from '../../components/WatchProvidersIsland.astro'
 import { mediumHref } from '../../lib/media'
 import { titleHref, titlePages } from '../../lib/pages'
-import { usersOf, watched } from '../../lib/runtime'
+import { owner, watched } from '../../lib/runtime'
 
-const users = usersOf(Astro.cookies)
+const users = owner()
 const seen = users.trakt === null ? null : await watched(users)
 const pages = seen === null ? [] : titlePages(seen.items)
 const page = pages.find((one) => one.kind === 'film' && one.slug === Astro.params.slug)
 // A film's address that is a show (an old address guessed wrong without the history): its own page.
 const other = pages.find((one) => one.kind === 'episode' && one.slug === Astro.params.slug)
 if (page === undefined && other !== undefined) return Astro.redirect(titleHref(import.meta.env.BASE_URL, other.slug, other.kind))
-if (users.trakt !== null && page === undefined) return Astro.rewrite('/404/')
+if (page === undefined) return Astro.rewrite('/404/')
 const base = import.meta.env.BASE_URL
 const kind = 'Film'
 ---
 
-{page === undefined ? (
-  <NeedsUsername medium="film" />
-) : (
 <Page bare current="film"
   width="pane"
   title={page.title}
@@ -35,4 +31,3 @@ const kind = 'Film'
     <WatchProvidersIsland slot="providers" server:defer kind={page.kind} tmdbId={page.viewings.find((watch) => watch.tmdbId !== null)?.tmdbId ?? null} />
   </TitleDetail>
 </Page>
-)}

@@ -1,8 +1,9 @@
 /**
  * Every setting the site needs, in one list. The sources' keys, Spotify's sign-in and the key the site shares with its relay are **secrets of the Worker**
  * (`wrangler secret put`); the two Cloudflare tokens the deploy uses are **secrets of this GitHub repository**. Nothing of it is ever in a file here.
- * `npm run settings:push` sets each from env files kept elsewhere (the private monorepo's `secrets/`), the value on stdin, never on a command line. Whose data is shown is not a setting: it is the
- * visitor's usernames, from their cookies (`users.ts`). What is not secret is a `var` in `wrangler.jsonc` (`IMAGE_TRANSFORMS`, `CF_BEACON_TOKEN`), and a binding is no setting at all.
+ * `npm run settings:push` sets each from env files kept elsewhere (the private monorepo's `secrets/`), the value on stdin, never on a command line. What is not secret is a `var` in `wrangler.jsonc`:
+ * whose data is shown (the owner's usernames, `LASTFM_USER`, `TRAKT_USER`, `LISTENBRAINZ_USER`, `STEAM_USER`, `RETROACHIEVEMENTS_USER`: `users.ts`), `IMAGE_TRANSFORMS` and `CF_BEACON_TOKEN`; and a
+ * binding is no setting at all.
  */
 
 export interface Setting {
@@ -27,7 +28,6 @@ export const SETTINGS: readonly Setting[] = [
   { name: "SETLISTFM_API_KEY", where: "worker", deploy: true, optional: true, about: "setlist.fm API key, for an artist's concerts and setlists: https://www.setlist.fm/settings/api" },
   { name: "STEAM_API_KEY", where: "worker", deploy: true, optional: true, about: "Steam Web API key, for the games: https://steamcommunity.com/dev/apikey (the profile's game details must be public)" },
   { name: "RETROACHIEVEMENTS_API_KEY", where: "worker", deploy: true, optional: true, about: "RetroAchievements web API key, for the old console games: https://retroachievements.org/controlpanel.php (Keys)" },
-  { name: "COOKIE_SECRET", where: "worker", deploy: true, optional: true, about: "the key the username cookies are signed with (`signed-cookie.ts`), a long random string (`openssl rand -base64 48`); without it a cookie made by hand is taken as a username" },
   { name: "UPSTREAM_URL", where: "worker", optional: true, about: "a relay's address (medier-upstream has no workers.dev address of its own), only where the Worker has no `UPSTREAM` binding to it (`wrangler.jsonc`; a Worker on this zone cannot reach Last.fm, Trakt, TMDB, Spotify or MusicBrainz itself)" },
   { name: "UPSTREAM_KEY", where: "worker", about: "the key the site and the relay share; made when it is not in the files, and set on both" },
   { name: "CLOUDFLARE_API_TOKEN", where: "github", about: "a Cloudflare API token that may edit Workers: https://dash.cloudflare.com/profile/api-tokens (the deploy uses it)" },

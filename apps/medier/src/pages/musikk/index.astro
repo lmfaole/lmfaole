@@ -1,41 +1,30 @@
 ---
-import Intro from '../../components/Intro.astro'
-import { INTROS } from '../../lib/onboarding'
 import { PageSection } from '@lmfaole/designsystem/components/page-section'
 import { mediumHref } from '../../lib/media'
 import { monthAt } from '../../lib/months'
 
 import { Fetched, PlayRows, TopArtistRows } from '../../components/sections'
-import UsernameGate from '../../components/UsernameGate.astro'
 import Page from '../../layouts/Page.astro'
 import { playingNow } from '../../lib/now'
-import { artistPictures, music, usersOf } from '../../lib/runtime'
+import { artistPictures, music, owner } from '../../lib/runtime'
 import { hasMusic } from '../../lib/users'
 
 const base = import.meta.env.BASE_URL
-const users = usersOf(Astro.cookies)
-const { listening, pictures } = !hasMusic(users) ? { listening: null, pictures: new Map() } : await music(users).then(async (found) => ({ listening: found, pictures: await artistPictures((found?.topArtists ?? []).map((artist) => artist.name)) }))
+const users = owner()
+if (!hasMusic(users)) return Astro.rewrite('/404/')
+const { listening, pictures } = await music(users).then(async (found) => ({ listening: found, pictures: await artistPictures((found?.topArtists ?? []).map((artist) => artist.name)) }))
 const now = playingNow(listening?.now ?? null)
-// Plays from ListenBrainz (a visitor without Last.fm) have no pages here: those are made of Last.fm's.
+// Plays from ListenBrainz (where there is no Last.fm username) have no pages here: those are made of Last.fm's.
 const pages = listening?.source !== 'listenbrainz'
 const source = users.lastfm === null ? 'ListenBrainz' : 'Last.fm'
 ---
 
 <Page current="music" title="Musikk" lead={`De siste avspillingene og de mest spilte artistene siste måned, fra ${source}.`}>
-  {
-    !hasMusic(users) ? (
-      <UsernameGate services={['lastfm']} />
-    ) : (
-      <>
-        <Intro intro={INTROS.musikk} />
-        <PageSection id="siste" title="Siste avspillinger" icon="history" continues={{ href: mediumHref(base, 'music', 'historikk/'), label: 'Se hele lyttehistorikken' }}>
-          <PlayRows plays={(listening?.recent ?? []).slice(0, 10)} now={now} base={base} start artistLinks={pages} trackLinks={pages} albumLinks={pages} />
-        </PageSection>
-        <PageSection id="artister" title="Mest spilt siste måned" icon="person" continues={pages ? { href: mediumHref(base, 'music', 'maned/', monthAt(Date.now()).id), label: 'Se månedens Wrapped' } : undefined}>
-          <TopArtistRows artists={listening?.topArtists ?? []} base={base} pictures={pictures} pages={pages} />
-        </PageSection>
-        <Fetched sources={[{ at: listening?.at ?? null, source }]} />
-      </>
-    )
-  }
+  <PageSection id="siste" title="Siste avspillinger" icon="history" continues={{ href: mediumHref(base, 'music', 'historikk/'), label: 'Se hele lyttehistorikken' }}>
+    <PlayRows plays={(listening?.recent ?? []).slice(0, 10)} now={now} base={base} start artistLinks={pages} trackLinks={pages} albumLinks={pages} />
+  </PageSection>
+  <PageSection id="artister" title="Mest spilt siste måned" icon="person" continues={pages ? { href: mediumHref(base, 'music', 'maned/', monthAt(Date.now()).id), label: 'Se månedens Wrapped' } : undefined}>
+    <TopArtistRows artists={listening?.topArtists ?? []} base={base} pictures={pictures} pages={pages} />
+  </PageSection>
+  <Fetched sources={[{ at: listening?.at ?? null, source }]} />
 </Page>

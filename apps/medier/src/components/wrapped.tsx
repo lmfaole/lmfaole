@@ -134,7 +134,7 @@ function NewArtists({ names, links, base }: { names: readonly { name: string; pl
   return (
     <PageSection id="nye" title="Nye artister" icon="new">
       {names.length === 0 ? (
-        <EmptyState reason="nothing-yet" what="nye artister" description="Alle artistene du spilte mest hadde du hørt på før." />
+        <EmptyState reason="nothing-yet" what="nye artister" description="Alle de mest spilte artistene var hørt på før." />
       ) : (
         <List
           columns={{ name: "Artist", value: "Avspillinger" }}
@@ -168,7 +168,7 @@ export function FilmPeriod({ stats, links, base, perDay }: { stats: WatchStats; 
   if (stats.films === 0) {
     return (
       <PageSection id="tall" title="Tall" icon="chart">
-        <EmptyState reason="no-results" what="filmer" description="Oppsummeringen lages av filmene du markerer som sett på Trakt i perioden. Velg en annen periode, eller se filmene du har sett sist." action={{ href: `${base}film/`, label: "Se filmene du har sett sist" }} />
+        <EmptyState reason="no-results" what="filmer" description="Oppsummeringen lages av filmene som er markert som sett på Trakt i perioden. Velg en annen periode, eller se de sist sette filmene." action={{ href: `${base}film/`, label: "Se de sist sette filmene" }} />
       </PageSection>
     )
   }
@@ -209,7 +209,7 @@ export function TvPeriod({ stats, links, base, perDay }: { stats: WatchStats; li
   if (stats.episodes === 0) {
     return (
       <PageSection id="tall" title="Tall" icon="chart">
-        <EmptyState reason="no-results" what="episoder" description="Oppsummeringen lages av episodene du markerer som sett på Trakt i perioden. Velg en annen periode, eller se episodene du har sett sist." action={{ href: `${base}tv/`, label: "Se episodene du har sett sist" }} />
+        <EmptyState reason="no-results" what="episoder" description="Oppsummeringen lages av episodene som er markert som sett på Trakt i perioden. Velg en annen periode, eller se de sist sette episodene." action={{ href: `${base}tv/`, label: "Se de sist sette episodene" }} />
       </PageSection>
     )
   }
@@ -277,7 +277,7 @@ export function PeriodView({ data, links, base, previous, part }: { data: Period
     if (music === null) return null
     return music.stats.total === 0 ? (
       <PageSection id="tall" title="Tall" icon="chart">
-        <EmptyState reason="no-results" what="avspillinger" description="Oppsummeringen lages av det Last.fm førte opp i perioden. Velg en annen periode, eller se det du har hørt på sist." action={{ href: `${base}musikk/`, label: "Se de siste avspillingene" }} />
+        <EmptyState reason="no-results" what="avspillinger" description="Oppsummeringen lages av det Last.fm førte opp i perioden. Velg en annen periode, eller se de siste avspillingene." action={{ href: `${base}musikk/`, label: "Se de siste avspillingene" }} />
       </PageSection>
     ) : (
       <Numbers stats={music.stats} previousTotal={music.previousTotal} previous={previous} truncated={music.truncated} />

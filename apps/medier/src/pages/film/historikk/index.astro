@@ -2,36 +2,25 @@
 import { PageSection } from '@lmfaole/designsystem/components/page-section'
 
 import { HistoryTimeline, Sessions } from '../../../components/history'
-import Intro from '../../../components/Intro.astro'
 import { Fetched } from '../../../components/sections'
-import UsernameGate from '../../../components/UsernameGate.astro'
 import Page from '../../../layouts/Page.astro'
 import { mediumHref } from '../../../lib/media'
-import { INTROS } from '../../../lib/onboarding'
-import { usersOf, watched } from '../../../lib/runtime'
+import { owner, watched } from '../../../lib/runtime'
 
 const base = import.meta.env.BASE_URL
-const users = usersOf(Astro.cookies)
-const seen = users.trakt === null ? null : await watched(users)
+const users = owner()
+if (users.trakt === null) return Astro.rewrite('/404/')
+const seen = await watched(users)
 const items = (seen?.items ?? []).filter((watch) => watch.kind === 'film')
 const now = new Date().toISOString()
 ---
 
-<Page current="film" title="Historikk" lead="Filmene du har sett, dag for dag, og hvor lenge du så, fra Trakt." crumbs={[{ label: 'Medier', href: base }, { label: 'Film', href: mediumHref(base, 'film') }, { label: 'Historikk', href: mediumHref(base, 'film', 'historikk/') }]}>
-  {
-    users.trakt === null ? (
-      <UsernameGate services={['trakt']} />
-    ) : (
-      <>
-        <Intro intro={INTROS.filmHistorikk} />
-        <PageSection id="okter" title="Titteøkter" icon="film">
-          <Sessions medium="film" watches={items} now={now} />
-        </PageSection>
-        <PageSection id="tidslinje" title="Tidslinje" icon="history">
-          <HistoryTimeline medium="film" watches={items} now={now} base={base} />
-        </PageSection>
-        <Fetched sources={[{ at: seen?.at ?? null, source: 'Trakt' }]} />
-      </>
-    )
-  }
+<Page current="film" title="Historikk" lead="Sette filmer, dag for dag, og hvor lenge hver titteøkt varte, fra Trakt." crumbs={[{ label: 'Medier', href: base }, { label: 'Film', href: mediumHref(base, 'film') }, { label: 'Historikk', href: mediumHref(base, 'film', 'historikk/') }]}>
+  <PageSection id="okter" title="Titteøkter" icon="film">
+    <Sessions medium="film" watches={items} now={now} />
+  </PageSection>
+  <PageSection id="tidslinje" title="Tidslinje" icon="history">
+    <HistoryTimeline medium="film" watches={items} now={now} base={base} />
+  </PageSection>
+  <Fetched sources={[{ at: seen?.at ?? null, source: 'Trakt' }]} />
 </Page>

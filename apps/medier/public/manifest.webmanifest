@@ -2,7 +2,7 @@
   "id": "/medier/",
   "name": "Medier",
   "short_name": "Medier",
-  "description": "Hva jeg hører på og ser: musikk fra Last.fm og Spotify, film og TV fra Trakt.",
+  "description": "Musikk, film, TV og spill: avspillinger fra Last.fm, film og TV fra Trakt, spill fra Steam og RetroAchievements.",
   "lang": "nb",
   "start_url": "/medier/",
   "scope": "/medier/",

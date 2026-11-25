@@ -1,6 +1,6 @@
 /**
  * What the site keeps of Spotify's Web API: the search for an artist's picture and an album's or a track's link, and how the token to ask for them is made. Pure, so a test pins it;
- * `sources.ts` does the asking. What plays now is not asked of Spotify (it would be the owner's, not the visitor's): it is Last.fm's, for the visitor's own username.
+ * `sources.ts` does the asking. What plays now is not asked of Spotify (Spotify's own player is not where every play is): it is Last.fm's, for the owner's username.
  */
 
 export const TOKEN_URL = "https://accounts.spotify.com/api/token"

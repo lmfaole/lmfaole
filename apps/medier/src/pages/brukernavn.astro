@@ -1,5 +1,0 @@
----
-// The old page for the usernames: they are under «Innstillinger» now, on its «Kontoer».
-const tilbake = Astro.url.searchParams.get('tilbake')
-return Astro.redirect(`${import.meta.env.BASE_URL}innstillinger/kontoer/${tilbake === null ? '' : `?${new URLSearchParams({ tilbake }).toString()}`}`, 301)
----

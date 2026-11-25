@@ -5,39 +5,36 @@ import { Stack } from '@lmfaole/designsystem/components/layout'
 import { Progress } from '@lmfaole/designsystem/components/progress'
 
 import { AchievementRows } from '../../../components/games'
-import UsernameGate from '../../../components/UsernameGate.astro'
 import Page from '../../../layouts/Page.astro'
 import { lockedOf, unlockedOf } from '../../../lib/achievement-view'
 import { gameHref, gameId } from '../../../lib/pages'
-import { game, hasSteam, usersOf } from '../../../lib/runtime'
+import { game, hasSteam, owner } from '../../../lib/runtime'
 
 // Every achievement in a Steam game: the unlocked, the last first, and the ones still to get, the most common (the nearest) first. The game's page shows the last five and continues here.
 const id = gameId(Astro.params.slug ?? '')
 if (id === null || !hasSteam()) return Astro.rewrite('/404/')
-const users = usersOf(Astro.cookies)
+const users = owner()
 const detail = users.steam === null ? null : await game(users, id)
-if (users.steam !== null && detail === null) return Astro.rewrite('/404/')
+if (detail === null) return Astro.rewrite('/404/')
 const base = import.meta.env.BASE_URL
-if (detail !== null && Astro.params.slug !== gameHref('', id, detail.game.name).slice('spill/'.length, -1)) return Astro.redirect(`${gameHref(base, id, detail.game.name)}prestasjoner/`)
-const achievements = detail?.achievements == null || detail.achievements.total === 0 ? null : detail.achievements
+if (Astro.params.slug !== gameHref('', id, detail.game.name).slice('spill/'.length, -1)) return Astro.redirect(`${gameHref(base, id, detail.game.name)}prestasjoner/`)
+const achievements = detail.achievements == null || detail.achievements.total === 0 ? null : detail.achievements
 const unlocked = achievements === null ? [] : unlockedOf(achievements.list)
 const locked = achievements === null ? [] : lockedOf(achievements.list)
-const name = detail?.game.name ?? 'Spill'
-const crumbs = [{ label: 'Medier', href: base }, { label: 'Spill', href: `${base}spill/` }, ...(detail === null ? [] : [{ label: name, href: gameHref(base, id, name) }, { label: 'Prestasjoner', href: `${gameHref(base, id, name)}prestasjoner/` }])]
+const name = detail.game.name
+const crumbs = [{ label: 'Medier', href: base }, { label: 'Spill', href: `${base}spill/` }, { label: name, href: gameHref(base, id, name) }, { label: 'Prestasjoner', href: `${gameHref(base, id, name)}prestasjoner/` }]
 ---
 
-<Page current="games" title="Prestasjoner" lead={detail === null ? 'Siden viser prestasjonene i et spill fra Steam for profilen du oppgir.' : `Alle prestasjonene i ${name}: de du har låst opp, sist først, og de som gjenstår, de flest har først.`} crumbs={crumbs}>
+<Page current="games" title="Prestasjoner" lead={`Alle prestasjonene i ${name}: de som er låst opp, sist først, og de som gjenstår, de vanligste først.`} crumbs={crumbs}>
   {
-    detail === null ? (
-      <UsernameGate services={['steam']} />
-    ) : achievements === null ? (
+    achievements === null ? (
       <EmptyState reason="nothing-yet" what="prestasjoner" description="Spillet har ingen prestasjoner, eller de er ikke offentlige på profilen." />
     ) : (
       <>
         <PageSection id="laast-opp" title="Låst opp" icon="award">
           <Stack>
             <Progress label="Av alle prestasjonene" value={achievements.unlocked} max={achievements.total} valueText={`${achievements.unlocked} av ${achievements.total}`} />
-            {unlocked.length === 0 ? <EmptyState reason="nothing-yet" what="prestasjoner" description="Du har ikke låst opp noen prestasjoner i spillet ennå." /> : <AchievementRows list={unlocked} />}
+            {unlocked.length === 0 ? <EmptyState reason="nothing-yet" what="prestasjoner" description="Ingen prestasjoner i spillet er låst opp ennå." /> : <AchievementRows list={unlocked} />}
           </Stack>
         </PageSection>
         {locked.length === 0 ? null : (

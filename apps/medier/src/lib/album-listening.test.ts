@@ -91,11 +91,11 @@ test("the chart of the discography says where this album is among them, what is 
     { title: "Junior", released: "2009-03-20", plays: 90 },
   ]
   const most = discographyChartText(albums, "Melody A.M.", "Röyksopp")
-  assert.equal(most?.title, "Melody A.M. er albumet av Röyksopp du har spilt mest")
+  assert.equal(most?.title, "Melody A.M. er det mest spilte albumet av Röyksopp")
   assert.equal(most?.highlight, "Melody A.M.")
   assert.match(most?.description ?? "", /3 studioalbumene, 2001–2009, eldste først/)
-  assert.equal(discographyChartText(albums, "Junior (Deluxe)", "Röyksopp")?.title, "Junior er det nest mest spilte albumet ditt av Röyksopp")
-  assert.equal(discographyChartText(albums, "The Understanding", "Röyksopp")?.title, "Du har ikke spilt The Understanding, men Melody A.M. er det du har spilt mest")
+  assert.equal(discographyChartText(albums, "Junior (Deluxe)", "Röyksopp")?.title, "Junior er det nest mest spilte albumet av Röyksopp")
+  assert.equal(discographyChartText(albums, "The Understanding", "Röyksopp")?.title, "The Understanding er ikke spilt, men Melody A.M. er spilt mest")
   assert.match(discographyChartText(albums, "Junior", "Röyksopp")?.summary ?? "", /Junior: 90 avspillinger, nummer 2 av 3/)
   assert.equal(discographyChartText(albums.slice(0, 2), "Melody A.M.", "Röyksopp"), null)
   assert.equal(discographyChartText(albums, "Senior", "Röyksopp"), null)
@@ -106,7 +106,7 @@ test("the head's figures are the plays, about how long, and the share of the art
   assert.deepEqual(albumFigures(1204, 6 * 3600, 3168), [
     { value: "1\u00a0204", label: "avspillinger" },
     { value: "6 t", label: "lyttetid, omtrent" },
-    { value: "38 %", label: "av alt du har hørt av artisten" },
+    { value: "38 %", label: "av avspillingene av artisten" },
   ])
   assert.deepEqual(albumFigures(1, null, null), [{ value: "1", label: "avspilling" }])
   assert.equal(albumFigures(10, null, 5).length, 1)
@@ -131,8 +131,8 @@ test("the days an album was played are counted on their date in Oslo, every day 
   assert.deepEqual(albumDayCounts([], [], "Röyksopp", "Junior", "2026-02-10"), [])
 
   const text = albumDaysText(days, "Junior")
-  assert.equal(text?.title, "Du har spilt Junior 2 dager i det siste")
+  assert.equal(text?.title, "Junior er spilt 2 dager i det siste")
   assert.match(text?.description ?? "", /fra 1\. januar 2026 til 10\. februar 2026: 3 avspillinger i alt/)
-  assert.equal(albumDaysText(days.map((day) => ({ ...day, value: 0 })), "Junior")?.title, "Du har ikke spilt Junior i det siste")
+  assert.equal(albumDaysText(days.map((day) => ({ ...day, value: 0 })), "Junior")?.title, "Junior er ikke spilt i det siste")
   assert.equal(albumDaysText([], "Junior"), null)
 })

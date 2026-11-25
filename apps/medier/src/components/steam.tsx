@@ -9,7 +9,7 @@ import type { WishlistGame } from "../lib/steam-wishlist.ts"
 import { gamePrice } from "../lib/steam-view.ts"
 import { shortWhen } from "../lib/when.ts"
 
-/** Games of the wishlist: the store's picture, the price (with a sale struck through, «Nytt tilbud» where it came since the visitor last looked), and the game in the store. */
+/** Games of the wishlist: the store's picture, the price (with a sale struck through), and the game in the store. */
 export function WishlistRows({ games }: { games: readonly WishlistGame[] }) {
   if (games.length === 0) return <EmptyState reason="nothing-yet" what="spill" description="Ingen spill her akkurat nå." />
   return (
@@ -17,7 +17,7 @@ export function WishlistRows({ games }: { games: readonly WishlistGame[] }) {
       kind="game"
       rows={games.map((game) => {
         const price = gamePrice(game.price)
-        return { key: String(game.appId), title: game.name ?? `Spill ${game.appId}`, href: game.url, external: true, picture: { src: game.image }, ...(game.comingSoon ? { meta: ["Kommer snart"] } : {}), ...(price === null ? {} : { price: { ...price, ...(game.newSale ? { newSale: true } : {}) } }) }
+        return { key: String(game.appId), title: game.name ?? `Spill ${game.appId}`, href: game.url, external: true, picture: { src: game.image }, ...(game.comingSoon ? { meta: ["Kommer snart"] } : {}), ...(price === null ? {} : { price }) }
       })}
     />
   )
@@ -29,7 +29,7 @@ export function LevelBar({ badges }: { badges: SteamBadges }) {
   return <Progress {...levelProgress({ level: badges.level, xp: badges.xp, xpAtLevel: badges.xpLevelStart, xpToNext: badges.xpToNext })} />
 }
 
-/** The badges, the last earned first: a game's badge links to the game's page where it is one of the visitor's. */
+/** The badges, the last earned first: a game's badge links to the game's page where it is one of the owner's. */
 export function BadgeRows({ badges, base, owned }: { badges: SteamBadges; base: string; owned: ReadonlySet<number> }) {
   if (badges.badges.length === 0) return <EmptyState reason="nothing-yet" what="merker" description="Profilen har ingen merker, eller de er ikke offentlige." />
   return (

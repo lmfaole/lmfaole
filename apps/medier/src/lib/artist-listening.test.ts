@@ -53,10 +53,10 @@ test("the user's songs by the artist, and the artists like it that they play too
 
 test("the head says the artist's place in words, and its plays, share of all and plays last month as figures", () => {
   assert.equal(artistKind(null), "Artist")
-  assert.equal(artistKind(1), "Din mest spilte artist")
-  assert.equal(artistKind(4), "Din fjerde mest spilte artist")
-  assert.equal(artistKind(1042), `Nr. ${(1042).toLocaleString("nb-NO")} av artistene dine`)
-  assert.deepEqual(artistFigures(1234, 0.031, 56), [{ value: (1234).toLocaleString("nb-NO"), label: "avspillinger" }, { value: "3,1 %", label: "av alt du har hørt" }, { value: "56", label: "siste måned" }])
+  assert.equal(artistKind(1), "Mest spilte artist")
+  assert.equal(artistKind(4), "Fjerde mest spilte artist")
+  assert.equal(artistKind(1042), `Nr. ${(1042).toLocaleString("nb-NO")} av de mest spilte artistene`)
+  assert.deepEqual(artistFigures(1234, 0.031, 56), [{ value: (1234).toLocaleString("nb-NO"), label: "avspillinger" }, { value: "3,1 %", label: "av alle avspillinger" }, { value: "56", label: "siste måned" }])
   assert.deepEqual(artistFigures(1, null, null), [{ value: "1", label: "avspilling" }])
   assert.deepEqual(artistFigures(null, null, 1), [{ value: "1", label: "siste måned" }])
 })
@@ -68,7 +68,7 @@ test("the chart over time says when it was first played, when most and how much 
     description: "Avspillinger per kvartal, 1. kvartal 2022 til 1. kvartal 2023.",
     summary: "Arealdiagram. Først spilt i 3. kvartal 2022, mest i 4. kvartal 2022 (40 avspillinger), 7 avspillinger hittil i 1. kvartal 2023.",
   })
-  assert.equal(listeningChartText("year", [{ long: "2025", plays: 3 }, { long: "2026", plays: 9 }])?.summary, "Arealdiagram. Spilt alt i 2025, da historikken din på Last.fm begynner, mest hittil i 2026 (9 avspillinger).")
+  assert.equal(listeningChartText("year", [{ long: "2025", plays: 3 }, { long: "2026", plays: 9 }])?.summary, "Arealdiagram. Spilt alt i 2025, da historikken på Last.fm begynner, mest hittil i 2026 (9 avspillinger).")
   assert.equal(listeningChartText("month", [{ long: "mai 2026", plays: 0 }, { long: "juni 2026", plays: 0 }])?.title, "Ikke spilt i perioden")
   assert.equal(listeningChartText("month", [{ long: "mai 2026", plays: 4 }]), null)
 })

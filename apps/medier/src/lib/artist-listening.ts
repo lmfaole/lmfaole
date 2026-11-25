@@ -1,5 +1,5 @@
 /**
- * What an artist's page says of the visitor's own listening to it: its plays over time and what the chart of them says, its place among all they have heard, their most played songs by it and the
+ * What an artist's page says of the owner's own listening to it: its plays over time and what the chart of them says, its place among all they have heard, their most played songs by it and the
  * artists like it that they hear too. Pure, so a test pins it; `sources.ts` asks Last.fm for what it is read from.
  */
 
@@ -105,12 +105,12 @@ export function similarHeard(similar: readonly SimilarArtist[], top: readonly To
 
 const ORDINALS = ["", "nest", "tredje", "fjerde", "femte", "sjette", "sjuende", "åttende", "niende", "tiende"] as const
 
-/** «Din mest spilte artist», «Din fjerde mest spilte artist» up to the tenth, then «Nr. 42 av artistene dine»; «Artist» where its place is not known. */
+/** «Mest spilte artist», «Fjerde mest spilte artist» up to the tenth, then «Nr. 42 av de mest spilte artistene»; «Artist» where its place is not known. */
 export function artistKind(rank: number | null): string {
   if (rank === null) return "Artist"
-  if (rank === 1) return "Din mest spilte artist"
+  if (rank === 1) return "Mest spilte artist"
   const word = ORDINALS[rank - 1]
-  return word === undefined ? `Nr. ${rank.toLocaleString("nb-NO")} av artistene dine` : `Din ${word} mest spilte artist`
+  return word === undefined ? `Nr. ${rank.toLocaleString("nb-NO")} av de mest spilte artistene` : `${word.charAt(0).toUpperCase()}${word.slice(1)} mest spilte artist`
 }
 
 const PER: Readonly<Record<PeriodUnit, string>> = { month: "måned", quarter: "kvartal", half: "halvår", year: "år" }
@@ -121,7 +121,7 @@ const plural = (n: number, one: string, many: string): string => `${n.toLocaleSt
 export function artistFigures(plays: number | null, share: number | null, lastMonth: number | null): { value: string; label: string }[] {
   return [
     plays === null ? null : { value: plays.toLocaleString("nb-NO"), label: plays === 1 ? "avspilling" : "avspillinger" },
-    share === null ? null : { value: shareText(share), label: "av alt du har hørt" },
+    share === null ? null : { value: shareText(share), label: "av alle avspillinger" },
     lastMonth === null ? null : { value: lastMonth.toLocaleString("nb-NO"), label: "siste måned" },
   ].filter((one) => one !== null)
 }
@@ -139,7 +139,7 @@ export function listeningChartText(unit: PeriodUnit, series: readonly { long: st
   const heard = series[start]
   if (heard === undefined) return { title: "Ikke spilt i perioden", description, summary: "Arealdiagram. Ingen avspillinger i perioden." }
   const peak = series.reduce((best, one) => (one.plays > best.plays ? one : best), heard)
-  const since = start === 0 ? `Spilt alt i ${heard.long}, da historikken din på Last.fm begynner` : `Først spilt i ${heard.long}`
+  const since = start === 0 ? `Spilt alt i ${heard.long}, da historikken på Last.fm begynner` : `Først spilt i ${heard.long}`
   const most = `${plural(peak.plays, "avspilling", "avspillinger")}`
   const now = peak === last ? `mest hittil i ${last.long} (${most})` : `mest i ${peak.long} (${most}), ${plural(last.plays, "avspilling", "avspillinger")} hittil i ${last.long}`
   return { title: `Mest spilt i ${peak.long}`, description, summary: `Arealdiagram. ${since}, ${now}.` }

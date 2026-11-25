@@ -4,24 +4,18 @@ import { test } from "node:test"
 import { asRateLimit, limitersFor, secure } from "./guard.ts"
 
 test("pages and the API count against the pages' limit, islands against their own, built files against none", () => {
-  assert.deepEqual(limitersFor("GET", "/"), ["LIMITER"])
-  assert.deepEqual(limitersFor("GET", "/musikk/album/a-b/"), ["LIMITER"])
-  assert.deepEqual(limitersFor("GET", "/api/now/"), ["LIMITER"])
-  assert.deepEqual(limitersFor("GET", "/_server-islands/TopTracksIsland"), ["ISLAND_LIMITER"])
-  assert.deepEqual(limitersFor("GET", "/_astro/client.abc123.js"), [])
-  assert.deepEqual(limitersFor("GET", "/favicon.png"), [])
+  assert.deepEqual(limitersFor("/"), ["LIMITER"])
+  assert.deepEqual(limitersFor("/musikk/album/a-b/"), ["LIMITER"])
+  assert.deepEqual(limitersFor("/api/now/"), ["LIMITER"])
+  assert.deepEqual(limitersFor("/_server-islands/TopTracksIsland"), ["ISLAND_LIMITER"])
+  assert.deepEqual(limitersFor("/_astro/client.abc123.js"), [])
+  assert.deepEqual(limitersFor("/favicon.png"), [])
 })
 
-test("a post to the API, which may check usernames with their services, counts against the checks' limit too", () => {
-  assert.deepEqual(limitersFor("POST", "/api/innstillinger/"), ["LIMITER", "CHECK_LIMITER"])
-  assert.deepEqual(limitersFor("POST", "/api/brukernavn/"), ["LIMITER", "CHECK_LIMITER"])
-})
-
-test("under the site's base, its islands and its API are known by their paths there", () => {
-  assert.deepEqual(limitersFor("GET", "/medier/_server-islands/TopTracksIsland", "/medier/"), ["ISLAND_LIMITER"])
-  assert.deepEqual(limitersFor("POST", "/medier/api/innstillinger/", "/medier/"), ["LIMITER", "CHECK_LIMITER"])
-  assert.deepEqual(limitersFor("GET", "/medier/_astro/client.abc123", "/medier/"), [])
-  assert.deepEqual(limitersFor("GET", "/medier/musikk/", "/medier/"), ["LIMITER"])
+test("under the site's base, its islands are known by their paths there", () => {
+  assert.deepEqual(limitersFor("/medier/_server-islands/TopTracksIsland", "/medier/"), ["ISLAND_LIMITER"])
+  assert.deepEqual(limitersFor("/medier/_astro/client.abc123", "/medier/"), [])
+  assert.deepEqual(limitersFor("/medier/musikk/", "/medier/"), ["LIMITER"])
 })
 
 test("only a binding with `limit` is a rate limit: without one (astro dev), nothing is limited", () => {

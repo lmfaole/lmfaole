@@ -7,7 +7,6 @@ import type { Playing } from "../lib/now.ts"
 import { titleHref, titlePages, trackHref } from "../lib/pages.ts"
 import { groupNounsOf, listeningSessions, playingEvent, playsTimeline, spansWithin, watchesTimeline, watchSessions } from "../lib/timeline.ts"
 import type { Watch } from "../lib/trakt.ts"
-import { mediumHref } from "../lib/media.ts"
 import type { Medium } from "../lib/week-source.ts"
 
 /** How far back the sessions go: two days, so last evening is there in the morning. */
@@ -33,11 +32,10 @@ export function HistoryTimeline({ medium, plays = [], watches = [], now, playing
       ? [...(playing === null ? [] : [playingEvent(playing, now)]), ...playsTimeline(plays, pages ? { href: (play) => trackHref(base, play.artist, play.track) } : {})]
       : watchesTimeline(watches, { href: (watch) => pageOf.get(watch.id) })
   if (events.length === 0) {
-    const back = `${base}innstillinger/kontoer/?tilbake=${encodeURIComponent(mediumHref(base, medium, "historikk/"))}`
     return medium === "music" ? (
-      <EmptyState reason="nothing-yet" what="avspillinger" description="Tidslinjen fylles med det Last.fm fører opp at du hører på. Er den tom, kan det være feil brukernavn, eller at Last.fm ikke svarte akkurat nå." action={{ href: back, label: "Sjekk brukernavnet" }} />
+      <EmptyState reason="nothing-yet" what="avspillinger" description="Tidslinjen fylles med avspillingene Last.fm fører opp. Er den tom, kan det være at Last.fm ikke svarte akkurat nå." />
     ) : (
-      <EmptyState reason="nothing-yet" what={medium === "film" ? "filmer" : "episoder"} description="Tidslinjen fylles med det du markerer som sett på Trakt. Er den tom, kan det være feil brukernavn, en privat profil, eller at Trakt ikke svarte akkurat nå." action={{ href: back, label: "Sjekk brukernavnet" }} />
+      <EmptyState reason="nothing-yet" what={medium === "film" ? "filmer" : "episoder"} description="Tidslinjen fylles med det som er markert som sett på Trakt. Er den tom, kan det være at Trakt ikke svarte akkurat nå." />
     )
   }
   return <Timeline label={medium === "music" ? "Lyttehistorikk" : "Seerhistorikk"} events={events} now={now} groupNouns={groupNounsOf(events)} />

@@ -22,8 +22,8 @@ export function PlayRows({ plays, base, limit, artistLinks = true, trackLinks = 
   ]
   const shown = limit === undefined ? rows : rows.slice(0, limit)
   if (shown.length === 0) {
-    const description = "Last.fm fører opp det du hører på når en spiller (Spotify, Apple Music eller andre) er koblet til kontoen. Det kan også være at Last.fm ikke svarte akkurat nå."
-    const action = { href: "https://www.last.fm/about/trackmymusic", label: "Koble til en spiller" }
+    const description = "Avspillingene som Last.fm fører opp, dukker opp her. Det kan også være at Last.fm ikke svarte akkurat nå."
+    const action = { href: "https://www.last.fm/about/trackmymusic", label: "Slik fører Last.fm opp avspillinger" }
     return <EmptyState reason={start ? "first-run" : "nothing-yet"} what="avspillinger" description={description} action={action} />
   }
   if (within === "album") {
@@ -96,9 +96,9 @@ export function WatchRows({ items, base, limit, kind }: { items: readonly Watch[
   const shown = limit === undefined ? rows : rows.slice(0, limit)
   if (shown.length === 0) {
     return kind === "film" ? (
-      <EmptyState reason="nothing-yet" what="filmer" description="Filmene du markerer som sett på Trakt, eller som en tilkoblet strømmetjeneste fører opp der, dukker opp her. Det kan også være at Trakt ikke svarte akkurat nå." action={{ href: "https://trakt.tv/movies/trending", label: "Marker en film som sett på Trakt" }} />
+      <EmptyState reason="nothing-yet" what="filmer" description="Filmer som er markert som sett på Trakt, dukker opp her. Det kan også være at Trakt ikke svarte akkurat nå." />
     ) : (
-      <EmptyState reason="nothing-yet" what="episoder" description="Episodene du markerer som sett på Trakt, eller som en tilkoblet strømmetjeneste fører opp der, dukker opp her. Det kan også være at Trakt ikke svarte akkurat nå." action={{ href: "https://trakt.tv/shows/trending", label: "Marker en episode som sett på Trakt" }} />
+      <EmptyState reason="nothing-yet" what="episoder" description="Episoder som er markert som sett på Trakt, dukker opp her. Det kan også være at Trakt ikke svarte akkurat nå." />
     )
   }
   return (
@@ -145,7 +145,7 @@ function viewingDetail(viewing: Viewing): (string | number | null)[] {
   return [episodesCode(viewing.episodes), only === undefined || only.title === "" ? null : only.title]
 }
 
-/** «Kunne ikke hente data fra Last.fm» when a source did not answer, and nothing when all did: where the data comes from and how fresh it is is said once, under «Innstillinger» (`SOURCES`). */
+/** «Kunne ikke hente data fra Last.fm» when a source did not answer, and nothing when all did: where the data comes from is said once, at the foot of the front page (`SOURCES`). */
 export function Fetched({ sources }: { sources: readonly { at: string | null; source: string }[] }) {
   const failed = sources.filter(({ at }) => at === null).map(({ source }) => source)
   if (failed.length === 0) return null

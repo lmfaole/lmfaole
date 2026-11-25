@@ -7,11 +7,12 @@
   "workers_dev": false,
   "preview_urls": false,
   "observability": { "enabled": true },
-  // Whose plays and viewings are shown is the visitor's (their usernames, in cookies), never a setting. The sources' keys, and the key the site shares with the relay, are secrets (`src/lib/settings.ts`).
+  // Whose plays and viewings are shown is the owner's: the usernames are `vars` below, the same for every visitor (`src/lib/users.ts`). The sources' keys, and the key the site shares with the
+  // relay, are secrets (`src/lib/settings.ts`).
   // The site is https://lmfaole.party/medier/, a path of the origin the other apps share (`/`, `/start`, `/cv`, `/design/` are other Workers'): the route takes only `/medier…`.
   "routes": [{ "pattern": "lmfaole.party/medier*", "zone_name": "lmfaole.party" }],
-  // Each page asks the sources with the site's keys, so a visitor (by address) gets so many a minute (`src/lib/guard.ts`, `src/middleware.ts`): pages and the API, the server islands
-  // (a page has up to five), and the posts that check usernames with their services.
+  // Each page asks the sources with the site's keys, so a visitor (by address) gets so many a minute (`src/lib/guard.ts`, `src/middleware.ts`): pages and the API, and the server islands
+  // (a page has up to five).
   // The relay (`upstream/`) is a Worker of this account: the site asks it Worker to Worker through this binding, not over the internet (`src/lib/route.ts`). It is deployed
   // before the site (`.github/workflows/medier.yml` at the repository's root), so the binding always has a Worker to go to.
   "services": [
@@ -19,11 +20,19 @@
   ],
   // Not secret, so not secrets (`src/lib/settings.ts`). IMAGE_TRANSFORMS "1": the pictures go through the zone's Image Transformations (`src/lib/image-sources.ts`); only once
   // Transformations are on for lmfaole.party and the sources' hosts are allowed there (README, «Set up once»). CF_BEACON_TOKEN: the Web Analytics site's token (public, it is
-  // in every page); empty, no beacon.
-  "vars": { "IMAGE_TRANSFORMS": "0", "CF_BEACON_TOKEN": "" },
+  // in every page); empty, no beacon. LASTFM_USER, TRAKT_USER, LISTENBRAINZ_USER, STEAM_USER (a SteamID or custom name) and RETROACHIEVEMENTS_USER: whose data the site shows (public names);
+  // an empty one, and that service has no part of the site.
+  "vars": {
+    "IMAGE_TRANSFORMS": "0",
+    "CF_BEACON_TOKEN": "",
+    "LASTFM_USER": "snowpony69",
+    "TRAKT_USER": "lmfaole",
+    "LISTENBRAINZ_USER": "lmfaole",
+    "STEAM_USER": "76561198871653749",
+    "RETROACHIEVEMENTS_USER": "lmfaole2"
+  },
   "ratelimits": [
     { "name": "LIMITER", "namespace_id": "1101", "simple": { "limit": 60, "period": 60 } },
-    { "name": "ISLAND_LIMITER", "namespace_id": "1102", "simple": { "limit": 120, "period": 60 } },
-    { "name": "CHECK_LIMITER", "namespace_id": "1103", "simple": { "limit": 10, "period": 60 } }
+    { "name": "ISLAND_LIMITER", "namespace_id": "1102", "simple": { "limit": 120, "period": 60 } }
   ]
 }

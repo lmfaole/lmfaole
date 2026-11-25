@@ -153,10 +153,11 @@ test("Spotify: the token, and the searches that find an artist, an album and a t
   assert.equal(parseArtistMatch(await ask(searchArtistUrl("Ukjent")), "Ukjent"), null)
 })
 
-test("an address that is none of the sources' is 404, and made-up settings give every source a key without overriding one, and no username (the visitor gives it)", () => {
+test("an address that is none of the sources' is 404, and made-up settings give every source a key without overriding one, and a username to every service where none is set", () => {
   assert.equal(mockFetch("https://example.com/", {}, NOW).status, 404)
   assert.equal(mockSettings({ LASTFM_API_KEY: "meg", TMDB_API_KEY: "x" })["LASTFM_API_KEY"], "meg")
-  assert.equal(mockSettings({})["LASTFM_USER"], undefined)
+  assert.equal(mockSettings({})["LASTFM_USER"], "demo")
+  assert.equal(mockSettings({ TRAKT_USER: "lmfaole" })["TRAKT_USER"], "lmfaole")
   assert.equal(mockSettings({})["TRAKT_CLIENT_ID"], "mock")
 })
 
@@ -195,11 +196,9 @@ test("Steam beyond the games: presence, level and badges, stats, the wishlist an
   assert.ok(badges !== null && badges.level === 42 && badges.badges.some((one) => one.appId !== null && one.name !== null) && badges.badges.some((one) => one.name === "År i tjeneste"))
   assert.ok((await loadGameStats(env, get, 1086940)).every((stat) => stat.label !== stat.key) && (await loadGameStats(env, get, 1086940)).length === 4)
   assert.deepEqual(await loadGameStats(env, get, 620 + 1), [])
-  const wishlist = await loadWishlist(env, get, null)
+  const wishlist = await loadWishlist(env, get)
   assert.ok(wishlist !== null && wishlist.games.length === 8 && wishlist.games.every((game) => game.name !== null) && wishlist.games[0]?.priority === 1)
-  assert.equal(wishlist.newSales.length, wishlist.onSale.length)
-  const seen = await loadWishlist(env, get, new Set(wishlist.onSale.map((game) => game.appId)))
-  assert.equal(seen?.newSales.length, 0)
+  assert.ok(wishlist.onSale.length > 0 && wishlist.onSale.every((game) => game.onSale))
   const game = await loadGame(env, get, 1145360)
   assert.ok(game?.store !== null && game?.store !== undefined)
   assert.ok(game.store.media.screenshots.length === 3 && game.store.media.movies[0]?.hls !== null && game.store.features.singlePlayer && game.store.controller === "full" && game.store.dlc.length === 2)

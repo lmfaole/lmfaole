@@ -1,31 +1,25 @@
 ---
 import { GameDetail, gameFigures } from '../../../components/games'
 import { Head } from '../../../components/head'
-import UsernameGate from '../../../components/UsernameGate.astro'
 import Page from '../../../layouts/Page.astro'
 import { gameId, retroGameHref } from '../../../lib/pages'
 import { retroView } from '../../../lib/played-games'
-import { hasRetro, retroGame, usersOf } from '../../../lib/runtime'
+import { hasRetro, retroGame, owner } from '../../../lib/runtime'
 import { transformed } from '../../../lib/image-sources'
 
 const id = gameId(Astro.params.slug ?? '')
 if (id === null || !hasRetro()) return Astro.rewrite('/404/')
-const users = usersOf(Astro.cookies)
+const users = owner()
 const found = users.retroachievements === null ? null : await retroGame(users, id)
-// A game RetroAchievements does not know (or could not be asked about): no page.
-if (users.retroachievements !== null && found === null) return Astro.rewrite('/404/')
+// No username, a game RetroAchievements does not know (or could not be asked about): no page.
+if (found === null) return Astro.rewrite('/404/')
 const base = import.meta.env.BASE_URL
 // An old address with the name spelt another way: the page's own.
-if (found !== null && Astro.params.slug !== retroGameHref('', id, found.game.title).slice('spill/retro/'.length, -1)) return Astro.redirect(retroGameHref(base, id, found.game.title))
+if (Astro.params.slug !== retroGameHref('', id, found.game.title).slice('spill/retro/'.length, -1)) return Astro.redirect(retroGameHref(base, id, found.game.title))
 // The same page as a Steam game's (`GameDetail`): only the service behind it differs.
-const view = found === null ? null : retroView(found.game, found.lastPlayed)
+const view = retroView(found.game, found.lastPlayed)
 ---
 
-{view === null ? (
-  <Page current="games" title="Spill" lead="Siden viser spill fra RetroAchievements for brukeren du oppgir." crumbs={[{ label: 'Medier', href: base }, { label: 'Spill', href: `${base}spill/` }]}>
-    <UsernameGate services={['retroachievements']} />
-  </Page>
-) : (
 <Page bare current="games"
   width="pane"
   title={view.title}
@@ -35,4 +29,3 @@ const view = found === null ? null : retroView(found.game, found.lastPlayed)
   <Head client:idle kind={view.kind} title={view.title} sources={transformed(view.cover === null ? [] : [view.cover])} shape="game" sleeve disc={view.held} figures={gameFigures(view)} lines={view.developer === null ? [] : [view.developer]} tags={view.genres.slice(0, 4)} />
   <GameDetail view={view} />
 </Page>
-)}

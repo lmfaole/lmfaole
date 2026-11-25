@@ -22,7 +22,7 @@ import { statFacts } from "@lmfaole/designsystem/lib/games"
 import { type Achievement, playtimeText } from "../lib/steam.ts"
 import { shortWhen } from "../lib/when.ts"
 
-const PRIVATE = "Spill fra Steam vises bare når spilldetaljene på profilen er offentlige: det velger du under Rediger profil › Personvern på Steam."
+const PRIVATE = "Spill fra Steam vises bare når spilldetaljene på profilen er offentlige."
 
 /** A game's page here: Steam's under «spill/», RetroAchievements' under «spill/retro/». */
 export const entryHref = (base: string, entry: Pick<GameEntry, "source" | "id" | "title">): string => (entry.source === "steam" ? gameHref(base, entry.id, entry.title) : retroGameHref(base, entry.id, entry.title))
@@ -36,7 +36,7 @@ const when = (seconds: number | null): string => (seconds === null ? "" : shortW
 export function RecentGames({ games, base, empty, playing }: { games: readonly GameEntry[]; base: string; /** Where to find the profiles, when there is nothing. */ empty?: { href: string; label: string }; /** The Steam app played now (the profile's presence): its row is first and says «Spilles nå». */ playing?: number | null }) {
   const isPlaying = (game: GameEntry): boolean => playing !== undefined && playing !== null && game.source === "steam" && game.id === playing
   games = [...games.filter(isPlaying), ...games.filter((game) => !isPlaying(game))]
-  if (games.length === 0) return <EmptyState reason="nothing-yet" what="spill" description={`Spillene du spiller på Steam og med RetroAchievements de siste to ukene dukker opp her. ${PRIVATE}`} {...(empty === undefined ? {} : { action: empty })} />
+  if (games.length === 0) return <EmptyState reason="nothing-yet" what="spill" description={`Spill som er spilt på Steam og med RetroAchievements de siste to ukene, dukker opp her. ${PRIVATE}`} {...(empty === undefined ? {} : { action: empty })} />
   return (
     <List
       kind="game"
@@ -72,11 +72,11 @@ export function AchievementRows({ list }: { list: readonly Achievement[] }) {
 const releasedText = (released: string | null): string | null => (released === null ? null : /^\d{4}-\d\d-\d\d$/.test(released) ? longDay(released) : /^\d{4}(-\d\d)?$/.test(released) ? released.slice(0, 4) : released)
 
 /**
- * A game's page, the same for every service, the visitor's own first: the achievements, how many of how many with the last five unlocked (continued on their own page where there is
- * one), and the three rarest the visitor has where the five do not show them already; their numbers in the game; the time on each machine; then what the game is, its pictures, its
+ * A game's page, the same for every service, the owner's own first: the achievements, how many of how many with the last five unlocked (continued on their own page where there is
+ * one), and the three rarest the owner has where the five do not show them already; their numbers in the game; the time on each machine; then what the game is, its pictures, its
  * news and its DLC. Who made it and when, and where it is sold, beside.
  */
-export function GameDetail({ view, steam, achievementsHref, children }: { view: GameView; /** The page of all the game's achievements, the locked too, where there is one. */ achievementsHref?: string; /** A Steam game's own: the store's page, what Steam says beyond it (reviews, players now, news, the Deck, DLC) and the visitor's numbers in it. */ steam?: { store: StoreApp | null; extras: GameExtras | null; stats: readonly GameStat[]; base: string }; /** Sections of its own after the text (the pictures, which are an island). */ children?: ReactNode }) {
+export function GameDetail({ view, steam, achievementsHref, children }: { view: GameView; /** The page of all the game's achievements, the locked too, where there is one. */ achievementsHref?: string; /** A Steam game's own: the store's page, what Steam says beyond it (reviews, players now, news, the Deck, DLC) and the owner's numbers in it. */ steam?: { store: StoreApp | null; extras: GameExtras | null; stats: readonly GameStat[]; base: string }; /** Sections of its own after the text (the pictures, which are an island). */ children?: ReactNode }) {
   const { achievements } = view
   const unlocked = achievements === null ? [] : unlockedOf(achievements.list)
   const rarest = rarestBeyond(unlocked)
@@ -119,12 +119,12 @@ export function GameDetail({ view, steam, achievementsHref, children }: { view: 
         )}
       </PageSection>
       {rarest.length === 0 ? null : (
-        <PageSection id="sjeldneste" title="De sjeldneste du har" icon="favorite">
+        <PageSection id="sjeldneste" title="De sjeldneste" icon="favorite">
           <AchievementRows list={rarest} />
         </PageSection>
       )}
       {own.length === 0 ? null : (
-        <PageSection id="tall" title="Dine tall i spillet" icon="trend-up">
+        <PageSection id="tall" title="Tall i spillet" icon="trend-up">
           <FactList facts={own} />
         </PageSection>
       )}

@@ -232,7 +232,7 @@ export function parseAchievements(player: unknown, schema: unknown, global: unkn
   return { total: achievements.length, unlocked: done, list: achievements.sort((a, b) => (b.unlocked ?? 0) - (a.unlocked ?? 0)) }
 }
 
-/** A game played lately, with the visitor's achievements in it (`null` where it has none, or they are not public). */
+/** A game played lately, with the owner's achievements in it (`null` where it has none, or they are not public). */
 export interface PlayedGame {
   game: OwnedGame
   achievements: Achievements | null

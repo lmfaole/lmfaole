@@ -75,7 +75,7 @@ export function TitleDetail({ page, base, providers }: { page: TitlePage; base: 
           <List columns={{ name: "Navn", value: "Rolle" }} rows={crew.map((one) => ({ key: `${one.id}-${one.role}`, title: one.name, href: personHref(base, one.id, one.name), value: one.role }))} />
         </PageSection>
       )}
-      <PageSection id="sett" title={page.kind === "film" ? "Når du så den" : "Episodene du har sett"} icon="history">
+      <PageSection id="sett" title={page.kind === "film" ? "Når den ble sett" : "Sette episoder"} icon="history">
         <List
           columns={{ name: page.kind === "film" ? "Visning" : "Episode", value: "Sett" }}
           rows={page.viewings.map((watch) => ({
@@ -98,7 +98,7 @@ const logos = (label: string, providers: readonly Provider[]): ReactNode => (pro
 export function WatchProviders({ providers }: { providers: Providers | null }) {
   if (providers === null) return null
   return (
-    <PageSection id="se" title="Hvor kan du se den" icon="tv">
+    <PageSection id="se" title="Hvor den kan ses" icon="tv">
       <Stack>
         <FactList
           facts={[
@@ -154,13 +154,13 @@ export function Setlists({ setlists }: { setlists: SetlistData | null }) {
 }
 
 /**
- * The artists like one that the visitor plays too, with Spotify's pictures (`pictures`, by name; the page's server island asks for them with a budget of its own, and its fallback has none). `url` is
+ * The artists like one that the owner plays too, with Spotify's pictures (`pictures`, by name; the page's server island asks for them with a budget of its own, and its fallback has none). `url` is
  * the artist on Last.fm, which found them.
  */
 export function SimilarArtists({ similar, pictures, linked, base, url }: { similar: ArtistListening["similar"]; pictures: ReadonlyMap<string, SpotifyArtist>; /** The names that have a page of their own here. */ linked: ReadonlySet<string>; base: string; url: string }) {
   if (similar.length === 0) return null
   return (
-    <PageSection id="lignende" title="Lignende artister du også hører" icon="people">
+    <PageSection id="lignende" title="Lignende artister som også er spilt" icon="people">
       <Stack>
         <List
           kind="artist"
@@ -177,7 +177,7 @@ export function SimilarArtists({ similar, pictures, linked, base, url }: { simil
           })}
         />
         <Text role="note">
-          Artistene <TextLink href={url} external>Last.fm</TextLink> finner lignende, blant dem du har hørt mest på.
+          Artistene <TextLink href={url} external>Last.fm</TextLink> finner lignende, blant de mest spilte.
         </Text>
       </Stack>
     </PageSection>
@@ -191,7 +191,7 @@ export function SimilarArtists({ similar, pictures, linked, base, url }: { simil
 export function TopTracks({ artist, tracks, covers, linked, base }: { artist: string; tracks: readonly TopTrack[]; covers: ReadonlyMap<string, string>; linked: ReadonlySet<string>; base: string }) {
   if (tracks.length === 0) return null
   return (
-    <PageSection id="mest-spilte" title="Dine mest spilte" icon="play">
+    <PageSection id="mest-spilte" title="Mest spilte" icon="play">
       <List
         kind="track"
         ranked
@@ -237,11 +237,11 @@ export function ArtistLinks({ links }: { links: readonly ArtistLink[] }) {
 const yearOf = (released: string | null): string | null => (released === null ? null : released.slice(0, 4))
 
 /**
- * An artist: its newest release where it is news, what Last.fm's users write of it, then the visitor's own listening to it (their plays over time, their most played songs by it), its albums, its concerts, its recent plays, the artists like it
+ * An artist: its newest release where it is news, what Last.fm's users write of it, then the owner's own listening to it (their plays over time, their most played songs by it), its albums, its concerts, its recent plays, the artists like it
  * that they play too, and last the ways on from MusicBrainz (its own site, Wikipedia…); beside, Last.fm's listeners and the ways to it on Last.fm and Spotify. The picture and the link to it are Spotify's; the tags, the listeners and the text are Last.fm's (its text is the users', CC BY-SA, with
  * the link back where it is shown). `chart` is the chart of the plays over time, an island the page puts in; `songs` the most played songs with their covers (`TopTracks`), another.
  */
-export function ArtistDetail({ page, base, info, listening, links, chart, similar, songs, latest, onward, concerts }: { page: ArtistPage; base: string; info: { lastfm: ArtistInfo | null; spotify: SpotifyArtist | null; albums: ShelfAlbum[]; albumsFrom: AlbumsFrom }; listening: ArtistListening | null; /** The slugs of the songs and the artists that have a page of their own here. */ links: { tracks: ReadonlySet<string>; artists: ReadonlySet<string> }; chart?: ReactNode; /** The artists like it that the visitor plays too (`SimilarArtists`), a server island the page puts in. */ similar?: ReactNode; /** The most played songs (`TopTracks`), a server island the page puts in; without it they are shown with the covers of the recent plays. */ songs?: ReactNode; /** The newest release (`LatestRelease`), a server island the page puts in. */ latest?: ReactNode; /** The links on from MusicBrainz (`ArtistLinks`), a server island the page puts in, the last section. */ onward?: ReactNode; /** The last concerts and the newest setlist (`Setlists`), a server island the page puts in. */ concerts?: ReactNode }) {
+export function ArtistDetail({ page, base, info, listening, links, chart, similar, songs, latest, onward, concerts }: { page: ArtistPage; base: string; info: { lastfm: ArtistInfo | null; spotify: SpotifyArtist | null; albums: ShelfAlbum[]; albumsFrom: AlbumsFrom }; listening: ArtistListening | null; /** The slugs of the songs and the artists that have a page of their own here. */ links: { tracks: ReadonlySet<string>; artists: ReadonlySet<string> }; chart?: ReactNode; /** The artists like it that the owner plays too (`SimilarArtists`), a server island the page puts in. */ similar?: ReactNode; /** The most played songs (`TopTracks`), a server island the page puts in; without it they are shown with the covers of the recent plays. */ songs?: ReactNode; /** The newest release (`LatestRelease`), a server island the page puts in. */ latest?: ReactNode; /** The links on from MusicBrainz (`ArtistLinks`), a server island the page puts in, the last section. */ onward?: ReactNode; /** The last concerts and the newest setlist (`Setlists`), a server island the page puts in. */ concerts?: ReactNode }) {
   const { lastfm, spotify, albums, albumsFrom } = info
   // The albums among the recent plays have a page of their own here, under the name of the edition that was played; the others are only named.
   const played = new Map(page.plays.filter((play) => play.album !== "").map((play) => [albumKey(play.album), play.album]))
@@ -256,7 +256,7 @@ export function ArtistDetail({ page, base, info, listening, links, chart, simila
         </PageSection>
       )}
       {chart === undefined ? null : (
-        <PageSection id="lytting" title="Din lytting" icon="chart">
+        <PageSection id="lytting" title="Lytting" icon="chart">
           {chart}
         </PageSection>
       )}
@@ -326,7 +326,7 @@ export function PersonDetail({ id, person, found, base }: { id: number; person: 
           <Text>{firstSentences(person.biography, 900)}</Text>
         </PageSection>
       )}
-      <PageSection id="sett" title="I det du har sett" icon="film">
+      <PageSection id="sett" title="I det som er sett" icon="film">
         <List
           kind="film"
           rows={found.appearances.map(({ page, roles }) => ({ key: page.slug, title: page.title, href: titleHref(base, page.slug, page.kind), kind: page.kind === "film" ? "film" : "show", picture: { sources: sourcesOf(page.poster) }, meta: [roles.join(", ") || null], value: page.year === null ? (page.kind === "film" ? "Film" : "Serie") : String(page.year) }))}
@@ -353,7 +353,7 @@ export function TrackDetail({ page, base, info }: { page: TrackPage; base: strin
         ["Lengde", lastfm?.seconds == null ? null : lengthText(lastfm.seconds)],
         ["Sjangere", tagsText(lastfm?.tags ?? [])],
         ["Lyttere på Last.fm", listeners(lastfm?.listeners)],
-        ["Spilt av deg totalt", lastfm?.userPlays == null ? null : count(lastfm.userPlays, "gang", "ganger")],
+        ["Spilt totalt", lastfm?.userPlays == null ? null : count(lastfm.userPlays, "gang", "ganger")],
         ["Blant de siste avspillingene", count(page.plays.length, "gang", "ganger")],
       ]}
       links={musicLinks(page.url, spotify?.url ?? null)}
@@ -378,11 +378,11 @@ export interface AlbumFactsData {
   tags: string[]
   listeners: number | null
   userPlays: number | null
-  /** About how long the visitor has listened to it, in seconds (`listenedSeconds`). */
+  /** About how long the owner has listened to it, in seconds (`listenedSeconds`). */
   listened: number | null
 }
 
-/** What an album's facts are made of: Spotify's day, Last.fm's tracks, tags, listeners and the visitor's plays, and the time spent on it estimated from them. */
+/** What an album's facts are made of: Spotify's day, Last.fm's tracks, tags, listeners and the owner's plays, and the time spent on it estimated from them. */
 export function albumFactsOf(page: AlbumPage, info: { lastfm: AlbumInfo | null; spotify: SpotifyAlbum | null; top: TopTrack[] | null }): AlbumFactsData {
   const { lastfm, spotify } = info
   const tracks = lastfm?.tracks ?? []
@@ -404,7 +404,7 @@ export function AlbumLabel({ release }: { release: AlbumEdition | null }) {
 }
 
 /**
- * An album's facts, each said only here: the artist is the head's «av …», the tracks are counted by their list, the visitor's plays and time listened are the head's figures (`albumFigures`) and the recent plays have their section.
+ * An album's facts, each said only here: the artist is the head's «av …», the tracks are counted by their list, the owner's plays and time listened are the head's figures (`albumFigures`) and the recent plays have their section.
  * `label` is the label and the country of its first release (`AlbumLabel`, a server island the page puts in).
  */
 const albumFacts = (facts: AlbumFactsData, label: ReactNode) =>
@@ -430,7 +430,7 @@ function DiscographyAlbum({ album, artist, base, linked }: { album: StudioAlbum;
 
 /**
  * What MusicBrainz says of an album, as the sections after its tracks: who made it (its first official release's credits), its other editions, and its place among the artist's albums with the
- * ones before and after it (with `chart`, the visitor's plays of each of them). `linked` are the artist's albums that have a page here, by `albumKey`, to the title each was played under.
+ * ones before and after it (with `chart`, the owner's plays of each of them). `linked` are the artist's albums that have a page here, by `albumKey`, to the title each was played under.
  */
 export function AlbumRelease({ release, artist, base, linked, chart }: { release: AlbumReleaseData; artist: string; base: string; linked: ReadonlyMap<string, string>; /** The visitor's plays of each of the artist's albums with this one picked out (`DiscographyChart`, an island): it says the place, in place of «Plass». */ chart?: ReactNode }) {
   const { credits, editions, place, first } = release
@@ -475,7 +475,7 @@ export function AlbumRelease({ release, artist, base, linked, chart }: { release
   )
 }
 
-/** The tracks of an album in order, each with how many times the visitor has played it (`plays`, by title) as a bar, so the favourites stand out; with no plays known, only their lengths. */
+/** The tracks of an album in order, each with how many times the owner has played it (`plays`, by title) as a bar, so the favourites stand out; with no plays known, only their lengths. */
 function AlbumTracks({ tracks, plays, artist, base, played }: { tracks: AlbumInfo["tracks"]; plays: ReadonlyMap<string, number>; artist: string; base: string; played: ReadonlySet<string> }) {
   const link = (track: AlbumInfo["tracks"][number]) => (played.has(trackSlug(artist, track.title)) ? { href: trackHref(base, artist, track.title) } : {})
   if (plays.size === 0) {
@@ -497,13 +497,13 @@ function AlbumTracks({ tracks, plays, artist, base, played }: { tracks: AlbumInf
           }
         })}
       />
-      <Text role="note">Avspillingene er dine av hver låt, uansett hvilket album den ble spilt fra. En låt uten tall er ikke blant de tusen du har spilt mest.</Text>
+      <Text role="note">Avspillingene av hver låt, uansett hvilket album den ble spilt fra. En låt uten tall er ikke blant de tusen mest spilte.</Text>
     </Stack>
   )
 }
 
 /**
- * An album: what Last.fm's users write of it, its tracks in order with the visitor's plays of each (each links to its page where it has been played), their plays of it over time (`chart`, a
+ * An album: what Last.fm's users write of it, its tracks in order with the owner's plays of each (each links to its page where it has been played), their plays of it over time (`chart`, a
  * server island the page puts in) and by day (`days`), what MusicBrainz says of who made it, its editions and its place among the artist's albums (`release`, another), the plays from it here,
  * and the ways to it on Last.fm and Spotify. The facts are `albumFactsOf`'s, with the label and the country (`label`, `AlbumLabel` in a third island); the day is Spotify's, the rest Last.fm's.
  */

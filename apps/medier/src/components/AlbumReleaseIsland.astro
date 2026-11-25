@@ -1,8 +1,8 @@
 ---
-// A server island: who made the album, its other editions and its place among the artist's albums are MusicBrainz's, up to three asks a second apart (each kept for a month), with the visitor's
+// A server island: who made the album, its other editions and its place among the artist's albums are MusicBrainz's, up to three asks a second apart (each kept for a month), with the owner's
 // plays of each of the artist's albums (their thousand most played of all time, one answer every album's page shares).
 import { discographyChartText } from '../lib/album-listening'
-import { albumRelease, usersOf } from '../lib/runtime'
+import { albumRelease, owner } from '../lib/runtime'
 import { AlbumRelease } from './detail'
 import { DiscographyChart } from './trend'
 
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const { artist, title, base, linked } = Astro.props
-const release = await albumRelease(usersOf(Astro.cookies), artist, title, true)
+const release = await albumRelease(owner(), artist, title, true)
 const discography = release?.discography ?? null
 const chart = discography === null ? null : discographyChartText(discography, title, artist)
 ---
@@ -30,7 +30,7 @@ const chart = discography === null ? null : discographyChartText(discography, ti
       description={chart.description}
       summary={chart.summary}
       highlight={chart.highlight}
-      ariaLabel={`Dine avspillinger av hvert studioalbum av ${artist}`}
+      ariaLabel={`Avspillinger av hvert studioalbum av ${artist}`}
       albums={discography}
     />
   </AlbumRelease>

@@ -1,5 +1,5 @@
 /**
- * RetroAchievements (retroachievements.org): the old console games a profile has played in an emulator, and its achievements in each. The site's web API key, and the visitor's
+ * RetroAchievements (retroachievements.org): the old console games a profile has played in an emulator, and its achievements in each. The site's web API key, and the owner's
  * username there; every profile is public. Its times are UTC, written «2026-11-22 03:40:19». Pure, with a test.
  */
 
@@ -9,7 +9,6 @@ const API = "https://retroachievements.org/API"
 const MEDIA = "https://media.retroachievements.org"
 const enc = encodeURIComponent
 
-export const retroProfileUrl = (key: string, user: string): string => `${API}/API_GetUserProfile.php?u=${enc(user)}&y=${enc(key)}`
 export const retroRecentUrl = (key: string, user: string, count = 20): string => `${API}/API_GetUserRecentlyPlayedGames.php?u=${enc(user)}&c=${count}&y=${enc(key)}`
 export const retroGameUrl = (key: string, user: string, gameId: number): string => `${API}/API_GetGameInfoAndUserProgress.php?u=${enc(user)}&g=${gameId}&a=1&y=${enc(key)}`
 export const retroUserPage = (user: string): string => `https://retroachievements.org/user/${enc(user)}`
@@ -36,8 +35,6 @@ export function retroTime(value: unknown): number | null {
   return Number.isNaN(ms) ? null : Math.floor(ms / 1000)
 }
 
-/** Whether a profile is one RetroAchievements knows: its profile has a name (an unknown one is a 404, or an empty list). */
-export const parseRetroProfile = (answer: unknown): boolean => text(record(answer)["User"]) !== null
 
 /** A game played lately, as the rows show it. */
 export interface RetroGame {

@@ -1,5 +1,5 @@
 /**
- * ListenBrainz (https://listenbrainz.org), the music's other source where a visitor has no Last.fm: their listens, what plays now and the artists they played most this month, read into the same
+ * ListenBrainz (https://listenbrainz.org), the music's other source where the owner has no Last.fm: their listens, what plays now and the artists they played most this month, read into the same
  * plays and top artists Last.fm's are (`lastfm.ts`), so Musikk, its history and the front page show them alike. The covers are the Cover Art Archive's, by the release MusicBrainz matched the listen to.
  * What ListenBrainz cannot give in Last.fm's shape is not asked: an artist's, an album's or a song's page, the weeks and months, and the trend are Last.fm's alone. Pure, with a test.
  */
@@ -13,8 +13,6 @@ const user = (name: string): string => encodeURIComponent(name)
 export const listensUrl = (name: string, count = 50): string => `${API}/user/${user(name)}/listens?count=${count}`
 export const playingNowUrl = (name: string): string => `${API}/user/${user(name)}/playing-now`
 export const topArtistsUrl = (name: string, count = 10): string => `${API}/stats/user/${user(name)}/artists?range=month&count=${count}`
-/** A user that is not one answers 404 here. */
-export const listenCountUrl = (name: string): string => `${API}/user/${user(name)}/listen-count`
 export const profileUrl = (name: string): string => `https://listenbrainz.org/user/${user(name)}/`
 
 /** ListenBrainz asks for at most one request a second from a client, and for a User-Agent that says who asks. */
@@ -75,6 +73,3 @@ export function parseTopArtists(answer: unknown): TopArtist[] {
     return [{ name, plays, url: MBID.test(mbid) ? `https://listenbrainz.org/artist/${mbid}/` : `https://listenbrainz.org/search/?search_term=${encodeURIComponent(name)}&search_type=artist` }]
   })
 }
-
-/** Whether ListenBrainz's answer to `listen-count` is a user's. */
-export const parseUserFound = (answer: unknown): boolean => typeof object(object(answer)["payload"])["count"] === "number"

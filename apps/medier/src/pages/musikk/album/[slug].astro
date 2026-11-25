@@ -9,30 +9,27 @@ import { albumFigures } from '../../../lib/album-listening'
 import { albumKey } from '../../../lib/albums'
 import { Head } from '../../../components/head'
 import { sourcesOf } from '../../../lib/image-sources'
-import NeedsUsername from '../../../components/NeedsUsername.astro'
 import Page from '../../../layouts/Page.astro'
 import { albumHref, albumPages, artistHref, trackPages } from '../../../lib/pages'
-import { album, albumDisc, music, usersOf } from '../../../lib/runtime'
+import { album, albumDisc, music, owner } from '../../../lib/runtime'
 
-const users = usersOf(Astro.cookies)
+const users = owner()
 const listening = users.lastfm === null ? null : await music(users)
 const page = listening === null ? undefined : albumPages(listening).find((one) => one.slug === Astro.params.slug)
-if (users.lastfm !== null && page === undefined) return Astro.rewrite('/404/')
-const info = page === undefined ? null : await album(users, page.artist, page.title)
+if (page === undefined) return Astro.rewrite('/404/')
+const info = await album(users, page.artist, page.title)
+if (info === null) return Astro.rewrite('/404/')
 // A record or a CD, from what MusicBrainz said the last time (never asked here: the head is not to wait for it, nor change shape after).
-const disc = page === undefined ? 'record' : await albumDisc(users, page.artist, page.title)
+const disc = await albumDisc(users, page.artist, page.title)
 const played = new Set(listening === null ? [] : trackPages(listening).map((track) => track.slug))
 const base = import.meta.env.BASE_URL
-const facts = page === undefined || info === null ? null : albumFactsOf(page, info)
+const facts = albumFactsOf(page, info)
 // The head's figures, said there and not again in the facts: the plays, about how long, and the share of the artist (their plays over time are the chart under the tracks).
-const figures = page === undefined || info === null || facts === null ? [] : albumFigures(facts.userPlays, facts.listened, info.artistPlays)
+const figures = albumFigures(facts.userPlays, facts.listened, info.artistPlays)
 // The artist's albums that have a page here, under the title each was played under: the discography links to them.
-const linked: [string, string][] = page === undefined || listening === null ? [] : [...new Map(albumPages(listening).filter((one) => one.artist === page.artist).map((one) => [albumKey(one.title), one.title]))]
+const linked: [string, string][] = listening === null ? [] : [...new Map(albumPages(listening).filter((one) => one.artist === page.artist).map((one) => [albumKey(one.title), one.title]))]
 ---
 
-{page === undefined || info === null ? (
-  <NeedsUsername medium="music" />
-) : (
 <Page
   bare
   current="music"
@@ -45,14 +42,13 @@ const linked: [string, string][] = page === undefined || listening === null ? []
   <AlbumDetail page={page} base={base} info={info} played={played}>
     <AlbumFactsIsland slot="label" server:defer artist={page.artist} title={page.title} />
     <AlbumListeningIsland slot="chart" server:defer artist={page.artist} title={page.title}>
-      <SectionSkeleton slot="fallback" title="Din lytting" icon="chart" lines={6} />
+      <SectionSkeleton slot="fallback" title="Lytting" icon="chart" lines={6} />
     </AlbumListeningIsland>
     <AlbumDaysIsland slot="days" server:defer artist={page.artist} title={page.title}>
-      <SectionSkeleton slot="fallback" title="Dagene du spilte det" icon="calendar" lines={6} />
+      <SectionSkeleton slot="fallback" title="Dagene det ble spilt" icon="calendar" lines={6} />
     </AlbumDaysIsland>
     <AlbumReleaseIsland slot="release" server:defer artist={page.artist} title={page.title} base={base} linked={linked}>
       <SectionSkeleton slot="fallback" title="Medvirkende" icon="people" lines={6} />
     </AlbumReleaseIsland>
   </AlbumDetail>
 </Page>
-)}

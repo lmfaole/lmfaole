@@ -2,7 +2,7 @@ name: medier
 
 # Every push that touches the site is tested, type-checked and built; a push to main, or a manual run, is also deployed to Cloudflare Workers: the site (https://lmfaole.party/medier/) and the relay
 # it asks its sources through (`apps/medier/upstream/`). The site asks Last.fm, Trakt, TMDB and Spotify when a page is asked for, so nothing is fetched here. The sources' keys are
-# secrets of the Worker (`npm run settings:push`); the Cloudflare secrets, STEAM_API_KEY, SETLISTFM_API_KEY, RETROACHIEVEMENTS_API_KEY and COOKIE_SECRET are this repository's (the last four are uploaded with the deploy).
+# secrets of the Worker (`npm run settings:push`); the Cloudflare secrets, STEAM_API_KEY, SETLISTFM_API_KEY and RETROACHIEVEMENTS_API_KEY are this repository's (the last three are uploaded with the deploy).
 on:
   push:
     paths: [apps/medier/**, packages/designsystem/**, package-lock.json, .github/workflows/medier.yml]
@@ -46,7 +46,6 @@ jobs:
           STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
           SETLISTFM_API_KEY: ${{ secrets.SETLISTFM_API_KEY }}
           RETROACHIEVEMENTS_API_KEY: ${{ secrets.RETROACHIEVEMENTS_API_KEY }}
-          COOKIE_SECRET: ${{ secrets.COOKIE_SECRET }}
         run: |
           if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
             echo "::notice::CLOUDFLARE_API_TOKEN is not set as a repository secret, so this run only builds."
@@ -54,5 +53,5 @@ jobs:
           fi
           npx wrangler deploy --config upstream/wrangler.jsonc
           # The keys kept as this repository's secrets go up with the site as the Worker's secrets (the others are pushed with `npm run settings:push`).
-          node -e 'const s={};for(const k of ["STEAM_API_KEY","SETLISTFM_API_KEY","RETROACHIEVEMENTS_API_KEY","COOKIE_SECRET"])if(process.env[k])s[k]=process.env[k];require("fs").writeFileSync(process.env.RUNNER_TEMP+"/secrets.json",JSON.stringify(s))'
+          node -e 'const s={};for(const k of ["STEAM_API_KEY","SETLISTFM_API_KEY","RETROACHIEVEMENTS_API_KEY"])if(process.env[k])s[k]=process.env[k];require("fs").writeFileSync(process.env.RUNNER_TEMP+"/secrets.json",JSON.stringify(s))'
           npx wrangler deploy --secrets-file "$RUNNER_TEMP/secrets.json"

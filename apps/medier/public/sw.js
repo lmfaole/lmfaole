@@ -2,11 +2,9 @@
 // each when there is no network, the front page then, and last our own offline page. The built files (`_astro/`, the icons) never change under one name: from the cache when there, else
 // fetched and kept. Nothing outside the base is touched, and of the origin's caches only our own (`medier-…`) are ever deleted. Nothing from another site is touched
 // (the covers and pictures are other sites' own, Spotify's among them, and are not kept). A new worker waits until the app is closed: no `skipWaiting`, so an old page is never
-// served by a new worker. Change `VERSION` and the old caches are deleted when it takes over. A page is made for the visitor's usernames (cookies): the server says whose it is (`X-Medier-Who`),
-// and as what it was drawn (the visitor's theme, effects and sections, and whether the first-run wizard was open), and the pages kept are of one such at a time, so a page from before a change
-// (Innstillinger) is never shown offline after it.
+// served by a new worker. Change `VERSION` and the old caches are deleted when it takes over. Every page is the same for every visitor, so a copy kept is simply the page as it last was.
 
-const VERSION = "v6"
+const VERSION = "v7"
 const STATIC = `medier-static-${VERSION}`
 const PAGES = `medier-pages-${VERSION}`
 /** The site's base, where this file is: `/medier/`. */
@@ -14,8 +12,6 @@ const BASE = new URL("./", self.location.href).pathname
 const OFFLINE = `${BASE}offline/`
 /** How many pages are kept: the last visited, so the cache stays small and nothing in it is old for long. */
 const MAX_PAGES = 40
-/** Whose pages are kept: an entry of its own in the pages' cache, with the server's `X-Medier-Who` of the last page kept. */
-const WHO = `${BASE}__medier-who__`
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -38,18 +34,9 @@ self.addEventListener("activate", (event) => {
   )
 })
 
-/** A page of someone else (other usernames) than the pages kept: those go, all but the offline page, before it is kept. */
-async function keepFor(cache, who) {
-  const kept = await cache.match(WHO)
-  if (kept !== undefined && (await kept.text()) === who) return
-  const keys = (await cache.keys()).filter((request) => new URL(request.url).pathname !== OFFLINE)
-  await Promise.all(keys.map((request) => cache.delete(request)))
-  await cache.put(WHO, new Response(who))
-}
-
 /** The oldest pages go when there are more than `MAX_PAGES` (a cache lists its keys in the order they were added); the offline page stays. */
 async function trim(cache) {
-  const keys = (await cache.keys()).filter((request) => ![OFFLINE, WHO].includes(new URL(request.url).pathname))
+  const keys = (await cache.keys()).filter((request) => new URL(request.url).pathname !== OFFLINE)
   await Promise.all(keys.slice(0, Math.max(0, keys.length - MAX_PAGES)).map((request) => cache.delete(request)))
 }
 
@@ -79,9 +66,7 @@ self.addEventListener("fetch", (event) => {
           // Only a page that came back ok, from here, and not a redirect: a copy of an error or of somewhere else would be shown as the page.
           if (response.ok && response.type === "basic" && !response.redirected && url.pathname !== OFFLINE) {
             const copy = response.clone()
-            const who = response.headers.get("X-Medier-Who") ?? ""
             event.waitUntil(caches.open(PAGES).then(async (cache) => {
-              await keepFor(cache, who)
               await cache.put(key, copy)
               await trim(cache)
             }))

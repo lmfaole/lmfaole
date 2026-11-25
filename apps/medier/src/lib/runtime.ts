@@ -5,9 +5,7 @@
 
 import { env } from "cloudflare:workers"
 
-import type { AstroCookies } from "astro"
-
-import { type Env, forUsers, type Get, lastfmError, loadGameExtras, loadGameStats, loadSteamBadges, loadSteamPresence, loadWishlist, lastfmUserExists, type Listening, loadAlbum, loadAlbumDays, loadAlbumRelease, loadAlbumTimeline, loadArtist, loadArtistLinks, loadArtistListening, loadArtistPictures, loadLastfmNow, loadLatestRelease, loadMusic, loadPerson, loadGame, loadGames, loadRetroGame, loadRetroGames, retroUserExists, loadSetlists, loadTrack, loadTrackCovers, loadWatched, loadWatchProviders, listenbrainzUserExists, loadListenBrainzMusic, loadListenBrainzNow, settle, steamUserExists, traktUserExists } from "./sources.ts"
+import { type Env, forUsers, type Get, lastfmError, loadGameExtras, loadGameStats, loadSteamBadges, loadSteamPresence, loadWishlist, type Listening, loadAlbum, loadAlbumDays, loadAlbumRelease, loadAlbumTimeline, loadArtist, loadArtistLinks, loadArtistListening, loadArtistPictures, loadLastfmNow, loadLatestRelease, loadMusic, loadPerson, loadGame, loadGames, loadRetroGame, loadRetroGames, loadSetlists, loadTrack, loadTrackCovers, loadWatched, loadWatchProviders, loadListenBrainzMusic, loadListenBrainzNow, settle } from "./sources.ts"
 import { MOCK_VERSION, mockFetch, mockSettings } from "./mock.ts"
 import { discOf } from "./musicbrainz-release.ts"
 import { loadMonth, loadTrend, loadWeek, type Medium } from "./week-source.ts"
@@ -15,10 +13,9 @@ import type { Month } from "./months.ts"
 import type { Week } from "./weeks.ts"
 import type { NowPlaying } from "./spotify.ts"
 import type { Watched } from "./trakt.ts"
-import { NO_USERS, readUsers, type Users } from "./users.ts"
-import { parseSeenSales, SALES_COOKIE, type Wishlist } from "./steam-wishlist.ts"
+import { type Users, usersFrom } from "./users.ts"
+import type { Wishlist } from "./steam-wishlist.ts"
 import { failureOf, failureTtl, keptFailure, lastfmErrorCode } from "./negative-cache.ts"
-import { readSignedUsers } from "./signed-cookie.ts"
 import { asService, routeOf } from "./route.ts"
 
 const AGENT = "lmfaole-medier (https://github.com/lmfaole/medier)"
@@ -30,7 +27,9 @@ const own = (): Env => Object.fromEntries(Object.entries(env).filter((entry): en
 /** `MOCK_DATA=1` (`.dev.vars`, never a Worker's secret): the sources are answered by `mock.ts`, with no keys and no network, and any username is one. */
 export const mocking = (): boolean => own()["MOCK_DATA"] === "1"
 export const settings = (): Env => (mocking() ? mockSettings(own()) : own())
-/** The settings for one visitor: the Worker's keys and the visitor's usernames, never anyone else's. */
+/** Whose data the site shows: the owner's usernames, the `vars` of `wrangler.jsonc` (`users.ts`), the same for every visitor. */
+export const owner = (): Users => usersFrom(settings())
+/** The settings with these usernames. */
 const settingsFor = (users: Users): Env => forUsers(settings(), users)
 
 /** `IMAGE_TRANSFORMS` "1": the pictures go through the zone's Image Transformations (`image-sources.ts`). */
@@ -40,30 +39,6 @@ export const beaconToken = (): string => settings()["CF_BEACON_TOKEN"] ?? ""
 
 /** A binding of the Worker (a rate limit, a service), as it is: not a setting. */
 export const binding = (name: string): unknown => env[name]
-
-/** The key the username cookies are signed with (`signed-cookie.ts`); without it they are taken as they are, as before (and the log says so). */
-export const cookieSecret = (): string | null => {
-  const secret = own()["COOKIE_SECRET"] ?? ""
-  return secret === "" ? null : secret
-}
-
-/** The usernames of each request, as the middleware read them (signed: `verifyUsers`); a page reads them by its `cookies`, which are the middleware's. */
-const verified = new WeakMap<AstroCookies, Users>()
-let warned = false
-
-/** Reads the request's username cookies once, checking their signatures (`src/middleware.ts`, before the page). */
-export async function verifyUsers(cookies: AstroCookies): Promise<void> {
-  const secret = cookieSecret()
-  const cookie = (name: string): string | undefined => cookies.get(name)?.value
-  if (secret === null && !warned) {
-    warned = true
-    console.warn("COOKIE_SECRET is not set: the username cookies are taken without a signature")
-  }
-  verified.set(cookies, secret === null ? readUsers(cookie) : await readSignedUsers(cookie, secret))
-}
-
-/** The visitor's usernames, from the request's cookies (`users.ts`), as `verifyUsers` found them: none where it did not read them, unless there is no key to sign with. */
-export const usersOf = (cookies: AstroCookies): Users => verified.get(cookies) ?? (cookieSecret() === null ? readUsers((name) => cookies.get(name)?.value) : NO_USERS)
 
 /**
  * Workers on this zone cannot reach an origin outside Cloudflare (every such fetch ends in 525): the relay (`upstream/`) asks on the page's behalf, only for the hosts it knows and
@@ -146,10 +121,10 @@ export const get: Get = async (url, request) => {
   return { data, hit: false }
 }
 
-/** Each source on its own, for the visitor's usernames; `null` when it is not set up, the visitor has not given the username, or it is down: a page shows what it has. */
+/** Each source on its own, for the owner's usernames; `null` when it is not set up, has no username, or is down: a page shows what it has. */
 /** A pause between the asks to a source that wants them spaced (MusicBrainz, ListenBrainz); none on made-up data. */
 const pause = (ms: number): Promise<void> => (mocking() ? Promise.resolve() : new Promise((done) => setTimeout(done, ms)))
-/** The music is Last.fm's; for a visitor with only a ListenBrainz username, ListenBrainz's. */
+/** The music is Last.fm's; with only a ListenBrainz username, ListenBrainz's. */
 export const music = (users: Users): Promise<Listening | null> => settle(users.lastfm === null ? loadListenBrainzMusic(settingsFor(users), get, pause) : loadMusic(settingsFor(users), get))
 export const games = (users: Users) => settle(loadGames(settingsFor(users), get))
 export const game = (users: Users, appId: number) => settle(loadGame(settingsFor(users), get, appId))
@@ -161,21 +136,14 @@ export const steamBadges = (users: Users) => settle(loadSteamBadges(settingsFor(
 export const gameStats = async (users: Users, appId: number) => (await settle(loadGameStats(settingsFor(users), get, appId))) ?? []
 /** A game's reviews, players now, news, Steam Deck report and DLC; `dlc` is the store page's own list (`game().store.dlc`), so the page is not asked again. */
 export const gameExtras = (appId: number, dlc: readonly number[] = []) => settle(loadGameExtras(get, appId, dlc))
-/** The Steam user's wishlist with prices; the sales the visitor has not seen (cookie `steam_sales_seen`, set by `markSalesSeen`) are `newSales`. */
-export const wishlist = (users: Users, cookies: AstroCookies): Promise<Wishlist | null> => settle(loadWishlist(settingsFor(users), get, parseSeenSales(cookies.get(SALES_COOKIE)?.value)))
-/** Only the wishlist's sales, for a count in the navigation. */
-export const wishlistSales = async (users: Users, cookies: AstroCookies): Promise<Pick<Wishlist, "onSale" | "newSales"> | null> => {
-  const found = await wishlist(users, cookies)
-  return found === null ? null : { onSale: found.onSale, newSales: found.newSales }
-}
-/** Whether the site has Steam's key: without it there are no games, and no «Spill» in the bar. */
+/** The Steam user's wishlist with prices, and which games are on sale. */
+export const wishlist = (users: Users): Promise<Wishlist | null> => settle(loadWishlist(settingsFor(users), get))
+/** Whether the site has Steam's key: without it there are no Steam games. */
 export const hasSteam = (): boolean => (settings()["STEAM_API_KEY"] ?? "") !== ""
 export const retroGames = (users: Users) => settle(loadRetroGames(settingsFor(users), get))
 export const retroGame = (users: Users, gameId: number) => settle(loadRetroGame(settingsFor(users), get, gameId))
 /** Whether the site has RetroAchievements' key: the old console games, beside Steam's under «Spill». */
 export const hasRetro = (): boolean => (settings()["RETROACHIEVEMENTS_API_KEY"] ?? "") !== ""
-/** Whether «Spill» is in the bar: the site has a key to either source of games. */
-export const hasGames = (): boolean => hasSteam() || hasRetro()
 export const watched = (users: Users): Promise<Watched | null> => settle(loadWatched(settingsFor(users), get))
 export const lastfmNow = (users: Users): Promise<NowPlaying | null> => settle(users.lastfm === null ? loadListenBrainzNow(settingsFor(users), get) : loadLastfmNow(settingsFor(users), get))
 export const artist = (users: Users, name: string) => loadArtist(settingsFor(users), get, name)
@@ -201,10 +169,3 @@ export const track = (users: Users, artist: string, title: string) => loadTrack(
 export const week = (users: Users, which: Week, medium: Medium) => settle(loadWeek(settingsFor(users), get, which, Date.now(), medium))
 export const month = (users: Users, which: Month, medium: Medium) => settle(loadMonth(settingsFor(users), get, which, Date.now(), medium))
 export const trend = (users: Users, periods: readonly { id: string; start: number; end: number }[]) => settle(loadTrend(settingsFor(users), get, periods, Date.now()))
-
-/** Whether the services have this username (a Trakt profile must be public); in a run on made-up data every name is one. */
-export const lastfmUserFound = (user: string): Promise<boolean> => (mocking() ? Promise.resolve(true) : lastfmUserExists(settings(), get, user))
-export const traktUserFound = (user: string): Promise<boolean> => (mocking() ? Promise.resolve(true) : traktUserExists(settings(), get, user))
-export const listenbrainzUserFound = (user: string): Promise<boolean> => (mocking() ? Promise.resolve(true) : listenbrainzUserExists(get, user))
-export const retroUserFound = (user: string): Promise<boolean> => (mocking() ? Promise.resolve(true) : retroUserExists(settings(), get, user))
-export const steamUserFound = (user: string): Promise<boolean> => (mocking() ? Promise.resolve(true) : steamUserExists(settings(), get, user))

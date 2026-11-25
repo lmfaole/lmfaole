@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert"
 import { test } from "node:test"
 
-import { parseRetroGame, parseRetroProfile, parseRetroRecent, retroCase, retroRecentUrl, retroTime } from "./retroachievements.ts"
+import { parseRetroGame, parseRetroRecent, retroCase, retroRecentUrl, retroTime } from "./retroachievements.ts"
 
 test("RetroAchievements' times are UTC, with or without an offset written", () => {
   assert.equal(retroTime("2026-11-22 03:40:19"), Date.UTC(2026, 10, 22, 3, 40, 19) / 1000)
@@ -20,7 +20,6 @@ test("the games played lately are the last played first, with the title screen, 
   assert.deepEqual(games.map((game) => [game.gameId, game.unlocked, game.total]), [[759, 3, 57], [5741, 17, 17]])
   assert.equal(games[0]?.image, "https://media.retroachievements.org/Images/095164.png")
   assert.deepEqual(parseRetroRecent({ error: "nope" }), [])
-  assert.ok(parseRetroProfile({ User: "MaxMilyin" }) && !parseRetroProfile([]))
 })
 
 test("a game's achievements are the unlocked last first, locked with the grey badge, each with the share of its players and its points counted", () => {

@@ -1,19 +1,18 @@
 ---
 // The wrapped of a week or a month, of one medium: the music (Last.fm: the numbers, a trend, the top artists, albums and songs, who is new), the films (Trakt: the numbers, the films, the genres
-// and the directors) or the TV (Trakt: the numbers, the shows, the binges). The page parses the period and loads it; without the medium's username (`data` is `null`) this asks for it instead.
+// and the directors) or the TV (Trakt: the numbers, the shows, the binges). The page parses the period and loads it (without the medium's username, or a period that could not be had, it is no page).
 import { ErrorMessage } from '@lmfaole/designsystem/components/error-message'
 import Period from './Period.astro'
 import { Head } from './head'
 import { FilmPeriod, OtherPeriods, PeriodChips, TvPeriod } from './wrapped'
 import { PlaysChart } from './trend'
 import TrendSection from './TrendSection.astro'
-import UsernameGate from './UsernameGate.astro'
 import Page from '../layouts/Page.astro'
 import { sourcesOf } from '../lib/image-sources'
 import { MEDIA, mediumHref } from '../lib/media'
 import { monthAt, monthRange, monthShort, monthText, monthTitle, recentMonths, type Month } from '../lib/months'
 import { albumPages, artistPages, titleHref, titlePages, trackPages } from '../lib/pages'
-import { music, usersOf, watched } from '../lib/runtime'
+import { music, owner, watched } from '../lib/runtime'
 import { dayColumns, monthsUpTo, TREND_LENGTH, weeksUpTo } from '../lib/trend'
 import type { Medium, PeriodData } from '../lib/week-source'
 import { isComplete, rangeText, recentWeeks, weekAt, type Week } from '../lib/weeks'
@@ -21,14 +20,14 @@ import { isComplete, rangeText, recentWeeks, weekAt, type Week } from '../lib/we
 interface Props {
   medium: Medium
   period: { kind: 'week'; week: Week } | { kind: 'month'; month: Month }
-  data: PeriodData | null
+  data: PeriodData
 }
 
 const { medium, period, data } = Astro.props
 const base = import.meta.env.BASE_URL
 const now = Date.now()
 const info = MEDIA[medium]
-const users = usersOf(Astro.cookies)
+const users = owner()
 const isWeek = period.kind === 'week'
 const range = period.kind === 'week' ? period.week : period.month
 const id = range.id
@@ -39,7 +38,7 @@ const lead = `${span}${complete ? '' : ' · så langt'}`
 const href = mediumHref(base, medium, isWeek ? 'uke/' : 'maned/', id)
 const crumbs = [{ label: 'Medier', href: base }, { label: info.label, href: mediumHref(base, medium) }, { label: title, href }]
 // What has a page of its own to link to: among the recent plays (artists, albums, songs), or among the films and shows seen.
-const [listening, seen] = data === null ? [null, null] : await Promise.all([medium === 'music' ? music(users) : null, medium === 'music' ? null : watched(users)])
+const [listening, seen] = await Promise.all([medium === 'music' ? music(users) : null, medium === 'music' ? null : watched(users)])
 const links = {
   artists: new Set(listening === null ? [] : artistPages(listening).map((page) => page.name)),
   albums: new Set(listening === null ? [] : albumPages(listening).map((page) => page.slug)),
@@ -51,8 +50,8 @@ const others =
     ? recentWeeks(now, 12).map((one) => ({ key: one.id, label: `Uke ${one.number}${one.id === weekAt(now).id ? ' (så langt)' : ''}`, range: rangeText(one), href: mediumHref(base, medium, 'uke/', one.id) }))
     : recentMonths(now, 12).map((one) => ({ key: one.id, label: `${monthTitle(one)}${one.id === monthAt(now).id ? ' (så langt)' : ''}`, range: monthRange(one), href: mediumHref(base, medium, 'maned/', one.id) }))
 // The head's picture and line: the most played album's cover, the latest film's poster, or the most watched show's.
-const topAlbum = data?.music?.stats.topAlbums[0]
-const watchStats = data?.watched?.stats
+const topAlbum = data.music?.stats.topAlbums[0]
+const watchStats = data.watched?.stats
 const topShow = watchStats?.shows[0]
 const topFilm = watchStats?.filmItems[0]
 const head =
@@ -65,41 +64,33 @@ const trendSpan =
   period.kind === 'week'
     ? weeksUpTo(period.week, TREND_LENGTH).map((one) => ({ id: one.id, start: one.start, end: one.end, label: `u${one.number}` }))
     : monthsUpTo(period.month, TREND_LENGTH).map((one) => ({ id: one.id, start: one.start, end: one.end, label: monthShort(one) }))
-const days = period.kind === 'month' ? dayColumns((medium === 'music' ? data?.music?.stats.byDate : watchStats?.byDate) ?? {}, period.month.first, period.month.days) : []
+const days = period.kind === 'month' ? dayColumns((medium === 'music' ? data.music?.stats.byDate : watchStats?.byDate) ?? {}, period.month.first, period.month.days) : []
 const counted = medium === 'music' ? { valueLabel: 'Avspillinger', noun: 'Avspillinger' } : medium === 'film' ? { valueLabel: 'Filmer', noun: 'Filmer' } : { valueLabel: 'Episoder', noun: 'Episoder' }
 ---
 
-{
-  data === null ? (
-    <Page current={info.place} title={title} lead={`Hvem skal vi lage oppsummeringen av ${medium === 'music' ? 'musikken' : medium === 'film' ? 'filmene' : 'TV-en'} for?`} crumbs={crumbs}>
-      <UsernameGate services={[info.service]} />
-    </Page>
+<Page bare current={info.place} width="reading" title={`${title} · ${info.label}`} lead={lead} crumbs={crumbs}>
+  <Head client:idle kind={`Wrapped · ${info.label}`} title={title} sources={head.sources} shape={head.shape} lines={[lead, ...(head.line === null ? [] : [head.line])]} />
+  <PeriodChips current={period.kind} weekHref={mediumHref(base, medium, 'uke/')} monthHref={mediumHref(base, medium, 'maned/')} />
+  {medium === 'music' && (
+    <TrendSection
+      server:defer
+      periods={trendSpan}
+      title={`Siste ${TREND_LENGTH} ${isWeek ? 'uker' : 'måneder'}`}
+      description={`Avspillinger per ${isWeek ? 'uke' : 'måned'}, til og med ${period.kind === 'week' ? `uke ${period.week.number}` : monthText(period.month)}.`}
+      ariaLabel={`Avspillinger per ${isWeek ? 'uke' : 'måned'}`}
+    />
+  )}
+  {period.kind === 'month' && days.some((one) => one.value > 0) && (
+    <PlaysChart client:visible title="Dag for dag" description={`${counted.noun} per dag i ${monthText(period.month)}.`} ariaLabel={`${counted.valueLabel} per dag`} columns={days} valueLabel={counted.valueLabel} empty={counted.valueLabel.toLowerCase()} />
+  )}
+  {medium === 'music' ? (
+    <Period data={data} links={links} base={base} previous={isWeek ? 'uken før' : 'måneden før'} />
+  ) : watchStats === undefined ? (
+    <ErrorMessage what="oppsummeringen" error="Trakt svarte ikke." retry={{ href, label: 'Prøv igjen' }} />
+  ) : medium === 'film' ? (
+    <FilmPeriod stats={watchStats} links={links} base={base} perDay={isWeek} />
   ) : (
-    <Page bare current={info.place} width="reading" title={`${title} · ${info.label}`} lead={lead} crumbs={crumbs}>
-      <Head client:idle kind={`Wrapped · ${info.label}`} title={title} sources={head.sources} shape={head.shape} lines={[lead, ...(head.line === null ? [] : [head.line])]} />
-      <PeriodChips current={period.kind} weekHref={mediumHref(base, medium, 'uke/')} monthHref={mediumHref(base, medium, 'maned/')} />
-      {medium === 'music' && (
-        <TrendSection
-          server:defer
-          periods={trendSpan}
-          title={`Siste ${TREND_LENGTH} ${isWeek ? 'uker' : 'måneder'}`}
-          description={`Avspillinger per ${isWeek ? 'uke' : 'måned'}, til og med ${period.kind === 'week' ? `uke ${period.week.number}` : monthText(period.month)}.`}
-          ariaLabel={`Avspillinger per ${isWeek ? 'uke' : 'måned'}`}
-        />
-      )}
-      {period.kind === 'month' && days.some((one) => one.value > 0) && (
-        <PlaysChart client:visible title="Dag for dag" description={`${counted.noun} per dag i ${monthText(period.month)}.`} ariaLabel={`${counted.valueLabel} per dag`} columns={days} valueLabel={counted.valueLabel} empty={counted.valueLabel.toLowerCase()} />
-      )}
-      {medium === 'music' ? (
-        <Period data={data} links={links} base={base} previous={isWeek ? 'uken før' : 'måneden før'} />
-      ) : watchStats === undefined ? (
-        <ErrorMessage what="oppsummeringen" error="Trakt svarte ikke." retry={{ href, label: 'Prøv igjen' }} />
-      ) : medium === 'film' ? (
-        <FilmPeriod stats={watchStats} links={links} base={base} perDay={isWeek} />
-      ) : (
-        <TvPeriod stats={watchStats} links={links} base={base} perDay={isWeek} />
-      )}
-      <OtherPeriods id={isWeek ? 'uker' : 'maneder'} title={isWeek ? 'Andre uker' : 'Andre måneder'} name={isWeek ? 'Uke' : 'Måned'} rows={others} current={id} />
-    </Page>
-  )
-}
+    <TvPeriod stats={watchStats} links={links} base={base} perDay={isWeek} />
+  )}
+  <OtherPeriods id={isWeek ? 'uker' : 'maneder'} title={isWeek ? 'Andre uker' : 'Andre måneder'} name={isWeek ? 'Uke' : 'Måned'} rows={others} current={id} />
+</Page>

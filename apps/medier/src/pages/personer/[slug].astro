@@ -3,31 +3,26 @@ import { PersonDetail } from '../../components/detail'
 import { Head } from '../../components/head'
 import { profileSources } from '../../lib/tmdb'
 import { transformed } from '../../lib/image-sources'
-import NeedsUsername from '../../components/NeedsUsername.astro'
 import Page from '../../layouts/Page.astro'
 import { mediumHref, mediumOfKind } from '../../lib/media'
 import { personHref, personId, personIn } from '../../lib/pages'
-import { person as loadPerson, usersOf, watched } from '../../lib/runtime'
+import { person as loadPerson, owner, watched } from '../../lib/runtime'
 
 const id = personId(Astro.params.slug ?? '')
 if (id === null) return Astro.rewrite('/404/')
 // What the credits of the films seen say of them, and TMDB's own page of them: either is enough for a page, and the second is kept for a month.
-const users = usersOf(Astro.cookies)
+const users = owner()
 const [seen, person] = users.trakt === null ? [null, null] : await Promise.all([watched(users), loadPerson(id)])
 const found = seen === null ? null : personIn(seen.items, id)
-if (users.trakt !== null && found === null) return Astro.rewrite('/404/')
+if (found === null) return Astro.rewrite('/404/')
 const base = import.meta.env.BASE_URL
-const name = person?.name ?? found?.name ?? ''
+const name = person?.name ?? found.name
 // A person is under Film or TV by what they were in first among what was seen.
-const medium = mediumOfKind(found?.appearances[0]?.page.kind ?? 'film')
+const medium = mediumOfKind(found.appearances[0]?.page.kind ?? 'film')
 const place = medium === 'tv' ? { label: 'TV', href: mediumHref(base, 'tv') } : { label: 'Film', href: mediumHref(base, 'film') }
 ---
 
-{found === null ? (
-  <NeedsUsername medium="film" />
-) : (
 <Page bare current={medium === 'tv' ? 'tv' : 'film'} width="pane" title={name} lead={person?.department ?? 'Fra rollelisten'} crumbs={[{ label: 'Medier', href: base }, place, { label: name, href: personHref(base, id, name) }]}>
   <Head client:idle kind={person?.department ?? 'Fra rollelisten'} title={name} sources={transformed(profileSources(person?.profile ?? found.profile))} shape="person" />
   <PersonDetail id={id} person={person} found={found} base={base} />
 </Page>
-)}

@@ -6,17 +6,16 @@ import { ConnectionBanner } from '@lmfaole/designsystem/components/connection-ba
 
 import { Frame, navItems, type Place } from '../components/frame'
 import { NavBar } from '@lmfaole/designsystem/components/nav-bar'
-import { htmlAttributes, parsePrefs, PREFS_COOKIE } from '@lmfaole/designsystem/lib/preferences'
 import { brandAttributes } from '@lmfaole/designsystem/lib/brand'
 import { transitionAttributes } from '@lmfaole/designsystem/lib/motion'
-import FirstRunWizard from '../components/FirstRunWizard.astro'
 import { WebAnalytics } from '@lmfaole/designsystem/components/web-analytics'
-import { beaconToken, hasGames, hasSteam, usersOf, wishlistSales } from '../lib/runtime'
+import { beaconToken, hasRetro, hasSteam, owner } from '../lib/runtime'
+import { hasMusic } from '../lib/users'
 
 interface Props {
   title: string
   lead: string
-  /** The pages above this one, and this one last; none on a page in the menu (the front page, Musikk, Film, TV, Innstillinger): the menu says where it is. */
+  /** The pages above this one, and this one last; none on a page in the menu (the front page, Musikk, Film, TV, Spill): the menu says where it is. */
   crumbs?: Crumb[]
   /** `pane` for a detail page: the reading column and the `DetailLayout` rail beside it on a wide screen. */
   width?: 'reading' | 'pane'
@@ -24,25 +23,21 @@ interface Props {
   current?: Place
   /** A page whose own head (`DetailHeader`) is its `<h1>`: the title and the lead are in the document's head and its description, and not drawn here. */
   bare?: boolean
-  /** The first-run wizard on a first visit; not on «Innstillinger» (which has the same fields) or a page made ahead of time (the offline page), which has no cookies to read. */
-  firstRun?: boolean
 }
-const { title, lead, crumbs, width = 'reading', current, bare = false, firstRun = true } = Astro.props
-// The visitor's theme, effects and tilt on <html> from the first frame (`prefs` cookie; the design system reads the attributes).
-const attributes = htmlAttributes(parsePrefs(Astro.cookies.get(PREFS_COOKIE)?.value))
+const { title, lead, crumbs, width = 'reading', current, bare = false } = Astro.props
 const base = import.meta.env.BASE_URL
-// «Spill» is in the bar wherever the site has Steam's or RetroAchievements' key, like Musikk, Film and TV: without a Steam profile its page asks for one.
-const games = !Astro.isPrerendered && hasGames()
-// How many games on the Steam wishlist went on sale since the visitor last looked, a count on «Spill»: asked only for a visitor with a Steam profile, and a wishlist that is not told is no count.
-const steamUsers = games && hasSteam() ? usersOf(Astro.cookies) : null
-const sales = steamUsers?.steam == null ? 0 : ((await wishlistSales(steamUsers, Astro.cookies))?.newSales.length ?? 0)
+// A place is in the bar where it has a username (and «Spill» a key to Steam or RetroAchievements). A page made ahead of time (the offline page) reads no settings: it has Musikk, Film and TV.
+const users = Astro.isPrerendered ? null : owner()
+const shown = users === null
+  ? { music: true, film: true, tv: true, games: false }
+  : { music: hasMusic(users), film: users.trakt !== null, tv: users.trakt !== null, games: (hasSteam() && users.steam !== null) || (hasRetro() && users.retroachievements !== null) }
 // Cloudflare Web Analytics (`CF_BEACON_TOKEN`, public): drawn here, on the server, with no island (it is a plain script tag); nothing without a token, or on a page made ahead of time.
 const beacon = Astro.isPrerendered ? '' : beaconToken()
 // With the brand's hue, a change of page is the browser's own view transition (`transitionAttributes()`): the menu's current place slides to the new one and `<main>` rises in (design system, «Motion» §9; no `ClientRouter`).
 ---
 
 <!doctype html>
-<html lang="nb" {...attributes} {...brandAttributes('amber')} {...transitionAttributes()}>
+<html lang="nb" {...brandAttributes('amber')} {...transitionAttributes()}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -62,15 +57,14 @@ const beacon = Astro.isPrerendered ? '' : beaconToken()
   </head>
   <body>
     <Frame width={width}>
-      <NavBar slot="nav" client:load title="Medier" glyph="play" items={navItems(base, current, games, sales)} />
+      <NavBar slot="nav" client:load title="Medier" glyph="play" items={navItems(base, current, shown)} />
       <ConnectionBanner client:idle />
       {crumbs === undefined ? null : <Breadcrumbs items={crumbs} />}
       {bare ? null : <PageHeader title={title} description={lead} />}
       <slot />
     </Frame>
-    {firstRun && <FirstRunWizard />}
     <script>
-      // The controls marked `data-haptic` give a short buzz where the phone can (design system, «Haptics»); the visitor turns it off under Innstillinger › Utseende.
+      // The controls marked `data-haptic` give a short buzz where the phone can (design system, «Haptics»).
       import { listenForHaptics } from '@lmfaole/designsystem/lib/haptics'
       import { listenForPendingForms } from '@lmfaole/designsystem/lib/pending-forms'
       listenForHaptics()

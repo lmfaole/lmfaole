@@ -1,6 +1,6 @@
 ---
 // A server island: the label and the country of the album's first release are MusicBrainz's, asked a second apart and kept for a month; the fact is empty until it answers.
-import { albumRelease, usersOf } from '../lib/runtime'
+import { albumRelease, owner } from '../lib/runtime'
 import { AlbumLabel } from './detail'
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { artist, title } = Astro.props
-const release = await albumRelease(usersOf(Astro.cookies), artist, title, false)
+const release = await albumRelease(owner(), artist, title, false)
 ---
 
 <AlbumLabel release={release?.first ?? null} />

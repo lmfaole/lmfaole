@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert"
 import { test } from "node:test"
 
-import { listensUrl, parseListens, parsePlayingNow, parseTopArtists, parseUserFound } from "./listenbrainz.ts"
+import { listensUrl, parseListens, parsePlayingNow, parseTopArtists } from "./listenbrainz.ts"
 
 const LISTEN = {
   listened_at: 1771414109,
@@ -36,5 +36,4 @@ test("the month's top artists, none before ListenBrainz has counted them, and a 
     { name: "Ukjent", plays: 3, url: "https://listenbrainz.org/search/?search_term=Ukjent&search_type=artist" },
   ])
   assert.deepEqual(parseTopArtists(null), [])
-  assert.ok(parseUserFound({ payload: { count: 1200 } }) && !parseUserFound({ code: 404, error: "Cannot find user: x" }))
 })

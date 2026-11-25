@@ -3,7 +3,6 @@ import ArtistLinksIsland from '../../components/ArtistLinksIsland.astro'
 import { ArtistDetail, SimilarArtists, TopTracks } from '../../components/detail'
 import { Head } from '../../components/head'
 import LatestReleaseIsland from '../../components/LatestReleaseIsland.astro'
-import NeedsUsername from '../../components/NeedsUsername.astro'
 import SetlistsIsland from '../../components/SetlistsIsland.astro'
 import SimilarArtistsIsland from '../../components/SimilarArtistsIsland.astro'
 import TopTracksIsland from '../../components/TopTracksIsland.astro'
@@ -13,18 +12,19 @@ import { albumKey } from '../../lib/albums'
 import { artistFigures, artistKind, coversFromPlays, listeningChartText } from '../../lib/artist-listening'
 import { playedCovers } from '../../lib/musicbrainz-artist'
 import { artistPages, slugify, trackPages, trackSlug } from '../../lib/pages'
-import { artist, artistListening, music, usersOf } from '../../lib/runtime'
+import { artist, artistListening, music, owner } from '../../lib/runtime'
 import { transformed } from '../../lib/image-sources'
 
 const base = import.meta.env.BASE_URL
-const users = usersOf(Astro.cookies)
-// Without a Last.fm username there are no plays to find the artist among: the page asks for it.
+const users = owner()
+// Without a Last.fm username there are no plays to find the artist among, and no page.
 const listening = users.lastfm === null ? null : await music(users)
 const pages = listening === null ? [] : artistPages(listening)
 const page = pages.find((one) => one.slug === Astro.params.slug)
-if (users.lastfm !== null && page === undefined) return Astro.rewrite('/404/')
-// What is known of the artist and the visitor's own listening to it are asked for at the same time; each leaves out only its own sections when it fails.
-const [info, own] = page === undefined ? [null, null] : await Promise.all([artist(users, page.name), artistListening(users, page.name)])
+if (page === undefined) return Astro.rewrite('/404/')
+// What is known of the artist and the listening to it are asked for at the same time; each leaves out only its own sections when it fails.
+const [info, own] = await Promise.all([artist(users, page.name), artistListening(users, page.name)])
+if (info === null) return Astro.rewrite('/404/')
 const links = { tracks: new Set(listening === null ? [] : trackPages(listening).map((one) => one.slug)), artists: new Set(pages.map((one) => one.slug)) }
 const tags = info?.lastfm !== null && info?.lastfm !== undefined && info.lastfm.tags.length > 0 ? info.lastfm.tags : (info?.spotify?.genres ?? [])
 const plays = info?.lastfm?.userPlays ?? own?.place?.plays ?? null
@@ -33,21 +33,18 @@ const similar = own?.similar ?? []
 const similarLinked = similar.filter((one) => links.artists.has(slugify(one.name))).map((one) => one.name)
 const tracks = own?.tracks ?? []
 // The covers of the songs played lately are in the plays; the island asks Last.fm for the others.
-const knownCovers = page === undefined ? [] : [...coversFromPlays(page.plays, page.name, tracks.map((one) => one.title))]
-const linkedTracks = page === undefined ? [] : tracks.filter((one) => links.tracks.has(trackSlug(page.name, one.title))).map((one) => one.title)
+const knownCovers = [...coversFromPlays(page.plays, page.name, tracks.map((one) => one.title))]
+const linkedTracks = tracks.filter((one) => links.tracks.has(trackSlug(page.name, one.title))).map((one) => one.title)
 const chart = timeline === null ? null : listeningChartText(timeline.unit, timeline.series)
 const mbid = info?.lastfm?.mbid ?? null
 // The albums among the recent plays have a page of their own, under the name of the edition played: the newest release links to its page where it is one of them.
-const played: [string, string][] = page === undefined ? [] : [...new Map(page.plays.filter((play) => play.album !== '').map((play) => [albumKey(play.album), play.album]))]
+const played: [string, string][] = [...new Map(page.plays.filter((play) => play.album !== '').map((play) => [albumKey(play.album), play.album]))]
 ---
 
-{page === undefined || info === null ? (
-  <NeedsUsername medium="music" />
-) : (
 <Page bare current="music" width="pane" title={page.name} lead={artistKind(own?.place?.rank ?? null)} crumbs={[{ label: 'Medier', href: base }, { label: 'Musikk', href: `${base}musikk/` }, { label: page.name, href: `${base}musikk/${page.slug}/` }]}>
   <Head client:idle kind={artistKind(own?.place?.rank ?? null)} title={page.name} sources={transformed(info.spotify?.images ?? [])} shape="artist" figures={artistFigures(plays, own?.place?.share ?? null, page.top?.plays ?? null)} tags={tags.slice(0, 4)} />
   <ArtistDetail page={page} base={base} info={info} listening={own} links={links}>
-    <LatestReleaseIsland slot="latest" server:defer artist={page.name} mbid={mbid} played={played} covers={page === undefined ? [] : playedCovers(page.plays)} base={base} />
+    <LatestReleaseIsland slot="latest" server:defer artist={page.name} mbid={mbid} played={played} covers={playedCovers(page.plays)} base={base} />
     <ArtistLinksIsland slot="onward" server:defer mbid={mbid} />
     <SetlistsIsland slot="concerts" server:defer mbid={mbid} />
     {timeline !== null && chart !== null && (
@@ -73,4 +70,3 @@ const played: [string, string][] = page === undefined ? [] : [...new Map(page.pl
     )}
   </ArtistDetail>
 </Page>
-)}

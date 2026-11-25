@@ -1,5 +1,5 @@
 /**
- * What an album's page says of the visitor's own listening to it: its plays over time (one weekly album chart from Last.fm a stretch, shared by every album's page), their plays of each of its
+ * What an album's page says of the owner's own listening to it: its plays over time (one weekly album chart from Last.fm a stretch, shared by every album's page), their plays of each of its
  * tracks, how long it is and about how long they have listened to it. Pure, so a test pins it; `sources.ts` asks Last.fm for what it is read from.
  */
 
@@ -119,7 +119,7 @@ const ORDINAL = ["", "nest", "tredje", "fjerde", "femte", "sjette", "sjuende", "
 const playsText = (n: number): string => `${n.toLocaleString("nb-NO")} ${n === 1 ? "avspilling" : "avspillinger"}`
 
 /**
- * What the chart of the user's plays of each of the artist's albums says: its title (where this album is among them: «Junior er albumet av Röyksopp du har spilt mest»), its subtitle (what is counted,
+ * What the chart of the user's plays of each of the artist's albums says: its title (where this album is among them: «Junior er det mest spilte albumet av Röyksopp»), its subtitle (what is counted,
  * in what order, over what time) and its summary. `null` with fewer than `FEWEST_ALBUMS` albums, this one not among them, or none played.
  */
 export function discographyChartText(albums: readonly DiscographyAlbum[], title: string, artist: string): { title: string; description: string; summary: string; highlight: string } | null {
@@ -129,14 +129,14 @@ export function discographyChartText(albums: readonly DiscographyAlbum[], title:
   const rank = 1 + albums.filter((album) => album.plays > here.plays).length
   const word = ORDINAL[rank - 1]
   const heading =
-    here.plays === 0 ? `Du har ikke spilt ${here.title}, men ${top.title} er det du har spilt mest` : rank === 1 ? `${here.title} er albumet av ${artist} du har spilt mest` : word === undefined ? `Du har spilt ${top.title} mest av albumene til ${artist}` : `${here.title} er det ${word} mest spilte albumet ditt av ${artist}`
+    here.plays === 0 ? `${here.title} er ikke spilt, men ${top.title} er spilt mest` : rank === 1 ? `${here.title} er det mest spilte albumet av ${artist}` : word === undefined ? `${top.title} er det mest spilte albumet av ${artist}` : `${here.title} er det ${word} mest spilte albumet av ${artist}`
   const first = albums[0]
   const last = albums.at(-1)
   const span = first?.released != null && last?.released != null ? `, ${first.released.slice(0, 4)}–${last.released.slice(0, 4)}` : ""
   return {
     title: heading,
-    description: `Dine avspillinger av hvert av de ${albums.length} studioalbumene${span}, eldste først, siden du begynte på Last.fm. Alle utgaver av et album telles sammen.`,
-    summary: `Søylediagram. ${here.title}: ${playsText(here.plays)}, nummer ${rank} av ${albums.length}. Mest spilt: ${top.title} (${playsText(top.plays)}). Et album utenfor de tusen du har spilt mest, telles som 0.`,
+    description: `Avspillinger av hvert av de ${albums.length} studioalbumene${span}, eldste først, siden historikken på Last.fm begynte. Alle utgaver av et album telles sammen.`,
+    summary: `Søylediagram. ${here.title}: ${playsText(here.plays)}, nummer ${rank} av ${albums.length}. Mest spilt: ${top.title} (${playsText(top.plays)}). Et album utenfor de tusen mest spilte telles som 0.`,
     highlight: here.title,
   }
 }
@@ -147,7 +147,7 @@ export function albumFigures(plays: number | null, listened: number | null, arti
   return [
     plays === null ? null : { value: plays.toLocaleString("nb-NO"), label: plays === 1 ? "avspilling" : "avspillinger" },
     listened === null ? null : { value: aboutText(listened).replace(/^omtrent /, ""), label: "lyttetid, omtrent" },
-    share === null ? null : { value: `${Math.round(share * 100).toLocaleString("nb-NO")} %`, label: "av alt du har hørt av artisten" },
+    share === null ? null : { value: `${Math.round(share * 100).toLocaleString("nb-NO")} %`, label: "av avspillingene av artisten" },
   ].filter((one) => one !== null)
 }
 
@@ -189,7 +189,7 @@ export function albumDaysText(days: readonly { date: string; value: number }[], 
   const played = days.filter((day) => day.value > 0).length
   const total = days.reduce((sum, day) => sum + day.value, 0)
   return {
-    title: played === 0 ? `Du har ikke spilt ${title} i det siste` : `Du har spilt ${title} ${played.toLocaleString("nb-NO")} ${played === 1 ? "dag" : "dager"} i det siste`,
-    description: `Dine avspillinger av albumet hver dag fra ${dayText(first.date)} til ${dayText(last.date)}: ${playsText(total)} i alt.`,
+    title: played === 0 ? `${title} er ikke spilt i det siste` : `${title} er spilt ${played.toLocaleString("nb-NO")} ${played === 1 ? "dag" : "dager"} i det siste`,
+    description: `Avspillinger av albumet hver dag fra ${dayText(first.date)} til ${dayText(last.date)}: ${playsText(total)} i alt.`,
   }
 }

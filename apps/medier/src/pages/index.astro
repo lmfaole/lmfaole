@@ -1,51 +1,39 @@
 ---
-import { InstallPrompt } from '@lmfaole/designsystem/components/install-prompt'
-import { isSeen, parseSeen, SEEN_COOKIE } from '@lmfaole/designsystem/lib/onboarding'
-import { EmptyState } from '@lmfaole/designsystem/components/empty-state'
-import { orderSections, parsePrefs, PREFS_COOKIE } from '@lmfaole/designsystem/lib/preferences'
-import { SEEN_PATH } from '../lib/onboarding'
-import { FRONT_SECTION_IDS, frontSections, type FrontSection } from '../lib/settings-form'
+import { SourcesSettings } from '@lmfaole/designsystem/components/app-settings'
+import { PageSection } from '@lmfaole/designsystem/components/page-section'
 import { mediumHref } from '../lib/media'
 import { monthAt } from '../lib/months'
-import { firstRunOpen } from '../lib/visitor-cookies'
-import { PageSection } from '@lmfaole/designsystem/components/page-section'
 
+import { SOURCES } from '../components/credits'
+import { InstallOffer } from '../components/install-offer'
 import { NowPlayingLive } from '../components/now-playing-live'
 import { RecentGames } from '../components/games'
 import { Fetched, PlayRows, TopArtistRows, WatchRows } from '../components/sections'
-import UsernameGate from '../components/UsernameGate.astro'
 import Page from '../layouts/Page.astro'
 import { playingNow } from '../lib/now'
 import { recentGames } from '../lib/played-games'
-import { artistPictures, games, hasRetro, hasSteam, imageTransforms, music, retroGames, steamPresence, usersOf, watched } from '../lib/runtime'
-import { hasMusic, type Service } from '../lib/users'
+import { artistPictures, games, hasRetro, hasSteam, imageTransforms, music, retroGames, steamPresence, owner, watched } from '../lib/runtime'
+import { hasMusic } from '../lib/users'
 
 const base = import.meta.env.BASE_URL
-const users = usersOf(Astro.cookies)
-// The sections the visitor has chosen for the front page, in their order (Innstillinger › Forside); all, in the app's order, where nothing is chosen.
-const prefs = parsePrefs(Astro.cookies.get(PREFS_COOKIE)?.value)
-const shown = frontSections(prefs, orderSections)
-// A service with no username is a form asking for it, where its first section would stand (shown or not, so the way to give it is always there); one form for both at the top when neither is given.
-// The music is Last.fm's, or ListenBrainz's where there is no Last.fm (its form asks for Last.fm); the games are there with a key and a profile for Steam or RetroAchievements, one list of both, and ask for nothing here (Innstillinger › Kontoer does).
-type Need = 'music' | 'trakt' | 'games'
-const NEEDS: Record<FrontSection, Need> = { na: 'music', musikk: 'music', artister: 'music', film: 'trakt', tv: 'trakt', spill: 'games' }
-const GATE: Record<Need, Service | null> = { music: 'lastfm', trakt: 'trakt', games: null }
-const has: Record<Need, boolean> = { music: hasMusic(users), trakt: users.trakt !== null, games: (users.steam !== null && hasSteam()) || (users.retroachievements !== null && hasRetro()) }
-const ordered = orderSections(FRONT_SECTION_IDS, prefs.order)
-const gateAt = (need: Need): FrontSection | undefined => ordered.find((id) => NEEDS[id] === need)
+const users = owner()
+// The front page's sections, in this order, each only where its service has a username: the music (Last.fm's, or ListenBrainz's where there is no Last.fm), film and TV (Trakt), and the games
+// (with a key and a profile for Steam or RetroAchievements, one list of both).
+const SECTIONS = ['na', 'musikk', 'film', 'tv', 'artister', 'spill'] as const
+type Section = (typeof SECTIONS)[number]
+const has = { music: hasMusic(users), trakt: users.trakt !== null, steam: users.steam !== null && hasSteam(), retro: users.retroachievements !== null && hasRetro() }
+const NEEDS: Record<Section, boolean> = { na: has.music, musikk: has.music, artister: has.music, film: has.trakt, tv: has.trakt, spill: has.steam || has.retro }
+const shown = SECTIONS.filter((id) => NEEDS[id])
 // The music, and the pictures of the artists in its list: the pictures need the list, so they follow it while the other sources are asked.
-const withPictures = music(users).then(async (found) => ({ listening: found, pictures: await artistPictures((found?.topArtists ?? []).slice(0, 5).map((artist) => artist.name)) }))
-const [{ listening, pictures }, seen, played] = await Promise.all([withPictures, watched(users), has.games && shown.includes('spill') ? Promise.all([users.steam !== null && hasSteam() ? games(users) : null, users.retroachievements !== null && hasRetro() ? retroGames(users) : null, users.steam !== null && hasSteam() ? steamPresence(users) : null]) : null])
+const withPictures = has.music ? music(users).then(async (found) => ({ listening: found, pictures: await artistPictures((found?.topArtists ?? []).slice(0, 5).map((artist) => artist.name)) })) : { listening: null, pictures: new Map<string, string>() }
+const [{ listening, pictures }, seen, played] = await Promise.all([withPictures, has.trakt ? watched(users) : null, NEEDS.spill ? Promise.all([has.steam ? games(users) : null, has.retro ? retroGames(users) : null, has.steam ? steamPresence(users) : null]) : null])
 // What plays now is the card at the top, which keeps asking for it while the page is open; the list is the finished plays.
 const now = playingNow(listening?.now ?? null)
 const plays = (listening?.recent ?? []).filter((play) => play.playedAt !== null)
-// Plays from ListenBrainz (a visitor without Last.fm) have no pages here: those are made of Last.fm's.
+// Plays from ListenBrainz (where there is no Last.fm username) have no pages here: those are made of Last.fm's.
 const pages = listening?.source !== 'listenbrainz'
 const films = (seen?.items ?? []).filter((watch) => watch.kind === 'film')
 const episodes = (seen?.items ?? []).filter((watch) => watch.kind === 'episode')
-const missing: Service[] = [...(has.music ? [] : (['lastfm'] as const)), ...(has.trakt ? [] : (['trakt'] as const))]
-// The offer to install the app, once: «Ikke nå» or an install puts it away for good.
-const installSeen = isSeen(parseSeen(Astro.cookies.get(SEEN_COOKIE)?.value), 'install') || firstRunOpen(Astro.cookies, Astro.url)
 const sources = [
   ...(has.music ? [{ at: listening?.at ?? null, source: users.lastfm === null ? 'ListenBrainz' : 'Last.fm' }] : []),
   ...(has.trakt ? [{ at: seen?.at ?? null, source: 'Trakt' }] : []),
@@ -54,13 +42,10 @@ const sources = [
 ]
 ---
 
-<Page current="front" title="Medier" lead="Hva du hører på, ser og spiller, hentet fra Last.fm, ListenBrainz, Trakt, Steam og RetroAchievements.">
-  {missing.length === 2 && <UsernameGate services={missing} />}
+<Page current="front" title="Medier" lead="Musikk, film, TV og spill, hentet fra Last.fm, ListenBrainz, Trakt, Steam og RetroAchievements.">
   {
-    ordered.map((id) =>
-      !has[NEEDS[id]] ? (
-        GATE[NEEDS[id]] !== null && missing.length === 1 && gateAt(NEEDS[id]) === id && (NEEDS[id] === 'music' ? <UsernameGate services={['lastfm']} title="Hvem skal vi hente musikk for?" /> : <UsernameGate services={['trakt']} title="Hvem skal vi hente film og TV for?" />)
-      ) : !shown.includes(id) ? null : id === 'na' ? (
+    shown.map((id) =>
+      id === 'na' ? (
         <NowPlayingLive client:load initial={now} endpoint={`${base}api/now/`} transforms={imageTransforms()} />
       ) : id === 'musikk' ? (
         <PageSection id="musikk" title="Musikk" icon="music" continues={{ href: mediumHref(base, 'music', 'historikk/'), label: 'Se hele lyttehistorikken' }}>
@@ -87,7 +72,7 @@ const sources = [
       ),
     )
   }
-  {shown.length === 0 && <EmptyState reason="nothing-yet" what="seksjoner" description="Du har valgt bort alle seksjonene på forsiden. Musikk, Film og TV finner du fortsatt i menyen." action={{ href: `${base}innstillinger/forside/`, label: 'Velg hva forsiden viser' }} />}
-  {!installSeen && <InstallPrompt client:idle appName="Medier" seen={false} cookiePath={SEEN_PATH} />}
+  <InstallOffer client:idle />
   {sources.length > 0 && <Fetched sources={sources} />}
+  <SourcesSettings sources={SOURCES} />
 </Page>

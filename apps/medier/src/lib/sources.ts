@@ -1,5 +1,5 @@
 /**
- * What a page needs from Last.fm, Trakt, TMDB, Spotify and MusicBrainz, for the visitor's own usernames (`users.ts`), asked for when the page is asked for. Each answer is kept for a while (`TTL`), so a page
+ * What a page needs from Last.fm, Trakt, TMDB, Spotify and MusicBrainz, for the owner's usernames (`users.ts`), asked for when the page is asked for. Each answer is kept for a while (`TTL`), so a page
  * is quick and the sources are asked little. Pure: the asking is done by the `get` that is passed in (`runtime.ts`), so a test hands it a fake one.
  */
 
@@ -15,24 +15,24 @@ import { type ArtistLink, artistUrlsUrl, type LatestRelease, latestReleasesUrl, 
 import { type NowPlaying, parseAlbumMatch, parseArtistMatch, parseToken, parseTrackMatch, refreshRequest, searchAlbumUrl, searchArtistUrl, searchTrackUrl, type SpotifyAlbum, type SpotifyArtist, type SpotifyTrack } from "./spotify.ts"
 import { authorize, detailsUrl, parseInfo, parsePerson, parsePoster, type Person, personUrl, type TitleInfo } from "./tmdb.ts"
 import { mergeHistory, parseHistory, type Watch, type Watched } from "./trakt.ts"
-import { LISTENBRAINZ_PAUSE_MS, listenCountUrl, listensUrl, parseListens, parsePlayingNow, parseTopArtists as parseLbTopArtists, parseUserFound, playingNowUrl, topArtistsUrl as lbTopArtistsUrl } from "./listenbrainz.ts"
+import { LISTENBRAINZ_PAUSE_MS, listensUrl, parseListens, parsePlayingNow, parseTopArtists as parseLbTopArtists, playingNowUrl, topArtistsUrl as lbTopArtistsUrl } from "./listenbrainz.ts"
 import { type Achievements, achievementsUrl, globalAchievementsUrl, isSteamId, type OwnedGame, ownedGamesUrl, parseAchievements, parseOwnedGame, parseOwnedGames, parseOwnedList, parseRecentGames, parseVanity, profileUrl, recentGamesUrl, schemaUrl, storeDetailsUrl, vanityUrl } from "./steam.ts"
 import { type GameEntry, retroEntry, steamEntry } from "./played-games.ts"
 import { badgesUrl, type GameStat, parseBadges, parsePlayerSummary, parseSteamLevel, parseUserStats, playerSummariesUrl, type SteamBadges, steamLevelUrl, type SteamPresence, userStatsUrl } from "./steam-profile.ts"
 import { currentPlayersUrl, type DeckCompatibility, deckUrl, type Dlc, DLC_LIMIT, dlcOf, type NewsItem, newsUrl, parseCurrentPlayers, parseDeck, parseNews, parsePrices, parseReviews, parseStoreApp, parseStoreItems, pricesUrl, type Reviews, reviewsUrl, STORE_BATCH, type StoreApp, type StoreItem, storeItemsUrl, type StorePrice } from "./steam-store.ts"
 import { parseWishlist, type Wishlist, WISHLIST_LIMIT, wishlistOf, wishlistUrl } from "./steam-wishlist.ts"
-import { parseRetroGame, parseRetroProfile, parseRetroRecent, type RetroGameDetail, retroGameUrl, retroProfileUrl, retroRecentUrl, retroUserPage } from "./retroachievements.ts"
+import { parseRetroGame, parseRetroRecent, type RetroGameDetail, retroGameUrl, retroRecentUrl, retroUserPage } from "./retroachievements.ts"
 import { parseSetlists, type Setlists, setlistHeaders, setlistsUrl } from "./setlistfm.ts"
 import { parseWatchProviders, type WatchProviders, watchProvidersUrl } from "./watch-providers.ts"
 import type { Users } from "./users.ts"
 
 /**
- * The settings a request is asked with: the Worker's secrets (`settings.ts`), and the visitor's usernames as `LASTFM_USER`, `TRAKT_USER`, `LISTENBRAINZ_USER`, `STEAM_USER` and `RETROACHIEVEMENTS_USER` (`forUsers`). A source whose key
+ * The settings a request is asked with: the Worker's secrets (`settings.ts`), and the owner's usernames as `LASTFM_USER`, `TRAKT_USER`, `LISTENBRAINZ_USER`, `STEAM_USER` and `RETROACHIEVEMENTS_USER` (`forUsers`). A source whose key
  * or username is not set is left out, not an error.
  */
 export type Env = Readonly<Partial<Record<string, string>>>
 
-/** The Worker's settings with the visitor's usernames, and only theirs: a username the Worker itself has (an old variable) is never one. */
+/** The Worker's settings with these usernames, and only these (trimmed, as `usersFrom` reads them). */
 export function forUsers(env: Env, users: Users): Env {
   const { LASTFM_USER: _lastfm, TRAKT_USER: _trakt, LISTENBRAINZ_USER: _listenbrainz, STEAM_USER: _steam, RETROACHIEVEMENTS_USER: _retro, ...rest } = env
   const named = (key: string, user: string | null): Env => (user === null ? {} : { [key]: user })
@@ -55,7 +55,7 @@ export interface Request {
 export type Get = (url: string, request: Request) => Promise<{ data: unknown; hit: boolean }>
 
 /** How long each kind of answer is kept, in seconds. A poster does not change; what is playing now does, quickly. */
-export const TTL = { nowPlaying: 15, token: 3000, user: 3600, recent: 60, topArtists: 3600, history: 300, poster: 30 * 24 * 3600, artist: 24 * 3600, weekDone: 24 * 3600, weekLive: 300, firsts: 7 * 24 * 3600, length: 7 * 24 * 3600, albums: 7 * 24 * 3600, allTime: 6 * 3600, periodDone: 30 * 24 * 3600, periodLive: 3600, release: 30 * 24 * 3600, providers: 24 * 3600, setlists: 24 * 3600, steamId: 30 * 24 * 3600, gamesRecent: 600, gamesOwned: 6 * 3600, gameStore: 24 * 3600, achievements: 600, achievementSchema: 7 * 24 * 3600, achievementShares: 24 * 3600, retroUser: 24 * 3600, retroRecent: 600, retroGame: 600, steamPresence: 60, steamBadges: 6 * 3600, steamStats: 600, wishlist: 3600, storePrices: 3600, storeItems: 7 * 24 * 3600, reviews: 6 * 3600, playersNow: 120, news: 3600, deck: 7 * 24 * 3600 } as const
+export const TTL = { nowPlaying: 15, token: 3000, user: 3600, recent: 60, topArtists: 3600, history: 300, poster: 30 * 24 * 3600, artist: 24 * 3600, weekDone: 24 * 3600, weekLive: 300, firsts: 7 * 24 * 3600, length: 7 * 24 * 3600, albums: 7 * 24 * 3600, allTime: 6 * 3600, periodDone: 30 * 24 * 3600, periodLive: 3600, release: 30 * 24 * 3600, providers: 24 * 3600, setlists: 24 * 3600, steamId: 30 * 24 * 3600, gamesRecent: 600, gamesOwned: 6 * 3600, gameStore: 24 * 3600, achievements: 600, achievementSchema: 7 * 24 * 3600, achievementShares: 24 * 3600, retroRecent: 600, retroGame: 600, steamPresence: 60, steamBadges: 6 * 3600, steamStats: 600, wishlist: 3600, storePrices: 3600, storeItems: 7 * 24 * 3600, reviews: 6 * 3600, playersNow: 120, news: 3600, deck: 7 * 24 * 3600 } as const
 
 /** How long Steam is given to answer one of the asks beyond a game's own (`loadGameExtras`, the profile's, the wishlist's): a page is not held up by one that is slow. */
 export const STEAM_TIMEOUT = 5000
@@ -79,7 +79,7 @@ export const setting = (env: Env, name: string): string => env[name] ?? ""
 /** The music, and the song Last.fm says is playing now (a scrobble of whatever plays, Spotify included), which is not a finished play and so not in `recent`. */
 export interface Listening extends Music {
   now: NowPlaying | null
-  /** Whose the plays are: Last.fm's, or ListenBrainz's for a visitor without Last.fm (who then has no pages of an artist, an album or a song: those are Last.fm's). */
+  /** Whose the plays are: Last.fm's, or ListenBrainz's where there is no Last.fm username (and then no pages of an artist, an album or a song: those are Last.fm's). */
   source: "lastfm" | "listenbrainz"
 }
 
@@ -89,35 +89,6 @@ export function lastfmBase(env: Env): string | null {
   const user = setting(env, "LASTFM_USER")
   if (key === "" || user === "") return null
   return `https://ws.audioscrobbler.com/2.0/?format=json&api_key=${encodeURIComponent(key)}&user=${encodeURIComponent(user)}`
-}
-
-/**
- * Whether a username is one Last.fm has (`user.getinfo`; an unknown user is an error, which `get` throws). `true` where Last.fm is not set up: there is nothing to ask, and nothing
- * will be shown for it either.
- */
-export async function lastfmUserExists(env: Env, get: Get, user: string): Promise<boolean> {
-  const key = setting(env, "LASTFM_API_KEY")
-  if (key === "") return true
-  try {
-    const answer = await get(`https://ws.audioscrobbler.com/2.0/?format=json&method=user.getinfo&api_key=${encodeURIComponent(key)}&user=${encodeURIComponent(user)}`, { ttl: TTL.user })
-    const found = (answer.data as { user?: { name?: unknown } } | null)?.user?.name
-    return typeof found === "string" && found !== ""
-  } catch {
-    return false
-  }
-}
-
-/** Whether a username is one Trakt has with a public profile: a private or unknown one answers 401/403/404 (which `get` throws), or says `private`. `true` where Trakt is not set up. */
-export async function traktUserExists(env: Env, get: Get, user: string): Promise<boolean> {
-  const clientId = setting(env, "TRAKT_CLIENT_ID")
-  if (clientId === "") return true
-  try {
-    const answer = await get(`https://api.trakt.tv/users/${encodeURIComponent(user)}`, { headers: { "trakt-api-version": "2", "trakt-api-key": clientId }, ttl: TTL.user })
-    const profile = answer.data as { username?: unknown; private?: unknown } | null
-    return typeof profile?.username === "string" && profile.private !== true
-  } catch {
-    return false
-  }
 }
 
 export async function loadMusic(env: Env, get: Get): Promise<Listening | null> {
@@ -151,7 +122,7 @@ function listenBrainzAsker(get: Get, pause: (ms: number) => Promise<void>): (url
 }
 
 /**
- * The music from ListenBrainz (`listenbrainz.ts`) for a visitor with a ListenBrainz username and no Last.fm: the last fifty listens, what plays now and the month's top artists, in Last.fm's shape. What
+ * The music from ListenBrainz (`listenbrainz.ts`) where there is a ListenBrainz username and no Last.fm: the last fifty listens, what plays now and the month's top artists, in Last.fm's shape. What
  * plays now and the top artists leave out only themselves when they fail. `null` without the username.
  */
 export async function loadListenBrainzMusic(env: Env, get: Get, pause: (ms: number) => Promise<void>): Promise<Listening | null> {
@@ -169,15 +140,6 @@ export async function loadListenBrainzNow(env: Env, get: Get): Promise<NowPlayin
   const user = setting(env, "LISTENBRAINZ_USER")
   if (user === "") return null
   return parsePlayingNow((await get(playingNowUrl(user), { ttl: TTL.nowPlaying })).data, user)
-}
-
-/** Whether ListenBrainz has a user of that name (an unknown one answers 404, which `get` throws). */
-export async function listenbrainzUserExists(get: Get, user: string): Promise<boolean> {
-  try {
-    return parseUserFound((await get(listenCountUrl(user), { ttl: TTL.user })).data)
-  } catch {
-    return false
-  }
 }
 
 /**
@@ -245,18 +207,7 @@ async function steamId(key: string, get: Get, user: string): Promise<string | nu
   return parseVanity((await get(vanityUrl(key, user), { ttl: TTL.steamId })).data)
 }
 
-/** Whether a Steam profile is one Steam knows, by its SteamID or custom name; `true` where Steam is not set up (nothing will be shown for it either). */
-export async function steamUserExists(env: Env, get: Get, user: string): Promise<boolean> {
-  const key = setting(env, "STEAM_API_KEY")
-  if (key === "") return true
-  try {
-    return (await steamId(key, get, user)) !== null
-  } catch {
-    return false
-  }
-}
-
-/** The visitor's games on one service, each as a row of «Spill» (`played-games.ts`). */
+/** The owner's games on one service, each as a row of «Spill» (`played-games.ts`). */
 export interface GameLibrary {
   entries: GameEntry[]
   /** How many games the profile has; `null` where the service does not say, or its list is not public. */
@@ -266,7 +217,7 @@ export interface GameLibrary {
 }
 
 /**
- * The visitor's games on Steam (`steam.ts`): every game of the owned list (kept for six hours), with the minutes of the last two weeks (kept for ten minutes); `null` without the key or the
+ * The owner's games on Steam (`steam.ts`): every game of the owned list (kept for six hours), with the minutes of the last two weeks (kept for ten minutes); `null` without the key or the
  * profile, or where Steam knows no such profile. A profile whose game details are private has no games.
  */
 export async function loadGames(env: Env, get: Get): Promise<GameLibrary | null> {
@@ -285,7 +236,7 @@ export async function loadGames(env: Env, get: Get): Promise<GameLibrary | null>
   return { entries: [...all.map((game) => steamEntry(game, minutes.get(game.appId) ?? 0)), ...lent], owned: parseOwnedGames(owned.data)?.owned ?? null, profile: profileUrl(id) }
 }
 
-/** One game of the visitor's on Steam, for its page: their time with it, what the store says of it, and their achievements in it. */
+/** One game of the owner's on Steam, for its page: their time with it, what the store says of it, and their achievements in it. */
 export interface GameDetail {
   game: OwnedGame
   /** Minutes played the last two weeks. */
@@ -323,7 +274,7 @@ export async function loadGame(env: Env, get: Get, appId: number): Promise<GameD
   return { game, recentMinutes, store, achievements, profile: profileUrl(id) }
 }
 
-/** The key and the visitor's SteamID; `null` without either, or where Steam knows no such profile. */
+/** The key and the owner's SteamID; `null` without either, or where Steam knows no such profile. */
 async function steamProfile(env: Env, get: Get): Promise<{ key: string; id: string } | null> {
   const key = setting(env, "STEAM_API_KEY")
   const user = setting(env, "STEAM_USER")
@@ -332,7 +283,7 @@ async function steamProfile(env: Env, get: Get): Promise<{ key: string; id: stri
   return id === null ? null : { key, id }
 }
 
-/** Whether the visitor is online on Steam and what they play now (`steam-profile.ts`), kept a minute; `null` without the key or the profile. */
+/** Whether the owner is online on Steam and what they play now (`steam-profile.ts`), kept a minute; `null` without the key or the profile. */
 export async function loadSteamPresence(env: Env, get: Get): Promise<SteamPresence | null> {
   const profile = await steamProfile(env, get)
   if (profile === null) return null
@@ -340,7 +291,7 @@ export async function loadSteamPresence(env: Env, get: Get): Promise<SteamPresen
 }
 
 /**
- * The visitor's Steam level and badges (`GetBadges`, kept six hours), a game's badge named by the owned list (the same answer `loadGames` keeps); where the badges are not told, the level alone
+ * The owner's Steam level and badges (`GetBadges`, kept six hours), a game's badge named by the owned list (the same answer `loadGames` keeps); where the badges are not told, the level alone
  * (`GetSteamLevel`) with no badges. `null` without the key or the profile, or where neither is told.
  */
 export async function loadSteamBadges(env: Env, get: Get): Promise<SteamBadges | null> {
@@ -354,7 +305,7 @@ export async function loadSteamBadges(env: Env, get: Get): Promise<SteamBadges |
   return level === null ? null : { level, xp: 0, xpToNext: 0, xpLevelStart: 0, badges: [] }
 }
 
-/** The visitor's own numbers in a game (`GetUserStatsForGame`, ten minutes), named by the game's schema (the achievements' answer, a week); empty where the game keeps none, it fails, or there is no profile. */
+/** The owner's own numbers in a game (`GetUserStatsForGame`, ten minutes), named by the game's schema (the achievements' answer, a week); empty where the game keeps none, it fails, or there is no profile. */
 export async function loadGameStats(env: Env, get: Get, appId: number): Promise<GameStat[]> {
   const profile = await steamProfile(env, get).catch(() => null)
   if (profile === null) return []
@@ -377,17 +328,17 @@ async function namesAndPrices(get: Get, appIds: readonly number[]): Promise<{ na
 }
 
 /**
- * The visitor's wishlist (`steam-wishlist.ts`, kept an hour) with the names (a week) and the prices in Norway (an hour) of its first `WISHLIST_LIMIT` games, and which are on sale, now and since
- * `seen` (the visitor's cookie, `parseSeenSales`). `null` without the key or the profile, or where the wishlist is not public.
+ * The wishlist (`steam-wishlist.ts`, kept an hour) with the names (a week) and the prices in Norway (an hour) of its first `WISHLIST_LIMIT` games, and which are on sale now. `null` without the key
+ * or the profile, or where the wishlist is not public.
  */
-export async function loadWishlist(env: Env, get: Get, seen: ReadonlySet<number> | null): Promise<Wishlist | null> {
+export async function loadWishlist(env: Env, get: Get): Promise<Wishlist | null> {
   const profile = await steamProfile(env, get)
   if (profile === null) return null
   const wishes = parseWishlist((await get(wishlistUrl(profile.id), { ttl: TTL.wishlist, timeout: STEAM_TIMEOUT })).data)
   if (wishes === null) return null
   const first = wishes.slice(0, WISHLIST_LIMIT)
   const { names, prices } = await namesAndPrices(get, first.map((wish) => wish.appId))
-  return wishlistOf(first, names, prices, seen, wishes.length > first.length)
+  return wishlistOf(first, names, prices, wishes.length > first.length)
 }
 
 /** What a game's page may show beyond `GameDetail`, each `null` (or empty) on its own where it fails: Steam's public answers, with no key and no profile. */
@@ -425,22 +376,11 @@ export async function loadGameExtras(get: Get, appId: number, dlc: readonly numb
   }
 }
 
-/** Whether a profile is one RetroAchievements knows (it answers 404 for one it does not); `true` where it is not set up. */
-export async function retroUserExists(env: Env, get: Get, user: string): Promise<boolean> {
-  const key = setting(env, "RETROACHIEVEMENTS_API_KEY")
-  if (key === "") return true
-  try {
-    return parseRetroProfile((await get(retroProfileUrl(key, user), { ttl: TTL.retroUser })).data)
-  } catch {
-    return false
-  }
-}
-
 /** How many of the games played lately on RetroAchievements have their time asked for: only a game's own answer says it, one request each. */
 const RETRO_TIMED = 12
 
 /**
- * The visitor's games on RetroAchievements (`retroachievements.ts`), the last played first, kept for ten minutes, each with its time played (from the game's own answer, the same one its
+ * The owner's games on RetroAchievements (`retroachievements.ts`), the last played first, kept for ten minutes, each with its time played (from the game's own answer, the same one its
  * page asks for, kept as long); `null` without the key or the username. A game whose answer fails has no time.
  */
 export async function loadRetroGames(env: Env, get: Get): Promise<GameLibrary | null> {
@@ -452,7 +392,7 @@ export async function loadRetroGames(env: Env, get: Get): Promise<GameLibrary | 
   return { entries: games.map((game, at) => retroEntry(game, minutes[at] ?? 0)), owned: null, profile: retroUserPage(user) }
 }
 
-/** One game on RetroAchievements with the visitor's progress in it, and when they last played it (from the recent list), kept for ten minutes; `null` without the key or the username, or where there is no such game. */
+/** One game on RetroAchievements with the owner's progress in it, and when they last played it (from the recent list), kept for ten minutes; `null` without the key or the username, or where there is no such game. */
 export async function loadRetroGame(env: Env, get: Get, gameId: number): Promise<{ game: RetroGameDetail; lastPlayed: number | null; profile: string } | null> {
   const key = setting(env, "RETROACHIEVEMENTS_API_KEY")
   const user = setting(env, "RETROACHIEVEMENTS_USER")
@@ -713,7 +653,7 @@ export async function loadArtistPictures(env: Env, get: Get, names: readonly str
 /** The artists like one that a page shows with their pictures: no more Spotify searches than this for them. */
 export const MAX_SIMILAR = 6
 
-/** What an artist's page says of the visitor's own listening to it; each part is `null` (or empty) where it could not be had, and the page leaves its section out. */
+/** What an artist's page says of the owner's own listening to it; each part is `null` (or empty) where it could not be had, and the page leaves its section out. */
 export interface ArtistListening {
   /** Its plays in each stretch (month, quarter, half-year or year) since the user started on Last.fm, oldest first. */
   timeline: { unit: PeriodUnit; series: { label: string; long: string; plays: number }[] } | null
@@ -743,7 +683,7 @@ async function artistTimeline(base: string, get: Get, name: string, nowMs: numbe
 }
 
 /**
- * The visitor's own listening to an artist, from Last.fm: its plays over time, its place among all they have played (their first thousand artists and songs of all time, one answer each shared by every
+ * The owner's own listening to an artist, from Last.fm: its plays over time, its place among all they have played (their first thousand artists and songs of all time, one answer each shared by every
  * artist's page) and the artists like it that they play too (at most `MAX_SIMILAR`). Each part is asked at the same time as the others and leaves out only itself when it fails. Spotify is not asked here:
  * on a cold page the charts use up the Worker's limit of questions, and the pictures of the artists like it are asked for by an island of their own.
  */

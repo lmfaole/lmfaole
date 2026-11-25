@@ -1,24 +1,22 @@
 /**
  * The three parts of the site, kept apart: the music (Last.fm), the films and the TV (both Trakt: the films, and the shows' episodes). Each has its overview, its history and its wrapped (a week, a
- * month) under its own address, and asks only for its own username. Old addresses lead straight to the new ones (`oldAddress`): the shared pages (`/historikk/`, `/uke/…`, `/maned/…`) to the music's,
+ * month) under its own address, and shows only its own source. Old addresses lead straight to the new ones (`oldAddress`): the shared pages (`/historikk/`, `/uke/…`, `/maned/…`) to the music's,
  * and the pages of film and TV together (`/film-og-tv/…`) to the film's; a film's or a show's own page under `/film-og-tv/<slug>/` is found by its page (`src/pages/film-og-tv/[slug].astro`).
  */
-import type { Service } from "./users.ts"
 import type { Medium } from "./week-source.ts"
 
 export interface MediumInfo {
   /** Its overview, under the site's base: `musikk/`. */
   path: string
   label: string
-  service: Service
   /** Its place in the navigation (`Frame`). */
   place: "music" | "film" | "tv"
 }
 
 export const MEDIA: Readonly<Record<Medium, MediumInfo>> = {
-  music: { path: "musikk/", label: "Musikk", service: "lastfm", place: "music" },
-  film: { path: "film/", label: "Film", service: "trakt", place: "film" },
-  tv: { path: "tv/", label: "TV", service: "trakt", place: "tv" },
+  music: { path: "musikk/", label: "Musikk", place: "music" },
+  film: { path: "film/", label: "Film", place: "film" },
+  tv: { path: "tv/", label: "TV", place: "tv" },
 }
 
 /** The pages of a medium: its overview, history, and the wrapped of a week and a month (the address of one, or the place that opens the latest). */

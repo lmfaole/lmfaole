@@ -1,13 +1,13 @@
 import type { APIRoute } from 'astro'
 
 import { playingNow } from '../../lib/now'
-import { lastfmNow, usersOf } from '../../lib/runtime'
+import { lastfmNow, owner } from '../../lib/runtime'
 
 /**
- * What plays now for the visitor's Last.fm username (its cookie), or ListenBrainz's where there is no Last.fm, for the front page to ask for again while it is open. Last.fm's answer is kept for fifteen seconds in the Worker's cache, under its address,
- * which has the username in it, so any number of readers of one user asks Last.fm about as often as one would. `null` when nothing plays or there is no username. The answer is the visitor's own: never kept by a shared cache.
+ * What plays now (Last.fm's, or ListenBrainz's where there is no Last.fm username), for the front page to ask for again while it is open. Last.fm's answer is kept for fifteen seconds in the Worker's
+ * cache, under its address, so any number of readers asks Last.fm about as often as one would. `null` when nothing plays or there is no username. Live: never kept by the edge's page cache or any other.
  */
-export const GET: APIRoute = async ({ cookies }) => {
-  const playing = playingNow(await lastfmNow(usersOf(cookies)))
-  return new Response(JSON.stringify(playing), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'private, no-store', Vary: 'Cookie' } })
+export const GET: APIRoute = async () => {
+  const playing = playingNow(await lastfmNow(owner()))
+  return new Response(JSON.stringify(playing), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } })
 }

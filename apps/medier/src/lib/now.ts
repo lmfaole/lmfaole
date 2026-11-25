@@ -1,5 +1,5 @@
 /**
- * What plays now: Last.fm's scrobble of the song the visitor is playing (whatever plays it). `disc` is the cover the card turns into a disc (round, with a hole and a shine on it): Last.fm's own,
+ * What plays now: Last.fm's scrobble of the song the owner is playing (whatever plays it). `disc` is the cover the card turns into a disc (round, with a hole and a shine on it): Last.fm's own,
  * `null` where it has none.
  */
 
