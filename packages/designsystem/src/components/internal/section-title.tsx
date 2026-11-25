@@ -6,7 +6,7 @@ export function SectionTitle({ icon, children }: { icon: IconName; children: str
   return (
     <span className="inline-flex min-w-0 items-center gap-2">
       <span className="shrink-0">
-        <Icon name={icon} />
+        <Icon name={icon} size="lg" />
       </span>
       <span className="min-w-0">{children}</span>
     </span>

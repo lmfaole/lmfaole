@@ -40,7 +40,7 @@ The established systems have six to eight sizes in all (GOV.UK seven, Primer six
 levels, two if possible, with the smallest visible step between them. We have four text sizes and two page-title sizes, and use them for three levels:
 
 1. **The page** (`PageHeader`): one `h1`.
-2. **A section** (`PageSection`): its title as a small uppercase label or a semibold heading, an `h2`, and its parts one level down (`h3`).
+2. **A section** (`PageSection`): its title an `h2` in the `part` look (larger and semibold, never in capitals), and its parts one level down (`h3`, `section` or `label`).
 3. **An item** (a row's name): the strong name in `List`.
 
 There is **no fourth level of emphasis**. Bold is for what stops something or what is the point (GOV.UK: «use bold text sparingly»). Italic is not used, and never together with bold (Butterick).
@@ -51,12 +51,18 @@ There is **no fourth level of emphasis**. Bold is for what stops something or wh
   `Text` at about 80 characters; a page's description under its title is held to about 65 (`PageHeader`). A list, a row or a table can use the whole column.
 - Line height is the pair that comes with each size and is about one and a half for body text, inside Butterick's 120–145 % of the type size and a little above it. Do not set one yourself.
 - Text must still work when the reader sets it larger or looser: WCAG 1.4.12 asks that nothing is cut off when the line height is 1.5 times the size, paragraph spacing twice, letter spacing 0.12 em and word
-  spacing 0.16 em; WCAG 1.4.4 asks that text can be resized to 200 %. So size text in relative units and never in viewport units (WCAG failure F94), and let boxes grow with their text.
+  spacing 0.16 em; WCAG 1.4.4 asks that text can be resized to 200 %. So size text in relative units and never in viewport units alone (WCAG failure F94), and let boxes grow with their text.
+- **The scale grows with the screen** (`theme.css`): `xs` and `sm` are fixed; from `base` up each size is `clamp(rem, rem + vw, rem)`, and the larger
+  the step, the more it grows (the page title from 1.875 rem on a phone to 3 rem on a desktop, a section title from 1.5 to 2.125 rem, body text from 1
+  to 1.0625 rem). So the levels stand further apart where there is room, and the rem part keeps zoom working: no step grows more than 2.5 times.
+- **Headings are set tighter** (1.1–1.3) than text (1.6), and are balanced (`text-wrap: balance`); paragraphs and list items avoid a lone last word (`text-wrap: pretty`).
+- **Space follows the levels too:** sections stand 2.5 rem apart on a phone and up to 4 rem on a desktop, a page's header has more room under it on a desktop,
+  and a section's title is closer to its content than to the section before it.
 
 ## 4. Emphasis
 
 - **Weight first, then tone.** A name is `medium`, the rest is `muted` and small. That is how a row is scanned down its left edge.
-- **Uppercase is for short labels** (`Heading look="label"`), with letter spacing; Butterick asks for 5–12 % extra, and the label look has 10 %. Never a sentence in capitals.
+- **No heading is set in capitals**, not even a short label: capitals are slower to read, are read letter by letter by some screen readers and shout. A level is told apart by size and weight (a test in `rules.test.ts`).
 - **A heading is not centred, not underlined**, and is kept together by `text-balance` for the page title.
 - `destructive` text is for what stops something, with a symbol and words.
 
@@ -81,7 +87,7 @@ There is **no fourth level of emphasis**. Bold is for what stops something or wh
 
 ## 8. Typefaces
 
-**Atkinson Hyperlegible Next** for all text and every heading, **Atkinson Hyperlegible Mono** for short uppercase labels, code and
+**Atkinson Hyperlegible Next** for all text and every heading, **Atkinson Hyperlegible Mono** for code and
 technical values. Chosen in 8.25 against six other pairs, measured on their `latin` files and set on the same page:
 
 | Pair | x-height (of the em) | Sans and mono alike | Weight of both | I l 1, O 0 |

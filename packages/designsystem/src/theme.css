@@ -83,6 +83,31 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/*
+ * The type scale (guide «Typography»): the small sizes are fixed, for the chrome and fine print; from `base` up each size grows with the
+ * screen, between a phone's size and a desktop's, and the larger the step, the more it grows, so the levels stand further apart on a
+ * desktop. Each is `clamp(rem, rem + vw, rem)`: the rem part keeps it following the reader's text size and zoom (WCAG 1.4.4). Headings
+ * are set tighter than text.
+ */
+@theme {
+    --text-xs: 0.75rem;
+    --text-xs--line-height: 1.5;
+    --text-sm: 0.875rem;
+    --text-sm--line-height: 1.5;
+    --text-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+    --text-base--line-height: 1.6;
+    --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+    --text-lg--line-height: 1.4;
+    --text-xl: clamp(1.25rem, 1.1rem + 0.65vw, 1.625rem);
+    --text-xl--line-height: 1.3;
+    --text-2xl: clamp(1.5rem, 1.25rem + 1vw, 2.125rem);
+    --text-2xl--line-height: 1.2;
+    --text-3xl: clamp(1.875rem, 1.45rem + 1.75vw, 3rem);
+    --text-3xl--line-height: 1.12;
+    --text-4xl: clamp(2.25rem, 1.65rem + 2.5vw, 3.75rem);
+    --text-4xl--line-height: 1.08;
+}
+
 :root,
 [data-theme="light"] {
     color-scheme: light;
@@ -298,6 +323,10 @@
     }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
+    text-wrap: balance;
+    }
+  p, li, dd, blockquote, figcaption {
+    text-wrap: pretty;
     }
 }
 

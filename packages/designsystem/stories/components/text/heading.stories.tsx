@@ -42,7 +42,9 @@ type Story = StoryObj<typeof meta>
 
 /** The page's title: `h1` with the largest look. */
 export const Page: Story = { args: { level: 1, look: "page" } }
-/** A section's heading: `h2` with the section look. */
-export const Section: Story = { args: { level: 2, look: "section" } }
-/** A small uppercase label above a group, still a real heading. */
+/** The title of a part of a page: `h2` with the part look (`PageSection` draws it). */
+export const Part: Story = { args: { level: 2, look: "part" } }
+/** An item or a group in a section: `h3` with the section look. */
+export const Section: Story = { args: { level: 3, look: "section" } }
+/** A small, quiet heading above a group, still a real heading, never in capitals. */
 export const Label: Story = { args: { level: 3, look: "label" } }

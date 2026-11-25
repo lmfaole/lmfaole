@@ -8,7 +8,7 @@ import { Heading } from "./text"
  */
 export function PageHeader({ title, description, actions }: { title: string; /** One line on what is on the page, as text or with inline parts (a `Person` in a byline). */ description?: ReactNode; /** Buttons or menus shown alongside the title. */ actions?: ReactNode }) {
   return (
-    <header className="mb-6 grid min-w-0 gap-2">
+    <header className="mb-8 grid min-w-0 gap-3 lg:mb-12">
       <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
         <div className="min-w-0 flex-[1_1_14rem]">
           <Heading level={1}>{title}</Heading>
@@ -16,7 +16,7 @@ export function PageHeader({ title, description, actions }: { title: string; /**
         {actions === undefined || actions === null ? null : <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
       </div>
       {description !== undefined && description !== null && description !== false && description !== "" ? (
-        <p className="text-muted-foreground max-w-prose min-w-0 text-sm [overflow-wrap:anywhere]">{description}</p>
+        <p className="text-muted-foreground max-w-prose min-w-0 text-base [overflow-wrap:anywhere]">{description}</p>
       ) : null}
     </header>
   )

@@ -122,7 +122,7 @@ A status is a short word with a symbol, sentence case, never truncated and never
 
 - Section titles are nouns; a group's title says what is in it («Krever deg», «Issues til deg»).
 - An `iconLabel` names the kind in one word («Pull request», «Issue», «Spørsmål»).
-- Small-capital section labels (`Heading look="label"`) are short enough to survive upper-casing.
+- Section titles and labels are short noun phrases in sentence case; nothing is set in capitals.
 
 ## Sources
 

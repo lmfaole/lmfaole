@@ -167,3 +167,14 @@ test("long titles: a row's title is cut at two lines and its meta at one, a head
     if (/\b(truncate|line-clamp-\d)\b/.test(source)) assert.match(source, /\bmin-w-0\b/, `${file}: what is cut must be allowed to shrink (min-w-0)`)
   }
 })
+
+test("no heading is set in capitals: no heading look, heading element or section title has `uppercase`", () => {
+  const found = [...publicComponents, join(src, "components", "internal", "section-title.tsx")].flatMap((path) => {
+    const text = readFileSync(path, "utf8")
+    const headings = text.match(/<h[1-6]\b[^>]*>/g) ?? []
+    const looks = text.match(/const HEADINGS = \{[\s\S]*?\n\} as const/)?.[0] ?? ""
+    const skeleton = path.endsWith("section-skeleton.tsx") ? text : ""
+    return [...headings, looks, skeleton].some((part) => /\buppercase\b/.test(part)) ? [relative(src, path)] : []
+  })
+  assert.deepEqual(found, [])
+})

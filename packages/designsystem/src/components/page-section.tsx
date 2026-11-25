@@ -24,7 +24,7 @@ function Body({ what, error, children }: { what: string | undefined; error: unkn
 }
 
 /**
- * A titled block of a page (a ranked list, the latest plays): the small capitals heading and the content under it, labelled for a screen reader by it.
+ * A titled block of a page (a ranked list, the latest plays): its heading and the content under it, labelled for a screen reader by it.
  *
  * With `continues` it is a preview of a subpage: a card holding the title, the first few of what the subpage has (the five latest
  * plays), and at its foot, inside the card under a line, one full-width link to the subpage («Se hele historikken»). The rows keep
@@ -35,7 +35,7 @@ export function PageSection({ id, title, icon, more, continues, source, what, er
   | { more?: undefined; /** The subpage this section is an excerpt of: the section becomes a card with the link at its foot. */ continues: Continuation }
 )) {
   const heading = (
-    <Heading level={2} look="label" id={id}>
+    <Heading level={2} look="part" id={id}>
       <SectionTitle icon={icon}>{title}</SectionTitle>
     </Heading>
   )
@@ -52,7 +52,7 @@ export function PageSection({ id, title, icon, more, continues, source, what, er
     )
   }
   return (
-    <section aria-labelledby={id} data-frame="section" className="grid content-start gap-4">
+    <section aria-labelledby={id} data-frame="section" className="grid content-start gap-4 lg:gap-5">
       <Head more={more}>{heading}</Head>
       <Body what={what} error={error}>{children}</Body>
       {source === undefined ? null : <Credit source={source} />}

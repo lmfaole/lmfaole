@@ -22,10 +22,16 @@ const ROLES = {
 
 export type TextRole = keyof typeof ROLES
 
+/**
+ * Four looks, each a step apart in size and weight, never in case: no heading is set in capitals (they are read letter by letter, are
+ * harder to read and shout). `part` is the title of a part of a page (`PageSection` draws it), `section` an item or a group in one,
+ * `label` a small quiet heading above a group.
+ */
 const HEADINGS = {
   page: `font-heading font-semibold tracking-tight ${HEAD_TITLE}`,
+  part: "min-w-0 text-2xl font-semibold tracking-tight [overflow-wrap:anywhere]",
   section: "min-w-0 text-lg font-semibold [overflow-wrap:anywhere]",
-  label: "min-w-0 font-mono text-sm font-medium tracking-widest text-muted-foreground uppercase [overflow-wrap:anywhere]",
+  label: "min-w-0 text-sm font-semibold text-muted-foreground [overflow-wrap:anywhere]",
 } as const
 
 /** A long word breaks where it must, so the text never widens the page. */
@@ -38,8 +44,11 @@ export function Text({ role = "body", id, children }: { role?: TextRole; childre
   )
 }
 
-/** A page's title a step smaller when it is long (`titleStep`): never cut, so a long one is smaller rather than taller. */
-const PAGE_SIZES = ["text-3xl 2xl:text-4xl", "text-2xl 2xl:text-3xl", "text-xl 2xl:text-2xl"] as const
+/**
+ * A page's title a step smaller when it is long (`titleStep`): never cut, so a long one is smaller rather than taller. The sizes grow with
+ * the screen themselves (the type scale in `theme.css`).
+ */
+const PAGE_SIZES = ["text-3xl", "text-2xl", "text-xl"] as const
 
 export function Heading({ level, look = level === 1 ? "page" : level === 2 ? "section" : "label", id, children }: { level: 1 | 2 | 3; look?: keyof typeof HEADINGS; id?: string; children: ReactNode }) {
   const Tag = `h${level}` as const

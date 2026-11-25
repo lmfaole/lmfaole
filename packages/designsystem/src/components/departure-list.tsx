@@ -50,7 +50,7 @@ export function DepartureList({ departures, now, emptyMessage = "Ingen avganger 
     <div className="grid gap-6">
       {hours.map(({ hour, departures: inHour }, index) => (
         <div key={`${index}-${hour}`} className="grid gap-1">
-          <h3 className="text-muted-foreground border-b pb-1 text-xs font-medium tracking-wide uppercase tabular-nums">
+          <h3 className="text-muted-foreground border-b pb-1 text-sm font-semibold tabular-nums">
             kl. {hour}
           </h3>
           <ol className="divide-border grid grid-cols-[auto_auto_minmax(0,1fr)] gap-x-3 divide-y">

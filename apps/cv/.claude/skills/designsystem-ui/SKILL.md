@@ -28,14 +28,14 @@ fits, the markup becomes a component in the design system, named for what it is,
 ## Type
 
 - Text only through `Text`, by its role: `body`, `quiet` (a secondary line), `note` (a credit or source under content),
-  `figure` (a number in a line, tabular). Never a size, a tone or a weight of your own; headings are `Heading` (`level` is the element, `look` is the appearance: page, section, label, item).
+  `figure` (a number in a line, tabular). Never a size, a tone or a weight of your own; headings are `Heading` (`level` is the element, `look` is the appearance: page, part, section, label).
 - One page `<h1>` (`PageHeader`). Sections are `<h2>`, their parts `<h3>`. Never skip a level for looks.
 - Figures in a line use `Text role="figure"` (tabular numbers). Titles are short noun phrases, not sentences.
 - **Three levels, no fourth:** page, section, item. A section is never made by bolding or enlarging `Text`; it is a `Heading`. Bold is for what stops something or the point; no italic.
 - **Paragraphs stand in `Stack width="prose"`** (45–75 characters, about 65; **designsystem-hierarchy**). A list, a row or a table can use the whole reading column.
-- **Uppercase** only in short labels (`Heading look="label"`), never a sentence. `xs` is for fine print and secondary notes, never the only place something needed to act is said.
-- Never a size in viewport units; text must survive 200 % zoom and WCAG 1.4.12 text spacing. `<html lang="nb">` is set once. If a
-  size is ever made fluid (`clamp()` with a rem floor), its largest step is at most 2.5 × its smallest, or zoom cannot reach 200 %.
+- **No capitals** in any heading or label; levels differ in size and weight. `xs` is for fine print and secondary notes, never the only place something needed to act is said.
+- Never a size in viewport units; text must survive 200 % zoom and WCAG 1.4.12 text spacing. `<html lang="nb">` is set once. The scale is
+  fluid from `base` up (`clamp()` with a rem floor, in `theme.css`); each step's largest is at most 2.5 × its smallest, or zoom cannot reach 200 %.
 - **No light or thin weights** (Apple HIG: they fail first at small sizes and in dark mode). Regular for text, semibold for headings;
   the superfamily is variable, so there is no faux bold and no second family for "display".
 - **Wrapping:** heads are balanced (`text-balance`, in `HEAD_TITLE` and the empty and first-run titles); a short lead or empty-state

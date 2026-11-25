@@ -51,8 +51,8 @@ section that needs the reader now; on a detail page it is the title and the stat
 
 ## 4. Three levels, visibly different
 
-Page title (`PageHeader`, `Heading level={1}`), section title (`PageSection`, `look="label"`/`"section"`), item (the row's name).
-Each differs in size, weight or case. **No fourth level of emphasis.** `destructive` and bold are for what stops something.
+Page title (`PageHeader`, `Heading level={1}`), section title (`PageSection`, `look="part"`), item (the row's name).
+Each differs in size and weight, never in case. **No fourth level of emphasis.** `destructive` and bold are for what stops something.
 
 - **Few steps, far apart:** the three levels and two text colours (the text and `quiet`) carry the whole page; a difference too small to see
   at a glance is noise, not hierarchy (NN/g, visual hierarchy). Never a new size, weight or colour for one place.

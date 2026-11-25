@@ -32,12 +32,13 @@ export const WIDTH_CLASSES = [
 ] as const
 
 /**
- * The room between the sections of a page, the same on every page of every app: 2rem between one section (`PageSection`, a
- * `StreamedSection`'s skeleton, anything marked `data-page-part`) and the next. It is a margin between neighbours, not a gap, so a
+ * The room between the sections of a page, the same on every page of every app: 2.5rem on a phone, growing to 4rem on a desktop, between
+ * one section (`PageSection`, a `StreamedSection`'s skeleton, anything marked `data-page-part`) and the next, always well over the room
+ * inside one (rule 5 of «Reading and hierarchy»). It is a margin between neighbours, not a gap, so a
  * part that draws nothing (a `ConnectionBanner` while online) leaves no room behind. `PageLayout` puts it on its children, and so
  * does the main column of a detail page; a page never wraps its sections in a `Stack` of its own.
  */
-export const SECTION_RHYTHM = "[&>:is(section,[data-page-part])+:is(section,[data-page-part])]:mt-8"
+export const SECTION_RHYTHM = "[&>:is(section,[data-page-part])+:is(section,[data-page-part])]:mt-[clamp(2.5rem,1.75rem+2.5vw,4rem)]"
 
 /** The room above and under a page's content, the same in `PageLayout` and `PageColumn`. */
-export const PAGE_PADDING_Y = "py-10"
+export const PAGE_PADDING_Y = "py-10 lg:py-14"

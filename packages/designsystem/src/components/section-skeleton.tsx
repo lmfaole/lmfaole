@@ -11,9 +11,9 @@ import { Skeleton } from "./ui/skeleton"
  */
 export function SectionSkeleton({ title, icon, lines = 3 }: { title: string; icon: IconName; lines?: number }) {
   return (
-    <div role="status" data-page-part="" className="grid gap-4">
+    <div role="status" data-page-part="" className="grid gap-4 lg:gap-5">
       <span className="sr-only">Henter {title}</span>
-      <p aria-hidden="true" className="text-muted-foreground font-mono text-sm font-medium tracking-widest uppercase">
+      <p aria-hidden="true" className="text-2xl font-semibold tracking-tight">
         <SectionTitle icon={icon}>{title}</SectionTitle>
       </p>
       {Array.from({ length: lines }, (_, index) => (
