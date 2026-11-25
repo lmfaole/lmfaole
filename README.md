@@ -25,6 +25,7 @@ npm install                          # every workspace, one lockfile
 npm run typecheck && npm test        # every workspace that has them
 npm run hooks                        # once per clone: the design system's visual test before a push
 npm run build -w apps/medier         # one workspace: -w <path>
+npm run cf:audit                     # every Cloudflare resource has a wrangler.jsonc here, or is in scripts/cf-audit.allow.json (--json)
 ```
 
 The apps use the design system as a workspace (`"@lmfaole/designsystem": "*"`), so a change to it is checked against the apps in the

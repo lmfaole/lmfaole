@@ -1,0 +1,9 @@
+{
+  "$comment": "Resources in the Cloudflare account that no wrangler.jsonc in this repository owns, kept on purpose (scripts/cf-audit.ts). kind: zone, worker, route, custom_domain, d1, kv, r2, queue, pages, durable_object, hyperdrive, vectorize, workflow, ai_gateway, dns or access; name: its name (or id). An allow-listed zone covers its routes, custom domains and DNS records; an allow-listed Worker its routes, custom domains and crons.",
+  "external": [
+    { "kind": "zone", "name": "fremtind.games", "reason": "fremtind.games, owned outside this repository" },
+    { "kind": "worker", "name": "fremtind-games-api", "reason": "fremtind.games' API, owned outside this repository" },
+    { "kind": "custom_domain", "name": "api.fremtind.games", "reason": "fremtind-games-api's address, owned outside this repository" },
+    { "kind": "d1", "name": "fremtind-games", "reason": "fremtind-games-api's database, owned outside this repository" }
+  ]
+}
