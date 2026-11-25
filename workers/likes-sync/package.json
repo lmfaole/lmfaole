@@ -16,7 +16,7 @@
     "backfill": "node scripts/backfill.ts"
   },
   "devDependencies": {
-    "@types/node": "^24.13.3",
+    "@types/node": "^26.6.6",
     "typescript": "~7.0.2",
     "wrangler": "^4.150.0"
   }
