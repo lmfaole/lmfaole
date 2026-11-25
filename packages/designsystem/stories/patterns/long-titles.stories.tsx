@@ -36,14 +36,26 @@ Each story is drawn at 20rem and 24rem, the narrowest phones.`,
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** The two widths side by side, each a container of its own. */
+/**
+ * One width, a container of its own. It is a section named by its width, as a page's head stands in its `main`: a `<header>` there is the
+ * head of that part, not the page's banner, so a head drawn at both widths is not two banners.
+ */
+function Width({ width, children }: { width: "w-80" | "w-96"; children: ReactNode }) {
+  return (
+    <section aria-label={width === "w-80" ? "20rem" : "24rem"} className={`${width} shrink-0 @container outline-1 outline-border outline-dashed`}>
+      {children}
+    </section>
+  )
+}
+
+/** The two widths side by side. */
 function Widths({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-wrap items-start gap-8">
       {(["w-80", "w-96"] as const).map((width) => (
-        <div key={width} className={`${width} shrink-0 @container outline-1 outline-border outline-dashed`}>
+        <Width key={width} width={width}>
           {children}
-        </div>
+        </Width>
       ))}
     </div>
   )
@@ -84,22 +96,28 @@ export const DetailHead: Story = {
   ),
 }
 
-/** A page's own head, with the trail above it: the middle crumbs are cut, the page's own name and the title are whole. */
+/** A page's own head, with the trail above it, at one width: a page has one trail («Brødsmuler»), and two would be two landmarks of one name. */
+const pageHead = (width: "w-80" | "w-96") => () => (
+  <Width width={width}>
+    <Breadcrumbs
+      items={[
+        { href: "#", label: "Podkaster" },
+        { href: "#show", label: SHOW },
+        { href: "#episode", label: LONG },
+      ]}
+    />
+    <PageHeader title={LONG} description={URL} />
+  </Width>
+)
+
+/** A page's own head at 20rem, with the trail above it: the middle crumbs are cut, the page's own name and the title are whole. */
 export const PageHead: Story = {
-  render: () => (
-    <Widths>
-      <Breadcrumbs
-        items={[
-          { href: "#", label: "Podkaster" },
-          { href: "#show", label: SHOW },
-          { href: "#episode", label: LONG },
-        ]}
-      />
-      <PageHeader title={LONG} description={URL} />
-    </Widths>
-  ),
+  render: pageHead("w-80"),
   globals: { viewport: { value: "large", isRotated: false } },
 }
+
+/** The page's head at 24rem. */
+export const PageHeadWider: Story = { ...PageHead, render: pageHead("w-96") }
 
 /** The chapters of an episode: each chapter's title cut at two lines; the time and «spilles nå» keep their room. */
 export const Chapters: Story = {

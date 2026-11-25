@@ -74,7 +74,7 @@ jobs:
           git add 'stories/**/__screenshots__/**'
           if git diff --cached --quiet; then echo "no change"; exit 0; fi
           git commit -m "Visual: new reference pictures from ${GITHUB_SHA::7}"
-          git push
+          git pull --rebase -q origin "$GITHUB_REF_NAME" && git push
 
       - name: Keep the pictures of a failed run
         if: failure()
@@ -85,3 +85,5 @@ jobs:
             packages/designsystem/stories/**/__screenshots__/**
             packages/designsystem/.vitest-attachments/**
           if-no-files-found: ignore
+          # The actual pictures and the differences are under `.vitest-attachments`, which v4 leaves out unless asked.
+          include-hidden-files: true

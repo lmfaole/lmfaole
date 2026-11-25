@@ -133,7 +133,7 @@ export const Effects: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const off = canvas.getByRole("radio", { name: /Uten effekter/ })
-    await userEvent.click(canvas.getByText("Flate bilder og rolige bakgrunner. Bruker mindre strøm."))
+    await userEvent.click(canvas.getByText("Flatt og stille. Bruker mindre strøm og passer om bevegelse er ubehagelig."))
     await expect(off).toBeChecked()
   },
 }
