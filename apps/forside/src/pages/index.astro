@@ -1,17 +1,18 @@
 ---
-// `/`: the front page, a name, one sentence and a few plain links. The name and the role are the CV's in D1 (`site`), or the page's own words while it has
-// none (`lib/runtime`); drawn when asked and kept at the edge for a few minutes (`lib/page-cache`).
+// `/`: the front page, a name, one sentence, a few plain links and the owner's GitHub lately. The name, the role and the GitHub part are the D1 database's (`site`),
+// or the page's own words and no GitHub while it has none (`lib/runtime`); drawn when asked and kept at the edge for a few minutes (`lib/page-cache`).
 import Document from '../layouts/Document.astro'
 import { PROFILE, pageHead } from '../lib/profile'
-import { currentOwner } from '../lib/runtime'
+import { currentFrontPage } from '../lib/runtime'
 import { Forside } from '../views/Forside'
 
 const page = pageHead('/')
-const owner = await currentOwner()
+const now = new Date()
+const front = await currentFrontPage(now)
 const person = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: owner.name,
+  name: front.owner.name,
   url: PROFILE.url,
   image: `${PROFILE.url}profilbilde.jpg`,
   email: `mailto:${PROFILE.email}`,
@@ -19,6 +20,6 @@ const person = {
 }
 ---
 
-<Document title={owner.name} description={page.description} path="/" jsonLd={person}>
-  <Forside owner={owner} />
+<Document title={front.owner.name} description={page.description} path="/" jsonLd={person}>
+  <Forside page={front} now={now} />
 </Document>

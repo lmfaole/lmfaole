@@ -25,12 +25,12 @@ function edge(context: APIContext): { cache: Cache; waitUntil: (promise: Promise
   return { cache: caches.default, waitUntil }
 }
 
-/** An old address moved (301), or the page: the front page (drawn with what D1 says) is kept at the edge for a few minutes (`lib/page-cache`); the rest is drawn anew. */
+/** An old address moved (301), or the page: the pages drawn with what D1 says (the front page, `/ordliste`) are kept at the edge for a few minutes (`lib/page-cache`); the rest is drawn anew. */
 async function answer(context: APIContext, next: MiddlewareNext): Promise<Response> {
   const moved = movedTo(context.url.pathname)
   if (moved !== null) return new Response(null, { status: 301, headers: { Location: moved, 'Cache-Control': 'public, max-age=3600' } })
   const kept = cacheableRequest(context.request.method, context.url.pathname) ? edge(context) : null
-  // The front page reads no query, so one copy serves every address of it.
+  // Those pages read no query, so one copy serves every address of each.
   const key = new Request(new URL(context.url.pathname, context.url.origin).toString())
   const hit = kept === null ? undefined : await kept.cache.match(key).catch(() => undefined)
   if (hit !== undefined) return withHeaders(new Response(hit.body, hit), (headers) => headers.set('Cache-Control', PAGE_CACHE_CONTROL))
@@ -43,7 +43,7 @@ async function answer(context: APIContext, next: MiddlewareNext): Promise<Respon
   return page
 }
 
-/** What the Worker answers itself (the front page, an old address, the 404) gets the security headers; a built page has them from `public/_headers`. */
+/** What the Worker answers itself (the pages drawn from D1, an old address, the 404) gets the security headers; a built page has them from `public/_headers`. */
 export const onRequest = defineMiddleware(async (context, next) => {
   if (context.isPrerendered) return next()
   return withHeaders(await answer(context, next), secure)

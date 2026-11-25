@@ -17,15 +17,18 @@ export const PROFILE = {
   url: 'https://lmfaole.party/',
   /** The CV: a path of this origin, served by the CV's own Worker (`apps/cv`). */
   cv: '/cv/',
+  /** The names that come up in the texts and where they link (`/ordliste`), linked from the front page once there are any. */
+  glossary: '/ordliste',
   email: 'hei@lmfaole.party',
   github: 'https://github.com/lmfaole',
   linkedin: 'https://www.linkedin.com/in/olejorgenbakken/',
 } as const
 
-/** Each page's own `<title>` and link-preview text, by path. `/kilder` is not linked from the front page or the sitemap. */
+/** Each page's own `<title>` and link-preview text, by path. `/kilder` is not linked from the front page or the sitemap; `/ordliste` is linked while it has terms. */
 const PAGES = [
   { path: '/', title: NAME, description: BIO },
   { path: '/kilder', title: 'Kilder', description: 'Hvor dataene om det jeg ser, hører på og spiller kommer fra, og når de hentes.' },
+  { path: '/ordliste', title: 'Ordliste', description: 'Navn som går igjen i tekstene mine, og hvor de hører hjemme.' },
 ] as const
 
 export type PagePath = (typeof PAGES)[number]['path']

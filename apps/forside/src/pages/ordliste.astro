@@ -1,0 +1,16 @@
+---
+// `/ordliste`: the glossary in the D1 database `site` (`lib/runtime`), drawn when asked and kept at the edge for a few minutes (`lib/page-cache`). Without terms
+// (none yet, or D1 cannot answer) there is no such page: the 404.
+import Document from '../layouts/Document.astro'
+import { pageHead } from '../lib/profile'
+import { currentGlossary } from '../lib/runtime'
+import { Ordliste } from '../views/Ordliste'
+
+const page = pageHead('/ordliste')
+const terms = await currentGlossary()
+if (terms.length === 0) return Astro.rewrite('/404')
+---
+
+<Document title={`${page.title} – lmfaole.party`} description={page.description} path="/ordliste">
+  <Ordliste title={page.title} description={page.description} terms={terms} />
+</Document>
