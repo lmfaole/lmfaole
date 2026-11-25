@@ -8,8 +8,8 @@
   "compatibility_date": "2026-11-01",
   "d1_databases": [
     // Fill in the ids printed by `npx wrangler d1 create library` and `npx wrangler d1 create site`, here and in workers/catalog/wrangler.jsonc.
-    { "binding": "LIBRARY", "database_name": "library", "database_id": "library-not-created-yet", "migrations_dir": "library/migrations" },
-    { "binding": "SITE", "database_name": "site", "database_id": "site-not-created-yet", "migrations_dir": "site/migrations" }
+    { "binding": "LIBRARY", "database_name": "library", "database_id": "8f891a67-47c8-4232-88ea-a2acf01e9573", "migrations_dir": "library/migrations" },
+    { "binding": "SITE", "database_name": "site", "database_id": "e298167f-145e-41c9-ac11-0c74a80c6f43", "migrations_dir": "site/migrations" }
   ],
   "r2_buckets": [{ "binding": "ARCHIVE", "bucket_name": "listens-archive" }]
 }
