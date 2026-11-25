@@ -41,6 +41,14 @@ Det jeg hører på, spiller og ser, lagret i Cloudflare D1, slik at det kan bruk
 - **`ratings`:** det som er ratet nå. Ratinger som er fjernet på Trakt, blir også fjernet her.
 - **`letterboxd`:** Letterboxd-dagboka (`lmfaole`) fra den offentlige RSS-feeden. Feeden viser bare de siste føringene, så hver kjøring tar vare på det den ser. Nøkkelen er Letterboxds egen id, og endret vurdering eller anmeldelse oppdaterer raden. Lister tas ikke med.
 
+## Fra den gamle monorepoen
+
+`node scripts/import-dump.ts` (i rota) legger egen historikk fra datadumpen i den gamle monorepoen inn én gang, med migrasjonene `0002_dump_history.sql` (`music`, `gameplay`) og `0003_dump_history.sql` (`watching`). Den holder seg under dagskvoten og fortsetter der den slapp neste dag.
+
+- **`music`:** `listens` (`client` = `monorepo-dump`) bare fram til `cursor` og bare det som ikke alt er der innen et minutt. Nye tabeller: `spotify_saved`, `spotify_saved_albums`, `spotify_followed`, `apple_favorites`, `collection` (platesamlingen), `concerts`, `concert_acts`, `venues`.
+- **`gameplay`:** `game_log`, `game_collection` og `profile` for alt utenom Steam og RetroAchievements. Achievements fra Xbox, Pokémon GO og Apple havner i `achievements`.
+- **`watching`:** `film_log` og `tv_log` med det Trakt og Letterboxd ikke har. En filmrad med `same_as` er en visning som alt står der, og er med bare for kino, sete eller notat. Dessuten `cinemas` og `apple_tv`.
+
 ## Backup
 
 Søndager kl. 03:00 UTC tar D1s eget eksport-API en kopi av alle tre basene (`music`, `gameplay`, `watching`). Kopien strømmes rett til R2 under `backup/<base>/<dato>.sql`, og de 4 nyeste av hver beholdes. Dette krever secret-en `BACKUP_TOKEN`: et API-token med *Account → D1 → Edit*. Uten den hoppes backupen over. D1 Time Travel gir uansett 7 dager tilbake.

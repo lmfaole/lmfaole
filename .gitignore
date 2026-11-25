@@ -3,3 +3,6 @@ node_modules/
 .wrangler/
 .dev.vars
 *.tsbuildinfo
+
+# scripts/import-dump.ts: its cursor, the SQL batches and the R2 exports
+scripts/.import-dump/

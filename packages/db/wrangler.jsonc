@@ -1,0 +1,12 @@
+// The D1 databases no worker owns yet, so their migrations can be applied (`npx wrangler d1 migrations apply <name> --remote -c packages/db/wrangler.jsonc`)
+// and scripts/import-dump.ts can write to them. The worker that reads one (forside, cv) binds it with the same id.
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "db",
+  "compatibility_date": "2026-11-01",
+  "d1_databases": [
+    // Fill in the ids printed by `npx wrangler d1 create library` and `npx wrangler d1 create site`.
+    { "binding": "LIBRARY", "database_name": "library", "database_id": "library-not-created-yet", "migrations_dir": "library/migrations" },
+    { "binding": "SITE", "database_name": "site", "database_id": "site-not-created-yet", "migrations_dir": "site/migrations" }
+  ]
+}
