@@ -1,0 +1,245 @@
+{
+  "person": {
+    "navn": "Ole Jørgen Bakken",
+    "tittel": "Senior frontend-utvikler",
+    "arbeidsgiver": "Fremtind Forsikring",
+    "sted": "Oslo"
+  },
+  "employers": [
+    {
+      "navn": "Fremtind",
+      "sted": "Oslo",
+      "roles": [
+        {
+          "aar": 2026,
+          "fra": "2026-06-01",
+          "til": null,
+          "tittel": "Senior frontend-utvikler",
+          "beskrivelse": "Ansvarlig for frontend-miljøet i Fremtind, samt leder for Fremtind Ung; en sosial møteplass for unge og unge til sinns.",
+          "projects": []
+        },
+        {
+          "aar": 2024,
+          "fra": "2024-05-01",
+          "til": null,
+          "tittel": "Frontend-utvikler",
+          "beskrivelse": "Utvikling av Jøkul; komponenter, mønster og dokumentasjon som gir folk en felles plattform for god kundekontakt. Designet i Figma, utviklet i React, dokumentert med Sanity + Next.js.",
+          "projects": [
+            {
+              "aar": 2025,
+              "fra": "2025-01-01",
+              "til": null,
+              "navn": "Jøkul",
+              "tittel": "Jøkul",
+              "url": "https://jokul.fremtind.no/komponenter",
+              "beskrivelse": "Fremtinds designsystem",
+              "github": {
+                "repo": "fremtind/jokul",
+                "commit": {
+                  "message": "chore(portal): fjern manuelle klikk-events, dekkes av Mixpanel autocapture",
+                  "at": "2026-11-17T12:55:35Z",
+                  "url": "https://github.com/fremtind/jokul/commit/e2f04941343ba3fd9c677eb92eb1519890e012f0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "aar": 2023,
+          "fra": "2023-04-01",
+          "til": "2024-04-30",
+          "tittel": "Interaksjonsdesigner",
+          "beskrivelse": "Designer for kundeportalen for bedriftskunder.",
+          "projects": []
+        }
+      ]
+    },
+    {
+      "navn": "NAV",
+      "sted": "Oslo",
+      "roles": [
+        {
+          "aar": 2021,
+          "fra": "2021-11-01",
+          "til": "2023-03-31",
+          "tittel": "Produktdesigner",
+          "beskrivelse": "Design av komponenter i Figma, og dokumentasjon lagd med Sanity.",
+          "projects": [
+            {
+              "aar": 2022,
+              "fra": "2022-08-01",
+              "til": "2023-03-31",
+              "navn": "Aksel",
+              "tittel": "Aksel",
+              "url": "https://aksel.nav.no",
+              "beskrivelse": null,
+              "github": {
+                "repo": "navikt/aksel",
+                "commit": {
+                  "message": "Ikon label og tekstendringer (#1798)",
+                  "at": "2023-02-09T13:29:23Z",
+                  "url": "https://github.com/navikt/aksel/commit/5f1fb0a4a1c00fd13f64745f899eff4978f86ddc"
+                }
+              }
+            },
+            {
+              "aar": 2022,
+              "fra": "2022-04-01",
+              "til": "2022-05-31",
+              "navn": "Mangfold i mai",
+              "tittel": "Mangfold i mai",
+              "url": "https://mangfoldimai.no",
+              "beskrivelse": null,
+              "github": {
+                "repo": "navikt/mangfold-i-mai",
+                "commit": {
+                  "message": "Merge pull request #47",
+                  "at": "2022-04-29T11:55:31Z",
+                  "url": "https://github.com/navikt/mangfold-i-mai/commit/7fffec9b7277808bee368e74978c3d7aa51ea658"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "navn": "Vipps",
+      "sted": "Oslo",
+      "roles": [
+        {
+          "aar": 2021,
+          "fra": "2021-06-01",
+          "til": "2021-08-31",
+          "tittel": "Interaksjonsdesigner",
+          "beskrivelse": null,
+          "projects": []
+        }
+      ]
+    },
+    {
+      "navn": "Shortcut",
+      "sted": "Oslo",
+      "roles": [
+        {
+          "aar": 2021,
+          "fra": "2021-01-01",
+          "til": "2021-06-30",
+          "tittel": "Interaksjonsdesigner",
+          "beskrivelse": null,
+          "projects": []
+        }
+      ]
+    },
+    {
+      "navn": "Flow Digital AS",
+      "sted": "Oslo",
+      "roles": [
+        {
+          "aar": 2019,
+          "fra": "2019-09-01",
+          "til": "2020-02-29",
+          "tittel": "Frontend-utvikler",
+          "beskrivelse": null,
+          "projects": []
+        }
+      ]
+    },
+    {
+      "navn": "Oslo kommune",
+      "sted": "Oslo",
+      "roles": [
+        {
+          "aar": 2019,
+          "fra": "2019-09-01",
+          "til": "2019-09-30",
+          "tittel": "Valgobservatør",
+          "beskrivelse": null,
+          "projects": []
+        }
+      ]
+    },
+    {
+      "navn": "Høyskolen Kristiania",
+      "sted": "Oslo",
+      "roles": [
+        {
+          "aar": 2019,
+          "fra": "2019-08-01",
+          "til": "2021-06-30",
+          "tittel": "Lærerassistent",
+          "beskrivelse": null,
+          "projects": []
+        }
+      ]
+    },
+    {
+      "navn": "Zabai",
+      "sted": "Oslo",
+      "roles": [
+        {
+          "aar": 2017,
+          "fra": "2017-11-01",
+          "til": "2018-01-31",
+          "tittel": "Frontend-utvikler",
+          "beskrivelse": null,
+          "projects": []
+        }
+      ]
+    },
+    {
+      "navn": "Telenor",
+      "sted": "Gjøvik",
+      "roles": [
+        {
+          "aar": 2015,
+          "fra": "2015-04-01",
+          "til": "2015-08-31",
+          "tittel": "Kundestøtterepresentant",
+          "beskrivelse": null,
+          "projects": []
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "aar": 2021,
+      "fra": "2018-08-01",
+      "til": "2021-06-30",
+      "grad": "Bachelor i informasjonsteknologi, interaktivt design",
+      "institusjon": "Høyskolen Kristiania",
+      "beskrivelse": "Bachelor i informasjonsteknologi – Interaktivt design (180 studiepoeng) ved Høyskolen Kristiania. Studiet kombinerer design og programmering: interaksjonsdesign, brukertesting og analyse, informasjonssikkerhet og et kreativt webprosjekt, med HTML, CSS, JavaScript og C#. Vi jobbet med reelle kundecaser fra arbeidslivet. Jeg avsluttet med bacheloroppgaven for Shortcut."
+    },
+    {
+      "aar": 2017,
+      "fra": "2016-08-01",
+      "til": "2017-06-30",
+      "grad": "Årsstudium, kommunikasjon og mediefag",
+      "institusjon": "Høgskulen i Volda",
+      "beskrivelse": null
+    },
+    {
+      "aar": 2016,
+      "fra": "2013-08-01",
+      "til": "2016-06-30",
+      "grad": "Videregående opplæring, Medier og kommunikasjon",
+      "institusjon": "Gjøvik videregående skole",
+      "beskrivelse": "Jeg gikk Medier og kommunikasjon på Gjøvik videregående skole. Linjen handler om å lage innhold for medier: foto, film, grafisk design og kommunikasjon. Jeg drev ungdomsbedriften ISO, som solgte fotografering og design."
+    }
+  ],
+  "links": [
+    {
+      "navn": "Blog",
+      "url": "https://lmfaole.party"
+    },
+    {
+      "navn": "Figma",
+      "url": "https://www.figma.com/@olejorgenbakken"
+    },
+    {
+      "navn": "LinkedIn",
+      "url": "https://www.linkedin.com/in/olejorgenbakken"
+    }
+  ]
+}

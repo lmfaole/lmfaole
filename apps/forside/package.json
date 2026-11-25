@@ -1,0 +1,36 @@
+{
+  "name": "forside",
+  "private": true,
+  "type": "module",
+  "description": "Forsiden på lmfaole.party: navn, rolle og noen lenker, og /kilder",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro build && wrangler dev",
+    "deploy": "astro build && wrangler deploy",
+    "test": "node --test",
+    "typecheck": "tsc --noEmit",
+    "skills": "designsystem-skills",
+    "skills:check": "designsystem-skills --check"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.4.8",
+    "@astrojs/react": "^7.1.2",
+    "@lmfaole/designsystem": "*",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.5",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.5",
+    "wrangler": "^4.164.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "typescript": "~7.0.2"
+  }
+}

@@ -1,0 +1,55 @@
+---
+// The document every page of the site stands in: the head (title, description, link preview, icons) and the page frame. No service worker,
+// no cookies and no script of its own: the origin is shared with the other apps (`/medier/`, `/cv/`, `/start`, `/design/`).
+import '../styles.css'
+import { PageLayout } from '@lmfaole/designsystem/components/page-layout'
+
+import { PROFILE } from '../lib/profile'
+
+interface Props {
+  title: string
+  description?: string
+  /** The page's own address, for the link preview; none for a page that is not one (the 404). */
+  path?: string
+  /** Structured data about the page (schema.org). */
+  jsonLd?: Record<string, unknown>
+}
+const { title, description, path, jsonLd } = Astro.props
+const image = new URL('profilbilde.jpg', PROFILE.url).href
+const json = jsonLd === undefined ? null : JSON.stringify(jsonLd).replaceAll('<', '\\u003c')
+---
+
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    {description === undefined ? null : <meta name="description" content={description} />}
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {
+      path === undefined ? null : (
+        <>
+          <link rel="canonical" href={new URL(path.replace(/^\//, ''), PROFILE.url).href} />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="lmfaole.party" />
+          <meta property="og:locale" content="nb_NO" />
+          <meta property="og:url" content={new URL(path.replace(/^\//, ''), PROFILE.url).href} />
+          <meta property="og:title" content={title} />
+          {description === undefined ? null : <meta property="og:description" content={description} />}
+          <meta property="og:image" content={image} />
+          <meta property="og:image:width" content="460" />
+          <meta property="og:image:height" content="460" />
+        </>
+      )
+    }
+    {json === null ? null : <script type="application/ld+json" set:html={json} />}
+  </head>
+  <body>
+    <PageLayout>
+      <slot />
+    </PageLayout>
+  </body>
+</html>

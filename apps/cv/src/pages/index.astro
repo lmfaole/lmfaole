@@ -1,0 +1,16 @@
+---
+export const prerender = true
+// `/cv/`: the CV, with the projects under the roles they were done in, from the snapshot `src/data/cv.json`. It sends no script.
+import Document from '../layouts/Document.astro'
+import data from '../data/cv.json'
+import type { Cv } from '../lib/cv'
+import { Work } from '../views/Work'
+
+const TITLE = 'Ole Jørgen Bakken, frontendutvikler'
+const DESCRIPTION = 'Hva jeg jobber med: CV-en min og prosjektene jeg har jobbet med, med siste commit.'
+const cv: Cv = data
+---
+
+<Document title={TITLE} description={DESCRIPTION} url={new URL(import.meta.env.BASE_URL, Astro.site).href} width="pane">
+  <Work cv={cv} />
+</Document>

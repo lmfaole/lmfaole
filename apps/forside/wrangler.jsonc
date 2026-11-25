@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "forside",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // Only the zone's route: no workers.dev or preview address, so the site has one address.
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  // The whole origin, except what a more specific route takes: `/medier*`, `/cv`, `/cv/*`, `/start` and `/design/` are other Workers'.
+  "routes": [{ "pattern": "lmfaole.party/*", "zone_name": "lmfaole.party" }]
+}

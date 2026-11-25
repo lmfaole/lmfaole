@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://lmfaole.party/sitemap.xml

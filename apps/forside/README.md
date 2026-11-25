@@ -1,44 +1,39 @@
-# lmfaole.party
+# forside
 
-Kildekoden bak [lmfaole.party](https://lmfaole.party) - en enkel,
-statisk forside med lenker til GitHub-profilen min og andre steder jeg
-kan nås på nettet.
+Forsiden på [lmfaole.party](https://lmfaole.party): navn, rolle, én setning og noen lenker (CV, GitHub, LinkedIn, e-post), og
+[`/kilder`](https://lmfaole.party/kilder), som viser hvor dataene på [`/medier/`](https://lmfaole.party/medier/) kommer fra og når de hentes neste gang.
 
-## Struktur
+- Astro på Cloudflare Workers, Workeren `forside` på ruten `lmfaole.party/*` (`wrangler.jsonc`). De andre appene har mer spesifikke ruter på samme
+  domene (`/medier*`, `/cv`, `/cv/*`, `/start`, `/design/`), og de vinner.
+- Alle sidene bygges på forhånd. Workeren svarer bare på resten: gamle adresser (`src/lib/moved-paths.ts`, 301 til `/medier/…`) og 404.
+- Ingen informasjonskapsler og ingen service worker, så siden rører aldri de andre appenes.
+- Sikkerhetshodene står i `src/lib/headers.ts` (Workerens svar) og `public/_headers` (de bygde filene). En test passer på at de er like.
+- `/kilder` leser `src/lib/sources.ts`. Tidene er cron-uttrykkene i `workers/scheduler/src/jobs.ts`, som er i UTC, og vises i norsk tid.
 
-| Sti | Hva det er |
-| --- | --- |
-| `index.html` | Selve forsiden. Ingen build-steg, ingen JavaScript. |
-| `styles.css` | Stilarket til forsiden. |
-| `profilbilde.jpg` | Profilbilde hentet fra GitHub-avataren, brukt på siden og som og:image. |
-| `favicon.ico` | Samme bilde i 16, 32 og 48 px - fanen i nettleseren. |
-| `apple-touch-icon.png` | Samme bilde i 180 px - ikonet iOS legger på hjemskjermen. |
-| `robots.txt` | Lar søkemotorer vite at hele siden kan indekseres. |
-| `sitemap.xml` | Enkelt sitemap for søkemotorer. |
+## Data
 
-## Endre profilbildet
+Siden har ingen data utenfor koden. Fase 4 flytter dataene til D1 (`site` og de andre basene), og da leser appene D1.
 
-`profilbilde.jpg` er originalen; `favicon.ico` og `apple-touch-icon.png`
-er avledet av den. Bytt ut originalen og generer på nytt med
-ImageMagick:
+## Utvikle
 
 ```sh
-magick profilbilde.jpg -strip -resize 16x16 -colors 32  /tmp/f16.png
-magick profilbilde.jpg -strip -resize 32x32 -colors 64  /tmp/f32.png
-magick profilbilde.jpg -strip -resize 48x48 -colors 128 /tmp/f48.png
-magick /tmp/f48.png /tmp/f32.png /tmp/f16.png favicon.ico
-magick profilbilde.jpg -strip -resize 180x180 -colors 256 apple-touch-icon.png
+npm run dev          # astro dev
+npm test             # node --test
+npm run typecheck
+npm run build
+npm run preview      # bygger og kjører Workeren lokalt med wrangler dev
 ```
 
-Fargene begrenses fordi et fotografi som 8-bits ICO ellers blir
-uhandterlig stort.
+Deploy skjer fra `.github/workflows/forside.yml` ved push til `main`.
 
-## Utvikle lokalt
+## Profilbildet
 
-Ingen installasjon eller verktøy kreves - åpne `index.html` direkte i
-en nettleser, eller server mappen med et vilkårlig statisk-fil-verktøy,
-f.eks.:
+`public/profilbilde.jpg` er originalen (og bildet i lenkeforhåndsvisningen). `favicon.ico` og `apple-touch-icon.png` lages av den med ImageMagick:
 
 ```sh
-npx serve .
+magick profilbilde.jpg -strip -resize 16x16 -colors 32 f16.png
+magick profilbilde.jpg -strip -resize 32x32 -colors 64 f32.png
+magick profilbilde.jpg -strip -resize 48x48 -colors 128 f48.png
+magick f48.png f32.png f16.png favicon.ico && rm f16.png f32.png f48.png
+magick profilbilde.jpg -strip -resize 180x180 -colors 256 apple-touch-icon.png
 ```

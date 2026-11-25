@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // The Worker keeps the name it had in the old monorepo (`work`), so a deploy replaces it and its routes.
+  "name": "work",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // Only the zone's routes: no workers.dev or preview address, and no custom domain, so the site has one address.
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  // Paths of lmfaole.party: `forside` owns `lmfaole.party/*`, and these two are more specific, so they reach this Worker.
+  "routes": [
+    { "pattern": "lmfaole.party/cv", "zone_name": "lmfaole.party" },
+    { "pattern": "lmfaole.party/cv/*", "zone_name": "lmfaole.party" }
+  ]
+}

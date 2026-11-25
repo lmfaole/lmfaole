@@ -6,7 +6,8 @@ originals, backups) and KV (small state), never on a machine at home.
 | Path | What | Address |
 | --- | --- | --- |
 | `packages/designsystem` | The design system: theme, building blocks, components (React 19, Tailwind 4, shipped as source) and Storybook | lmfaole.party/design |
-| `apps/forside` | The front page, plain HTML and CSS | lmfaole.party (not deployed from here yet) |
+| `apps/cv` | The CV, from a checked-in snapshot (Astro on Workers, the Worker `work`) | lmfaole.party/cv |
+| `apps/forside` | The front page and `/kilder` (Astro on Workers) | lmfaole.party |
 | `apps/medier` | What I listen to and watch (Astro on Workers) | lmfaole.party/medier |
 | `apps/startside` | The start page of the working day (Next.js on Workers, KV, behind Access) | lmfaole.party/start |
 | `workers/activity` | Listens, plays and viewings from ListenBrainz, Last.fm, Trakt, Letterboxd, Steam and RetroAchievements into D1, weekly backup to R2 | cron |
@@ -15,6 +16,7 @@ originals, backups) and KV (small state), never on a machine at home.
 
 Each was a repository of its own (`lmfaole/designsystem`, `lmfaole.party`, `medier`, `podkast`, `startside`, `services`); those are archived,
 and their history stays there. This repository starts from their state on 2026-11-25 (without the podcast player `podkast`, which was dropped).
+`apps/forside` and `apps/cv` came later from the old private monorepo (its `apps/forside` and `apps/work`).
 
 ## Work on it
 

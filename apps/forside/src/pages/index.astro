@@ -1,0 +1,22 @@
+---
+export const prerender = true
+// `/`: the front page, a name, one sentence and a few plain links.
+import Document from '../layouts/Document.astro'
+import { NAME, PROFILE, pageHead } from '../lib/profile'
+import { Forside } from '../views/Forside'
+
+const page = pageHead('/')
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: NAME,
+  url: PROFILE.url,
+  image: `${PROFILE.url}profilbilde.jpg`,
+  email: `mailto:${PROFILE.email}`,
+  sameAs: [PROFILE.github, PROFILE.linkedin],
+}
+---
+
+<Document title={page.title} description={page.description} path="/" jsonLd={person}>
+  <Forside />
+</Document>

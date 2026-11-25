@@ -1,0 +1,16 @@
+---
+export const prerender = true
+// `/kilder`: where the media pages' content comes from; the next fetch is worked out in the browser, so the sections hydrate when the browser is idle.
+import { PageHeader } from '@lmfaole/designsystem/components/page-header'
+
+import Document from '../layouts/Document.astro'
+import { pageHead } from '../lib/profile'
+import { Kilder } from '../views/Kilder'
+
+const page = pageHead('/kilder')
+---
+
+<Document title={page.title} description={page.description} path="/kilder">
+  <PageHeader title={page.title} description={page.description} />
+  <Kilder client:idle />
+</Document>
