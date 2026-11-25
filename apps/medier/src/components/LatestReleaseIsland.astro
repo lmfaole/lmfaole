@@ -1,0 +1,21 @@
+---
+// A server island: the artist's newest release is one more question to MusicBrainz (kept for a week), with a budget of its own; a cold artist's page has used most of the Worker's limit.
+import { latestRelease } from '../lib/runtime'
+import { LatestRelease } from './detail'
+
+interface Props {
+  artist: string
+  /** MusicBrainz's id of the artist, from Last.fm; `null` searches by the name. */
+  mbid: string | null
+  /** The albums among the plays, `[albumKey, the edition played]`: those have a page to link to. */
+  played: [string, string][]
+  /** The covers the recent plays show (`playedCovers`). */
+  covers: [string, string][]
+  base: string
+}
+
+const { artist, mbid, played, covers, base } = Astro.props
+const release = await latestRelease(artist, mbid).catch(() => null)
+---
+
+<LatestRelease artist={artist} release={release} played={new Map(played)} covers={new Map(covers)} base={base} today={new Date().toISOString().slice(0, 10)} />

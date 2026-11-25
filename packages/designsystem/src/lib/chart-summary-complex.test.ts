@@ -1,0 +1,24 @@
+import assert from "node:assert/strict"
+import { test } from "node:test"
+
+import { summariseCalendar, summariseDumbbell } from "./chart-summary-complex.ts"
+import { monthRows } from "./heatmap.ts"
+
+test("the calendar summary counts days and names the busiest", () => {
+  const text = summariseCalendar([{ date: "2026-03-11", value: 2 }, { date: "2026-03-12", value: 9 }, { date: "2026-03-13", value: 0 }], "avspillinger")
+  assert.equal(text, "Kalenderdiagram, 11. mars til 13. mars: 11 avspillinger på 2 av 3 dager. Travleste dag: 12. mars (9).")
+  assert.equal(summariseCalendar([], "x"), null)
+})
+
+test("months add up and count active days", () => {
+  assert.deepEqual(monthRows([{ date: "2026-03-01", value: 2 }, { date: "2026-03-02", value: 0 }, { date: "2026-04-01", value: 5 }]), [["mars 2026", 2, 1], ["apr. 2026", 5, 1]])
+})
+
+test("the dumbbell summary names the biggest change in either direction", () => {
+  assert.match(summariseDumbbell([{ label: "A", from: 1, to: 2 }, { label: "B", from: 10, to: 4 }], "2024", "2025") ?? "", /Størst endring: B \(−6\)/)
+})
+
+test("a count of one takes the singular when the unit has one", () => {
+  assert.equal(summariseCalendar([{ date: "2026-11-16", value: 1 }], { one: "visning", many: "visninger" }), "Kalenderdiagram, 16. nov. til 16. nov.: 1 visning på 1 av 1 dager. Travleste dag: 16. nov. (1).")
+  assert.match(summariseCalendar([{ date: "2026-11-16", value: 2 }], { one: "visning", many: "visninger" }) ?? "", /2 visninger/)
+})

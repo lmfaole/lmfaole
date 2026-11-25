@@ -1,0 +1,36 @@
+---
+import { ErrorMessage } from '@lmfaole/designsystem/components/error-message'
+import { PageSection } from '@lmfaole/designsystem/components/page-section'
+
+import { WishlistRows } from '../../../components/steam'
+import UsernameGate from '../../../components/UsernameGate.astro'
+import Page from '../../../layouts/Page.astro'
+import { hasSteam, usersOf, wishlist } from '../../../lib/runtime'
+import { markSalesSeen } from '../../../lib/visitor-cookies'
+
+if (!hasSteam()) return Astro.rewrite('/404/')
+const base = import.meta.env.BASE_URL
+const users = usersOf(Astro.cookies)
+const list = users.steam === null ? null : await wishlist(users, Astro.cookies)
+// The sales are seen now: the bar counts only those that come after this.
+if (list !== null) markSalesSeen(Astro.cookies, list.onSale.map((game) => game.appId))
+---
+
+<Page current="games" title="Ønskeliste" lead="Spillene du ønsker deg på Steam, og hva som er på tilbud." crumbs={[{ label: 'Medier', href: base }, { label: 'Spill', href: `${base}spill/` }, { label: 'Ønskeliste', href: `${base}spill/onskeliste/` }]}>
+  {
+    users.steam === null ? (
+      <UsernameGate services={['steam']} />
+    ) : list === null ? (
+      <ErrorMessage what="ønskelisten" error="Steam svarte ikke, eller ønskelisten er ikke offentlig." />
+    ) : (
+      <>
+        <PageSection id="tilbud" title="På tilbud" icon="sale" source={{ label: 'Steam' }}>
+          <WishlistRows games={list.onSale} />
+        </PageSection>
+        <PageSection id="onskeliste" title="Hele ønskelisten" icon="favorite" source={{ label: 'Steam' }}>
+          <WishlistRows games={list.games} />
+        </PageSection>
+      </>
+    )
+  }
+</Page>

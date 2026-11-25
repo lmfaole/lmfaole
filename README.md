@@ -1,0 +1,35 @@
+# lmfaole
+
+lmfaole's apps, workers and design system in one repository. Everything runs on Cloudflare: the data lives in D1 (records), R2 (raw
+originals, backups) and KV (small state), never on a machine at home.
+
+| Path | What | Address |
+| --- | --- | --- |
+| `packages/designsystem` | The design system: theme, building blocks, components (React 19, Tailwind 4, shipped as source) and Storybook | design.lmfaole.party |
+| `apps/forside` | The front page, plain HTML and CSS | lmfaole.party (not deployed from here yet) |
+| `apps/medier` | What I listen to and watch (Astro on Workers) | medier.lmfaole.party |
+| `apps/startside` | The start page of the working day (Next.js on Workers, KV, behind Access) | lmfaole.party/start |
+| `workers/activity` | Listens, plays and viewings from ListenBrainz, Last.fm, Trakt, Letterboxd, Steam and RetroAchievements into D1, weekly backup to R2 | cron |
+| `workers/likes-sync` | Spotify likes → Last.fm loves | cron |
+| `workers/scheduler` | The account's one Cron Trigger (every quarter hour): calls `scheduled` on the Workers above whose job is due (`src/jobs.ts`) | cron |
+
+Each was a repository of its own (`lmfaole/designsystem`, `lmfaole.party`, `medier`, `podkast`, `startside`, `services`); those are archived,
+and their history stays there. This repository starts from their state on 2026-11-25 (without the podcast player `podkast`, which was dropped).
+
+## Work on it
+
+```sh
+npm install                          # every workspace, one lockfile
+npm run typecheck && npm test        # every workspace that has them
+npm run hooks                        # once per clone: the design system's visual test before a push
+npm run build -w apps/medier         # one workspace: -w <path>
+```
+
+The apps use the design system as a workspace (`"@lmfaole/designsystem": "*"`), so a change to it is checked against the apps in the
+same commit. Each app and worker keeps its own `package.json`, `wrangler.jsonc` and README.
+
+## CI
+
+One workflow per app in `.github/workflows/`, run only when its path (or the design system, or the lockfile) changes. A push to `main`
+deploys the app when the repository has `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`; the workers are only checked and deployed
+by hand (`npx wrangler deploy` in each).

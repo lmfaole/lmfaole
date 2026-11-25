@@ -1,0 +1,45 @@
+---
+import { GameDetail, gameFigures } from '../../components/games'
+import { GameMedia } from '../../components/game-media'
+import { Head } from '../../components/head'
+import UsernameGate from '../../components/UsernameGate.astro'
+import Page from '../../layouts/Page.astro'
+import { gameHref, gameId } from '../../lib/pages'
+import { steamView } from '../../lib/played-games'
+import { game, gameExtras, gameStats, hasSteam, usersOf } from '../../lib/runtime'
+import { mediaItems } from '../../lib/steam-view'
+import { transformed } from '../../lib/image-sources'
+
+const id = gameId(Astro.params.slug ?? '')
+if (id === null || !hasSteam()) return Astro.rewrite('/404/')
+const users = usersOf(Astro.cookies)
+const detail = users.steam === null ? null : await game(users, id)
+// A game the profile has not got (or Steam could not be asked): no page.
+if (users.steam !== null && detail === null) return Astro.rewrite('/404/')
+const base = import.meta.env.BASE_URL
+// An old address with the name spelt another way: the page's own.
+if (detail !== null && Astro.params.slug !== gameHref('', id, detail.game.name).slice('spill/'.length, -1)) return Astro.redirect(gameHref(base, id, detail.game.name))
+const view = detail === null ? null : steamView(detail)
+// What Steam says beyond the store's page (reviews, players now, news, the Deck, DLC), and the visitor's own numbers in the game; each asked on its own and left out where it fails.
+const [extras, stats] = detail === null ? [null, []] : await Promise.all([gameExtras(id, detail.store?.dlc ?? []), gameStats(users, id)])
+const media = detail?.store == null ? [] : mediaItems(detail.store)
+const hero = detail?.store?.media.hero
+---
+
+{view === null ? (
+  <Page current="games" title="Spill" lead="Siden viser spill fra Steam for profilen du oppgir." crumbs={[{ label: 'Medier', href: base }, { label: 'Spill', href: `${base}spill/` }]}>
+    <UsernameGate services={['steam']} />
+  </Page>
+) : (
+<Page bare current="games"
+  width="pane"
+  title={view.title}
+  lead={view.kind}
+  crumbs={[{ label: 'Medier', href: base }, { label: 'Spill', href: `${base}spill/` }, { label: view.title, href: gameHref(base, id, view.title) }]}
+>
+  <Head client:idle kind={view.kind} title={view.title} sources={transformed(view.cover === null ? [] : [view.cover])} shape="game" sleeve disc={view.held} figures={gameFigures(view)} backdrop={hero === undefined ? undefined : { sources: transformed([{ src: hero, width: 1920 }]) }} lines={view.developer === null ? [] : [view.developer]} tags={view.genres.slice(0, 4)} />
+  <GameDetail view={view} steam={{ store: detail?.store ?? null, extras, stats, base }} achievementsHref={`${gameHref(base, id, view.title)}prestasjoner/`}>
+    {media.length > 0 && <GameMedia client:visible items={media} />}
+  </GameDetail>
+</Page>
+)}

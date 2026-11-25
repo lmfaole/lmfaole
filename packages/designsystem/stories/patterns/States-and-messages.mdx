@@ -1,0 +1,93 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Badge } from "../../src/components/badge"
+import { Banner } from "../../src/components/banner"
+import { EmptyState } from "../../src/components/empty-state"
+import { ErrorMessage } from "../../src/components/error-message"
+import { Time } from "../../src/components/time"
+
+<Meta title="Patterns/States and messages" />
+
+# States and messages
+
+What a page says when it has nothing to show, when its data is old, while it waits and when something fails. A read-mostly page
+is judged on these moments more than on the happy path. The rules are from the documentation of GOV.UK, Primer, Carbon and
+Atlassian, put into our own terms: one reading column, state told in form (symbol and words, never colour alone), and
+Norwegian bokmål.
+
+## 1. Four states, each designed
+
+| State | Do |
+| --- | --- |
+| Loading | Show the frame at once. Nothing at all for what arrives within a second; `Skeleton` for what takes longer and for whole regions; one hidden label for a group («Henter pull requests»). |
+| Empty | `EmptyState` with a `reason` and a `what`: the words, the picture and the action follow from them. |
+| Error | `ErrorMessage` with a `what` and the `error`, in the part that failed. One failing source never takes the page down. |
+| Not found | `NotFoundPage`, with a way back. |
+
+## 2. Empty is four different things
+
+An empty page or section fills the room it stands in, after Apple's `ContentUnavailableView`: a picture, a title, a line under it and at
+most one central action, centred both ways. A page's empty state takes the rest of the screen; a section's a smaller, fixed share of it.
+The app says **why** it is empty and **what** would be here; the design system writes the words and draws the picture, so the same
+situation reads the same in every app. The types hold the rules: a first run cannot leave out its action, an all-done state cannot have one.
+
+<div className="sb-unstyled grid gap-4 sm:grid-cols-2">
+  <section data-frame="section"><EmptyState reason="all-done" what="åpne pull requests" /></section>
+  <section data-frame="section"><EmptyState reason="no-results" what="episoder" query="radioresepsjonen" /></section>
+</div>
+
+| `reason` | When | Title | Line under it | Action |
+| --- | --- | --- | --- | --- |
+| `first-run` | The reader has not started yet | «Ingen \{what\} ennå» | the app's own, required | required: the way to fill it («Finn podkaster») |
+| `nothing-yet` | It comes by itself | «Ingen \{what\} ennå» | «De dukker opp her når det kommer noe.» | optional |
+| `no-results` | A search or a filter left nothing | «Ingen treff for «\{query\}»», or «Ingen treff» | «Sjekk stavemåten eller prøv et annet søk.» | «Tøm søket» by default with a `query` |
+| `all-done` | Nothing is wrong: it is all handled | «Ingen \{what\}» | «Alt er behandlet.» | none: nothing to do is the message |
+
+- **It failed to load** is not empty: that is an `ErrorMessage` (below), with its own warning picture.
+- Replace the whole empty structure: no table headers over no rows, which a screen reader reads as an empty table.
+- Where many sections of a front page are empty at once, each stands as its own full section: the page says honestly that there is
+  nothing yet, and each section says why.
+
+## 3. A message has a place
+
+| It is about | It stands | Built from |
+| --- | --- | --- |
+| The whole page or a section, good news or a note | At the top of its body | `Banner` (`success` or `info`) |
+| No connection | Over the page | `ConnectionBanner` |
+| One action or one field | Next to it | Text, `StatusLine` |
+| Something the reader must answer to go on | A dialog | `Overlay` |
+| A failed query | In the part that failed | `ErrorMessage` |
+
+<div className="sb-unstyled grid gap-4">
+  <Banner tone="info" title="Dataene er fra i går">Synkroniseringen har ikke gått siden 18. november.</Banner>
+  <section data-frame="section"><ErrorMessage what="været" error={new Error("Yr svarte 502")} retry /></section>
+</div>
+
+- **No toast.** It disappears before it can be read and is hard to reach by keyboard. Say what happened where it happened.
+- **A failure is an `ErrorMessage`, never a warning `Banner`.** It says «Kunne ikke hente \{what\}», keeps the cause in a «Detaljer» fold,
+  offers «Prøv igjen» (`retry`) and is announced at once (`role="alert"`). A `Banner` is announced politely (`role="status"`).
+- **Success is only shown where it is not already evident.** A saved value that is on the page says nothing more. When it is said, it is
+  one word in the past tense with no full stop: «Lagret».
+
+## 4. Wording an error
+
+Say what happened, then what to do. Use the same words in a summary and next to the field. Never «Vennligst», «Beklager», «Ups»,
+«ugyldig» or «Noe gikk galt»; say what went wrong: «GitHub svarte 401. Lag en ny token.»
+
+## 5. Status, and time
+
+A status is **a symbol and a word**, in sentence case, never truncated and never colour alone: <Badge icon="pull-request-draft">Utkast</Badge>
+<Badge tone="destructive" icon="failure">Feilet</Badge>. One word for one meaning across the page. `destructive` is only for what stops something.
+
+A relative time always has the exact time with it: <Time value="2026-11-19T09:00:00Z" now={new Date("2026-11-19T12:00:00Z")} /> says
+«for 3 timer siden» and carries the exact time in its title. Under seven days is relative, after that a date. `now` is passed in, so the
+server and the browser tell the same story.
+
+## Sources
+
+[GOV.UK error message](https://design-system.service.gov.uk/components/error-message/), [GOV.UK dates](https://design-system.service.gov.uk/patterns/dates/),
+[Primer empty states](https://primer.style/product/ui-patterns/empty-states/), [Primer loading](https://primer.style/product/ui-patterns/loading/),
+[Primer notification messaging](https://primer.style/product/ui-patterns/notification-messaging/),
+[Carbon empty states](https://carbondesignsystem.com/patterns/empty-states-pattern/),
+[Carbon status indicators](https://carbondesignsystem.com/patterns/status-indicator-pattern/),
+[Atlassian lozenge](https://atlassian.design/components/lozenge/usage).

@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule: { interval: weekly }
+    # The same seven days as the owner's npm `min-release-age`.
+    cooldown: { default-days: 7 }
+    groups:
+      all: { patterns: ["*"] }
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }

@@ -1,0 +1,96 @@
+/*
+ * Light and shadow. One light for the whole page (`lib/light.ts`), where it is is `--light-x` and `--light-y` (-1 to 1 across the screen, x to the right, y down,
+ * the place the light is FROM). `LightSource` moves them with the pointer and the tilt of a phone; with neither, and under `prefers-reduced-motion`, they stay at the
+ * upper left. A shadow falls away from the light, so every elevation below moves with it, and nothing says anything by its shadow alone: a shadow is
+ * depth, never information.
+ */
+
+:root {
+  --light-x: -0.5;
+  --light-y: -0.7;
+  --shadow-color: oklch(0.2 0 0 / 0.3);
+  /* The rim of light on the side of a lit frame that faces the light. White: it shows on a dark page and is lost on a white one, which is as it should be. */
+  --rim-color: oklch(1 0 0 / 0.9);
+  /* What a record's grooves spread a bright light into. */
+  --spectrum-violet: oklch(0.66 0.24 305);
+  --spectrum-cyan: oklch(0.82 0.13 205);
+  --spectrum-yellow: oklch(0.92 0.17 100);
+  --spectrum-pink: oklch(0.7 0.22 5);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --shadow-color: oklch(0 0 0 / 0.6);
+    --rim-color: oklch(1 0 0 / 0.3);
+  }
+}
+
+:root[data-theme='dark'] {
+  --shadow-color: oklch(0 0 0 / 0.6);
+  --rim-color: oklch(1 0 0 / 0.3);
+}
+
+@layer components {
+  /* Three heights: a card on the page, a thing lifted off it, a thing floating over it. The offset is away from the light; the blur grows with the height. */
+  .elevation-1 {
+    box-shadow: calc(var(--light-x) * -0.125rem) calc(var(--light-y) * -0.125rem) 0.25rem var(--shadow-color);
+  }
+
+  .elevation-2 {
+    box-shadow: calc(var(--light-x) * -0.375rem) calc(var(--light-y) * -0.375rem) 0.875rem var(--shadow-color);
+  }
+
+  /*
+   * The frame of the page's main picture (`Picture size="hero"`): a shadow that falls away from the light and a thin rim of light on the side that faces it. Both are OUTSIDE the picture,
+   * so nothing is painted over it: that is what lets it be used on pictures whose source says they may not be overlaid (Spotify's).
+   */
+  .lit-frame {
+    box-shadow:
+      calc(var(--light-x) * 0.09375rem) calc(var(--light-y) * 0.09375rem) 0 0 var(--rim-color),
+      calc(var(--light-x) * -0.4375rem) calc(var(--light-y) * -0.4375rem) 1rem var(--shadow-color);
+  }
+
+  /* Where the light is, drawn: a soft pool of it on a surface and a small sun at its place, for a preview of the light (`TiltPreview`). Both follow `--light-x` and `--light-y`. */
+  .light-spot {
+    background: radial-gradient(
+      circle at calc(50% + var(--light-x) * 45%) calc(50% + var(--light-y) * 45%),
+      color-mix(in oklch, var(--foreground) 16%, transparent),
+      transparent 60%
+    );
+  }
+
+  .light-dot {
+    position: absolute;
+    inset-inline-start: calc(50% + var(--light-x) * (50% - 1.5rem));
+    inset-block-start: calc(50% + var(--light-y) * (50% - 1.5rem));
+    translate: -50% -50%;
+  }
+
+  .elevation-3 {
+    box-shadow: calc(var(--light-x) * -0.75rem) calc(var(--light-y) * -0.75rem) 1.75rem var(--shadow-color);
+  }
+
+  /*
+   * What a disc shows where WebGL is not (and before it is): two bands of light and the spectrum they spread, on top of the cover, standing still as the disc turns under them
+   * (the grooves are round, so the reflection does not turn). The bands sit on the line from the light through the middle of the disc.
+   */
+  .light-sheen {
+    /* Soft light, not screen: a band brightens the cover in its own colour instead of laying white and a rainbow over it, with only a trace of the spectrum left. */
+    mix-blend-mode: soft-light;
+    background:
+      conic-gradient(from calc(atan2(var(--light-y), var(--light-x)) + 47deg), transparent 0 8%, oklch(1 0 0 / 0.7) 12%, transparent 18% 50%, oklch(1 0 0 / 0.5) 62%, transparent 68%),
+      conic-gradient(
+        from calc(atan2(var(--light-y), var(--light-x)) + 47deg),
+        transparent 0 6%,
+        color-mix(in oklch, var(--spectrum-violet) 12%, transparent) 9%,
+        color-mix(in oklch, var(--spectrum-cyan) 12%, transparent) 12%,
+        color-mix(in oklch, var(--spectrum-yellow) 12%, transparent) 15%,
+        color-mix(in oklch, var(--spectrum-pink) 10%, transparent) 18%,
+        transparent 21% 48%,
+        color-mix(in oklch, var(--spectrum-violet) 10%, transparent) 58%,
+        color-mix(in oklch, var(--spectrum-cyan) 10%, transparent) 62%,
+        color-mix(in oklch, var(--spectrum-yellow) 10%, transparent) 66%,
+        transparent 70%
+      );
+  }
+}

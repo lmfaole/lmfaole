@@ -1,0 +1,11 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "startside-upstream",
+  "main": "worker.js",
+  "compatibility_date": "2026-11-01",
+  // Only the page's service binding UPSTREAM reaches it: no workers.dev and no preview addresses.
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true }
+  // Secrets: UPSTREAM_KEY (the same as the page's), GITHUB_TOKEN.
+}

@@ -1,0 +1,7 @@
+{
+  "play": [{ "d": "M38 27 L74 50 L38 73 Z", "fill": "currentColor", "stroke": "currentColor", "strokeWidth": "7", "strokeLinejoin": "round" }],
+  "sunrise": [
+    { "d": "M28 60 A22 22 0 0 1 72 60 Z", "fill": "currentColor" },
+    { "d": "M16 70 H84 M30 80 H70 M50 18 V28 M21 31 L28 38 M79 31 L72 38", "fill": "none", "stroke": "currentColor", "strokeWidth": "5", "strokeLinecap": "round" }
+  ]
+}

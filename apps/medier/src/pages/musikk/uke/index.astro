@@ -1,0 +1,7 @@
+---
+import { mediumHref } from '../../../lib/media'
+import { lastCompletedWeek } from '../../../lib/weeks'
+
+// The wrapped opens on the last week that is over; the weeks before it, and this one so far, are on its page.
+return Astro.redirect(mediumHref(import.meta.env.BASE_URL, 'music', 'uke/', lastCompletedWeek(Date.now()).id))
+---

@@ -1,0 +1,75 @@
+import type { Meta, StoryObj } from "@storybook/react-vite"
+
+import { useState } from "react"
+
+import { Stack } from "../../../src/components/layout"
+import { NowPlayingCard } from "../../../src/components/now-playing-card"
+import { Button } from "../../../src/components/ui/button"
+import { poster } from "../../sample"
+
+const meta = {
+  title: "Components/Media/NowPlayingCard",
+  component: NowPlayingCard,
+  tags: ["autodocs"],
+  args: { picture: poster(10, "A"), title: "Hard", detail: "Rihanna, Jeezy · Rated R" },
+  parameters: { docs: { description: { component: `### Use it when
+
+what plays now should be the first thing on a page, once: a record as a disc that turns slowly under the page's light, on a stage of the cover's own colours, with the words «Spilles nå», a pulsing dot, the title and a line under it. When the song changes, the colours of the stage go over to the new cover's and settle (one move of 0.7 s), and the disc takes the new cover.
+
+The disc is drawn in WebGL (the cover turns, the reflections do not, and the cover shapes them: its hue where the spectrum starts and how much of its colour is in it, how vivid it is how tight the bands are, how light it is how much it shines) and follows the page's one light: move the pointer over the page, or tilt the phone (\`LightSource\`, which the card carries; iOS asks first, with a button). A tap on the disc pauses it. Where WebGL is not there, it is the same in CSS.
+
+### Do not use it when
+
+there is more than one thing playing, or on a page that does not show what plays: the disc is the one thing that moves on a page. For the song in a list, use \`List\` with a row\'s \`live\`.
+
+### Accessibility
+
+**Handled by the component**
+
+- The turning loops for as long as it plays, which WCAG 2.2.2 asks to be pausable: the disc is a button («Stopp snurringen», «Start snurringen»), and under \`prefers-reduced-motion\` it does not turn and there is nothing to press ([2.2.2 Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide)). The tilt button's target is 2.75rem tall, though it looks smaller ([2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)).
+- The card is not one large link: the disc is a button of its own, and the line under the title may have links of its own; \`title\` is plain text.
+- «Spilles nå» is in words; the disc and the dot are decoration, never the only signal ([1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color)).
+- The light is soft and large, and nothing flashes ([2.3.1 Three Flashes or Below Threshold](https://www.w3.org/WAI/WCAG22/Understanding/three-flashes-or-below-threshold)).
+- The canvas is hidden from assistive technology; the drawing stops when the disc is off the screen or the tab is hidden.
+
+**You check**
+
+- \`title\` names what plays.
+- The cover may be read by WebGL only where its host allows it (CORS); where not, the CSS disc is shown.
+
+### Content
+
+«Spilles nå», the title, and by whom.
+
+### Related
+
+\`Picture\` (\`disc\`), \`LightSource\`, \`LiveDot\`, \`List\` (\`live\`)` } }, },
+} satisfies Meta<typeof NowPlayingCard>
+export default meta
+type Story = StoryObj<typeof meta>
+
+/** The card on a page: move the pointer to move the light; a tap on the disc pauses it. */
+export const Default: Story = {}
+/** A cover that may not be cropped or have anything on it (Spotify's): `disc` off, and it is shown as it is, sharp and still. */
+export const WithoutDisc: Story = { args: { disc: false } }
+
+/** The song changes while the page is open: the stage's colours go over to the new cover's in one move of 0.7 s and settle, and the disc takes the new cover. */
+export const SongChange: Story = {
+  render: () => {
+    const songs = [
+      { title: "Hard", detail: "Rihanna, Jeezy · Rated R", src: poster(10, "A") },
+      { title: "Alyse", detail: "Shygirl · Alyse", src: poster(200, "B") },
+      { title: "Submit", detail: "Shygirl · Alias", src: poster(120, "C") },
+    ]
+    const [index, setIndex] = useState(0)
+    const song = songs[index % songs.length] ?? songs[0]
+    return (
+      <Stack>
+        <NowPlayingCard picture={song?.src ?? null} title={song?.title ?? ""} detail={song?.detail} />
+        <Button type="button" variant="outline" onClick={() => setIndex((now) => now + 1)}>
+          Neste sang
+        </Button>
+      </Stack>
+    )
+  },
+}

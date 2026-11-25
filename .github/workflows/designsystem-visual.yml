@@ -1,0 +1,87 @@
+name: designsystem-visual
+
+# Every story's picture against the reference CI keeps in `packages/designsystem/stories/**/__screenshots__` (`npm run test:visual`, `.storybook/visual.setup.ts`).
+# The references are drawn in this Linux: a new story gets its picture from the push to main that adds it (committed by the bot), and
+# changed pictures from a run by hand with «update» on (Actions → Visual → Run workflow), or before the push with
+# `npm run test:visual:docker -- --update`, which draws them in Playwright's image as here (a picture from a Mac itself differs by a few
+# pixels of font rendering). A failed run keeps the actual pictures and the differences as an artifact.
+on:
+  push:
+    branches: [main]
+    paths: [packages/designsystem/**, package-lock.json, .github/workflows/designsystem-visual.yml]
+  pull_request:
+    paths: [packages/designsystem/**, package-lock.json, .github/workflows/designsystem-visual.yml]
+  workflow_dispatch:
+    inputs:
+      update:
+        description: Make new reference pictures from this commit and commit them
+        type: boolean
+        default: false
+
+concurrency:
+  group: designsystem-visual-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    working-directory: packages/designsystem
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+        working-directory: .
+      - run: npx playwright install --with-deps chromium
+
+      - name: Compare with the references
+        if: ${{ !inputs.update }}
+        run: |
+          if [ -z "$(find stories -path '*__screenshots__*' -name '*.png' -print -quit)" ]; then
+            echo "::notice::No reference pictures yet: run this workflow by hand with «update» on to make them."
+            exit 0
+          fi
+          # A story without a reference fails even under --update=new, which makes the picture: so a failed first pass is run again,
+          # and only a difference from an existing reference (or a story that will not settle) fails the job.
+          if npm run test:visual -- --update=new; then exit 0; fi
+          made=$(git ls-files --others --exclude-standard 'stories/**/__screenshots__/**' | grep -c '\.png$' || true)
+          [ "$made" -gt 0 ] || exit 1
+          echo "::notice::$made new reference picture(s) for new stories; comparing again."
+          npm run test:visual
+          if [ "$GITHUB_EVENT_NAME" = push ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add 'stories/**/__screenshots__/**'
+            git commit -m "Visual: reference pictures for new stories from ${GITHUB_SHA::7}"
+            git pull --rebase -q origin main && git push
+          fi
+
+      - name: Make new references and commit them
+        if: ${{ inputs.update }}
+        run: |
+          npm run test:visual -- --update
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 'stories/**/__screenshots__/**'
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git commit -m "Visual: new reference pictures from ${GITHUB_SHA::7}"
+          git push
+
+      - name: Keep the pictures of a failed run
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-differences
+          path: |
+            packages/designsystem/stories/**/__screenshots__/**
+            packages/designsystem/.vitest-attachments/**
+          if-no-files-found: ignore

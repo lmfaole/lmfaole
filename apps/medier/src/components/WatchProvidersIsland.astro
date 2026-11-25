@@ -1,0 +1,16 @@
+---
+// A server island: where a film or a show can be seen is one more question to TMDB (kept for a day), which the page need not wait for.
+import { watchProviders } from '../lib/runtime'
+import { WatchProviders } from './detail'
+
+interface Props {
+  kind: 'film' | 'episode'
+  /** TMDB's id of the film or the show, from Trakt; without it there is nothing to ask. */
+  tmdbId: number | null
+}
+
+const { kind, tmdbId } = Astro.props
+const providers = tmdbId === null ? null : await watchProviders(kind, tmdbId)
+---
+
+<WatchProviders providers={providers} />

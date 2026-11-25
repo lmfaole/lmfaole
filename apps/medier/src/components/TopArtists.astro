@@ -1,0 +1,18 @@
+---
+// A server island: it asks for its own page, so the pictures from Spotify have a budget of questions of their own and are not starved by the rest of the page.
+import { artistPictures } from '../lib/runtime'
+import type { TopArtist } from '../lib/wrapped'
+import { ArtistsSection } from './wrapped'
+
+interface Props {
+  artists: TopArtist[]
+  /** The names of the artists that have a page of their own to link to. */
+  linked: string[]
+  base: string
+}
+
+const { artists, linked, base } = Astro.props
+const pictures = await artistPictures(artists.map((artist) => artist.name))
+---
+
+<ArtistsSection artists={artists} pictures={pictures} linked={new Set(linked)} base={base} />

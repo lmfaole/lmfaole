@@ -1,0 +1,23 @@
+{
+  "name": "likes-sync",
+  "private": true,
+  "type": "module",
+  "description": "Spotify-likes til Last.fm: en Cloudflare Worker som en gang i uka elsker sangene du har likt på Spotify",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "tsc --noEmit",
+    "dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler deploy",
+    "auth": "node scripts/auth.ts",
+    "secrets": "node scripts/secrets.ts",
+    "backfill": "node scripts/backfill.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "~7.0.2",
+    "wrangler": "^4.150.0"
+  }
+}

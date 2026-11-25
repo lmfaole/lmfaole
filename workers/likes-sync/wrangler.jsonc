@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "likes-sync",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-11-01",
+  // node:crypto, for Last.fm's MD5 signature.
+  "compatibility_flags": ["nodejs_compat"],
+  // Only the cron: no address at all.
+  "workers_dev": false,
+  "preview_urls": false,
+  // The cursor (the newest liked song that is loved) and Spotify's refresh token where it has rotated it. No id: wrangler deploy makes the namespace the first time.
+  "kv_namespaces": [{ "binding": "STATE" }],
+  // No cron of its own: workers/scheduler calls `scheduled` Mondays at 05:00 UTC.
+  "triggers": { "crons": [] },
+  "observability": { "enabled": true }
+  // Secrets (npm run secrets): SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN, LASTFM_API_KEY, LASTFM_API_SECRET, LASTFM_SESSION_KEY.
+}

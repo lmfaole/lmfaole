@@ -1,0 +1,12 @@
+---
+import { ErrorMessage } from '@lmfaole/designsystem/components/error-message'
+
+import Page from '../layouts/Page.astro'
+
+// Kept by the service worker when the app is installed: shown when a page is asked for with no network and there is no copy of it. Static, so it is a file, not a request.
+export const prerender = true
+---
+
+<Page firstRun={false} title="Frakoblet" lead="Siden trenger nett for å hente det som er nytt.">
+  <ErrorMessage what="siden" error="Ingen nett. Sidene du har sett nylig, kan fortsatt åpnes." retry />
+</Page>

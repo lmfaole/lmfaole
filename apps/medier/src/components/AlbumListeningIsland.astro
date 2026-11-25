@@ -1,0 +1,29 @@
+---
+// A server island: the album's plays over time are one weekly album chart from Last.fm a stretch (up to 24, shared by every album's page), too many for the page itself on a cold cache.
+import { listeningChartText } from '../lib/artist-listening'
+import { albumTimeline, usersOf } from '../lib/runtime'
+import { PageSection } from '@lmfaole/designsystem/components/page-section'
+import { ListeningChart } from './trend'
+
+interface Props {
+  artist: string
+  title: string
+}
+
+const { artist, title } = Astro.props
+const timeline = await albumTimeline(usersOf(Astro.cookies), artist, title)
+const chart = timeline === null || timeline.series.every((one) => one.plays === 0) ? null : listeningChartText(timeline.unit, timeline.series)
+---
+
+{timeline !== null && chart !== null && (
+  <PageSection id="lytting" title="Din lytting" icon="chart">
+    <ListeningChart
+      client:visible
+      title={chart.title}
+      description={chart.description}
+      summary={chart.summary}
+      ariaLabel={`Avspillinger av ${title} over tid`}
+      points={timeline.series.map((one) => ({ label: one.label, value: one.plays }))}
+    />
+  </PageSection>
+)}

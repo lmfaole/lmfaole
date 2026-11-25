@@ -1,0 +1,130 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Heading, Text } from "../../src/components/text"
+import { Stack } from "../../src/components/layout"
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+Few sizes, few weights, three levels, and one measure. A page never sets a size, a weight or a colour: it asks `Text` and `Heading`. The
+rules are from GOV.UK, Primer, Atlassian, NAV Aksel, Carbon, Butterick's *Practical Typography* and WCAG, put into our terms; each source is at the end.
+
+## 1. What we have
+
+| | Values |
+| --- | --- |
+| `Text` size | `xs`, `sm`, `base` (the default), `lg` |
+| `Text` tone | `default`, `muted`, `destructive` |
+| `Text` weight | `normal`, `medium`, `semibold` |
+| `Heading` look | `page`, `section`, `label` |
+| Typefaces | Atkinson Hyperlegible Next for all text and headings, its Mono for short labels and code (see **Typefaces** below) |
+
+`Heading` takes a `level` (the element, which makes the page's outline) and a `look` (how it looks), chosen apart: a section is an `h2` whatever it looks like, and a
+title is never made by making text bold or larger (Atlassian, Aksel).
+
+<div className="sb-unstyled">
+<Stack>
+  <Heading level={1}>Sidens tittel</Heading>
+  <Heading level={2}>Seksjon</Heading>
+  <Heading level={3}>Liten seksjonstittel</Heading>
+  <Text>Brødtekst i vanlig størrelse.</Text>
+  <Text role="quiet">Sekundær tekst, mindre og dempet.</Text>
+  <Text role="note">Tekst fra Wikipedia</Text>
+</Stack>
+</div>
+
+## 2. Few sizes
+
+The established systems have six to eight sizes in all (GOV.UK seven, Primer six, Atlassian a 4 px grid from 12 to 32 px), and Butterick asks for no more than three heading
+levels, two if possible, with the smallest visible step between them. We have four text sizes and two page-title sizes, and use them for three levels:
+
+1. **The page** (`PageHeader`): one `h1`.
+2. **A section** (`PageSection`): its title as a small uppercase label or a semibold heading, an `h2`, and its parts one level down (`h3`).
+3. **An item** (a row's name): the strong name in `List`.
+
+There is **no fourth level of emphasis**. Bold is for what stops something or what is the point (GOV.UK: «use bold text sparingly»). Italic is not used, and never together with bold (Butterick).
+
+## 3. Reading width and line height
+
+- A line of running text has **45–90 characters** (Butterick); GOV.UK says no more than 75. The reading column is 48 rem, which holds a paragraph of
+  `Text` at about 80 characters; a page's description under its title is held to about 65 (`PageHeader`). A list, a row or a table can use the whole column.
+- Line height is the pair that comes with each size and is about one and a half for body text, inside Butterick's 120–145 % of the type size and a little above it. Do not set one yourself.
+- Text must still work when the reader sets it larger or looser: WCAG 1.4.12 asks that nothing is cut off when the line height is 1.5 times the size, paragraph spacing twice, letter spacing 0.12 em and word
+  spacing 0.16 em; WCAG 1.4.4 asks that text can be resized to 200 %. So size text in relative units and never in viewport units (WCAG failure F94), and let boxes grow with their text.
+
+## 4. Emphasis
+
+- **Weight first, then tone.** A name is `medium`, the rest is `muted` and small. That is how a row is scanned down its left edge.
+- **Uppercase is for short labels** (`Heading look="label"`), with letter spacing; Butterick asks for 5–12 % extra, and the label look has 10 %. Never a sentence in capitals.
+- **A heading is not centred, not underlined**, and is kept together by `text-balance` for the page title.
+- `destructive` text is for what stops something, with a symbol and words.
+
+## 5. Figures and code
+
+- Figures that line up (a column, a counter, a clock) use tabular numbers: `Text role="figure"` (GOV.UK: tabular numbers for comparison, for reference numbers and for counters that update).
+- Identifiers, paths, commands and ids are monospace (`font-mono`, through `Markdown` for code in text).
+
+## 6. Norwegian
+
+- Quotes are « » and not " ". A range is an en dash without spaces («9–15», «2020–2025»), or «fra … til» in a sentence; a spaced hyphen is not used (Aksel, *Skriveregler*).
+- A number and its unit or `%` stay together with a non-breaking space («93 %», «12 m/s»); thousands are grouped with a space (`Intl` does both in nb-NO). A minus is −.
+- `<html lang="nb">` is set once on the page: screen readers read in the right language and the browser knows which language to hyphenate. Do not rely on hyphenation:
+  `hyphens: auto` needs the language's dictionary in the browser (MDN), and we have not checked every browser for Norwegian.
+
+## 7. Check it
+
+1. Read the page at 200 % zoom and at 400 px wide: nothing is cut, nothing scrolls sideways.
+2. Count the levels: page, section, item. If you need a fourth, the structure is wrong, not the type.
+3. Cover everything but the left edge: is the name of each row the strongest part?
+4. Look at the longest paragraph: is it in the reading column (`PageLayout width="reading"`)?
+
+## 8. Typefaces
+
+**Atkinson Hyperlegible Next** for all text and every heading, **Atkinson Hyperlegible Mono** for short uppercase labels, code and
+technical values. Chosen in 8.25 against six other pairs, measured on their `latin` files and set on the same page:
+
+| Pair | x-height (of the em) | Sans and mono alike | Weight of both | I l 1, O 0 |
+| --- | --- | --- | --- | --- |
+| Geist + JetBrains Mono (before) | 0.530 / 0.550 | no: the mono is larger | 68 KB | alike |
+| Geist + Geist Mono | 0.530 | yes | 51 KB | alike |
+| IBM Plex Sans + Plex Mono | 0.516 | yes | 59 KB, the mono static | told apart |
+| Source Sans 3 + Source Code Pro | 0.478 (small, narrow) | yes | 50 KB | told apart |
+| **Atkinson Hyperlegible Next + Mono** | **0.496** | **yes** | **50 KB** | **told apart, by design** |
+| Inter + JetBrains Mono | 0.546 / 0.550 | near | 87 KB | alike |
+| Mona Sans + Monaspace Neon | 0.517 / 0.513 | near | 82 KB | partly |
+
+Why this one:
+
+- **One superfamily.** Two members of one family share their skeleton, x-height, capitals and figures, so a mono label and the title above
+  it sit on the same line and read as one voice (Google Fonts, FontShop). Two families from two designers have to be tuned against each
+  other and never quite agree; the old pair's mono stood larger than its sans.
+- **No monospace headings.** Monospace is a spacing system for code, columns and alignment; in a title its even widths make an uneven rhythm
+  and a long line (a title broke in two where the sans keeps it on one). Mono is kept where it helps: a short label in capitals, code, a status code.
+- **Legibility is the point of it.** The Braille Institute drew it so letters that are easily confused are not: a tail on `l`, serifs on
+  `I`, a slashed `0`. That serves every reader and the low-vision reader most, which is what this system is for. Its tabular figures share
+  the mono's shapes, so a column of numbers and a line of code agree.
+- **Light.** One variable file per member, 50 KB for both in `latin`, 18 KB less than before.
+
+Its x-height is a little lower than Geist's, so 16 px reads a hair smaller; the sizes are kept, since its open shapes read clearly at them.
+
+## Sources
+
+[GOV.UK type scale](https://design-system.service.gov.uk/styles/type-scale/),
+[GOV.UK font override classes](https://design-system.service.gov.uk/styles/font-override-classes/),
+[Primer typography](https://primer.style/product/primitives/typography/),
+[Atlassian typography](https://atlassian.design/foundations/typography),
+[Aksel typography](https://aksel.nav.no/komponenter/core/typography),
+[Butterick, headings](https://practicaltypography.com/headings.html),
+[Butterick, line length](https://practicaltypography.com/line-length.html),
+[Butterick, line spacing](https://practicaltypography.com/line-spacing.html),
+[Butterick, bold or italic](https://practicaltypography.com/bold-or-italic.html),
+[Butterick, letterspacing](https://practicaltypography.com/letterspacing.html),
+[WCAG 1.4.12 text spacing](https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html),
+[WCAG 1.4.4 resize text](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html),
+[Google Fonts, pairing within a superfamily](https://fonts.google.com/knowledge/choosing_type/pairing_typefaces_within_a_family_superfamily),
+[FontShop, how to mix type](https://www.fontshop.com/content/how-to-mix-type),
+[Fontsource, Atkinson Hyperlegible Mono](https://fontsource.org/fonts/atkinson-hyperlegible-mono/about),
+[Braille Institute and Applied Design, Atkinson Hyperlegible Next](https://lbbonline.com/news/applied-design-launches-atkinson-hyperlegible-next-typeface),
+[MDN, hyphens](https://developer.mozilla.org/en-US/docs/Web/CSS/hyphens),
+[Aksel, Skriveregler i Nav](https://aksel.nav.no/god-praksis/artikler/skriveregler-i-nav).

@@ -1,0 +1,92 @@
+{
+  "name": "@lmfaole/designsystem",
+  "version": "9.3.1",
+  "private": true,
+  "type": "module",
+  "description": "The design system: the theme (tokens, fonts, motion), the building blocks a page is put together from, and the components built on them. React and Tailwind, shipped as source.",
+  "repository": "github:lmfaole/lmfaole",
+  "scripts": {
+    "lint": "oxlint -c oxlintrc.json src",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test \"src/**/*.test.ts\" \"scripts/**/*.test.mjs\"",
+    "icons": "node scripts/generate-icons.mjs",
+    "use-cases": "node scripts/use-cases.mjs",
+    "verify": "npm run -s typecheck && npm run -s lint && npm test",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o storybook-static",
+    "deploy": "npm run build-storybook && wrangler deploy",
+    "test:stories": "vitest run --project=\"storybook-*\"",
+    "test:visual": "vitest run --project=visual",
+    "test:visual:docker": "node scripts/visual-docker.mjs"
+  },
+  "exports": {
+    "./theme.css": "./src/theme.css",
+    "./motion.css": "./src/motion.css",
+    "./shell.css": "./src/shell.css",
+    "./overlay.css": "./src/overlay.css",
+    "./first-run.css": "./src/first-run.css",
+    "./components/button-group": "./src/components/ui/button-group.tsx",
+    "./components/native-select": "./src/components/ui/native-select.tsx",
+    "./components/skeleton": "./src/components/ui/skeleton.tsx",
+    "./components/table": "./src/components/ui/table.tsx",
+    "./components/card": null,
+    "./components/separator": null,
+    "./components/ui/*": null,
+    "./components/internal/*": null,
+    "./components/*": "./src/components/*.tsx",
+    "./lib/*": "./src/lib/*.ts"
+  },
+  "files": [
+    "src",
+    ".claude/skills",
+    "scripts"
+  ],
+  "dependencies": {
+    "@fontsource-variable/atkinson-hyperlegible-mono": "^5.3.0",
+    "@fontsource-variable/atkinson-hyperlegible-next": "^5.3.0",
+    "@tanstack/charts": "^1.0.0",
+    "class-variance-authority": "^0.7.1",
+    "cn": "^0.4.0",
+    "lucide-react": "^1.48.0",
+    "radix-ui": "^1.6.7",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "peerDependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^11.0.0-beta.3",
+    "@storybook/addon-docs": "^11.0.0-beta.3",
+    "@storybook/addon-mcp": "^11.0.0-beta.3",
+    "@storybook/addon-vitest": "^11.0.0-beta.3",
+    "@storybook/react-vite": "^11.0.0-beta.3",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@typescript/native": "npm:typescript@~7.0.2",
+    "@vitest/browser-playwright": "^4.1.12",
+    "oxlint": "^1.81.0",
+    "playwright": "^1.65.1",
+    "react": "^19.2.8",
+    "react-docgen": "^8.0.4",
+    "react-dom": "^19.2.8",
+    "storybook": "^11.0.0-beta.3",
+    "tailwindcss": "^4.3.3",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^4.1.12",
+    "wrangler": "^4.164.0"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "designsystem-skills": "./scripts/install-skills.mjs",
+    "designsystem-app-icons": "./scripts/app-icons.mjs",
+    "designsystem-budget": "./scripts/budget.mjs"
+  }
+}

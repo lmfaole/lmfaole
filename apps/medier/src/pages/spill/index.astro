@@ -1,0 +1,76 @@
+---
+import { ErrorMessage } from '@lmfaole/designsystem/components/error-message'
+import { PageSection } from '@lmfaole/designsystem/components/page-section'
+import { LinkButton } from '@lmfaole/designsystem/components/link-button'
+import { Text, TextLink } from '@lmfaole/designsystem/components/text'
+
+import { MostPlayedGames, RecentGames } from '../../components/games'
+import { Fetched } from '../../components/sections'
+import { WishlistRows } from '../../components/steam'
+import UsernameGate from '../../components/UsernameGate.astro'
+import Page from '../../layouts/Page.astro'
+import { mostPlayed, recentGames } from '../../lib/played-games'
+import { games, hasRetro, hasSteam, retroGames, steamPresence, usersOf, wishlist } from '../../lib/runtime'
+import { gameHref } from '../../lib/pages'
+import type { Service } from '../../lib/users'
+
+const users = usersOf(Astro.cookies)
+const base = import.meta.env.BASE_URL
+// Each source of games only where the site has its key; with it, the visitor's own profile (Steam's custom name or SteamID, RetroAchievements' username).
+const steam = hasSteam() && users.steam !== null
+const retro = hasRetro() && users.retroachievements !== null
+const available: Service[] = [...(hasSteam() ? (['steam'] as const) : []), ...(hasRetro() ? (['retroachievements'] as const) : [])]
+const [fromSteam, fromRetro, presence, wishes] = await Promise.all([steam ? games(users) : null, retro ? retroGames(users) : null, steam ? steamPresence(users) : null, steam ? wishlist(users, Astro.cookies) : null])
+const playing = presence?.playing ?? null
+// One list of games, whichever service each was played through: a source that did not answer is said below the lists.
+const entries = [...(fromSteam?.entries ?? []), ...(fromRetro?.entries ?? [])]
+const failed = [...(steam && fromSteam === null ? ['Steam'] : []), ...(retro && fromRetro === null ? ['RetroAchievements'] : [])]
+const profiles = [...(fromSteam === null ? [] : [{ href: fromSteam.profile, label: 'Steam' }]), ...(fromRetro === null ? [] : [{ href: fromRetro.profile, label: 'RetroAchievements' }])]
+const recent = recentGames(entries, Math.floor(Date.now() / 1000))
+const most = mostPlayed(entries)
+---
+
+<Page current="games" title="Spill" lead="Spillene du har spilt, fra Steam og RetroAchievements.">
+  {
+    available.length === 0 ? (
+      <ErrorMessage what="spill" error="Siden har ingen nøkkel til Steam eller RetroAchievements ennå." />
+    ) : !steam && !retro ? (
+      <UsernameGate services={available} />
+    ) : (
+      <>
+        {failed.length > 0 && <Fetched sources={failed.map((source) => ({ at: null, source }))} />}
+        {playing !== null && (
+          <PageSection id="na" title="Spiller nå" icon="game">
+            <Text>
+              {playing.appId === null ? playing.name : <TextLink href={gameHref(base, playing.appId, playing.name)}>{playing.name}</TextLink>}
+            </Text>
+          </PageSection>
+        )}
+        {wishes !== null && wishes.onSale.length > 0 && (
+          <PageSection id="tilbud" title="Ønskeliste på tilbud" icon="sale" continues={{ href: `${base}spill/onskeliste/`, label: 'Se hele ønskelisten' }}>
+            <WishlistRows games={wishes.onSale.slice(0, 3)} />
+          </PageSection>
+        )}
+        {profiles.length > 0 && (
+          <>
+            <PageSection id="nylig" title="Nylig spilt" icon="game">
+              <RecentGames games={recent} base={base} empty={profiles[0] === undefined ? undefined : { href: profiles[0].href, label: `Åpne profilen på ${profiles[0].label}` }} />
+            </PageSection>
+            <PageSection id="mest" title="Mest spilt" icon="trend-up">
+              <MostPlayedGames games={most} base={base} />
+              <Text role="note">
+                {fromSteam?.owned == null ? 'Fra' : `${fromSteam.owned.toLocaleString('nb-NO')} spill på Steam. Fra`}{' '}
+                {profiles.map((profile, at) => (
+                  <>{at === 0 ? '' : ' og '}<TextLink href={profile.href} external>profilen på {profile.label}</TextLink></>
+                ))}.
+              </Text>
+            </PageSection>
+          </>
+        )}
+        {steam && (
+          <LinkButton href={`${base}spill/profil/`}>Se Steam-profilen</LinkButton>
+        )}
+      </>
+    )
+  }
+</Page>

@@ -1,0 +1,19 @@
+---
+// A server island: it asks for its own page, so the totals of twelve periods have a budget of questions of their own and do not starve (or are not starved by) the rest of the page.
+import { trend, usersOf } from '../lib/runtime'
+import { trendColumns } from '../lib/trend'
+import { PlaysChart } from './trend'
+
+interface Props {
+  periods: { id: string; start: number; end: number; label: string }[]
+  title: string
+  description: string
+  ariaLabel: string
+}
+
+const { periods, title, description, ariaLabel } = Astro.props
+const points = await trend(usersOf(Astro.cookies), periods)
+const columns = trendColumns(points ?? [], (id) => periods.find((one) => one.id === id)?.label ?? id)
+---
+
+{columns.length > 1 && <PlaysChart client:visible title={title} description={description} ariaLabel={ariaLabel} columns={columns} />}

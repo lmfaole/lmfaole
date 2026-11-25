@@ -1,0 +1,204 @@
+/*
+ * The app shell: what makes a page feel installed rather than like a web
+ * page. Safe-area insets as tokens (the notch, the home indicator, rounded
+ * corners in landscape) and the touch and scroll defaults of a native app.
+ * The viewport meta has `viewport-fit=cover`, so without these the header
+ * would sit under the notch.
+ *
+ * A change of page is a view transition, the browser's own cross-fade, with no script (Chrome 126+, Safari 18.2+; elsewhere the
+ * page simply changes). It is the one fade of text the system allows: the whole page, once, short. It is asked for only when the
+ * reader has not asked for less motion, and runs on the tokens. A page that cross-fades does not also `Reveal` its content.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+::view-transition-group(root) {
+  animation-duration: var(--motion-duration-enter);
+  animation-timing-function: var(--motion-ease-standard);
+}
+
+/*
+ * Named transitions, for an app that asks for them on its `<html>` (`transitionAttributes()` in `lib/motion`: `data-motion="transitions"`). The
+ * `NavBar`'s current place (`data-nav-indicator`, one shown at each width) slides from the old place to the new, and the page's `<main>` rises
+ * in a little as the old one gives way. Productive motion on the system's tokens, the same in every app. The indicator's picture is mixed with
+ * what is under it (darken in light, lighten in dark), so the names it passes over stay readable as it moves. Nothing of it under reduced motion,
+ * nothing where view transitions are missing: the page changes and the indicator is in its place.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-motion~='transitions'] [data-nav-indicator] {
+    view-transition-name: nav-current;
+  }
+
+  :root[data-motion~='transitions'] main {
+    view-transition-name: main;
+  }
+
+  :root[data-motion~='transitions'] [data-nav-bar] {
+    view-transition-name: nav-bar;
+  }
+
+  :root[data-motion~='transitions'] [data-podcast-player] {
+    view-transition-name: podcast-player;
+  }
+}
+
+/*
+ * The bar itself stays put, and so does a docked `PodcastPlayer` (`data-podcast-player`), which plays on from page to page. Named, it is lifted out of the root's picture and painted above `<main>`'s (it is fixed over the page, and
+ * the content scrolls under it on a phone); unnamed, `<main>`'s picture would cover it while the page changes and the bar would blink
+ * away and back. It does not fade: the new bar is shown at once, the old one not at all. The current place moves above it.
+ */
+::view-transition-group(nav-bar),
+::view-transition-group(podcast-player) {
+  animation: none;
+}
+
+::view-transition-old(nav-bar),
+::view-transition-old(podcast-player) {
+  display: none;
+}
+
+::view-transition-new(nav-bar),
+::view-transition-new(podcast-player) {
+  animation: none;
+}
+
+::view-transition-group(nav-current) {
+  animation-duration: var(--motion-duration-enter);
+  animation-timing-function: var(--motion-ease-standard);
+  mix-blend-mode: darken;
+}
+
+:root[data-theme='dark']::view-transition-group(nav-current) {
+  mix-blend-mode: lighten;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light'])::view-transition-group(nav-current) {
+    mix-blend-mode: lighten;
+  }
+}
+
+/* The page's content keeps its place: its group does not stretch from one page's height to the other's; only the pictures move. */
+::view-transition-group(main) {
+  animation: none;
+}
+
+::view-transition-old(main) {
+  animation: view-main-out var(--motion-duration-exit) var(--motion-ease-exit) both;
+}
+
+::view-transition-new(main) {
+  animation: view-main-in var(--motion-duration-enter) var(--motion-ease-enter) both;
+}
+
+@keyframes view-main-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes view-main-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--motion-distance) / 2));
+  }
+}
+
+:root {
+  --safe-top: env(safe-area-inset-top, 0rem);
+  --safe-right: env(safe-area-inset-right, 0rem);
+  --safe-bottom: env(safe-area-inset-bottom, 0rem);
+  --safe-left: env(safe-area-inset-left, 0rem);
+  /*
+   * The room the app's chrome takes at the foot and at the left, for what docks beside it (`PodcastPlayer`). With a `NavBar` on a phone,
+   * its bar: a place is 3.5rem, its top border 0.0625rem, and it pads the home indicator itself (so what docks above it does not). From tablet
+   * width, its rail: 14rem at the left, nothing at the foot. `--player-room` is the docked player's own height, set by `PodcastPlayer`
+   * while it shows; `PageLayout` leaves it free under the page.
+   */
+  --nav-bar-room: 0rem;
+  --nav-rail-room: 0rem;
+  --dock-safe-bottom: var(--safe-bottom);
+  --player-room: 0rem;
+  /*
+   * What stands around a page's content when the page itself is empty (`EmptyState` or `ErrorMessage` straight in `PageLayout`): the page's
+   * room above and under it (2.5rem each), its header with a line of description (about 7rem) and the gap under it (2rem), the bar at the foot
+   * and the docked player. The empty frame fills the rest of the screen (`100dvh - var(--chrome)`), so the message sits in the middle of what is left.
+   */
+  --chrome: calc(14rem + var(--nav-bar-room) + var(--player-room) + var(--safe-top) + var(--safe-bottom));
+}
+
+:root:has([data-nav-bar]) {
+  --nav-bar-room: calc(3.5rem + 0.0625rem + var(--safe-bottom));
+  --dock-safe-bottom: 0rem;
+}
+
+@media (width >= 48rem) {
+  :root:has([data-nav-bar]) {
+    --nav-bar-room: 0rem;
+    --nav-rail-room: 14rem;
+    --dock-safe-bottom: var(--safe-bottom);
+  }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* A pull past the end of the page must not drag the shell or reload it. */
+  body {
+    overscroll-behavior-y: none;
+  }
+
+  /* No double-tap zoom delay on controls, and no accidental text selection when pressing them. */
+  :where(a, button, summary, [role="button"], [role="tab"], [role="menuitem"]) {
+    touch-action: manipulation;
+  }
+  :where(button, [role="button"], [role="tab"], nav a) {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/*
+ * Forced colours (Windows high contrast). The browser replaces colours, drops box-shadows and background images, so what was told by a
+ * fill or a shadow disappears. Small repairs only, as MDN advises, not a second design: focus is a real outline, a control that is only
+ * a fill gets an edge, the current place gets a line, and a bar that is only a fill gets a border. Icons take `currentColor`, so they
+ * follow the text.
+ */
+@media (forced-colors: active) {
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 0.125rem solid Highlight;
+    outline-offset: 0.125rem;
+  }
+
+  :where(button, [role='button']) {
+    border: 0.0625rem solid ButtonBorder;
+  }
+
+  :where(nav a[aria-current]:not([aria-current='false'])) {
+    outline: 0.125rem solid CanvasText;
+    outline-offset: -0.125rem;
+  }
+
+  :where([role='meter'], [data-slot='skeleton']) {
+    border: 0.0625rem solid CanvasText;
+  }
+
+  /* A mark that is only a fill or a gradient (the ring of a donut, a legend key) keeps its own colours: the legend beside it says what each is, and the
+     browser would otherwise drop it. */
+  [data-chart-mark] {
+    forced-color-adjust: none;
+  }
+
+  /* The filled part of a meter is only a background, which is dropped: keep it as the text colour. */
+  [role='meter'] > * {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+}

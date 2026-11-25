@@ -1,0 +1,15 @@
+---
+// A server island: the artist's links on are a question to MusicBrainz and one to Wikidata (each kept for a week), with a budget of their own; a cold artist's page has used most of the Worker's limit.
+import { artistLinks } from '../lib/runtime'
+import { ArtistLinks } from './detail'
+
+interface Props {
+  /** MusicBrainz's id of the artist, from Last.fm; without it there are no links (a search by name could find another artist). */
+  mbid: string | null
+}
+
+const { mbid } = Astro.props
+const links = await artistLinks(mbid).catch(() => [])
+---
+
+<ArtistLinks links={links} />

@@ -1,0 +1,25 @@
+---
+// A server island: the days the album was played are read from every play of the last six months (the pages the history's month pages keep), too many asks for the page itself.
+import { albumDaysText } from '../lib/album-listening'
+import { albumDays, usersOf } from '../lib/runtime'
+import { CalendarHeatmap } from '@lmfaole/designsystem/components/calendar-heatmap'
+import { ChartCard } from '@lmfaole/designsystem/components/chart-card'
+import { PageSection } from '@lmfaole/designsystem/components/page-section'
+
+interface Props {
+  artist: string
+  title: string
+}
+
+const { artist, title } = Astro.props
+const days = await albumDays(usersOf(Astro.cookies), artist, title)
+const text = days === null ? null : albumDaysText(days, title)
+---
+
+{days !== null && text !== null && (
+  <PageSection id="dager" title="Dagene du spilte det" icon="calendar">
+    <ChartCard title={text.title} description={text.description} empty={days.length === 0 ? 'avspillinger' : undefined}>
+      <CalendarHeatmap data={days} ariaLabel={`Avspillinger av ${title} per dag`} unit={{ one: 'avspilling', many: 'avspillinger' }} />
+    </ChartCard>
+  </PageSection>
+)}

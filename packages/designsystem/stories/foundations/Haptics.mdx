@@ -1,0 +1,149 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Foundations/Haptics" summary="Haptics: a short buzz that confirms what a hand did, never the only sign of it. A semantic vocabulary on navigator.vibrate, the brand's signature, the reader's off switch, what each platform can do, and the don'ts." />
+
+# Haptics
+
+A haptic is the third channel of feedback, after what is seen and what is heard. A short, clear tap confirms what a hand just did. It
+**never carries meaning on its own**: every buzz goes with words, a symbol or a position on the screen. Haptics are opt-in for each control,
+progressive (they do nothing where they cannot work), and the reader can turn them off. The research behind this guide is in its sources.
+
+## 1. Principles
+
+1. **Confirm a gesture, never start one.** A buzz answers a tap, a click, a change or a key, once the outcome is known. Never on hover, scroll,
+   focus, page load, a timer or a live update.
+2. **Few and semantic.** There are seven kinds, each with one meaning everywhere (Apple: use the system patterns for what they mean,
+   consistently). An app never writes its own milliseconds.
+3. **Clear, not buzzy.** Short taps (10–30 ms), every pattern under 200 ms. On the web there is no amplitude, so «soft» comes from short
+   (Android: given a choice between buzzy haptics and none, choose none).
+4. **Rare.** Apple: «Avoid overusing haptics». If the reader feels it often, take it away. Not every button buzzes.
+5. **Never alone.** The visible state, a `Banner`, the error under a field or a live region says it too (Apple: haptics complement, they do
+   not replace).
+6. **The reader decides.** «Make haptics optional» (Apple). «Vibrasjon» in `AppearanceSettings` is the off switch. Without a choice, `prefers-reduced-motion`
+   is a hint: only the outcomes are felt.
+
+## 2. Vocabulary
+
+`haptic(kind)` from `lib/haptics`, each kind a `navigator.vibrate` pattern of on and off milliseconds:
+
+| Kind | Pattern (ms) | Like | Use it for |
+| --- | --- | --- | --- |
+| `selection` | `10` | iOS selection, Android `CLOCK_TICK` and `SEGMENT_TICK` | A value changed: a switch, a choice, a step forward, a row moved past another |
+| `impact-light` | `15` | iOS impact light | Something small snapped into place |
+| `impact-medium` | `25` | iOS impact medium, Android `GESTURE_END` | Something larger landed: a pull to refresh released |
+| `success` | `15 · 60 · 25` | iOS notification success, Android `CONFIRM` | It worked: two taps, the second firmer |
+| `warning` | `25 · 90 · 25` | iOS notification warning | A destructive confirm, or done with a caveat |
+| `error` | `30 · 50 · 30 · 50 · 30` | iOS notification error, Android `REJECT` | It did not work: three firm taps |
+| `signature` | by `data-brand` | Apple Pay's «two simple taps» | The moment an app is set up (the end of `FirstRun`), and nothing else |
+
+### The brand's signature
+
+| `data-brand` | App | Pattern (ms) | Feels like |
+| --- | --- | --- | --- |
+| `amber` | Medier | `12 · 70 · 40` | «play»: a tap, then a push, short then long, like ▶ starting |
+| `teal` | Start | `6 · 40 · 10 · 40 · 16 · 40 · 24` | a sunrise: four taps that grow |
+| any other, or none | | as `success` | |
+
+A signature works through restraint: one moment, always with the moment that is seen (the completion of the first run). If it were used
+everywhere, it would be noise. Under reduced motion it is played as a plain `success`.
+
+## 3. Where the design system buzzes
+
+| Component | Kind | When |
+| --- | --- | --- |
+| `FirstRun` | `selection` · `error` · `signature` | A step forward, a step that fails its checks, and «Ferdig» once it is sent |
+| `ReorderList` | `selection` | A row moved with its arrows, or dragged past another |
+| `CheckboxList`, `ToggleMatrix`, `ChoiceCards` | `selection` (`data-haptic`) | A box ticked or a card chosen, once the app has `Haptics` |
+| «Vibrasjon» (`AppearanceSettings`) | `selection` | Turning vibration on, so the reader feels what they chose |
+
+`TiltButton` has none on purpose: it is only shown on iOS, where the tilt permission is asked for, and iOS has no `vibrate`.
+
+## 4. In an app
+
+1. **Once, in the layout:** `<Haptics />` (Next.js) or, in Astro, `<script>import { listenForHaptics } from "@lmfaole/designsystem/lib/haptics";
+   listenForHaptics()</script>`. This plays the controls that are marked `data-haptic="<kind>"`, also in server-drawn markup.
+2. **On the settings page:** «Vibrasjon» comes with `AppearanceSettings`, in its «Effekter» section after the effects themselves. It applies at once and is kept in this browser.
+3. **Mark sparingly:** `data-haptic="warning"` on the button that confirms something destructive. In a script, call `haptic("success")`
+   after a save that is confirmed on screen.
+
+```tsx
+import { Haptics } from "@lmfaole/designsystem/components/haptics"
+import { AppearanceSettings } from "@lmfaole/designsystem/components/appearance-settings"
+import { haptic } from "@lmfaole/designsystem/lib/haptics"
+
+<Button type="submit" variant="outline" data-haptic="warning">Slett listen</Button>
+```
+
+### Off, and who decides
+
+- **The reader:** `localStorage` `ds-haptics` = `on` or `off`, written by «Vibrasjon» in `AppearanceSettings`. It is kept per device, not per account, because
+  it is the phone that vibrates.
+- **The page:** `data-haptics="off"` on `<html>`, or on any element above a control. The nearest one wins, and it beats the reader's choice.
+  Use it for a preview or a kiosk.
+- **The hint:** under `prefers-reduced-motion: reduce`, with no choice of the reader's own, the ticks and impacts are not played, and the
+  signature is a plain `success`. An explicit «on» gives everything.
+- **The throttle:** a buzz within the previous pattern plus 80 ms is dropped, unless it says more (an error cuts in over a tick). A fast run
+  of changes is never a storm.
+
+## 5. What each platform can do
+
+| Where | What is felt |
+| --- | --- |
+| Chrome, Samsung Internet and WebView on Android, and installed PWAs from them | Everything, after the first tap or key (sticky user activation). Not in cross-origin iframes. |
+| Firefox on Android | Nothing: `vibrate` is disabled and answers `true` anyway |
+| Firefox on desktop | Nothing (removed in 129) |
+| Safari, every browser on iOS, home-screen web apps on iOS | Nothing from `vibrate`. A native `<input type="checkbox" switch>` gives the system's own tap when the reader toggles it (iOS 18 and later), so «Vibrasjon» is one. |
+| Desktop | Nothing; nothing is lost |
+
+### Why not the iOS «hidden switch» trick
+
+Some libraries fake an iPhone haptic by clicking a hidden `<label>` for a switch from a script. We do not use it:
+
+- WebKit now requires a trusted event and user activation for the switch's haptic, so a scripted click no longer works (iOS 26.5).
+- The version that still works lays an invisible control over the button. That changes hit-testing and focus, and adds a switch to the
+  accessibility tree that the reader never asked for.
+- It gives one fixed tap, so `success` and `error` would feel the same.
+
+Where a control *is* on or off, make it a real native `switch`, and the iPhone's own tap comes honestly.
+
+A web haptics API (WICG «Web Haptics»: `navigator.playHaptics()` and a CSS `haptic` property, with semantic effects much like these) is
+still an idea. When it ships, `haptic()` can use it underneath, and nothing in an app changes.
+
+## 6. Accessibility
+
+- **Never the only carrier.** WCAG has no criterion that names haptics. SC 1.3.3 Sensory Characteristics and SC 1.4.1 Use of Color state
+  the same principle for other senses: one sense alone never carries meaning. Many readers feel nothing at all: a phone on the table,
+  Safari, haptics off.
+- **No OS setting reaches the web.** iOS System Haptics and Android's touch feedback are invisible to a page, and there is no media query.
+  So the in-app switch is required, not optional.
+- **Short and rare,** for people with sensory processing differences or vestibular disorders, and for the battery.
+- **SC 2.2.2 Pause, Stop, Hide** is about content that moves or updates by itself. A brief answer to the reader's own gesture is outside it.
+  Never vibrate on load or on a timer.
+
+## 7. Do and don't
+
+| Do | Don't |
+| --- | --- |
+| Buzz once the outcome is known, with what is seen | Buzz on hover, scroll, focus, load, a timer or a live update |
+| Use a kind for its meaning | Write your own milliseconds, or make a long pattern |
+| `selection` for a value changing | Give every button a buzz, or buzz on navigation |
+| `error` with the error under the field | Let a rhythm be the only way to tell success from error |
+| The signature at the end of the first run | The signature for routine actions |
+| A native `switch` for an on/off setting | Fake iOS haptics with hidden or overlaid controls |
+| «Vibrasjon» (`AppearanceSettings`) on the settings page | Turn it on again for a reader who turned it off |
+
+## Sources
+
+1. Apple, Human Interface Guidelines, [Playing haptics](https://developer.apple.com/design/human-interface-guidelines/playing-haptics)
+2. Apple, WWDC19, [Designing Audio-Haptic Experiences](https://developer.apple.com/videos/play/wwdc2019/810/) (Apple Pay's «two simple taps»; causality, harmony, utility)
+3. Apple Support, [Change the sounds and vibrations on iPhone](https://support.apple.com/guide/iphone/change-the-sounds-and-vibrations-iph07c867f28/ios) (Keyboard Feedback, System Haptics)
+4. Android Developers, [Haptics design principles](https://developer.android.com/develop/ui/views/haptics/haptics-principles) and [HapticFeedbackConstants](https://developer.android.com/reference/android/view/HapticFeedbackConstants)
+5. MDN, [Navigator.vibrate()](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate), and [browser-compat-data](https://github.com/mdn/browser-compat-data/blob/main/api/Navigator.json)
+6. WebKit, [Safari 17.4: the switch control](https://webkit.org/blog/15063/webkit-features-in-safari-17-4/), and [commit fc1ef83eae](https://github.com/WebKit/WebKit/commit/fc1ef83eae) (switch haptics need a trusted event)
+7. [tijnjh/ios-haptics](https://github.com/tijnjh/ios-haptics) and [PR #13](https://github.com/tijnjh/ios-haptics/pull/13) (iOS 26.5, the overlay)
+8. WICG, [Web Haptics](https://github.com/WICG/web-haptics) (ideation)
+9. W3C, Understanding [1.3.3](https://www.w3.org/WAI/WCAG22/Understanding/sensory-characteristics.html), [1.4.1](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html), [2.2.2](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html)
+10. MDN, [prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
+
+Also the guides «Motion» (a buzz goes with the motion that is seen, never instead of it) and «Brand» (the signature is one of the brand's
+few places), and the skill `designsystem-haptics`.

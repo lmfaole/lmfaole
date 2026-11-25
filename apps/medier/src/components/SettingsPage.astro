@@ -1,0 +1,30 @@
+---
+// A subpage of «Innstillinger»: its breadcrumbs (Medier › Innstillinger › X), «Innstillinger» current in the bar, and «Lagret» (role `status`) once its form has been saved, with the way back to the
+// page the visitor came from (`tilbake`) when there is one. The page puts its own `SettingsForm` in the slot.
+import { Banner } from '@lmfaole/designsystem/components/banner'
+import { TextLink } from '@lmfaole/designsystem/components/text'
+import Page from '../layouts/Page.astro'
+import { SETTINGS_PAGES, type SettingsPage } from '../lib/settings-form'
+import { formError, safeBack } from '../lib/users'
+
+interface Props {
+  page: SettingsPage
+}
+const { page } = Astro.props
+const base = import.meta.env.BASE_URL
+const { label, lead } = SETTINGS_PAGES[page]
+const tilbake = Astro.url.searchParams.get('tilbake')
+const to = tilbake === null ? null : safeBack(tilbake, base)
+const saved = Astro.url.searchParams.has('lagret') && formError(Astro.url.searchParams) === null
+---
+
+<Page firstRun={false} current="settings" title={label} lead={lead} crumbs={[{ label: 'Medier', href: base }, { label: 'Innstillinger', href: `${base}innstillinger/` }, { label, href: `${base}innstillinger/${page}/` }]}>
+  {
+    saved && (
+      <Banner tone="success" title="Lagret.">
+        {to !== null && <TextLink href={to}>Tilbake til siden du var på</TextLink>}
+      </Banner>
+    )
+  }
+  <slot />
+</Page>

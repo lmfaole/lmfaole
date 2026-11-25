@@ -1,0 +1,54 @@
+---
+import Intro from '../../components/Intro.astro'
+import { INTROS } from '../../lib/onboarding'
+import { PageSection } from '@lmfaole/designsystem/components/page-section'
+import { FactList } from '@lmfaole/designsystem/components/fact-list'
+import { Text } from '@lmfaole/designsystem/components/text'
+import { mediumHref } from '../../lib/media'
+import { monthAt, monthText } from '../../lib/months'
+import { longLength } from '../../lib/wrapped'
+
+import { Fetched, WatchRows } from '../../components/sections'
+import UsernameGate from '../../components/UsernameGate.astro'
+import Page from '../../layouts/Page.astro'
+import { month, usersOf, watched } from '../../lib/runtime'
+
+const base = import.meta.env.BASE_URL
+const users = usersOf(Astro.cookies)
+const current = monthAt(Date.now())
+// The films seen, and this month's wrapped so far: the page's two sections are excerpts of the history and of the wrapped.
+const [seen, thisMonth] = users.trakt === null ? [null, null] : await Promise.all([watched(users), month(users, current, 'film')])
+const films = (seen?.items ?? []).filter((watch) => watch.kind === 'film')
+const stats = thisMonth?.watched?.stats ?? null
+const number = (n: number): string => n.toLocaleString('nb-NO')
+---
+
+<Page current="film" title="Film" lead="Filmene du har sett sist, fra Trakt.">
+  {
+    users.trakt === null ? (
+      <UsernameGate services={['trakt']} />
+    ) : (
+      <>
+        <Intro intro={INTROS.film} />
+        <PageSection id="sett" title="Sist sett" icon="film" continues={{ href: mediumHref(base, 'film', 'historikk/'), label: 'Se hele filmhistorikken' }}>
+          <WatchRows items={films} base={base} kind="film" />
+        </PageSection>
+        <PageSection id="maned" title="Denne måneden" icon="calendar" continues={{ href: mediumHref(base, 'film', 'maned/', current.id), label: 'Se månedens Wrapped' }}>
+          {stats === null || stats.films === 0 ? (
+            <Text role="quiet">{stats === null ? 'Oppsummeringen av måneden kunne ikke hentes akkurat nå.' : `Ingen filmer sett i ${monthText(current)} ennå.`}</Text>
+          ) : (
+            <FactList
+              facts={[
+                ['Filmer', number(stats.films)],
+                ['Seertid, anslag', `≈ ${longLength(stats.minutes * 60)}`],
+                ['Mest sett sjanger', stats.genres[0]?.name ?? null],
+                ['Mest sett regissør', (stats.directors[0]?.films ?? 0) > 1 ? (stats.directors[0]?.name ?? null) : null],
+              ]}
+            />
+          )}
+        </PageSection>
+        <Fetched sources={[{ at: seen?.at ?? null, source: 'Trakt' }]} />
+      </>
+    )
+  }
+</Page>

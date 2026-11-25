@@ -1,0 +1,14 @@
+---
+import Wrapped from '../../../components/Wrapped.astro'
+import { usersOf, week as loadWeek } from '../../../lib/runtime'
+import { parseWeek } from '../../../lib/weeks'
+
+const week = parseWeek(Astro.params.week ?? '')
+// A week that has not begun has nothing to tell, and an address that is no week is no page.
+if (week === null || week.start * 1000 > Date.now()) return Astro.rewrite('/404/')
+const users = usersOf(Astro.cookies)
+const data = users.trakt === null ? null : await loadWeek(users, week, 'tv')
+if (users.trakt !== null && data === null) return Astro.rewrite('/404/')
+---
+
+<Wrapped medium="tv" period={{ kind: 'week', week }} data={data} />

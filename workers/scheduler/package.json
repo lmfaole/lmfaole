@@ -1,0 +1,20 @@
+{
+  "name": "@lmfaole/scheduler",
+  "private": true,
+  "type": "module",
+  "description": "Kontoens eneste cron: hvert 5. minutt kjører den de andre workernes jobber etter hver sin tidsplan",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "tsc --noEmit",
+    "dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "~7.0.2",
+    "wrangler": "^4.150.0"
+  }
+}

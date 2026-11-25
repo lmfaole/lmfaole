@@ -1,0 +1,39 @@
+/** The frames of a picture: its ratio, its size, the shape of its corners. In a file of its own so the disc (a client component) and `Picture` share them. */
+
+/** A poster is 2:3 (a book, a film); a square is a cover, a box or an avatar; wide is a banner about 2:1 (a game's header on Steam, a channel's art). */
+export type Ratio = 'poster' | 'square' | 'wide'
+/**
+ * The shape of the frame: what KIND of thing the picture is of, so a reader tells a person from a record from a film before reading. One shape for each kind, the same everywhere in an app,
+ * and never for decoration. `normal` is the default and what every picture has had. `sharp` is a sleeve or a plate (a record's cover, a box); `soft` is a tile with large corners (a single, an item); `round`
+ * is a person or a group, and needs `ratio="square"` (a poster frame cannot be a circle, so it falls back to `soft`).
+ */
+export type PictureCorners = 'sharp' | 'normal' | 'soft' | 'round'
+
+export const CORNERS: Record<PictureCorners, string> = { sharp: 'rounded-sm', normal: 'rounded-md', soft: 'rounded-[30%]', round: 'rounded-full' }
+
+/**
+ * `row` stands in front of a row of a list; `hero` heads the page of the thing itself; `feature` is the hero larger, as wide as its cell, where the picture is the page's face (an artist's
+ * portrait in `DetailHeader size="large"`); `fill` is a tile of a gallery, as wide as its cell.
+ */
+export type Size = 'row' | 'hero' | 'feature' | 'fill'
+
+/** The sizes that are the page's main picture, and so are lit on their frame and carry the light's source. */
+export const LIT_SIZES: readonly Size[] = ['hero', 'feature']
+
+export const FRAMES: Record<Ratio, Record<Size, string>> = {
+  poster: { row: 'aspect-[2/3] w-10', hero: 'aspect-[2/3] w-24 sm:w-28 @3xl:w-40 @5xl:w-48', feature: 'aspect-[2/3] w-full', fill: 'aspect-[2/3] w-full' },
+  square: { row: 'size-10', hero: 'size-28 sm:size-32 @3xl:size-44 @5xl:size-56', feature: 'aspect-square w-full', fill: 'aspect-square w-full' },
+  wide: { row: 'aspect-[460/215] w-20', hero: 'aspect-[460/215] w-48 sm:w-56 @3xl:w-80', feature: 'aspect-[460/215] w-full', fill: 'aspect-[460/215] w-full' },
+}
+export const SIZES: Record<Ratio, Record<Size, [number, number]>> = {
+  poster: { row: [40, 60], hero: [96, 144], feature: [192, 288], fill: [200, 300] },
+  square: { row: [40, 40], hero: [112, 112], feature: [320, 320], fill: [200, 200] },
+  wide: { row: [80, 37], hero: [192, 90], feature: [460, 215], fill: [320, 150] },
+}
+
+/** The widest the frame is drawn, in CSS pixels, at any width (the hero grows with its container): what `sizes` promises the browser. */
+export const DRAWN: Record<Ratio, Record<Size, number>> = {
+  poster: { row: 40, hero: 192, feature: 320, fill: 320 },
+  square: { row: 40, hero: 224, feature: 320, fill: 320 },
+  wide: { row: 80, hero: 320, feature: 460, fill: 320 },
+}

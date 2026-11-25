@@ -1,0 +1,11 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "medier-upstream",
+  "main": "worker.ts",
+  "compatibility_date": "2026-11-01",
+  // The site reaches it only through its UPSTREAM service binding (see worker.ts): no workers.dev address, no preview addresses.
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true }
+  // Secret: UPSTREAM_KEY (the same as the site's).
+}

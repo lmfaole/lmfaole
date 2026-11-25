@@ -1,0 +1,388 @@
+@import "tailwindcss";
+@import "@fontsource-variable/atkinson-hyperlegible-next";
+@import "@fontsource-variable/atkinson-hyperlegible-mono";
+@import "./motion.css";
+@import "./light.css";
+@import "./shell.css";
+@import "./icon.css";
+@import "./overlay.css";
+@import "./first-run.css";
+
+/*
+ * Tailwind's automatic content detection skips anything under `node_modules`, which is where a project that uses
+ * this package finds it. Without these, the classes written inside the package's own components never reach the
+ * project's compiled CSS, even though the class strings do reach the rendered HTML. `lib` holds class strings too
+ * (the page column, the link style).
+ */
+@source "./components";
+@source "./lib";
+
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+}
+
+@theme inline {
+    /*
+     * Tailwind's own transitions and pulse follow the motion tokens, so the generated shadcn parts (`transition-all`,
+     * `transition-colors`, the skeleton's `animate-pulse`) move on the system's timing without being edited. The pulse waits a
+     * second (a quick load never flickers) and beats twice, under five seconds (WCAG 2.2.2).
+     */
+    --default-transition-duration: var(--motion-duration-fast);
+    --default-transition-timing-function: var(--motion-ease-standard);
+    --ease-in: var(--motion-ease-exit);
+    --ease-out: var(--motion-ease-enter);
+    --ease-in-out: var(--motion-ease-in-out);
+    --animate-pulse: motion-pulse var(--motion-duration-live) var(--motion-ease-in-out) 1s 2;
+    /*
+     * One superfamily, drawn together for legibility (Braille Institute): the same x-height, capitals and figures in both, so I, l and 1
+     * and O and 0 are told apart everywhere. Sans for all text and every heading; mono only for short labels, code and technical values.
+     */
+    --font-heading: var(--font-sans);
+    --font-sans: 'Atkinson Hyperlegible Next Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'Atkinson Hyperlegible Mono Variable', ui-monospace, monospace;
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-logo-plate: var(--logo-plate);
+    --color-ring: var(--ring);
+    --color-brand: var(--brand);
+    --color-brand-foreground: var(--brand-foreground);
+    --color-brand-subtle: var(--brand-subtle);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root,
+[data-theme="light"] {
+    color-scheme: light;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --logo-plate: oklch(1 0 0 / 0.85);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.5 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.52 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: var(--brand-ring, oklch(0.556 0 0));
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --series-1: oklch(0.52 0.07 239);
+    --series-2: oklch(0.66 0.17 51);
+    --series-3: oklch(0.35 0.10 353);
+    --series-4: oklch(0.66 0.20 299);
+    --series-5: oklch(0.49 0.15 40);
+    --series-6: oklch(0.36 0.20 287);
+    /* The weather's marks (Meteogram): the temperature above and below zero, and what falls. */
+    --temperature-warm: oklch(0.55 0.19 35);
+    --temperature-cold: oklch(0.5 0.15 255);
+    --precipitation: oklch(0.56 0.11 228);
+    /* Public transport (LineBadge, DepartureBoard): a line's colour by its kind, as Ruter paints them, with the text that stands on it; and the text of a late departure. */
+    --transit-bus: oklch(0.53 0.2 28);
+    --transit-bus-foreground: oklch(1 0 0);
+    --transit-tram: oklch(0.5 0.15 252);
+    --transit-tram-foreground: oklch(1 0 0);
+    --transit-metro: oklch(0.68 0.17 52);
+    --transit-metro-foreground: oklch(0.145 0 0);
+    --transit-rail: oklch(0.48 0.1 165);
+    --transit-rail-foreground: oklch(1 0 0);
+    --transit-ferry: oklch(0.5 0.085 215);
+    --transit-ferry-foreground: oklch(1 0 0);
+    --transit-other: oklch(0.48 0.03 270);
+    --transit-other-foreground: oklch(1 0 0);
+    --transit-late: oklch(0.52 0.11 62);
+    /* What happened in a history (Timeline, StateSteps, DurationBars): the node or bar of an event that went well, that was merged or
+       otherwise marked, that warns, or that failed, with the icon that stands on it. Always beside its icon and words. */
+    --event-accent: oklch(0.5 0.19 300);
+    --event-accent-foreground: oklch(1 0 0);
+    --event-success: oklch(0.52 0.13 150);
+    --event-success-foreground: oklch(1 0 0);
+    --event-warning: oklch(0.62 0.13 65);
+    --event-warning-foreground: oklch(0.145 0 0);
+    --event-danger: oklch(0.53 0.2 27);
+    --event-danger-foreground: oklch(1 0 0);
+    /* The official awareness levels of a warning (HazardList): MET's and NVE's yellow, orange and red, never the brand. Always with the level in words. */
+    --hazard-yellow: oklch(0.88 0.16 95);
+    --hazard-yellow-foreground: oklch(0.145 0 0);
+    --hazard-orange: oklch(0.76 0.15 60);
+    --hazard-orange-foreground: oklch(0.145 0 0);
+    --hazard-red: oklch(0.53 0.2 27);
+    --hazard-red-foreground: oklch(1 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: var(--brand-ring, oklch(0.556 0 0));
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --series-1: oklch(0.77 0.10 267);
+    --series-2: oklch(0.74 0.14 86);
+    --series-3: oklch(0.62 0.18 2);
+    --series-4: oklch(0.62 0.18 295);
+    --series-5: oklch(0.90 0.15 175);
+    --series-6: oklch(0.90 0.18 105);
+    --temperature-warm: oklch(0.74 0.15 40);
+    --temperature-cold: oklch(0.75 0.11 248);
+    --precipitation: oklch(0.74 0.1 222);
+    --transit-bus: oklch(0.7 0.16 25);
+    --transit-bus-foreground: oklch(0.145 0 0);
+    --transit-tram: oklch(0.72 0.12 250);
+    --transit-tram-foreground: oklch(0.145 0 0);
+    --transit-metro: oklch(0.76 0.15 60);
+    --transit-metro-foreground: oklch(0.145 0 0);
+    --transit-rail: oklch(0.72 0.12 160);
+    --transit-rail-foreground: oklch(0.145 0 0);
+    --transit-ferry: oklch(0.74 0.09 205);
+    --transit-ferry-foreground: oklch(0.145 0 0);
+    --transit-other: oklch(0.72 0.03 270);
+    --transit-other-foreground: oklch(0.145 0 0);
+    --transit-late: oklch(0.8 0.13 75);
+    --event-accent: oklch(0.74 0.14 300);
+    --event-accent-foreground: oklch(0.145 0 0);
+    --event-success: oklch(0.74 0.14 150);
+    --event-success-foreground: oklch(0.145 0 0);
+    --event-warning: oklch(0.8 0.13 75);
+    --event-warning-foreground: oklch(0.145 0 0);
+    --event-danger: oklch(0.7 0.17 25);
+    --event-danger-foreground: oklch(0.145 0 0);
+    --hazard-yellow: oklch(0.86 0.15 95);
+    --hazard-yellow-foreground: oklch(0.145 0 0);
+    --hazard-orange: oklch(0.76 0.15 60);
+    --hazard-orange-foreground: oklch(0.145 0 0);
+    --hazard-red: oklch(0.68 0.19 25);
+    --hazard-red-foreground: oklch(0.145 0 0);
+}
+}
+
+/* The same dark theme, forced by `data-theme="dark"` on the root or on any element: for Storybook's theme toolbar («Begge» draws a story in
+   light and in dark side by side) and the tests. An app sets it only from a visitor's own choice (`lib/preferences`, `htmlAttributes`, on
+   `<html>` on the server so nothing flashes); without one, its theme follows the device (rule 6). `data-theme="light"` forces light the
+   same way (the light block above takes it too). */
+[data-theme="dark"] {
+    color-scheme: dark;
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: var(--brand-ring, oklch(0.556 0 0));
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --series-1: oklch(0.77 0.10 267);
+    --series-2: oklch(0.74 0.14 86);
+    --series-3: oklch(0.62 0.18 2);
+    --series-4: oklch(0.62 0.18 295);
+    --series-5: oklch(0.90 0.15 175);
+    --series-6: oklch(0.90 0.18 105);
+    --temperature-warm: oklch(0.74 0.15 40);
+    --temperature-cold: oklch(0.75 0.11 248);
+    --precipitation: oklch(0.74 0.1 222);
+    --transit-bus: oklch(0.7 0.16 25);
+    --transit-bus-foreground: oklch(0.145 0 0);
+    --transit-tram: oklch(0.72 0.12 250);
+    --transit-tram-foreground: oklch(0.145 0 0);
+    --transit-metro: oklch(0.76 0.15 60);
+    --transit-metro-foreground: oklch(0.145 0 0);
+    --transit-rail: oklch(0.72 0.12 160);
+    --transit-rail-foreground: oklch(0.145 0 0);
+    --transit-ferry: oklch(0.74 0.09 205);
+    --transit-ferry-foreground: oklch(0.145 0 0);
+    --transit-other: oklch(0.72 0.03 270);
+    --transit-other-foreground: oklch(0.145 0 0);
+    --transit-late: oklch(0.8 0.13 75);
+    --event-accent: oklch(0.74 0.14 300);
+    --event-accent-foreground: oklch(0.145 0 0);
+    --event-success: oklch(0.74 0.14 150);
+    --event-success-foreground: oklch(0.145 0 0);
+    --event-warning: oklch(0.8 0.13 75);
+    --event-warning-foreground: oklch(0.145 0 0);
+    --event-danger: oklch(0.7 0.17 25);
+    --event-danger-foreground: oklch(0.145 0 0);
+    --hazard-yellow: oklch(0.86 0.15 95);
+    --hazard-yellow-foreground: oklch(0.145 0 0);
+    --hazard-orange: oklch(0.76 0.15 60);
+    --hazard-orange-foreground: oklch(0.145 0 0);
+    --hazard-red: oklch(0.68 0.19 25);
+    --hazard-red-foreground: oklch(0.145 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  html {
+    @apply font-sans;
+    }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+    }
+}
+
+/*
+ * Charts (guide «Data visualisation»): one height for every chart in a `ChartCard`, the same in every app, so a page never chooses one. It
+ * follows the card's width (a fifth of it, `cqi`) between 12.5rem and 20rem. `--chart-accent` is the colour of a chart's marks: unset, the
+ * chart takes `--primary`; a part of a page that has a colour of its own sets it for the charts on it (`WeatherStage`: the weather's).
+ */
+:root {
+    --chart-height: clamp(12.5rem, 22cqi, 20rem);
+}
+
+/*
+ * The brand (guide «Brand»): one hue per app, set once with `data-brand` on `<html>` (`BRAND_HUES` in `lib/brand`). Without it, the brand is
+ * the ink and the muted surface, and nothing looks different. The brand is used sparingly and only in the chrome: the app's mark
+ * (`AppMark`, `Wordmark`), the current place in `NavBar`, the focus ring, the one primary `Button`, and a ticked checkbox or radio. It is
+ * never in a chart, a status, an event or a transit line, and never paints content (a cover leads with its own colours).
+ *
+ * Each value is `light-dark()`, so it follows the `color-scheme` of the element it is used on: the device's, a visitor's `data-theme`, or a
+ * Storybook section drawn in the other theme. `--brand` keeps 4.5:1 on the page and the card (a mark or a word in it can be read), and
+ * `--brand-foreground` 4.5:1 on `--brand`; `--brand-subtle` is the surface of the current place, with the text and the brand on it
+ * (`theme-contrast.test.ts`). In light the hue is deep with white on it, in dark it is lighter with the ink on it.
+ */
+:root {
+    --brand: light-dark(oklch(0.145 0 0), oklch(0.985 0 0));
+    --brand-foreground: light-dark(oklch(1 0 0), oklch(0.145 0 0));
+    --brand-subtle: light-dark(oklch(0.97 0 0), oklch(0.269 0 0));
+}
+
+[data-brand="rose"] {
+    --brand: light-dark(oklch(0.56 0.19 355), oklch(0.68 0.15 350));
+    --brand-foreground: light-dark(oklch(1 0 0), oklch(0.145 0 0));
+    --brand-subtle: light-dark(oklch(0.95 0.025 355), oklch(0.3 0.05 355));
+}
+
+[data-brand="amber"] {
+    --brand: light-dark(oklch(0.55 0.115 70), oklch(0.66 0.135 70));
+    --brand-foreground: light-dark(oklch(1 0 0), oklch(0.145 0 0));
+    --brand-subtle: light-dark(oklch(0.95 0.025 70), oklch(0.3 0.045 70));
+}
+
+[data-brand="teal"] {
+    --brand: light-dark(oklch(0.53 0.09 190), oklch(0.66 0.105 190));
+    --brand-foreground: light-dark(oklch(1 0 0), oklch(0.145 0 0));
+    --brand-subtle: light-dark(oklch(0.95 0.025 190), oklch(0.3 0.045 190));
+}
+
+[data-brand="blue"] {
+    --brand: light-dark(oklch(0.55 0.18 255), oklch(0.66 0.15 255));
+    --brand-foreground: light-dark(oklch(1 0 0), oklch(0.145 0 0));
+    --brand-subtle: light-dark(oklch(0.95 0.02 255), oklch(0.3 0.05 255));
+}
+
+[data-brand="violet"] {
+    --brand: light-dark(oklch(0.56 0.2 300), oklch(0.66 0.16 300));
+    --brand-foreground: light-dark(oklch(1 0 0), oklch(0.145 0 0));
+    --brand-subtle: light-dark(oklch(0.95 0.025 300), oklch(0.3 0.05 300));
+}
+
+/* A branded app's focus ring is its brand (3:1 is needed, the brand has 4.5:1). `--brand-ring` reaches the theme's blocks on `:root`; `--ring`
+   on the element itself reaches a branded part of a page. */
+[data-brand] {
+    --brand-ring: var(--brand);
+    --ring: var(--brand);
+}
+
+/* The one primary action and a ticked box take the brand: the variables are set on the control itself, so the generated parts are not edited. */
+[data-brand] :is([data-slot="button"][data-variant="default"], input[type="checkbox"], input[type="radio"]) {
+    --primary: var(--brand);
+    --primary-foreground: var(--brand-foreground);
+}
+
+/* More contrast asked for: the lines between parts, which are decorative otherwise, become as strong as secondary text. (Here, after the tokens, so it wins over them.) */
+@media (prefers-contrast: more) {
+  :root {
+    --border: var(--muted-foreground);
+    --input: var(--muted-foreground);
+  }
+}
+
+/*
+ * The focus ring of the generated shadcn parts is `ring-ring/50`: half of a colour that has 3:1 at full strength falls under it
+ * (WCAG 1.4.11). Unlayered, so it wins over their utilities, and the ring is drawn at full strength on whatever has focus.
+ */
+[data-slot]:focus-visible {
+  --tw-ring-color: var(--ring);
+}
+

@@ -1,0 +1,226 @@
+/*
+ * Dialog, sheet and page: the browser's own `<dialog>`, opened by invoker commands (the internal `CommandButton`, as in `ImageLightbox`). A list of choices is
+ * never an overlay: it is a native `<select>` (`NativeSelect`).
+ * They sit in the top layer, so no z-index. Motion is a transition from `@starting-style`, and `display` and `overlay`
+ * transition discretely so the closing one stays until it has left; everything runs on the `--motion-*` tokens and
+ * lands at once under reduced motion (motion.css).
+ */
+dialog[data-overlay] {
+  padding: 0;
+  border: 0.0625rem solid var(--border);
+  background: var(--popover);
+  color: var(--popover-foreground);
+  max-inline-size: none;
+  max-block-size: none;
+  overflow: visible;
+}
+
+/* The preflight zeroes `margin`, which is what centres a modal dialog by default. */
+dialog[data-overlay='dialog'] {
+  inset: 0;
+  margin: auto;
+  block-size: fit-content;
+  inline-size: min(90vw, 24rem);
+  border-radius: var(--radius-2xl);
+}
+
+/* A picture or a video as large as the screen lets it be, still with the page around it to tap outside. */
+dialog[data-overlay='media'] {
+  inset: 0;
+  margin: auto;
+  block-size: fit-content;
+  inline-size: min(96vw, 72rem);
+  border-radius: var(--radius-2xl);
+}
+
+dialog[data-overlay='sheet'] {
+  inset: auto 0 0 0;
+  margin: 0 auto;
+  inline-size: 100%;
+  max-inline-size: 28rem;
+  max-block-size: 80dvh;
+  border-block-end: 0;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  padding-block-end: var(--safe-bottom);
+}
+
+[data-overlay-body] {
+  position: relative;
+  display: grid;
+  gap: 0.75rem;
+  max-block-size: inherit;
+  overflow-y: auto;
+  padding: 1rem;
+  padding-block-start: 3.5rem;
+}
+
+[data-overlay-body] > h2 {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 1rem;
+  block-size: 3rem;
+  display: grid;
+  align-items: center;
+}
+
+[data-overlay-close] {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  display: grid;
+  place-items: center;
+  min-block-size: 3rem;
+  min-inline-size: 3rem;
+  z-index: 1;
+}
+
+/* A card over a list (`DetailHost`): the whole screen on a phone, a tall box on a wide screen. */
+dialog[data-overlay='page'] {
+  inset: 0;
+  margin: 0;
+  inline-size: 100%;
+  block-size: 100dvh;
+  border: 0;
+  border-radius: 0;
+}
+
+/* The body scrolls and the close button stays: it is the dialog's, not the body's. The hero bleeds out to the edges of
+   the card, so everything under it carries the gutter itself. The hero's own info button is at the end, so the close
+   button is at the start. */
+dialog[data-overlay='page'] {
+  overflow: hidden;
+}
+
+dialog[data-overlay='page'] [data-overlay-body] {
+  block-size: 100%;
+  max-block-size: none;
+  /* Rows as tall as their content: in a grid of a set height they would shrink to it and clip the hero. */
+  grid-auto-rows: max-content;
+  align-content: start;
+  /* The hero pulls itself up by the column's padding (`-mt-10`), so the card has that padding on top. */
+  padding: 2.5rem 0 calc(1rem + var(--safe-bottom));
+  overscroll-behavior: contain;
+}
+
+dialog[data-overlay='page'] [data-overlay-body] > :not(header) {
+  margin-inline: 1rem;
+}
+
+dialog[data-overlay='page'] > [data-overlay-close] {
+  inset-inline: 0.5rem auto;
+  inset-block-start: 0.5rem;
+  border-radius: calc(infinity * 1rem);
+  background: color-mix(in oklch, var(--background) 70%, transparent);
+  backdrop-filter: blur(0.5rem);
+}
+
+@media (min-width: 48rem) {
+  dialog[data-overlay='page'] {
+    margin: auto;
+    inline-size: min(56rem, 94vw);
+    block-size: min(92dvh, 60rem);
+    border: 0.0625rem solid var(--border);
+    border-radius: var(--radius-2xl);
+  }
+}
+
+/* The podcast player in full («Spilles nå», `NowPlaying`): the whole screen on a phone, as a media app's player, and a large sheet in the middle from tablet
+   width, twice as wide when it has chapters to put beside the player. Its ground is a tint of the page that the artwork's colours are drawn on
+   (`AmbientBackdrop`); a drag down moves it with the finger (`data-dragging`, no transition while it follows). The page behind does not scroll. */
+dialog[data-overlay='player'] {
+  inset: 0;
+  margin: 0;
+  inline-size: 100%;
+  block-size: 100dvh;
+  border: 0;
+  border-radius: 0;
+  overflow: clip;
+  background: color-mix(in oklch, var(--muted) 30%, var(--background));
+  color: var(--foreground);
+}
+
+@media (min-width: 48rem) {
+  dialog[data-overlay='player'] {
+    margin: auto;
+    inline-size: min(30rem, 94vw);
+    block-size: min(92dvh, 52rem);
+    border: 0.0625rem solid var(--border);
+    border-radius: var(--radius-2xl);
+  }
+
+  dialog[data-overlay='player'][data-chapters] {
+    inline-size: min(60rem, 94vw);
+  }
+}
+
+dialog[data-overlay='player']::backdrop {
+  background: color-mix(in oklch, var(--foreground) 35%, transparent);
+  backdrop-filter: blur(0.5rem);
+}
+
+:root:has(dialog[data-overlay='player'][open]) {
+  overflow: hidden;
+}
+
+/* Motion: open is the end state, closed (and the first frame of opening) is off screen or a little small. Closing runs on the
+   exit timing, shorter and accelerating away; opening on the enter timing, decelerating into place. */
+dialog[data-overlay] {
+  transition:
+    translate var(--motion-duration-exit) var(--motion-ease-exit),
+    scale var(--motion-duration-exit) var(--motion-ease-exit),
+    overlay var(--motion-duration-exit) allow-discrete,
+    display var(--motion-duration-exit) allow-discrete;
+}
+
+dialog[data-overlay][open] {
+  transition-duration: var(--motion-duration-enter), var(--motion-duration-fast), var(--motion-duration-enter), var(--motion-duration-enter);
+  transition-timing-function: var(--motion-ease-enter);
+}
+
+dialog[data-overlay='sheet']:not([open]),
+dialog[data-overlay='page']:not([open]),
+dialog[data-overlay='player']:not([open]) {
+  translate: 0 100%;
+}
+
+dialog[data-overlay='dialog']:not([open]) {
+  scale: 0.96;
+}
+
+@starting-style {
+  dialog[data-overlay='sheet'][open],
+  dialog[data-overlay='page'][open],
+  dialog[data-overlay='player'][open] {
+    translate: 0 100%;
+  }
+
+  dialog[data-overlay='dialog'][open] {
+    scale: 0.96;
+  }
+}
+
+dialog[data-overlay]::backdrop {
+  background: color-mix(in oklch, var(--foreground) 20%, transparent);
+  opacity: 0;
+  transition:
+    opacity var(--motion-duration-exit) var(--motion-ease-exit),
+    overlay var(--motion-duration-exit) allow-discrete,
+    display var(--motion-duration-exit) allow-discrete;
+}
+
+dialog[data-overlay][open]::backdrop {
+  opacity: 1;
+  transition-duration: var(--motion-duration-enter);
+  transition-timing-function: var(--motion-ease-enter);
+}
+
+@starting-style {
+  dialog[data-overlay][open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* Following the finger: no transition until it lets go. */
+dialog[data-overlay][data-dragging] {
+  transition: none;
+}

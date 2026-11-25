@@ -1,0 +1,81 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Sparkline } from "../../src/components/sparkline"
+
+<Meta title="Patterns/Data visualisation" />
+
+# Data visualisation
+
+Our charts are `ColumnChart`, `AreaChart`, `DumbbellChart`, `CalendarHeatmap` and `AuroraChart`, each in a `ChartCard`; a `Sparkline` for a shape beside a number; and the `Meteogram` and `DurationBars` for the weather and for how long each state lasted. A page gives a chart **its data and its words, never its look**: since 10.0 no chart takes a height, a colour, a label step or a table switch.
+The rules are from GOV.UK (Analysis Function), Carbon, Primer, NN/G and Datawrapper; what is our own decision is marked.
+
+## 1. Ask the question first
+
+| The reader wants | Use |
+| --- | --- |
+| One number | `KeyFigures` or a `SummaryBar`, not a chart |
+| A number and how it moved | The number with a `Sparkline` beside it |
+| A trend over time | `AreaChart` (a line over a light fill) |
+| Compare a few categories, or counts per period | `ColumnChart`; `highlight` marks one column (today, now) |
+| A ranking | A `List` that is `ranked` (our decision: a list with pictures reads better than bars) |
+| Rhythm over days, weeks and months | `CalendarHeatmap` (Monday first, four quantile steps, the months as a table) |
+| How several things changed between two moments | `DumbbellChart`: a ring at the start, a filled dot at the end, biggest change first |
+| The weather hour by hour | `Meteogram`: the sky, the temperature (warm above 0°, cold below, the zero line drawn) and the precipitation in bands on one time axis, each band with its own scale, and the dark hours shaded |
+| The chance of the northern lights | `AuroraChart`: the Kp index every three hours as columns, the Kp the place needs as a dashed line, the dark shaded |
+| How long each state lasted | `DurationBars` |
+| Exact values | Every chart's table, «Vis tallene» |
+
+**Not drawn** (GOV.UK, NN/G, Datawrapper): 3D charts, radial gauges (a linear `Progress` is the bullet), pies and donuts, two value axes in one chart (a `Meteogram` stacks its measures in bands of their own instead), a truncated bar axis, colour as the measure of size, and a chart of fewer than three points (the number says it better).
+Several series are one `AreaChart` each, each in its `ChartCard`, which fits the one-column rule better than one crowded chart. In 10.0 the line, ranked bar, stacked column, donut, scatter, box plot, histogram and heatmap charts were removed: no page used them.
+
+**Why these, and how they are drawn** (Cleveland and McGill's ranking of what a person reads accurately: position on a common scale first, then length, then angle and area, then colour).
+The value is a **position** or a **length** (a column, a dot, a ring), and colour is help only: the heat steps are four greys that keep 3:1 and every day is also in a title and a table, so colour is never the only carrier.
+Heat steps come from **quantiles of the values above zero**, not equal ranges: one very busy day would otherwise turn all the others pale. A day with no data is empty, and a zero is a zero.
+A dumbbell has one shared axis, so its rows must share a unit and a size; for things of very different size use percent change or one column chart each.
+
+## 2. One look, the chart's (our decision)
+
+- **One height.** Every chart in a `ChartCard`, and its empty state, is `--chart-height` tall: `clamp(12.5rem, 22cqi, 20rem)`, a little taller in a wider card. It is in CSS from the first paint, so nothing moves when the chart has measured itself.
+- **One colour.** The marks are `--chart-accent`. It is not set at the root, so a chart is in the theme's `primary`; a `WeatherStage` sets it to the weather's colour, and the charts on it follow.
+- **The labels thin themselves.** A column chart labels every column up to eight, then every second, third and so on (`labelStep`), so the labels never crowd; every column is still in the table.
+- **The table is always there.** Under every chart, «Vis tallene» opens its numbers, for a sighted reader as for a screen reader.
+- **In a card.** `ColumnChart`, `AreaChart`, `DumbbellChart`, `CalendarHeatmap` and `AuroraChart` stand in a `ChartCard`, which gives the title, the line under it and the empty state (a test checks every story and component).
+
+## 3. Anatomy
+
+- **Title and subtitle.** The title states the message («Avspillingene økte gjennom høsten»), the subtitle gives what is counted, the unit and the period (GOV.UK, Datawrapper, Carbon). `ChartCard` has both. Say the unit in the subtitle and again in the tooltip.
+- **Bars start at zero**, and the axis is never broken (GOV.UK). `ColumnChart` does: bars of 100 and 102 differ by two percent in height. A line may leave zero if the break is said in the text.
+- **Order.** A ranking is sorted by value; time, weekday and hour have their own order.
+- **Labels are horizontal**; if there are many, the chart labels every nth (GOV.UK, Datawrapper). Numbers have a decimal comma, grouping with a space and a real minus (`formatChartValue`: `nb-NO`).
+- **Few annotations**, short and close to the data, and the same words in the text alternative (Datawrapper, GOV.UK).
+- **Light gridlines**, and no frame filled with elements (GOV.UK, Carbon).
+
+## 4. Without colour
+
+One series a chart, so nothing is told apart by colour alone. Marks meet 3:1 against the background and axis text 4.5:1 (a test checks the theme's colours on the page and the card). A chart's colour never carries a state: tell a state with a symbol and words.
+
+## 5. A number with its shape
+
+<span className="sb-unstyled">14 avspillinger <Sparkline data={[4, 6, 5, 9, 12, 10, 14]} ariaLabel="Avspillinger siste sju dager: økte fra 4 til 14" /></span>
+
+A row of a dashboard is the number, its `Sparkline` and a few words («opp 3 fra i går»), and the exact values are wherever the number is explained. A sparkline has no axes and no tooltip; its `label` says what it counts, the period and how it moved.
+
+## 6. Text alternative
+
+Every chart has its numbers as a table (`ChartTable`, «Vis tallene», always there) and can have a visible `summary` that says the type, the range, the trend and the extremes without repeating the title or listing every point. `summariseSeries()` writes one when nobody has. See **Accessible charts**.
+
+## 7. States
+
+- **Empty:** `ChartCard empty` with what there is none of, a plural noun: `empty="avspillinger"` gives «Ingen avspillinger å vise.» at the chart's height, no axes drawn. A chart given no data at all says «Ingen data å vise.».
+- **Loading:** a `SectionSkeleton` at the chart's final height inside a `StreamedSection`. **Error:** an `ErrorMessage` in the part. **Stale:** a `Freshness` line. See **Charts on the server**.
+- **One value or all equal:** say it in words (`summariseSeries`: «Alle er 5»); a single point is still drawn as a dot, but the number is the better chart.
+
+## Sources
+
+[GOV.UK Analysis Function, charts](https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-charts/),
+[Carbon, chart anatomy](https://carbondesignsystem.com/data-visualization/chart-anatomy/),
+[Carbon, dashboards](https://carbondesignsystem.com/data-visualization/dashboards/),
+[Primer, data visualization](https://primer.style/product/ui-patterns/data-visualization/),
+[NN/G, dashboards and preattentive attributes](https://www.nngroup.com/articles/dashboards-preattentive/),
+[Datawrapper, chart types](https://www.datawrapper.de/academy/chart-types-guide),
+[Datawrapper, text in data visualizations](https://www.datawrapper.de/academy/text-in-data-visualizations).

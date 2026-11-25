@@ -1,0 +1,375 @@
+/*
+ * The motion system: tokens, the small shared movements and the reduced-motion safety net. Imported by `theme.css`, so every
+ * app has it. When to animate and when not to is the guide «Foundations / Motion» in Storybook; app code takes durations and
+ * easings from the tokens below and never writes its own.
+ *
+ * Tokens are named by purpose. Entrances move and never fade: a fade hands a contrast checker half-transparent text. Exits are
+ * shorter than entrances (NN/g). Only `transform`, `translate`, `scale`, `opacity` and registered numbers move, so nothing lays
+ * the page out again on every frame. No loop runs longer than five seconds (WCAG 2.2.2).
+ */
+
+:root {
+  /* Durations, by what they are for. */
+  --motion-duration-instant: 100ms; /* a press, a hover: the answer within 0.1 s */
+  --motion-duration-fast: 150ms; /* a colour, a small part, the dimming of a refetch */
+  --motion-duration-enter: 250ms; /* an overlay or a block opening */
+  --motion-duration-exit: 200ms; /* the same, leaving: shorter, the eye no longer needs it */
+  --motion-duration-reveal: 300ms; /* a short rise into place */
+  --motion-duration-slow: 400ms; /* a large movement, across a good part of the screen */
+  --motion-duration-data: 700ms; /* a bar growing, a number counting up */
+  --motion-duration-celebrate: 600ms; /* the one moment something is finished (the check drawn as the first run ends): once, the whole of it under a second */
+  --motion-duration-live: 2400ms; /* one beat of a live pulse; it beats twice */
+  --motion-duration-disc: 12000ms; /* one slow turn of a record playing now; it turns for as long as it plays */
+  --motion-duration-base: var(--motion-duration-enter); /* the old name, kept for the apps */
+  --motion-duration-press: var(--motion-duration-instant); /* the answer to a press, by its purpose */
+
+  /* Easings. `enter` decelerates into place, `exit` accelerates away, `standard` moves within the page. */
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --motion-ease-linear: linear;
+  /* A light spring (about 3 % overshoot), for a press, a lift and the beat of a mark only, never text or a large surface. Falls back to `enter`. */
+  --motion-ease-spring: var(--motion-ease-enter);
+  --motion-ease-spring: linear(0, 0.029, 0.101, 0.198, 0.308, 0.42, 0.528, 0.627, 0.714, 0.789, 0.852, 0.903, 0.942, 0.973, 0.995, 1.01, 1.02, 1.026, 1.028, 1.028, 1.027, 1.024, 1.021, 1.018, 1);
+  /* The old names, kept for the apps: `out` is `enter`, `in` is `exit` (softer than the old one, which barely moved for its first half). */
+  --motion-ease-out: var(--motion-ease-enter);
+  --motion-ease-in: var(--motion-ease-exit);
+  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* IBM Carbon's expressive standard: a longer, softer arc for the few signature moments only (guide «Motion», «Brand motion»). */
+  --motion-ease-expressive: cubic-bezier(0.4, 0.14, 0.3, 1);
+
+  --motion-distance: 0.75rem;
+  /* Between siblings rising in turn: five steps at most, so the last has settled within half a second. */
+  --motion-stagger: 40ms;
+
+  /*
+   * Brand motion (guide «Motion», «Brand motion»): the accent of an app's few signature moments (its mark revealed in the first run, the
+   * first run finished, an empty page, a wait for the mark), set by its hue below, one hue to an app. Everything else moves on the tokens
+   * above, the same in every app: an app never changes the scale, only these. Without a brand: the system's own entrance, once.
+   */
+  --motion-brand-duration: var(--motion-duration-slow); /* one beat of the gesture */
+  --motion-brand-ease: var(--motion-ease-enter);
+  --motion-brand-distance: var(--motion-distance); /* how far a mark rises into place, upward only */
+  --motion-brand-beats: 1; /* how many beats the gesture has: one or two */
+  --motion-brand-beat: 0ms; /* the rest between two beats */
+  --motion-mark-delay: 0s; /* when a mark's gesture starts: after the check, as the first run ends */
+}
+
+/* Rhythmic (Medier, the play mark): two short beats on the light spring, 120 ms apart, the second smaller: the mark lands on the downbeat. */
+[data-brand='amber'] {
+  --motion-brand-duration: 300ms;
+  --motion-brand-ease: var(--motion-ease-spring);
+  --motion-brand-beats: 2;
+  --motion-brand-beat: 120ms;
+}
+
+/* Calm and rising (Start, the sunrise): one slow glide upward that only decelerates. No overshoot, no spring anywhere. */
+[data-brand='teal'] {
+  --motion-brand-duration: 400ms;
+  --motion-brand-ease: var(--motion-ease-enter);
+  --motion-brand-distance: calc(var(--motion-distance) * 1.5);
+  --motion-brand-beats: 1;
+}
+
+/* rose, blue and violet have no app yet: they keep the neutral accent until one takes them and says how it moves («Brand», section 5). */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-instant: 0.01ms;
+    --motion-duration-fast: 0.01ms;
+    --motion-duration-enter: 0.01ms;
+    --motion-duration-exit: 0.01ms;
+    --motion-duration-reveal: 0.01ms;
+    --motion-duration-slow: 0.01ms;
+    --motion-duration-data: 0.01ms;
+    --motion-duration-celebrate: 0.01ms;
+    --motion-duration-live: 0.01ms;
+    --motion-duration-disc: 0.01ms;
+    --motion-stagger: 0ms;
+  }
+
+  /* After the hues, so it wins over each of them: no brand moves under reduced motion. */
+  :root,
+  [data-brand] {
+    --motion-brand-duration: 0.01ms;
+    --motion-brand-distance: 0rem;
+    --motion-brand-beat: 0ms;
+  }
+}
+
+/* Registered so a bar or a ring can grow from nothing: a gradient stop is only animatable as a typed number. */
+@property --share {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes motion-rise {
+  from {
+    transform: translateY(var(--motion-distance));
+  }
+}
+
+@keyframes motion-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes motion-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* An empty state's picture settling into its frame: up from a little below and a little smaller, once. It moves, it never fades. */
+@keyframes motion-float {
+  from {
+    transform: translateY(calc(var(--motion-distance) * 1.5)) scale(0.94);
+  }
+}
+
+@keyframes motion-grow {
+  from {
+    --share: 0;
+  }
+}
+
+/* Brand motion: the mark rising into place, a beat of the play mark (a downbeat, then a smaller one), the sun clearing its horizon, a stroke drawn. */
+@keyframes brand-mark-in {
+  from {
+    transform: translateY(var(--motion-brand-distance)) scale(0.85);
+  }
+}
+
+@keyframes brand-beat {
+  from {
+    scale: 0.92;
+  }
+}
+
+@keyframes brand-beat-again {
+  from {
+    transform: scale(0.97);
+  }
+}
+
+@keyframes brand-sunrise {
+  from {
+    translate: 0 1.875rem;
+  }
+}
+
+@keyframes brand-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@layer components {
+  /* One element rising into place on arrival. */
+  .motion-reveal {
+    animation: motion-rise var(--motion-duration-reveal) var(--motion-ease-enter) both;
+  }
+
+  /* The children of a list or grid rising in one after the other, five steps at most. */
+  .motion-stagger > * {
+    animation: motion-rise var(--motion-duration-reveal) var(--motion-ease-enter) both;
+  }
+
+  .motion-stagger > :nth-child(2) { animation-delay: calc(var(--motion-stagger) * 1); }
+  .motion-stagger > :nth-child(3) { animation-delay: calc(var(--motion-stagger) * 2); }
+  .motion-stagger > :nth-child(4) { animation-delay: calc(var(--motion-stagger) * 3); }
+  .motion-stagger > :nth-child(5) { animation-delay: calc(var(--motion-stagger) * 4); }
+  .motion-stagger > :nth-child(n + 6) { animation-delay: calc(var(--motion-stagger) * 5); }
+
+  /*
+   * The picture of an empty state or a failure (`EmptyState`, `ErrorMessage`) arriving: the whole settles into place, then its one
+   * detail (`[data-float-detail]`: the magnifier, the check, the warning sign) a beat after it. Once, on the page's first paint, never again.
+   */
+  .motion-float {
+    animation: motion-float var(--motion-duration-slow) var(--motion-ease-enter) both;
+  }
+
+  .motion-float [data-float-detail] {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: motion-float var(--motion-duration-slow) var(--motion-ease-spring) calc(var(--motion-stagger) * 3) both;
+  }
+
+  /* A bar or ring whose `--share` (0 to 1) grows from nothing. */
+  .motion-grow {
+    animation: motion-grow var(--motion-duration-data) var(--motion-ease-enter) both;
+  }
+
+  /* The pulse of something live: two beats, under five seconds (WCAG 2.2.2), then still. Say «live» in words beside it. */
+  .motion-live {
+    animation: motion-pulse var(--motion-duration-live) var(--motion-ease-in-out) 2;
+  }
+
+  /*
+   * A record playing now (`Picture disc`) turns slowly for as long as it plays, and not at all under reduced motion. It is the one loop that runs past five
+   * seconds (WCAG 2.2.2 asks for a way to pause it): a choice made for the sake of the look, with the words «playing now» always beside it.
+   */
+  .motion-disc {
+    animation: motion-spin var(--motion-duration-disc) var(--motion-ease-linear) infinite;
+  }
+
+  /*
+   * An app's mark (`AppMark`) in a signature moment, once, never looping. `reveal`: the play mark beats (twice in amber), the sun rises over
+   * its horizon (clipped there by the mark), any other mark rises into place. `loading`: after a second of waiting the glyph beats as many
+   * times as the brand's beats, then rests; a word beside it says what is waited for. All on the brand's tokens, so each app moves in its
+   * own way. Two animations make the two beats: the second, on `transform`, runs `beats - 1` times (none with one beat), after the first and
+   * the rest between them.
+   */
+  [data-mark-motion='reveal']:not([data-app-mark='play'], [data-app-mark='sunrise']) {
+    animation: brand-mark-in var(--motion-brand-duration) var(--motion-brand-ease) var(--motion-mark-delay) both;
+  }
+
+  [data-mark-motion='reveal'][data-app-mark='play'] [data-glyph],
+  [data-mark-motion='loading'] [data-glyph] {
+    --beat-start: var(--motion-mark-delay);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation:
+      brand-beat var(--motion-brand-duration) var(--motion-brand-ease) var(--beat-start) both,
+      brand-beat-again var(--motion-brand-duration) var(--motion-brand-ease) calc(var(--beat-start) + var(--motion-brand-duration) + var(--motion-brand-beat)) calc(var(--motion-brand-beats) - 1) none;
+  }
+
+  [data-mark-motion='loading'] [data-glyph] {
+    --beat-start: 1s;
+  }
+
+  [data-mark-motion='reveal'][data-app-mark='sunrise'] [data-sun] {
+    animation: brand-sunrise var(--motion-brand-duration) var(--motion-brand-ease) var(--motion-mark-delay) both;
+  }
+
+  /* A stroke drawn from its start (`pathLength="1"`, `stroke-dasharray: 1`): the check when the first run is finished. */
+  .motion-draw {
+    stroke-dasharray: 1;
+    animation: brand-draw var(--motion-duration-celebrate) var(--motion-ease-expressive) both;
+  }
+
+  /* A container that is refetching: dimmed while `aria-busy`, back when it settles. A page on its way (`main[aria-busy]`) too. */
+  .motion-pending,
+  main {
+    transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
+  }
+
+  .motion-pending[aria-busy='true'],
+  main[aria-busy='true'] {
+    opacity: 0.5;
+  }
+
+  /* Pressed feedback for anything clickable that is not already a Button: down a pixel at once, back on a light spring. */
+  .motion-press {
+    transition: translate var(--motion-duration-instant) var(--motion-ease-spring);
+  }
+
+  .motion-press:active {
+    translate: 0 0.0625rem;
+  }
+
+  /*
+   * A card that lifts under a real pointer, never on touch where hover sticks. The shadow is drawn once on `::after` and only its
+   * opacity changes: a `box-shadow` that changes is painted again on every frame.
+   */
+  .motion-lift {
+    position: relative;
+    transition: translate var(--motion-duration-fast) var(--motion-ease-spring);
+  }
+
+  .motion-lift::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0.5rem 1rem -0.5rem color-mix(in oklch, currentColor 30%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
+  }
+
+  @media (hover: hover) {
+    .motion-lift:hover {
+      translate: 0 -0.125rem;
+    }
+
+    .motion-lift:hover::after {
+      opacity: 1;
+    }
+  }
+
+  /* Open and close of a block without measuring it: wrap the content in one child with `overflow: hidden`. */
+  .motion-collapse {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows var(--motion-duration-enter) var(--motion-ease-standard);
+  }
+
+  .motion-collapse[data-state='closed'] {
+    grid-template-rows: 0fr;
+  }
+
+  .motion-collapse > * {
+    min-block-size: 0;
+    overflow: hidden;
+  }
+}
+
+/*
+ * A `<details>` that opens and closes smoothly (`Disclosure`), where the browser can animate to `height: auto`
+ * (`interpolate-size`, `::details-content`; Chromium in 2026). Elsewhere it opens at once, which is no loss.
+ */
+@supports (interpolate-size: allow-keywords) and selector(::details-content) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  details[data-motion='disclosure']::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size var(--motion-duration-exit) var(--motion-ease-exit),
+      content-visibility var(--motion-duration-exit) allow-discrete;
+  }
+
+  details[data-motion='disclosure'][open]::details-content {
+    block-size: auto;
+    transition-duration: var(--motion-duration-enter);
+    transition-timing-function: var(--motion-ease-enter);
+  }
+}
+
+/*
+ * The safety net. Loops stop, movement and fades land at once, and that also covers any shadcn component added later (sheet,
+ * dialog, menus) and the page's view transition. A spinner is feedback that something is working, not decoration, so
+ * `data-motion="essential"` keeps it turning.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .motion-reveal,
+  .motion-stagger > *,
+  .motion-grow,
+  .motion-live,
+  .motion-disc,
+  .motion-float,
+  .motion-float [data-float-detail],
+  .motion-draw,
+  [data-mark-motion],
+  [data-mark-motion] * {
+    animation: none;
+  }
+
+  *:not([data-motion='essential']),
+  *:not([data-motion='essential'])::before,
+  *:not([data-motion='essential'])::after,
+  *::backdrop,
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

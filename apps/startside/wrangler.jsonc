@@ -1,0 +1,36 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "startside",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Only the route: no workers.dev or preview address that would get round Cloudflare Access.
+  "workers_dev": false,
+  "preview_urls": false,
+  // Workers AI, for the summaries (lib/ai.ts); without it the pages simply have none.
+  "ai": { "binding": "AI" },
+  // The relay (upstream/), called inside Cloudflare instead of over its workers.dev address (lib/relay.ts). Deployed first (deploy.yml).
+  "services": [{ "binding": "UPSTREAM", "service": "startside-upstream" }],
+  // The snapshot the cron fills (lib/snapshot.ts). No id: wrangler deploy creates the namespace the first time (automatic provisioning).
+  "kv_namespaces": [{ "binding": "SNAPSHOT" }],
+  // No cron of its own: workers/scheduler calls `scheduled` (worker.mjs) every 15 minutes to put the shared sources into the snapshot. 96 runs a day, at most five KV writes each.
+  "triggers": { "crons": [] },
+  "observability": { "enabled": true },
+  "routes": [{ "pattern": "lmfaole.party/start*", "zone_name": "lmfaole.party" }],
+  "vars": {
+    // GitHub: the repositories whose issues are watched (the ones you are involved in, new ones nobody owns, what moved lately).
+    "GITHUB_WATCH_REPOS": "fremtind/jokul",
+    "WEATHER_PLACE": "Oslo",
+    "WEATHER_LAT": "59.91",
+    "WEATHER_LON": "10.75",
+    // Cloudflare Access (the application «Startside»): the Worker checks the token Access signs (worker.mjs, lib/access.ts).
+    "ACCESS_TEAM_DOMAIN": "https://party-7ry-pages.cloudflareaccess.com",
+    "ACCESS_AUD": "f12d1eec25593141673629b11f25f1cf106ec59c65ba8e7c2548f0ebb6f21ebc",
+    // AI Gateway for the summaries (lib/ai-gateway.ts): «default» is created by Cloudflare on the first call; empty for none.
+    "AI_GATEWAY": "default",
+    // "1" once Image Transformations is on for lmfaole.party with github.com and avatars.githubusercontent.com allowed: avatars as AVIF/WebP via /cdn-cgi/image.
+    "IMAGE_TRANSFORMS": "0",
+    // Web Analytics' site token (32 hex); empty, no beacon.
+    "CF_BEACON_TOKEN": ""
+  }
+}

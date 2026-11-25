@@ -1,0 +1,198 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Components/Overview" summary="Every component by what it is for, in the order of the sidebar: find the group, then the line that says what you need." />
+
+# Components
+
+Grouped by what they are for, in the order a page is built: its frame, its words and links, what a person does, then the kinds of
+content. Find what you need on the left and follow the name. Whole pages made of these are under **Patterns**; tokens and icons under
+**Foundations**.
+
+If the thing is not here, add a component to the design system; do not style it in the app.
+
+## Layout
+
+The frame of a page and how its parts stand: one reading column, sections under each other, columns only for what is looked at.
+
+| You need | Use |
+| --- | --- |
+| The page frame and its title | [`PageLayout`](?path=/docs/components-layout-pagelayout--docs), [`PageColumn`](?path=/docs/components-layout-pagecolumn--docs), [`PageHeader`](?path=/docs/components-layout-pageheader--docs) |
+| The head of a page of one thing: its picture and name together, on a backdrop of the picture's colours | [`DetailHeader`](?path=/docs/components-layout-detailheader--docs) |
+| The body of a page of one thing: its sections, and a rail of its status, facts and links out | [`DetailLayout`](?path=/docs/components-layout-detaillayout--docs) |
+| The weather of a page (now, today) on a backdrop of the weather's own colours | [`WeatherStage`](?path=/docs/components-layout-weatherstage--docs) |
+| A titled part of a page | [`PageSection`](?path=/docs/components-layout-pagesection--docs) |
+| Things under each other; short things in a line | [`Stack`](?path=/docs/components-layout-stack--docs), [`Inline`](?path=/docs/components-layout-inline--docs) |
+| Things looked at in columns | [`Grid`](?path=/docs/components-layout-grid--docs) |
+
+## Text
+
+Words in the few forms the system has: a size, a tone, a weight, never a class.
+
+| You need | Use |
+| --- | --- |
+| A heading, a paragraph | [`Heading`](?path=/docs/components-text-heading--docs), [`Text`](?path=/docs/components-text-text--docs) |
+| A few lines that belong together | [`Lines`](?path=/docs/components-text-lines--docs) |
+| Text written in Markdown (a description, a comment) | [`Markdown`](?path=/docs/components-text-markdown--docs) |
+| A time, relative when recent | [`Time`](?path=/docs/components-text-time--docs) |
+
+## Links
+
+The way to another page: in text, out of the site, or several on a line (a whole row that is a link is a `List` row with `href`).
+
+| You need | Use |
+| --- | --- |
+| A link in text, or out to another site (`external`) | [`TextLink`](?path=/docs/components-links-textlink--docs) |
+
+## Actions
+
+What a person does on the page, not where they go.
+
+| You need | Use |
+| --- | --- |
+| An action; several that belong together | [`Button`](?path=/docs/components-actions-button--docs), [`ButtonGroup`](?path=/docs/components-actions-buttongroup--docs) |
+| A link that looks like the main action | [`LinkButton`](?path=/docs/components-actions-linkbutton--docs) |
+| A form sent to a server that may take a moment | [`PendingButton`](?path=/docs/components-actions-pendingbutton--docs) |
+
+## Navigation
+
+Between pages and within a long list: where you are, the way back, the pages under this one.
+
+| You need | Use |
+| --- | --- |
+| Where you are and the way back; the pages under this page | [`Breadcrumbs`](?path=/docs/components-navigation-breadcrumbs--docs), [`SubPages`](?path=/docs/components-navigation-subpages--docs) |
+| The top-level pages of an app | [`NavBar`](?path=/docs/components-navigation-navbar--docs) |
+| Narrowing a long list | [`FilterChips`](?path=/docs/components-navigation-filterchips--docs) |
+| Counts that each lead to their list | [`SummaryBar`](?path=/docs/components-navigation-summarybar--docs) |
+
+## Lists
+
+Many things of one kind, each a row that leads to its own page.
+
+| You need | Use |
+| --- | --- |
+| Many things to open, each a row: a picture (`kind`), an icon, a map or a rank in front, a line under the name, a value at the end | [`List`](?path=/docs/components-lists-list--docs) |
+| Something on the page that changes by itself, told to a screen reader | [`LiveRegion`](?path=/docs/components-status-liveregion--docs) |
+| An album's cover as a sleeve in 3D with a record half out (the main picture of an album's page) | [`AlbumSleeve`](?path=/docs/components-media-albumsleeve--docs), or `DetailHeader` with `sleeve` (`disc="cd"` for a CD in its jewel case) |
+| What plays now, large, as a disc that shines under the page's light | [`NowPlayingCard`](?path=/docs/components-media-nowplayingcard--docs), [`LightSource`](?path=/docs/components-media-lightsource--docs), [`TiltButton`](?path=/docs/components-media-tiltbutton--docs) |
+| A few numbers that say most about a section, large, above its chart | [`KeyFigures`](?path=/docs/components-charts-keyfigures--docs) |
+| Terms and their values | [`FactList`](?path=/docs/components-lists-factlist--docs) |
+| A status under a title | [`StatusLine`](?path=/docs/components-lists-statusline--docs) |
+| Pictures looked at in a grid (a cast, an artist's albums) | [`Tiles`](?path=/docs/components-lists-tiles--docs) |
+| The next departures from a stop, as its signs show them | [`DepartureBoard`](?path=/docs/components-lists-departureboard--docs) |
+| Every departure from one stop the next hours, in order, on the stop's own page | [`DepartureList`](?path=/docs/components-lists-departurelist--docs) |
+| Every stop on one trip of a line, the stop seen from marked, on the line's own page | [`StopSequence`](?path=/docs/components-lists-stopsequence--docs) |
+| Warnings from the authorities (MET, NVE/Varsom) with their level in the official colour and a link to the full warning | [`HazardList`](?path=/docs/components-lists-hazardlist--docs) |
+| What happened to a thing, newest first (a pull request, an issue, what was played) | [`Timeline`](?path=/docs/components-lists-timeline--docs) |
+
+## Tables
+
+Values compared across columns, when a list is not enough.
+
+| You need | Use |
+| --- | --- |
+| The table | [`Table`](?path=/docs/components-tables-table--docs) |
+| A heading for a screen reader only | [`SrTableHead`](?path=/docs/components-tables-srtablehead--docs) |
+
+## Charts
+
+A number's shape: over time, by day, as a change. Every chart stands in a `ChartCard` (but `Sparkline`, `Meteogram` and `DurationBars`) and has its table.
+
+| You need | Use |
+| --- | --- |
+| A card around a chart | [`ChartCard`](?path=/docs/components-charts-chartcard--docs) |
+| Over time | [`AreaChart`](?path=/docs/components-charts-areachart--docs), [`ColumnChart`](?path=/docs/components-charts-columnchart--docs), [`Sparkline`](?path=/docs/components-charts-sparkline--docs) |
+| Days and rhythms | [`CalendarHeatmap`](?path=/docs/components-charts-calendarheatmap--docs) |
+| A change between two moments | [`DumbbellChart`](?path=/docs/components-charts-dumbbellchart--docs) |
+| The weather hour by hour | [`Meteogram`](?path=/docs/components-charts-meteogram--docs) |
+| The chance of the northern lights over the next days | [`AuroraChart`](?path=/docs/components-charts-aurorachart--docs) |
+| How long each state lasted, on one time axis | [`DurationBars`](?path=/docs/components-charts-durationbars--docs) |
+
+## Media
+
+Pictures, logos, people and podcasts.
+
+| You need | Use |
+| --- | --- |
+| A picture | [`Picture`](?path=/docs/components-media-picture--docs) |
+| Podcasts: the app's one player, docked at the foot, and «Spilles nå» over the whole screen (`NowPlaying`); the button that plays an episode; its chapters | [`PodcastPlayer`](?path=/docs/components-media-podcastplayer--docs), [`PlayButton`](?path=/docs/components-media-playbutton--docs), [`ChapterList`](?path=/docs/components-media-chapterlist--docs) |
+| An episode's transcript, read along with it: the line said now marked and followed, a tap to go there, speakers, search | [`Transcript`](?path=/docs/components-media-transcript--docs) |
+| A picture opened large | [`ImageLightbox`](?path=/docs/components-media-imagelightbox--docs) |
+| A game's screenshots and trailers | [`MediaGallery`](?path=/docs/components-media-mediagallery--docs) |
+| A maker's or source's logo | [`Logo`](?path=/docs/components-media-logo--docs), [`Logos`](?path=/docs/components-media-logos--docs) |
+| Services by logo and name, grouped (where a film streams) | [`LogoList`](?path=/docs/components-media-logolist--docs) |
+| A small still map of a place (a stop, a bike station) | a `List` row's `map`, `DetailLayout map`, `DepartureBoard at` |
+| The app's own name and mark, its brand | [`Wordmark`](?path=/docs/components-media-wordmark--docs) (`AppMark`) |
+| A person named, with their picture | [`Person`](?path=/docs/components-media-person--docs) |
+
+## Forms
+
+Rare here: a field, a search, a choice from a list, a setting, and what went wrong.
+
+| You need | Use |
+| --- | --- |
+| A field; a search | [`TextField`](?path=/docs/components-forms-textfield--docs), [`SearchField`](?path=/docs/components-forms-searchfield--docs) |
+| A time of day | [`TimeField`](?path=/docs/components-forms-timefield--docs) |
+| A choice from a list | [`NativeSelect`](?path=/docs/components-forms-nativeselect--docs) |
+| What must be fixed before sending | [`FormErrorSummary`](?path=/docs/components-forms-formerrorsummary--docs) |
+| One of a few choices, each worth a word or a picture (a setting; the picture is the choice) | [`ChoiceCards`](?path=/docs/components-forms-choicecards--docs) |
+| Some of a list | [`CheckboxList`](?path=/docs/components-forms-checkboxlist--docs) |
+| Some of a list in each of a few groups (sections per part of the day) | [`ToggleMatrix`](?path=/docs/components-forms-togglematrix--docs) |
+| The order of a short list (drag, or buttons) | [`ReorderList`](?path=/docs/components-forms-reorderlist--docs) |
+| A short list typed one to a line | [`ListField`](?path=/docs/components-forms-listfield--docs) |
+
+## Status
+
+The state of a thing, beside it or over the page.
+
+| You need | Use |
+| --- | --- |
+| A word next to a name; something live | [`Badge`](?path=/docs/components-status-badge--docs), [`LiveDot`](?path=/docs/components-status-livedot--docs) |
+| When it was made, and when it is old | [`Freshness`](?path=/docs/components-status-freshness--docs) |
+| A public transport line (its kind and code) | [`LineBadge`](?path=/docs/components-status-linebadge--docs) |
+| A value against a goal | [`Progress`](?path=/docs/components-status-progress--docs) |
+| The steps a thing goes through, and where it is now | [`StateSteps`](?path=/docs/components-status-statesteps--docs) |
+| A message about the page; the connection | [`Banner`](?path=/docs/components-status-banner--docs), [`ConnectionBanner`](?path=/docs/components-status-connectionbanner--docs) |
+
+## States
+
+What a section shows while it loads, when it is empty and when it failed.
+
+| You need | Use |
+| --- | --- |
+| Nothing to show; a failed query | [`EmptyState`](?path=/docs/components-states-emptystate--docs), [`ErrorMessage`](?path=/docs/components-states-errormessage--docs) |
+| Loading | [`Skeleton`](?path=/docs/components-states-skeleton--docs), [`SectionSkeleton`](?path=/docs/components-states-sectionskeleton--docs), [`StreamedSection`](?path=/docs/components-states-streamedsection--docs) |
+
+## Onboarding
+
+The first visit: the introduction, whose data, what a page is for, a permission, what is new, and the offer to install; and the settings that change it later. What has been seen is kept in the `seen` cookie (`lib/onboarding`), what the visitor chose in the `prefs` cookie (`lib/preferences`), both read on the server.
+
+| You need | Use |
+| --- | --- |
+| Whose data to fetch; whose is shown | [`UsernameForm`](?path=/docs/components-onboarding-usernameform--docs), [`UserChip`](?path=/docs/components-onboarding-userchip--docs) |
+| A word about a page on the first visit | [`IntroCallout`](?path=/docs/components-onboarding-introcallout--docs) |
+| A permission of the browser (position, notifications) | [`PermissionCard`](?path=/docs/components-onboarding-permissioncard--docs) |
+| A place or section that has just come | [`NewBadge`](?path=/docs/components-onboarding-newbadge--docs) |
+| The offer to install the app | [`InstallPrompt`](?path=/docs/components-onboarding-installprompt--docs) |
+| The first visit's introduction, one question per step | [`FirstRun`](?path=/docs/components-onboarding-firstrun--docs) (with `FirstRunEnhancer`) |
+| The settings page, a part at a time | [`SettingsSection`](?path=/docs/components-onboarding-settingssection--docs) |
+| «Utseende» in settings, whole (theme, effects, vibration, the light); in a first run `ThemeChoice`, `EffectsChoice`, `TiltChoice` | [`AppearanceSettings`](?path=/docs/components-onboarding-appearancesettings--docs) |
+| «App» in settings: installing the app | [`InstallSettings`](?path=/docs/components-onboarding-installsettings--docs) |
+| «Vis introen igjen» in settings | [`IntroSettings`](?path=/docs/components-onboarding-introsettings--docs) |
+| Where an app's data comes from, each source with its mark, last in settings | [`SourcesSettings`](?path=/docs/components-onboarding-sourcessettings--docs) |
+
+## Overlays
+
+Over the page or folded into it.
+
+| You need | Use |
+| --- | --- |
+| A dialog, a sheet, a popover | [`Overlay`](?path=/docs/components-overlays-overlay--docs) |
+| Long content out of the way | [`Disclosure`](?path=/docs/components-overlays-disclosure--docs) |
+
+## Motion
+
+Movement from the motion tokens, off under reduced motion.
+
+| You need | Use |
+| --- | --- |
+| Things entering | [`Reveal`](?path=/docs/components-motion-reveal--docs), [`Stagger`](?path=/docs/components-motion-stagger--docs) |

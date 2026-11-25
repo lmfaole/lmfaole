@@ -1,0 +1,24 @@
+---
+// A server island: the covers of the most played songs that the recent plays did not show are one question to Last.fm each, with a budget of their own (the page's charts may have used the Worker's limit).
+import type { TopTrack } from '../lib/lastfm'
+import { trackCovers, usersOf } from '../lib/runtime'
+import { TopTracks } from './detail'
+
+interface Props {
+  artist: string
+  tracks: TopTrack[]
+  /** The covers the recent plays already showed, by title. */
+  known: [string, string][]
+  /** The titles that have a page of their own to link to. */
+  linked: string[]
+  base: string
+}
+
+const { artist, tracks, known, linked, base } = Astro.props
+const covers = new Map(known)
+const missing = tracks.map((track) => track.title).filter((title) => !covers.has(title))
+const found = missing.length === 0 ? new Map<string, string>() : await trackCovers(usersOf(Astro.cookies), artist, missing).catch(() => new Map<string, string>())
+for (const [title, cover] of found) covers.set(title, cover)
+---
+
+<TopTracks artist={artist} tracks={tracks} covers={covers} linked={new Set(linked)} base={base} />

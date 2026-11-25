@@ -1,0 +1,19 @@
+{
+  "name": "lmfaole",
+  "private": true,
+  "type": "module",
+  "description": "lmfaole's apps, workers and design system in one repository, all on Cloudflare",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "workers/*"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "hooks": "git config core.hooksPath .githooks"
+  }
+}

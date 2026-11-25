@@ -1,0 +1,244 @@
+import type { Decorator, Meta, StoryObj } from "@storybook/react-vite"
+import { flushSync } from "react-dom"
+import { hydrateRoot } from "react-dom/client"
+import { renderToString } from "react-dom/server"
+import { expect, spyOn, userEvent, waitFor, within } from "storybook/test"
+
+import { FirstRun, FirstRunFinish } from "../../../src/components/first-run"
+import { FirstRunEnhancer } from "../../../src/components/first-run-enhancer"
+import { stepQuestions } from "../../../src/lib/first-run"
+import { steps } from "./first-run-steps"
+
+/** A frame the wizard fills (it is fixed to the screen, and a transform makes the frame its screen), so a story shows it as a page would; `parameters.frame` narrows it. */
+const frame: Decorator = (Story, { parameters }) => (
+  <div className={`relative h-[36rem] overflow-hidden rounded-lg border [transform:translateZ(0)] [&_dialog]:h-full! ${parameters["frame"] === "phone" ? "w-[24rem]" : ""}`}>
+    <Story />
+  </div>
+)
+
+/** Where the stories' wizard asks the server to check a step; `Validation` answers it as a server would. */
+const VALIDATE = "/start/api/innstillinger/sjekk"
+
+const meta = {
+  title: "Components/Onboarding/FirstRun",
+  component: FirstRun,
+  tags: ["autodocs"],
+  args: {
+    open: true,
+    title: "Kom i gang",
+    action: "/start/api/innstillinger",
+    back: "/start",
+    steps: steps(),
+  },
+  argTypes: { steps: { control: false } },
+  decorators: [frame],
+  render: (args) => (
+    <>
+      <FirstRun {...args} />
+      <FirstRunEnhancer id={args.id ?? "first-run"} modal={false} />
+    </>
+  ),
+  parameters: {
+    docs: {
+      story: { inline: false, height: "36rem" },
+      description: {
+        component: `### Use it when
+
+an app is first opened and a few choices make it the visitor's own: whose data, what to show, the theme, the effects, the tilt, installing. It opens on any page while the \`seen\` cookie lacks \`first-run@1\`, drawn \`open\` by the server so nothing flashes, and is gone for good after «Ferdig» or «Hopp over». The same choices are on the settings page (\`SettingsSection\`), with «Vis introen igjen».
+
+Two parts: \`FirstRun\` is the markup, drawn on the server with any fields in its steps; \`FirstRunEnhancer\` (a client island that draws nothing) makes it a wizard by its \`id\`. The steps' \`content\` are the native fields (\`TextField\`, \`ChoiceCards\`, \`CheckboxList\`, \`ListField\`).
+
+**One question per step, always.** A step asks one thing: one field, one radio group, one list of checkboxes. Effects and tilt are two steps, never one; a step with more is split, not filled. \`FirstRunEnhancer\` warns in the console when a step has fields of more than one name (\`stepQuestions\`).
+
+**The choice is the example.** Where a choice is about how something looks, the picture is the choice and the whole card (the picture, the label and a sentence) is the radio: \`ThemeChoice\`, \`EffectsChoice\` (live WebGL and flat) and \`TiltChoice\` («Følg telefonen», which asks the phone when chosen, and «Fast lys»), the same as on the settings page (\`AppearanceSettings\`). Never an example above and the radios below.
+
+**The server.** One form, \`POST\` to \`action\`, with \`back\`, the fields and \`skip=1\` from «Hopp over». It saves the choices (the \`prefs\` cookie: \`lib/preferences\`), marks \`first-run@1\` in \`seen\` and answers \`303\` to \`back\`. With \`validateUrl\`, each step is sent there first with \`validate=<step>\` and \`accept: application/json\`, answered \`{ "errors": { "<field>": "<melding>" } }\` (\`{}\` is fine); the errors stand under the fields and the step stays. Without JavaScript the server checks everything and on an error answers \`303\` back with \`?forste-gang=<step>\` (and the values), so the page draws it open at \`initialStep\` with the errors; add \`#first-run-<step>\` to scroll to it.
+
+### Do not use it when
+
+one page needs one word (use \`IntroCallout\`), or one thing must be known before a page can show anything (use \`UsernameForm\` on that page). Never for news or a sign-in.
+
+### Accessibility
+
+**Handled by the component**
+
+- A labelled \`<dialog>\`; with the enhancer a modal (\`showModal\`): the page behind is inert and does not scroll, focus stays inside ([2.4.3 Focus Order](https://www.w3.org/WAI/WCAG22/Understanding/focus-order))
+- Each step is a section with a real heading that begins «Trinn 2 av 8»; focus moves to it at each step, so a screen reader reads where it is ([3.3.2 Labels or Instructions](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions))
+- Esc does nothing: leaving is «Hopp over», which tells the server. Enter in a field is «Neste», and «Ferdig» on the last step
+- An error from the server is shown in words with a symbol under its field, tied with \`aria-describedby\` and \`aria-invalid\`, and focus moves to the field ([3.3.1 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification))
+- Without JavaScript every step stands under the other, with one «Ferdig»: nothing is lost
+- Steps move in from the side they come from, and land at once under \`prefers-reduced-motion\`; so do the mark on the first step and the end (\`FirstRunFinish\`: the check drawn, then the mark, while the next page loads, with focus on its sentence) ([2.3.3 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions))
+
+**You check**
+
+- Every step can be passed as it is: a sensible default in every field, and nothing required that the visitor may not want to give.
+- The server answers \`validate\` quickly, and says what to do in the error.
+
+### Content
+
+A step is one question or a short title («Lyst eller mørkt?»), a sentence on why, and its one field. Six to eight steps at most; welcome first, installing last. The buttons are «Tilbake», «Neste», «Ferdig» and «Hopp over».
+
+### Related
+
+\`FirstRunEnhancer\`, \`FirstRunFinish\`, \`AppMark\`, \`SettingsSection\`, \`ChoiceCards\`, \`ThemeChoice\`, \`EffectsChoice\`, \`TiltChoice\`, \`AppearanceSettings\`, \`IntroCallout\`, \`UsernameForm\`, \`lib/preferences\`, \`lib/onboarding\``,
+      },
+    },
+  },
+} satisfies Meta<typeof FirstRun>
+export default meta
+type Story = StoryObj<typeof meta>
+
+/** The first step, as a visitor meets it. «Neste» goes on, and «Tilbake» back. */
+export const Welcome: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await expect(canvas.getByRole("heading", { name: /Trinn 1 av 8\W+Velkommen til Startside/ })).toBeVisible()
+    for (const step of canvasElement.querySelectorAll("[data-step]")) await expect(stepQuestions(step).length).toBeLessThanOrEqual(1)
+    await expect(canvas.queryByRole("button", { name: "Tilbake" })).toBeNull()
+    await userEvent.click(canvas.getByRole("button", { name: "Neste" }))
+    const second = canvas.getByRole("heading", { name: /Trinn 2 av 8/ })
+    await expect(second).toBeVisible()
+    await expect(second).toHaveFocus()
+    await expect(canvas.getByText("2 av 8")).toBeVisible()
+    await userEvent.click(canvas.getByRole("button", { name: "Tilbake" }))
+    await expect(canvas.getByRole("heading", { name: /Trinn 1 av 8/ })).toHaveFocus()
+  },
+}
+
+/** A field, and the server's check of it (`validateUrl`): «Neste» sends the step, and the error stands under the field. */
+export const Validation: Story = {
+  args: { initialStep: "github", validateUrl: VALIDATE },
+  beforeEach: () => {
+    const original = globalThis.fetch
+    globalThis.fetch = async (input, init) =>
+      String(input) === VALIDATE ? Response.json({ errors: { github: "Fant ingen GitHub-bruker som heter «lmfaole». Sjekk stavingen." } }) : original(input, init)
+    return () => {
+      globalThis.fetch = original
+    }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByRole("button", { name: "Neste" }))
+    const field = canvas.getByRole("textbox", { name: "GitHub-brukernavn" })
+    await waitFor(() => expect(field).toHaveAttribute("aria-invalid", "true"))
+    await expect(field).toHaveAccessibleDescription(/Fant ingen GitHub-bruker/)
+    await expect(field).toHaveFocus()
+    await expect(canvas.getByRole("heading", { name: /Trinn 2 av 8/ })).toBeVisible()
+  },
+}
+
+/** The effects, one question: two cards, each its own picture, the live WebGL sample and the flat one. The whole card is the radio. */
+export const Effects: Story = {
+  args: { initialStep: "effekter" },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const off = canvas.getByRole("radio", { name: /Uten effekter/ })
+    await userEvent.click(canvas.getByText("Flate bilder og rolige bakgrunner. Bruker mindre strøm."))
+    await expect(off).toBeChecked()
+  },
+}
+
+/** The theme, one question: each card is the theme drawn by its own tokens. */
+export const Theme: Story = { args: { initialStep: "tema" } }
+
+/** The tilt, one question: «Følg telefonen» (the light follows; on a desktop the pointer, labelled as a simulation) or «Fast lys». On a phone that asks, choosing it asks. */
+export const Tilt: Story = { args: { initialStep: "bevegelse" } }
+
+/** The last step: «Ferdig» sends it all. */
+export const Last: Story = { args: { initialStep: "installer" } }
+
+/** Dark, the theme. */
+export const Dark: Story = { args: { initialStep: "tema" }, globals: { theme: "dark" } }
+
+/** Dark, the effects. */
+export const DarkEffects: Story = { args: { initialStep: "effekter" }, globals: { theme: "dark" } }
+
+/** On a phone: the effects, the cards under each other. */
+export const Phone: Story = { args: { initialStep: "effekter" }, parameters: { frame: "phone" }, globals: { viewport: { value: "compact", isRotated: false } } }
+
+/** On a phone: the theme. */
+export const PhoneTheme: Story = { args: { initialStep: "tema" }, parameters: { frame: "phone" }, globals: { viewport: { value: "compact", isRotated: false } } }
+
+/** On a phone: the tilt. */
+export const PhoneTilt: Story = { args: { initialStep: "bevegelse" }, parameters: { frame: "phone" }, globals: { viewport: { value: "compact", isRotated: false } } }
+
+/** As the server drew it, after an error it found without JavaScript: open at that step with the error under the field. */
+export const ServerError: Story = { args: { initialStep: "github", steps: steps({ github: "Fant ingen GitHub-bruker som heter «lmfaole». Sjekk stavingen." }) } }
+
+/** Without JavaScript: every step under the other in one scrolling page, and one «Ferdig». */
+export const WithoutJavaScript: Story = { render: (args) => <FirstRun {...args} /> }
+
+/**
+ * As an app draws it: on the server, then hydrated in the browser, with no word from React that the two differ (a `<template>` once did, on every page where it was open). The test fails on
+ * any hydration error.
+ */
+export const Hydrated: Story = {
+  args: { id: "hydrated", initialStep: "tema" },
+  render: () => <div data-host="" className="contents" />,
+  play: async ({ canvasElement, args }) => {
+    const host = canvasElement.querySelector("[data-host]")
+    if (!(host instanceof HTMLElement)) throw new Error("No host")
+    const page = (
+      <>
+        <FirstRun {...args} />
+        <FirstRunEnhancer id="hydrated" modal={false} />
+      </>
+    )
+    host.innerHTML = renderToString(page)
+    const errors: unknown[] = []
+    const logged = spyOn(console, "error")
+    flushSync(() => {
+      hydrateRoot(host, page, { onRecoverableError: (error) => errors.push(error) })
+    })
+    await waitFor(() => expect(host.querySelector("dialog[data-enhanced]")).not.toBeNull())
+    await expect(errors).toEqual([])
+    await expect(logged).not.toHaveBeenCalled()
+    logged.mockRestore()
+  },
+}
+
+/**
+ * A branded app (`data-brand="teal"`, here on a wrapper): its `AppMark` before the title, and large on the first step, where the sun rises over
+ * its horizon once (`reveal`, guide «Motion», «Brand motion»): the first place the mark is learned. «Neste», the one primary action, is in the
+ * brand. The steps and their pictures are the ink (guide «Brand»). Back on the first step, the mark stands still.
+ */
+export const Branded: Story = {
+  args: { title: "Kom i gang med Startside", glyph: "sunrise" },
+  decorators: [
+    (Story) => (
+      <div data-brand="teal">
+        <Story />
+      </div>
+    ),
+  ],
+}
+
+/**
+ * The end, as «Ferdig» sends the form (`FirstRunFinish`, shown by the enhancer over the wizard while the next page loads): the check drawn in the
+ * brand, then the mark's gesture, the sun rising. Start (`teal`): one slow rise, no overshoot.
+ */
+export const Finish: Story = {
+  render: () => (
+    <div data-brand="teal" className="grid h-full place-items-center">
+      <FirstRunFinish glyph="sunrise" label="Alt er klart" />
+    </div>
+  ),
+}
+
+/** The same end in Medier (`amber`): the check, then the play mark beats twice on the light spring. */
+export const FinishRhythmic: Story = {
+  render: () => (
+    <div data-brand="amber" className="grid h-full place-items-center">
+      <FirstRunFinish glyph="play" label="Alt er klart" />
+    </div>
+  ),
+}
+
+/** Without a glyph: the check alone, in the ink. */
+export const FinishUnbranded: Story = {
+  render: () => (
+    <div className="grid h-full place-items-center">
+      <FirstRunFinish label="Alt er klart" />
+    </div>
+  ),
+}

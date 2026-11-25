@@ -1,0 +1,7 @@
+---
+import { mediumHref } from '../../../lib/media'
+import { lastCompletedMonth } from '../../../lib/months'
+
+// The wrapped of a month opens on the last month that is over.
+return Astro.redirect(mediumHref(import.meta.env.BASE_URL, 'music', 'maned/', lastCompletedMonth(Date.now()).id))
+---

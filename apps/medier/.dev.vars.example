@@ -1,0 +1,20 @@
+# Copy to .dev.vars (not committed) for `npm run dev`.
+
+# Made-up data: every source is answered from src/lib/mock.ts, no keys and no network.
+# Keys you set below still win for the settings (not for the answers); leave this out to use the real sources.
+MOCK_DATA=1
+
+# The key the username cookies are signed with (any long random string, `openssl rand -base64 48`); without it they are taken unsigned, with a warning.
+# COOKIE_SECRET=
+
+# Real sources (leave out with MOCK_DATA=1):
+# LASTFM_API_KEY=
+# LASTFM_USER=
+# TRAKT_CLIENT_ID=
+# TRAKT_USER=
+# TMDB_API_KEY=
+# SPOTIFY_CLIENT_ID=
+# SPOTIFY_CLIENT_SECRET=
+# SPOTIFY_REFRESH_TOKEN=
+# SETLISTFM_API_KEY=
+# STEAM_API_KEY=

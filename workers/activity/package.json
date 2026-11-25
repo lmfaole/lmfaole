@@ -1,0 +1,22 @@
+{
+  "name": "activity",
+  "private": true,
+  "type": "module",
+  "description": "Alle avspillinger i D1: henter fra ListenBrainz hver time, med et lite lese-API",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "tsc --noEmit",
+    "dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler d1 migrations apply music --remote && wrangler d1 migrations apply gameplay --remote && wrangler d1 migrations apply watching --remote && wrangler deploy",
+    "undated": "node scripts/undated.ts",
+    "backfill": "node scripts/backfill.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "~7.0.2",
+    "wrangler": "^4.150.0"
+  }
+}

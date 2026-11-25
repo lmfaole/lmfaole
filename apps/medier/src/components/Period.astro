@@ -1,0 +1,27 @@
+---
+// The wrapped of a week or a month: the numbers, the top artists (a server island, with the pictures), then the other lists. One place for the order, for both pages.
+import type { PeriodData } from '../lib/week-source'
+import ArtistsIsland from './TopArtists.astro'
+import { ArtistsSection, type Linkable, PeriodView } from './wrapped'
+
+interface Props {
+  data: PeriodData
+  links: Linkable
+  base: string
+  previous: string
+}
+
+const { data, links, base, previous } = Astro.props
+const artists = data.music !== null && data.music.stats.total > 0 ? data.music.stats.topArtists : []
+const linked = artists.filter((artist) => links.artists.has(artist.name)).map((artist) => artist.name)
+---
+
+<PeriodView data={data} links={links} base={base} previous={previous} part="head" />
+{
+  artists.length > 0 && (
+    <ArtistsIsland server:defer artists={artists} linked={linked} base={base}>
+      <ArtistsSection slot="fallback" artists={artists} pictures={new Map()} linked={new Set(linked)} base={base} />
+    </ArtistsIsland>
+  )
+}
+<PeriodView data={data} links={links} base={base} previous={previous} part="tail" />

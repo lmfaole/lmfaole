@@ -1,0 +1,51 @@
+---
+import { ErrorMessage } from '@lmfaole/designsystem/components/error-message'
+import { LinkButton } from '@lmfaole/designsystem/components/link-button'
+import { PageSection } from '@lmfaole/designsystem/components/page-section'
+
+import { BadgeRows, LevelBar } from '../../../components/steam'
+import { Head } from '../../../components/head'
+import UsernameGate from '../../../components/UsernameGate.astro'
+import Page from '../../../layouts/Page.astro'
+import { transformed } from '../../../lib/image-sources'
+import { games, hasSteam, steamBadges, steamPresence, usersOf } from '../../../lib/runtime'
+import { presenceFor } from '../../../lib/steam-view'
+
+if (!hasSteam()) return Astro.rewrite('/404/')
+const base = import.meta.env.BASE_URL
+const users = usersOf(Astro.cookies)
+const [presence, badges, played] = users.steam === null ? [null, null, null] : await Promise.all([steamPresence(users), steamBadges(users), games(users)])
+const owned = new Set((played?.entries ?? []).map((entry) => entry.id))
+const crumbs = [{ label: 'Medier', href: base }, { label: 'Spill', href: `${base}spill/` }, { label: 'Steam-profil', href: `${base}spill/profil/` }]
+---
+
+{
+  presence === null ? (
+    <Page current="games" title="Steam-profil" lead="Hvem du er på Steam, og hva du spiller nå." crumbs={crumbs}>
+      {users.steam === null ? <UsernameGate services={['steam']} /> : <ErrorMessage what="Steam-profilen" error="Steam svarte ikke, eller profilen finnes ikke." />}
+    </Page>
+  ) : (
+    <Page bare current="games" width="reading" title={presence.name} lead="Steam-profil" crumbs={crumbs}>
+      <Head
+        client:idle
+        kind="Steam-profil"
+        title={presence.name}
+        shape="person"
+        sources={transformed(presence.avatar === null ? [] : [{ src: presence.avatar, width: 184 }])}
+        presence={presenceFor(presence, base, new Date())}
+        figures={badges === null ? [] : [{ value: String(badges.level), label: 'Steam-nivå' }, ...(badges.badges.length > 0 ? [{ value: String(badges.badges.length), label: 'merker' }] : [])]}
+      />
+      {badges !== null && badges.xpToNext > 0 && (
+        <PageSection id="niva" title="Nivå" icon="trend-up">
+          <LevelBar badges={badges} />
+        </PageSection>
+      )}
+      {badges !== null && (
+        <PageSection id="merker" title="Merker" icon="award" source={{ label: 'Steam' }}>
+          <BadgeRows badges={badges} base={base} owned={owned} />
+        </PageSection>
+      )}
+      <LinkButton href={presence.profile} external>Åpne profilen på Steam</LinkButton>
+    </Page>
+  )
+}

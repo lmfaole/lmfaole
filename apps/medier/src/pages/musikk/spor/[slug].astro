@@ -1,0 +1,32 @@
+---
+import { TrackDetail } from '../../../components/detail'
+import { Head } from '../../../components/head'
+import { sourcesOf } from '../../../lib/image-sources'
+import NeedsUsername from '../../../components/NeedsUsername.astro'
+import Page from '../../../layouts/Page.astro'
+import { artistHref, trackHref, trackPages } from '../../../lib/pages'
+import { music, track, usersOf } from '../../../lib/runtime'
+
+const users = usersOf(Astro.cookies)
+const listening = users.lastfm === null ? null : await music(users)
+const page = listening === null ? undefined : trackPages(listening).find((one) => one.slug === Astro.params.slug)
+if (users.lastfm !== null && page === undefined) return Astro.rewrite('/404/')
+const info = page === undefined ? null : await track(users, page.artist, page.title)
+const base = import.meta.env.BASE_URL
+---
+
+{page === undefined || info === null ? (
+  <NeedsUsername medium="music" />
+) : (
+<Page
+  bare
+  current="music"
+  width="pane"
+  title={page.title}
+  lead={`Låt av ${page.artist}`}
+  crumbs={[{ label: 'Medier', href: base }, { label: 'Musikk', href: `${base}musikk/` }, { label: page.artist, href: artistHref(base, page.artist) }, { label: page.title, href: trackHref(base, page.artist, page.title) }]}
+>
+  <Head client:idle kind="Låt" title={page.title} sources={sourcesOf(page.image)} shape="track" by={{ name: page.artist, href: artistHref(base, page.artist) }} />
+  <TrackDetail page={page} base={base} info={info} />
+</Page>
+)}

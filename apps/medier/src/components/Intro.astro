@@ -1,0 +1,19 @@
+---
+// The intro of a page, the first time it is visited: left out by the server once dismissed (the `seen` cookie), so it never flashes.
+import { IntroCallout } from '@lmfaole/designsystem/components/intro-callout'
+import { isSeen, parseSeen, SEEN_COOKIE } from '@lmfaole/designsystem/lib/onboarding'
+import { type Intro, SEEN_PATH } from '../lib/onboarding'
+import { firstRunOpen } from '../lib/visitor-cookies'
+
+interface Props {
+  intro: Intro
+  action?: { href: string; label: string }
+}
+
+const { intro, action } = Astro.props
+const version = intro.version ?? 1
+// Not while the first-run wizard is open: one introduction at a time.
+const seen = isSeen(parseSeen(Astro.cookies.get(SEEN_COOKIE)?.value), intro.id, version) || firstRunOpen(Astro.cookies, Astro.url)
+---
+
+{!seen && <IntroCallout client:idle id={intro.id} version={version} seen={false} title={intro.title} description={intro.body} cookiePath={SEEN_PATH} {...(action === undefined ? {} : { action })} />}

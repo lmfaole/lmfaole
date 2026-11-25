@@ -1,0 +1,213 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Wordmark } from "../../src/components/wordmark"
+
+<Meta title="Foundations/Brand" summary="How an app in the family is known: a brand platform (purpose, personality, voice), one hue and one mark per app under the family «lmfaole», where the brand goes in the interface and where it never goes." />
+
+# Brand
+
+The apps built on this system are a **family**: Medier and Startside, both under lmfaole.party. Today they look the same, and like nothing in
+particular. A brand makes each one recognisable and the family coherent, without taking anything from what the apps are for: your music, your
+films, your morning. The rule of this page in one line: **the content leads, the brand signs**.
+
+<div className="not-prose my-6 flex flex-wrap gap-6">
+  <div data-brand="amber"><Wordmark name="Medier" glyph="play" family="lmfaole" size="lg" /></div>
+  <div data-brand="teal"><Wordmark name="Startside" glyph="sunrise" family="lmfaole" size="lg" /></div>
+</div>
+
+## 1. What the research says
+
+How mature systems and well-known brands handle a brand across a family of products, condensed. The sources are linked; the principles in
+section 2 follow from them.
+
+**Brand is a layer, not a second system.** Primer keeps the product's functional tokens apart from a separate brand system for marketing
+([Primer colour usage](https://primer.style/product/getting-started/foundations/color-usage/), [Primer Brand](https://primer.style/brand/));
+Spotify's Encore is one foundation with layers of local systems for each product above it
+([Spotify Engineering](https://engineering.atspotify.com/2023/05/multiple-layers-of-abstraction-in-design-systems)). Carbon's themes change
+values and never roles ([Carbon themes](https://carbondesignsystem.com/elements/themes/overview/)). Digdir's designsystemet and NAV's Aksel
+theme through a small set of colour tokens set by an attribute, and **status colours never inherit a brand**
+([designsystemet colours](https://www.designsystemet.no/no/fundamentals/code/colors), [Aksel theming](https://aksel.nav.no/grunnleggende/styling/theming)).
+Radix Themes gives one accent per app from a closed set of tested scales ([Radix colour](https://www.radix-ui.com/themes/docs/theme/color)).
+
+**One accent, used sparingly, and the content first.** Apple's guidelines: use the accent colour judiciously, defer to the content, do not
+put the logo everywhere, keep branding out of the launch screen, and let onboarding be where the app introduces itself
+([Apple HIG, Branding](https://developer.apple.com/design/human-interface-guidelines/branding)). Geist and Polaris keep their interfaces
+near-neutral and reserve colour for meaning ([Geist colours](https://vercel.com/geist/colors), [Polaris colours](https://polaris.shopify.com/design/colors));
+Atlassian separates the brand's expressive palette from the product's functional one ([Atlassian colour](https://atlassian.design/foundations/color),
+[Atlassian brand](https://atlassian.design/brand)).
+
+**Content can carry the colour.** Material You derives the palette from the person's wallpaper
+([Making Material You](https://design.google/library/making-material-you), [Android dynamic colour](https://developer.android.com/develop/ui/views/theming/dynamic-colors));
+Collins' 2015 identity for Spotify let duotone and the artists' own pictures be the brand ([Collins, Spotify](https://www.wearecollins.com/work/spotify)).
+Here the `AmbientBackdrop` and the light take their colour from a cover, so the app's hue stays out of the way.
+
+**Brand strategy comes before the visuals.** A brand platform (purpose, values, personality) and a position decide the verbal and visual
+identity, not the other way round. Mailchimp keeps one **voice** and varies the **tone** with the moment
+([Mailchimp voice and tone](https://styleguide.mailchimp.com/voice-and-tone/), [NN/g tone of voice](https://www.nngroup.com/articles/tone-of-voice-dimensions/)).
+Airbnb's Bélo was drawn from «belong anywhere» (Brand New on the [Airbnb identity](https://www.underconsideration.com/brandnew/archives/new_logo_and_identity_for_airbnb_by_designstudio.php)).
+Vipps is a Norwegian example of a brand built on one plain promise and a strong colour and a recognisable voice ([Vipps brand](https://brand.vipps.no/)); NRK
+is a masterbrand over many channels and services ([NRK](https://www.nrk.no/informasjon/)).
+
+**Architecture: branded house, house of brands, endorsed.** Apple and Google are branded houses: products named plainly under one master
+brand, with a systematic family of product icons ([Evolving the Google identity](https://design.google/library/evolving-google-identity)).
+Uber's identity was built as one system across a family of services ([Uber identity](https://www.underconsideration.com/brandnew/archives/new_logo_and_identity_for_uber_done_in_house.php)).
+An **endorsed** brand lets each product have its own name and mark, with the family vouching for it quietly
+([Brand architecture](https://en.wikipedia.org/wiki/Brand_architecture)). It fits two small apps with distinct purposes under one domain.
+
+**Distinctive assets are built by repetition.** A brand is recognised by a few assets (a colour, a shape, a sound, a motion, a recurring
+moment) used the same way for a long time ([Ehrenberg-Bass Institute](https://www.ehrenbergbass.com/)). Netflix's «N» and its «tudum» are
+one mark across picture, motion and sound ([Netflix brand](https://brand.netflix.com/en/)). Spotify Wrapped is a recurring **signature
+moment**: a yearly, personal story the brand owns ([Wrapped 2023](https://newsroom.spotify.com/2023-11-29/wrapped-user-experience-2023/)).
+Niche media apps earn love through personality: Letterboxd's three dots ([Letterboxd brand](https://letterboxd.com/about/brand/)), Last.fm's
+scrobble and its red ([Last.fm](https://www.last.fm/about)).
+
+**Icons are part of the brand.** A maskable icon keeps its drawing inside a safe circle ([web.dev](https://web.dev/articles/maskable-icon)); a
+handful of files (an SVG favicon, a PNG fallback, an apple-touch-icon, the manifest's icons) cover the platforms
+([Evil Martians](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs)). `theme-color` tints the
+browser around the page ([MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/theme-color)). A mark that
+carries meaning needs 3:1 ([WCAG 1.4.11](https://www.w3.org/TR/WCAG22/#non-text-contrast)).
+
+## 2. Principles
+
+1. **The content leads, the brand signs.** Covers, posters, weather and the day are the colour of a page. The brand is a signature in the
+   chrome, never a coat of paint over the content.
+2. **One hue per app, from a closed and tested set.** The hue is identity, never meaning: not success, not a warning, not a link, not a series.
+3. **One mark per app, one shape for the family.** Every app is a glyph on the same rounded tile; the hue and the glyph tell them apart.
+4. **The family endorses, it does not lead.** «Medier · lmfaole»: the app's name first, the family after it and quieter.
+5. **Voice is the strongest asset we have.** Plain Norwegian, the same in every app; the tone moves with the moment.
+6. **Signature moments, neutral everyday.** The brand shows where the app meets you (the first run, the mark, an empty page), not on every
+   control.
+7. **Same assets, used the same way, for a long time.** A new hue or glyph is a decision for the family, made here.
+8. **Neutral by default.** Without `data-brand`, every token is the ink: an app is branded when it chooses to be.
+
+## 3. The layers
+
+| Layer | What it is | Where it lives |
+| --- | --- | --- |
+| Strategy | The brand platform: purpose, personality, voice, distinctive assets (section 5) | This page; the app's README |
+| Brand tokens | `--brand`, `--brand-foreground`, `--brand-subtle`, one set per hue, `light-dark()` | `theme.css`, `[data-brand="…"]` |
+| Role tokens | `background`, `foreground`, `primary`, `ring`, `destructive`, `series-*`… unchanged; `ring` and the primary `Button` take the brand when one is set | `theme.css` |
+| Components | `AppMark`, `Wordmark`, `NavBar` (`glyph`, `family`), `FirstRun` (`glyph`) | `src/components` |
+| Assets | The icons and favicon from the same drawing as `AppMark` | `npx designsystem-app-icons` |
+
+The hues are named for their colour (`rose`, `amber`, `teal`, `blue`, `violet`), not for an app: the design system knows nothing about the
+apps (README). There is no green: green reads as success.
+
+## 4. Where the brand goes, and where it never goes
+
+| The brand is here | The brand is never here |
+| --- | --- |
+| The app's mark (`AppMark`, `Wordmark`) | Text in the content, headings, links in running text |
+| The current place in the `NavBar`: its icon in the hue on a tint of it | Charts (`series-*`, `chart-*` and the grey defaults stay as they are) |
+| The focus ring (`ring`; the brand has 4.5:1, a ring needs 3:1) | A state: `destructive`, a `Badge`, `StateSteps`, events, `transit-*` |
+| The one primary `Button` on a page, a ticked checkbox or radio | Backgrounds of cards, sections, the page, a `PageHeader` |
+| The first run's header (`FirstRun` `glyph`) | Over a cover or a poster; the `AmbientBackdrop`, which is the content's colour |
+| The app's icons and favicon | `theme-color` and the manifest's colours, for now (an open question) |
+
+## 5. The brand platform
+
+A brand platform is a page of words that decides the rest. Fill it in for each app, keep it in the app's README, and change it rarely.
+
+| Part | Question | Length |
+| --- | --- | --- |
+| Purpose | Why does the app exist, for the person who uses it? | One sentence |
+| Position | For whom, instead of what, and what makes it different? | One sentence |
+| Personality | Three adjectives, each with what it is **not** («warm, not cute») | Three pairs |
+| Voice | How it speaks always; how the tone moves (welcome, empty, error, success) | Three lines and four examples |
+| Distinctive assets | Hue, glyph, name, a recurring moment, a motion | A list |
+| Signature moments | Where the brand is felt: first run, an empty page, a yearly or weekly look back | Two or three |
+| Do / don't | Rules a reviewer can check | Five each |
+
+### The family's platform
+
+> **Approved** (November 2026) and in use in both apps: Medier in `amber` with `play`, Startside in `teal` with `sunrise`. The draft
+> proposed `violet` for Medier; the owner chose amber.
+
+**lmfaole (the family)**
+
+- **Purpose:** small, personal tools for one person's day and taste, made with care and without noise.
+- **Architecture:** endorsed. Each app has its own name, hue and glyph; «lmfaole» follows quietly in the `Wordmark` and the footer.
+- **Personality:** personal, not private; careful, not precious; plain, not dull.
+- **Voice:** plain Norwegian (bokmål), short sentences, the person addressed as «du», no exclamation marks, no jargon. Dry humour at most, and
+  never in an error.
+- **Distinctive assets:** the rounded tile with one white glyph; Atkinson Hyperlegible as the type; one light for the page; one hue per app.
+- **Don't:** a slogan, a mascot, a gradient brand colour, the family's name before the app's.
+
+**Medier**
+
+- **Purpose:** see what you have listened to and watched, and find your way back to it.
+- **Position:** for one person who scrobbles and logs, instead of four services' own pages: one calm place where the covers lead.
+- **Personality:** warm, not cute; curious, not nosy; quiet, not cold.
+- **Hue and glyph:** `amber` (warm, the glow of a record player and a cinema; away from `destructive` red and Last.fm's red; the draft proposed `violet`, the approved platform chose amber), `play`.
+- **Voice examples:** welcome «Her er det du har hørt og sett.»; empty «Ingenting spilt ennå i dag.»; error «Fikk ikke kontakt med Last.fm.
+  Prøver igjen om litt.»; success «Koblet til Trakt.»
+- **Signature moments:** the first run; the album page's sleeve in the light; a look back at the week or the year (a «Wrapped» of your own,
+  later).
+- **Do:** let the cover's colour lead (`AmbientBackdrop`); keep the mark in the rail. **Don't:** tint covers, charts or a source's logo
+  amber.
+
+**Startside**
+
+- **Purpose:** the morning in one look: what to do, what the weather is, when to leave.
+- **Position:** for a developer starting the day, instead of five tabs: calm, brisk and useful before coffee.
+- **Personality:** calm, not sleepy; brisk, not curt; practical, not bare.
+- **Hue and glyph:** `teal` (morning and clear; `amber` is the late departure and the warning event, `blue` the tram and the cold), `sunrise`.
+- **Voice examples:** welcome «God morgen. Her er dagen din.»; empty «Ingen pull requests venter på deg.»; error «Fikk ikke hentet
+  avgangene. Viser de siste vi hadde.»; success «Lagret.»
+- **Signature moments:** the first run; the greeting and the weather stage at the top of the morning.
+- **Do:** keep transit, weather and GitHub states in their own colours. **Don't:** use teal for a line, a temperature or a check.
+
+## 6. Distinctive assets, and keeping them
+
+- **Colour:** the app's hue, in the places in section 4 and nowhere else. A brand is not made stronger by more of it.
+- **Shape:** the rounded tile (`rx 22` on a 100 grid), the same for every app, with one glyph. The tile in the page (`AppMark`) and on the
+  home screen are drawn from the same data (`src/lib/app-glyphs.json`).
+- **Type:** Atkinson Hyperlegible: legible first, and it is the family's voice on the page.
+- **Motion:** the light that follows the pointer is still the family's one moving signature, and every app moves on the same productive
+  tokens. On top of that, each app has an **accent** for its signature moments only, set by its hue («Motion», section 9). Medier (`amber`)
+  is rhythmic: the play mark beats twice on the light spring. Start (`teal`) is calm and rising: the sun clears its horizon, with no
+  overshoot. The accent plays in the first run (`AppMark reveal`), as it ends (`FirstRunFinish`), on an app's first empty page
+  (`EmptyState reason="first-run"`, its «+» in the hue) and in a long wait (`AppMark loading`). Each plays once, within a second, and not at all under reduced motion.
+- **Words:** the name, said the same way in the `<title>`, the manifest, the `Wordmark` and the first run.
+- **Consistency over time:** change a hue or a glyph only with a new entry on this page and in the README; never per page or per season.
+
+## 7. Using it
+
+Set the hue once, on the root of the app, and give the `NavBar` the app's glyph and family:
+
+```tsx
+<html lang="nb" {...htmlAttributes(prefs)} data-brand="amber">
+  …
+  <NavBar label="Hovedmeny" title="Medier" glyph="play" family="lmfaole" items={items} />
+```
+
+`brandAttributes("amber")` from `lib/brand` gives the attribute with its type. The first run takes the same glyph: `<FirstRun glyph="play" … />`.
+The hue brings the app's motion accent with it («Motion», section 9). For the current place to slide between pages, add
+`transitionAttributes()` from `lib/motion` beside it.
+
+Draw the icons from the same mark, in the app's folder:
+
+```sh
+npx designsystem-app-icons --hue amber --glyph play
+npx designsystem-app-icons --hue teal --glyph sunrise --apple app/apple-icon.png --favicon app/icon.png --svg app/icon.svg
+```
+
+It writes `favicon.svg`, a 64 px PNG, a 180 px apple-touch-icon, and 192, 512 and maskable 512 icons, and prints the manifest's colours.
+Keep `theme-color` and the manifest's `background_color` the page's (`#ffffff` light, `#0a0a0a` dark): the browser's chrome is not the brand's
+place, the icon is.
+
+## 8. Do and don't
+
+| Do | Don't |
+| --- | --- |
+| Set `data-brand` once, on `<html>` | Set it on a section to colour it, or mix two hues on a page |
+| Use the brand through the components | Write `text-brand`, `bg-brand` in an app (`className` is not an app's) |
+| Keep the app's name the ink, the mark in the hue | Colour the name, a heading or a link with the brand |
+| Let a cover, a poster or the weather be the colour of a page | Tint a picture, a chart or a status with the brand |
+| Say the app's name the same way everywhere | Add a slogan, a mascot or a second logo |
+| Choose a new hue or glyph here, for the family | Invent one in an app |
+
+## Sources
+
+All linked above. Also: the guide «Colour and state» (the one colour of the interface and how the brand relates to it), «Light and shadow»
+(the content's colour), and the skill `designsystem-brand`.

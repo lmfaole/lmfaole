@@ -1,0 +1,9 @@
+node_modules
+.next
+.open-next
+.wrangler
+.dev.vars
+next-env.d.ts
+*.tsbuildinfo
+.spotify.env
+.env.local

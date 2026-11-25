@@ -1,0 +1,14 @@
+---
+import Wrapped from '../../../components/Wrapped.astro'
+import { parseMonth } from '../../../lib/months'
+import { month as loadMonth, usersOf } from '../../../lib/runtime'
+
+const month = parseMonth(Astro.params.month ?? '')
+// A month that has not begun has nothing to tell, and an address that is no month is no page.
+if (month === null || month.start * 1000 > Date.now()) return Astro.rewrite('/404/')
+const users = usersOf(Astro.cookies)
+const data = users.lastfm === null ? null : await loadMonth(users, month, 'music')
+if (users.lastfm !== null && data === null) return Astro.rewrite('/404/')
+---
+
+<Wrapped medium="music" period={{ kind: 'month', month }} data={data} />

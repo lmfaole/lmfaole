@@ -1,0 +1,82 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Foundations/Light and shadow" summary="One light for the whole page: where it is, what it moves (shadows, reflections), what moves it (pointer, tilt), and the rules: depth only, never information; still under reduced motion." />
+
+# Light and shadow
+
+A page has **one light**. Where it is is two numbers, `--light-x` and `--light-y`, from -1 to 1 across the screen (x to the right, y down), and they are
+where the light is **from**: at the upper left (the default, `-0.5 / -0.7`), shadows fall to the lower right. Everything that is lit reads the same
+two numbers, so every shadow and every reflection on a page agree and move together.
+
+## 1. What reads the light
+
+| What | How |
+| --- | --- |
+| `elevation-1`, `-2`, `-3` (a class of `light.css`) | a shadow that falls away from the light: 2, 6 and 12 px away, 4, 14 and 28 px soft. A card on the page, a thing lifted off it, a thing floating over it |
+| `--shadow-color` | the colour of every shadow: a soft dark in light, a deeper one in dark, where a shadow is hard to see |
+| `Picture disc`, `NowPlayingCard` | a record: drawn in WebGL, the cover turns and the reflections do not (the grooves are round), so two bands of light and their spectrum stand on the line from the light through the middle, and move when the light does |
+| `.light-sheen` | the same two bands in CSS, for the disc before WebGL is ready or where it is not there |
+| `--spectrum-violet`, `-cyan`, `-yellow`, `-pink` | what a bright reflection is spread into, as a token |
+
+## 2. What moves the light
+
+`LightSource` (every lit `Picture size="hero"` and `NowPlayingCard` carries one, so a page needs none of its own; any number is the same as one):
+
+- **The pointer**: the light is at the pointer, across the whole screen, smoothed (half the distance in 120 ms, whatever the frame rate).
+- **A phone's tilt** (`deviceorientation`): how it is held moves the light across the screen. iOS asks first: one `TiltButton`, «La lyset følge telefonen», and the answer is kept (see 3).
+- **Neither**: it stays at the default.
+
+The maths is `lib/light.ts` (pure, with a test): `lightFromPointer`, `lightFromTilt`, `approach`, `shadowOffset`, `lightAngle`. The current light is
+`lightStore.current`, read by the CSS variables and by the discs, once for the whole bundle.
+
+## 3. Where the light goes
+
+**The page's main visual element, and only it.** A page has one thing that leads it with a picture, and that is the one that is lit; a row's thumbnail or a card's small cover never is. Lit means two things, chosen by what the picture is.
+
+| The main picture is | It is lit by | How |
+| --- | --- | --- |
+| any `Picture size="hero"` or `size="feature"` (a poster, a portrait, a cover on a page of its own; `feature` is the larger portrait of `DetailHeader size="large"`) | **its frame**, automatically (`lit-frame`) | a shadow that falls away from the light and a thin rim of light on the side that faces it: both **outside** the picture, nothing painted over it |
+| the record of what plays now (`NowPlayingCard`, `Picture disc`) | **its surface** as well | reflections on the disc, in WebGL, that follow the light |
+
+- **Frame by default.** A hero `Picture` carries the light's source with it (`LightSource`), so a page needs nothing of its own for the light to follow the pointer. Do not add a shadow of your own to a hero.
+- **Surface only where the picture may be altered.** A reflection over a picture is an overlay, and a disc is a crop: use them only on pictures the app may alter (Last.fm's covers, an app's own). Where a source's terms
+  say its pictures may not be cropped or overlaid (Spotify's covers and artist pictures), use the frame and nothing else; a test keeps the reflection to the disc alone.
+- **One tilt button, once.** Put a `TiltButton` by the main picture, where the page leads with one; on an iPhone it asks to let the light follow how it is held, and nowhere else shows it. The answer is kept in the
+  browser (`localStorage`, `ds-light-tilt`: `on` or `denied`), so a reader is asked once and not at every visit: a yes is listened to at once the next time, and if iOS has forgotten it, the next tap on the page asks
+  again (a permission can only be asked in a tap); a no is not asked again. Where storage is blocked, nothing is kept and the reader is asked again, which is all that is lost.
+- **The head of a page of a thing is composed, not stacked.** `DetailHeader` puts the main picture and the name together (the picture beside the name on a phone, never above it with a gap of page around it) on a stage whose ground is
+  four colours **taken from the picture** and drawn in WebGL, that move with the light. Only colours are taken, never the picture, so it is safe for sources that forbid altering their pictures. It is drawn when the light changes
+  and at no other time: nothing loops, nothing needs a pause, and it costs no battery at rest. It is the page's `<h1>`: the page leaves out its own title.
+- **Not a row.** The 40 px picture of a row is not lit, and a page with many pictures does not light them all.
+
+## 4. Rules
+
+- **Depth, never information.** A shadow or a reflection says how far something is from the page, never what it is: nothing says anything by where a shadow falls, how bright a
+  reflection is or what colour its spectrum has. Remove all of it, and the page says the same.
+- **Never text.** Light and shadow do not touch text or its contrast (WCAG 1.4.3). A reflection is on a picture, a shadow is under a surface.
+- **Still under `prefers-reduced-motion`.** The light stays at the upper left, `LightSource` listens to nothing, and a disc does not turn.
+- **Nothing flashes.** Reflections are large and soft, and move at the pace of a hand (WCAG 2.3.1).
+- **What loops can be paused.** The disc turns for as long as it plays, which is a loop past five seconds: it is a button, and a tap pauses it (WCAG 2.2.2).
+- **One that moves.** A page has one thing that turns and shines. Several at once are noise.
+- **Cheap where it counts.** WebGL is a quad and one texture; it stops when the disc is off the screen or the tab is hidden, takes 2× pixels at most and asks for the low-power GPU.
+  The cover must be readable by WebGL (CORS); where it is not, the CSS disc is shown.
+
+## 5. WebGL in the system
+
+Three surfaces draw in WebGL, all lit by the page's one light: the **disc** (`Picture disc`, the record playing now), the **backdrop** of a **stage** (`Stage`, under `DetailHeader` and `NowPlayingCard`: four colours taken from the picture) and the **sleeve** (`AlbumSleeve`, the main picture of the page of an album: the cover whole on a slab of plastic, in 3D, with a record half out of it, or in a CD's jewel case with the CD, or a film's poster in a DVD case, tilting toward the light). What they have in common is the rules:
+
+- **A few, at most.** A page has at most four WebGL surfaces at once (`lib/gl-budget.ts`): a browser drops the oldest context when a page asks for more, and every one costs memory and battery. A surface that gets no slot shows its CSS version, which every one has.
+- **CSS first.** Each has a version in CSS (the disc's `light-sheen`, the stage's plain tinted ground) that shows before WebGL is ready, where it is not there, where the picture may not be read (no CORS), and under `prefers-reduced-motion`.
+- **A lost context comes back.** When the browser takes a context away, the surface falls back to CSS, and is drawn again when it is given back (`webglcontextrestored`).
+- **Asks for less on a machine that cannot keep up.** A surface times its frames (`lib/gl-quality.ts`): slower than 24 ms a frame on average, it draws at fewer pixels, then every other frame. It never asks for more again.
+- **Draws only when it must.** A surface that is off the screen or in a hidden tab does not draw; the backdrop draws only when the light changes. The disc is the one loop (see 4), and it can be paused.
+- **Finite moves only.** When the picture changes (what plays changes), the backdrop's colours go over to the new ones in one move of 0.7 s and settle (`mixPalette`, `easeOut`); never a loop, and no move at all under `prefers-reduced-motion`.
+- **Never the picture itself.** The backdrop takes four colours from a picture and draws those; the disc and the sleeve add something to a cover (a crop, a record, a gleam of plastic), so they are only made of a cover the app may alter (Last.fm's, its own). A picture whose source forbids altering it is shown as it is, on its frame (and a stage may take its colours).
+- **A record is a real object.** The disc is a mesh with a thickness (a face, an edge and the wall of the hole, `lib/disc-geometry.ts`), seen a little from above and tilted a little toward the light so that its edge shows, and it reflects two things: its round grooves (the spectrum in two bands, moving with the light and the angle) and a studio round it (the light, a soft box, a sky over a floor), more at a glancing angle. The cover shapes it.
+- **3D is little and honest.** A sleeve is a box, a quad and one texture (`lib/mat4.ts`, `lib/sleeve-shader.ts`): no library. It tilts only toward the light (the pointer, a phone's tilt) and is drawn when the light changes; it never turns by itself.
+- **The head's text is the full text colour** on a stage (a test measures 4.5:1 on the worst colour a picture can give).
+
+## 6. Not yet
+
+The shadows of `shadow-md` and its likes (a hero picture, an overlay) do not read the light yet: they are moved onto `elevation-*` when they are next touched, so that no picture of a
+page changes without anybody having asked.

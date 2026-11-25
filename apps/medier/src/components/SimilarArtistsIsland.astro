@@ -1,0 +1,19 @@
+---
+// A server island: it asks for its own page, so the pictures from Spotify have a budget of questions of their own; on a cold artist's page its charts had used the Worker's limit, and Spotify was never asked.
+import { artistPictures } from '../lib/runtime'
+import type { ArtistListening } from '../lib/sources'
+import { SimilarArtists } from './detail'
+
+interface Props {
+  similar: ArtistListening['similar']
+  /** The names of the artists that have a page of their own to link to. */
+  linked: string[]
+  base: string
+  url: string
+}
+
+const { similar, linked, base, url } = Astro.props
+const pictures = await artistPictures(similar.map((one) => one.name)).catch(() => new Map())
+---
+
+<SimilarArtists similar={similar} pictures={pictures} linked={new Set(linked)} base={base} url={url} />
