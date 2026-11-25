@@ -1,0 +1,20 @@
+{
+  "name": "@lmfaole/catalog",
+  "private": true,
+  "type": "module",
+  "description": "Mine egne data fra eksterne kontoer i D1: GitHub (offentlige repoer, PR-er, issues, bidrag) og Hardcover-hyllene",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "tsc --noEmit",
+    "dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler d1 migrations apply site --remote && wrangler d1 migrations apply library --remote && wrangler deploy"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "~7.0.2",
+    "wrangler": "^4.150.0"
+  }
+}

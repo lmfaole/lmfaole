@@ -10,7 +10,8 @@
   "services": [
     { "binding": "ACTIVITY", "service": "activity" },
     { "binding": "LIKES_SYNC", "service": "likes-sync" },
-    { "binding": "STARTSIDE", "service": "startside" }
+    { "binding": "STARTSIDE", "service": "startside" },
+    { "binding": "CATALOG", "service": "catalog" }
   ],
   // The account's only cron (the free plan has five). Every job's own schedule is in src/jobs.ts and must fall on these quarter hours.
   "triggers": { "crons": ["*/15 * * * *"] },

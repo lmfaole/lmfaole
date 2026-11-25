@@ -1,12 +1,12 @@
 name: workers
 
-# The Workers with only a cron (activity, likes-sync, scheduler): tested and type-checked on every push that touches them. They are deployed by hand
-# (`npx wrangler deploy` in each), as before.
+# The Workers with only a cron (activity, catalog, likes-sync, scheduler): tested and type-checked on every push that touches them, or the shared
+# schemas in packages/db that catalog's tests are built from. They are deployed by hand (`npm run deploy` in each), as before.
 on:
   push:
-    paths: [workers/**, package-lock.json, .github/workflows/workers.yml]
+    paths: [workers/**, packages/db/**, package-lock.json, .github/workflows/workers.yml]
   pull_request:
-    paths: [workers/**, package-lock.json, .github/workflows/workers.yml]
+    paths: [workers/**, packages/db/**, package-lock.json, .github/workflows/workers.yml]
 
 concurrency:
   group: workers-${{ github.ref }}
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        worker: [activity, likes-sync, scheduler]
+        worker: [activity, catalog, likes-sync, scheduler]
     defaults:
       run:
         working-directory: workers/${{ matrix.worker }}

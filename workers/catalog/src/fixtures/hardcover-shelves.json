@@ -1,0 +1,48 @@
+{
+  "data": {
+    "me": [
+      {
+        "user_books": [
+          {
+            "status_id": 3,
+            "rating": 4.25,
+            "date_added": "2024-01-01",
+            "book": { "id": 7, "title": " Dune ", "release_year": 1965 },
+            "user_book_reads": [
+              { "started_at": "2023-01-01", "finished_at": "2023-02-01" },
+              { "started_at": "2024-02-01", "finished_at": "2024-03-05" }
+            ]
+          },
+          {
+            "status_id": 2,
+            "rating": null,
+            "date_added": "2024-04-01",
+            "book": { "id": 8, "title": "Emma", "release_year": null },
+            "user_book_reads": [{ "started_at": "2024-04-02", "finished_at": null }]
+          },
+          {
+            "status_id": 1,
+            "rating": 0,
+            "date_added": "2024-04-01",
+            "book": { "id": 9, "title": "Ulysses", "release_year": 1922 },
+            "user_book_reads": []
+          },
+          {
+            "status_id": 5,
+            "rating": 2,
+            "date_added": "2026-10-01",
+            "book": { "id": 10, "title": "Moby-Dick", "release_year": 1851 },
+            "user_book_reads": []
+          },
+          {
+            "status_id": 6,
+            "rating": null,
+            "date_added": "2024-04-01",
+            "book": { "id": 11, "title": "Ignored", "release_year": null },
+            "user_book_reads": []
+          }
+        ]
+      }
+    ]
+  }
+}

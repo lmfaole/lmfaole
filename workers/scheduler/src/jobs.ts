@@ -7,6 +7,8 @@ export const JOBS = [
   { binding: "LIKES_SYNC", cron: "0 5 * * 1" },
   // The shared sources into the start page's snapshot.
   { binding: "STARTSIDE", cron: "*/15 * * * *" },
+  // The owner's public GitHub into site; at 06:15 the Hardcover shelves into library too.
+  { binding: "CATALOG", cron: "15 */6 * * *" },
 ] as const
 
 export type Binding = (typeof JOBS)[number]["binding"]

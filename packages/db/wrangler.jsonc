@@ -1,11 +1,12 @@
-// The D1 databases no worker owns yet, so their migrations can be applied (`npx wrangler d1 migrations apply <name> --remote -c packages/db/wrangler.jsonc`)
-// and scripts/import-dump.ts can write to them. The worker that reads one (forside, cv) binds it with the same id.
+// The D1 databases shared by more than one worker, so their migrations can be applied (`npx wrangler d1 migrations apply <name> --remote -c packages/db/wrangler.jsonc`)
+// and scripts/import-dump.ts can write to them. A worker that uses one binds it with the same id: workers/catalog writes `github_*` in site
+// and `books` in library, and the sites read them.
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "db",
   "compatibility_date": "2026-11-01",
   "d1_databases": [
-    // Fill in the ids printed by `npx wrangler d1 create library` and `npx wrangler d1 create site`.
+    // Fill in the ids printed by `npx wrangler d1 create library` and `npx wrangler d1 create site`, here and in workers/catalog/wrangler.jsonc.
     { "binding": "LIBRARY", "database_name": "library", "database_id": "library-not-created-yet", "migrations_dir": "library/migrations" },
     { "binding": "SITE", "database_name": "site", "database_id": "site-not-created-yet", "migrations_dir": "site/migrations" }
   ]

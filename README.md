@@ -11,6 +11,7 @@ originals, backups) and KV (small state), never on a machine at home.
 | `apps/medier` | What I listen to and watch (Astro on Workers) | lmfaole.party/medier |
 | `apps/startside` | The start page of the working day (Next.js on Workers, KV, behind Access) | lmfaole.party/start |
 | `workers/activity` | Listens, plays and viewings from ListenBrainz, Last.fm, Trakt, Letterboxd, Steam and RetroAchievements into D1, weekly backup to R2 | cron |
+| `workers/catalog` | Public GitHub (repos, PRs, issues, contribution calendar) into D1 `site`, Hardcover shelves into D1 `library` | cron |
 | `workers/likes-sync` | Spotify likes → Last.fm loves | cron |
 | `workers/scheduler` | The account's one Cron Trigger (every quarter hour): calls `scheduled` on the Workers above whose job is due (`src/jobs.ts`) | cron |
 

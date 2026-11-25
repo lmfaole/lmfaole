@@ -1,0 +1,24 @@
+[
+  {
+    "sha": "79ce0d3c69973b45fa534c717fdca59d61b77508",
+    "node_id": "C_kwDOC3CnQNoAKDc5Y2UwZDNjNjk5NzNiNDVmYTUzNGM3MTdmZGNhNTlkNjFiNzc1MDg",
+    "commit": {
+      "author": {
+        "name": "Ole Jørgen",
+        "email": "hei@lmfaole.party",
+        "date": "2026-11-24T13:27:49Z"
+      },
+      "committer": {
+        "name": "Ole Jørgen Bakken",
+        "email": "hei@lmfaole.party",
+        "date": "2026-11-24T14:02:30Z"
+      },
+      "message": "fix(portal): sett maksbredde på innhold i artikler\n\nInnholdet i artikler utenom komponentsider får samme maksbredde som innholdskolonnen på komponentsidene. Tabeller kan være 20 % bredere, og h3/h4 etter en tabell får ekstra luft over seg.\n\nLukker #6869"
+    },
+    "html_url": "https://github.com/fremtind/jokul/commit/79ce0d3c69973b45fa534c717fdca59d61b77508",
+    "author": {
+      "login": "lmfaole",
+      "type": "User"
+    }
+  }
+]

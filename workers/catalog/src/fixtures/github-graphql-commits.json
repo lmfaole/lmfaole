@@ -1,0 +1,20 @@
+{
+  "data": {
+    "r0": {
+      "isPrivate": false,
+      "defaultBranchRef": {
+        "target": {
+          "history": {
+            "nodes": [{ "oid": "5f1fb0a4a1c00fd13f64745f899eff4978f86ddc", "committedDate": "2023-02-09T13:29:23Z", "messageHeadline": "Ikon label og tekstendringer (#1798)" }]
+          }
+        }
+      }
+    },
+    "r1": { "isPrivate": true, "defaultBranchRef": { "target": { "history": { "nodes": [{ "oid": "aaaa", "committedDate": "2025-01-01T00:00:00Z", "messageHeadline": "secret" }] } } } },
+    "r2": { "isPrivate": false, "defaultBranchRef": { "target": { "history": { "nodes": [] } } } },
+    "r3": null
+  },
+  "errors": [
+    { "type": "NOT_FOUND", "path": ["r3"], "locations": [{ "line": 1, "column": 191 }], "message": "Could not resolve to a Repository with the name 'slettet/gone'." }
+  ]
+}
