@@ -1,8 +1,12 @@
 {
-  "$schema": "../presentasjon.schema.json",
+  "$schema": "../../presentasjon.schema.json",
   "title": "Gamle UU-feil å unngå i nye løsninger",
   "file": "gamle-uu-feil-a-unnga-i-nye-losninger.pptx",
   "aspect": "16:9",
+  "summary": "Hvordan KI endrer universell utforming, og hvordan vi kan bruke det til vår fordel, med eksempler fra forsikring.",
+  "event": "Frempå 2026, Fremtind",
+  "date": "2026-11-27",
+  "duration": 10,
   "slides": [
     {
       "n": 1,

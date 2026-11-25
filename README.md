@@ -9,6 +9,7 @@ originals, backups) and KV (small state), never on a machine at home.
 | `apps/cv` | The CV, from a checked-in snapshot (Astro on Workers, the Worker `work`) | lmfaole.party/cv |
 | `apps/forside` | The front page and `/kilder` (Astro on Workers) | lmfaole.party |
 | `apps/medier` | What I listen to and watch (Astro on Workers) | lmfaole.party/medier |
+| `apps/presentasjoner` | My talks, slide by slide with notes, and each as PDF from R2 (Astro on Workers; the content is `content/*/presentasjon.json`) | lmfaole.party/presentasjoner |
 | `apps/startside` | The start page of the working day: open, read-only, public data only (Next.js on Workers, KV) | lmfaole.party/start |
 | `workers/activity` | Listens, plays and viewings from ListenBrainz, Last.fm, Trakt, Letterboxd, Steam and RetroAchievements into D1, weekly backup to R2 | cron |
 | `workers/catalog` | Public GitHub (repos, PRs, issues, contribution calendar) into D1 `site`, Hardcover shelves into D1 `library` | cron |

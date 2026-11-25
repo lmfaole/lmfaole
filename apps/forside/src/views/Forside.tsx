@@ -55,6 +55,7 @@ export function Forside({ page, now }: { page: FrontPage; now: Date }) {
         label="Lenker"
         items={[
           <TextLink href={PROFILE.cv}>CV</TextLink>,
+          <TextLink href={PROFILE.presentations}>Presentasjoner</TextLink>,
           <TextLink href={PROFILE.github} external>GitHub</TextLink>,
           <TextLink href={PROFILE.linkedin} external>LinkedIn</TextLink>,
           <TextLink href={`mailto:${PROFILE.email}`}>E-post</TextLink>,

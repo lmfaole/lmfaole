@@ -1,0 +1,29 @@
+---
+export const prerender = true
+// `/presentasjoner/`: the talks, the newest first, each with what it is about, where and when it is held, its slides and its length. Built from `content/`.
+import { PageHeader } from '@lmfaole/designsystem/components/page-header'
+import { SubPages } from '@lmfaole/designsystem/components/sub-pages'
+import { formatDuration } from '@lmfaole/designsystem/lib/timeline'
+
+import Document from '../layouts/Document.astro'
+import { TALKS } from '../lib/content'
+import { formatDate, slideCount, splitSlides } from '../lib/deck'
+
+const TITLE = 'Presentasjoner'
+const DESCRIPTION = 'Foredragene mine, slide for slide med notatene, og hvert av dem som PDF.'
+const base = import.meta.env.BASE_URL
+const pages = TALKS.map(({ slug, deck }) => ({
+  href: `${base}${slug}/`,
+  label: deck.title,
+  icon: 'document' as const,
+  value: [deck.event, deck.date === undefined ? undefined : formatDate(deck.date), slideCount(splitSlides(deck.slides).shown.length), deck.duration === undefined ? undefined : formatDuration(deck.duration * 60_000)]
+    .filter((part) => part !== undefined)
+    .join(' · '),
+  ...(deck.summary === undefined ? {} : { description: deck.summary }),
+}))
+---
+
+<Document title={TITLE} description={DESCRIPTION} url={new URL(base, Astro.site).href}>
+  <PageHeader title={TITLE} description={DESCRIPTION} />
+  <SubPages label="Presentasjoner" pages={pages} />
+</Document>

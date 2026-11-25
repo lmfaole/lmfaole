@@ -17,6 +17,8 @@ export const PROFILE = {
   url: 'https://lmfaole.party/',
   /** The CV: a path of this origin, served by the CV's own Worker (`apps/cv`). */
   cv: '/cv/',
+  /** The talks, slide by slide and as PDF: a path of this origin, served by its own Worker (`apps/presentasjoner`). */
+  presentations: '/presentasjoner/',
   /** The names that come up in the texts and where they link (`/ordliste`), linked from the front page once there are any. */
   glossary: '/ordliste',
   email: 'hei@lmfaole.party',

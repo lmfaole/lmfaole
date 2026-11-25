@@ -8,7 +8,10 @@ text by placeholder, text boxes, pictures (as files in the folder's bilder/, mat
 audio, links, the time stamp and the speaker notes. The format is presentasjon.schema.json; check.py checks it.
 
 <repo folder> is where presentasjon.json and bilder/ live (default: the .pptx's folder), for when the
-.pptx is kept outside this repo. Needs python-pptx.
+.pptx is kept outside this repo (apps/presentasjoner/content/<år>-...). Needs python-pptx.
+
+What the .pptx does not know (summary, event, date, duration, or any other top-level field) is written by hand
+in presentasjon.json and kept as it is when the file is made again.
 """
 import hashlib
 import json
@@ -133,14 +136,18 @@ def main():
     prs = Presentation(pptx)
     ratio = round(prs.slide_width / prs.slide_height, 2)
     slides = [slide_json(n, s, images) for n, s in enumerate(prs.slides, 1)]
+    out = folder / "presentasjon.json"
     deck = {
-        "$schema": "../presentasjon.schema.json",
+        "$schema": "../../presentasjon.schema.json",
         "title": next((s["title"] for s in slides if s["title"]), pptx.stem),
         "file": pptx.name,
         "aspect": {1.78: "16:9", 1.33: "4:3"}.get(ratio, str(ratio)),
-        "slides": slides,
     }
-    out = folder / "presentasjon.json"
+    # The fields written by hand (summary, event, date, duration …) are kept, in their order, before the slides.
+    if out.exists():
+        before = json.loads(out.read_text(encoding="utf-8"))
+        deck.update({k: v for k, v in before.items() if k not in deck and k != "slides"})
+    deck["slides"] = slides
     out.write_text(json.dumps(deck, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     missing = [f"slide {s['n']}: {p['missing']}" for s in slides for p in s.get("pictures", []) if "missing" in p]
     print(f"Wrote {out} ({len(slides)} slides)" + "".join(f"\n  not in bilder/: {m}" for m in missing))

@@ -1,0 +1,60 @@
+---
+export const prerender = true
+// `/presentasjoner/<slug>/`: one talk, built from `content/<slug>/presentasjon.json`: what it is about, its facts and its PDF, and the outline, slide
+// for slide with the speaker's notes folded away. The hidden slides kept in reserve are in a section of their own, folded as well.
+import { Breadcrumbs } from '@lmfaole/designsystem/components/breadcrumbs'
+import { Disclosure } from '@lmfaole/designsystem/components/disclosure'
+import { MediaGallery } from '@lmfaole/designsystem/components/media-gallery'
+import { PageHeader } from '@lmfaole/designsystem/components/page-header'
+import { PageSection } from '@lmfaole/designsystem/components/page-section'
+import { Text } from '@lmfaole/designsystem/components/text'
+import type { GetStaticPaths } from 'astro'
+
+import Document from '../../layouts/Document.astro'
+import { slidePictures, TALKS } from '../../lib/content'
+import { pdfName, slideTitle, splitSlides, type Talk } from '../../lib/deck'
+import { SlideItem } from '../../views/SlideItem'
+import { TalkDetail } from '../../views/TalkDetail'
+
+export const getStaticPaths = (() => TALKS.map((talk) => ({ params: { slug: talk.slug }, props: { talk } }))) satisfies GetStaticPaths
+
+const { talk } = Astro.props as { talk: Talk }
+const { slug, deck } = talk
+const base = import.meta.env.BASE_URL
+const here = `${base}${slug}/`
+const { shown, reserve } = splitSlides(deck.slides)
+const gallery = new Map(await Promise.all(deck.slides.map(async (slide) => [slide.n, await slidePictures(slug, slide)] as const)))
+const pictures = (slide: (typeof deck.slides)[number]) => gallery.get(slide.n) ?? []
+---
+
+<Document title={`${deck.title} – Presentasjoner`} description={deck.summary} url={new URL(here, Astro.site).href} width="pane">
+  <Breadcrumbs items={[{ href: base, label: 'Presentasjoner' }, { href: here, label: deck.title }]} />
+  <PageHeader title={deck.title} description={deck.summary} />
+  <TalkDetail deck={deck} pdf={`${here}${pdfName(deck)}`}>
+    <PageSection id="innhold" title="Innhold" icon="chapters">
+      {
+        shown.map((slide) => (
+          <SlideItem slide={slide}>
+            {pictures(slide).length > 0 && <MediaGallery slot="gallery" client:visible items={pictures(slide)} label={`Bilder på slide ${slide.n}: ${slideTitle(slide)}`} />}
+          </SlideItem>
+        ))
+      }
+    </PageSection>
+    {
+      reserve.length > 0 && (
+        <PageSection id="reserveslides" title="Reserveslides" icon="hidden">
+          <Text role="quiet">Slides som er skjult i presentasjonen og bare tas fram ved behov, for eksempel ved spørsmål.</Text>
+          <Disclosure summary={`Vis ${reserve.length} reserveslides`}>
+            {
+              reserve.map((slide) => (
+                <SlideItem slide={slide} notes="shown">
+                  {pictures(slide).length > 0 && <MediaGallery slot="gallery" client:visible items={pictures(slide)} label={`Bilder på slide ${slide.n}: ${slideTitle(slide)}`} />}
+                </SlideItem>
+              ))
+            }
+          </Disclosure>
+        </PageSection>
+      )
+    }
+  </TalkDetail>
+</Document>

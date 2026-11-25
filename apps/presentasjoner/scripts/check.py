@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Check that every presentation folder (presentasjoner/<år>-...) has a README.md and a valid presentasjon.json.
+"""Check that every presentation folder (apps/presentasjoner/content/<år>-...) has a README.md and a valid presentasjon.json.
 
-Usage: check.py [<presentasjoner folder>]   (no dependencies; exits 1 on errors)
+Usage: check.py [<apps/presentasjoner folder>]   (no dependencies; exits 1 on errors)
 
 presentasjon.json is checked against presentasjon.schema.json (the subset of JSON Schema it uses), and:
-slides are numbered 1..N, pictures exist in bilder/, and every picture and video has alt text unless it is
-marked decorative.
+slides are numbered 1..N, pictures exist in bilder/, every picture and video has alt text unless it is
+marked decorative, and the date (when there is one) is a real day.
 """
+import datetime
 import json
 import re
 import sys
@@ -74,6 +75,13 @@ def check_deck(folder, schema):
     errors = validate(deck, schema, schema)
     if errors:
         return errors
+    if (folder / deck.get("$schema", "")).resolve() != (folder.parent.parent / "presentasjon.schema.json").resolve():
+        errors.append(f"$schema: {deck.get('$schema')!r} is not ../../presentasjon.schema.json")
+    if "date" in deck:
+        try:
+            datetime.date.fromisoformat(deck["date"])
+        except ValueError:
+            errors.append(f"date: {deck['date']} is not a day")
     for i, slide in enumerate(deck["slides"], 1):
         where = f"slide {i}"
         if slide["n"] != i:
@@ -90,7 +98,8 @@ def check_deck(folder, schema):
 def main():
     root = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent.parent
     schema = json.loads((root / "presentasjon.schema.json").read_text(encoding="utf-8"))
-    folders = sorted(p for p in root.iterdir() if p.is_dir() and re.match(r"^\d{4}-", p.name))
+    content = root / "content"
+    folders = sorted(p for p in content.iterdir() if p.is_dir() and re.match(r"^\d{4}-", p.name)) if content.is_dir() else []
     failed = False
     for folder in folders:
         errors = ([] if (folder / "README.md").is_file() else ["missing README.md"]) + check_deck(folder, schema)
