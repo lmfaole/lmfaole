@@ -1,0 +1,32 @@
+name: cf-audit
+
+# Every Monday: does every resource in the Cloudflare account have an owner here (a wrangler.jsonc, or scripts/cf-audit.allow.json), and does
+# Cloudflare still match the configs? Read-only. With the API token it also sees DNS, Access and AI Gateway, which wrangler's login cannot; a
+# section the token may not read is reported as not checked. A failing run (something unowned or drifting) is GitHub's e-mail to the owner.
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: cf-audit
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: node --test scripts/cf-audit.test.ts
+      - run: npm run cf:audit
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

@@ -8,7 +8,7 @@ export const HEAT_STEPS = 4
  * ranges: one very busy day would otherwise put every other day in the palest step and the chart would say nothing.
  */
 export function heatLevels(values: readonly number[], steps: number = HEAT_STEPS): (value: number | null | undefined) => number {
-  const positive = values.filter((value) => Number.isFinite(value) && value > 0).sort((a, b) => a - b)
+  const positive = values.filter((value) => Number.isFinite(value) && value > 0).toSorted((a, b) => a - b)
   const limits = Array.from({ length: steps - 1 }, (_, index) => {
     const position = ((index + 1) / steps) * (positive.length - 1)
     return positive[Math.round(position)] ?? 0
@@ -80,7 +80,7 @@ export function calendarWeeks(days: readonly CalendarDay[]): CalendarWeek[] {
 /** The calendar's table: one row per month with its sum and the number of days that had anything, since a row for each of 365 days is not a table to read. */
 export function monthRows(days: readonly CalendarDay[]): (string | number)[][] {
   const months = new Map<string, { sum: number; active: number }>()
-  for (const day of [...days].sort((a, b) => a.date.localeCompare(b.date))) {
+  for (const day of days.toSorted((a, b) => a.date.localeCompare(b.date))) {
     const key = day.date.slice(0, 7)
     const month = months.get(key) ?? { sum: 0, active: 0 }
     month.sum += day.value

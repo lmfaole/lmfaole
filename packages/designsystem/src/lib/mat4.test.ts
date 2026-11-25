@@ -25,7 +25,7 @@ test("a rotation keeps lengths and its 3x3 part is the rotation alone", () => {
   const [x, y, z] = transformPoint(m, [0.3, 0.4, 0.5])
   assert.ok(Math.abs(Math.hypot(x, y, z) - Math.hypot(0.3, 0.4, 0.5)) < 1e-5)
   const part = rotationPart(translation(9, 9, 9))
-  assert.deepEqual(Array.from(part), [1, 0, 0, 0, 1, 0, 0, 0, 1])
+  assert.deepEqual([...part], [1, 0, 0, 0, 1, 0, 0, 0, 1])
 })
 
 test("the camera puts what is straight ahead in the middle and nearer things lower in depth than farther ones", () => {

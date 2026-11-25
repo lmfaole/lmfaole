@@ -1,9 +1,19 @@
 {
-  "$comment": "Resources in the Cloudflare account that no wrangler.jsonc in this repository owns, kept on purpose (scripts/cf-audit.ts). kind: zone, worker, route, custom_domain, d1, kv, r2, queue, pages, durable_object, hyperdrive, vectorize, workflow, ai_gateway, dns or access; name: its name (or id). An allow-listed zone covers its routes, custom domains and DNS records; an allow-listed Worker its routes, custom domains and crons.",
+  "$comment": "Resources in the Cloudflare account that no wrangler.jsonc in this repository owns, kept on purpose (scripts/cf-audit.ts). kind: zone, worker, route, custom_domain, d1, kv, r2, queue, pages, durable_object, hyperdrive, vectorize, workflow, ai_gateway, dns or access; name: its name (or id). A dns name is `<record name>` (every record there), `<record name> <type>`, or `<record name> <type> <start of the content>`. An allow-listed zone covers its routes, custom domains and DNS records; an allow-listed Worker its routes, custom domains and crons.",
   "external": [
     { "kind": "zone", "name": "fremtind.games", "reason": "fremtind.games, owned outside this repository" },
     { "kind": "worker", "name": "fremtind-games-api", "reason": "fremtind.games' API, owned outside this repository" },
     { "kind": "custom_domain", "name": "api.fremtind.games", "reason": "fremtind-games-api's address, owned outside this repository" },
-    { "kind": "d1", "name": "fremtind-games", "reason": "fremtind-games-api's database, owned outside this repository" }
+    { "kind": "d1", "name": "fremtind-games", "reason": "fremtind-games-api's database, owned outside this repository" },
+    { "kind": "dns", "name": "lmfaole.party MX", "reason": "mail for @lmfaole.party goes to Proton Mail" },
+    { "kind": "dns", "name": "lmfaole.party TXT v=spf1", "reason": "SPF: Proton Mail may send for lmfaole.party" },
+    { "kind": "dns", "name": "lmfaole.party TXT protonmail-verification=", "reason": "Proton Mail's proof that the domain is ours" },
+    { "kind": "dns", "name": "protonmail._domainkey.lmfaole.party CNAME", "reason": "DKIM key for Proton Mail" },
+    { "kind": "dns", "name": "protonmail2._domainkey.lmfaole.party CNAME", "reason": "DKIM key for Proton Mail" },
+    { "kind": "dns", "name": "protonmail3._domainkey.lmfaole.party CNAME", "reason": "DKIM key for Proton Mail" },
+    { "kind": "dns", "name": "_dmarc.lmfaole.party TXT", "reason": "DMARC policy for mail from lmfaole.party" },
+    { "kind": "dns", "name": "_atproto.lmfaole.party TXT", "reason": "Bluesky handle @lmfaole.party (its DID)" },
+    { "kind": "dns", "name": "www.lmfaole.party", "reason": "www, kept on purpose by the owner behind the Access application «party»; no Worker serves it" },
+    { "kind": "access", "name": "party", "reason": "guards www.lmfaole.party, kept on purpose by the owner" }
   ]
 }

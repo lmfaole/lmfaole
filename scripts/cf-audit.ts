@@ -185,7 +185,8 @@ export interface Actual {
   vectorize?: string[]
   workflows?: string[]
   aiGateways?: string[]
-  dns?: { zone: string; name: string; type: string }[]
+  /** `content` with a TXT record's quotes; `proxied` undefined for a type Cloudflare cannot proxy. */
+  dns?: { zone: string; name: string; type: string; content: string; proxied?: boolean }[]
   access?: { name: string; aud: string; domains: string[] }[]
   notChecked: Partial<Record<Kind, string>>
 }
@@ -216,6 +217,8 @@ const reaches = (pattern: string, target: string): boolean => {
 /** The zone a host is in: the longest zone name it ends with. */
 const zoneOf = (host: string, zones: string[]): string | undefined =>
   zones.filter((z) => host === z || host.endsWith(`.${z}`) || (host.startsWith("*.") && host.endsWith(z))).sort((a, b) => b.length - a.length)[0]
+/** The record types a route or custom domain needs: what a proxied hostname resolves through. */
+const WEB_RECORDS = new Set(["A", "AAAA", "CNAME"])
 const files = (cs: Config[]): string | undefined => [...new Set(cs.map((c) => c.file))].join(", ") || undefined
 
 /** Compares the configs (and the allow-list) with what Cloudflare has. Pure: every row the report shows, grouped by kind, problems first. */
@@ -223,11 +226,12 @@ export function audit(configs: Config[], actual: Actual, allow: AllowEntry[] = [
   const rows: Row[] = []
   const add = (row: Row): void => void rows.push(Object.fromEntries(Object.entries(row).filter(([, v]) => v !== undefined && v !== "")) as unknown as Row)
   const used = new Set<AllowEntry>()
-  const allowed = (kind: Kind, ...names: (string | null | undefined)[]): AllowEntry | undefined => {
-    const entry = allow.find((a) => a.kind === kind && names.includes(a.name))
+  const allowedIf = (kind: Kind, match: (name: string) => boolean): AllowEntry | undefined => {
+    const entry = allow.find((a) => a.kind === kind && match(a.name))
     if (entry) used.add(entry)
     return entry
   }
+  const allowed = (kind: Kind, ...names: (string | null | undefined)[]): AllowEntry | undefined => allowedIf(kind, (name) => names.includes(name))
   const workers = configs.filter((c) => c.worker)
   const zoneNames = (actual.zones ?? []).map((z) => z.name)
   const zoneName = (z: string | undefined): string | undefined => actual.zones?.find((x) => x.id === z)?.name ?? z
@@ -423,20 +427,33 @@ export function audit(configs: Config[], actual: Actual, allow: AllowEntry[] = [
   const gateway = (c: Config): string | undefined => (typeof c.vars.AI_GATEWAY === "string" && c.vars.AI_GATEWAY) || undefined
   byName("ai_gateway", actual.aiGateways, null, (g) => files(configs.filter((c) => gateway(c) === g)), configs.filter(gateway).map((c) => ({ name: gateway(c)!, owner: c.file })))
 
-  // DNS records: owned when a route or custom domain of a config reaches the host.
+  // DNS records: the proxied A, AAAA and CNAME records a route or custom domain of a config runs on are owned by it. Anything else (mail,
+  // verification, a host no route reaches) needs an allow-list entry: `name`, `name type`, or `name type content` where content is a prefix.
   if (!skip("dns") && actual.dns) {
     for (const record of actual.dns) {
-      const resource = `${record.name} ${record.type}`
-      const owner = files(workers.filter((c) => c.routes.some((r) => glob(hostOf(r.pattern)).test(record.name))))
-      if (owner) add({ kind: "dns", status: "owned", resource, owner })
-      else orphan("dns", resource, "no route or custom domain reaches it", allowed("dns", resource, record.name) ?? allowed("zone", record.zone))
+      const head = `${record.name} ${record.type}`
+      const resource = record.content ? `${head} ${record.content.length > 40 ? `${record.content.slice(0, 39)}…` : record.content}` : head
+      const web = WEB_RECORDS.has(record.type)
+      const owner = web ? files(workers.filter((c) => c.routes.some((r) => glob(hostOf(r.pattern)).test(record.name)))) : undefined
+      if (owner && record.proxied === false) add({ kind: "dns", status: "drift", resource, owner, detail: "not proxied, so the Worker route on it never runs" })
+      else if (owner) add({ kind: "dns", status: "owned", resource, owner })
+      else {
+        const entry = allowedIf("dns", (n) => n === record.name || n === head || (n.startsWith(`${head} `) && record.content.startsWith(n.slice(head.length + 1)))) ?? allowed("zone", record.zone)
+        orphan("dns", resource, web ? "no route or custom domain reaches it" : `no Worker needs a ${record.type} record`, entry)
+      }
     }
   }
 
-  // Access applications: owned by the config whose ACCESS_AUD is theirs, or whose route reaches one of their domains.
+  // Access applications: owned by the config whose ACCESS_AUD is theirs, or else by the Worker that serves one of their domains (the most
+  // specific route reaching it, as Cloudflare picks it: lmfaole.party/start* over lmfaole.party/*).
+  const servedBy = (target: string): Config[] => {
+    const hits = workers.flatMap((c) => c.routes.map((r) => ({ c, pattern: r.customDomain ? `${hostOf(r.pattern)}/*` : r.pattern })).filter((h) => reaches(h.pattern, target)))
+    const best = Math.max(0, ...hits.map((h) => bare(h.pattern).length))
+    return hits.filter((h) => bare(h.pattern).length === best).map((h) => h.c)
+  }
   if (!skip("access") && actual.access) {
     for (const app of actual.access) {
-      const owner = files(configs.filter((c) => c.vars.ACCESS_AUD === app.aud)) ?? files(workers.filter((c) => c.routes.some((r) => app.domains.some((d) => reaches(r.pattern, d)))))
+      const owner = files(configs.filter((c) => c.vars.ACCESS_AUD === app.aud)) ?? files(app.domains.flatMap(servedBy))
       const domains = app.domains.join(" ")
       if (owner) add({ kind: "access", status: "owned", resource: app.name, owner, detail: domains })
       else orphan("access", app.name, `${domains || "no domain"}: no route reaches it`, allowed("access", app.name, app.aud) ?? app.domains.map((d) => allowed("zone", zoneOf(hostOf(d), zoneNames))).find(Boolean))
@@ -463,15 +480,18 @@ export const failing = (rows: Row[]): boolean => rows.some((r) => r.status === "
 // ---------------------------------------------------------------------------------------------------------------- reading Cloudflare
 
 type Answer = { ok: true; result: any; info?: Raw } | { ok: false; status: number; message: string }
+/** `fetch`, or a stand-in for the tests. */
+export type Get = (url: string, init: { headers: Record<string, string> }) => Promise<Response>
 
 function token(): { token: string; source: "env" | "wrangler" } {
   if (process.env.CLOUDFLARE_API_TOKEN) return { token: process.env.CLOUDFLARE_API_TOKEN, source: "env" }
+  if (process.env.CI) throw new Error("CLOUDFLARE_API_TOKEN is not set (in CI there is no wrangler login to fall back on)")
   const out = execFileSync(join(ROOT, "node_modules/.bin/wrangler"), ["auth", "token", "--json"], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] })
   return { token: (JSON.parse(out) as { token: string }).token, source: "wrangler" }
 }
 
-async function api(auth: string, path: string): Promise<Answer> {
-  const response = await fetch(`https://api.cloudflare.com/client/v4${path}`, { headers: { authorization: `Bearer ${auth}` } })
+async function api(get: Get, auth: string, path: string): Promise<Answer> {
+  const response = await get(`https://api.cloudflare.com/client/v4${path}`, { headers: { authorization: `Bearer ${auth}` } })
   const json = (await response.json().catch(() => ({}))) as Raw
   if (!response.ok || json.success === false) {
     const message = list(json.errors).map((e) => `${e.code} ${e.message}`).join("; ") || response.statusText
@@ -481,12 +501,12 @@ async function api(auth: string, path: string): Promise<Answer> {
 }
 
 /** Every page of a paginated list (page numbers, or R2's cursor). */
-async function all(auth: string, path: string, perPage = 50, pick: (result: any) => Raw[] = (r) => list(r)): Promise<Answer> {
+async function all(get: Get, auth: string, path: string, perPage = 50, pick: (result: any) => Raw[] = (r) => list(r)): Promise<Answer> {
   const items: Raw[] = []
   let cursor: string | undefined
   for (let page = 1; page <= 100; page++) {
     const query = `${path}${path.includes("?") ? "&" : "?"}per_page=${perPage}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : `&page=${page}`}`
-    const answer = await api(auth, query)
+    const answer = await api(get, auth, query)
     if (!answer.ok) return answer
     const got = pick(answer.result)
     items.push(...got)
@@ -500,7 +520,9 @@ async function all(auth: string, path: string, perPage = 50, pick: (result: any)
 
 const why = (a: Extract<Answer, { ok: false }>): string => `${a.status === 401 || a.status === 403 ? "no permission" : `error ${a.status}`} (${a.message})`
 
-export async function fetchActual(auth: string, source: "env" | "wrangler", account = ACCOUNT): Promise<Actual> {
+export async function fetchActual(auth: string, source: "env" | "wrangler", account = ACCOUNT, get: Get = fetch): Promise<Actual> {
+  const one = (path: string) => api(get, auth, path)
+  const many = (path: string, perPage?: number, pick?: (result: any) => Raw[]) => all(get, auth, path, perPage, pick)
   const notChecked: Actual["notChecked"] = {}
   const take = <T>(kinds: Kind[], answer: Answer, map: (result: Raw[]) => T): T | undefined => {
     if (answer.ok) return map(list(answer.result))
@@ -509,19 +531,19 @@ export async function fetchActual(auth: string, source: "env" | "wrangler", acco
   }
   const A = `/accounts/${account}`
   const [zones, scripts, domains, d1, kv, r2, queues, pages, dos, hyperdrive, vectorize, workflows, gateways] = await Promise.all([
-    all(auth, `/zones?account.id=${account}`),
-    api(auth, `${A}/workers/scripts`),
-    api(auth, `${A}/workers/domains`),
-    all(auth, `${A}/d1/database`, 100),
-    all(auth, `${A}/storage/kv/namespaces`, 100),
-    all(auth, `${A}/r2/buckets`, 1000, (r) => list(r?.buckets)),
-    all(auth, `${A}/queues`, 100),
-    all(auth, `${A}/pages/projects`, 10),
-    all(auth, `${A}/workers/durable_objects/namespaces`, 100),
-    all(auth, `${A}/hyperdrive/configs`, 20),
-    api(auth, `${A}/vectorize/v2/indexes`),
-    all(auth, `${A}/workflows`, 100),
-    all(auth, `${A}/ai-gateway/gateways`, 50),
+    many(`/zones?account.id=${account}`),
+    one(`${A}/workers/scripts`),
+    one(`${A}/workers/domains`),
+    many(`${A}/d1/database`, 100),
+    many(`${A}/storage/kv/namespaces`, 100),
+    many(`${A}/r2/buckets`, 1000, (r) => list(r?.buckets)),
+    many(`${A}/queues`, 100),
+    many(`${A}/pages/projects`, 10),
+    many(`${A}/workers/durable_objects/namespaces`, 100),
+    many(`${A}/hyperdrive/configs`, 20),
+    one(`${A}/vectorize/v2/indexes`),
+    many(`${A}/workflows`, 100),
+    many(`${A}/ai-gateway/gateways`, 50),
   ])
   const actual: Actual = {
     notChecked,
@@ -544,7 +566,7 @@ export async function fetchActual(auth: string, source: "env" | "wrangler", acco
     actual.workers = await Promise.all(
       names.map(async (name): Promise<ActualWorker> => {
         const s = `${A}/workers/scripts/${encodeURIComponent(name)}`
-        const [schedules, subdomain, settings] = await Promise.all([api(auth, `${s}/schedules`), api(auth, `${s}/subdomain`), api(auth, `${s}/settings`)])
+        const [schedules, subdomain, settings] = await Promise.all([one(`${s}/schedules`), one(`${s}/subdomain`), one(`${s}/settings`)])
         return {
           name,
           crons: schedules.ok ? list(schedules.result?.schedules).map((x) => String(x.cron)) : undefined,
@@ -556,20 +578,20 @@ export async function fetchActual(auth: string, source: "env" | "wrangler", acco
     )
 
   if (actual.zones) {
-    const perZone = await Promise.all(actual.zones.map(async (z) => ({ z, routes: await api(auth, `/zones/${z.id}/workers/routes`), dns: await all(auth, `/zones/${z.id}/dns_records`, 100) })))
+    const perZone = await Promise.all(actual.zones.map(async (z) => ({ z, routes: await one(`/zones/${z.id}/workers/routes`), dns: await many(`/zones/${z.id}/dns_records`, 100) })))
     const failed = (key: "routes" | "dns") => perZone.map((p) => p[key]).find((a): a is Extract<Answer, { ok: false }> => !a.ok)
     const routeError = failed("routes")
     if (routeError) notChecked.route = why(routeError)
     else actual.routes = perZone.flatMap((p) => list(p.routes.ok && p.routes.result).map((r) => ({ zone: p.z.name, pattern: String(r.pattern), script: r.script ? String(r.script) : null })))
     const dnsError = failed("dns")
     if (dnsError) notChecked.dns = why(dnsError)
-    else actual.dns = perZone.flatMap((p) => list(p.dns.ok && p.dns.result).map((r) => ({ zone: p.z.name, name: String(r.name), type: String(r.type) })))
+    else actual.dns = perZone.flatMap((p) => list(p.dns.ok && p.dns.result).map((r) => dnsRecord(p.z.name, r)))
   }
 
   // wrangler's login has no Access scope, yet the API answers it with an empty list rather than a refusal.
   if (source === "wrangler") notChecked.access = "no permission (wrangler's login has no Access scope and gets an empty list; set CLOUDFLARE_API_TOKEN)"
   else
-    actual.access = take(["access"], await all(auth, `${A}/access/apps`, 100), (r) =>
+    actual.access = take(["access"], await many(`${A}/access/apps`, 100), (r) =>
       r.map((a) => ({
         name: String(a.name),
         aud: String(a.aud ?? ""),
@@ -577,6 +599,18 @@ export async function fetchActual(auth: string, source: "env" | "wrangler", acco
       })),
     )
   return actual
+}
+
+/** A DNS record as /zones/{id}/dns_records lists it. A TXT record's content comes in quotes (and one long value in several quoted parts). */
+export function dnsRecord(zone: string, r: Raw): NonNullable<Actual["dns"]>[number] {
+  const content = String(r.content ?? "")
+  return {
+    zone,
+    name: String(r.name),
+    type: String(r.type),
+    content: r.type === "TXT" ? content.replace(/^"|"$/g, "").replace(/"\s+"/g, "") : content,
+    proxied: r.proxiable === false || typeof r.proxied !== "boolean" ? undefined : r.proxied,
+  }
 }
 
 const BINDING_TYPES: Record<string, Binding["type"]> = { d1: "d1", kv_namespace: "kv", r2_bucket: "r2", queue: "queue", service: "service", durable_object_namespace: "durable_object", hyperdrive: "hyperdrive", vectorize: "vectorize", workflow: "workflow" }

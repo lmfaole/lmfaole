@@ -87,7 +87,8 @@ export interface CoverTraits {
 /** The traits of a `size` × `size` square of RGBA pixels: the mean colour of the whole, as a hue, a saturation and a lightness. */
 export function coverTraits(pixels: ArrayLike<number>, size: number): CoverTraits {
   const quarters = [0, 1, 2, 3].map((quarter) => quarterMean(pixels, size, quarter))
-  const [r, g, b] = [0, 1, 2].map((channel) => quarters.reduce((sum, colour) => sum + (colour[channel] ?? 0), 0) / 4 / 255) as [number, number, number]
+  const mean = (channel: number): number => quarters.reduce((sum, colour) => sum + (colour[channel] ?? 0), 0) / 4 / 255
+  const [r, g, b] = [mean(0), mean(1), mean(2)]
   const max = Math.max(r, g, b)
   const min = Math.min(r, g, b)
   const lightness = (max + min) / 2

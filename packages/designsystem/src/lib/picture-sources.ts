@@ -12,12 +12,12 @@ export interface PictureSource {
 export function srcSetOf(sources: readonly PictureSource[] | undefined, drawn: number): { srcSet: string; sizes: string } | null {
   const usable = (sources ?? []).filter((source) => source.src !== "" && Number.isFinite(source.width) && source.width > 0)
   if (usable.length < 2) return null
-  const sorted = [...usable].sort((a, b) => a.width - b.width)
+  const sorted = usable.toSorted((a, b) => a.width - b.width)
   return { srcSet: sorted.map((source) => `${source.src} ${source.width}w`).join(", "), sizes: `${drawn / 16}rem` }
 }
 
 /** The source to put in `src`: the smallest that covers the picture at twice its size (a sharp first choice where `srcset` is not read). */
 export function fallbackOf(sources: readonly PictureSource[], drawn: number): PictureSource | undefined {
-  const sorted = [...sources].sort((a, b) => a.width - b.width)
+  const sorted = sources.toSorted((a, b) => a.width - b.width)
   return sorted.find((source) => source.width >= drawn * 2) ?? sorted.at(-1)
 }

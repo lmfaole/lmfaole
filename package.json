@@ -15,6 +15,12 @@
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "hooks": "git config core.hooksPath .githooks",
-    "cf:audit": "node scripts/cf-audit.ts"
+    "cf:audit": "node scripts/cf-audit.ts",
+    "rollout": "node scripts/rollout.ts"
+  },
+  "overrides": {
+    "@opennextjs/cloudflare": {
+      "glob": "^14.0.6"
+    }
   }
 }

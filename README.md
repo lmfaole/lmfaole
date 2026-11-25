@@ -27,6 +27,7 @@ npm run typecheck && npm test        # every workspace that has them
 npm run hooks                        # once per clone: the design system's visual test before a push
 npm run build -w apps/medier         # one workspace: -w <path>
 npm run cf:audit                     # every Cloudflare resource has a wrangler.jsonc here, or is in scripts/cf-audit.allow.json (--json)
+npm run rollout -- --list            # the rollout (D1, import, R2, catalog, scheduler) step by step, skipping what is done (--dry-run, --from, --only, --yes)
 ```
 
 The apps use the design system as a workspace (`"@lmfaole/designsystem": "*"`), so a change to it is checked against the apps in the
@@ -36,4 +37,5 @@ same commit. Each app and worker keeps its own `package.json`, `wrangler.jsonc` 
 
 One workflow per app in `.github/workflows/`, run only when its path (or the design system, or the lockfile) changes. A push to `main`
 deploys the app when the repository has `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`; the workers are only checked and deployed
-by hand (`npx wrangler deploy` in each).
+by hand (`npx wrangler deploy` in each). `cf-audit.yml` runs `npm run cf:audit` every Monday (and on demand) with the API token, which
+also reads DNS, Access and AI Gateway; a failing run is GitHub's e-mail to the owner.

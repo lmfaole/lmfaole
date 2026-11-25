@@ -96,11 +96,12 @@ for (const [mode, tokens] of Object.entries(MODES)) {
   test(`${mode}: the chart series are told apart in normal vision and in each kind of colour-vision deficiency`, () => {
     const series = [1, 2, 3, 4, 5, 6].map((n) => surface(tokens, `series-${n}`))
     const weak: string[] = []
+    const none: Rgb = [0, 0, 0]
     for (const [kind, matrix] of [["normal", null], ["protan", CVD.protan], ["deutan", CVD.deutan], ["tritan", CVD.tritan]] as const) {
       for (let i = 0; i < series.length; i++) {
         for (let j = i + 1; j < series.length; j++) {
-          const a = series[i] ?? [0, 0, 0] as Rgb
-          const b = series[j] ?? [0, 0, 0] as Rgb
+          const a = series[i] ?? none
+          const b = series[j] ?? none
           const apart = distance(matrix === null ? a : simulate(a, matrix), matrix === null ? b : simulate(b, matrix))
           if (apart < 8) weak.push(`series-${i + 1} and series-${j + 1} (${kind}): ${apart.toFixed(1)}`)
         }

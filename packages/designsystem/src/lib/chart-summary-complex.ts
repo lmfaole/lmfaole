@@ -10,7 +10,7 @@ export const unitWord = (n: number, unit: Unit): string => (typeof unit === "str
 
 export function summariseCalendar(days: readonly CalendarDay[], unit: Unit): string | null {
   if (days.length === 0) return null
-  const sorted = [...days].sort((a, b) => a.date.localeCompare(b.date))
+  const sorted = days.toSorted((a, b) => a.date.localeCompare(b.date))
   const total = sorted.reduce((sum, day) => sum + day.value, 0)
   const active = sorted.filter((day) => day.value > 0)
   const busiest = sorted.reduce((best, day) => (day.value > best.value ? day : best), sorted[0] ?? { date: "", value: 0 })
@@ -20,9 +20,10 @@ export function summariseCalendar(days: readonly CalendarDay[], unit: Unit): str
 }
 
 export function summariseDumbbell(rows: readonly { label: string; from: number; to: number }[], fromLabel: string, toLabel: string): string | null {
-  if (rows.length === 0) return null
+  const first = rows[0]
+  if (first === undefined) return null
   const change = (row: { from: number; to: number }) => row.to - row.from
-  const biggest = rows.reduce((best, row) => (Math.abs(change(row)) > Math.abs(change(best)) ? row : best), rows[0] as (typeof rows)[number])
+  const biggest = rows.reduce((best, row) => (Math.abs(change(row)) > Math.abs(change(best)) ? row : best), first)
   const up = rows.filter((row) => change(row) > 0).length
   const down = rows.filter((row) => change(row) < 0).length
   return `Endring fra ${fromLabel} til ${toLabel}: ${fmt(up)} opp, ${fmt(down)} ned. Størst endring: ${biggest.label} (${change(biggest) > 0 ? "+" : ""}${fmt(change(biggest))}).`

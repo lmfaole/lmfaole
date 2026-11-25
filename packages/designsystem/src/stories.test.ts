@@ -47,7 +47,9 @@ const titles = everything(root).map((file) => {
   return { file: relative(root, file), title: match?.[1] ?? match?.[2] ?? "" }
 })
 const preview = readFileSync(join(root, "..", ".storybook", "preview.tsx"), "utf8")
-const order = JSON.parse(/storySort: \{ order: (\[.*\]) \}/.exec(preview)?.[1] ?? "[]") as Order
+const isOrder = (value: unknown): value is Order => Array.isArray(value) && value.every((item) => typeof item === "string" || isOrder(item))
+const parsed: unknown = JSON.parse(/storySort: \{ order: (\[.*\]) \}/.exec(preview)?.[1] ?? "[]")
+const order: Order = isOrder(parsed) ? parsed : []
 
 test("every story and guide has a place in the sidebar's order, and its file stands in the folder of its title", () => {
   const places = new Set(placed(order))

@@ -8,7 +8,7 @@ export interface DumbbellRow {
 
 /** Rows ordered by the size of the change, the biggest first (up or down): the chart is read from the top, so the top is what moved most. Ties keep their order. */
 export function sortByChange<T extends { from: number; to: number }>(rows: readonly T[]): T[] {
-  return [...rows].sort((a, b) => Math.abs(b.to - b.from) - Math.abs(a.to - a.from))
+  return rows.toSorted((a, b) => Math.abs(b.to - b.from) - Math.abs(a.to - a.from))
 }
 
 /** Where a value stands on the shared axis, 0 to 100 percent; the axis is the same for every row, and a zero baseline is not forced since the dots show position, not length. */

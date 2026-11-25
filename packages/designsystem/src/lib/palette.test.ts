@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import { BACKDROP_HIGHLIGHT, BACKDROP_OPACITY, coverTraits, easeOut, isLightArt, LIGHT_ART, lively, mixPalette, paletteOf, quarterMean } from "./palette.ts"
+import { BACKDROP_HIGHLIGHT, BACKDROP_OPACITY, coverTraits, easeOut, isLightArt, LIGHT_ART, lively, mixPalette, paletteOf, quarterMean, type Rgb } from "./palette.ts"
 
 const square = (size: number, colour: (x: number, y: number) => [number, number, number, number]): number[] => {
   const pixels: number[] = []
@@ -53,12 +53,16 @@ const ratio = (a: number[], b: number[]): number => {
 }
 
 test("the head's text keeps 4.5:1 on the backdrop, on the worst colour a picture can give, with the light's highlight on it, in both themes", () => {
-  const hueToRgb = (hue: number): number[] => [4, 0, 2].map((n) => Math.round(255 * Math.max(0, Math.min(1, Math.abs((((hue / 60 + n) % 6) - 3)) - 1))))
+  const hueToRgb = (hue: number): Rgb => {
+    const channel = (n: number): number => Math.round(255 * Math.max(0, Math.min(1, Math.abs((((hue / 60 + n) % 6) - 3)) - 1)))
+    return [channel(4), channel(0), channel(2)]
+  }
+  const dim = ([r, g, b]: Rgb): Rgb => [128 + (r - 128) * 0.3, 128 + (g - 128) * 0.3, 128 + (b - 128) * 0.3]
   for (const [bg, text, opacity] of [[[10, 10, 10], [250, 250, 250], BACKDROP_OPACITY.dark], [[255, 255, 255], [10, 10, 10], BACKDROP_OPACITY.light]] as const) {
     for (let hue = 0; hue < 360; hue += 5) {
       for (const dull of [false, true]) {
         const base = hueToRgb(hue)
-        const colour = lively((dull ? base.map((v) => 128 + (v - 128) * 0.3) : base) as [number, number, number])
+        const colour = lively(dull ? dim(base) : base)
         for (const shown of [colour, colour.map((v) => Math.min(255, v + BACKDROP_HIGHLIGHT * 255))]) {
           const blended = shown.map((v, index) => v * opacity + (bg[index] ?? 0) * (1 - opacity))
           assert.ok(ratio([...text], blended) >= 4.5, `hue ${hue} ${dull ? "dull" : "vivid"} on ${bg[0]} gave ${ratio([...text], blended).toFixed(2)}`)
@@ -81,13 +85,12 @@ test("a picture has a main hue, a saturation and a lightness, and covers that di
 })
 
 test("a palette changes colour by shares of the way, and the move settles", () => {
-  const a: [number, number, number][] = [[0, 0, 0], [100, 0, 0], [0, 100, 0], [0, 0, 100]]
-  const b: [number, number, number][] = [[200, 200, 200], [100, 100, 0], [0, 0, 0], [50, 50, 50]]
-  const pair = (list: [number, number, number][]) => list as [[number, number, number], [number, number, number], [number, number, number], [number, number, number]]
-  assert.deepEqual(mixPalette(pair(a), pair(b), 0), pair(a))
-  assert.deepEqual(mixPalette(pair(a), pair(b), 1), pair(b))
-  assert.deepEqual(mixPalette(pair(a), pair(b), 0.5)[0], [100, 100, 100])
-  assert.deepEqual(mixPalette(pair(a), pair(b), 9), pair(b))
+  const a: [Rgb, Rgb, Rgb, Rgb] = [[0, 0, 0], [100, 0, 0], [0, 100, 0], [0, 0, 100]]
+  const b: [Rgb, Rgb, Rgb, Rgb] = [[200, 200, 200], [100, 100, 0], [0, 0, 0], [50, 50, 50]]
+  assert.deepEqual(mixPalette(a, b, 0), a)
+  assert.deepEqual(mixPalette(a, b, 1), b)
+  assert.deepEqual(mixPalette(a, b, 0.5)[0], [100, 100, 100])
+  assert.deepEqual(mixPalette(a, b, 9), b)
   assert.equal(easeOut(0), 0)
   assert.equal(easeOut(1), 1)
   assert.ok(easeOut(0.5) > 0.5, "fast at first")
@@ -95,18 +98,18 @@ test("a palette changes colour by shares of the way, and the move settles", () =
 })
 
 test("a light picture is told from the rest, and its stronger backdrop on the muted ground keeps the head's text at 4.5:1 and stands apart from the page", () => {
-  const square = (colour: readonly number[]): number[] => Array.from({ length: 16 * 16 }, () => [...colour, 255]).flat()
-  assert.equal(isLightArt(square([255, 255, 255]), 16), true)
-  assert.equal(isLightArt(square([240, 236, 228]), 16), true)
-  assert.equal(isLightArt(square([180, 40, 60]), 16), false)
-  assert.equal(isLightArt(square([20, 20, 20]), 16), false)
+  const solid = (colour: readonly number[]): number[] => Array.from({ length: 16 * 16 }, () => [...colour, 255]).flat()
+  assert.equal(isLightArt(solid([255, 255, 255]), 16), true)
+  assert.equal(isLightArt(solid([240, 236, 228]), 16), true)
+  assert.equal(isLightArt(solid([180, 40, 60]), 16), false)
+  assert.equal(isLightArt(solid([20, 20, 20]), 16), false)
   // The light theme's --muted (oklch 0.97) and text; every light colour a picture can give, at its lightest made lively.
   const muted = [247, 247, 247]
   const text = [10, 10, 10]
   for (let hue = 0; hue < 360; hue += 5) {
     for (const lightness of [LIGHT_ART.lightness, 0.92, 1]) {
-      const pale = [0, 1, 2].map((n) => Math.round(255 * lightness - (n === Math.floor(hue / 120) ? 0 : 255 * (1 - lightness))))
-      const colour = lively(pale as [number, number, number])
+      const channel = (n: number): number => Math.round(255 * lightness - (n === Math.floor(hue / 120) ? 0 : 255 * (1 - lightness)))
+      const colour = lively([channel(0), channel(1), channel(2)])
       for (const shown of [colour, colour.map((v) => Math.min(255, v + BACKDROP_HIGHLIGHT * 255))]) {
         const blended = shown.map((v, index) => v * LIGHT_ART.opacity + (muted[index] ?? 0) * (1 - LIGHT_ART.opacity))
         assert.ok(ratio(text, blended) >= 4.5, `hue ${hue} at ${lightness} gave ${ratio(text, blended).toFixed(2)}`)

@@ -12,9 +12,14 @@ import { browserStorage, resolveTiltPreference, writeTiltPreference } from "./li
 type Permission = { requestPermission?: () => Promise<"granted" | "denied"> }
 type Ask = () => Promise<"granted" | "denied">
 
+/** Whether the browser's `DeviceOrientationEvent` has iOS's `requestPermission` (the standard typings leave it out). */
+const asksPermission = (event: unknown): event is Permission => (typeof event === "function" || (typeof event === "object" && event !== null)) && "requestPermission" in event
+
 const permissionCall = (): Ask | null => {
-  const call = (window.DeviceOrientationEvent as unknown as Permission | undefined)?.requestPermission
-  return typeof call === "function" ? call.bind(window.DeviceOrientationEvent) : null
+  const event: unknown = window.DeviceOrientationEvent
+  if (!asksPermission(event)) return null
+  const call = event.requestPermission
+  return typeof call === "function" ? call.bind(event) : null
 }
 
 /** True on a phone or a tablet that must be asked before it tells how it is held, and has not been answered yet: where a button for it is worth showing. */

@@ -27,7 +27,7 @@ test("the classes say the same numbers: Tailwind reads them as text, so they are
 
 test("the width classes rise, start at nothing and name the split", () => {
   const starts = WIDTH_CLASSES.map((one) => one.fromRem)
-  assert.deepEqual(starts, [...starts].sort((a, b) => a - b))
+  assert.deepEqual(starts, starts.toSorted((a, b) => a - b))
   assert.equal(starts[0], 0)
   assert.equal(WIDTH_CLASSES.find((one) => one.name === "expanded")?.fromRem, LAYOUT_REM.splitAt)
 })

@@ -56,7 +56,7 @@ export const luminance = ([r, g, b]: Rgb): number => 0.2126 * r + 0.7152 * g + 0
 
 /** WCAG contrast ratio, 1 to 21. */
 export function contrast(a: Rgb, b: Rgb): number {
-  const [high, low] = [luminance(a), luminance(b)].sort((x, y) => y - x)
+  const [high, low] = [luminance(a), luminance(b)].toSorted((x, y) => y - x)
   return ((high ?? 0) + 0.05) / ((low ?? 0) + 0.05)
 }
 
