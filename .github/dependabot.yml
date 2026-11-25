@@ -7,6 +7,10 @@ updates:
     cooldown: { default-days: 7 }
     groups:
       all: { patterns: ["*"] }
+    ignore:
+      # Types follow the Node major in .node-version, not the newest Node.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule: { interval: monthly }
