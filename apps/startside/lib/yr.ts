@@ -67,7 +67,7 @@ export async function getForecast(device: Position | null = null, chosen: string
   const place = position === null ? (env("WEATHER_PLACE") ?? "Oslo") : (chosen ?? (await placeName(position.lat, position.lon)) ?? "din posisjon")
   const response = await upstream(forecastUrl(lat, lon), {
     // MET's terms ask for an identifying User-Agent, and that the same forecast in the Nordic area is not asked for more than once in 30 minutes (longer when its `Expires` says so; see `upstream.ts`).
-    headers: { "User-Agent": "startside github.com/lmfaole/startside" },
+    headers: { "User-Agent": "startside github.com/lmfaole/lmfaole" },
     revalidate: 1800,
   })
   if (!response.ok) throw new Error(`Yr svarte ${response.status}`)

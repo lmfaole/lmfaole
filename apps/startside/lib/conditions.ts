@@ -14,7 +14,7 @@ import { weatherPosition } from "./yr"
 // failing the page: outside its area (the radar, the air, the bikes) or when it is down, the page simply has less to say.
 
 const OSLO = { lat: 59.913, lon: 10.752 }
-const MET = { "User-Agent": "startside github.com/lmfaole/startside" }
+const MET = { "User-Agent": "startside github.com/lmfaole/lmfaole" }
 
 async function json(url: string, init: Parameters<typeof upstream>[1]): Promise<unknown> {
   try {

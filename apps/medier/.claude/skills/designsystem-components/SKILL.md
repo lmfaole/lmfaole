@@ -7,7 +7,7 @@ description: Use when choosing which design system component to use for somethin
 
 ## Look a component up
 
-- **The catalogue as data:** <https://lmfaole.github.io/designsystem/manifests/components.json> (every component: its description, props with
+- **The catalogue as data:** <https://lmfaole.party/design/manifests/components.json> (every component: its description, props with
   types and JSDoc, and the code of each story) and `…/manifests/docs.json` (the guides). Read it before guessing a prop.
 - **In this repository**, with `npm run storybook` running, the `storybook` MCP server (`.mcp.json`, `@storybook/addon-mcp`) lists
   components and docs, previews stories and runs their tests (`test-run`).

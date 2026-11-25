@@ -22,7 +22,7 @@ const TIMEOUT_MS = 10_000
 export const INDEX_KEY = "index"
 export const bodyKey = (key: string): string => `body:${key}`
 
-const MET_HEADERS = { "User-Agent": "startside github.com/lmfaole/startside" }
+const MET_HEADERS = { "User-Agent": "startside github.com/lmfaole/lmfaole" }
 const GITHUB_HEADERS = { Accept: "application/vnd.github+json", "User-Agent": "startside", "X-GitHub-Api-Version": "2022-11-28" }
 
 /** MET's complete forecast for a place (`lib/yr.ts` asks for the same address, so the page and the snapshot share it). */

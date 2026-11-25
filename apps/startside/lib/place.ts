@@ -9,7 +9,7 @@ interface Reverse {
 export async function placeName(lat: number, lon: number): Promise<string | null> {
   try {
     const response = await upstream(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=10&accept-language=nb&lat=${lat}&lon=${lon}`, {
-      headers: { "User-Agent": "startside github.com/lmfaole/startside" },
+      headers: { "User-Agent": "startside github.com/lmfaole/lmfaole" },
       revalidate: 86_400,
     })
     if (!response.ok) return null
@@ -26,7 +26,7 @@ export async function searchPlaces(query: string): Promise<FoundPlace[] | null> 
   if (q === "") return []
   try {
     const response = await upstream(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=8&accept-language=nb&q=${encodeURIComponent(q)}`, {
-      headers: { "User-Agent": "startside github.com/lmfaole/startside" },
+      headers: { "User-Agent": "startside github.com/lmfaole/lmfaole" },
       revalidate: 86_400,
     })
     if (!response.ok) return null

@@ -2,7 +2,7 @@
 
 A personal start page: what to do and look at during the working day, fetched from outside services and rendered on the
 server on every request. Next.js (App Router, SSR) on Cloudflare Workers through OpenNext, built from the components of
-[`lmfaole/designsystem`](https://github.com/lmfaole/designsystem). The project writes no styling of its own.
+[`lmfaole/designsystem`](https://github.com/lmfaole/lmfaole/tree/main/packages/designsystem). The project writes no styling of its own.
 
 ## Pages
 

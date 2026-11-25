@@ -7,7 +7,7 @@ import { readOnlyQuery, sameKey } from "./guard.js"
 
 // The first is Cloudflare Access's signing keys (public), for the page's check of its token where it cannot fetch them itself.
 const HOSTS = new Set(["party-7ry-pages.cloudflareaccess.com", "api.met.no", "api.github.com", "nominatim.openstreetmap.org", "api.entur.io", "api.spotify.com", "services.swpc.noaa.gov", "www.hvakosterstrommen.no", "api01.nve.no", "gbfs.urbansharing.com", "ws.geonorge.no"])
-const USER_AGENT = "startside github.com/lmfaole/startside"
+const USER_AGENT = "startside github.com/lmfaole/lmfaole"
 /** The largest body a POST may have (a GraphQL query, Spotify's token form). */
 const BODY_MAX = 64 * 1024
 

@@ -11,7 +11,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..")
 const dataDir = join(root, "lib", "mock-data")
 mkdirSync(dataDir, { recursive: true })
 
-const UA = "startside-mock-capture github.com/lmfaole/startside"
+const UA = "startside-mock-capture github.com/lmfaole/lmfaole"
 // Two places in Oslo to capture the stations around: Grünerløkka (also the forecast and the place name) and the centre.
 const GRUNERLOKKA = { lat: 59.9226, lon: 10.7586 }
 const SENTRUM = { lat: 59.915013, lon: 10.751613 }
