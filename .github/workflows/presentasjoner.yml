@@ -1,0 +1,20 @@
+name: presentasjoner
+
+# Every presentation folder needs a README.md and a presentasjon.json that matches presentasjon.schema.json (the .pptx is not versioned).
+on:
+  push:
+    paths: [presentasjoner/**, .github/workflows/presentasjoner.yml]
+  pull_request:
+    paths: [presentasjoner/**, .github/workflows/presentasjoner.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - run: python3 presentasjoner/scripts/check.py

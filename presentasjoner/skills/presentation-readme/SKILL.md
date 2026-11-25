@@ -5,12 +5,12 @@ description: Lag og vedlikehold README.md for hver presentasjon i repoet. Bruk n
 
 # README per presentasjon
 
-Hver presentasjonsmappe skal ha en `README.md` ved siden av `.pptx`-filen. Start fra `maler/README-mal.md`.
+Hver presentasjonsmappe skal ha en `README.md` ved siden av `.pptx`-filen. Start fra `maler/README-mal.md`. Mappen skal også ha en `presentasjon.json` med innholdet i `.pptx`-filen; se «presentasjon.json» i `../../README.md`.
 
 ## Retningslinjer
 
 1. Opprett README samtidig som mappen. Ikke vent til presentasjonen er ferdig.
-2. Hold den i synk: oppdater tidsplan, kilder og åpne punkter hver gang slides endres.
+2. Hold den i synk: oppdater tidsplan, kilder og åpne punkter hver gang slides endres, og lag `presentasjon.json` på nytt med `scripts/pptx_to_json.py`.
 3. Seksjoner (alle skal med, hopp over bare hvis de ikke gjelder):
    - Fakta: arrangement, dato, varighet, målgruppe, filnavn, status
    - Budskap
