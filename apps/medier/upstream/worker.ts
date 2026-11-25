@@ -11,7 +11,7 @@ interface RelayEnv {
 
 const GET_HOSTS = new Set(["ws.audioscrobbler.com", "api.trakt.tv", "api.themoviedb.org", "api.spotify.com", "musicbrainz.org", "www.wikidata.org", "api.setlist.fm", "api.steampowered.com", "store.steampowered.com", "retroachievements.org", "api.listenbrainz.org"])
 const FORWARDED = ["authorization", "content-type", "accept", "trakt-api-version", "trakt-api-key", "x-api-key"]
-const USER_AGENT = "lmfaole-medier (https://github.com/lmfaole/medier)"
+const USER_AGENT = "lmfaole-medier (https://github.com/lmfaole/lmfaole)"
 
 export default {
   async fetch(request: Request, env: RelayEnv): Promise<Response> {

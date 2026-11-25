@@ -15,7 +15,7 @@ import { readFileSync } from "node:fs"
 
 import { parseEnvFile, plan, required, SETTINGS } from "../src/lib/settings.ts"
 
-const REPOSITORY = process.env["GITHUB_REPOSITORY"] ?? "lmfaole/medier"
+const REPOSITORY = process.env["GITHUB_REPOSITORY"] ?? "lmfaole/lmfaole"
 const [command, ...rest] = process.argv.slice(2)
 const dry = rest.includes("--dry-run")
 const files = rest.filter((word) => word !== "--dry-run")

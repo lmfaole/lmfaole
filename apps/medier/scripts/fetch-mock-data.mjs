@@ -8,7 +8,7 @@
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 
-const UA = "lmfaole-medier-mock/1.0 (https://github.com/lmfaole/medier; local development fixtures)"
+const UA = "lmfaole-medier-mock/1.0 (https://github.com/lmfaole/lmfaole; local development fixtures)"
 const DATA = new URL("../src/lib/mock-data.json", import.meta.url)
 const OUT = new URL("../public/mock/", import.meta.url)
 

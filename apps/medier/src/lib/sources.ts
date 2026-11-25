@@ -253,14 +253,15 @@ export interface GameDetail {
  * minutes; their names and pictures a week, the shares of all players a day). `null` without the key or the profile, or where the profile has not got the game; the store and the
  * achievements each `null` on their own where they fail (a profile whose achievements are not public).
  */
-export async function loadGame(env: Env, get: Get, appId: number): Promise<GameDetail | null> {
+export async function loadGame(env: Env, get: Get, appId: number, stored: { game: OwnedGame; recentMinutes: number; steamId: string } | null = null): Promise<GameDetail | null> {
   const key = setting(env, "STEAM_API_KEY")
   const user = setting(env, "STEAM_USER")
   if (key === "" || user === "") return null
-  const id = await steamId(key, get, user)
+  const id = stored?.steamId ?? (await steamId(key, get, user))
   if (id === null) return null
-  const [owned, recent] = await Promise.all([get(ownedGamesUrl(key, id), { ttl: TTL.gamesOwned }), settle(get(recentGamesUrl(key, id), { ttl: TTL.gamesRecent }))])
-  const game = parseOwnedGame(owned.data, appId)
+  // The game and its fortnight as the database has them (`stored.ts`), or Steam's lists of them.
+  const [owned, recent] = stored === null ? await Promise.all([get(ownedGamesUrl(key, id), { ttl: TTL.gamesOwned }), settle(get(recentGamesUrl(key, id), { ttl: TTL.gamesRecent }))]) : [null, null]
+  const game = stored?.game ?? parseOwnedGame(owned?.data, appId)
   if (game === null) return null
   const [store, achievements] = await Promise.all([
     settle(get(storeDetailsUrl(appId), { ttl: TTL.gameStore }).then((answer) => parseStoreApp(answer.data, appId))),
@@ -270,7 +271,7 @@ export async function loadGame(env: Env, get: Get, appId: number): Promise<GameD
       ),
     ),
   ])
-  const recentMinutes = recent === null ? 0 : (parseRecentGames(recent.data).find((one) => one.appId === appId)?.recentMinutes ?? 0)
+  const recentMinutes = stored?.recentMinutes ?? (recent === null ? 0 : (parseRecentGames(recent.data).find((one) => one.appId === appId)?.recentMinutes ?? 0))
   return { game, recentMinutes, store, achievements, profile: profileUrl(id) }
 }
 
@@ -393,14 +394,15 @@ export async function loadRetroGames(env: Env, get: Get): Promise<GameLibrary | 
 }
 
 /** One game on RetroAchievements with the owner's progress in it, and when they last played it (from the recent list), kept for ten minutes; `null` without the key or the username, or where there is no such game. */
-export async function loadRetroGame(env: Env, get: Get, gameId: number): Promise<{ game: RetroGameDetail; lastPlayed: number | null; profile: string } | null> {
+export async function loadRetroGame(env: Env, get: Get, gameId: number, storedLastPlayed: number | null = null): Promise<{ game: RetroGameDetail; lastPlayed: number | null; profile: string } | null> {
   const key = setting(env, "RETROACHIEVEMENTS_API_KEY")
   const user = setting(env, "RETROACHIEVEMENTS_USER")
   if (key === "" || user === "") return null
-  const [answer, recent] = await Promise.all([get(retroGameUrl(key, user, gameId), { ttl: TTL.retroGame }), settle(get(retroRecentUrl(key, user), { ttl: TTL.retroRecent }))])
+  // When it was last played as the database has it (`stored.ts`), or from the recent list.
+  const [answer, recent] = await Promise.all([get(retroGameUrl(key, user, gameId), { ttl: TTL.retroGame }), storedLastPlayed === null ? settle(get(retroRecentUrl(key, user), { ttl: TTL.retroRecent })) : null])
   const game = parseRetroGame(answer.data)
   if (game === null) return null
-  const lastPlayed = recent === null ? null : (parseRetroRecent(recent.data).find((one) => one.gameId === gameId)?.lastPlayed ?? null)
+  const lastPlayed = storedLastPlayed ?? (recent === null ? null : (parseRetroRecent(recent.data).find((one) => one.gameId === gameId)?.lastPlayed ?? null))
   return { game, lastPlayed, profile: retroUserPage(user) }
 }
 

@@ -1,6 +1,7 @@
 /**
  * The Worker's end of `sources.ts`: its settings, and the `get` that asks a source, through the relay, and keeps the answer in the Worker's cache for as long
  * as the source's `ttl` says. A page imports the loaders below, which pass the one to the other; nothing else here is the page's business.
+ * The listens, what was watched and the games are read from the activity Worker's D1 databases (`stored.ts`, through `query`, kept the same way) where they have them, and asked of the sources where not.
  */
 
 import { env } from "cloudflare:workers"
@@ -17,8 +18,10 @@ import { type Users, usersFrom } from "./users.ts"
 import type { Wishlist } from "./steam-wishlist.ts"
 import { failureOf, failureTtl, keptFailure, lastfmErrorCode } from "./negative-cache.ts"
 import { asService, routeOf } from "./route.ts"
+import { asDatabase, DATABASES, type Query, type Row } from "./d1.ts"
+import { storedGames, storedMusic, storedRetroGames, storedRetroLastPlayed, storedSteamGame, storedWatched } from "./stored.ts"
 
-const AGENT = "lmfaole-medier (https://github.com/lmfaole/medier)"
+const AGENT = "lmfaole-medier (https://github.com/lmfaole/lmfaole)"
 /** A cache key is an address; an answer that is kept under a name (a token) gets one that no one can ask the Worker for. */
 const KEY_HOST = "https://cache.medier.invalid/"
 
@@ -121,13 +124,67 @@ export const get: Get = async (url, request) => {
   return { data, hit: false }
 }
 
+const hex = (bytes: ArrayBuffer): string => [...new Uint8Array(bytes)].map((byte) => byte.toString(16).padStart(2, "0")).join("")
+
+/** Reads a D1 database (`d1.ts`) and keeps the rows for `ttl` seconds, as `get` keeps an answer; only ever reads. A failure (a table not there yet) is not kept. */
+const storedQuery: Query = async (store, sql, params, ttl) => {
+  const db = asDatabase(binding(DATABASES[store]))
+  if (db === null) throw new Error(`${store}: not bound`)
+  const cache = caches.default
+  const kept = new Request(`${KEY_HOST}d1/${store}/${hex(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(JSON.stringify([sql, params]))))}`)
+  const found = await cache.match(kept)
+  if (found !== undefined) return (await found.json()) as Row[]
+  const { results } = await db.prepare(sql).bind(...params).all()
+  await keep(cache, kept, results, ttl)
+  return results
+}
+
+/** The databases, but not on made-up data (`MOCK_DATA`), which is the sources' own. */
+const query = (): Query | null => (mocking() ? null : storedQuery)
+
+/** What the databases have (`stored`), or, where they have not got it or cannot answer (not bound, a table not there, not caught up), what the source has. */
+async function storedOr<T>(stored: (query: Query) => Promise<T>, source: () => Promise<T>): Promise<T> {
+  const reader = query()
+  if (reader !== null) {
+    try {
+      return await stored(reader)
+    } catch {
+      // The source, as before there were databases.
+    }
+  }
+  return source()
+}
+
 /** Each source on its own, for the owner's usernames; `null` when it is not set up, has no username, or is down: a page shows what it has. */
 /** A pause between the asks to a source that wants them spaced (MusicBrainz, ListenBrainz); none on made-up data. */
 const pause = (ms: number): Promise<void> => (mocking() ? Promise.resolve() : new Promise((done) => setTimeout(done, ms)))
 /** The music is Last.fm's; with only a ListenBrainz username, ListenBrainz's. */
-export const music = (users: Users): Promise<Listening | null> => settle(users.lastfm === null ? loadListenBrainzMusic(settingsFor(users), get, pause) : loadMusic(settingsFor(users), get))
-export const games = (users: Users) => settle(loadGames(settingsFor(users), get))
-export const game = (users: Users, appId: number) => settle(loadGame(settingsFor(users), get, appId))
+/** The listens from D1 once it is caught up with now (what plays now from Last.fm), else Last.fm's; with only a ListenBrainz username, ListenBrainz's. */
+export const music = (users: Users): Promise<Listening | null> =>
+  settle(
+    users.lastfm === null
+      ? loadListenBrainzMusic(settingsFor(users), get, pause)
+      : storedOr(
+          async (reader) => {
+            const [found, now] = await Promise.all([storedMusic(settingsFor(users), reader, Date.now()), settle(loadLastfmNow(settingsFor(users), get))])
+            return { ...found, now }
+          },
+          () => loadMusic(settingsFor(users), get),
+        ),
+  )
+export const games = (users: Users) => settle(storedOr((reader) => storedGames(settingsFor(users), reader, Date.now()), () => loadGames(settingsFor(users), get)))
+/** A game's page: the game and its time from D1, the store and the achievements from Steam; a game D1 has not got (lent from family) from Steam's lists. */
+export const game = (users: Users, appId: number) =>
+  settle(
+    storedOr(
+      async (reader) => {
+        const stored = await storedSteamGame(settingsFor(users), reader, appId, Date.now())
+        if (stored === null) throw new Error("games: not stored")
+        return loadGame(settingsFor(users), get, appId, stored)
+      },
+      () => loadGame(settingsFor(users), get, appId),
+    ),
+  )
 /** Whether the Steam user is online, and what they play now; kept for a minute. */
 export const steamPresence = (users: Users) => settle(loadSteamPresence(settingsFor(users), get))
 /** The Steam user's level, experience and badges. */
@@ -140,11 +197,21 @@ export const gameExtras = (appId: number, dlc: readonly number[] = []) => settle
 export const wishlist = (users: Users): Promise<Wishlist | null> => settle(loadWishlist(settingsFor(users), get))
 /** Whether the site has Steam's key: without it there are no Steam games. */
 export const hasSteam = (): boolean => (settings()["STEAM_API_KEY"] ?? "") !== ""
-export const retroGames = (users: Users) => settle(loadRetroGames(settingsFor(users), get))
-export const retroGame = (users: Users, gameId: number) => settle(loadRetroGame(settingsFor(users), get, gameId))
+export const retroGames = (users: Users) => settle(storedOr((reader) => storedRetroGames(settingsFor(users), reader, get), () => loadRetroGames(settingsFor(users), get)))
+export const retroGame = (users: Users, gameId: number) =>
+  settle(
+    storedOr(
+      async (reader) => {
+        const lastPlayed = await storedRetroLastPlayed(reader, gameId)
+        if (lastPlayed === null) throw new Error("games: not stored")
+        return loadRetroGame(settingsFor(users), get, gameId, lastPlayed)
+      },
+      () => loadRetroGame(settingsFor(users), get, gameId),
+    ),
+  )
 /** Whether the site has RetroAchievements' key: the old console games, beside Steam's under «Spill». */
 export const hasRetro = (): boolean => (settings()["RETROACHIEVEMENTS_API_KEY"] ?? "") !== ""
-export const watched = (users: Users): Promise<Watched | null> => settle(loadWatched(settingsFor(users), get))
+export const watched = (users: Users): Promise<Watched | null> => settle(storedOr((reader) => storedWatched(settingsFor(users), reader, get, Date.now()), () => loadWatched(settingsFor(users), get)))
 export const lastfmNow = (users: Users): Promise<NowPlaying | null> => settle(users.lastfm === null ? loadListenBrainzNow(settingsFor(users), get) : loadLastfmNow(settingsFor(users), get))
 export const artist = (users: Users, name: string) => loadArtist(settingsFor(users), get, name)
 export const artistListening = (users: Users, name: string) => settle(loadArtistListening(settingsFor(users), get, name, Date.now()))
@@ -166,6 +233,6 @@ export const albumDisc = async (users: Users, artist: string, title: string): Pr
   discOf((await settle(loadAlbumRelease(settingsFor(users), keptOnly, artist, title, { credits: false, pause: () => Promise.resolve() })))?.first ?? null)
 export const albumDays = (users: Users, artist: string, title: string) => settle(loadAlbumDays(settingsFor(users), get, artist, title, Date.now()))
 export const track = (users: Users, artist: string, title: string) => loadTrack(settingsFor(users), get, artist, title)
-export const week = (users: Users, which: Week, medium: Medium) => settle(loadWeek(settingsFor(users), get, which, Date.now(), medium))
-export const month = (users: Users, which: Month, medium: Medium) => settle(loadMonth(settingsFor(users), get, which, Date.now(), medium))
-export const trend = (users: Users, periods: readonly { id: string; start: number; end: number }[]) => settle(loadTrend(settingsFor(users), get, periods, Date.now()))
+export const week = (users: Users, which: Week, medium: Medium) => settle(loadWeek(settingsFor(users), get, which, Date.now(), medium, query()))
+export const month = (users: Users, which: Month, medium: Medium) => settle(loadMonth(settingsFor(users), get, which, Date.now(), medium, query()))
+export const trend = (users: Users, periods: readonly { id: string; start: number; end: number }[]) => settle(loadTrend(settingsFor(users), get, periods, Date.now(), query()))

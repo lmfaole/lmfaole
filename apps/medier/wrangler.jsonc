@@ -18,6 +18,13 @@
   "services": [
     { "binding": "UPSTREAM", "service": "medier-upstream" }
   ],
+  // The activity Worker's databases (`workers/activity`, the same ids), which it fills every three hours: the listens, what was watched, the games. The site only reads them
+  // (`src/lib/d1.ts`, `src/lib/stored.ts`) and never migrates them: their migrations are the activity Worker's.
+  "d1_databases": [
+    { "binding": "MUSIC", "database_name": "music", "database_id": "ca72bd29-9022-4bfc-b4cc-d7968d91fa1b" },
+    { "binding": "GAMES", "database_name": "gameplay", "database_id": "5d315e5c-61b7-465a-a7e0-d3e3ab6d44bc" },
+    { "binding": "WATCHING", "database_name": "watching", "database_id": "de856333-5317-41e0-99be-0b01e43101ec" }
+  ],
   // Not secret, so not secrets (`src/lib/settings.ts`). IMAGE_TRANSFORMS "1": the pictures go through the zone's Image Transformations (`src/lib/image-sources.ts`); only once
   // Transformations are on for lmfaole.party and the sources' hosts are allowed there (README, «Set up once»). CF_BEACON_TOKEN: the Web Analytics site's token (public, it is
   // in every page); empty, no beacon. LASTFM_USER, TRAKT_USER, LISTENBRAINZ_USER, STEAM_USER (a SteamID or custom name) and RETROACHIEVEMENTS_USER: whose data the site shows (public names);

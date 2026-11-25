@@ -73,6 +73,8 @@ export interface RetroGameDetail {
   consoleId: number
   /** The box it came in, for the head. */
   boxArt: string | null
+  /** The title screen (about 4:3), for a row, as the recent list has it. */
+  image: string | null
   developer: string | null
   publisher: string | null
   genres: string[]
@@ -118,6 +120,7 @@ export function parseRetroGame(answer: unknown): RetroGameDetail | null {
     console: text(game["ConsoleName"]) ?? "",
     consoleId: count(game["ConsoleID"]),
     boxArt: media(game["ImageBoxArt"]) ?? media(game["ImageTitle"]),
+    image: media(game["ImageTitle"]) ?? media(game["ImageIcon"]),
     developer: text(game["Developer"]),
     publisher: text(game["Publisher"]),
     genres: (text(game["Genre"]) ?? "").split(",").map((one) => one.trim()).filter((one) => one !== ""),

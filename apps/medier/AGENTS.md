@@ -7,7 +7,8 @@ deploy; `npm run settings:push` sets them). Kept small on purpose; read `README.
   `style` or stylesheet of our own, Norwegian bokmål on screen, run `designsystem-review` before calling UI work done. Motion and haptics too: brand motion only through the design system's
   signature parts (`EmptyState glyph` on an app's first, empty start, one on a page), page changes by `transitionAttributes()` on `<html>`, buzzes by `data-haptic` or the components
   (README, «Brand»); no animation, duration or vibration of our own.
-- Data: nothing is stored. A page asks its sources when it is asked for (`src/lib/sources.ts`, pure, with a test; `src/lib/runtime.ts` is the Worker's end), and the answers are kept in
+- Data: the site writes nothing. The owner's history is read (only `SELECT`, never a write or a migration) from the activity Worker's D1 databases (`MUSIC`, `WATCHING`, `GAMES`; `src/lib/stored.ts`,
+  `src/lib/d1.ts`; a missing table reads as empty, and what D1 cannot answer falls back to the source). What D1 does not have, a page asks its sources for when it is asked for (`src/lib/sources.ts`, pure, with a test; `src/lib/runtime.ts` is the Worker's end), and the answers are kept in
   the Worker's cache for as long as each source's `TTL` says. Reading an API's answer is a pure function in `src/lib/` with a test next to it (`node --test`).
 - A Worker on the lmfaole.party zone cannot reach Last.fm, Trakt, TMDB, Spotify or MusicBrainz (525): everything goes through the relay in `upstream/`, which allows only those hosts and only with the key the
   two share. A new source is: a parser and its test in `src/lib/`, a loader in `src/lib/sources.ts`, its host in `upstream/worker.ts` (and its test), its setting in `src/lib/settings.ts`, and a section.
