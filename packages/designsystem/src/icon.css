@@ -39,4 +39,20 @@
       scale: -1 1;
     }
   }
+
+  /*
+   * In a section's title (`SectionTitle`) the icon is set like a letter of it: as tall as the capitals (`1cap`, about 0.7em where the unit
+   * is missing), so it grows with the fluid heading; on the baseline; with a stroke about as heavy as semibold text; and muted, so the
+   * words lead and the icon only says what kind of section it is.
+   */
+  .ds-title-icon .ds-icon {
+    --icon-size: 0.7em;
+    stroke-width: 2.5;
+    color: var(--muted-foreground);
+  }
+  @supports (height: 1cap) {
+    .ds-title-icon .ds-icon {
+      --icon-size: 1cap;
+    }
+  }
 }
