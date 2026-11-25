@@ -9,6 +9,10 @@ export interface OwnedGame {
   name: string
   playtime_forever: number
   rtime_last_played?: number
+  playtime_windows_forever?: number
+  playtime_mac_forever?: number
+  playtime_linux_forever?: number
+  playtime_deck_forever?: number
 }
 
 export interface Unlock {
@@ -17,6 +21,21 @@ export interface Unlock {
   unlocktime: number
   name?: string
   description?: string
+}
+
+const PLATFORMS = [["playtime_windows_forever", "Windows"], ["playtime_mac_forever", "Mac"], ["playtime_linux_forever", "Linux"], ["playtime_deck_forever", "Steam Deck"]] as const
+
+/** The machine a game is played on most: «Windows», «Mac», «Linux» or «Steam Deck»; the first of those on a tie, and null where Steam counts no time on any. */
+export function mainPlatform(game: OwnedGame): string | null {
+  const minutes = (value: number | undefined) => (typeof value === "number" && value > 0 ? value : 0)
+  // Steam counts a Deck's time under Linux too: Linux is only what was not on the Deck.
+  const deck = minutes(game.playtime_deck_forever)
+  let best: string | null = null, most = 0
+  for (const [field, label] of PLATFORMS) {
+    const time = field === "playtime_linux_forever" ? minutes(game[field]) - deck : minutes(game[field])
+    if (time > most) [best, most] = [label, time]
+  }
+  return best
 }
 
 export async function ownedGames(key: string, steamId: string, fetch: Fetch): Promise<OwnedGame[]> {

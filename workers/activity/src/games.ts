@@ -3,7 +3,7 @@
 import type { Database, Statement } from "./db.ts"
 import type { Fetch } from "./listenbrainz.ts"
 import { earnedBetween, profile, recentGames, utc } from "./retroachievements.ts"
-import { achievements, ownedGames } from "./steam.ts"
+import { achievements, mainPlatform, ownedGames } from "./steam.ts"
 
 export interface GamesOptions {
   steam: { key: string; id: string }
@@ -60,7 +60,7 @@ export async function syncGames(db: Database, options: GamesOptions): Promise<{ 
       writes.push(event.bind("steam", id, at, game.playtime_forever, game.playtime_forever - (before.minutes ?? 0), 0, null))
       events++
     }
-    writes.push(upsertGame.bind("steam", id, game.name, null, game.playtime_forever, lastPlayed, null, null, options.now))
+    writes.push(upsertGame.bind("steam", id, game.name, mainPlatform(game), game.playtime_forever, lastPlayed, null, null, options.now))
   }
 
   // Games played since their achievements were last fetched, the most recently played first.

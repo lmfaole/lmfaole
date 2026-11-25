@@ -103,7 +103,7 @@ export interface OwnedGame {
   platforms: { label: string; minutes: number }[]
 }
 
-const PLATFORMS = [["playtime_windows_forever", "Windows"], ["playtime_mac_forever", "Mac"], ["playtime_linux_forever", "Linux"], ["playtime_deck_forever", "Steam Deck"]] as const
+export const PLATFORMS = [["playtime_windows_forever", "Windows"], ["playtime_mac_forever", "Mac"], ["playtime_linux_forever", "Linux"], ["playtime_deck_forever", "Steam Deck"]] as const
 
 /** A game of the owned list as its page tells it; `null` where it has no name. */
 function ownedGame(one: Record<string, unknown>): OwnedGame | null {

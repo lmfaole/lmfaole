@@ -25,6 +25,7 @@ Det jeg hører på, spiller og ser, lagret i Cloudflare D1, slik at det kan bruk
 ## Spill (D1 `gameplay`)
 
 - **`games`:** alle spill på Steam og RetroAchievements, med minutter, sist spilt og achievements.
+  - `platform`: konsollen på RetroAchievements. På Steam er det maskinen med mest tid: `Windows`, `Mac`, `Linux` eller `Steam Deck` (Deck-tiden trekkes fra Linux, og likt går til den første). Tom når Steam ikke har tid på noen maskin.
 - **`play_events`:** ingen av tjenestene lagrer økter, så de lages her.
   - Steam: når totaltiden for et spill har økt, lagres økningen. Første rad er totaltiden før sporingen begynte (`baseline`).
   - RetroAchievements: hver ny «sist spilt», med rich presence.

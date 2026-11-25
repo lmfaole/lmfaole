@@ -5,7 +5,7 @@ import { test } from "node:test"
 
 import { isMissingTable, optional, type Query, type Row, type Store } from "./d1.ts"
 import { type Env, type Get } from "./sources.ts"
-import { lastfmTrackUrl, listensCover, newArtistsIn, storedGames, storedMusic, storedRetroGames, storedSteamGame, storedWatched, watchesIn } from "./stored.ts"
+import { lastfmTrackUrl, listensCover, newArtistsIn, storedGames, storedMusic, storedRetroGames, steamMachine, storedSteamGame, storedWatched, watchesIn } from "./stored.ts"
 import { loadTrend, loadWeek } from "./week-source.ts"
 import { parseWeek, type Week } from "./weeks.ts"
 
@@ -115,21 +115,32 @@ test("a stretch's films are Trakt's, and the log's where it is there: not the on
 test("the Steam games are the stored ones, with the minutes they grew by the last two weeks (not the first count, and not before)", async () => {
   const db = database("games")
   const now = Math.floor(AFTER / 1000)
-  db.prepare("INSERT INTO games (source, game_id, name, platform, minutes, last_played, updated_at) VALUES ('steam', '620', 'Portal 2', NULL, 666, ?, 0), ('steam', '10', 'Deck game', 'Steam Deck', 30, ?, 0), ('ra', '668', 'Emerald', 'Game Boy Advance', NULL, ?, 0)").run(now - 100, now - 50, now - 10)
+  db.prepare("INSERT INTO games (source, game_id, name, platform, minutes, last_played, updated_at) VALUES ('steam', '620', 'Portal 2', NULL, 666, ?, 0), ('steam', '10', 'Deck game', 'Steam Deck', 30, ?, 0), ('steam', '70', 'Half-Life', 'Windows', 90, ?, 0), ('ra', '668', 'Emerald', 'Game Boy Advance', NULL, ?, 0)").run(now - 100, now - 50, now - 200, now - 10)
   db.prepare("INSERT INTO play_events (source, game_id, at, minutes_added, baseline) VALUES ('steam', '620', ?, 600, 1), ('steam', '620', ?, 40, 0), ('steam', '620', ?, 26, 0), ('steam', '620', ?, 99, 0)").run(now - 20 * 86400, now - 86400, now - 100, now - 15 * 86400)
   const { query } = reader({ games: db })
   const library = await storedGames(ENV, query, AFTER)
-  assert.equal(library?.owned, 2)
+  assert.equal(library?.owned, 3)
   assert.equal(library?.profile, "https://steamcommunity.com/profiles/76561198871653749/")
   assert.deepEqual(library?.entries.map((one) => [one.id, one.title, one.platform, one.totalMinutes, one.recentMinutes]), [
     [10, "Deck game", "Steam Deck", 30, 0],
     [620, "Portal 2", "PC", 666, 66],
+    [70, "Half-Life", "Windows", 90, 0],
   ])
+  assert.deepEqual((await storedSteamGame(ENV, query, 70, AFTER))?.game.platforms, [{ label: "Windows", minutes: 90 }])
   assert.deepEqual((await storedSteamGame(ENV, query, 620, AFTER))?.recentMinutes, 66)
   assert.equal(await storedSteamGame(ENV, query, 999, AFTER), null)
   // A custom name is Steam's to resolve.
   await assert.rejects(storedGames({ STEAM_USER: "name" }, query, AFTER))
   await assert.rejects(storedGames(ENV, reader({ games: database("games") }).query, AFTER), /nothing stored/)
+})
+
+test("a stored Steam machine is named as Steam's list names it, and an unknown one is none", () => {
+  assert.equal(steamMachine("Mac"), "Mac")
+  assert.equal(steamMachine("linux"), "Linux")
+  assert.equal(steamMachine("Steam Deck"), "Steam Deck")
+  assert.equal(steamMachine("Amiga"), null)
+  assert.equal(steamMachine(""), null)
+  assert.equal(steamMachine(null), null)
 })
 
 test("the retro games are the stored ones, each with its picture and time from the game's own answer", async () => {

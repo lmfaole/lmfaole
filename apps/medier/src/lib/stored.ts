@@ -7,7 +7,7 @@
 import { type ChartArtist, type Play, type TopArtist } from "./lastfm.ts"
 import { coverOf } from "./listenbrainz.ts"
 import { type Env, type GameLibrary, type Get, type Listening, setting, TTL, withPosters } from "./sources.ts"
-import { isSteamId, type OwnedGame, profileUrl } from "./steam.ts"
+import { isSteamId, type OwnedGame, PLATFORMS, profileUrl } from "./steam.ts"
 import { type GameEntry, retroEntry, steamEntry } from "./played-games.ts"
 import { parseRetroGame, retroGameUrl, retroUserPage } from "./retroachievements.ts"
 import { mergeHistory, parseHistory, type Watch, type Watched } from "./trakt.ts"
@@ -214,13 +214,19 @@ const TWO_WEEKS = 14 * 24 * 3600
 /** The owned list's time is the activity Worker's, every three hours; the fortnight's minutes are asked of the ten minutes. */
 const STEP = 600
 
+/** The machine the activity Worker stored for a Steam game (the one with the most time), named as Steam's own list is; `null` for none or one it does not know (the game shows «PC»). */
+export function steamMachine(stored: string | null): string | null {
+  const key = stored?.trim().toLowerCase()
+  return PLATFORMS.find(([, label]) => label.toLowerCase() === key)?.[1] ?? null
+}
+
 /** A stored Steam game as the owned list has it: its machine where the Worker stored one. */
 function ownedOf(row: Row): OwnedGame | null {
   const appId = Number(row["game_id"])
   const name = str(row["name"])
   if (!Number.isInteger(appId) || appId <= 0 || name === null) return null
   const minutes = num(row["minutes"]) ?? 0
-  const platform = str(row["platform"])
+  const platform = steamMachine(str(row["platform"]))
   return { appId, name, totalMinutes: minutes, lastPlayed: num(row["last_played"]), platforms: platform === null ? [] : [{ label: platform, minutes }] }
 }
 
