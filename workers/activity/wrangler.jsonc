@@ -5,16 +5,14 @@
   "compatibility_date": "2026-11-01",
   "workers_dev": true,
   "preview_urls": false,
-  "vars": { "LISTENBRAINZ_USER": "lmfaole", "LASTFM_USER": "snowpony69", "TRAKT_USER": "lmfaole", "LETTERBOXD_USER": "lmfaole", "ACCOUNT_ID": "5d49b98b68b70cbd1c81be0f18501262" },
+  "vars": { "LISTENBRAINZ_USER": "lmfaole", "LASTFM_USER": "snowpony69", "TRAKT_USER": "lmfaole", "LETTERBOXD_USER": "lmfaole" },
   "d1_databases": [
     { "binding": "MUSIC", "database_name": "music", "database_id": "ca72bd29-9022-4bfc-b4cc-d7968d91fa1b", "migrations_dir": "migrations/music" },
     { "binding": "GAMES", "database_name": "gameplay", "database_id": "5d315e5c-61b7-465a-a7e0-d3e3ab6d44bc", "migrations_dir": "migrations/gameplay" },
     { "binding": "WATCHING", "database_name": "watching", "database_id": "de856333-5317-41e0-99be-0b01e43101ec", "migrations_dir": "migrations/watching" }
   ],
-  // Raw exports, and the weekly backups under backup/.
-  "r2_buckets": [{ "binding": "ARCHIVE", "bucket_name": "listens-archive" }],
-  // No cron of its own: workers/scheduler calls `scheduled` every three hours (0 */3 * * *); Sundays at 03:00 UTC is the backup instead.
+  // No cron of its own: workers/scheduler calls `scheduled` every three hours (0 */3 * * *). The weekly backup is .github/workflows/d1-backup.yml.
   "triggers": { "crons": [] },
   "observability": { "enabled": true }
-  // Secrets: STEAM_API_KEY, STEAM_ID, RA_USER, RA_API_KEY (monorepo/secrets/games-sync.env), LASTFM_API_KEY (music-sync.env), TRAKT_CLIENT_ID (tv-sync.env), BACKUP_TOKEN (an API token with Account, D1, Edit).
+  // Secrets: STEAM_API_KEY, STEAM_ID, RA_USER, RA_API_KEY (monorepo/secrets/games-sync.env), LASTFM_API_KEY (music-sync.env), TRAKT_CLIENT_ID (tv-sync.env).
 }

@@ -1,11 +1,9 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
-import { backup, type Bucket } from "./backup.ts"
 import { parseFeed, syncLetterboxd } from "./letterboxd.ts"
 import { syncLoves } from "./loves.ts"
 import { syncTrakt, type Entry, type Rating } from "./trakt.ts"
 import { database } from "./testing.ts"
-import { isBackupRun } from "./worker.ts"
 
 const count = (sqlite: ReturnType<typeof database>["sqlite"], table: string) => (sqlite.prepare(`SELECT COUNT(*) AS n FROM ${table}`).get() as { n: number }).n
 
@@ -59,28 +57,6 @@ test("loves: the backfill finishes over runs, with new loves on top and none twi
   for (let run = 0; run < 5; run++) await syncLoves(db, options())
   assert.equal(count(sqlite, "loves"), 31)
   assert.equal((sqlite.prepare("SELECT value FROM state WHERE key = 'loves_backfill_page'").get() as { value: string }).value, "0")
-})
-
-test("backup: waits for the export, streams it to R2 and keeps the newest", async () => {
-  ;(globalThis as Record<string, unknown>)["FixedLengthStream"] ??= class extends TransformStream { constructor(_length: number) { super() } }
-  const stored = new Map<string, string>([["backup/listens/2020-01-01.sql", ""], ["backup/listens/2020-01-08.sql", ""], ["backup/listens/2020-01-15.sql", ""]])
-  const bucket: Bucket = {
-    put: async (key, value) => stored.set(key, await new Response(value).text()),
-    list: async ({ prefix }) => ({ objects: [...stored.keys()].filter((k) => k.startsWith(prefix)).map((key) => ({ key })) }),
-    delete: async (keys) => void keys.forEach((k) => stored.delete(k)),
-  }
-  let polls = 0
-  const fetch = async (input: string) => {
-    if (input === "https://dump") return new Response("CREATE TABLE x;", { headers: { "content-length": "15" } })
-    polls++
-    return Response.json({ success: true, result: polls < 3 ? { status: "active", at_bookmark: "b" } : { status: "complete", result: { signed_url: "https://dump" } } })
-  }
-  await backup({ accountId: "a", token: "t", databases: [{ name: "listens", id: "1" }], bucket, fetch, now: new Date(Date.UTC(2020, 0, 22)), keep: 2, wait: async () => {} })
-  assert.equal(polls, 3)
-  assert.deepEqual([...stored.keys()].sort(), ["backup/listens/2020-01-15.sql", "backup/listens/2020-01-22.sql"])
-  assert.equal(stored.get("backup/listens/2020-01-22.sql"), "CREATE TABLE x;")
-  assert.equal(isBackupRun(new Date(Date.UTC(2026, 10, 22, 3))), true)
-  assert.equal(isBackupRun(new Date(Date.UTC(2026, 10, 22, 6))), false)
 })
 
 const feed = (rating: string, review: string) => `<rss><channel>

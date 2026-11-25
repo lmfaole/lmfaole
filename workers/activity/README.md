@@ -51,7 +51,7 @@ Det jeg hører på, spiller og ser, lagret i Cloudflare D1, slik at det kan bruk
 
 ## Backup
 
-Søndager kl. 03:00 UTC tar D1s eget eksport-API en kopi av alle tre basene (`music`, `gameplay`, `watching`). Kopien strømmes rett til R2 under `backup/<base>/<dato>.sql`, og de 4 nyeste av hver beholdes. Dette krever secret-en `BACKUP_TOKEN`: et API-token med *Account → D1 → Edit*. Uten den hoppes backupen over. D1 Time Travel gir uansett 7 dager tilbake.
+Workeren tar ikke backup selv. `.github/workflows/d1-backup.yml` eksporterer alle D1-basene repoet eier (`music`, `gameplay`, `watching`, `library`, `site`) søndager kl. 04:30 UTC med repoets ene API-token, og legger dem gzippet i R2 under `backup/<base>/<dato>.sql.gz`. De 4 nyeste av hver beholdes. D1 Time Travel gir uansett 7 dager tilbake.
 
 ## Gratiskvoter
 
@@ -103,6 +103,5 @@ Secrets:
 - `STEAM_API_KEY`, `STEAM_ID`, `RA_USER`, `RA_API_KEY` (fra `games-sync.env`)
 - `LASTFM_API_KEY` (fra `music-sync.env`)
 - `TRAKT_CLIENT_ID` (fra `tv-sync.env`)
-- `BACKUP_TOKEN`
 
 Alle env-filene ligger i `monorepo/secrets/`.

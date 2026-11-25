@@ -1,7 +1,6 @@
-/** The Worker. Every three hours (workers/scheduler calls `scheduled`) it copies, each into its D1 database: new listens from ListenBrainz and loves from Last.fm, what was played on Steam and RetroAchievements, what was watched and rated on Trakt, and the Letterboxd diary. Sundays at 03:00 UTC it backs the databases up to R2 instead. It also answers the read-only API. */
+/** The Worker. Every three hours (workers/scheduler calls `scheduled`) it copies, each into its D1 database: new listens from ListenBrainz and loves from Last.fm, what was played on Steam and RetroAchievements, what was watched and rated on Trakt, and the Letterboxd diary. It also answers the read-only API. */
 
 import { handle } from "./api.ts"
-import { backup, type Bucket } from "./backup.ts"
 import type { Database } from "./db.ts"
 import { syncGames } from "./games.ts"
 import { syncLetterboxd } from "./letterboxd.ts"
@@ -13,8 +12,6 @@ interface Env {
   MUSIC: Database
   GAMES: Database
   WATCHING: Database
-  ARCHIVE: Bucket
-  ACCOUNT_ID: string
   LISTENBRAINZ_USER: string
   LASTFM_USER: string
   TRAKT_USER: string
@@ -25,23 +22,11 @@ interface Env {
   STEAM_ID: string
   RA_USER: string
   RA_API_KEY: string
-  /** An API token allowed to export D1 (Account, D1, Edit). Without it there is no backup. */
-  BACKUP_TOKEN?: string
-  /** `wrangler dev --test-scheduled --var FORCE_BACKUP:1` runs the backup now, to try it. */
-  FORCE_BACKUP?: string
 }
 
 interface Context {
   waitUntil(promise: Promise<unknown>): void
 }
-
-const DATABASES = [
-  { name: "music", id: "ca72bd29-9022-4bfc-b4cc-d7968d91fa1b" },
-  { name: "gameplay", id: "5d315e5c-61b7-465a-a7e0-d3e3ab6d44bc" },
-  { name: "watching", id: "de856333-5317-41e0-99be-0b01e43101ec" },
-]
-
-export const isBackupRun = (at: Date): boolean => at.getUTCDay() === 0 && at.getUTCHours() === 3
 
 async function settle(jobs: Promise<unknown>[]): Promise<void> {
   const failed = (await Promise.allSettled(jobs)).filter((result) => result.status === "rejected")
@@ -54,10 +39,6 @@ export default {
     // fetch is wrapped: called as options.fetch, workerd throws «Illegal invocation».
     const fetcher = (input: string, init?: RequestInit) => fetch(input, init)
     const at = new Date(controller.scheduledTime)
-    if (isBackupRun(at) || env.FORCE_BACKUP === "1") {
-      if (env.BACKUP_TOKEN === undefined) return console.log("backup: no BACKUP_TOKEN")
-      return void (await backup({ accountId: env.ACCOUNT_ID, token: env.BACKUP_TOKEN, databases: DATABASES, bucket: env.ARCHIVE, fetch: fetcher, now: at, keep: 4, log: console.log }))
-    }
     const now = Math.floor(at.getTime() / 1000)
     // The free plan allows 50 subrequests a run, a D1 batch counting as one. At most: music 2 fetches + 5 queries, loves 4 + 3,
     // games 3 + 8 Steam achievement lists + 3, Trakt 3 history + 1 ratings + 2, Letterboxd 1 + 1. That is 36.
