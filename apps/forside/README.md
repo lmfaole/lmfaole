@@ -7,10 +7,11 @@ det siste året, [`/ordliste`](https://lmfaole.party/ordliste), navnene som går
 - Astro på Cloudflare Workers, Workeren `forside` på ruten `lmfaole.party/*` (`wrangler.jsonc`). De andre appene har mer spesifikke ruter på samme
   domene (`/medier*`, `/cv`, `/cv/*`, `/start`, `/design/`), og de vinner.
 - `/kilder` bygges på forhånd. `/` og `/ordliste` lages når de blir spurt etter, fordi de leses fra D1 (se Data), og legges i Workerens cache
-  (`caches.default`) i fem minutter (`src/lib/page-cache.ts`, `src/middleware.ts`). Svaret sier `s-maxage=300`. Workeren svarer også på gamle adresser
+  (`caches.default`) i fem minutter (`src/middleware.ts`, med `pageCache` fra `@lmfaole/web/middleware`). Svaret sier `s-maxage=300`. Workeren svarer også på gamle adresser
   (`src/lib/moved-paths.ts`, 301 til `/medier/…`) og 404.
 - Ingen informasjonskapsler og ingen service worker, så siden rører aldri de andre appenes.
-- Sikkerhetshodene står i `src/lib/headers.ts` (Workerens svar) og `public/_headers` (de bygde filene). En test passer på at de er like.
+- Sikkerhetshodene står i `@lmfaole/web/headers` (Workerens svar) og `public/_headers` (de bygde filene). En test (`src/headers.test.ts`) passer på at de er like.
+- Astro-oppsettet, middlewarens sidecache, D1-lesingen, dokumentet, 404-siden, stilarket og tsconfig er felles for Astro-appene, i `packages/web` (`@lmfaole/web`).
 - `/kilder` leser `src/lib/sources.ts`. Tidene er cron-uttrykkene i `workers/scheduler/src/jobs.ts`, som er i UTC, og vises i norsk tid.
 
 ## Data

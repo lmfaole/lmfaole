@@ -1,12 +1,13 @@
 /**
- * The CV from the D1 database `site` (`d1.ts`), in the same shape as the snapshot `src/data/cv.json` (`cv.ts`), read by named columns, so a column added to a
+ * The CV from the D1 database `site` (read through `@lmfaole/web/d1`), in the same shape as the snapshot `src/data/cv.json` (`cv.ts`), read by named columns, so a column added to a
  * table is not published until it is listed here (the person's source and the day it was fetched never are). As the old monorepo's `/api/cv.json` did:
  * education after primary school only (the grunnskole rows say where the owner grew up), each project inside the role it was done in, and the employers
  * ordered by their newest role. Pure but for the database that is passed in.
  */
 
+import { type Database, num, readAll, type Row, str } from '@lmfaole/web/d1'
+
 import type { Cv, Education, Employer, Person, Project, Role } from './cv.ts'
-import { type Database, num, readAll, type Row, str } from './d1.ts'
 
 export const SQL = {
   person: 'SELECT navn, tittel, arbeidsgiver, sted FROM cv_person ORDER BY id LIMIT 1',

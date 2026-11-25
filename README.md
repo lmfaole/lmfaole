@@ -6,6 +6,7 @@ originals, backups) and KV (small state), never on a machine at home.
 | Path | What | Address |
 | --- | --- | --- |
 | `packages/designsystem` | The design system: theme, building blocks, components (React 19, Tailwind 4, shipped as source) and Storybook | lmfaole.party/design |
+| `packages/web` | What every Astro app shares (`@lmfaole/web`): Astro config, security headers, edge page cache, D1 reading, document, 404, tsconfig | – |
 | `apps/cv` | The CV, from a checked-in snapshot (Astro on Workers, the Worker `work`) | lmfaole.party/cv |
 | `apps/forside` | The front page and `/kilder` (Astro on Workers) | lmfaole.party |
 | `apps/medier` | What I listen to and watch (Astro on Workers) | lmfaole.party/medier |
@@ -28,15 +29,18 @@ npm run typecheck && npm test        # every workspace that has them
 npm run hooks                        # once per clone: the design system's visual test before a push
 npm run build -w apps/medier         # one workspace: -w <path>
 npm run cf:audit                     # every Cloudflare resource has a wrangler.jsonc here, or is in scripts/cf-audit.allow.json (--json)
+npm run new-app -- <name> --description "…"   # a new Astro app at lmfaole.party/<name>, with its Worker, workflow and row above
 npm run rollout -- --list            # the rollout (D1, import, R2, catalog, scheduler) step by step, skipping what is done (--dry-run, --from, --only, --yes)
 ```
 
 The apps use the design system as a workspace (`"@lmfaole/designsystem": "*"`), so a change to it is checked against the apps in the
-same commit. Each app and worker keeps its own `package.json`, `wrangler.jsonc` and README.
+same commit. The Astro apps share their setup through `packages/web` (`"@lmfaole/web": "*"`) the same way; `npm run new-app` makes one
+from it. Each app and worker keeps its own `package.json`, `wrangler.jsonc` and README.
 
 ## CI
 
-One workflow per app in `.github/workflows/`, run only when its path (or the design system, or the lockfile) changes. A push to `main`
-deploys the app when the repository has `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`; the workers are only checked and deployed
+One workflow per app in `.github/workflows/`, run only when its path (or the design system, or the lockfile) changes. The Astro apps' are
+callers of `astro-app.yml` (test, typecheck, skills, build, deploy), and run on a change to `packages/web` too (not yet `medier.yml`);
+`web.yml` checks the package itself. A push to `main` deploys the app when the repository has `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`; the workers are only checked and deployed
 by hand (`npx wrangler deploy` in each). `cf-audit.yml` runs `npm run cf:audit` every Monday (and on demand) with the API token, which
 also reads DNS, Access and AI Gateway; a failing run is GitHub's e-mail to the owner.

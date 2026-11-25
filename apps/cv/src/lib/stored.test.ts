@@ -1,27 +1,19 @@
 import assert from 'node:assert/strict'
-import { readdirSync, readFileSync } from 'node:fs'
-import { DatabaseSync } from 'node:sqlite'
+import { readFileSync } from 'node:fs'
+import type { DatabaseSync } from 'node:sqlite'
 import { test } from 'node:test'
 
+import { isMissingTable } from '@lmfaole/web/d1'
+import { migratedSqlite, sqliteD1 as d1 } from '@lmfaole/web/testing'
+
 import type { Cv } from './cv.ts'
-import { type Database, isMissingTable, type Row } from './d1.ts'
 import { storedCv } from './stored.ts'
 
 /** The database's own migrations, so the queries are tried against the tables as they are. */
 const MIGRATIONS = new URL('../../../../packages/db/site/migrations/', import.meta.url)
 const SNAPSHOT = JSON.parse(readFileSync(new URL('../data/cv.json', import.meta.url), 'utf8')) as Cv
 
-function sqlite(migrated = true): DatabaseSync {
-  const db = new DatabaseSync(':memory:')
-  if (migrated) for (const file of readdirSync(MIGRATIONS).sort()) if (file.endsWith('.sql')) db.exec(readFileSync(new URL(file, MIGRATIONS), 'utf8'))
-  return db
-}
-
-/** D1's binding over an in-memory SQLite. */
-function d1(db: DatabaseSync): Database {
-  const prepare = (sql: string) => ({ all: async () => ({ results: db.prepare(sql).all() as Row[] }) })
-  return { prepare, batch: (statements) => Promise.all(statements.map((statement) => statement.all())) }
-}
+const sqlite = (migrated = true): DatabaseSync => migratedSqlite(MIGRATIONS, migrated)
 
 const insert = (db: DatabaseSync, table: string, row: Record<string, string | number | null>): void => {
   const columns = Object.keys(row)

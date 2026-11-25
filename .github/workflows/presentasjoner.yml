@@ -2,12 +2,12 @@ name: presentasjoner
 
 # Every push that touches the app is tested (the node tests and `scripts/check.py`, which checks each talk's README.md and presentasjon.json),
 # type-checked and built; a push to the default branch, or a manual run, is also deployed to Cloudflare Workers (the Worker `presentasjoner`,
-# lmfaole.party/presentasjoner and lmfaole.party/presentasjoner/*). The PDFs in R2 are put there by hand (`scripts/export_pdf.sh`).
+# lmfaole.party/presentasjoner and lmfaole.party/presentasjoner/*). The PDFs in R2 are put there by hand (`scripts/export_pdf.sh`). The steps are `astro-app.yml`'s.
 on:
   push:
-    paths: [apps/presentasjoner/**, packages/designsystem/**, package-lock.json, .github/workflows/presentasjoner.yml]
+    paths: [apps/presentasjoner/**, packages/designsystem/**, packages/web/**, package-lock.json, .github/workflows/presentasjoner.yml, .github/workflows/astro-app.yml]
   pull_request:
-    paths: [apps/presentasjoner/**, packages/designsystem/**, package-lock.json, .github/workflows/presentasjoner.yml]
+    paths: [apps/presentasjoner/**, packages/designsystem/**, packages/web/**, package-lock.json, .github/workflows/presentasjoner.yml, .github/workflows/astro-app.yml]
   workflow_dispatch:
 
 concurrency:
@@ -17,35 +17,9 @@ concurrency:
 permissions:
   contents: read
 
-defaults:
-  run:
-    working-directory: apps/presentasjoner
-
 jobs:
   build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
-          cache: npm
-      - run: npm ci
-        working-directory: .
-      - run: npm test
-      - run: npm run typecheck
-      - run: npm run skills:check
-      - run: npm run build
-
-      - name: Deploy
-        if: github.event_name != 'pull_request' && github.ref_name == github.event.repository.default_branch
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo "::notice::CLOUDFLARE_API_TOKEN is not set as a repository secret, so this run only builds."
-            exit 0
-          fi
-          npx wrangler deploy
+    uses: ./.github/workflows/astro-app.yml
+    with:
+      app: apps/presentasjoner
+    secrets: inherit

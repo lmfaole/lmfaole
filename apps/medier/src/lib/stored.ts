@@ -11,7 +11,8 @@ import { isSteamId, type OwnedGame, PLATFORMS, profileUrl } from "./steam.ts"
 import { type GameEntry, retroEntry, steamEntry } from "./played-games.ts"
 import { parseRetroGame, retroGameUrl, retroUserPage } from "./retroachievements.ts"
 import { mergeHistory, parseHistory, type Watch, type Watched } from "./trakt.ts"
-import { floorTo, num, optional, type Query, type Row, str } from "./d1.ts"
+import { num, optional, type Row, str } from "@lmfaole/web/d1"
+import { floorTo, type Query } from "./d1.ts"
 
 /** A stretch of time, in unix seconds; `end` is not part of it. */
 export interface Span {

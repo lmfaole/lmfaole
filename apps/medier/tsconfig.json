@@ -1,11 +1,4 @@
 {
-  "extends": "astro/tsconfigs/strictest",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "types": ["node"]
-  },
-  "include": ["src", "scripts", "upstream", "astro.config.ts", ".astro/types.d.ts"],
-  "exclude": ["dist"]
+  "extends": "@lmfaole/web/tsconfig.app.json",
+  "include": ["src", "scripts", "upstream", "astro.config.ts", ".astro/types.d.ts"]
 }

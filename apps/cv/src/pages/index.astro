@@ -1,7 +1,8 @@
 ---
 // `/cv/`: the CV, with the projects under the roles they were done in, from D1 (`site`) or, while it has none, the snapshot `src/data/cv.json`
-// (`lib/runtime`). Drawn when asked and kept at the edge for a few minutes (`lib/page-cache`). It sends no script.
-import Document from '../layouts/Document.astro'
+// (`lib/runtime`). Drawn when asked and kept at the edge for a few minutes (`src/middleware.ts`). It sends no script.
+import Document from '@lmfaole/web/Document.astro'
+
 import { currentCv } from '../lib/runtime'
 import { Work } from '../views/Work'
 
@@ -10,6 +11,6 @@ const DESCRIPTION = 'Hva jeg jobber med: CV-en min og prosjektene jeg har jobbet
 const cv = await currentCv()
 ---
 
-<Document title={TITLE} description={DESCRIPTION} url={new URL(import.meta.env.BASE_URL, Astro.site).href} width="pane">
+<Document title={TITLE} description={DESCRIPTION} url={new URL(import.meta.env.BASE_URL, Astro.site).href} width="pane" image={{ file: 'og-image.jpg', width: 460, height: 460 }}>
   <Work cv={cv} />
 </Document>

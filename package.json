@@ -16,7 +16,8 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "hooks": "git config core.hooksPath .githooks",
     "cf:audit": "node scripts/cf-audit.ts",
-    "rollout": "node scripts/rollout.ts"
+    "rollout": "node scripts/rollout.ts",
+    "new-app": "node scripts/new-app.ts"
   },
   "overrides": {
     "@opennextjs/cloudflare": {

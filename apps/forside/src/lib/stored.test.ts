@@ -1,29 +1,17 @@
 import assert from 'node:assert/strict'
-import { readdirSync, readFileSync } from 'node:fs'
-import { DatabaseSync, type SQLInputValue } from 'node:sqlite'
+import type { DatabaseSync } from 'node:sqlite'
 import { test } from 'node:test'
 
-import { type Database, isMissingTable, type Row, type Statement } from './d1.ts'
+import { isMissingTable } from '@lmfaole/web/d1'
+import { migratedSqlite, sqliteD1 as d1 } from '@lmfaole/web/testing'
+
 import { OWNER } from './profile.ts'
 import { OWN_FRONT_PAGE, storedFrontPage, storedGlossary } from './stored.ts'
 
 /** The database's own migrations, so the queries are tried against the tables as they are. */
 const MIGRATIONS = new URL('../../../../packages/db/site/migrations/', import.meta.url)
 
-function sqlite(migrated = true): DatabaseSync {
-  const db = new DatabaseSync(':memory:')
-  if (migrated) for (const file of readdirSync(MIGRATIONS).sort()) if (file.endsWith('.sql')) db.exec(readFileSync(new URL(file, MIGRATIONS), 'utf8'))
-  return db
-}
-
-/** D1's binding over an in-memory SQLite. */
-function d1(db: DatabaseSync): Database {
-  const statement = (sql: string, params: SQLInputValue[] = []): Statement => ({
-    bind: (...values) => statement(sql, values),
-    all: async () => ({ results: db.prepare(sql).all(...params) as Row[] }),
-  })
-  return { prepare: (sql) => statement(sql), batch: (statements) => Promise.all(statements.map((s) => s.all())) }
-}
+const sqlite = (migrated = true): DatabaseSync => migratedSqlite(MIGRATIONS, migrated)
 
 const NOW = new Date('2026-11-25T12:00:00Z')
 const at = (iso: string): number => Date.parse(iso) / 1000

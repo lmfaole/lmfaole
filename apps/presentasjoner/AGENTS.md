@@ -12,7 +12,9 @@ The talks at <https://lmfaole.party/presentasjoner/>, Astro on Cloudflare Worker
   `presentasjon.schema.json`. The .pptx and the employer's template never go in the repo: it is public.
 - The PDF is in the R2 bucket `presentasjoner` (binding `PDF`, read only) at `<slug>/<pptx name>.pdf`, put there by `scripts/export_pdf.sh`; the endpoint
   serves only keys of talks in `content/` (`pdfKey`).
-- Security headers: `src/lib/headers.ts` and `public/_headers` say the same (`node --test` checks it).
+- Security headers: `@lmfaole/web/headers` (the Worker's answers, `src/middleware.ts`) and `public/_headers` (the built files) say the same (`src/headers.test.ts` checks it).
+- The Astro config, the middleware's page cache, D1 reading, the document, the 404 page, the stylesheet and the tsconfig are `packages/web` (`@lmfaole/web`),
+  shared by every Astro app: a change there is made there, not here (its `AGENTS.md`).
 - Check before saying done: `npm test` (node tests and `check.py`), `npm run typecheck`, `npm run build`, and `npm run preview` to see the Worker as it runs.
 
 ## Git: work on main

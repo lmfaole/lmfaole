@@ -1,0 +1,38 @@
+name: web
+
+# What every Astro app shares (`packages/web`, `@lmfaole/web`): tested and type-checked on every push that touches it, or what of an app its tests hold to
+# the conventions (`apps.test.ts`: each app's wrangler.jsonc, astro.config.ts, tsconfig.json and versions), and `npm run new-app`, which makes an app
+# from it. The apps that use it are built by their own workflows.
+on:
+  push:
+    paths: [packages/web/**, scripts/new-app.ts, scripts/new-app.test.ts, apps/*/wrangler.jsonc, apps/*/astro.config.ts, apps/*/tsconfig.json, apps/*/package.json, package-lock.json, .github/workflows/web.yml]
+  pull_request:
+    paths: [packages/web/**, scripts/new-app.ts, scripts/new-app.test.ts, apps/*/wrangler.jsonc, apps/*/astro.config.ts, apps/*/tsconfig.json, apps/*/package.json, package-lock.json, .github/workflows/web.yml]
+
+concurrency:
+  group: web-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: packages/web
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+        working-directory: .
+      - run: npm run typecheck
+      - run: npm test
+      - run: node --test scripts/new-app.test.ts
+        working-directory: .

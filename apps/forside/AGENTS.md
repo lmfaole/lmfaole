@@ -10,7 +10,9 @@ The front page of <https://lmfaole.party/> (`/`, `/ordliste` and `/kilder`), Ast
   `site` (binding `SITE`), read only (`SELECT`, never a migration or a write) in `src/lib/stored.ts`, mapped by pure functions with a `node:sqlite` test against
   the real migration. Where D1 has none, or fails, the name and role are `src/lib/profile.ts`'s (`src/lib/runtime.ts`), the GitHub section and the link to
   `/ordliste` are not drawn, and `/ordliste` is a 404.
-- Security headers: `src/lib/headers.ts` and `public/_headers` say the same (`node --test` checks it).
+- Security headers: `@lmfaole/web/headers` (the Worker's answers, `src/middleware.ts`) and `public/_headers` (the built files) say the same (`src/headers.test.ts` checks it).
+- The Astro config, the middleware's page cache, D1 reading, the document, the 404 page, the stylesheet and the tsconfig are `packages/web` (`@lmfaole/web`),
+  shared by every Astro app: a change there is made there, not here (its `AGENTS.md`).
 - Check before saying done: `npm test`, `npm run typecheck`, `npm run build`, and `npm run preview` to see the Worker as it runs.
 
 ## Git: work on main

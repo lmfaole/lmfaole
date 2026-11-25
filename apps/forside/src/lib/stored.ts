@@ -1,11 +1,12 @@
 /**
- * What the pages read from the D1 database `site` (`d1.ts`). The front page: who it is about, the name (`cv_person`) and the role, the title of the newest
+ * What the pages read from the D1 database `site` (through `@lmfaole/web/d1`). The front page: who it is about, the name (`cv_person`) and the role, the title of the newest
  * position that goes on and its employer, «Senior frontend-utvikler hos Fremtind»; what the owner did on GitHub lately (`github_days`, `github_items`, which
  * `workers/catalog` keeps); and whether there is a glossary to link to. `/ordliste`: the glossary (`glossary_term`, from `scripts/import-dump.ts`). What the
  * database does not have yet is the page's own words (`profile.ts`), or nothing. Pure but for the database.
  */
 
-import { type Database, num, readAll, type Row, str } from './d1.ts'
+import { type Database, num, readAll, type Row, str } from '@lmfaole/web/d1'
+
 import { OWNER, type Owner } from './profile.ts'
 
 /** How many of the latest merged pull requests the front page lists. */

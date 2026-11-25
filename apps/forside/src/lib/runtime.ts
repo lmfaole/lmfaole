@@ -6,20 +6,11 @@
 
 import { env } from 'cloudflare:workers'
 
-import { asDatabase, type Database, isMissingTable } from './d1'
+import { type Database, readOr } from '@lmfaole/web/d1'
+
 import { type FrontPage, type GlossaryTerm, OWN_FRONT_PAGE, storedFrontPage, storedGlossary } from './stored'
 
-async function read<T>(what: string, ask: (db: Database) => Promise<T>, fallback: T): Promise<T> {
-  const db = asDatabase(env['SITE'])
-  if (db === null) return fallback
-  try {
-    return await ask(db)
-  } catch (error) {
-    // A table that is not there yet is the same as no rows; anything else is worth seeing in the Worker's logs.
-    if (!isMissingTable(error)) console.error(`site: ${what} could not be read from D1`, error)
-    return fallback
-  }
-}
+const read = <T>(what: string, ask: (db: Database) => Promise<T>, fallback: T): Promise<T> => readOr(env['SITE'], `site: ${what}`, ask, fallback)
 
 export const currentFrontPage = (now: Date): Promise<FrontPage> => read('the front page', (db) => storedFrontPage(db, now), OWN_FRONT_PAGE)
 

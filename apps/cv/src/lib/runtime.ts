@@ -5,21 +5,10 @@
 
 import { env } from 'cloudflare:workers'
 
+import { readOr } from '@lmfaole/web/d1'
+
 import snapshot from '../data/cv.json'
 import type { Cv } from './cv'
-import { asDatabase, isMissingTable } from './d1'
 import { storedCv } from './stored'
 
-export async function currentCv(): Promise<Cv> {
-  const db = asDatabase(env['SITE'])
-  if (db !== null) {
-    try {
-      const stored = await storedCv(db)
-      if (stored !== null) return stored
-    } catch (error) {
-      // A table that is not there yet is the same as no CV; anything else is worth seeing in the Worker's logs.
-      if (!isMissingTable(error)) console.error('site: the CV could not be read from D1', error)
-    }
-  }
-  return snapshot
-}
+export const currentCv = async (): Promise<Cv> => (await readOr(env['SITE'], 'site: the CV', storedCv, null)) ?? snapshot

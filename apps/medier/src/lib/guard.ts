@@ -1,7 +1,9 @@
 /**
  * What keeps strangers from spending the site's keys (`src/middleware.ts`): Workers' rate limits (`ratelimits` in `wrangler.jsonc`), by the visitor's address, and the security headers every
- * answer of the Worker has. Without the bindings (`astro dev`, the tests) nothing is limited. Pure, with a test.
+ * answer of the Worker has (this site's rules, given to `@lmfaole/web/headers`' `secure`). Without the bindings (`astro dev`, the tests) nothing is limited. Pure, with a test.
  */
+
+import { secure as secureWith } from "@lmfaole/web/headers"
 
 /** A rate-limiting binding of Workers, as far as it is used here. */
 export interface RateLimit {
@@ -48,6 +50,4 @@ export const securityHeaders = (analytics: ScriptOrigins): Readonly<Record<strin
 })
 
 /** The security headers, where the answer has none of its own. */
-export function secure(headers: Headers, analytics: ScriptOrigins): void {
-  for (const [name, value] of Object.entries(securityHeaders(analytics))) if (!headers.has(name)) headers.set(name, value)
-}
+export const secure = (headers: Headers, analytics: ScriptOrigins): void => secureWith(headers, securityHeaders(analytics))

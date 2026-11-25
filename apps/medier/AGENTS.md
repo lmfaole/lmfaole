@@ -9,7 +9,8 @@ deploy; `npm run settings:push` sets them). Kept small on purpose; read `README.
   (README, «Brand»); no animation, duration or vibration of our own.
 - Data: the site writes nothing. The owner's history is read (only `SELECT`, never a write or a migration) from the activity Worker's D1 databases (`MUSIC`, `WATCHING`, `GAMES`; `src/lib/stored.ts`,
   `src/lib/d1.ts`; a missing table reads as empty, and what D1 cannot answer falls back to the source). What D1 does not have, a page asks its sources for when it is asked for (`src/lib/sources.ts`, pure, with a test; `src/lib/runtime.ts` is the Worker's end), and the answers are kept in
-  the Worker's cache for as long as each source's `TTL` says. Reading an API's answer is a pure function in `src/lib/` with a test next to it (`node --test`).
+  the Worker's cache for as long as each source's `TTL` says. What it shares with the other Astro apps (the Astro config, the page cache's middleware, D1 reading,
+  `secure`, the stylesheet, the tsconfig) is `packages/web` (`@lmfaole/web`); what is medier's own (which pages are kept, the CSP with analytics, `floorTo`) stays in `src/lib/`. Reading an API's answer is a pure function in `src/lib/` with a test next to it (`node --test`).
 - A Worker on the lmfaole.party zone cannot reach Last.fm, Trakt, TMDB, Spotify or MusicBrainz (525): everything goes through the relay in `upstream/`, which allows only those hosts and only with the key the
   two share. A new source is: a parser and its test in `src/lib/`, a loader in `src/lib/sources.ts`, its host in `upstream/worker.ts` (and its test), its setting in `src/lib/settings.ts`, and a section.
 - The site is <https://lmfaole.party/medier/>: Astro's `base` `/medier` and the zone route `lmfaole.party/medier*` (`wrangler.jsonc`), on an origin shared with other apps (`/`, `/start`, `/cv`, `/design/`). Nothing of the site leaves

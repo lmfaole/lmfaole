@@ -6,10 +6,11 @@ og lenker. Den samme CV-en som data ligger på [`/cv/api/cv.json`](https://lmfao
 - Astro på Cloudflare Workers. Workeren heter fortsatt `work` (navnet fra den gamle monorepoen), slik at en deploy erstatter den og beholder rutene
   `lmfaole.party/cv` og `lmfaole.party/cv/*` (`wrangler.jsonc`). Ingen custom domain: `jobb.lmfaole.party` er borte og skal ikke tilbake.
 - Alt under Astros `base` `/cv`. `forside` eier `lmfaole.party/*`, men rutene her er mer spesifikke og vinner. `/cv` sendes videre til `/cv/`.
-- Siden og JSON-en lages når de blir spurt etter, fra D1 (se Data), og legges i Workerens cache (`caches.default`) i fem minutter (`src/lib/page-cache.ts`,
-  `src/middleware.ts`). Svaret sier `s-maxage=300`. Workeren svarer også på resten (404).
+- Siden og JSON-en lages når de blir spurt etter, fra D1 (se Data), og legges i Workerens cache (`caches.default`) i fem minutter (`src/middleware.ts`,
+  med `pageCache` fra `@lmfaole/web/middleware`). Svaret sier `s-maxage=300`. Workeren svarer også på resten (404).
 - Ingen informasjonskapsler og ingen service worker.
-- Sikkerhetshodene står i `src/lib/headers.ts` (Workerens svar) og `public/_headers` (de bygde filene). En test passer på at de er like.
+- Sikkerhetshodene står i `@lmfaole/web/headers` (Workerens svar) og `public/_headers` (de bygde filene). En test (`src/headers.test.ts`) passer på at de er like.
+- Astro-oppsettet, middlewarens sidecache, D1-lesingen, dokumentet, 404-siden, stilarket og tsconfig er felles for Astro-appene, i `packages/web` (`@lmfaole/web`).
 
 ## Data
 

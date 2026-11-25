@@ -5,9 +5,9 @@ name: medier
 # secrets of the Worker (`npm run settings:push`); the Cloudflare secrets, STEAM_API_KEY, SETLISTFM_API_KEY and RETROACHIEVEMENTS_API_KEY are this repository's (the last three are uploaded with the deploy).
 on:
   push:
-    paths: [apps/medier/**, packages/designsystem/**, package-lock.json, .github/workflows/medier.yml]
+    paths: [apps/medier/**, packages/designsystem/**, packages/web/**, package-lock.json, .github/workflows/medier.yml]
   pull_request:
-    paths: [apps/medier/**, packages/designsystem/**, package-lock.json, .github/workflows/medier.yml]
+    paths: [apps/medier/**, packages/designsystem/**, packages/web/**, package-lock.json, .github/workflows/medier.yml]
   workflow_dispatch:
 
 concurrency:

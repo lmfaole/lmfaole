@@ -1,10 +1,6 @@
 ---
 // An address under `/presentasjoner/` that no page owns (and a PDF that is not in the bucket), back to the list of talks.
-import { NotFoundPage } from '@lmfaole/designsystem/components/not-found-page'
-
-import Document from '../layouts/Document.astro'
+import NotFound from '@lmfaole/web/NotFound.astro'
 ---
 
-<Document title="Siden finnes ikke – Presentasjoner">
-  <NotFoundPage home={import.meta.env.BASE_URL} />
-</Document>
+<NotFound app="Presentasjoner" />

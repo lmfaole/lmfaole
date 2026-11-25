@@ -11,7 +11,8 @@ Alle lages i PowerPoint (`.pptx`).
   `/presentasjoner/<mappe>/<navnet på .pptx>.pdf` (`src/pages/[slug]/[file].pdf.ts`). Bare presentasjoner som finnes i `content/` kan hentes. Det
   som mangler i bøtta, får 404-siden.
 - Ingen informasjonskapsler og ingen service worker.
-- Sikkerhetshodene står i `src/lib/headers.ts` (Workerens svar) og `public/_headers` (de bygde filene). En test passer på at de er like.
+- Sikkerhetshodene står i `@lmfaole/web/headers` (Workerens svar) og `public/_headers` (de bygde filene). En test (`src/headers.test.ts`) passer på at de er like.
+- Astro-oppsettet, middlewarens sidecache, D1-lesingen, dokumentet, 404-siden, stilarket og tsconfig er felles for Astro-appene, i `packages/web` (`@lmfaole/web`).
 
 ## Struktur
 
