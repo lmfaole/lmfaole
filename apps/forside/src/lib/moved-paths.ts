@@ -17,3 +17,9 @@ export function movedTo(pathname: string): string | null {
   for (const [from, to] of MOVED) if (pathname === from || pathname === `${from}/` || pathname.startsWith(`${from}/`)) return to
   return null
 }
+
+/** The site's one host: `www.lmfaole.party` (routed to this Worker too) goes to the same address there. */
+export function canonicalUrl(url: URL): string | null {
+  if (url.hostname !== 'www.lmfaole.party') return null
+  return `https://lmfaole.party${url.pathname}${url.search}`
+}

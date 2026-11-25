@@ -8,7 +8,8 @@
   "preview_urls": false,
   "observability": { "enabled": true },
   // The whole origin, except what a more specific route takes: `/medier*`, `/cv`, `/cv/*`, `/start` and `/design/` are other Workers'.
-  "routes": [{ "pattern": "lmfaole.party/*", "zone_name": "lmfaole.party" }],
+  // www.lmfaole.party/* only to send it on to lmfaole.party (src/middleware.ts); its DNS record is an old one, proxied.
+  "routes": [{ "pattern": "lmfaole.party/*", "zone_name": "lmfaole.party" }, { "pattern": "www.lmfaole.party/*", "zone_name": "lmfaole.party" }],
   // The D1 database `site` (the same id as `packages/db/wrangler.jsonc`), which `scripts/import-dump.ts` fills with the CV: the front page's name and role are read
   // from it (`src/lib/stored.ts`). The site only reads it and never migrates it: `migrations_dir` is there for a local database
   // (`npx wrangler d1 migrations apply site --local`). While it has no CV, the page says what `src/lib/profile.ts` says.

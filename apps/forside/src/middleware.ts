@@ -2,7 +2,7 @@ import type { APIContext, MiddlewareNext } from 'astro'
 import { defineMiddleware } from 'astro:middleware'
 
 import { secure } from './lib/headers'
-import { movedTo } from './lib/moved-paths'
+import { canonicalUrl, movedTo } from './lib/moved-paths'
 import { cacheableRequest, cacheableResponse, KEPT_CACHE_CONTROL, PAGE_CACHE_CONTROL } from './lib/page-cache'
 
 /** The headers of an answer, where they can be changed in place (the answer the page made), or of a copy (one from the cache, whose headers are fixed). */
@@ -45,6 +45,8 @@ async function answer(context: APIContext, next: MiddlewareNext): Promise<Respon
 
 /** What the Worker answers itself (the pages drawn from D1, an old address, the 404) gets the security headers; a built page has them from `public/_headers`. */
 export const onRequest = defineMiddleware(async (context, next) => {
+  const canonical = canonicalUrl(context.url)
+  if (canonical !== null) return new Response(null, { status: 301, headers: { Location: canonical, 'Cache-Control': 'public, max-age=86400' } })
   if (context.isPrerendered) return next()
   return withHeaders(await answer(context, next), secure)
 })
