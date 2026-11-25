@@ -1,15 +1,17 @@
 ---
-export const prerender = true
-// `/`: the front page, a name, one sentence and a few plain links.
+// `/`: the front page, a name, one sentence and a few plain links. The name and the role are the CV's in D1 (`site`), or the page's own words while it has
+// none (`lib/runtime`); drawn when asked and kept at the edge for a few minutes (`lib/page-cache`).
 import Document from '../layouts/Document.astro'
-import { NAME, PROFILE, pageHead } from '../lib/profile'
+import { PROFILE, pageHead } from '../lib/profile'
+import { currentOwner } from '../lib/runtime'
 import { Forside } from '../views/Forside'
 
 const page = pageHead('/')
+const owner = await currentOwner()
 const person = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: NAME,
+  name: owner.name,
   url: PROFILE.url,
   image: `${PROFILE.url}profilbilde.jpg`,
   email: `mailto:${PROFILE.email}`,
@@ -17,6 +19,6 @@ const person = {
 }
 ---
 
-<Document title={page.title} description={page.description} path="/" jsonLd={person}>
-  <Forside />
+<Document title={owner.name} description={page.description} path="/" jsonLd={person}>
+  <Forside owner={owner} />
 </Document>

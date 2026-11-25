@@ -3,12 +3,12 @@ import { Inline } from '@lmfaole/designsystem/components/layout'
 import { PageHeader } from '@lmfaole/designsystem/components/page-header'
 import { Text, TextLink } from '@lmfaole/designsystem/components/text'
 
-import { BIO, NAME, PROFILE, ROLE } from '../lib/profile'
+import { BIO, type Owner, PROFILE } from '../lib/profile'
 
-export function Forside() {
+export function Forside({ owner }: { owner: Owner }) {
   return (
     <>
-      <PageHeader title={NAME} description={ROLE} />
+      <PageHeader title={owner.name} description={owner.role} />
       <Text>{BIO}</Text>
       <Inline
         label="Lenker"

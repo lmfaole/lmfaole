@@ -12,5 +12,11 @@
   "routes": [
     { "pattern": "lmfaole.party/cv", "zone_name": "lmfaole.party" },
     { "pattern": "lmfaole.party/cv/*", "zone_name": "lmfaole.party" }
+  ],
+  // The D1 database `site` (the same id as `packages/db/wrangler.jsonc`), which `scripts/import-dump.ts` fills with the CV and `workers/catalog` keeps the
+  // projects' latest commits in. The site only reads it (`src/lib/stored.ts`) and never migrates it: `migrations_dir` is there for a local database
+  // (`npx wrangler d1 migrations apply site --local`). While it has no CV, the page is the snapshot `src/data/cv.json`.
+  "d1_databases": [
+    { "binding": "SITE", "database_name": "site", "database_id": "e298167f-145e-41c9-ac11-0c74a80c6f43", "migrations_dir": "../../packages/db/site/migrations" }
   ]
 }

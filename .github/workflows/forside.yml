@@ -4,9 +4,9 @@ name: forside
 # Cloudflare Workers (the Worker `forside`, lmfaole.party/*).
 on:
   push:
-    paths: [apps/forside/**, packages/designsystem/**, package-lock.json, .github/workflows/forside.yml]
+    paths: [apps/forside/**, packages/designsystem/**, packages/db/site/**, package-lock.json, .github/workflows/forside.yml]
   pull_request:
-    paths: [apps/forside/**, packages/designsystem/**, package-lock.json, .github/workflows/forside.yml]
+    paths: [apps/forside/**, packages/designsystem/**, packages/db/site/**, package-lock.json, .github/workflows/forside.yml]
   workflow_dispatch:
 
 concurrency:

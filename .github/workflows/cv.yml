@@ -4,9 +4,9 @@ name: cv
 # Cloudflare Workers (the Worker `work`, lmfaole.party/cv and lmfaole.party/cv/*).
 on:
   push:
-    paths: [apps/cv/**, packages/designsystem/**, package-lock.json, .github/workflows/cv.yml]
+    paths: [apps/cv/**, packages/designsystem/**, packages/db/site/**, package-lock.json, .github/workflows/cv.yml]
   pull_request:
-    paths: [apps/cv/**, packages/designsystem/**, package-lock.json, .github/workflows/cv.yml]
+    paths: [apps/cv/**, packages/designsystem/**, packages/db/site/**, package-lock.json, .github/workflows/cv.yml]
   workflow_dispatch:
 
 concurrency:

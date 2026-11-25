@@ -1,9 +1,17 @@
-// What the pages say: the owner, and the head content of each page.
+// What the pages say: the owner, and the head content of each page. The name and the role are read from the CV in D1 (`stored.ts`) where it has them;
+// these are the words the page has while it has not.
 export const NAME = 'Ole Jørgen Bakken'
 /** What the front page says about the work, in one sentence; the description under the link previews too. */
 export const BIO = 'Jeg er senior frontend-utvikler hos Fremtind og bygger komponenter og webløsninger i designsystemet Jøkul, med universell utforming og webstandarder som utgangspunkt.'
 /** The line under the name on the front page. */
 export const ROLE = 'Senior frontend-utvikler hos Fremtind'
+
+/** Who the front page is about: the name over it and the line under the name. */
+export interface Owner {
+  name: string
+  role: string
+}
+export const OWNER: Owner = { name: NAME, role: ROLE }
 
 export const PROFILE = {
   url: 'https://lmfaole.party/',

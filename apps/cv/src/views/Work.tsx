@@ -1,5 +1,5 @@
 // The whole page: who (the facts in the rail, with the links out), then experience (with the projects and their latest commit) and education.
-// Props only, rendered to HTML when the site is built: nothing on the page needs a script.
+// Props only, rendered to HTML on the server: nothing on the page needs a script.
 import { DetailLayout } from '@lmfaole/designsystem/components/detail-layout'
 import { PageHeader } from '@lmfaole/designsystem/components/page-header'
 
