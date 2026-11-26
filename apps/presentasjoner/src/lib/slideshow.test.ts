@@ -4,8 +4,8 @@ import { test } from 'node:test'
 import { slideshowDocument, type ShowSlide } from './slideshow.ts'
 
 const slides: ShowSlide[] = [
-  { n: 1, title: 'Gamle <UU>-feil', reserve: false, body: '<p>Tekst</p>', notes: '' },
-  { n: 2, title: 'Reserve', reserve: true, body: '', notes: '<p>Notat</p>' },
+  { n: 1, title: 'Gamle <UU>-feil', reserve: false, layout: 'content', kicker: 'Linje', body: '<p>Tekst</p>', side: '<svg></svg>', foot: '<p>Kilde</p>', notes: '' },
+  { n: 2, title: 'Reserve', reserve: true, layout: 'section-dark', kicker: '', body: '', side: '', foot: '', notes: '<p>Notat</p>' },
 ]
 const file = slideshowDocument({ title: 'Tale', description: 'Om "UU"', css: '.a{}', slides, backHref: '/presentasjoner/tale/' })
 
@@ -16,7 +16,7 @@ test('every slide is a section with its number, its title escaped and its body',
 })
 
 test('a reserve slide says so, and has its notes; a slide without notes has no notes block', () => {
-  assert.match(file, /data-reserve="true"[^>]*>.*Reserveslide/s)
+  assert.match(file, /data-reserve="true"[^>]*>.*<p class="show-kicker">Reserve<\/p>/s)
   assert.equal(file.match(/class="show-notes"/g)?.length, 1)
 })
 
@@ -39,6 +39,6 @@ test('the overview lists every slide as an anchor, and the move respects reduced
 test('the slide is a 16:9 stage that scales with the window, and its parts rise into place without a fade', () => {
   assert.match(file, /aspect-ratio:16\/9/)
   assert.match(file, /html\.js\{font-size:max\(12px,calc\(min\(100vw,100dvh\*16\/9\)\/60\)\)\}/)
-  assert.match(file, /<div class="show-stage"><header>[\s\S]*<div class="show-content"><p>Tekst<\/p><\/div><\/div><\/section>/)
+  assert.match(file, /<div class="show-stage" data-layout="content"><p class="show-kicker">Linje<\/p><h2>[\s\S]*<div class="show-content"><p>Tekst<\/p><\/div><div class="show-side"><svg><\/svg><\/div><footer class="show-foot"><p>Kilde<\/p><\/footer><\/div><\/section>/)
   assert.match(file, /@keyframes show-rise\{from\{transform:translateY\(1\.25rem\)\}\}/)
 })

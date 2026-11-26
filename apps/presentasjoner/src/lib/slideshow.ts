@@ -6,13 +6,23 @@
  */
 import { escapeHtml } from './html.ts'
 
+/** The fixed arrangements a slide has, as in the template: each has its own places for the parts (`.show-stage[data-layout]`). */
+export type ShowLayout = 'cover' | 'closing' | 'section-dark' | 'section-light' | 'picture-left' | 'picture-right' | 'picture-edge' | 'content'
+
 export interface ShowSlide {
   n: number
   title: string
   /** A slide that is hidden in the talk and kept in reserve: it comes after the others and says so. */
   reserve: boolean
-  /** The slide's markup, from the same components as the page. */
+  layout: ShowLayout
+  /** The line over the title, as plain text, or empty. */
+  kicker: string
+  /** The slide's text, links and videos in words, as markup from the same components as the page, or empty. */
   body: string
+  /** The charts and pictures, as markup, or empty: they have their own place in the layout. */
+  side: string
+  /** The source and the credits, as markup, or empty: they sit at the foot. */
+  foot: string
   /** The speaker's notes as markup, or empty. */
   notes: string
 }
@@ -22,7 +32,6 @@ export const SLIDESHOW_CSS = `
 html{height:100%}
 body{margin:0;min-height:100%;background:var(--background);color:var(--foreground)}
 .show-slide{box-sizing:border-box;max-width:72rem;margin:0 auto;padding:2rem 1.5rem 6rem}
-.show-stage>header{margin-bottom:1.5rem}
 .show-kicker{margin:0;font-size:.875rem;color:var(--muted-foreground)}
 .show-slide h2{margin:.25rem 0 0;font-size:clamp(1.75rem,4.5vw + .5rem,4rem);line-height:1.1;font-weight:500;text-wrap:balance}
 .show-slide img{display:block;max-width:100%;max-height:60dvh;height:auto;margin:1rem 0;border-radius:.5rem}
@@ -31,9 +40,13 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 .js body{overflow:hidden}
 .js main{position:fixed;inset:0;display:flex;overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
 .js main::-webkit-scrollbar{display:none}
-.js .show-slide{flex:0 0 100%;height:100%;max-width:none;margin:0;padding:0;overflow:hidden;position:relative;display:grid;place-items:center;background:var(--muted);scroll-snap-align:start;scroll-snap-stop:always}
-.js .show-stage{box-sizing:border-box;inline-size:100%;block-size:100%;overflow-y:auto;display:flex;flex-direction:column;background:var(--background);padding:max(2rem,6dvh) max(1.5rem,8vw) 6rem}
-.js .show-content{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:72rem}
+.js .show-slide{flex:0 0 100%;height:100%;max-width:none;margin:0;padding:0;overflow:hidden;position:relative;display:grid;place-items:center;background:color-mix(in oklch,var(--foreground) 12%,var(--background));scroll-snap-align:start;scroll-snap-stop:always}
+.js .show-stage{box-sizing:border-box;inline-size:100%;block-size:100%;overflow-y:auto;display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "side" "content" "foot";grid-template-rows:auto auto auto auto 1fr;align-content:start;gap:1rem;background:var(--background);color:var(--foreground);padding:max(2rem,6dvh) max(1.5rem,8vw) 6rem}
+.show-kicker{grid-area:kicker}
+.show-stage>h2{grid-area:title}
+.show-content{grid-area:content}
+.show-side{grid-area:side;min-inline-size:0}
+.show-foot{grid-area:foot;align-self:end}
 .js .show-notes{position:absolute;inset:auto 0 60px 0;max-height:40%;overflow-y:auto;margin:0;padding:1rem max(1.5rem,8vw);background:var(--popover);color:var(--popover-foreground);border-top:1px solid var(--border);z-index:1}
 .js .show-notes{display:none}
 .js.show-with-notes .show-notes{display:block}
@@ -84,19 +97,39 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
     .js.show-idle main::scroll-button(*){opacity:0;translate:0 200%}
   }
 }
-/* On a wide screen the slide is a 16:9 stage in the middle of the window, and everything in it scales with it, as on a slide: the root size follows the stage */
+/* On a wide screen the slide is a 16:9 stage in the middle of the window, and everything in it scales with it, as on a slide: the root size follows the stage.
+   Each layout of the template has its own fixed places for the parts, as there. */
 @media (min-width:48rem) and (min-aspect-ratio:1/1){
   html.js{font-size:max(12px,calc(min(100vw,100dvh*16/9)/60))}
-  .js .show-stage{inline-size:min(100vw,calc(100dvh*16/9));block-size:auto;aspect-ratio:16/9;max-block-size:100dvh;padding:3rem 4rem 3.5rem;box-shadow:0 1.5rem 4rem oklch(0% 0 0 / .25)}
-  .js .show-stage h2{font-size:3rem}
-  .js .show-content{font-size:1.25rem}
-  .js .show-slide:first-child .show-stage{justify-content:center}
-  .js .show-slide:first-child h2{font-size:4.5rem}
-  .js .show-stage img{max-height:20rem}
+  .js .show-stage{inline-size:min(100vw,calc(100dvh*16/9));block-size:auto;aspect-ratio:16/9;max-block-size:100dvh;padding:3rem 4rem 2.5rem;gap:0 3rem;box-shadow:0 1.5rem 4rem oklch(0% 0 0 / .25);overflow:hidden}
+  .js .show-stage>h2{font-size:3rem}
+  .js .show-content{font-size:1.375rem}
+  .js .show-side img{max-block-size:100%}
+  .js .show-stage{grid-template-rows:auto auto 1fr auto}
+  .js .show-stage[data-layout=content]{grid-template-columns:3fr 2fr;grid-template-areas:"kicker kicker" "title title" "side content" "foot foot"}
+  .js .show-stage[data-layout=content]:not(:has(.show-side)){grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "content" "foot"}
+  .js .show-stage[data-layout=content]:not(:has(.show-content)){grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "side" "foot"}
+  .js .show-stage[data-layout=content] :is(.show-side,.show-content){align-self:center}
+  .js .show-stage[data-layout=content]:not(:has(.show-side)) .show-content{font-size:1.75rem;max-inline-size:44rem}
+  .js .show-stage:is([data-layout=picture-left],[data-layout=picture-right],[data-layout=picture-edge]){grid-template-columns:1fr 1fr;grid-template-rows:1fr auto auto auto 1fr auto}
+  .js .show-stage[data-layout=picture-left]{grid-template-areas:"side ." "side kicker" "side title" "side content" "side ." "foot foot"}
+  .js .show-stage[data-layout=picture-right]{grid-template-areas:". side" "kicker side" "title side" "content side" ". side" "foot foot"}
+  .js .show-stage[data-layout=picture-edge]{grid-template-columns:5fr 4fr;grid-template-areas:"side ." "side kicker" "side title" "side content" "side ." "side foot";padding:0 4rem 2.5rem 0}
+  .js .show-stage[data-layout=picture-edge] .show-foot{padding-bottom:0}
+  .js .show-stage:is([data-layout=picture-left],[data-layout=picture-right],[data-layout=picture-edge]) .show-side{align-self:stretch;min-block-size:0;overflow:hidden}
+  .js .show-stage:is([data-layout=picture-left],[data-layout=picture-right],[data-layout=picture-edge]) .show-side :is(div,img){block-size:100%;inline-size:100%;margin:0}
+  .js .show-stage:is([data-layout=picture-left],[data-layout=picture-right],[data-layout=picture-edge]) .show-side img{object-fit:cover;max-block-size:none;border-radius:var(--radius-2xl)}
+  .js .show-stage[data-layout=picture-edge] .show-side img{border-radius:0 var(--radius-2xl) var(--radius-2xl) 0}
+  .js .show-stage:is([data-layout=cover],[data-layout=closing]){grid-template-columns:minmax(0,40rem);grid-template-rows:1fr auto auto auto 1fr auto;grid-template-areas:"." "kicker" "title" "content" "." "foot"}
+  .js .show-stage:is([data-layout=cover],[data-layout=closing])>h2{font-size:4.5rem}
+  .js .show-stage:is([data-layout=section-dark],[data-layout=section-light]){grid-template-columns:minmax(0,44rem);grid-template-rows:1fr auto 1fr;grid-template-areas:"." "title" "."}
+  .js .show-stage:is([data-layout=section-dark],[data-layout=section-light])>h2{font-size:4rem}
+  .js .show-stage[data-layout=section-light]{background:var(--muted);color:var(--muted-foreground)}
+  .js .show-stage[data-layout=section-light]>h2{color:var(--foreground)}
 }
 @media (prefers-reduced-motion:no-preference){
   .js .show-slide:not([inert]) .show-stage>*{animation:show-rise var(--motion-duration-reveal) var(--motion-ease-enter) both}
-  .js .show-slide:not([inert]) .show-content{animation-delay:90ms}
+  .js .show-slide:not([inert]) :is(.show-content,.show-side){animation-delay:90ms}
 }
 @keyframes show-rise{from{transform:translateY(1.25rem)}}
 @media (prefers-reduced-motion:reduce){
@@ -223,8 +256,13 @@ export function slideshowDocument({
   const sections = slides.map(
     (slide) =>
       `<section class="show-slide" id="slide-${slide.n}" data-n="${slide.n}" data-reserve="${slide.reserve}" aria-label="${escapeHtml(`Slide ${slide.n}: ${slide.title}`)}">` +
-      `<div class="show-stage"><header><p class="show-kicker">${slide.reserve ? 'Reserveslide' : `Slide ${slide.n}`}</p><h2>${escapeHtml(slide.title)}</h2></header>` +
-      `<div class="show-content">${slide.body}</div></div>` +
+      `<div class="show-stage" data-layout="${slide.layout}"${['cover', 'closing', 'section-dark'].includes(slide.layout) ? ' data-theme="dark"' : ''}>` +
+      (slide.kicker === '' && !slide.reserve ? '' : `<p class="show-kicker">${escapeHtml(slide.reserve ? `Reserve${slide.kicker === '' ? '' : ` · ${slide.kicker}`}` : slide.kicker)}</p>`) +
+      `<h2>${escapeHtml(slide.title)}</h2>` +
+      (slide.body === '' ? '' : `<div class="show-content">${slide.body}</div>`) +
+      (slide.side === '' ? '' : `<div class="show-side">${slide.side}</div>`) +
+      (slide.foot === '' ? '' : `<footer class="show-foot">${slide.foot}</footer>`) +
+      '</div>' +
       (slide.notes === '' ? '' : `<aside class="show-notes" aria-label="Notater"><h3>Notater</h3>${slide.notes}</aside>`) +
       '</section>',
   )
