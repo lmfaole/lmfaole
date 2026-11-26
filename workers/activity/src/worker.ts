@@ -33,7 +33,8 @@ interface Context {
 
 export default {
   async scheduled(controller: { scheduledTime: number }, env: Env, _ctx: Context): Promise<void> {
-    const fetcher = workerFetch()
+    // Last.fm answers 500 now and then. Two retries of a failing source stay within the 50 subrequests (36 at most, plus 2 × the one that fails: 4 loves fetches → 44).
+    const fetcher = workerFetch({ timeout: 15000, retries: 2 })
     const at = new Date(controller.scheduledTime)
     const now = Math.floor(at.getTime() / 1000)
     // The free plan allows 50 subrequests a run, a D1 batch counting as one. At most: music 2 fetches + 5 queries, loves 4 + 3,
