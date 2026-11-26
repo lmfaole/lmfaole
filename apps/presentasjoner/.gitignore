@@ -8,3 +8,4 @@ dist/
 *.tmp
 *.pptx
 !maler/lmfaole-mal.pptx
+!content/*/nedlasting/*.pptx

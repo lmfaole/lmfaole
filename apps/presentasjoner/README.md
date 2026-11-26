@@ -2,7 +2,7 @@
 
 Presentasjonene mine på [lmfaole.party/presentasjoner/](https://lmfaole.party/presentasjoner/): en liste over foredragene, og for hvert av dem
 innholdet slide for slide (tekst, bilder, lenker og notater) og presentasjonen til nedlasting som PDF, PowerPoint eller HTML. Selve
-`.pptx`-filene og arbeidsgiver-malen er ikke med her. Alle lages i PowerPoint (`.pptx`).
+`.pptx`-filene fra foredragene og arbeidsgiver-malen er ikke med her, bare den generiske utgaven i `nedlasting/`. Alle lages i PowerPoint (`.pptx`).
 
 - Astro på Cloudflare Workers. Workeren heter `presentasjoner` og har rutene `lmfaole.party/presentasjoner` og `lmfaole.party/presentasjoner/*`
   (`wrangler.jsonc`). `forside` eier `lmfaole.party/*`, men rutene her er mer spesifikke og vinner. Alt ligger under Astros `base` `/presentasjoner`.
@@ -97,6 +97,7 @@ scripts/export.sh <mappe>              # begge; eller --pptx / --pdf
 Skriptet (macOS, PowerPoint og `npx wrangler login`) lager et outline med `deck_outline.py`, bygger `.pptx`-en med `build_deck.py`, lagrer den
 som PDF gjennom PowerPoint (programmet er sandkasset og skriver bare i sin egen mappe), laster opp til `presentasjoner/<mappe>/` og rydder
 opp. Sett `PPTX_PYTHON` om python-pptx ligger et annet sted. Kjør det på nytt etter hver endring — til du har gjort det, gir knappene 404.
+Samme filer legges også i `content/<mappe>/nedlasting/` og tas med i git, så du kan åpne dem lokalt og se historikken. Der er `.pptx`-en vår generiske utgave, aldri den som ble holdt.
 
 Den generiske utgaven og presentasjonen som ble holdt har samme filnavn, og R2-nøkkelen *er* det navnet, så en feil fil ville lagt
 arbeidsgiverens mal på en offentlig adresse. To vakter hindrer det: skriptet bygger i en mappe det lager selv og laster opp nøyaktig de

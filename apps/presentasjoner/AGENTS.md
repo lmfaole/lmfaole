@@ -9,7 +9,7 @@ The talks at <https://lmfaole.party/presentasjoner/>, Astro on Cloudflare Worker
   (`/`, `/cv/`, `/medier/`, `/start`, `/design/`): no cookies, no service worker.
 - Content is `content/<slug>/presentasjon.json` (made by `scripts/pptx_to_json.py`, never edited by hand except the top-level `summary`, `event`, `date`
   and `duration`), read at build time (`src/lib/content.ts`); the pages are prerendered. `scripts/check.py` (stdlib only) checks it against
-  `presentasjon.schema.json`. The .pptx and the employer's template never go in the repo: it is public.
+  `presentasjon.schema.json`. The .pptx the talk was given from and the employer's template never go in the repo: it is public. The generic deck and its PDF do, in `content/<slug>/nedlasting/` (`scripts/export.sh` writes them).
 - A talk is downloaded in three formats (`DOWNLOADS` in `src/lib/deck.ts`): the `.pdf` and the `.pptx` are in the R2 bucket `presentasjoner` (binding
   `FILES`, read only) at `<slug>/<pptx name>.<ending>`, put there by `scripts/export.sh`, and the `.html` is made as the answer is written from the
   page's own components and stylesheet. Each endpoint names its own format, and serves only keys of talks in `content/` (`fileKey`).

@@ -83,6 +83,13 @@ if [ -n "$want_pdf" ]; then
   fi
 fi
 
+# The generic deck is kept in the repository too (content/<slug>/nedlasting/), so it can be opened locally and its history is in git.
+# Its own folder, so the deck the talk was given from can never be mistaken for it: same name, other place.
+mkdir -p "$here/content/$slug/nedlasting"
+cp "$pptx" "$here/content/$slug/nedlasting/$stem.pptx"
+if [ -n "$want_pdf" ]; then cp "$pdf" "$here/content/$slug/nedlasting/$stem.pdf"; fi
+echo "Lagret i repoet: apps/presentasjoner/content/$slug/nedlasting/"
+
 if [ -n "$want_pptx" ]; then
   (cd "$here" && npx wrangler r2 object put "presentasjoner/$slug/$stem.pptx" --file "$pptx" \
     --content-type application/vnd.openxmlformats-officedocument.presentationml.presentation --remote)
