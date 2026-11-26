@@ -36,9 +36,10 @@ test('the overview lists every slide as an anchor, and the move respects reduced
   assert.match(file, /prefers-reduced-motion:reduce/)
 })
 
-test('the slide is a 16:9 stage that scales with the window, and its parts rise into place without a fade', () => {
+test('the slide is a 16:9 stage that scales with the window, with a fixed place for every layout', () => {
   assert.match(file, /aspect-ratio:16\/9/)
   assert.match(file, /html\.js\{font-size:max\(12px,calc\(min\(100vw,100dvh\*16\/9\)\/60\)\)\}/)
   assert.match(file, /<div class="show-stage" data-layout="content"><p class="show-kicker">Linje<\/p><h2>[\s\S]*<div class="show-content"><p>Tekst<\/p><\/div><div class="show-side"><svg><\/svg><\/div><footer class="show-foot"><p>Kilde<\/p><\/footer><\/div><\/section>/)
-  assert.match(file, /@keyframes show-rise\{from\{transform:translateY\(1\.25rem\)\}\}/)
+  assert.match(file, /data-layout=steps[\s\S]*counter-increment:step/)
+  assert.doesNotMatch(file, /show-rise/)
 })

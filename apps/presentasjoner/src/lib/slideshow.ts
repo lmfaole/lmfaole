@@ -7,7 +7,7 @@
 import { escapeHtml } from './html.ts'
 
 /** The fixed arrangements a slide has, as in the template: each has its own places for the parts (`.show-stage[data-layout]`). */
-export type ShowLayout = 'cover' | 'closing' | 'section-dark' | 'section-light' | 'picture-left' | 'picture-right' | 'picture-edge' | 'content'
+export type ShowLayout = 'cover' | 'closing' | 'section-dark' | 'section-light' | 'picture-left' | 'picture-right' | 'picture-edge' | 'chart' | 'charts-two' | 'steps' | 'quote' | 'list' | 'content'
 
 export interface ShowSlide {
   n: number
@@ -106,11 +106,22 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
   .js .show-content{font-size:1.375rem}
   .js .show-side img{max-block-size:100%}
   .js .show-stage{grid-template-rows:auto auto 1fr auto}
-  .js .show-stage[data-layout=content]{grid-template-columns:3fr 2fr;grid-template-areas:"kicker kicker" "title title" "side content" "foot foot"}
-  .js .show-stage[data-layout=content]:not(:has(.show-side)){grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "content" "foot"}
-  .js .show-stage[data-layout=content]:not(:has(.show-content)){grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "side" "foot"}
-  .js .show-stage[data-layout=content] :is(.show-side,.show-content){align-self:center}
-  .js .show-stage[data-layout=content]:not(:has(.show-side)) .show-content{font-size:1.75rem;max-inline-size:44rem}
+  .js .show-stage:is([data-layout=content],[data-layout=chart]){grid-template-columns:3fr 2fr;grid-template-areas:"kicker kicker" "title title" "side content" "foot foot"}
+  .js .show-stage:is([data-layout=content],[data-layout=chart]):not(:has(.show-side)){grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "content" "foot"}
+  .js .show-stage:is([data-layout=content],[data-layout=chart]):not(:has(.show-content)){grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "side" "foot"}
+  .js .show-stage:is([data-layout=content],[data-layout=chart]) :is(.show-side,.show-content){align-self:center}
+  .js .show-stage[data-layout=chart]:not(:has(.show-side)) .show-content{font-size:1.75rem;max-inline-size:44rem}
+  .js .show-stage[data-layout=charts-two]{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 1fr auto auto;grid-template-areas:"kicker" "title" "side" "content" "foot"}
+  .js .show-stage[data-layout=charts-two] .show-content{align-self:center;padding-block-start:1rem}
+  .js .show-stage:is([data-layout=list],[data-layout=quote],[data-layout=steps],[data-layout=content]:not(:has(.show-side))){grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "content" "foot"}
+  .js .show-stage:is([data-layout=list],[data-layout=quote],[data-layout=steps]) .show-content{align-self:center}
+  .js .show-stage[data-layout=list] .show-content{font-size:1.75rem;max-inline-size:52rem}
+  .js .show-stage[data-layout=list] .show-content li{margin-block:.75rem}
+  .js .show-stage[data-layout=quote] .show-content{font-size:2.5rem;line-height:1.25;max-inline-size:44rem;padding-inline-start:2rem;border-inline-start:.375rem solid var(--foreground)}
+  .js .show-stage[data-layout=steps] .show-content{font-size:1.5rem}
+  .show-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.5rem;margin:0;padding:0;list-style:none;counter-reset:step}
+  .show-steps li{counter-increment:step;border-block-start:.25rem solid var(--foreground);padding-block-start:1rem}
+  .show-steps li::before{content:counter(step);display:block;font-size:3rem;line-height:1;font-weight:500;margin-block-end:.75rem}
   .js .show-stage:is([data-layout=picture-left],[data-layout=picture-right],[data-layout=picture-edge]){grid-template-columns:1fr 1fr;grid-template-rows:1fr auto auto auto 1fr auto}
   .js .show-stage[data-layout=picture-left]{grid-template-areas:"side ." "side kicker" "side title" "side content" "side ." "foot foot"}
   .js .show-stage[data-layout=picture-right]{grid-template-areas:". side" "kicker side" "title side" "content side" ". side" "foot foot"}
@@ -127,11 +138,6 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
   .js .show-stage[data-layout=section-light]{background:var(--muted);color:var(--muted-foreground)}
   .js .show-stage[data-layout=section-light]>h2{color:var(--foreground)}
 }
-@media (prefers-reduced-motion:no-preference){
-  .js .show-slide:not([inert]) .show-stage>*{animation:show-rise var(--motion-duration-reveal) var(--motion-ease-enter) both}
-  .js .show-slide:not([inert]) :is(.show-content,.show-side){animation-delay:90ms}
-}
-@keyframes show-rise{from{transform:translateY(1.25rem)}}
 @media (prefers-reduced-motion:reduce){
   .js .show-progress::after,.js .show-bar{transition:none}
 }

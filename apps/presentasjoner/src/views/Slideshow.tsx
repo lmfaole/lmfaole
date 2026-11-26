@@ -3,13 +3,17 @@ import { Inline, Stack } from '@lmfaole/designsystem/components/layout'
 import { Text, TextLink } from '@lmfaole/designsystem/components/text'
 import { renderToStaticMarkup } from 'react-dom/server'
 
+import { slideCharts } from '../lib/chart'
 import { slidePictureFiles } from '../lib/content'
 import { boxText, isCredit, notesMarkdown, slideTitle, splitSlides, type Slide, type Talk } from '../lib/deck'
 import type { ShowLayout, ShowSlide } from '../lib/slideshow'
 import { SlideText } from './SlideItem'
 import { charts } from './TalkDocument'
 
-/** The fixed layout a slide has in the show, from the name of its layout in the .pptx: the same arrangements as there, in the same places. */
+/**
+ * The fixed layout a slide has in the show, chosen from what is on it: the template's layout for a cover, a closing, a divider and a picture next to its text;
+ * else the charts (one with its takeaway, two across), and for the text alone three steps, a single statement, or a list.
+ */
 export function showLayout(slide: Slide): ShowLayout {
   const name = slide.layout.toLowerCase()
   if (name.startsWith('forside')) return 'cover'
@@ -17,6 +21,14 @@ export function showLayout(slide: Slide): ShowLayout {
   if (name.startsWith('skilleark')) return name.includes('beige') ? 'section-light' : 'section-dark'
   if (name.startsWith('bilde i kant')) return 'picture-edge'
   if (name.startsWith('bilde')) return name.includes('(høyre)') ? 'picture-right' : 'picture-left'
+  const charted = slideCharts(slide)
+  if (charted.length > 1) return 'charts-two'
+  if (charted.length === 1) return 'chart'
+  const body = paragraphsOf(slide, '25')
+  const plain = (slide.pictures ?? []).length === 0 && (slide.textboxes ?? []).length === 0 && (slide.links ?? []).length === 0
+  if (plain && body.length === 3) return 'steps'
+  if (plain && body.length === 1) return 'quote'
+  if (body.length > 0) return 'list'
   return 'content'
 }
 
@@ -40,7 +52,13 @@ function slideParts({ slug, slide }: { slug: string; slide: Slide }, layout: Sho
     ...pictures.map((picture) => <img key={picture.src} src={picture.src} alt={picture.alt} />),
   ]
   const media = slide.media ?? []
-  const body = (
+  const body = layout === 'steps' ? (
+    <ol className="show-steps">
+      {paragraphsOf(slide, '25').map((paragraph, index) => (
+        <li key={index}>{typeof paragraph === 'string' ? paragraph : paragraph[0]}</li>
+      ))}
+    </ol>
+  ) : (
     <Stack>
       {bodyTexts
         .filter((paragraphs) => boxText(paragraphs) !== '')
