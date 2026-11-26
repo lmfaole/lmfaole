@@ -57,6 +57,22 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 .show-overview small{color:var(--muted-foreground);white-space:nowrap}
 .show-overview form{margin:1rem 0 0;display:flex;justify-content:flex-end}
 .show-overview button{font:inherit;color:inherit;background:transparent;border:1px solid var(--border);border-radius:.5rem;padding:.5rem .875rem;min-height:2.75rem;cursor:pointer}
+/* CSS carousel (Chrome 135+): the browser's own buttons and markers on the track; elsewhere the bar and the script do it */
+@supports selector(::scroll-button(*)) and selector(::scroll-marker){
+  .js main{scroll-marker-group:after}
+  .js .show-progress{display:none}
+  .js main::scroll-marker-group{position:fixed;inset:0 0 auto 0;z-index:3;display:flex;gap:1px;height:.375rem}
+  .js .show-slide::scroll-marker{content:"";flex:1;background:var(--muted);border-radius:0;outline-offset:-2px}
+  .js .show-slide::scroll-marker:hover{background:var(--muted-foreground)}
+  .js .show-slide::scroll-marker:target-current{background:var(--foreground)}
+  .js .show-slide::scroll-marker:focus-visible{outline:2px solid var(--foreground)}
+  .js main::scroll-button(left),.js main::scroll-button(right){position:fixed;top:50%;translate:0 -50%;z-index:3;width:3rem;height:3rem;border:1px solid var(--border);border-radius:50%;background:var(--background);color:var(--foreground);font:inherit;font-size:1.25rem;cursor:pointer;opacity:.7;transition:opacity var(--motion-duration-fast) var(--motion-ease-standard)}
+  .js main::scroll-button(left){content:"←" / "Forrige slide";left:.75rem}
+  .js main::scroll-button(right){content:"→" / "Neste slide";right:.75rem}
+  .js main::scroll-button(*):hover,.js main::scroll-button(*):focus-visible{opacity:1}
+  .js main::scroll-button(*):focus-visible{outline:2px solid var(--foreground);outline-offset:2px}
+  .js main::scroll-button(*):disabled{opacity:.25;cursor:default}
+}
 @media (prefers-reduced-motion:reduce){
   .js .show-progress::after,.js .show-bar{transition:none}
 }

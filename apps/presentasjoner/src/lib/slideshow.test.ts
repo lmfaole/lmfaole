@@ -32,5 +32,6 @@ test('the overview lists every slide as an anchor, and the move respects reduced
   assert.match(file, /<dialog class="show-overview"[\s\S]*<a href="#1"><small>1<\/small><span>Gamle &lt;UU&gt;-feil<\/span><\/a>[\s\S]*<a href="#2"><small>R2<\/small>/)
   assert.match(file, /scroll-snap-type:x mandatory/)
   assert.doesNotMatch(file, /view-transition/)
+  assert.match(file, /@supports selector\(::scroll-button\(\*\)\)[\s\S]*scroll-marker-group:after[\s\S]*::scroll-button\(right\)/)
   assert.match(file, /prefers-reduced-motion:reduce/)
 })
