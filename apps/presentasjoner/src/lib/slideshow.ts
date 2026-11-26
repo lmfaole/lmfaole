@@ -104,6 +104,11 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
   .js .show-stage{inline-size:min(100vw,calc(100dvh*16/9));block-size:auto;aspect-ratio:16/9;max-block-size:100dvh;padding:3rem 4rem 2.5rem;gap:0 3rem;box-shadow:0 1.5rem 4rem oklch(0% 0 0 / .25);overflow:hidden}
   .js .show-stage>h2{font-size:3rem}
   .js .show-content{font-size:1.375rem}
+  /* A chart is drawn once at 640×200 here, so its box keeps that shape and the whole chart, text too, grows with the stage. */
+  .js .show-stage :is(.ts-chart-host,.ts-chart-surface){block-size:auto!important}
+  .js .show-stage [class*=chart-height]{block-size:auto}
+  .js .show-stage svg.ts-chart{block-size:auto!important;inline-size:100%}
+  .js .show-stage :is(.show-side,.show-content) details{display:none}
   .js .show-side img{max-block-size:100%}
   .js .show-stage{grid-template-rows:auto auto 1fr auto}
   .js .show-stage:is([data-layout=content],[data-layout=chart]){grid-template-columns:3fr 2fr;grid-template-areas:"kicker kicker" "title title" "side content" "foot foot"}
