@@ -29,7 +29,7 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 .show-notes{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.9375rem}
 .show-bar,.show-progress{display:none}
 .js body{overflow:hidden}
-.js .show-slide{position:fixed;inset:0;max-width:none;margin:0;padding:max(2rem,6dvh) max(1.5rem,8vw) 6rem;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;view-transition-name:show-slide;scroll-snap-align:start}
+.js .show-slide{background:var(--background);position:fixed;inset:0;max-width:none;margin:0;padding:max(2rem,6dvh) max(1.5rem,8vw) 6rem;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;view-transition-name:show-slide;scroll-snap-align:start}
 .js .show-slide>*{width:100%;max-width:72rem;margin-inline:auto}
 .js .show-slide[hidden]{display:none}
 .js .show-notes{display:none}
@@ -59,14 +59,11 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 @media (prefers-reduced-motion:no-preference){
   ::view-transition-group(show-slide){animation-duration:var(--motion-duration-slow)}
   ::view-transition-old(show-slide),::view-transition-new(show-slide){animation-timing-function:var(--motion-ease-standard);mix-blend-mode:normal}
-  .show-forward::view-transition-old(show-slide){animation-name:show-out-left}
+  ::view-transition-old(show-slide){animation:none;opacity:0}
   .show-forward::view-transition-new(show-slide){animation-name:show-in-right}
-  .show-back::view-transition-old(show-slide){animation-name:show-out-right}
   .show-back::view-transition-new(show-slide){animation-name:show-in-left}
 }
-@keyframes show-out-left{to{transform:translateX(-12%)}}
 @keyframes show-in-right{from{transform:translateX(12%)}}
-@keyframes show-out-right{to{transform:translateX(12%)}}
 @keyframes show-in-left{from{transform:translateX(-12%)}}
 @media (prefers-reduced-motion:reduce){
   ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
