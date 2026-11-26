@@ -35,3 +35,10 @@ test('the overview lists every slide as an anchor, and the move respects reduced
   assert.match(file, /@supports selector\(::scroll-button\(\*\)\)[\s\S]*scroll-marker-group:after[\s\S]*::scroll-button\(right\)/)
   assert.match(file, /prefers-reduced-motion:reduce/)
 })
+
+test('the slide is a 16:9 stage that scales with the window, and its parts rise into place without a fade', () => {
+  assert.match(file, /aspect-ratio:16\/9/)
+  assert.match(file, /html\.js\{font-size:max\(12px,calc\(min\(100vw,100dvh\*16\/9\)\/60\)\)\}/)
+  assert.match(file, /<div class="show-stage"><header>[\s\S]*<div class="show-content"><p>Tekst<\/p><\/div><\/div><\/section>/)
+  assert.match(file, /@keyframes show-rise\{from\{transform:translateY\(1\.25rem\)\}\}/)
+})

@@ -21,8 +21,8 @@ export interface ShowSlide {
 export const SLIDESHOW_CSS = `
 html{height:100%}
 body{margin:0;min-height:100%;background:var(--background);color:var(--foreground)}
-.show-slide{box-sizing:border-box;container-type:inline-size;max-width:72rem;margin:0 auto;padding:2rem 1.5rem 6rem}
-.show-slide>header{margin-bottom:1.5rem}
+.show-slide{box-sizing:border-box;max-width:72rem;margin:0 auto;padding:2rem 1.5rem 6rem}
+.show-stage>header{margin-bottom:1.5rem}
 .show-kicker{margin:0;font-size:.875rem;color:var(--muted-foreground)}
 .show-slide h2{margin:.25rem 0 0;font-size:clamp(1.75rem,4.5vw + .5rem,4rem);line-height:1.1;font-weight:500;text-wrap:balance}
 .show-slide img{display:block;max-width:100%;max-height:60dvh;height:auto;margin:1rem 0;border-radius:.5rem}
@@ -31,21 +31,23 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 .js body{overflow:hidden}
 .js main{position:fixed;inset:0;display:flex;overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
 .js main::-webkit-scrollbar{display:none}
-.js .show-slide{flex:0 0 100%;height:100%;max-width:none;margin:0;padding:max(2rem,6dvh) max(1.5rem,8vw) 6rem;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;background:var(--background);scroll-snap-align:start;scroll-snap-stop:always}
-.js .show-slide>*{width:100%;max-width:72rem;margin-inline:auto}
+.js .show-slide{flex:0 0 100%;height:100%;max-width:none;margin:0;padding:0;overflow:hidden;position:relative;display:grid;place-items:center;background:var(--muted);scroll-snap-align:start;scroll-snap-stop:always}
+.js .show-stage{box-sizing:border-box;inline-size:100%;block-size:100%;overflow-y:auto;display:flex;flex-direction:column;background:var(--background);padding:max(2rem,6dvh) max(1.5rem,8vw) 6rem}
+.js .show-content{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:72rem}
+.js .show-notes{position:absolute;inset:auto 0 60px 0;max-height:40%;overflow-y:auto;margin:0;padding:1rem max(1.5rem,8vw);background:var(--popover);color:var(--popover-foreground);border-top:1px solid var(--border);z-index:1}
 .js .show-notes{display:none}
 .js.show-with-notes .show-notes{display:block}
-.js .show-progress{position:fixed;inset:0 0 auto 0;display:block;height:.25rem;background:var(--muted);z-index:2}
+.js .show-progress{position:fixed;inset:0 0 auto 0;display:block;height:4px;background:var(--muted);z-index:2}
 .js .show-progress::after{content:"";display:block;height:100%;background:var(--foreground);transform-origin:left;transform:scaleX(var(--progress,0));transition:transform var(--motion-duration-slow) var(--motion-ease-standard)}
-.js .show-bar{position:fixed;inset:auto 0 0 0;z-index:2;display:flex;gap:.5rem;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:.5rem 1rem;background:var(--background);border-top:1px solid var(--border);transition:opacity var(--motion-duration-enter) var(--motion-ease-standard),translate var(--motion-duration-enter) var(--motion-ease-standard)}
+.js .show-bar{position:fixed;inset:auto 0 0 0;z-index:2;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:8px 16px;font-size:16px;background:var(--background);border-top:1px solid var(--border);transition:opacity var(--motion-duration-enter) var(--motion-ease-standard),translate var(--motion-duration-enter) var(--motion-ease-standard)}
 .js.show-idle .show-bar:not(:focus-within){opacity:0;translate:0 100%}
 .js.show-idle{cursor:none}
-.show-bar button,.show-bar a{font:inherit;color:inherit;background:transparent;border:1px solid var(--border);border-radius:.5rem;padding:.5rem .875rem;min-height:2.75rem;min-width:2.75rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.show-bar button,.show-bar a{font:inherit;color:inherit;background:transparent;border:1px solid var(--border);border-radius:8px;padding:8px 14px;min-height:44px;min-width:44px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 .show-bar button:hover,.show-bar a:hover{background:var(--muted)}
 .show-bar button:focus-visible,.show-bar a:focus-visible,.show-overview a:focus-visible,.show-overview button:focus-visible{outline:2px solid var(--foreground);outline-offset:2px}
 .show-bar button[disabled]{opacity:.45;cursor:default}
-.show-group{display:flex;gap:.5rem;align-items:center}
-.show-count{min-width:4.5rem;text-align:center;font-variant-numeric:tabular-nums}
+.show-group{display:flex;gap:8px;align-items:center}
+.show-count{min-width:72px;text-align:center;font-variant-numeric:tabular-nums}
 .show-overview[open]{transition:opacity var(--motion-duration-enter) var(--motion-ease-enter),scale var(--motion-duration-enter) var(--motion-ease-enter)}
 @starting-style{.show-overview[open]{opacity:0;scale:.97}}
 .show-overview::backdrop{background:oklch(0% 0 0 / .55)}
@@ -59,7 +61,7 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 @supports selector(::scroll-button(*)) and selector(::scroll-marker){
   .js main{scroll-marker-group:after}
   .js .show-progress{display:none}
-  .js main::scroll-marker-group{position:fixed;inset:0 0 auto 0;z-index:3;display:flex;gap:1px;height:.375rem}
+  .js main::scroll-marker-group{position:fixed;inset:0 0 auto 0;z-index:3;display:flex;gap:1px;height:6px}
   .js .show-slide::scroll-marker{content:"";flex:1;background:var(--muted);border-radius:0;outline-offset:-2px}
   .js .show-slide::scroll-marker:hover{background:var(--muted-foreground)}
   .js .show-slide::scroll-marker:target-current{background:var(--foreground)}
@@ -73,15 +75,30 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
     .js .show-bar>:first-child{justify-self:start}
     .js .show-bar>:last-child{justify-self:end}
     .js #show-prev,.js #show-next{visibility:hidden}
-    .js main::scroll-button(left),.js main::scroll-button(right){position:fixed;inset-block-end:max(.5rem,env(safe-area-inset-bottom));z-index:3;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;inline-size:2.75rem;block-size:2.75rem;border:1px solid var(--border);border-radius:.5rem;background:transparent;color:var(--foreground);font:inherit;cursor:pointer;transition:opacity var(--motion-duration-enter) var(--motion-ease-standard),translate var(--motion-duration-enter) var(--motion-ease-standard)}
-    .js main::scroll-button(left){content:"←" / "Forrige slide";inset-inline-start:calc(50% - 5.5rem)}
-    .js main::scroll-button(right){content:"→" / "Neste slide";inset-inline-start:calc(50% + 2.75rem)}
+    .js main::scroll-button(left),.js main::scroll-button(right){position:fixed;inset-block-end:max(8px,env(safe-area-inset-bottom));z-index:3;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;inline-size:44px;block-size:44px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--foreground);font:inherit;cursor:pointer;transition:opacity var(--motion-duration-enter) var(--motion-ease-standard),translate var(--motion-duration-enter) var(--motion-ease-standard)}
+    .js main::scroll-button(left){content:"←" / "Forrige slide";inset-inline-start:calc(50% - 88px)}
+    .js main::scroll-button(right){content:"→" / "Neste slide";inset-inline-start:calc(50% + 44px)}
     .js main::scroll-button(*):hover{background:var(--muted)}
     .js main::scroll-button(*):focus-visible{outline:2px solid var(--foreground);outline-offset:2px}
     .js main::scroll-button(*):disabled{opacity:.45;cursor:default}
     .js.show-idle main::scroll-button(*){opacity:0;translate:0 200%}
   }
 }
+/* On a wide screen the slide is a 16:9 stage in the middle of the window, and everything in it scales with it, as on a slide: the root size follows the stage */
+@media (min-width:48rem) and (min-aspect-ratio:1/1){
+  html.js{font-size:max(12px,calc(min(100vw,100dvh*16/9)/60))}
+  .js .show-stage{inline-size:min(100vw,calc(100dvh*16/9));block-size:auto;aspect-ratio:16/9;max-block-size:100dvh;padding:3rem 4rem 3.5rem;box-shadow:0 1.5rem 4rem oklch(0% 0 0 / .25)}
+  .js .show-stage h2{font-size:3rem}
+  .js .show-content{font-size:1.25rem}
+  .js .show-slide:first-child .show-stage{justify-content:center}
+  .js .show-slide:first-child h2{font-size:4.5rem}
+  .js .show-stage img{max-height:20rem}
+}
+@media (prefers-reduced-motion:no-preference){
+  .js .show-slide:not([inert]) .show-stage>*{animation:show-rise var(--motion-duration-reveal) var(--motion-ease-enter) both}
+  .js .show-slide:not([inert]) .show-content{animation-delay:90ms}
+}
+@keyframes show-rise{from{transform:translateY(1.25rem)}}
 @media (prefers-reduced-motion:reduce){
   .js .show-progress::after,.js .show-bar{transition:none}
 }
@@ -206,8 +223,8 @@ export function slideshowDocument({
   const sections = slides.map(
     (slide) =>
       `<section class="show-slide" id="slide-${slide.n}" data-n="${slide.n}" data-reserve="${slide.reserve}" aria-label="${escapeHtml(`Slide ${slide.n}: ${slide.title}`)}">` +
-      `<header><p class="show-kicker">${slide.reserve ? 'Reserveslide' : `Slide ${slide.n}`}</p><h2>${escapeHtml(slide.title)}</h2></header>` +
-      slide.body +
+      `<div class="show-stage"><header><p class="show-kicker">${slide.reserve ? 'Reserveslide' : `Slide ${slide.n}`}</p><h2>${escapeHtml(slide.title)}</h2></header>` +
+      `<div class="show-content">${slide.body}</div></div>` +
       (slide.notes === '' ? '' : `<aside class="show-notes" aria-label="Notater"><h3>Notater</h3>${slide.notes}</aside>`) +
       '</section>',
   )
