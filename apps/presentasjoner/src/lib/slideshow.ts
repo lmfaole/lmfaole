@@ -70,7 +70,8 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 @media (min-width:48rem){
   @supports selector(::scroll-button(*)) and selector(::scroll-marker){
     .js .show-bar{display:grid;grid-template-columns:1fr auto 1fr}
-    .js .show-bar>.show-group:last-child{justify-self:end}
+    .js .show-bar>:first-child{justify-self:start}
+    .js .show-bar>:last-child{justify-self:end}
     .js #show-prev,.js #show-next{visibility:hidden}
     .js main::scroll-button(left),.js main::scroll-button(right){position:fixed;inset-block-end:max(.5rem,env(safe-area-inset-bottom));z-index:3;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;inline-size:2.75rem;block-size:2.75rem;border:1px solid var(--border);border-radius:.5rem;background:transparent;color:var(--foreground);font:inherit;cursor:pointer;transition:opacity var(--motion-duration-enter) var(--motion-ease-standard),translate var(--motion-duration-enter) var(--motion-ease-standard)}
     .js main::scroll-button(left){content:"←" / "Forrige slide";inset-inline-start:calc(50% - 5.5rem)}
