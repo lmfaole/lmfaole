@@ -55,7 +55,7 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 .show-overview small{color:var(--muted-foreground);white-space:nowrap}
 .show-overview form{margin:0}
 .show-overview button{font:inherit;color:inherit;background:transparent;border:1px solid var(--border);border-radius:.5rem;padding:.5rem .875rem;min-height:2.75rem;cursor:pointer}
-/* CSS carousel (Chrome 135+): the browser's own buttons and markers on the track; elsewhere the bar and the script do it */
+/* CSS carousel (Chrome 135+): the browser's own markers on the track and, from tablet width, its own arrows in the bar; elsewhere the bar and the script do it */
 @supports selector(::scroll-button(*)) and selector(::scroll-marker){
   .js main{scroll-marker-group:after}
   .js .show-progress{display:none}
@@ -64,12 +64,22 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
   .js .show-slide::scroll-marker:hover{background:var(--muted-foreground)}
   .js .show-slide::scroll-marker:target-current{background:var(--foreground)}
   .js .show-slide::scroll-marker:focus-visible{outline:2px solid var(--foreground)}
-  .js main::scroll-button(left),.js main::scroll-button(right){position:fixed;top:50%;translate:0 -50%;z-index:3;width:3rem;height:3rem;border:1px solid var(--border);border-radius:50%;background:var(--background);color:var(--foreground);font:inherit;font-size:1.25rem;cursor:pointer;opacity:.7;transition:opacity var(--motion-duration-fast) var(--motion-ease-standard)}
-  .js main::scroll-button(left){content:"←" / "Forrige slide";left:.75rem}
-  .js main::scroll-button(right){content:"→" / "Neste slide";right:.75rem}
-  .js main::scroll-button(*):hover,.js main::scroll-button(*):focus-visible{opacity:1}
-  .js main::scroll-button(*):focus-visible{outline:2px solid var(--foreground);outline-offset:2px}
-  .js main::scroll-button(*):disabled{opacity:.25;cursor:default}
+  .js main::scroll-button(left),.js main::scroll-button(right){display:none}
+}
+/* From tablet width the bar's two arrows are the browser's own: they sit where the hidden ones would, so the bar keeps its layout */
+@media (min-width:48rem){
+  @supports selector(::scroll-button(*)) and selector(::scroll-marker){
+    .js .show-bar{display:grid;grid-template-columns:1fr auto 1fr}
+    .js .show-bar>.show-group:last-child{justify-self:end}
+    .js #show-prev,.js #show-next{visibility:hidden}
+    .js main::scroll-button(left),.js main::scroll-button(right){position:fixed;inset-block-end:max(.5rem,env(safe-area-inset-bottom));z-index:3;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;inline-size:2.75rem;block-size:2.75rem;border:1px solid var(--border);border-radius:.5rem;background:transparent;color:var(--foreground);font:inherit;cursor:pointer;transition:opacity var(--motion-duration-enter) var(--motion-ease-standard),translate var(--motion-duration-enter) var(--motion-ease-standard)}
+    .js main::scroll-button(left){content:"←" / "Forrige slide";inset-inline-start:calc(50% - 5.5rem)}
+    .js main::scroll-button(right){content:"→" / "Neste slide";inset-inline-start:calc(50% + 2.75rem)}
+    .js main::scroll-button(*):hover{background:var(--muted)}
+    .js main::scroll-button(*):focus-visible{outline:2px solid var(--foreground);outline-offset:2px}
+    .js main::scroll-button(*):disabled{opacity:.45;cursor:default}
+    .js.show-idle main::scroll-button(*){opacity:0;translate:0 200%}
+  }
 }
 @media (prefers-reduced-motion:reduce){
   .js .show-progress::after,.js .show-bar{transition:none}
