@@ -7,7 +7,7 @@ import type { ReactNode } from 'react'
 import { boxText, isCredit, notesMarkdown, paragraphsMarkdown, plainText, slideTitle, type Paragraph, type Slide } from '../lib/deck'
 
 /** A text of the slide: plain words where it is one paragraph, else a list nested as on the slide. */
-function SlideText({ paragraphs }: { paragraphs: readonly Paragraph[] }) {
+export function SlideText({ paragraphs }: { paragraphs: readonly Paragraph[] }) {
   const plain = plainText(paragraphs)
   return plain === null ? <Markdown source={paragraphsMarkdown(paragraphs)} /> : <Text>{plain}</Text>
 }

@@ -181,12 +181,12 @@ export const deckFileName = (deck: Pick<Deck, 'file'>, format: DownloadFormat): 
 export const talkDownloads = (deck: Pick<Deck, 'file'>, here: string): { label: string; href: string }[] =>
   Object.entries(DOWNLOADS).map(([format, { label }]) => ({ label, href: `${here}${deckFileName(deck, format as DownloadFormat)}` }))
 
-/** What asks for the HTML to be shown in the browser instead of saved: `<file>.html?vis`. The same file either way. */
+/** What asks for the talk as a slideshow in the browser instead of the file to keep: `<file>.html?vis`. */
 export const SHOW = 'vis'
 
-/** Where a talk can be read as one page without keeping it, and what to call that. */
+/** Where a talk can be watched as a slideshow without keeping anything, and what to call that. */
 export const talkView = (deck: Pick<Deck, 'file'>, here: string): { label: string; href: string } => ({
-  label: 'Se HTML-utgaven',
+  label: 'Se som slideshow',
   href: `${here}${deckFileName(deck, 'html')}?${SHOW}`,
 })
 

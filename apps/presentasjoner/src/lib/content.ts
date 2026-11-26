@@ -28,3 +28,11 @@ export async function slidePictures(slug: string, slide: Slide): Promise<MediaIt
   )
   return items.filter((item) => item !== null)
 }
+
+/** A slide's pictures that show something, as the files the build gives them (not made smaller: the slideshow is made as the answer is written, and the Worker has no image service), with their alt text. */
+export function slidePictureFiles(slug: string, slide: Slide): { src: string; alt: string }[] {
+  return (slide.pictures ?? []).flatMap((picture) => {
+    const image = pictures[`../../content/${slug}/${picture.file}`]
+    return image === undefined || picture.decorative === true ? [] : [{ src: image.src, alt: picture.alt }]
+  })
+}

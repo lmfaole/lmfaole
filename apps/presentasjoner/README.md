@@ -21,9 +21,12 @@ innholdet slide for slide (tekst, bilder, lenker og notater) og presentasjonen t
   - `.html` lages i det svaret skrives (`src/pages/[slug]/[file].html.ts`): samme komponenter som siden (`src/views/TalkDocument.tsx`) og
     samme stilark, lagt inline, i én fil uten script. Bildene står som alt-tekst, slik videoene gjør, og diagrammene er tegnet ferdig.
     Skriftene hentes fra nettstedet, så åpnet fra disk brukes leserens egen skrift.
-  - Samme `.html` kan leses i nettleseren i stedet for å lastes ned: `?vis` (`SHOW` og `talkView` i `src/lib/deck.ts`) sender den som
-    `inline` i stedet for `attachment`. Nøyaktig samme fil, bare ikke lagret — derfor er det ingen egen rute og ingen annen markup.
-    Knappen «Se HTML-utgaven» står sist blant de fire i rail-en, og er den eneste som ikke er en nedlasting.
+  - `?vis` på samme adresse (`SHOW` og `talkView` i `src/lib/deck.ts`) åpner presentasjonen som slideshow i nettleseren, sendt `inline`:
+    én slide om gangen, med piltaster, mellomrom, sveip og knapper, `F` for fullskjerm og `N` for notater, og `#<n>` i adressen går til en
+    slide. Reserveslidene kommer sist. Den er laget i det svaret skrives (`src/lib/slideshow.ts`, `src/views/Slideshow.tsx`): samme
+    komponenter og stilark som siden, og bildene vises i full størrelse. Designsystemet har ikke noe slideshow, så dette er det ene stedet
+    appen har egen CSS og eget script (i fila, ikke på sidene). Uten script står alle slidene under hverandre.
+    Knappen «Se som slideshow» står sist blant de fire i rail-en, og er den eneste som ikke er en nedlasting.
 - Ingen informasjonskapsler og ingen service worker.
 - Sikkerhetshodene står i `@lmfaole/web/headers` (Workerens svar) og `public/_headers` (de bygde filene). En test (`src/headers.test.ts`) passer på at de er like.
 - Astro-oppsettet, middlewarens sidecache, D1-lesingen, dokumentet, 404-siden, stilarket og tsconfig er felles for Astro-appene, i `packages/web` (`@lmfaole/web`).

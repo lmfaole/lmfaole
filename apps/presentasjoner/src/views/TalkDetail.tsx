@@ -20,7 +20,7 @@ export function talkFacts(deck: Deck): DetailFact[] {
 /**
  * The body of a talk's page: the outline (`children`), and beside it the downloads and the facts. The three are equal ways to the same
  * talk, so each is the same quiet `LinkButton`, and the labels are short: the rail is 16–20rem wide and they stand under each other in it.
- * Reading the same file here rather than keeping it is the last of them, and the only one that is not a download: its icon says so.
+ * Watching it as a slideshow here rather than keeping a file is the last of them, and the only one that is not a download: its icon says so.
  */
 export function TalkDetail({
   deck,

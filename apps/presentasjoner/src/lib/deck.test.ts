@@ -120,7 +120,7 @@ test('a file is saved unless it is asked for to be read here, and then it is the
 
 test('reading a talk in the browser is the HTML file itself, asked for with ?vis', () => {
   assert.deepEqual(talkView({ file: 'tale.pptx' }, '/presentasjoner/2026-frempa/'), {
-    label: 'Se HTML-utgaven',
+    label: 'Se som slideshow',
     href: '/presentasjoner/2026-frempa/tale.html?vis',
   })
 })

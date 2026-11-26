@@ -12,7 +12,7 @@ import { SlideItem } from './SlideItem'
 import { talkFacts } from './TalkDetail'
 
 /** The slide's charts, drawn where they stand and read as they are: the file has no script, so there is nothing to hydrate them with. */
-const charts = (slide: Slide) => {
+export const charts = (slide: Slide) => {
   const plans = slideCharts(slide)
   return plans.length === 0 ? undefined : <SlideCharts plans={plans} />
 }
