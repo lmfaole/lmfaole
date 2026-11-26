@@ -100,15 +100,24 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 /* On a wide screen the slide is a 16:9 stage in the middle of the window, and everything in it scales with it, as on a slide: the root size follows the stage.
    Each layout of the template has its own fixed places for the parts, as there. */
 @media (min-width:48rem) and (min-aspect-ratio:1/1){
-  html.js{font-size:max(12px,calc(min(100vw,100dvh*16/9)/60))}
-  .js .show-stage{inline-size:min(100vw,calc(100dvh*16/9));block-size:auto;aspect-ratio:16/9;max-block-size:100dvh;padding:3rem 4rem 2.5rem;gap:0 3rem;box-shadow:0 1.5rem 4rem oklch(0% 0 0 / .25);overflow:hidden}
-  .js .show-stage>h2{font-size:3rem}
+  html.js{font-size:max(12px,calc(min(100vw,(100dvh - 62px)*16/9)/60))}
+  .js .show-slide{padding-block-end:62px;box-sizing:border-box}
+  .js .show-stage{inline-size:min(100vw,calc((100dvh - 62px)*16/9));block-size:auto;aspect-ratio:16/9;max-block-size:calc(100dvh - 62px);padding:2rem 4rem 2.5rem;gap:0 3rem;box-shadow:0 1.5rem 4rem oklch(0% 0 0 / .25);overflow:hidden}
+  .js .show-stage>h2{font-size:3rem;line-height:1.1;text-wrap:balance;margin-block-end:1.25rem}
+  /* The design system's text carries its own size; on the stage the layout sets it. */
+  .js .show-content :is(.text-base,p,li){font-size:inherit;line-height:1.35}
+  .js .show-content ul{padding-inline-start:1.25em;margin:0}
+  .js .show-content ul>li+li{margin-block-start:.5em}
+  .js .show-content li::marker{color:var(--muted-foreground)}
   .js .show-content{font-size:1.375rem}
   /* A chart is drawn once at 640×200 here, so its box keeps that shape and the whole chart, text too, grows with the stage. */
   .js .show-stage :is(.ts-chart-host,.ts-chart-surface){block-size:auto!important}
   .js .show-stage [class*=chart-height]{block-size:auto}
   .js .show-stage svg.ts-chart{block-size:auto!important;inline-size:100%}
   .js .show-stage :is(.show-side,.show-content) details{display:none}
+  .js .show-stage dl{gap:1.5rem 3rem;flex-wrap:nowrap}
+  .js .show-stage dl dd{font-size:4.5rem;line-height:1}
+  .js .show-stage dl dt{font-size:1.25rem;white-space:nowrap}
   .js .show-side img{max-block-size:100%}
   .js .show-stage{grid-template-rows:auto auto 1fr auto}
   .js .show-stage:is([data-layout=content],[data-layout=chart]){grid-template-columns:3fr 2fr;grid-template-areas:"kicker kicker" "title title" "side content" "foot foot"}
@@ -116,13 +125,13 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
   .js .show-stage:is([data-layout=content],[data-layout=chart]):not(:has(.show-content)){grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "side" "foot"}
   .js .show-stage:is([data-layout=content],[data-layout=chart]) :is(.show-side,.show-content){align-self:center}
   .js .show-stage[data-layout=chart]:not(:has(.show-side)) .show-content{font-size:1.75rem;max-inline-size:44rem}
-  .js .show-stage[data-layout=charts-two]{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 1fr auto auto;grid-template-areas:"kicker" "title" "side" "content" "foot"}
-  .js .show-stage[data-layout=charts-two] .show-content{align-self:center;padding-block-start:1rem}
+  .js .show-stage[data-layout=charts-two]{grid-template-columns:1fr 1fr;grid-template-rows:auto auto 1fr auto;grid-template-areas:"kicker kicker" "title title" "side content" "foot foot"}
+  .js .show-stage[data-layout=charts-two] :is(.show-side,.show-content){align-self:start;padding-block-start:1rem}
   .js .show-stage:is([data-layout=list],[data-layout=quote],[data-layout=steps],[data-layout=content]:not(:has(.show-side))){grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "content" "foot"}
-  .js .show-stage:is([data-layout=list],[data-layout=quote],[data-layout=steps]) .show-content{align-self:center}
+  .js .show-stage:is([data-layout=list],[data-layout=quote],[data-layout=steps]) .show-content{align-self:start;padding-block-start:1rem}
   .js .show-stage[data-layout=list] .show-content{font-size:1.75rem;max-inline-size:52rem}
-  .js .show-stage[data-layout=list] .show-content li{margin-block:.75rem}
-  .js .show-stage[data-layout=quote] .show-content{font-size:2.5rem;line-height:1.25;max-inline-size:44rem;padding-inline-start:2rem;border-inline-start:.375rem solid var(--foreground)}
+  .js .show-stage[data-layout=list] .show-content li+li{margin-block-start:1rem}
+  .js .show-stage[data-layout=quote] .show-content{font-size:2.5rem;max-inline-size:44rem;padding-inline-start:1.5rem;border-inline-start:.375rem solid var(--foreground)}
   .js .show-stage[data-layout=steps] .show-content{font-size:1.5rem}
   .show-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.5rem;margin:0;padding:0;list-style:none;counter-reset:step}
   .show-steps li{counter-increment:step;border-block-start:.25rem solid var(--foreground);padding-block-start:1rem}
@@ -132,12 +141,19 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
   .js .show-stage[data-layout=picture-right]{grid-template-areas:". side" "kicker side" "title side" "content side" ". side" "foot foot"}
   .js .show-stage[data-layout=picture-edge]{grid-template-columns:5fr 4fr;grid-template-areas:"side ." "side kicker" "side title" "side content" "side ." "side foot";padding:0 4rem 2.5rem 0}
   .js .show-stage[data-layout=picture-edge] .show-foot{padding-bottom:0}
+  .js .show-stage:is([data-layout=picture-left],[data-layout=picture-right],[data-layout=picture-edge]) .show-side{display:grid}
   .js .show-stage:is([data-layout=picture-left],[data-layout=picture-right],[data-layout=picture-edge]) .show-side{align-self:stretch;min-block-size:0;overflow:hidden}
   .js .show-stage:is([data-layout=picture-left],[data-layout=picture-right],[data-layout=picture-edge]) .show-side :is(div,img){block-size:100%;inline-size:100%;margin:0}
   .js .show-stage:is([data-layout=picture-left],[data-layout=picture-right],[data-layout=picture-edge]) .show-side img{object-fit:cover;max-block-size:none;border-radius:var(--radius-2xl)}
   .js .show-stage[data-layout=picture-edge] .show-side img{border-radius:0 var(--radius-2xl) var(--radius-2xl) 0}
-  .js .show-stage:is([data-layout=cover],[data-layout=closing]){grid-template-columns:minmax(0,40rem);grid-template-rows:1fr auto auto auto 1fr auto;grid-template-areas:"." "kicker" "title" "content" "." "foot"}
+  .js .show-stage:is([data-layout=cover],[data-layout=closing]){grid-template-columns:minmax(0,48rem);grid-template-rows:1fr auto auto auto 1fr auto;grid-template-areas:"." "kicker" "title" "content" "." "foot"}
   .js .show-stage:is([data-layout=cover],[data-layout=closing])>h2{font-size:4.5rem}
+  .js .show-stage:is([data-layout=cover],[data-layout=closing]) .show-content{font-size:1.5rem;color:var(--muted-foreground)}
+  .js .show-stage:is([data-layout=cover],[data-layout=closing]) .show-content ul{list-style:none;padding:0}
+  .js .show-stage[data-layout=charts-two] .show-side>div{grid-template-columns:1fr 1fr;gap:2rem}
+  .js .show-stage[data-layout=charts-two] dl dd{font-size:3.5rem}
+  .js .show-stage[data-layout=charts-two] dl dt{font-size:1.125rem}
+  .js .show-stage[data-layout=charts-two] .show-content{font-size:1.25rem}
   .js .show-stage:is([data-layout=section-dark],[data-layout=section-light]){grid-template-columns:minmax(0,44rem);grid-template-rows:1fr auto 1fr;grid-template-areas:"." "title" "."}
   .js .show-stage:is([data-layout=section-dark],[data-layout=section-light])>h2{font-size:4rem}
   .js .show-stage[data-layout=section-light]{background:var(--muted);color:var(--muted-foreground)}
@@ -173,7 +189,7 @@ export const SLIDESHOW_JS = `
     at = index
     slides.forEach((slide, i) => { slide.inert = i !== at })
     const slide = slides[at]
-    count.textContent = (slide.dataset.reserve === 'true' ? 'Reserve ' : '') + (at + 1) + ' / ' + slides.length
+    count.textContent = (at + 1) + ' / ' + slides.length
     prev.disabled = at === 0
     next.disabled = at === slides.length - 1
     root.style.setProperty('--progress', slides.length < 2 ? 1 : at / (slides.length - 1))
