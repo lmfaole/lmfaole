@@ -46,11 +46,9 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 .show-bar button[disabled]{opacity:.45;cursor:default}
 .show-group{display:flex;gap:.5rem;align-items:center}
 .show-count{min-width:4.5rem;text-align:center;font-variant-numeric:tabular-nums}
-.show-overview{width:min(60rem,92vw);max-height:84dvh;padding:1.5rem;border:1px solid var(--border);border-radius:1rem;background:var(--background);color:var(--foreground)}
-.show-overview::backdrop{background:oklch(0% 0 0 / .55)}
 .show-overview[open]{transition:opacity var(--motion-duration-enter) var(--motion-ease-enter),scale var(--motion-duration-enter) var(--motion-ease-enter)}
 @starting-style{.show-overview[open]{opacity:0;scale:.97}}
-.show-overview h2{margin:0 0 1rem;font-size:1.25rem}
+.show-overview::backdrop{background:oklch(0% 0 0 / .55)}
 .show-overview ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:.5rem}
 .show-overview a{display:flex;gap:.5rem;padding:.75rem;border:1px solid var(--border);border-radius:.5rem;color:inherit;text-decoration:none;min-height:2.75rem}
 .show-overview a:hover,.show-overview a[aria-current=true]{background:var(--muted)}
@@ -229,10 +227,12 @@ export function slideshowDocument({
     '<button type="button" id="show-full" title="Fullskjerm (F)">Fullskjerm</button>',
     '</div>',
     '</nav>',
-    '<dialog class="show-overview" id="show-overview" aria-labelledby="show-overview-title">',
-    '<h2 id="show-overview-title">Oversikt</h2>',
+    '<dialog class="show-overview" data-overlay="wide" closedby="any" id="show-overview" aria-labelledby="show-overview-title">',
+    '<div data-overlay-body="">',
+    '<h2 id="show-overview-title" class="font-medium">Oversikt</h2>',
     `<ol>${slides.map((slide) => `<li><a href="#${slide.n}"><small>${slide.reserve ? 'R' : ''}${slide.n}</small><span>${escapeHtml(slide.title)}</span></a></li>`).join('')}</ol>`,
     '<form method="dialog"><button>Lukk</button></form>',
+    '</div>',
     '</dialog>',
     `<script>${SLIDESHOW_JS}</script>`,
     '</body>',

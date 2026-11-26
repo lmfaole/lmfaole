@@ -8,8 +8,8 @@ import { CommandButton } from "./internal/command-button"
 interface OverlayProps {
   /** What a `CommandButton` points at with `commandFor`. */
   id: string
-  /** `dialog` is a box in the middle; `sheet` comes up from the bottom of the screen; `media` is a wide box in the middle for a picture or a video (`MediaGallery`). */
-  variant: "dialog" | "sheet" | "media"
+  /** `dialog` is a box in the middle; `wide` is the same for a list or a grid that needs the room; `sheet` comes up from the bottom of the screen; `media` is a wide box in the middle for a picture or a video (`MediaGallery`). */
+  variant: "dialog" | "wide" | "sheet" | "media"
   title: string
   /** The title is read by a screen reader and not drawn, where the content says what it is already. */
   hideTitle?: boolean

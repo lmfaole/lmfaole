@@ -33,6 +33,16 @@ dialog[data-overlay='media'] {
   border-radius: var(--radius-2xl);
 }
 
+/* A wide box in the middle for a list or a grid of choices that is too wide for `dialog` (the slideshow's overview). */
+dialog[data-overlay='wide'] {
+  inset: 0;
+  margin: auto;
+  block-size: fit-content;
+  max-block-size: 90dvh;
+  inline-size: min(94vw, 60rem);
+  border-radius: var(--radius-2xl);
+}
+
 dialog[data-overlay='sheet'] {
   inset: auto 0 0 0;
   margin: 0 auto;
