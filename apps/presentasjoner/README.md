@@ -22,8 +22,10 @@ innholdet slide for slide (tekst, bilder, lenker og notater) og presentasjonen t
     samme stilark, lagt inline, i én fil uten script. Bildene står som alt-tekst, slik videoene gjør, og diagrammene er tegnet ferdig.
     Skriftene hentes fra nettstedet, så åpnet fra disk brukes leserens egen skrift.
   - `?vis` på samme adresse (`SHOW` og `talkView` i `src/lib/deck.ts`) åpner presentasjonen som slideshow i nettleseren, sendt `inline`:
-    én slide om gangen, med piltaster, mellomrom, sveip og knapper, `F` for fullskjerm og `N` for notater, og `#<n>` i adressen går til en
-    slide. Reserveslidene kommer sist. Den er laget i det svaret skrives (`src/lib/slideshow.ts`, `src/views/Slideshow.tsx`): samme
+    én slide om gangen, med piltaster, mellomrom, sveip og knapper, `F` for fullskjerm, `N` for notater og `O` for oversikt (en `dialog`), og `#<n>` i adressen går til en
+    slide. Slidene fyller skjermen, byttet glir inn med View Transitions (slås av med `prefers-reduced-motion`, og der nettleseren mangler det),
+    en linje øverst viser framdriften, og i fullskjerm skjules knappelinja når musa hviler. Diagrammene er designsystemets egne, tegnet fra tallene
+    i innebygde PowerPoint-diagrammer. Reserveslidene kommer sist. Den er laget i det svaret skrives (`src/lib/slideshow.ts`, `src/views/Slideshow.tsx`): samme
     komponenter og stilark som siden, og bildene vises i full størrelse. Designsystemet har ikke noe slideshow, så dette er det ene stedet
     appen har egen CSS og eget script (i fila, ikke på sidene). Uten script står alle slidene under hverandre.
     Knappen «Se som slideshow» står sist blant de fire i rail-en, og er den eneste som ikke er en nedlasting.

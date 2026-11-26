@@ -21,14 +21,6 @@
           "Lyntale · Frempå 2026"
         ]
       },
-      "media": [
-        {
-          "kind": "video",
-          "name": "Bakgrunnsvideo",
-          "file": "media1.mp4",
-          "alt": "Dekorativ bakgrunnsvideo: rolig kamerabevegelse gjennom en furuskog"
-        }
-      ],
       "time": "0:00–0:05",
       "notes": "[0:00–0:05]\nHOVEDPOENG: Gå rett på saken.\nSI: Ikke «Hei, jeg heter…». Vis tittelen, pust, gå videre.\nOVERGANG: Neste slide stiller spørsmålet."
     },
@@ -109,10 +101,30 @@
           "De samme seks feilene, år etter år"
         ]
       },
-      "pictures": [
+      "charts": [
         {
-          "file": "bilder/chart_six.png",
-          "alt": "Stolpediagram: lav kontrast 83,9 prosent, bilder uten alt-tekst 53,1, skjemafelt uten ledetekst 51, lenker uten navn 46,3, knapper uten navn 30,6, mangler språk 13,5"
+          "kind": "bar",
+          "categories": [
+            "Lav kontrast",
+            "Bilder uten alt-tekst",
+            "Skjemafelt uten ledetekst",
+            "Lenker uten navn",
+            "Knapper uten navn",
+            "Mangler språk"
+          ],
+          "series": [
+            {
+              "name": "Andel forsider med feilen (%)",
+              "values": [
+                83.9,
+                53.1,
+                51.0,
+                46.3,
+                30.6,
+                13.5
+              ]
+            }
+          ]
         }
       ],
       "time": "1:50–2:25",
@@ -138,10 +150,22 @@
           "ble oversett av alle ti"
         ]
       ],
-      "pictures": [
+      "charts": [
         {
-          "file": "bilder/chart_gds.png",
-          "alt": "Stolpe som viser 143 kjente barrierer: 101 funnet av minst ett verktøy og 42 oversett av alle ti verktøy"
+          "kind": "bar",
+          "categories": [
+            "Funnet av minst ett verktøy",
+            "Oversett av alle ti verktøy"
+          ],
+          "series": [
+            {
+              "name": "Antall av 143 kjente barrierer",
+              "values": [
+                101.0,
+                42.0
+              ]
+            }
+          ]
         }
       ],
       "time": "2:25–3:05",
@@ -192,10 +216,32 @@
           "Skjermleserbrukere og KI"
         ]
       },
-      "pictures": [
+      "charts": [
         {
-          "file": "bilder/chart_ai.png",
-          "alt": "Stolpediagram over hva skjermleserbrukere bruker KI til: bildebeskrivelser 60,1 prosent, analyse av komplekse bilder 49,7, veiledning 40,6, sammendrag 37,1, multimedia 28,7, vurdere tilgjengelighet 19,5, lydversjon 17,9"
+          "kind": "bar",
+          "categories": [
+            "Bildebeskrivelser",
+            "Analyse av komplekse bilder",
+            "Veiledning",
+            "Sammendrag",
+            "Multimedia",
+            "Vurdere tilgjengelighet",
+            "Lydversjon"
+          ],
+          "series": [
+            {
+              "name": "Andel skjermleserbrukere (%)",
+              "values": [
+                60.1,
+                49.7,
+                40.6,
+                37.1,
+                28.7,
+                19.5,
+                17.9
+              ]
+            }
+          ]
         }
       ],
       "time": "3:55–4:20",
@@ -221,10 +267,38 @@
           "Sider med ARIA hadde flere feil. Sammenheng, ikke bevist årsak"
         ]
       ],
-      "pictures": [
+      "charts": [
         {
-          "file": "bilder/chart_trend.png",
-          "alt": "To stolpediagram: feil per forside økte fra 51 i 2025 til 56,1 i 2026, og forsider med ARIA hadde 59,1 feil mot 42 uten"
+          "kind": "column",
+          "categories": [
+            "2025",
+            "2026"
+          ],
+          "series": [
+            {
+              "name": "Feil per forside",
+              "values": [
+                51.0,
+                56.1
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "column",
+          "categories": [
+            "Med ARIA",
+            "Uten ARIA"
+          ],
+          "series": [
+            {
+              "name": "Feil per forside",
+              "values": [
+                59.1,
+                42.0
+              ]
+            }
+          ]
         }
       ],
       "time": "4:20–4:45",
@@ -352,10 +426,9 @@
     {
       "n": 20,
       "layout": "Siste side",
-      "title": null,
+      "title": "Ole Jørgen Bakken, Fremtind",
       "text": {
         "20": [
-          "Ole Jørgen Bakken, Fremtind",
           "Slides og kilder: lmfaole.party/presentasjoner"
         ]
       },
