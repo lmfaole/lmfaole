@@ -14,6 +14,8 @@ interface OverlayProps {
   /** The title is read by a screen reader and not drawn, where the content says what it is already. */
   hideTitle?: boolean
   children: ReactNode
+  /** Actions at the foot of the box, kept in view while the body scrolls (`data-overlay-footer`). */
+  footer?: ReactNode
 }
 
 /**
@@ -21,7 +23,7 @@ interface OverlayProps {
  * (`closedby="any"`, with a click handler for the browsers that do not know the attribute). Opened with
  * `<CommandButton command="show-modal" commandFor={id}>`. Its look and motion are in `overlay.css`.
  */
-export function Overlay({ id, variant, title, hideTitle = false, children }: OverlayProps) {
+export function Overlay({ id, variant, title, hideTitle = false, children, footer }: OverlayProps) {
   const titleId = useId()
   return (
     <dialog id={id} data-overlay={variant} closedby="any" aria-labelledby={titleId} onClick={(event) => event.target === event.currentTarget && event.currentTarget.close()}>
@@ -33,6 +35,7 @@ export function Overlay({ id, variant, title, hideTitle = false, children }: Ove
           <X aria-hidden="true" />
         </CommandButton>
         {children}
+        {footer === undefined ? null : <footer data-overlay-footer="">{footer}</footer>}
       </div>
     </dialog>
   )

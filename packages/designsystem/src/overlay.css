@@ -73,6 +73,20 @@ dialog[data-overlay='sheet'] {
   align-items: center;
 }
 
+/* The actions of a box, at its foot and in view while the body scrolls: sticky across the body's padding. */
+[data-overlay-footer] {
+  position: sticky;
+  inset-block-end: -1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin: 0 -1rem -1rem;
+  padding: 0.75rem 1rem;
+  border-block-start: 0.0625rem solid var(--border);
+  background: var(--popover);
+}
+
 [data-overlay-close] {
   position: absolute;
   inset-block-start: 0;

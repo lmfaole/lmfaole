@@ -53,7 +53,7 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 .show-overview a{display:flex;gap:.5rem;padding:.75rem;border:1px solid var(--border);border-radius:.5rem;color:inherit;text-decoration:none;min-height:2.75rem}
 .show-overview a:hover,.show-overview a[aria-current=true]{background:var(--muted)}
 .show-overview small{color:var(--muted-foreground);white-space:nowrap}
-.show-overview form{margin:1rem 0 0;display:flex;justify-content:flex-end}
+.show-overview form{margin:0}
 .show-overview button{font:inherit;color:inherit;background:transparent;border:1px solid var(--border);border-radius:.5rem;padding:.5rem .875rem;min-height:2.75rem;cursor:pointer}
 /* CSS carousel (Chrome 135+): the browser's own buttons and markers on the track; elsewhere the bar and the script do it */
 @supports selector(::scroll-button(*)) and selector(::scroll-marker){
@@ -231,7 +231,7 @@ export function slideshowDocument({
     '<div data-overlay-body="">',
     '<h2 id="show-overview-title" class="font-medium">Oversikt</h2>',
     `<ol>${slides.map((slide) => `<li><a href="#${slide.n}"><small>${slide.reserve ? 'R' : ''}${slide.n}</small><span>${escapeHtml(slide.title)}</span></a></li>`).join('')}</ol>`,
-    '<form method="dialog"><button>Lukk</button></form>',
+    '<footer data-overlay-footer=""><form method="dialog"><button>Lukk</button></form></footer>',
     '</div>',
     '</dialog>',
     `<script>${SLIDESHOW_JS}</script>`,
