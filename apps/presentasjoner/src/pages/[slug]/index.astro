@@ -1,7 +1,7 @@
 ---
 export const prerender = true
-// `/presentasjoner/<slug>/`: one talk, built from `content/<slug>/presentasjon.json`: what it is about, its facts and its PDF, and the outline, slide
-// for slide with the speaker's notes folded away. The hidden slides kept in reserve are in a section of their own, folded as well.
+// `/presentasjoner/<slug>/`: one talk, built from `content/<slug>/presentasjon.json`: what it is about, its facts, the three files it can be kept as and
+// the way to read the HTML one here (`talkView`), and the outline, slide for slide with the speaker's notes folded away. The hidden slides kept in reserve are in a section of their own, folded as well.
 import { Breadcrumbs } from '@lmfaole/designsystem/components/breadcrumbs'
 import { Disclosure } from '@lmfaole/designsystem/components/disclosure'
 import { MediaGallery } from '@lmfaole/designsystem/components/media-gallery'
@@ -11,8 +11,10 @@ import { Text } from '@lmfaole/designsystem/components/text'
 import Document from '@lmfaole/web/Document.astro'
 import type { GetStaticPaths } from 'astro'
 
+import { slideCharts } from '../../lib/chart'
 import { slidePictures, TALKS } from '../../lib/content'
-import { pdfName, slideTitle, splitSlides, type Talk } from '../../lib/deck'
+import { slideTitle, splitSlides, talkDownloads, talkView, type Talk } from '../../lib/deck'
+import { SlideCharts } from '../../views/SlideCharts'
 import { SlideItem } from '../../views/SlideItem'
 import { TalkDetail } from '../../views/TalkDetail'
 
@@ -30,11 +32,12 @@ const pictures = (slide: (typeof deck.slides)[number]) => gallery.get(slide.n) ?
 <Document title={`${deck.title} – Presentasjoner`} description={deck.summary} url={new URL(here, Astro.site).href} width="pane">
   <Breadcrumbs items={[{ href: base, label: 'Presentasjoner' }, { href: here, label: deck.title }]} />
   <PageHeader title={deck.title} description={deck.summary} />
-  <TalkDetail deck={deck} pdf={`${here}${pdfName(deck)}`}>
+  <TalkDetail deck={deck} downloads={talkDownloads(deck, here)} view={talkView(deck, here)}>
     <PageSection id="innhold" title="Innhold" icon="chapters">
       {
         shown.map((slide) => (
           <SlideItem slide={slide}>
+            {slideCharts(slide).length > 0 && <SlideCharts slot="charts" client:visible plans={slideCharts(slide)} />}
             {pictures(slide).length > 0 && <MediaGallery slot="gallery" client:visible items={pictures(slide)} label={`Bilder på slide ${slide.n}: ${slideTitle(slide)}`} />}
           </SlideItem>
         ))
@@ -46,6 +49,8 @@ const pictures = (slide: (typeof deck.slides)[number]) => gallery.get(slide.n) ?
           <Text role="quiet">Slides som er skjult i presentasjonen og bare tas fram ved behov, for eksempel ved spørsmål.</Text>
           <Disclosure summary={`Vis ${reserve.length} reserveslides`}>
             {
+              /* No chart here: a chart brings its own disclosure («Vis tallene»), and these slides stand inside one already. The file you
+                 download has no such fold, so there the charts are drawn (`src/views/TalkDocument.tsx`). */
               reserve.map((slide) => (
                 <SlideItem slide={slide} notes="shown">
                   {pictures(slide).length > 0 && <MediaGallery slot="gallery" client:visible items={pictures(slide)} label={`Bilder på slide ${slide.n}: ${slideTitle(slide)}`} />}

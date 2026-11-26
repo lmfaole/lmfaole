@@ -13,11 +13,11 @@ function SlideText({ paragraphs }: { paragraphs: readonly Paragraph[] }) {
 }
 
 /**
- * One slide of the outline: its number and title, when in the talk it comes, its text, its pictures (`gallery`, an island the page puts in)
- * with their credits, its videos in words, its links and the speaker's notes. The notes are behind a `Disclosure`, or (`notes="shown"`, for
- * a slide that is already inside one) under a quiet label, since a disclosure is never nested.
+ * One slide of the outline: its number and title, when in the talk it comes, its text, its charts (`charts`) and its pictures (`gallery`),
+ * both islands the page puts in, with their credits, its videos in words, its links and the speaker's notes. The notes are behind a
+ * `Disclosure`, or (`notes="shown"`, for a slide that is already inside one) under a quiet label, since a disclosure is never nested.
  */
-export function SlideItem({ slide, gallery, notes = 'folded' }: { slide: Slide; gallery?: ReactNode; notes?: 'folded' | 'shown' }) {
+export function SlideItem({ slide, charts, gallery, notes = 'folded' }: { slide: Slide; charts?: ReactNode; gallery?: ReactNode; notes?: 'folded' | 'shown' }) {
   const boxes = slide.textboxes ?? []
   const texts = [...Object.values(slide.text ?? {}), ...boxes.filter((box) => !isCredit(box))].filter((paragraphs) => boxText(paragraphs) !== '')
   const credits = boxes.filter(isCredit)
@@ -32,9 +32,12 @@ export function SlideItem({ slide, gallery, notes = 'folded' }: { slide: Slide; 
       {texts.map((paragraphs, index) => (
         <SlideText key={index} paragraphs={paragraphs} />
       ))}
+      {charts}
       {gallery}
       {credits.map((box, index) => (
-        <Text key={index} role="note">{boxText(box)}</Text>
+        <Text key={index} role="note">
+          {boxText(box)}
+        </Text>
       ))}
       {(slide.media ?? []).map((media) => (
         <Text key={media.file} role="quiet">{`${media.kind === 'video' ? 'Video' : 'Lyd'}: ${media.alt}`}</Text>

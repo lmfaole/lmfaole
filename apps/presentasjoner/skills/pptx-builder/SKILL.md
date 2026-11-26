@@ -9,10 +9,10 @@ description: Generate .pptx PowerPoint decks programmatically with python-pptx (
 
 ```bash
 python3 -m venv /tmp/pptxvenv && /tmp/pptxvenv/bin/pip install python-pptx pillow pyyaml   # pyyaml only for .yaml outlines
-/tmp/pptxvenv/bin/python apps/presentasjoner/skills/pptx-builder/scripts/build_deck.py outline.json /tmp/out.pptx [--template base.pptx]
+/tmp/pptxvenv/bin/python apps/presentasjoner/scripts/build_deck.py outline.json /tmp/out.pptx [--template base.pptx]
 ```
 
-Keep the venv and scratch output outside the repo. Decks are tracked with Git LFS (`.pptx`), so don't commit generated test decks.
+Keep the venv and scratch output outside the repo: `apps/presentasjoner` ignores `*.pptx`, since that repo is public and a deck is not kept there.
 
 Outline (JSON or YAML; slide `type`: `title`, `section`, `bullets`, `image`, `chart`, `table`; every slide takes `notes`):
 
@@ -25,7 +25,7 @@ Outline (JSON or YAML; slide `type`: `title`, `section`, `bullets`, `image`, `ch
   {"type": "table", "title": "T", "table": [["H1","H2"],["a","b"]]}]}
 ```
 
-Chart kinds: `bar`, `column`, `line`, `pie`. Image paths are relative to the outline file. `--template` reuses the masters/layouts/theme of an existing .pptx; its existing slides are dropped and empty placeholders pruned. Map slide types to the template's layout names with a top-level `"layouts": {"title": "Forside", "section": "Skilleark sort", "bullets": "Uten linje"}` (otherwise English default names are tried, then default indexes). Title slides accept `"extra": {"<placeholder idx>": "text"}`. Optional `"theme": {"body_pt": 28, "title_pt": 40}` sets font sizes. The Fremtind template is `maler/fremtind-mal.pptx`; `--keep-existing` keeps the template's slides as a hidden appendix after the new ones, and a slide accepts `"layout"` and `"hidden"`. PDF export for visual checks works on macOS via PowerPoint AppleScript (`save active presentation in POSIX file "x.pdf" as save as PDF`), then render pages with `pymupdf`.
+Chart kinds: `bar`, `column`, `line`, `pie`. A `bullets` slide takes an `image` **or** a `chart` beside the text, and `"alt"` is the alt text of whichever it is (PowerPoint's accessibility check reads it). A bullet is a string, `[text, level]` or `{"text": …, "level": 1, "url": …}` to link the line. Image paths are relative to the outline file. `--template` reuses the masters/layouts/theme of an existing .pptx; its existing slides are dropped and empty placeholders pruned. Map slide types to the template's layout names with a top-level `"layouts": {"title": "Forside", "section": "Skilleark sort", "bullets": "Uten linje"}` (otherwise English default names are tried, then default indexes). Title slides accept `"extra": {"<placeholder idx>": "text"}`. Optional `"theme": {"body_pt": 28, "title_pt": 40}` sets font sizes. The employer's template is not in this repo (it is public): pass its path from wherever you keep it. `--keep-existing` keeps the template's slides as a hidden appendix after the new ones, and a slide accepts `"layout"` and `"hidden"`. PDF export for visual checks works on macOS via PowerPoint AppleScript (`save active presentation in POSIX file "x.pdf" as save as PDF`), then render pages with `pymupdf`.
 
 The other way: `scripts/pptx_to_json.py` (in `apps/presentasjoner/`) writes a deck's content to `presentasjon.json`, which every presentation folder (`content/<år>-…`) needs. It records layouts, placeholder text, pictures in `bilder/`, media, links and notes; `scripts/check.py` checks it against `presentasjon.schema.json`. That format is a record of the deck, not an outline for `build_deck.py`.
 

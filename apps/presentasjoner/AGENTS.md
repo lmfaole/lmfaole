@@ -10,8 +10,19 @@ The talks at <https://lmfaole.party/presentasjoner/>, Astro on Cloudflare Worker
 - Content is `content/<slug>/presentasjon.json` (made by `scripts/pptx_to_json.py`, never edited by hand except the top-level `summary`, `event`, `date`
   and `duration`), read at build time (`src/lib/content.ts`); the pages are prerendered. `scripts/check.py` (stdlib only) checks it against
   `presentasjon.schema.json`. The .pptx and the employer's template never go in the repo: it is public.
-- The PDF is in the R2 bucket `presentasjoner` (binding `PDF`, read only) at `<slug>/<pptx name>.pdf`, put there by `scripts/export_pdf.sh`; the endpoint
-  serves only keys of talks in `content/` (`pdfKey`).
+- A talk is downloaded in three formats (`DOWNLOADS` in `src/lib/deck.ts`): the `.pdf` and the `.pptx` are in the R2 bucket `presentasjoner` (binding
+  `FILES`, read only) at `<slug>/<pptx name>.<ending>`, put there by `scripts/export.sh`, and the `.html` is made as the answer is written from the
+  page's own components and stylesheet. Each endpoint names its own format, and serves only keys of talks in `content/` (`fileKey`).
+  `?vis` on the `.html` sends that same file `inline` instead of `attachment` (`SHOW`, `talkView`), so it can be read without being kept: one
+  word of a header, never a second rendering of the talk.
+- What is downloaded is not the deck that was given: `scripts/export.sh <slug>` builds a generic one from `presentasjon.json` and our own
+  `maler/lmfaole-mal.pptx` (the one `.pptx` that belongs here; the rule is about the talk's deck and the **employer's** template) and exports the
+  PDF from that. The key is the deck's own name, so a wrong file would publish the employer's template: the script builds in a directory it makes
+  itself and uploads exactly that, and `scripts/deck_guard.py` (stdlib) refuses a `.pptx` whose theme, master, layouts or document properties name
+  the employer, or that has a layout our template does not. Never give the script a path, and never skip the guard.
+- A chart is the numbers, never a picture of them: `charts` in `presentasjon.json`, the form from `src/lib/chart.ts` (the design system's own
+  limits: ten categories, five series; too few numbers to draw are `KeyFigures`; past the limits nothing is drawn and the slide keeps its
+  picture) and the drawing from `src/views/SlideCharts.tsx`. The decision is tested, never nudged in the view.
 - Security headers: `@lmfaole/web/headers` (the Worker's answers, `src/middleware.ts`) and `public/_headers` (the built files) say the same (`src/headers.test.ts` checks it).
 - The Astro config, the middleware's page cache, D1 reading, the document, the 404 page, the stylesheet and the tsconfig are `packages/web` (`@lmfaole/web`),
   shared by every Astro app: a change there is made there, not here (its `AGENTS.md`).

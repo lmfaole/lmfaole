@@ -17,15 +17,34 @@ export function talkFacts(deck: Deck): DetailFact[] {
   ]
 }
 
-/** The body of a talk's page: the outline (`children`), and beside it the download of the PDF and the facts. */
-export function TalkDetail({ deck, pdf, children }: { deck: Deck; /** The PDF's address. */ pdf: string; children: ReactNode }) {
+/**
+ * The body of a talk's page: the outline (`children`), and beside it the downloads and the facts. The three are equal ways to the same
+ * talk, so each is the same quiet `LinkButton`, and the labels are short: the rail is 16–20rem wide and they stand under each other in it.
+ * Reading the same file here rather than keeping it is the last of them, and the only one that is not a download: its icon says so.
+ */
+export function TalkDetail({
+  deck,
+  downloads,
+  view,
+  children,
+}: {
+  deck: Deck
+  /** Each format, as `talkDownloads` has it. */ downloads: readonly { label: string; href: string }[]
+  /** The same HTML, read in the browser, as `talkView` has it. */ view: { label: string; href: string }
+  children: ReactNode
+}) {
   return (
     <DetailLayout
-      actions={
-        <LinkButton href={pdf} icon="download">
-          Last ned presentasjonen (PDF)
-        </LinkButton>
-      }
+      actions={[
+        ...downloads.map(({ label, href }) => (
+          <LinkButton key={href} href={href} icon="download">
+            {label}
+          </LinkButton>
+        )),
+        <LinkButton key={view.href} href={view.href} icon="view">
+          {view.label}
+        </LinkButton>,
+      ]}
       facts={talkFacts(deck)}
     >
       {children}

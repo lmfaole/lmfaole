@@ -10,14 +10,16 @@ Outline:
   "slides": [
     {"type": "title",   "title": "Deck", "subtitle": "Sub", "extra": {"20": "Author"}, "notes": "..."},
     {"type": "section", "title": "Part 1"},
-    {"type": "bullets", "title": "T", "bullets": ["a", ["nested", 1], "b"], "image": "pic.png"},
-    {"type": "image",   "title": "T", "image": "pic.png"},
+    {"type": "bullets", "title": "T", "bullets": ["a", ["nested", 1], "b"], "image": "pic.png", "alt": "What it shows"},
+    {"type": "image",   "title": "T", "image": "pic.png", "alt": "What it shows"},
     {"type": "chart",   "title": "T", "chart": {"kind": "bar|column|line|pie",
                          "categories": ["A","B"], "series": {"2024": [1,2]}}},
     {"type": "table",   "title": "T", "table": [["H1","H2"],["a","b"]]}
   ]
 }
-Bullets: a string is level 0; [text, level] sets the level. Every slide accepts "notes".
+Bullets: a string is level 0; [text, level] sets the level; {"text": …, "level": 1, "url": …} links the line.
+A "bullets" slide takes an "image" or a "chart" beside the text. "alt" is the alt text of the slide's picture
+or chart, which a screen reader and PowerPoint's accessibility check read. Every slide accepts "notes".
 Relative image paths resolve against the outline's directory.
 """
 import argparse
@@ -81,40 +83,63 @@ def body_box(prs, slide):
     return margin, top, prs.slide_width - 2 * margin, prs.slide_height - top - Inches(0.5)
 
 
+def bullet(item):
+    """A bullet as (text, level, url): a string, [text, level], or {"text": …, "level": …, "url": …}."""
+    if isinstance(item, str):
+        return item, 0, None
+    if isinstance(item, dict):
+        return item["text"], int(item.get("level", 0)), item.get("url")
+    return item[0], int(item[1]), None
+
+
 def fill_bullets(tf, items, theme):
     tf.clear()
     first = True
     for item in items:
-        text, level = (item, 0) if isinstance(item, str) else (item[0], int(item[1]))
+        text, level, url = bullet(item)
         p = tf.paragraphs[0] if first else tf.add_paragraph()
         first = False
         p.text = text
         p.level = level
         for r in p.runs:
+            if url:
+                r.hyperlink.address = url
             if theme.get("body_pt"):
                 r.font.size = Pt(theme["body_pt"])
             if theme.get("font"):
                 r.font.name = theme["font"]
 
 
-def add_picture_fit(slide, path, box):
+def set_alt(shape, alt):
+    """The alt text a screen reader and PowerPoint's accessibility check read."""
+    if not alt:
+        return
+    el = next(shape._element.iter("{http://schemas.openxmlformats.org/presentationml/2006/main}cNvPr"), None)
+    if el is not None:
+        el.set("descr", alt)
+
+
+def add_picture_fit(slide, path, box, alt=None):
     left, top, width, height = box
     pic = slide.shapes.add_picture(str(path), left, top)
     scale = min(width / pic.width, height / pic.height)
     pic.width, pic.height = int(pic.width * scale), int(pic.height * scale)
     pic.left = int(left + (width - pic.width) / 2)
     pic.top = int(top + (height - pic.height) / 2)
+    set_alt(pic, alt)
     return pic
 
 
-def add_chart(slide, spec, box, theme):
+def add_chart(slide, spec, box, theme, alt=None):
     cd = CategoryChartData()
     cd.categories = spec["categories"]
     for name, values in spec["series"].items():
         cd.add_series(name, values)
     kind = spec.get("kind", "column")
     left, top, width, height = box
-    chart = slide.shapes.add_chart(CHARTS[kind], left, top, width, height, cd).chart
+    frame = slide.shapes.add_chart(CHARTS[kind], left, top, width, height, cd)
+    set_alt(frame, alt)
+    chart = frame.chart
     chart.has_legend = len(spec["series"]) > 1 or kind == "pie"
     if chart.has_legend:
         chart.legend.position = XL_LEGEND_POSITION.BOTTOM
@@ -219,19 +244,22 @@ def build(outline, out, base, template=None, keep_existing=False):
             s.shapes.title.text = title
             body = list(s.placeholders)[1]
             fill_bullets(body.text_frame, spec.get("bullets", []), theme)
-            if spec.get("image"):  # text left, picture right
+            if spec.get("image") or spec.get("chart"):  # text left, picture or chart right
                 left, top, width, height = body.left, body.top, body.width, body.height
                 body.width = int(width * 0.5)
-                add_picture_fit(s, resolve(spec["image"], base),
-                                (left + int(width * 0.55), top, int(width * 0.45), height))
+                box = (left + int(width * 0.55), top, int(width * 0.45), height)
+                if spec.get("image"):
+                    add_picture_fit(s, resolve(spec["image"], base), box, spec.get("alt"))
+                else:
+                    add_chart(s, spec["chart"], box, theme, spec.get("alt"))
         else:
             s = prs.slides.add_slide(layout(prs, nm.get("other", "Title Only"), 5))
             s.shapes.title.text = title
             box = body_box(prs, s)
             if kind == "image":
-                add_picture_fit(s, resolve(spec["image"], base), box)
+                add_picture_fit(s, resolve(spec["image"], base), box, spec.get("alt"))
             elif kind == "chart":
-                add_chart(s, spec["chart"], box, theme)
+                add_chart(s, spec["chart"], box, theme, spec.get("alt"))
             elif kind == "table":
                 add_table(s, spec["table"], box, theme)
             else:

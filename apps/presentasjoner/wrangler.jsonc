@@ -12,6 +12,6 @@
     { "pattern": "lmfaole.party/presentasjoner", "zone_name": "lmfaole.party" },
     { "pattern": "lmfaole.party/presentasjoner/*", "zone_name": "lmfaole.party" }
   ],
-  // The talks as PDF, `<slug>/<the .pptx's name>.pdf`, put there by `scripts/export_pdf.sh`. The site only reads them (`src/pages/[slug]/[file].pdf.ts`).
-  "r2_buckets": [{ "binding": "PDF", "bucket_name": "presentasjoner" }]
+  // The talks to download, `<slug>/<the .pptx's name>.pdf` and `.pptx` (`README.md` says how they get there). The site only reads them (`src/lib/download.ts`).
+  "r2_buckets": [{ "binding": "FILES", "bucket_name": "presentasjoner" }]
 }

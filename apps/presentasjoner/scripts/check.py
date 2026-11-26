@@ -13,7 +13,7 @@ import re
 import sys
 from pathlib import Path
 
-TYPES = {"object": dict, "array": list, "string": str, "boolean": bool, "null": type(None)}
+TYPES = {"object": dict, "array": list, "string": str, "number": (int, float), "boolean": bool, "null": type(None)}
 
 
 def is_type(value, name):
@@ -92,6 +92,14 @@ def check_deck(folder, schema):
         for item in slide.get("pictures", []) + slide.get("media", []):
             if not item["alt"].strip() and not item.get("decorative"):
                 errors.append(f"{where}: {item.get('file') or item.get('name')} has no alt text and is not marked decorative")
+        # A chart's numbers only mean something as a grid: one value per category in every series. The schema cannot say it.
+        for j, chart in enumerate(slide.get("charts", []), 1):
+            for series in chart["series"]:
+                if len(series["values"]) != len(chart["categories"]):
+                    errors.append(
+                        f"{where}: chart {j}, series {series['name']!r} has {len(series['values'])} values"
+                        f" for {len(chart['categories'])} categories"
+                    )
     return errors
 
 

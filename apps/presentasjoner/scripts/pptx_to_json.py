@@ -80,6 +80,28 @@ def media(shape, slide):
     return item
 
 
+CHART_KINDS = {"COLUMN": "column", "BAR": "bar", "LINE": "line", "AREA": "area", "PIE": "pie", "DOUGHNUT": "pie"}
+
+
+def chart(shape):
+    """A chart's numbers: its categories and one series per row, so the site can draw them itself instead of keeping a picture of them.
+
+    The type is simplified to the six the schema has; anything else is "other" and the site reads the numbers, not the shape.
+    """
+    ch = shape.chart
+    try:
+        name = ch.chart_type.name
+    except (AttributeError, ValueError):  # a chart type python-pptx does not know
+        name = ""
+    item = {"kind": next((v for k, v in CHART_KINDS.items() if name.startswith(k)), "other")}
+    if ch.has_title and (title := ch.chart_title.text_frame.text.strip()):
+        item["title"] = title
+    # A category can be a number or a date in the .pptx; the site shows it as the words it is.
+    item["categories"] = [str(c) for c in ch.plots[0].categories]
+    item["series"] = [{"name": s.name or "", "values": list(s.values)} for s in ch.series]
+    return item
+
+
 def picture(shape, images):
     blob = shape.image.blob
     item = {"file": images.get(hashlib.sha256(blob).hexdigest())}
@@ -99,11 +121,15 @@ def slide_json(n, slide, images):
         out["hidden"] = True
     title = slide.shapes.title
     out["title"] = (title.text_frame.text.strip() or None) if title is not None else None
-    text, boxes, pictures, clips, found = {}, [], [], [], []
+    text, boxes, pictures, clips, charts, found = {}, [], [], [], [], []
     for shape in slide.shapes:
         found += links(shape)
         if shape.shape_type == MSO_SHAPE_TYPE.MEDIA:
             clips.append(media(shape, slide))
+            continue
+        # Before the picture: a chart is a GraphicFrame with no .image, so picture() would swallow it and it would be lost in silence.
+        if shape.has_chart:
+            charts.append(chart(shape))
             continue
         try:
             pictures.append(picture(shape, images))
@@ -115,7 +141,8 @@ def slide_json(n, slide, images):
                 text[str(shape.placeholder_format.idx)] = ps
         elif shape.has_text_frame and (ps := paragraphs(shape.text_frame)):
             boxes.append(ps)
-    for key, value in (("text", text), ("textboxes", boxes), ("pictures", pictures), ("media", clips), ("links", found)):
+    for key, value in (("text", text), ("textboxes", boxes), ("pictures", pictures), ("charts", charts),
+                       ("media", clips), ("links", found)):
         if value:
             out[key] = value
     notes = slide.notes_slide.notes_text_frame.text.strip() if slide.has_notes_slide else ""

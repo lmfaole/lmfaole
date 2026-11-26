@@ -25,6 +25,14 @@ export interface SlideLink {
   url: string
 }
 
+/** A chart on the slide, as the .pptx has it: its type there, its categories and one series per row, with one value per category. */
+export interface SlideChart {
+  kind: string
+  title?: string
+  categories: readonly string[]
+  series: readonly { name: string; values: readonly number[] }[]
+}
+
 export interface Slide {
   n: number
   layout: string
@@ -35,6 +43,7 @@ export interface Slide {
   text?: Readonly<Record<string, readonly Paragraph[]>>
   textboxes?: readonly (readonly Paragraph[])[]
   pictures?: readonly SlidePicture[]
+  charts?: readonly SlideChart[]
   media?: readonly SlideMedia[]
   links?: readonly SlideLink[]
   notes?: string
@@ -111,7 +120,10 @@ export const isCredit = (paragraphs: readonly Paragraph[]): boolean => /^(foto|b
  * is a point of a list, and a line that starts with a word in capitals and a colon («HOVEDPOENG: …») has that word in bold.
  */
 export function notesMarkdown(notes: string): string {
-  const lines = notes.replace(/\r\n?/g, '\n').replace(/^\s*\[[^\]\n]*\]\s*\n/, '').split('\n')
+  const lines = notes
+    .replace(/\r\n?/g, '\n')
+    .replace(/^\s*\[[^\]\n]*\]\s*\n/, '')
+    .split('\n')
   const blocks: string[] = []
   let list: string[] = []
   const flush = (): void => {
@@ -150,27 +162,67 @@ export function sortTalks(talks: readonly Talk[]): Talk[] {
   return talks.toSorted((one, other) => (other.deck.date ?? '').localeCompare(one.deck.date ?? '') || one.deck.title.localeCompare(other.deck.title, 'nb'))
 }
 
-/** The PDF's file name: the .pptx's, as PDF. */
-export const pdfName = (deck: Pick<Deck, 'file'>): string => deck.file.replace(/\.pptx$/i, '.pdf')
+/**
+ * The three ways a talk can be downloaded, by the ending of the file: what to call it on screen, and what it is sent as. `pdf` and `pptx`
+ * are in the bucket (`scripts/export.sh` puts them there); `html` is made as the answer is written.
+ */
+export const DOWNLOADS = {
+  pdf: { label: 'Last ned PDF', type: 'application/pdf' },
+  pptx: { label: 'Last ned PowerPoint', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
+  html: { label: 'Last ned HTML', type: 'text/html; charset=utf-8' },
+} as const
+
+export type DownloadFormat = keyof typeof DOWNLOADS
+
+/** A talk's file name in one of the formats: the .pptx's name, with that ending. */
+export const deckFileName = (deck: Pick<Deck, 'file'>, format: DownloadFormat): string => `${deck.file.replace(/\.pptx$/i, '')}.${format}`
+
+/** Each download of a talk: what to call it, and where it is (`/<slug>/<file>`, under `base`). */
+export const talkDownloads = (deck: Pick<Deck, 'file'>, here: string): { label: string; href: string }[] =>
+  Object.entries(DOWNLOADS).map(([format, { label }]) => ({ label, href: `${here}${deckFileName(deck, format as DownloadFormat)}` }))
+
+/** What asks for the HTML to be shown in the browser instead of saved: `<file>.html?vis`. The same file either way. */
+export const SHOW = 'vis'
+
+/** Where a talk can be read as one page without keeping it, and what to call that. */
+export const talkView = (deck: Pick<Deck, 'file'>, here: string): { label: string; href: string } => ({
+  label: 'Se HTML-utgaven',
+  href: `${here}${deckFileName(deck, 'html')}?${SHOW}`,
+})
 
 /**
- * The R2 key of a talk's PDF (`<slug>/<file>.pdf`), for the address `/<slug>/<file>.pdf`: only a talk that is in `content/` and its own
- * file name, so no other key of the bucket can be asked for. `null` for anything else.
+ * The key of a talk's file (`<slug>/<file>.<format>`), for the address `/<slug>/<file>.<format>`: only a talk that is in `content/` and its
+ * own file name in the format the endpoint serves, so no other key of the bucket, and no other format, can be asked for. `null` for
+ * anything else. The format is the endpoint's own, never read off the address, so each endpoint hands out only what it is for.
  */
-export function pdfKey(talks: readonly Talk[], slug: string | undefined, file: string | undefined): string | null {
+export function fileKey(talks: readonly Talk[], slug: string | undefined, file: string | undefined, format: DownloadFormat): string | null {
   const talk = talks.find((one) => one.slug === slug)
-  if (talk === undefined || file === undefined || pdfName(talk.deck) !== file) return null
-  return `${talk.slug}/${file}`
+  if (talk === undefined || file === undefined) return null
+  const name = deckFileName(talk.deck, format)
+  return `${file}.${format}` === name ? `${talk.slug}/${name}` : null
 }
 
-/** The headers of a PDF from the bucket: a download under its own name, kept for an hour, with its ETag. */
-export function pdfHeaders(file: string, object: { httpEtag: string; size: number }): Headers {
+/** What is done with a file: saved under its name, or shown by the browser as the answer to the address. */
+export type Disposition = 'attachment' | 'inline'
+
+/** A file under its own name, kept for an hour. A name that is not ASCII is sent both ways round, as RFC 6266 has it. */
+function headers(file: string, format: DownloadFormat, more: Record<string, string>, disposition: Disposition = 'attachment'): Headers {
   const ascii = file.replace(/[^\x20-\x7e]|["\\]/g, '_')
   return new Headers({
-    'Content-Type': 'application/pdf',
-    'Content-Disposition': `attachment; filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(file)}`,
-    'Content-Length': String(object.size),
-    ETag: object.httpEtag,
+    'Content-Type': DOWNLOADS[format].type,
+    'Content-Disposition': `${disposition}; filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(file)}`,
     'Cache-Control': 'public, max-age=3600',
+    ...more,
   })
 }
+
+/** The headers of a file from the bucket: its size and its ETag are the bucket's. */
+export const downloadHeaders = (file: string, format: DownloadFormat, object: { httpEtag: string; size: number }): Headers =>
+  headers(file, format, { 'Content-Length': String(object.size), ETag: object.httpEtag })
+
+/**
+ * The headers of a file made as the answer is written: no ETag, since nothing has one to compare with, and the length is the bytes of the
+ * text, not its characters — one «ø» is two bytes, and a wrong `Content-Length` cuts the file off.
+ */
+export const textHeaders = (file: string, format: DownloadFormat, body: string, disposition?: Disposition): Headers =>
+  headers(file, format, { 'Content-Length': String(new TextEncoder().encode(body).byteLength) }, disposition)
