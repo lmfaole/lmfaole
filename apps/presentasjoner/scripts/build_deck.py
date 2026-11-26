@@ -246,7 +246,8 @@ def build(outline, out, base, template=None, keep_existing=False):
             fill_bullets(body.text_frame, spec.get("bullets", []), theme)
             if spec.get("image") or spec.get("chart"):  # text left, picture or chart right
                 left, top, width, height = body.left, body.top, body.width, body.height
-                body.width = int(width * 0.5)
+                # Setting only the width of a placeholder that inherits its place would put it at (0, 0) with no height.
+                body.left, body.top, body.width, body.height = left, top, int(width * 0.5), height
                 box = (left + int(width * 0.55), top, int(width * 0.45), height)
                 if spec.get("image"):
                     add_picture_fit(s, resolve(spec["image"], base), box, spec.get("alt"))
