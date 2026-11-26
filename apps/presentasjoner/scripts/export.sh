@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Builds the generic deck of a talk from content/<slug>/presentasjon.json and our own template, and puts it and
-# a PDF of it in the R2 bucket `presentasjoner` at `<slug>/<the .pptx's name>.<ending>`, where the site serves
-# them (`/presentasjoner/<slug>/…`). The .pptx the talk was given from is never touched and never uploaded.
+# Builds the generic deck of a talk from content/<slug>/presentasjon.json and our own template, keeps it and a PDF of it in
+# content/<slug>/nedlasting/ (committed, and shipped with the site: scripts/downloads.mjs) and also puts them in the R2 bucket
+# `presentasjoner` at `<slug>/<the .pptx's name>.<ending>`, the fallback the site reads (`/presentasjoner/<slug>/…`). The .pptx the talk was given from is never touched and never uploaded.
 # macOS with Microsoft PowerPoint (it makes the PDF), and wrangler logged in (`npx wrangler login`).
 #
 # Usage: scripts/export.sh <slug> [--pptx] [--pdf]        (no flag does both; <slug> is the folder in content/)

@@ -7,10 +7,10 @@
     "node": ">=24"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro build && wrangler dev",
-    "deploy": "astro build && wrangler deploy",
+    "dev": "node scripts/downloads.mjs && astro dev",
+    "build": "node scripts/downloads.mjs && astro build",
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
     "test": "node --test && python3 scripts/check.py",
     "typecheck": "tsc --noEmit",
     "skills": "designsystem-skills",

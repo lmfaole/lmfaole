@@ -10,8 +10,11 @@ The talks at <https://lmfaole.party/presentasjoner/>, Astro on Cloudflare Worker
 - Content is `content/<slug>/presentasjon.json` (made by `scripts/pptx_to_json.py`, never edited by hand except the top-level `summary`, `event`, `date`
   and `duration`), read at build time (`src/lib/content.ts`); the pages are prerendered. `scripts/check.py` (stdlib only) checks it against
   `presentasjon.schema.json`. The .pptx the talk was given from and the employer's template never go in the repo: it is public. The generic deck and its PDF do, in `content/<slug>/nedlasting/` (`scripts/export.sh` writes them).
-- A talk is downloaded in three formats (`DOWNLOADS` in `src/lib/deck.ts`): the `.pdf` and the `.pptx` are in the R2 bucket `presentasjoner` (binding
-  `FILES`, read only) at `<slug>/<pptx name>.<ending>`, put there by `scripts/export.sh`, and the `.html` is made as the answer is written from the
+- A talk is downloaded in three formats (`DOWNLOADS` in `src/lib/deck.ts`): the `.pdf` and the `.pptx` are in the repository, in
+  `content/<slug>/nedlasting/`, and `scripts/downloads.mjs` (run by `dev`, `build`, `preview` and `deploy`) copies them into the gitignored
+  `public/_nedlasting/<slug>/`, so they ship with the site as static files that the Worker reads through the `ASSETS` binding and sends as
+  downloads. The R2 bucket `presentasjoner` (binding `FILES`, read only, `<slug>/<pptx name>.<ending>`, put there by `scripts/export.sh`) is only
+  the fallback where a file is not among the static ones. The `.html` is made as the answer is written from the the `.html` is made as the answer is written from the
   page's own components and stylesheet. Each endpoint names its own format, and serves only keys of talks in `content/` (`fileKey`).
   `?vis` on the `.html` sends that same file `inline` instead of `attachment` (`SHOW`, `talkView`), so it can be read without being kept: one
   word of a header, never a second rendering of the talk.

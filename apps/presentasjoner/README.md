@@ -14,8 +14,10 @@ innholdet slide for slide (tekst, bilder, lenker og notater) og presentasjonen t
   sin egen («Vis tallene»). I den nedlastede fila, som ikke har den utvidelsen, er de med.
 - Hver presentasjon kan lastes ned i tre formater, alle under `/presentasjoner/<mappe>/<navnet på .pptx>` med formatets endelse
   (`src/lib/deck.ts`, `DOWNLOADS`). Bare presentasjoner som finnes i `content/` kan hentes, og hvert endepunkt sender bare sitt eget format.
-  - `.pdf` og `.pptx` ligger i R2-bøtta `presentasjoner` (bindingen `FILES`) som `<mappe>/<navnet på .pptx>.<endelse>`, og Workeren leser dem
-    (`src/lib/download.ts`). Det som mangler i bøtta, får 404-siden.
+  - `.pdf` og `.pptx` ligger i repoet, i `content/<mappe>/nedlasting/`. `scripts/downloads.mjs` (kjørt av `dev`, `build`, `preview` og `deploy`)
+    kopierer dem til `public/_nedlasting/<mappe>/` (git ignorerer kopien), så de følger med nettstedet som statiske filer. Workeren leser dem
+    gjennom `ASSETS` og sender dem som nedlasting (`src/lib/download.ts`). R2-bøtta `presentasjoner` (bindingen `FILES`) er bare reserve: det som
+    ikke finnes blant de statiske filene, hentes derfra, og det som mangler begge steder, får 404-siden.
   - `.html` lages i det svaret skrives (`src/pages/[slug]/[file].html.ts`): samme komponenter som siden (`src/views/TalkDocument.tsx`) og
     samme stilark, lagt inline, i én fil uten script. Bildene står som alt-tekst, slik videoene gjør, og diagrammene er tegnet ferdig.
     Skriftene hentes fra nettstedet, så åpnet fra disk brukes leserens egen skrift.

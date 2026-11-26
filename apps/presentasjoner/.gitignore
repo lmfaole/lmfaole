@@ -9,3 +9,4 @@ dist/
 *.pptx
 !maler/lmfaole-mal.pptx
 !content/*/nedlasting/*.pptx
+public/_nedlasting/
