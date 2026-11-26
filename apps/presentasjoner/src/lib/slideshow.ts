@@ -29,9 +29,10 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 .show-notes{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.9375rem}
 .show-bar,.show-progress{display:none}
 .js body{overflow:hidden}
-.js .show-slide{background:var(--background);position:fixed;inset:0;max-width:none;margin:0;padding:max(2rem,6dvh) max(1.5rem,8vw) 6rem;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;view-transition-name:show-slide;scroll-snap-align:start}
+.js main{position:fixed;inset:0;display:flex;overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
+.js main::-webkit-scrollbar{display:none}
+.js .show-slide{flex:0 0 100%;height:100%;max-width:none;margin:0;padding:max(2rem,6dvh) max(1.5rem,8vw) 6rem;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;background:var(--background);scroll-snap-align:start;scroll-snap-stop:always}
 .js .show-slide>*{width:100%;max-width:72rem;margin-inline:auto}
-.js .show-slide[hidden]{display:none}
 .js .show-notes{display:none}
 .js.show-with-notes .show-notes{display:block}
 .js .show-progress{position:fixed;inset:0 0 auto 0;display:block;height:.25rem;background:var(--muted);z-index:2}
@@ -56,22 +57,12 @@ body{margin:0;min-height:100%;background:var(--background);color:var(--foregroun
 .show-overview small{color:var(--muted-foreground);white-space:nowrap}
 .show-overview form{margin:1rem 0 0;display:flex;justify-content:flex-end}
 .show-overview button{font:inherit;color:inherit;background:transparent;border:1px solid var(--border);border-radius:.5rem;padding:.5rem .875rem;min-height:2.75rem;cursor:pointer}
-@media (prefers-reduced-motion:no-preference){
-  ::view-transition-group(show-slide){animation-duration:var(--motion-duration-slow)}
-  ::view-transition-old(show-slide),::view-transition-new(show-slide){animation-timing-function:var(--motion-ease-standard);mix-blend-mode:normal}
-  ::view-transition-old(show-slide){animation:none;opacity:0}
-  .show-forward::view-transition-new(show-slide){animation-name:show-in-right}
-  .show-back::view-transition-new(show-slide){animation-name:show-in-left}
-}
-@keyframes show-in-right{from{transform:translateX(12%)}}
-@keyframes show-in-left{from{transform:translateX(-12%)}}
 @media (prefers-reduced-motion:reduce){
-  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
   .js .show-progress::after,.js .show-bar{transition:none}
 }
 `
 
-/** The script: shows one slide, from the address' `#<n>`, and moves on keys, buttons and swipes, with a slide-over between slides where the browser can. No library, nothing stored, nothing sent. */
+/** The script: shows one slide, from the address' `#<n>`, and moves on keys, buttons and swipes, with a scroll-snap track between slides. No library, nothing stored, nothing sent. */
 export const SLIDESHOW_JS = `
 (() => {
   const root = document.documentElement
@@ -85,6 +76,7 @@ export const SLIDESHOW_JS = `
   const overview = document.getElementById('show-overview')
   const overviewButton = document.getElementById('show-overview-open')
   const links = [...overview.querySelectorAll('a')]
+  const track = document.querySelector('main')
   const calm = matchMedia('(prefers-reduced-motion: reduce)')
   let at = 0
   const fromHash = () => {
@@ -93,7 +85,7 @@ export const SLIDESHOW_JS = `
   }
   const render = (index, push) => {
     at = index
-    slides.forEach((slide, i) => { slide.hidden = i !== at })
+    slides.forEach((slide, i) => { slide.inert = i !== at })
     const slide = slides[at]
     count.textContent = (slide.dataset.reserve === 'true' ? 'Reserve ' : '') + (at + 1) + ' / ' + slides.length
     prev.disabled = at === 0
@@ -103,14 +95,18 @@ export const SLIDESHOW_JS = `
     if (push) history.replaceState(null, '', '#' + slide.dataset.n)
     slide.scrollTop = 0
   }
-  const show = (index, push) => {
+  const show = (index, push, instant) => {
     const to = Math.min(Math.max(index, 0), slides.length - 1)
-    if (to === at && slides[at].hidden === false) return
-    if (!document.startViewTransition || calm.matches) return render(to, push)
-    root.classList.remove('show-forward', 'show-back')
-    root.classList.add(to > at ? 'show-forward' : 'show-back')
-    document.startViewTransition(() => render(to, push))
+    render(to, push)
+    slides[to].scrollIntoView({ behavior: instant || calm.matches ? 'instant' : 'smooth', inline: 'start', block: 'nearest' })
   }
+  const watcher = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const i = slides.indexOf(entry.target)
+      if (entry.isIntersecting && i !== at) render(i, true)
+    })
+  }, { root: track, threshold: 0.6 })
+  slides.forEach((slide) => watcher.observe(slide))
   const toggleFull = () => {
     if (!document.fullscreenEnabled) return
     if (document.fullscreenElement) document.exitFullscreen()
@@ -160,7 +156,7 @@ export const SLIDESHOW_JS = `
     const dy = event.changedTouches[0].clientY - startY
     if (Math.abs(dx) > 60 && Math.abs(dx) > 2 * Math.abs(dy)) show(at + (dx < 0 ? 1 : -1), true)
   }, { passive: true })
-  render(fromHash(), false)
+  show(fromHash(), false, true)
 })()
 `
 

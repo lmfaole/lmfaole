@@ -23,7 +23,7 @@ innholdet slide for slide (tekst, bilder, lenker og notater) og presentasjonen t
     Skriftene hentes fra nettstedet, så åpnet fra disk brukes leserens egen skrift.
   - `?vis` på samme adresse (`SHOW` og `talkView` i `src/lib/deck.ts`) åpner presentasjonen som slideshow i nettleseren, sendt `inline`:
     én slide om gangen, med piltaster, mellomrom, sveip og knapper, `F` for fullskjerm, `N` for notater og `O` for oversikt (en `dialog`), og `#<n>` i adressen går til en
-    slide. Slidene fyller skjermen, byttet glir inn med View Transitions (slås av med `prefers-reduced-motion`, og der nettleseren mangler det),
+    slide. Slidene fyller skjermen og ligger i en vannrett bane med CSS scroll-snap (`scroll-snap-type`, `scroll-snap-stop`), så byttet er nettleserens egen glidning (rett hopp med `prefers-reduced-motion`), og slidene som ikke vises er `inert`. Svipe og rulling virker også.
     en linje øverst viser framdriften, og i fullskjerm skjules knappelinja når musa hviler. Diagrammene er designsystemets egne, tegnet fra tallene
     i innebygde PowerPoint-diagrammer. Reserveslidene kommer sist. Den er laget i det svaret skrives (`src/lib/slideshow.ts`, `src/views/Slideshow.tsx`): samme
     komponenter og stilark som siden, og bildene vises i full størrelse. Designsystemet har ikke noe slideshow, så dette er det ene stedet
